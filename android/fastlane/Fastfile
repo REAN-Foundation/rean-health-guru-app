@@ -1,0 +1,82 @@
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+
+  lane :publish_to_browserstack do |options|
+    upload_to_browserstack_app_automate(
+      browserstack_username: ENV["BROWSERSTACK_USERNAME"],
+      browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
+      file_path: "./build/app/outputs/apk/#{options[:flavor]}/#{options[:mode]}/app-#{options[:flavor]}-#{options[:mode]}.apk",
+      # file_path: "./build/bundle/#{options[:flavor]}#{options[:mode].capitalize}/app-#{options[:flavor]}-#{options[:mode]}.aab",
+      custom_id: ENV["BROWSERSTACK_APP_ID"]
+    )
+  end
+
+  lane :publish_to_firebase do |options|
+    commit = last_git_commit
+    build_notes = "Release candidate. #{commit[:message]}. Built by #{commit[:author]}"
+
+    firebase_app_distribution(
+       app: ENV["FIREBASE_APP_ID"],
+       release_notes: build_notes,
+       groups: "distribution-team",
+       android_artifact_type: "APK",
+      #  android_artifact_type: "AAB",
+       android_artifact_path: "./build/app/outputs/apk/#{options[:flavor]}/#{options[:mode]}/app-#{options[:flavor]}-#{options[:mode]}.apk",
+      #  android_artifact_path: "./build/bundle/#{options[:flavor]}#{options[:mode].capitalize}/app-#{options[:flavor]}-#{options[:mode]}.aab",
+       firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"]
+    )
+  end
+
+  desc "Builds the release app"
+  lane :build_release do
+    gradle(task: "clean")
+    gradle(
+      task: "assemble",
+      build_type: "Release",
+      flavor: "prod",
+      properties: {
+        "android.injected.signing.store.file" => "keystore.jks",
+        "android.injected.signing.store.password" => ENV['KEYSTORE_PASSWORD'],
+        "android.injected.signing.key.alias" => ENV['KEY_ALIAS'],
+        "android.injected.signing.key.password" => ENV['KEY_PASSWORD'],
+      }
+    )
+  end
+
+  # Alpha Build uses UAT package name and is a different app in the Play Store pointing to UAT backend
+  desc "Upload Alpha Build to PlayStore"
+  lane :release_alpha_build do |options|
+    upload_to_play_store(
+      track: "alpha",
+      rollout: ENV["ROLLOUT_USER_BASE_PERCENT"],
+      package_name: "org.reanfoundation.patient.uat",
+      json_key_data: ENV["PLAYSTORE_JSON_KEY_DATA"],
+      aab: "#{options[:aab_path]}"
+    )
+  end
+  # Beta and Prod share the same prod backend
+  desc "Upload Beta Build to PlayStore"
+  lane :release_beta_build do |options|
+    upload_to_play_store(
+      track: "beta",
+      rollout: ENV["ROLLOUT_USER_BASE_PERCENT"],
+      package_name: "org.reanfoundation.patient",
+      json_key_data: ENV["PLAYSTORE_JSON_KEY_DATA"],
+      aab: "#{options[:aab_path]}"
+    )
+  end
+
+  desc "Promote Beta to Production"
+  lane :promote_beta_to_production do
+    upload_to_play_store(
+      track: 'beta',
+      track_promote_to: 'production',
+      package_name: "org.reanfoundation.patient",
+      json_key_data: ENV["PLAYSTORE_JSON_KEY_DATA"]
+    )
+  end
+
+end

@@ -1,0 +1,133 @@
+# This workflow will triage pull requests and apply a label based on the
+# paths that are modified in the pull request.
+#
+# To use this workflow, you will need to set up a .github/labeler.yml
+# file with configuration.  For more information, see:
+# https://github.com/actions/labeler
+
+name: DEV Workflow
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [production, main]
+  pull_request:
+    branches: [production, main]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  Code-Scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/setup_flutter
+
+      - name: Flutter Analyze
+        run: |
+          flutter analyze --no-pub
+          flutter format lib/** --set-exit-if-changed
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: GitHub SuperLinter Scan
+        uses: github/super-linter@v4
+
+  Android-BuildApp:
+    environment: dev
+    # needs: Code-Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: android
+
+      - uses: ./.github/actions/setup_flutter
+
+      # Setting up jdk
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11"
+          distribution: "adopt"
+
+      # Gradle cache
+      - name: Cache Gradle packages
+        id: cache_gradle_packages
+        uses: actions/cache@v2
+        continue-on-error: true
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/caches/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('checksum.txt') }}
+
+      - name: Import Dev Build Dependencies
+        run: |
+          echo ${{ secrets.KEYSTORE_TOKEN_BASE64 }} > android/app/dev/google-services.json
+          echo ${{ secrets.KEYSTORE_TOKEN_BASE64 }} | base64 -di | tee android/keystore.jks android/app/keystore.jks >/dev/null
+
+      # Flutter Build Artifact
+      # - if: github.ref == 'refs/heads/development'
+      - name: Build Dev/QA Artifact
+        run: flutter build apk --debug --flavor dev -t "lib/main_dev.dart"
+
+      # Upload Artifacts
+      # - if: github.ref == 'refs/heads/development'
+      - name: Upload build Artifacts
+        id: upload_build_artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifacts
+          path: |
+            build/app/outputs
+          if-no-files-found: warn
+
+  Android-PublishApp:
+    needs: Android-BuildApp
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: android
+    steps:
+      - uses: ./.github/actions/setup_fastlane
+      # with:
+      #   fastlane-dir: android
+
+      - uses: actions/download-artifact@v2
+        id: download
+        with:
+          name: artifacts
+          # path: android
+
+      - name: Display structure of downloaded files
+        run: ls -R
+
+        # working-directory: android
+      - name: Publish to BrowserStack
+        # working-directory: android
+        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:debug app_id:$BROWSERSTACK_APP_ID
+        env:
+          BROWSERSTACK_APP_ID: RHG-APP-Dev
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+      - name: Publish to Firebase
+        # working-directory: android
+        run: bundle exec fastlane publish_to_firebase flavor:dev mode:debug app_id:$FIREBASE_APP_ID
+        env:
+          FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
+          FIREBASE_APP_ID: $${{ secrets.FIREBASE_APP_ID_ANDROID }}
+
+      - uses: ./.github/actions/setup_fastlane
+        with:
+          project_id: ${{ secrets.TPIO_ANDROID_PROJECT_ID }}
+          app_id: ${{ secrets.TPIO_ANDROID_APP_ID }}
+          app_name: app-dev-debug.apk
+          app_path: "android/build/app/outputs/apk/dev/debug/app-dev-debug.apk"

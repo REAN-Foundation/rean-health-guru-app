@@ -1,0 +1,49 @@
+name: "Setup Fastlane"
+description: "Installs Ruby and Fastlane"
+inputs:
+  ruby-version:
+    description: "Ruby version to install"
+    required: false
+    default: "2.7"
+  bundler-version:
+    description: "Ruby version to install"
+    required: false
+    default: "2.2.26"
+  fastlane-dir:
+    description: "Fastlane working directory"
+    required: false
+    default: "."
+
+runs:
+  using: "composite"
+  steps:
+    # Checkout Code
+    - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+    # Generate cache key
+    - name: Generate cache key
+      id: generate_cache_key
+      shell: bash
+      run: bash ./.github/scripts/checksum.sh checksum.txt
+
+    # Setting up ruby
+    - name: Set up Ruby
+      id: set_up_ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ inputs.ruby-version }}
+        bundler-cache: true
+        working-directory: ${{ inputs.fastlane-dir }}
+
+    # Installing bundler to use fastlane on the machine
+    - name: Install fastlane
+      id: install-fastlane
+      working-directory: ${{ inputs.fastlane-dir }}
+      shell: bash
+      run: |
+        gem install bundler:${{ inputs.bundler-version }}
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3

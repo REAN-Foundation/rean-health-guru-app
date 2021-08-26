@@ -1,0 +1,10 @@
+# For all available options run `fastlane match --help`
+# The docs are available on https://docs.fastlane.tools/actions/match
+
+storage_mode "git"
+git_url "git@github.com:REAN-Foundation/ios-certificates.git"
+git_branch "master"
+# git_user_email "bot@tikme.co"
+
+force_for_new_devices true
+verbose true

@@ -1,0 +1,34 @@
+name: "Upload Application to TestProject.io"
+description: "Upload Application to TestProject.io"
+inputs:
+  project_id:
+    description: "TestProject.io Project ID"
+    required: true
+  app_id:
+    description: "TestProject.io Project ID"
+    required: true
+  app_path:
+    description: "TestProject.io Project ID"
+    required: true
+  app_name:
+    description: "TestProject.io Project ID"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    # Setting up Node
+    - uses: actions/setup-node@v2
+      with:
+        node-version: "14"
+
+    # Install Libraries
+    - name: Install node libraries
+      shell: bash
+      run: |
+        npm install es6-promise
+        npm install isomorphic-fetch
+
+    - name: Upload to TestProject.io
+      shell: bash
+      run: node ${{ github.action_path }}/testproject.js ${{ inputs.app_id }} ${{ inputs.project_id }} ${{ secrets.TESTPROJECT_API_KEY }} ${{ inputs.app_name }} "${{ inputs.app_path }}"

@@ -127,6 +127,8 @@ jobs:
 
       - name: Setup Fastlane
         uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: android
 
         # with:
         #   fastlane-dir: android

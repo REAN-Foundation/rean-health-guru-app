@@ -88,7 +88,7 @@ jobs:
 
       - name: Import Dev Build Dependencies
         run: |
-          echo ${{ secrets.KEYSTORE_TOKEN_BASE64 }} > ./android/app/dev/google-services.json
+          echo ${{ secrets.FIREBASE_SECRET_JSON }} > ./android/app/dev/google-services.json
           echo ${{ secrets.KEYSTORE_TOKEN_BASE64 }} | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
 
       # Flutter Build Artifact

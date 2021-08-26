@@ -362,11 +362,11 @@ class _DateAndTimeForBookAppoinmentViewState
   Widget _addMultiSelectService() {
     return MultiSelectFormField(
       autovalidate: false,
+      titleText: 'Services:',
       validator: (value) {
         if (value == null || value.length == 0) {
           return 'Please select one or more options';
         }
-        return '';
       },
       dataSource: [
         {
@@ -383,7 +383,7 @@ class _DateAndTimeForBookAppoinmentViewState
       okButtonLabel: 'OK',
       cancelButtonLabel: 'CANCEL',
       // required: true,
-      //hintText: 'Please choose one or more',
+      hintText: 'Please choose one or more',
       onSaved: (value) {
         if (value == null) return;
         setState(() {

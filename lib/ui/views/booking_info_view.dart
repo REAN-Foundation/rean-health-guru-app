@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:calendar_strip/calendar_strip.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

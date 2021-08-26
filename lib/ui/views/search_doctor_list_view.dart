@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:badges/badges.dart';
+import 'package:calendar_strip/calendar_strip.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:location/location.dart';

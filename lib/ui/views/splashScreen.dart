@@ -246,7 +246,7 @@ class _SplashScreenState extends State<SplashScreen> {
       text: TextSpan(
           text: 'REAN',
           style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.headline1,
+            textStyle: Theme.of(context).textTheme.display1,
             fontSize: 30,
             fontWeight: FontWeight.w700,
             color: primaryColor,

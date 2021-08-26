@@ -130,20 +130,13 @@ jobs:
         with:
           fastlane-dir: android
 
-        # with:
-        #   fastlane-dir: android
       - uses: actions/download-artifact@v2
         id: download
         with:
           name: artifacts
-          # path: android
+          path: android
 
-      - name: Display structure of downloaded files
-        run: ls -R
-
-        # working-directory: android
       - name: Publish to BrowserStack
-        # working-directory: android
         run: bundle exec fastlane publish_to_browserstack flavor:dev mode:debug app_id:$BROWSERSTACK_APP_ID
         env:
           BROWSERSTACK_APP_ID: RHG-APP-Dev
@@ -151,13 +144,13 @@ jobs:
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Publish to Firebase
-        # working-directory: android
         run: bundle exec fastlane publish_to_firebase flavor:dev mode:debug app_id:$FIREBASE_APP_ID
         env:
           FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
           FIREBASE_APP_ID: $${{ secrets.FIREBASE_APP_ID_ANDROID }}
 
-      - uses: ./.github/actions/setup_fastlane
+      - name: Publish to TestPoroject.io
+        uses: ./.github/actions/upload_to_testproject
         with:
           project_id: ${{ secrets.TPIO_ANDROID_PROJECT_ID }}
           app_id: ${{ secrets.TPIO_ANDROID_APP_ID }}

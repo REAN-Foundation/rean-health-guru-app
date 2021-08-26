@@ -90,9 +90,10 @@ jobs:
       - name: Import Dev Build Dependencies
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_JSON }}
+          KEYSTORE_TOKEN: ${{ secrets.KEYSTORE_TOKEN_BASE64 }}
         run: |
           echo $FIREBASE_CONFIG > ./android/app/src/dev/google-services.json
-          echo ${{ secrets.KEYSTORE_TOKEN_BASE64 }} | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
+          echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
 
       # Flutter Build Artifact
       # - if: github.ref == 'refs/heads/development'
@@ -110,7 +111,7 @@ jobs:
             build/app/outputs
           if-no-files-found: warn
 
-  Android-PublishApp:
+  Android-PublishAppInternally:
     needs: Android-BuildApp
     runs-on: ubuntu-latest
     defaults:
@@ -118,10 +119,17 @@ jobs:
         shell: bash
         working-directory: android
     steps:
-      - uses: ./.github/actions/setup_fastlane
-      # with:
-      #   fastlane-dir: android
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
 
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
+
+        # with:
+        #   fastlane-dir: android
       - uses: actions/download-artifact@v2
         id: download
         with:
@@ -153,3 +161,25 @@ jobs:
           app_id: ${{ secrets.TPIO_ANDROID_APP_ID }}
           app_name: app-dev-debug.apk
           app_path: "android/build/app/outputs/apk/dev/debug/app-dev-debug.apk"
+
+  iOS-BuildApp:
+    environment: dev
+    # needs: Code-Scan
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+  iOS-PublishAppInternally:
+    environment: dev
+    needs: iOS-BuildApp
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0

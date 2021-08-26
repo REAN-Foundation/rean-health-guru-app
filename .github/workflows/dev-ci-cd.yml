@@ -28,11 +28,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      # - name: SonarCloud Scan
+      #   uses: sonarsource/sonarcloud-github-action@master
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
@@ -88,9 +88,8 @@ jobs:
 
       - name: Import Dev Build Dependencies
         run: |
-          ls -R
           echo ${{ secrets.KEYSTORE_TOKEN_BASE64 }} > ./android/app/dev/google-services.json
-          echo ${{ secrets.KEYSTORE_TOKEN_BASE64 }} | base64 -di | tee ./android/keystore.jks android/app/keystore.jks >/dev/null
+          echo ${{ secrets.KEYSTORE_TOKEN_BASE64 }} | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
 
       # Flutter Build Artifact
       # - if: github.ref == 'refs/heads/development'

@@ -57,7 +57,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: ./.github/actions/setup_fastlane
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
         with:
           fastlane-dir: android
 
@@ -87,8 +88,9 @@ jobs:
 
       - name: Import Dev Build Dependencies
         run: |
-          echo ${{ secrets.KEYSTORE_TOKEN_BASE64 }} > android/app/dev/google-services.json
-          echo ${{ secrets.KEYSTORE_TOKEN_BASE64 }} | base64 -di | tee android/keystore.jks android/app/keystore.jks >/dev/null
+          ls -R
+          echo ${{ secrets.KEYSTORE_TOKEN_BASE64 }} > ./android/app/dev/google-services.json
+          echo ${{ secrets.KEYSTORE_TOKEN_BASE64 }} | base64 -di | tee ./android/keystore.jks android/app/keystore.jks >/dev/null
 
       # Flutter Build Artifact
       # - if: github.ref == 'refs/heads/development'

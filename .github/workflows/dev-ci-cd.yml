@@ -88,8 +88,10 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('checksum.txt') }}
 
       - name: Import Dev Build Dependencies
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_JSON }}
         run: |
-          echo ${{ secrets.FIREBASE_SECRET_JSON }} > ./android/app/src/dev/google-services.json
+          echo $FIREBASE_CONFIG > ./android/app/src/dev/google-services.json
           echo ${{ secrets.KEYSTORE_TOKEN_BASE64 }} | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
 
       # Flutter Build Artifact

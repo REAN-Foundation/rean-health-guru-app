@@ -22,9 +22,16 @@ jobs:
   Code-Scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/setup_flutter
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
 
-      - name: Flutter Analyze
+      - name: Setup Flutter
+        uses: ./.github/actions/setup_flutter
+
+      - name: Run Flutter Analyze
         run: |
           flutter analyze --no-pub
           flutter format lib/** --set-exit-if-changed

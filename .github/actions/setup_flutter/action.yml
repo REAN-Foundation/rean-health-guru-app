@@ -19,7 +19,7 @@ runs:
     # Initialize Flutter
     - name: Run Flutter Doctor
       shell: bash
-      run: flutter doctor
+      run: flutter doctor -v
 
     - name: Run Flutter Clean
       shell: bash

@@ -75,23 +75,16 @@ jobs:
         with:
           java-version: "11"
           distribution: "adopt"
+          cache: gradle
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
 
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
 
-      - name: Accept Android Licenses
-        run: flutter doctor --android-licenses
-
-      # Gradle cache
-      - name: Cache Gradle packages
-        id: cache_gradle_packages
-        uses: actions/cache@v2
-        continue-on-error: true
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/caches/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('checksum.txt') }}
+      # - name: Accept Android Licenses
+      #   run: flutter doctor --android-licenses
 
       - name: Import Dev Build Dependencies
         env:

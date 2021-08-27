@@ -17,12 +17,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # Generate cache key
-    - name: Generate cache key
-      id: generate_cache_key
-      shell: bash
-      run: bash ./.github/scripts/checksum.sh checksum.txt
-
     # Setting up ruby
     - name: Set up Ruby
       id: set_up_ruby

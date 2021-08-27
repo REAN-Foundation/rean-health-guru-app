@@ -10,7 +10,7 @@ platform :android do
       browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
       file_path: "./build/app/outputs/apk/#{options[:flavor]}/#{options[:mode]}/app-#{options[:flavor]}-#{options[:mode]}.apk",
       # file_path: "./build/bundle/#{options[:flavor]}#{options[:mode].capitalize}/app-#{options[:flavor]}-#{options[:mode]}.aab",
-      custom_id: ENV["BROWSERSTACK_APP_ID"]
+      custom_id: "#{options[:app_id]}"
     )
   end
 
@@ -26,7 +26,7 @@ platform :android do
       #  android_artifact_type: "AAB",
        android_artifact_path: "./build/app/outputs/apk/#{options[:flavor]}/#{options[:mode]}/app-#{options[:flavor]}-#{options[:mode]}.apk",
       #  android_artifact_path: "./build/bundle/#{options[:flavor]}#{options[:mode].capitalize}/app-#{options[:flavor]}-#{options[:mode]}.aab",
-       firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"]
+       firebase_cli_token: "#{options[:cli_token]}"
     )
   end
 

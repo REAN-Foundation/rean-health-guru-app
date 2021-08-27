@@ -69,9 +69,6 @@ jobs:
         with:
           fastlane-dir: android
 
-      - name: Accept Android Licenses
-        run: flutter doctor --android-licenses
-
       # Setting up jdk
       - name: Set up JDK
         uses: actions/setup-java@v2
@@ -81,6 +78,9 @@ jobs:
 
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
+
+      - name: Accept Android Licenses
+        run: flutter doctor --android-licenses
 
       # Gradle cache
       - name: Cache Gradle packages

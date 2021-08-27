@@ -135,7 +135,7 @@ jobs:
         id: download
         with:
           name: artifacts
-          path: android
+          path: android/build/app/outputs
 
       - name: Display structure of downloaded files
         run: ls -al

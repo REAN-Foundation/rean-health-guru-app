@@ -10,7 +10,7 @@ platform :android do
       browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
       file_path: "./build/app/outputs/apk/#{options[:flavor]}/#{options[:mode]}/app-#{options[:flavor]}-#{options[:mode]}.apk",
       # file_path: "./build/bundle/#{options[:flavor]}#{options[:mode].capitalize}/app-#{options[:flavor]}-#{options[:mode]}.aab",
-      custom_id: "#{options[:app_id]}"
+      custom_id: ENV["BROWSERSTACK_APP_ID"]
     )
   end
 
@@ -19,14 +19,14 @@ platform :android do
     build_notes = "Release candidate. #{commit[:message]}. Built by #{commit[:author]}"
 
     firebase_app_distribution(
-       app: "#{options[:app_id]}",
+       app: ENV["FIREBASE_APP_ID"],
        release_notes: build_notes,
        groups: "distribution-team",
        android_artifact_type: "APK",
       #  android_artifact_type: "AAB",
        android_artifact_path: "./build/app/outputs/apk/#{options[:flavor]}/#{options[:mode]}/app-#{options[:flavor]}-#{options[:mode]}.apk",
       #  android_artifact_path: "./build/bundle/#{options[:flavor]}#{options[:mode].capitalize}/app-#{options[:flavor]}-#{options[:mode]}.aab",
-       firebase_cli_token: "#{options[:cli_token]}"
+       firebase_cli_token: "ENV["FIREBASE_CLI_TOKEN"]"
     )
   end
 

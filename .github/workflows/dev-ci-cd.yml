@@ -134,7 +134,7 @@ jobs:
           path: android/build/app/outputs
 
       - name: Publish to BrowserStack
-        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:release app_id:$BROWSERSTACK_APP_ID
+        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:release
         env:
           BROWSERSTACK_APP_ID: RHG-APP-Android-Dev
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
@@ -142,7 +142,7 @@ jobs:
 
       - name: Publish to Firebase
         run: |
-          bundle exec fastlane publish_to_firebase flavor:dev mode:release app_id:$FIREBASE_APP_ID cli_token:$FIREBASE_CLI_TOKEN
+          bundle exec fastlane publish_to_firebase flavor:dev mode:release
         env:
           FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
           FIREBASE_APP_ID: $${{ secrets.FIREBASE_APP_ID_ANDROID }}
@@ -186,6 +186,10 @@ jobs:
       - name: Generate Signed Build
         run: bundle exec fastlane build flavor:dev mode:release
         working-directory: ios
+        env:
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
 
       # Upload Artifacts
       - name: Upload build Artifacts
@@ -221,14 +225,14 @@ jobs:
           path: ios/output
 
       - name: Publish to BrowserStack
-        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:release app_id:$BROWSERSTACK_APP_ID
+        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:release
         env:
           BROWSERSTACK_APP_ID: RHG-APP-iOS-Dev
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Publish to Firebase
-        run: bundle exec fastlane publish_to_firebase flavor:dev mode:release app_id:$FIREBASE_APP_ID
+        run: bundle exec fastlane publish_to_firebase flavor:dev mode:release
         env:
           FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
           FIREBASE_APP_ID: $${{ secrets.FIREBASE_APP_ID_IOS }}

@@ -36,6 +36,8 @@ jobs:
 
       - name: GitHub SuperLinter Scan
         uses: github/super-linter@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
       - name: Setup Flutter

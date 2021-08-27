@@ -1054,7 +1054,7 @@ class _CreateProfileState extends State<CreateProfile> {
       text: TextSpan(
           text: 'H',
           style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.display1,
+            textStyle: Theme.of(context).textTheme.headline1,
             fontSize: 30,
             fontWeight: FontWeight.w700,
             color: Color(0xffe46b10),

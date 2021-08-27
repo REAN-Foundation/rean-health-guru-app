@@ -36,6 +36,9 @@ jobs:
 
       - name: GitHub SuperLinter Scan
         uses: github/super-linter@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
 
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
@@ -66,8 +69,6 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
         continue-on-error: true
-        with:
-          flutter-version: "1.22.5"
 
       # Setting up jdk
       - name: Set up JDK
@@ -134,7 +135,7 @@ jobs:
         id: download
         with:
           name: artifacts
-          path: android
+          path: android/build/app/outputs
 
       - name: Display structure of downloaded files
         run: ls -al

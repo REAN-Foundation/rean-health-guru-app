@@ -3,7 +3,6 @@ import 'dart:ffi';
 
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:calendar_strip/calendar_strip.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:location/location.dart';
 import 'package:paitent/core/constants/app_contstants.dart';

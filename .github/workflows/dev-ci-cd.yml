@@ -136,6 +136,9 @@ jobs:
           name: artifacts
           path: android
 
+      - name: Display structure of downloaded files
+        run: ls -al
+
       - name: Publish to BrowserStack
         run: bundle exec fastlane publish_to_browserstack flavor:dev mode:debug app_id:$BROWSERSTACK_APP_ID
         env:

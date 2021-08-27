@@ -19,7 +19,7 @@ platform :android do
     build_notes = "Release candidate. #{commit[:message]}. Built by #{commit[:author]}"
 
     firebase_app_distribution(
-       app: ENV["FIREBASE_APP_ID"],
+       app: "#{options[:app_id]}",
        release_notes: build_notes,
        groups: "distribution-team",
        android_artifact_type: "APK",

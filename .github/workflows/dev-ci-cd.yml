@@ -96,6 +96,9 @@ jobs:
           echo $FIREBASE_CONFIG > ./android/app/src/dev/google-services.json
           echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
 
+      - name: Accept Android Licenses
+        run: flutter doctor --android-licenses
+
       # Flutter Build Artifact
       # - if: github.ref == 'refs/heads/development'
       - name: Build Dev/QA Artifact

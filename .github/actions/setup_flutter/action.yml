@@ -23,3 +23,10 @@ runs:
         flutter doctor
         flutter clean
         flutter pub get
+
+    # Check Flutter Version
+    - name: Check Flutter Version
+      shell: bash
+      run: |
+        echo "\n\n***********FLUTTER VERSION*************\n"
+        flutter --version

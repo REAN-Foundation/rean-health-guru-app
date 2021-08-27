@@ -72,6 +72,9 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
 
+      - name: Accept Android Licenses
+        run: flutter doctor --android-licenses
+
       # Setting up jdk
       - name: Set up JDK
         uses: actions/setup-java@v2
@@ -97,9 +100,6 @@ jobs:
         run: |
           echo $FIREBASE_CONFIG > ./android/app/src/dev/google-services.json
           echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
-
-      - name: Accept Android Licenses
-        run: flutter doctor --android-licenses
 
       # Flutter Build Artifact
       # - if: github.ref == 'refs/heads/development'

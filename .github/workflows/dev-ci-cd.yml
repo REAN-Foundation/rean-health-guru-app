@@ -36,6 +36,7 @@ jobs:
 
       - name: GitHub SuperLinter Scan
         uses: github/super-linter@v4
+        continue-on-error: true
 
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter

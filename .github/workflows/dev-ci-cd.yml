@@ -83,7 +83,7 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
 
-      - name: Import Dev Build Dependencies
+      - name: Import Build Environment Dependencies
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_JSON }}
           KEYSTORE_TOKEN: ${{ secrets.KEYSTORE_TOKEN_BASE64 }}
@@ -93,11 +93,10 @@ jobs:
 
       # Flutter Build Artifact
       # - if: github.ref == 'refs/heads/development'
-      - name: Build Dev/QA Artifact
+      - name: Flutter Build
         run: flutter build apk --release --flavor dev -t "lib/main_dev.dart"
 
       # Upload Artifacts
-      # - if: github.ref == 'refs/heads/development'
       - name: Upload build Artifacts
         id: upload_build_artifacts
         uses: actions/upload-artifact@v2
@@ -134,14 +133,14 @@ jobs:
           path: android/build/app/outputs
 
       - name: Publish to BrowserStack
-        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:debug app_id:$BROWSERSTACK_APP_ID
+        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:release app_id:$BROWSERSTACK_APP_ID
         env:
-          BROWSERSTACK_APP_ID: RHG-APP-Dev
+          BROWSERSTACK_APP_ID: RHG-APP-Android-Dev
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Publish to Firebase
-        run: bundle exec fastlane publish_to_firebase flavor:dev mode:debug app_id:$FIREBASE_APP_ID
+        run: bundle exec fastlane publish_to_firebase flavor:dev mode:release app_id:$FIREBASE_APP_ID
         env:
           FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
           FIREBASE_APP_ID: $${{ secrets.FIREBASE_APP_ID_ANDROID }}
@@ -173,9 +172,14 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
 
+      - name: Import Build Environment Dependencies
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_PLIST }}
+        run: |
+          echo $FIREBASE_CONFIG > ./ios/config/dev/GoogleService-Info.plist
+
       # Flutter Build Artifact
-      # - if: github.ref == 'refs/heads/development'
-      - name: Build Dev/QA Artifact
+      - name: Flutter Build
         run: flutter build ios --release --no-codesign --flavor dev -t "lib/main_dev.dart"
 
       - name: Generate Signed Build
@@ -183,7 +187,6 @@ jobs:
         working-directory: ios
 
       # Upload Artifacts
-      # - if: github.ref == 'refs/heads/development'
       - name: Upload build Artifacts
         id: upload_build_artifacts
         uses: actions/upload-artifact@v2
@@ -219,7 +222,7 @@ jobs:
       - name: Publish to BrowserStack
         run: bundle exec fastlane publish_to_browserstack flavor:dev mode:release app_id:$BROWSERSTACK_APP_ID
         env:
-          BROWSERSTACK_APP_ID: RHG-APP-Dev
+          BROWSERSTACK_APP_ID: RHG-APP-iOS-Dev
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
@@ -236,3 +239,8 @@ jobs:
           app_id: ${{ secrets.TPIO_ANDROID_APP_ID }}
           app_name: app-dev-debug.apk
           app_path: "android/build/app/outputs/apk/dev/debug/app-dev-debug.apk"
+
+      - name: Import Build Environment Dependencies
+        env:
+          IOS_DEMO_USER: ${{ secrets.IOS_DEMO_USER }}
+          IOS_DEMO_PASSWORD: ${{ secrets.IOS_DEMO_PASSWORD }}

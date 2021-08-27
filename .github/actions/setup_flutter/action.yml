@@ -28,5 +28,9 @@ runs:
     - name: Check Flutter Version
       shell: bash
       run: |
-        echo "\n\n***********FLUTTER VERSION*************\n"
+        echo ""
+        echo ""
+        echo "*********************"
+        echo "** FLUTTER VERSION **"
+        echo "*********************"
         flutter --version

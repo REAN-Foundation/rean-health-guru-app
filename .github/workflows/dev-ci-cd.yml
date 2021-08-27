@@ -42,11 +42,10 @@ jobs:
 
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
-        continue-on-error: true
 
       - name: Run Flutter Analyze
         run: |
-          flutter pub add --dev flutter_lints
+          # flutter pub add --dev flutter_lints
           flutter analyze --no-pub
           flutter format lib/** --set-exit-if-changed
 
@@ -68,7 +67,6 @@ jobs:
 
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
-        continue-on-error: true
 
       # Setting up jdk
       - name: Set up JDK

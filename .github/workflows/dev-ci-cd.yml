@@ -19,7 +19,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  Code-Scan:
+  CodeScan-GitHubSuperLinter:
     runs-on: ubuntu-latest
     steps:
       # Checkout Code
@@ -28,17 +28,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      # - name: SonarCloud Scan
-      #   uses: sonarsource/sonarcloud-github-action@master
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
       - name: GitHub SuperLinter Scan
         uses: github/super-linter@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
+
+  CodeScan-FlutterAnalyze:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
 
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
@@ -46,12 +49,13 @@ jobs:
       - name: Run Flutter Analyze
         run: |
           # flutter pub add --dev flutter_lints
-          flutter analyze --no-pub
+          flutter clean
+          flutter analyze --no-pub --preamble --congratulate
           flutter format lib/** --set-exit-if-changed
 
   Android-BuildApp:
     environment: dev
-    # needs: Code-Scan
+    # needs: [Code-Scan]
     runs-on: ubuntu-latest
     steps:
       # Checkout Code

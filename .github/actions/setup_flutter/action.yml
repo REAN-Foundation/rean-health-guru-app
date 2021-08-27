@@ -17,12 +17,17 @@ runs:
         echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
 
     # Initialize Flutter
-    - name: Run Flutter Checks
+    - name: Run Flutter Doctor
       shell: bash
-      run: |
-        flutter doctor
-        flutter clean
-        flutter pub get
+      run: flutter doctor
+
+    - name: Run Flutter Clean
+      shell: bash
+      run: flutter clean
+
+    - name: Run Flutter Pub Get
+      shell: bash
+      run: flutter pub get
 
     # Check Flutter Version
     - name: Check Flutter Version

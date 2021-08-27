@@ -38,3 +38,12 @@ lib/generated_plugin_registrant.dart
 
 ios/build/
 ios/output/
+
+
+# Exclude Firebase config files
+android/app/src/**/*.json
+android/app/src/*.json
+ios/config/**/*.plist
+
+ios/Flutter/fluttter_export_environments.sh
+ios/Flutter/Generated.xcconfig

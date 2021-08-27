@@ -17,14 +17,14 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # # Setting up ruby
-    # - name: Set up Ruby
-    #   id: set_up_ruby
-    #   uses: ruby/setup-ruby@v1
-    #   with:
-    #     ruby-version: ${{ inputs.ruby-version }}
-    #     bundler-cache: true
-    #     working-directory: ${{ inputs.fastlane-dir }}
+    # Setting up ruby
+    - name: Set up Ruby
+      id: set_up_ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ inputs.ruby-version }}
+        bundler-cache: true
+        working-directory: ${{ inputs.fastlane-dir }}
 
     # Installing bundler to use fastlane on the machine
     - name: Install fastlane

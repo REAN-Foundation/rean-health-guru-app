@@ -66,8 +66,6 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
         continue-on-error: true
-        with:
-          flutter-version: "1.22.5"
 
       # Setting up jdk
       - name: Set up JDK

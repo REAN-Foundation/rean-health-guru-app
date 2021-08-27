@@ -38,7 +38,7 @@ dependencies:
   geocoder: ^0.2.1
   date_util: ^0.1.4
   month_picker_strip: ^0.0.3
-  calendar_strip: ^1.0.6
+  #calendar_strip: ^1.0.7
   multiselect_formfield: ^0.1.3
   badges: ^1.1.1
   masked_text_input_formatter: 0.0.1

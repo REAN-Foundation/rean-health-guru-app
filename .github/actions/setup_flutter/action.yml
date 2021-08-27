@@ -21,4 +21,5 @@ runs:
       shell: bash
       run: |
         flutter doctor
+        flutter clean
         flutter pub get

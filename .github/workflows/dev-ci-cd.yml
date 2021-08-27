@@ -94,7 +94,7 @@ jobs:
       # Flutter Build Artifact
       # - if: github.ref == 'refs/heads/development'
       - name: Build Dev/QA Artifact
-        run: flutter build apk --debug --flavor dev -t "lib/main_dev.dart"
+        run: flutter build apk --release --flavor dev -t "lib/main_dev.dart"
 
       # Upload Artifacts
       # - if: github.ref == 'refs/heads/development'
@@ -105,7 +105,8 @@ jobs:
           name: artifacts
           path: |
             build/app/outputs
-          if-no-files-found: warn
+          if-no-files-found: error
+          retention-days: 7 # Keeping short for Dev Builds
 
   Android-PublishAppInternally:
     needs: Android-BuildApp
@@ -155,23 +156,54 @@ jobs:
           app_id: ${{ secrets.TPIO_ANDROID_APP_ID }}
           app_name: app-dev-debug.apk
           app_path: "android/build/app/outputs/apk/dev/debug/app-dev-debug.apk"
-  # iOS-BuildApp:
-  #   environment: dev
-  #   # needs: [Code-Scan]
-  #   runs-on: macos-latest
-  #   steps:
-  #     # Checkout Code
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v2.3.4
-  #       with:
-  #         fetch-depth: 0
-  # iOS-PublishAppInternally:
-  #   environment: dev
-  #   needs: iOS-BuildApp
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     # Checkout Code
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v2.3.4
-  #       with:
-  #         fetch-depth: 0
+
+  iOS-BuildApp:
+    environment: dev
+    # needs: [Code-Scan]
+    runs-on: macos-latest
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: ios
+
+      - name: Setup Flutter
+        uses: ./.github/actions/setup_flutter
+
+      # Flutter Build Artifact
+      # - if: github.ref == 'refs/heads/development'
+      - name: Build Dev/QA Artifact
+        run: flutter build ios --release --no-codesign --flavor dev -t "lib/main_dev.dart"
+
+      - name: Generate Signed Build
+        run: bundle exec fastlane build flavor:dev mode:release
+        working-directory: ios
+
+      # Upload Artifacts
+      # - if: github.ref == 'refs/heads/development'
+      - name: Upload build Artifacts
+        id: upload_build_artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifacts
+          path: |
+            ios/output
+          if-no-files-found: error
+          retention-days: 7 # Keeping short for Dev Builds
+
+  iOS-PublishAppInternally:
+    environment: dev
+    needs: iOS-BuildApp
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0

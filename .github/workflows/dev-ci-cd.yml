@@ -69,16 +69,16 @@ jobs:
         with:
           fastlane-dir: android
 
-      # # Setting up jdk
-      # - name: Set up JDK
-      #   uses: actions/setup-java@v2
-      #   with:
-      #     java-version: "11"
-      #     distribution: "adopt"
-      #     cache: gradle
+      # Setting up jdk
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11"
+          distribution: "adopt"
+          cache: gradle
 
-      # - name: Setup Android SDK
-      #   uses: android-actions/setup-android@v2
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
 
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter

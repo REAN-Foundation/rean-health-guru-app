@@ -28,14 +28,3 @@ runs:
     - name: Run Flutter Pub Get
       shell: bash
       run: flutter pub get
-
-    # Check Flutter Version
-    - name: Check Flutter Version
-      shell: bash
-      run: |
-        echo ""
-        echo ""
-        echo "*********************"
-        echo "** FLUTTER VERSION **"
-        echo "*********************"
-        flutter --version

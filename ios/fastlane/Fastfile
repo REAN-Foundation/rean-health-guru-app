@@ -132,7 +132,7 @@ platform :ios do
     build_notes = "Release candidate. #{commit[:message]}. Built by #{commit[:author]}"
 
     firebase_app_distribution(
-       app: ENV["FIREBASE_APP_ID"],
+       app: ENV["FIREBASE_APP_ID_IOS"],
        release_notes: build_notes,
        groups: "distribution-team",
        ipa_path: "./output/build/RHG-APP-#{options[:mode]}-#{options[:flavor]}.ipa",

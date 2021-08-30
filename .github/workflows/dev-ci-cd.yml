@@ -153,6 +153,7 @@ jobs:
           app_id: ${{ secrets.TPIO_ANDROID_APP_ID }}
           app_name: app-dev-debug.apk
           app_path: "android/build/app/outputs/apk/dev/debug/app-dev-debug.apk"
+          tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}
 
   iOS-BuildApp:
     environment: dev
@@ -207,6 +208,10 @@ jobs:
     environment: dev
     needs: iOS-BuildApp
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ios
     steps:
       # Checkout Code
       - name: Checkout Code
@@ -217,7 +222,7 @@ jobs:
       - name: Setup Fastlane
         uses: ./.github/actions/setup_fastlane
         with:
-          fastlane-dir: android
+          fastlane-dir: ios
 
       - uses: actions/download-artifact@v2
         id: download
@@ -236,7 +241,7 @@ jobs:
         run: bundle exec fastlane publish_to_firebase flavor:dev mode:release
         env:
           FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
-          FIREBASE_APP_ID: $${{ secrets.FIREBASE_APP_ID_IOS }}
+          FIREBASE_APP_ID_IOS: $${{ secrets.FIREBASE_APP_ID_IOS }}
 
       - name: Publish to TestPoroject.io
         uses: ./.github/actions/upload_to_testproject
@@ -245,6 +250,7 @@ jobs:
           app_id: ${{ secrets.TPIO_ANDROID_APP_ID }}
           app_name: app-dev-debug.apk
           app_path: "android/build/app/outputs/apk/dev/debug/app-dev-debug.apk"
+          tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}
       # - name: Import Build Environment Dependencies
       #   env:
       #     IOS_DEMO_USER: ${{ secrets.IOS_DEMO_USER }}

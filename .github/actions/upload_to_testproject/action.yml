@@ -13,6 +13,9 @@ inputs:
   app_name:
     description: "TestProject.io Project ID"
     required: true
+  tp_api_key:
+    description: "TestProject.io API Authentication Key"
+    required: true
 
 runs:
   using: "composite"
@@ -31,4 +34,4 @@ runs:
 
     - name: Upload to TestProject.io
       shell: bash
-      run: node ${{ github.action_path }}/testproject.js ${{ inputs.app_id }} ${{ inputs.project_id }} ${{ secrets.TESTPROJECT_API_KEY }} ${{ inputs.app_name }} "${{ inputs.app_path }}"
+      run: node ${{ github.action_path }}/testproject.js ${{ inputs.app_id }} ${{ inputs.project_id }} ${{ inputs.tp_api_key }} ${{ inputs.app_name }} "${{ inputs.app_path }}"

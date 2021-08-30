@@ -94,7 +94,7 @@ jobs:
       # Flutter Build Artifact
       # - if: github.ref == 'refs/heads/development'
       - name: Flutter Build
-        run: flutter build apk --release --flavor dev -t "lib/main_dev.dart"
+        run: flutter build apk --debug --flavor dev -t "lib/main_dev.dart"
 
       # Upload Artifacts
       - name: Upload build Artifacts
@@ -134,14 +134,14 @@ jobs:
           path: android/build/app/outputs
 
       - name: Publish to BrowserStack
-        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:release
+        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:debug
         env:
           BROWSERSTACK_APP_ID: RHG-APP-Android-Dev
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Publish to Firebase
-        run: bundle exec fastlane publish_to_firebase flavor:dev mode:release
+        run: bundle exec fastlane publish_to_firebase flavor:dev mode:debug
         env:
           FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
           FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
@@ -248,8 +248,8 @@ jobs:
         with:
           project_id: ${{ secrets.TPIO_ANDROID_PROJECT_ID }}
           app_id: ${{ secrets.TPIO_ANDROID_APP_ID }}
-          app_name: app-dev-debug.apk
-          app_path: "android/build/app/outputs/apk/dev/debug/app-dev-debug.apk"
+          app_name: RHG-APP-release-dev.ipa
+          app_path: "ios/output/build/RHG-APP-release-dev.ipa"
           tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}
       # - name: Import Build Environment Dependencies
       #   env:

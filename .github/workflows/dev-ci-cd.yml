@@ -142,10 +142,12 @@ jobs:
 
       - name: Publish to Firebase
         run: |
+          echo $FIREBASE_APP_ID_ANDROID > id.txt
+          cat id.txt
           bundle exec fastlane publish_to_firebase flavor:dev mode:release
         env:
           FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
-          FIREBASE_APP_ID: $${{ secrets.FIREBASE_APP_ID_ANDROID }}
+          FIREBASE_APP_ID_ANDROID: $${{ secrets.FIREBASE_APP_ID_ANDROID }}
 
       - name: Publish to TestPoroject.io
         uses: ./.github/actions/upload_to_testproject
@@ -191,6 +193,7 @@ jobs:
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}
           APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
       # Upload Artifacts
       - name: Upload build Artifacts

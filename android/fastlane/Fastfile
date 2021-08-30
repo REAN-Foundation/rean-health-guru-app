@@ -3,6 +3,9 @@
 default_platform(:android)
 
 platform :android do
+  before_all do
+    setup_ci
+  end
 
   lane :publish_to_browserstack do |options|
     upload_to_browserstack_app_automate(

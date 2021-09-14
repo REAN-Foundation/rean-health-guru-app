@@ -87,9 +87,11 @@ jobs:
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_JSON }}
           KEYSTORE_TOKEN: ${{ secrets.KEYSTORE_TOKEN_BASE64 }}
+          FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
         run: |
           echo $FIREBASE_CONFIG > ./android/app/src/dev/google-services.json
           echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
+          echo $FLUTTER_DOTENV > ./res/.env
 
       # Flutter Build Artifact
       # - if: github.ref == 'refs/heads/development'
@@ -177,7 +179,10 @@ jobs:
       - name: Import Build Environment Dependencies
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_PLIST }}
-        run: echo $FIREBASE_CONFIG > ./ios/config/dev/GoogleService-Info.plist
+          FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
+        run: |
+          echo $FIREBASE_CONFIG > ./ios/config/dev/GoogleService-Info.plist
+          echo $FLUTTER_DOTENV > ./res/.env
 
       # Flutter Build Artifact
       - name: Flutter Build

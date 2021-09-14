@@ -44,9 +44,10 @@ ios/output/
 android/app/src/**/*.json
 android/app/src/*.json
 ios/config/**/*.plist
+ios/config/*.plist
 
 # Exclude backend env files
-res/.env
+res/*.env
 
 ios/Flutter/fluttter_export_environments.sh
 ios/Flutter/Generated.xcconfig

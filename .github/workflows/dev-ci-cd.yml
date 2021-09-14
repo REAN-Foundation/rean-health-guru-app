@@ -244,12 +244,7 @@ jobs:
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Publish to Firebase
-        run: |
-          ls -lrt
-          ls -lrt output
-          echo $FIREBASE_APP_ID_IOS > id.txt
-          cat id.txt
-          bundle exec fastlane publish_to_firebase flavor:dev mode:release
+        run: bundle exec fastlane publish_to_firebase flavor:dev mode:release
         env:
           FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
           FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}

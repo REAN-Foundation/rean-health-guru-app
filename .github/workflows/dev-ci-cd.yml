@@ -51,7 +51,7 @@ jobs:
           # flutter pub add --dev flutter_lints
           # flutter format lib/** --set-exit-if-changed
           flutter clean
-          flutter analyze --no-pub --preamble --congratulate
+          flutter analyze --preamble --congratulate
 
   Android-BuildApp:
     environment: dev

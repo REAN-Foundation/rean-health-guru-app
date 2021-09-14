@@ -1,0 +1,30 @@
+name: "Setup Flutter"
+description: "Installs Flutter and initializes it"
+inputs:
+  flutter-version:
+    description: "Flutter version to install"
+    required: false
+    default: "2.2.3"
+
+runs:
+  using: "composite"
+  steps:
+    # Setting up Flutter
+    - name: Setup Flutter
+      shell: bash
+      run: |
+        git clone https://github.com/flutter/flutter.git -b ${{ inputs.flutter-version }} --depth 1
+        echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
+
+    # Initialize Flutter
+    - name: Run Flutter Doctor
+      shell: bash
+      run: flutter doctor -v
+
+    - name: Run Flutter Clean
+      shell: bash
+      run: flutter clean
+
+    - name: Run Flutter Pub Get
+      shell: bash
+      run: flutter pub get

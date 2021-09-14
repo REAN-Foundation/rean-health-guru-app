@@ -1,0 +1,37 @@
+name: "Publish Android build internally"
+description: "Installs Ruby and Fastlane"
+inputs:
+  fastlane-dir:
+    description: Fastlane working directory
+    required: false
+    default: "."
+  testproject_app_id:
+    description: TestProject.io Application ID
+    required: false
+    default: ""
+  firebase_app_id:
+    description: Firebase Application ID
+    required: false
+    default: ""
+  browserstack_app_id:
+    description: BrowserStack Application ID
+    required: false
+    default: ""
+  app_name:
+    description: Target build app name
+    required: false
+  app_path:
+    description: Target build app path
+    required: false
+  build_flavor:
+    description: Build Flavor (Dev,UAT,PROD)
+    required: false
+    default: dev
+  build_mode:
+    description: Build Mode (Debug,Release)
+    required: false
+    default: release
+
+runs:
+  using: "composite"
+  steps:

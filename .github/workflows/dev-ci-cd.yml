@@ -1,0 +1,280 @@
+# This workflow will triage pull requests and apply a label based on the
+# paths that are modified in the pull request.
+#
+# To use this workflow, you will need to set up a .github/labeler.yml
+# file with configuration.  For more information, see:
+# https://github.com/actions/labeler
+
+name: DEV Workflow
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [production, main]
+  pull_request:
+    branches: [production, main]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  gitguardian-scanning:
+    name: GitGuardian Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # fetch all history so multiple commits can be scanned
+      - name: GitGuardian Scan
+        uses: GitGuardian/gg-shield-action@master
+        env:
+          GITHUB_PUSH_BEFORE_SHA: ${{ github.event.before }}
+          GITHUB_PUSH_BASE_SHA: ${{ github.event.base }}
+          GITHUB_PULL_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          GITHUB_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
+
+  CodeScan-GitHubSuperLinter:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: GitHub SuperLinter Scan
+        uses: github/super-linter@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_DART: true
+
+  CodeScan-FlutterAnalyze:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Flutter
+        uses: ./.github/actions/setup_flutter
+
+      - name: Run Flutter Analyze
+        run: |
+          # flutter pub add --dev flutter_lints
+          # flutter format lib/** --set-exit-if-changed
+          flutter clean
+          flutter analyze --preamble --congratulate
+
+  Android-BuildApp:
+    environment: dev
+    # needs: [Code-Scan]
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: android
+
+      # Setting up jdk
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11"
+          distribution: "adopt"
+          cache: gradle
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Setup Flutter
+        uses: ./.github/actions/setup_flutter
+
+      - name: Import Build Environment Dependencies
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_JSON }}
+          KEYSTORE_TOKEN: ${{ secrets.KEYSTORE_TOKEN_BASE64 }}
+          FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
+        run: |
+          echo $FIREBASE_CONFIG > ./android/app/src/dev/google-services.json
+          echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
+          echo $FLUTTER_DOTENV > ./res/.env
+
+      # Flutter Build Artifact
+      # - if: github.ref == 'refs/heads/development'
+      - name: Flutter Build
+        run: flutter build apk --debug --flavor dev -t "lib/main_dev.dart"
+
+      # Upload Artifacts
+      - name: Upload build Artifacts
+        id: upload_build_artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: android-artifacts
+          path: |
+            build/app/outputs
+          if-no-files-found: error
+          retention-days: 7 # Keeping short for Dev Builds
+
+  Android-PublishAppInternally:
+    environment: dev
+    needs: Android-BuildApp
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: android
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: android
+
+      - uses: actions/download-artifact@v2
+        id: download
+        with:
+          name: android-artifacts
+          path: android/build/app/outputs
+
+      - name: Publish to BrowserStack
+        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:debug
+        env:
+          BROWSERSTACK_APP_ID: RHG-APP-Android-Dev
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+      - name: Publish to Firebase
+        run: bundle exec fastlane publish_to_firebase flavor:dev mode:debug
+        env:
+          FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
+          FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+
+      - name: Publish to TestProject.io
+        uses: ./.github/actions/upload_to_testproject
+        with:
+          project_id: ${{ secrets.TPIO_ANDROID_PROJECT_ID }}
+          app_id: ${{ secrets.TPIO_ANDROID_APP_ID }}
+          app_name: app-dev-debug.apk
+          app_path: "android/build/app/outputs/apk/dev/debug/app-dev-debug.apk"
+          tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}
+
+  iOS-BuildApp:
+    environment: dev
+    # needs: [Code-Scan]
+    runs-on: macos-latest
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: ios
+
+      - name: Setup Flutter
+        uses: ./.github/actions/setup_flutter
+
+      - name: Import Build Environment Dependencies
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_PLIST }}
+          FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
+        run: |
+          mkdir -p ./ios/config/dev/
+          echo $FIREBASE_CONFIG > ./ios/config/dev/GoogleService-Info.plist
+          echo $FLUTTER_DOTENV > ./res/.env
+
+      # Flutter Build Artifact
+      - name: Flutter Build
+        run: flutter build ios --release --no-codesign --flavor dev -t "lib/main_dev.dart"
+
+      - name: Generate Signed Build
+        run: bundle exec fastlane build flavor:dev mode:release
+        working-directory: ios
+        env:
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+
+      # Upload Artifacts
+      - name: Upload build Artifacts
+        id: upload_build_artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ios-artifacts
+          path: |
+            ios/output
+          if-no-files-found: error
+          retention-days: 7 # Keeping short for Dev Builds
+
+  iOS-PublishAppInternally:
+    environment: dev
+    needs: iOS-BuildApp
+    runs-on: macos-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ios
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: ios
+
+      - uses: actions/download-artifact@v2
+        id: download
+        with:
+          name: ios-artifacts
+          path: ios/output
+
+      - name: Publish to BrowserStack
+        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:release
+        env:
+          BROWSERSTACK_APP_ID: RHG-APP-iOS-Dev
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+      - name: Publish to Firebase
+        run: bundle exec fastlane publish_to_firebase flavor:dev mode:release
+        env:
+          FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
+          FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}
+
+      - name: Publish to TestProject.io
+        uses: ./.github/actions/upload_to_testproject
+        with:
+          project_id: ${{ secrets.TPIO_ANDROID_PROJECT_ID }}
+          app_id: ${{ secrets.TPIO_ANDROID_APP_ID }}
+          app_name: RHG-APP-release-dev.ipa
+          app_path: "ios/output/build/RHG-APP-release-dev.ipa"
+          tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}
+      # - name: Import Build Environment Dependencies
+      #   env:
+      #     IOS_DEMO_USER: ${{ secrets.IOS_DEMO_USER }}
+      #     IOS_DEMO_PASSWORD: ${{ secrets.IOS_DEMO_PASSWORD }}

@@ -1,0 +1,198 @@
+default_platform :ios
+
+platform :ios do
+  before_all do
+    xcversion(version: "12.4")
+    setup_ci
+  end
+
+  desc "Authenticate to App Store Connect API"
+  private_lane :get_api_key do
+    app_store_connect_api_key(
+      key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
+      issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+      key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
+      is_key_content_base64: true,
+      in_house: false
+    )
+  end
+
+  desc "Auto update build number"
+  private_lane :bump_build_number do
+    base_build_number = latest_testflight_build_number(
+      initial_build_number: 0,
+      api_key: get_api_key
+    )
+    increment_build_number({
+      build_number: base_build_number + 1
+    })
+  end
+
+  desc "Re-recreate development,adhoc and appstore profiles and necessary certificates if any of them is invalid or expired"
+  lane :update_signing_profiles do
+    register_devices(
+      devices_file: "./ios-devices.txt",
+      api_key: get_api_key,
+      platform: 'ios'
+    )
+    match(
+      app_identifier: "org.reanfoundation.patient.dev",
+      api_key: get_api_key,
+      type: "development",
+      readonly: false
+    )
+
+    match(
+      app_identifier: ["org.reanfoundation.patient.dev", "org.reanfoundation.patient.uat"],
+      api_key: get_api_key,
+      type: "adhoc",
+      readonly: false
+      )
+
+    match(
+      app_identifier: ["org.reanfoundation.patient", "org.reanfoundation.patient.uat"],
+      api_key: get_api_key,
+      type: "appstore",
+      readonly: false
+    )
+  end
+
+  desc "Install App Store Certificates and Profiles"
+  lane :get_signing_profiles do |options|
+    register_devices(
+      devices_file: "./ios-devices.txt",
+      api_key: get_api_key,
+      platform: 'ios'
+    )
+    match(
+      app_identifier: options[:identifier],
+      api_key: get_api_key,
+      type: options[:type],
+      readonly: false
+    )
+  end
+
+  desc "Build the ipa file as per the flavor"
+  lane :build do |options|
+    app_identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+
+    # Choosing the app_identifier (App Store Bundle ID) based on the flavor type
+    if(options[:flavor] != "prod")
+      app_identifier = app_identifier + ".#{options[:flavor]}"
+    end
+
+    # Defining the Provisioning Profile type and the IPA export method based
+    if(options[:flavor] == "prod" or (options[:flavor] == "uat" and options[:mode] == "release"))
+      profile_type = "appstore"
+      export_option = "app-store"
+    else
+      profile_type = "adhoc"
+      export_option = "ad-hoc"
+    end
+
+    # Defning the XCode Configuration Profile type (ex: Debug-dev, Debug-uat, Release-uat, Release-prod)
+    if(options[:mode] == "debug")
+      config = "Debug-#{options[:flavor]}"
+    elsif (options[:mode] == "release")
+      config = "Release-#{options[:flavor]}"
+    end
+
+    get_signing_profiles(type: profile_type , identifier: app_identifier)
+    gym(
+      scheme: "#{options[:flavor]}",
+      configuration: config,
+      output_name: "RHG-APP-#{options[:mode]}-#{options[:flavor]}",
+      export_method: export_option
+    )
+  end
+
+  desc "Export Simulator Build"
+  lane :export_simulator_build do
+    # The sh action executes the command in the project_root/ios/fastlane dir
+    sh("mkdir", "../Payload")
+    sh("mv", "../output/build/Runner.app", "../Payload")
+    # The zip action is executed in the project_rrot/ios directory
+    zip(path: "./Payload",
+        output_path: "./output/build/PatientSimulator.ipa"
+    )
+    sh("mv", "../output/build/PatientSimulator.ipa.zip", "../output/build/PatientSimulator.ipa")
+  end
+
+  lane :publish_to_browserstack do |options|
+    upload_to_browserstack_app_automate(
+      browserstack_username: ENV["BROWSERSTACK_USERNAME"],
+      browserstack_access_key: ENV["BROWSERSTACK_ACCESS_KEY"],
+      file_path: "./output/build/RHG-APP-#{options[:mode]}-#{options[:flavor]}.ipa",
+      custom_id: ENV["BROWSERSTACK_APP_ID"]
+    )
+  end
+
+  lane :publish_to_firebase do |options|
+    commit = last_git_commit
+    build_notes = "Release candidate. #{commit[:message]}. Built by #{commit[:author]}"
+
+    firebase_app_distribution(
+       app: ENV["FIREBASE_APP_ID_IOS"],
+       release_notes: build_notes,
+       groups: "distribution-team",
+       ipa_path: "./output/build/RHG-APP-#{options[:mode]}-#{options[:flavor]}.ipa",
+       firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"]
+    )
+  end
+
+  desc "Upload Build to TestFlight"
+  lane :upload_build_to_testflight do |options|
+    if options[:flavor] == 'uat'
+      app_store_app_id = '1569585646'
+      testers_group = [ "Alpha Testers" ]
+    else
+      app_store_app_id = '1567923095'
+      testers_group = [ "Beta Testers" ]
+    end
+
+    upload_to_testflight(
+      beta_app_review_info: {
+        contact_email: "support@reanfoundation.org",
+        contact_first_name: "REANCare",
+        contact_last_name: "Support",
+        contact_phone: "7798074981",
+        demo_account_name: ENV["IOS_DEMO_USER"],
+        demo_account_password: ENV["IOS_DEMO_PASSWORD"],
+        notes: "ReanCare Patient Test Build"
+      },
+      apple_id:app_store_app_id,
+      ipa: "./output/build/RHG-APP-#{options[:mode]}-#{options[:flavor]}.ipa",
+      api_key: get_api_key,
+      skip_waiting_for_build_processing: true,
+      changelog: "ReanCare Patient Test Build",
+      distribute_external: true,
+      groups: testers_group,
+      notify_external_testers: true,
+      uses_non_exempt_encryption: true,
+      beta_app_feedback_email: "support@reanfoundation.org",
+      beta_app_description: "REAN Care Patient #{options[:flavor]}",
+      demo_account_required: true
+    )
+  end
+
+  desc "Submit to App Store"
+  lane :submit_beta_to_app_store do
+    upload_to_app_store(
+      app_identifier: "org.reanfoundation.patient",
+      precheck_include_in_app_purchases: false,
+      submit_for_review: true,
+      automatic_release: true,
+      force: true, # Skip HTMl report verification
+      skip_screenshots: true,
+      submission_information: {
+        add_id_info_uses_idfa: false,
+        add_id_info_serves_ads: false,
+        add_id_info_tracks_install: false,
+        add_id_info_tracks_action: false,
+        add_id_info_limits_tracking: false
+      },
+      api_key: get_api_key
+    )
+  end
+
+end

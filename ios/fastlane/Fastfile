@@ -136,7 +136,7 @@ platform :ios do
        release_notes: build_notes,
        groups: "distribution-team",
        ipa_path: "./output/build/RHG-APP-#{options[:mode]}-#{options[:flavor]}.ipa",
-       firebase_cli_token: ENV["FIREBASE_TOKEN"]
+       firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"]
     )
   end
 

@@ -6,16 +6,16 @@
 
 #import "GeneratedPluginRegistrant.h"
 
-#if __has_include(<country_codes/CountryCodesPlugin.h>)
-#import <country_codes/CountryCodesPlugin.h>
+#if __has_include(<device_info_plus/FLTDeviceInfoPlusPlugin.h>)
+#import <device_info_plus/FLTDeviceInfoPlusPlugin.h>
 #else
-@import country_codes;
+@import device_info_plus;
 #endif
 
-#if __has_include(<device_info/FLTDeviceInfoPlugin.h>)
-#import <device_info/FLTDeviceInfoPlugin.h>
+#if __has_include(<devicelocale/DevicelocalePlugin.h>)
+#import <devicelocale/DevicelocalePlugin.h>
 #else
-@import device_info;
+@import devicelocale;
 #endif
 
 #if __has_include(<firebase_core/FLTFirebaseCorePlugin.h>)
@@ -36,12 +36,6 @@
 @import flutter_document_picker;
 #endif
 
-#if __has_include(<flutter_full_pdf_viewer/FlutterFullPdfViewerPlugin.h>)
-#import <flutter_full_pdf_viewer/FlutterFullPdfViewerPlugin.h>
-#else
-@import flutter_full_pdf_viewer;
-#endif
-
 #if __has_include(<flutter_inappwebview/InAppWebViewFlutterPlugin.h>)
 #import <flutter_inappwebview/InAppWebViewFlutterPlugin.h>
 #else
@@ -60,12 +54,6 @@
 @import fluttertoast;
 #endif
 
-#if __has_include(<geocoder/GeocoderPlugin.h>)
-#import <geocoder/GeocoderPlugin.h>
-#else
-@import geocoder;
-#endif
-
 #if __has_include(<health/HealthPlugin.h>)
 #import <health/HealthPlugin.h>
 #else
@@ -76,12 +64,6 @@
 #import <image_picker/FLTImagePickerPlugin.h>
 #else
 @import image_picker;
-#endif
-
-#if __has_include(<location/LocationPlugin.h>)
-#import <location/LocationPlugin.h>
-#else
-@import location;
 #endif
 
 #if __has_include(<package_info/FLTPackageInfoPlugin.h>)
@@ -96,8 +78,8 @@
 @import path_provider;
 #endif
 
-#if __has_include(<share/SharePlugin.h>)
-#import <share/SharePlugin.h>
+#if __has_include(<share/FLTSharePlugin.h>)
+#import <share/FLTSharePlugin.h>
 #else
 @import share;
 #endif
@@ -114,6 +96,12 @@
 @import sqflite;
 #endif
 
+#if __has_include(<syncfusion_flutter_pdfviewer/SyncfusionFlutterPdfViewerPlugin.h>)
+#import <syncfusion_flutter_pdfviewer/SyncfusionFlutterPdfViewerPlugin.h>
+#else
+@import syncfusion_flutter_pdfviewer;
+#endif
+
 #if __has_include(<url_launcher/FLTURLLauncherPlugin.h>)
 #import <url_launcher/FLTURLLauncherPlugin.h>
 #else
@@ -123,24 +111,22 @@
 @implementation GeneratedPluginRegistrant
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
-  [CountryCodesPlugin registerWithRegistrar:[registry registrarForPlugin:@"CountryCodesPlugin"]];
-  [FLTDeviceInfoPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTDeviceInfoPlugin"]];
+  [FLTDeviceInfoPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTDeviceInfoPlusPlugin"]];
+  [DevicelocalePlugin registerWithRegistrar:[registry registrarForPlugin:@"DevicelocalePlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [FLTFirebaseMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseMessagingPlugin"]];
   [FlutterDocumentPickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterDocumentPickerPlugin"]];
-  [FlutterFullPdfViewerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterFullPdfViewerPlugin"]];
   [InAppWebViewFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"InAppWebViewFlutterPlugin"]];
   [FlutterKeyboardVisibilityPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterKeyboardVisibilityPlugin"]];
   [FluttertoastPlugin registerWithRegistrar:[registry registrarForPlugin:@"FluttertoastPlugin"]];
-  [GeocoderPlugin registerWithRegistrar:[registry registrarForPlugin:@"GeocoderPlugin"]];
   [HealthPlugin registerWithRegistrar:[registry registrarForPlugin:@"HealthPlugin"]];
   [FLTImagePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImagePickerPlugin"]];
-  [LocationPlugin registerWithRegistrar:[registry registrarForPlugin:@"LocationPlugin"]];
   [FLTPackageInfoPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPackageInfoPlugin"]];
   [FLTPathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPathProviderPlugin"]];
   [FLTSharePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharePlugin"]];
   [FLTSharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharedPreferencesPlugin"]];
   [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
+  [SyncfusionFlutterPdfViewerPlugin registerWithRegistrar:[registry registrarForPlugin:@"SyncfusionFlutterPdfViewerPlugin"]];
   [FLTURLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTURLLauncherPlugin"]];
 }
 

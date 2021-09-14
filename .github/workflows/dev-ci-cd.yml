@@ -48,7 +48,7 @@ jobs:
 
       - name: Run Flutter Analyze
         run: |
-          flutter pub add --dev flutter_lints
+          # flutter pub add --dev flutter_lints
           flutter clean
           flutter analyze --no-pub --preamble --congratulate
           flutter format lib/** --set-exit-if-changed

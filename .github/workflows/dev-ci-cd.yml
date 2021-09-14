@@ -181,6 +181,7 @@ jobs:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_PLIST }}
           FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
         run: |
+          mkdir -p ./ios/config/dev/
           echo $FIREBASE_CONFIG > ./ios/config/dev/GoogleService-Info.plist
           echo $FLUTTER_DOTENV > ./res/.env
 

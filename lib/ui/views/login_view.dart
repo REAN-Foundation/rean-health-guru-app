@@ -1,12 +1,10 @@
 import 'dart:io';
 
-import 'package:country_codes/country_codes.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/login_view_model.dart';
@@ -15,8 +13,6 @@ import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/home_view.dart';
 import 'package:paitent/ui/views/signup_view.dart';
 import 'package:paitent/ui/widgets/bezierContainer.dart';
-import 'package:paitent/ui/widgets/login_header.dart';
-import 'package:flutter/material.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:provider/provider.dart';
@@ -35,10 +31,8 @@ class _LoginViewState extends State<LoginView> {
   var _passwordFocus = FocusNode();
   String mobileNumber = '';
   SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
-  final FirebaseMessaging _fcm = FirebaseMessaging();
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   String _fcmToken = "";
-  CountryDetails details = CountryCodes.detailsForLocale();
-  Locale locale = CountryCodes.getDeviceLocale();
   String countryCode = '';
 
   @override
@@ -55,54 +49,52 @@ class _LoginViewState extends State<LoginView> {
     return BaseWidget<LoginViewModel>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       builder: (context, model, child) => Container(
-        child: Scaffold(
-            backgroundColor: colorF6F6FF,
-            body: Container(
-              height: height,
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                      top: -height * .15,
-                      right: -MediaQuery.of(context).size.width * .4,
-                      child: BezierContainer()),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(height: height * .2),
-                          _title(),
-                          SizedBox(height: 50),
-                          _emailPasswordWidget(),
-                          SizedBox(height: 20),
-                          model.busy
-                              ? CircularProgressIndicator()
-                              :_submitButton(model),
-                          /*Container(
+          child: Scaffold(
+              backgroundColor: colorF6F6FF,
+              body: Container(
+                height: height,
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                        top: -height * .15,
+                        right: -MediaQuery.of(context).size.width * .4,
+                        child: BezierContainer()),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(height: height * .2),
+                            _title(),
+                            SizedBox(height: 50),
+                            _emailPasswordWidget(),
+                            SizedBox(height: 20),
+                            model.busy
+                                ? CircularProgressIndicator()
+                                : _submitButton(model),
+                            /*Container(
                             padding: EdgeInsets.symmetric(vertical: 10),
                             alignment: Alignment.centerRight,
                             child: Text('Forgot Password ?',
                                 style: TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.w500)),
                           ),*/
-                          //_divider(),
-                          //_facebookButton(),
-                          SizedBox(height: height * .099),
-                          _createAccountLabel(),
-                        ],
+                            //_divider(),
+                            //_facebookButton(),
+                            SizedBox(height: height * .099),
+                            _createAccountLabel(),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  //Positioned(top: 40, left: 0, child: _backButton()),
-                ],
-              ),
-            ))
-      ),
+                    //Positioned(top: 40, left: 0, child: _backButton()),
+                  ],
+                ),
+              ))),
     );
   }
-
 
   Widget _backButton() {
     return InkWell(
@@ -145,9 +137,7 @@ class _LoginViewState extends State<LoginView> {
                 controller: _passwordController,
                 focusNode: _passwordFocus,
                 textInputAction: TextInputAction.done,
-                onFieldSubmitted: (term) {
-
-                },
+                onFieldSubmitted: (term) {},
                 maxLines: 1,
                 decoration: InputDecoration(
                     border: InputBorder.none,
@@ -160,7 +150,6 @@ class _LoginViewState extends State<LoginView> {
   }
 
   Widget _entryMobileNoField(String title) {
-
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -173,11 +162,12 @@ class _LoginViewState extends State<LoginView> {
           SizedBox(
             height: 10,
           ),
-        Container(
-            height: 50,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          color: Colors.white,
-          child:/* Row(
+          Container(
+              height: 50,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              color: Colors.white,
+              child:
+                  /* Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
@@ -210,7 +200,7 @@ class _LoginViewState extends State<LoginView> {
             ],
           )*/
 
-          /*InternationalPhoneNumberInput(
+                  /*InternationalPhoneNumberInput(
             onInputChanged:
                 (PhoneNumber number) {
               mobileNumber = number
@@ -277,54 +267,51 @@ class _LoginViewState extends State<LoginView> {
               ),
             ),
           )*/
-          IntlPhoneField(
-            /*decoration: InputDecoration(
+                  IntlPhoneField(
+                /*decoration: InputDecoration(
                     labelText: 'Phone Number',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(),
                     ),
                   ),*/
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-            autoValidate: true,
-            decoration: InputDecoration(
-                counterText: "",
-                hintText: 'mobile_number',
-                hintStyle: TextStyle(color: Colors.transparent),
-                border: InputBorder.none,
-                fillColor: Colors.white,
-                filled: true),
-            initialCountryCode: details.alpha2Code,
-            onChanged: (phone) {
-              debugPrint(phone.countryCode);
-              print(phone.number);
-              mobileNumber = phone.number;
-              countryCode = phone.countryCode;
-              /*if(mobileNumber.length == 10){
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                autoValidate: true,
+                decoration: InputDecoration(
+                    counterText: "",
+                    hintText: 'mobile_number',
+                    hintStyle: TextStyle(color: Colors.transparent),
+                    border: InputBorder.none,
+                    fillColor: Colors.white,
+                    filled: true),
+                initialCountryCode: getCurrentLocale(),
+                onChanged: (phone) {
+                  debugPrint(phone.countryCode);
+                  print(phone.number);
+                  mobileNumber = phone.number;
+                  countryCode = phone.countryCode;
+                  /*if(mobileNumber.length == 10){
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/
-            },
-          )
-        ),
+                },
+              )),
         ],
       ),
     );
   }
 
-  Widget _submitButton( model) {
+  Widget _submitButton(model) {
     return Semantics(
       label: 'loginButton',
       child: InkWell(
         onTap: () async {
-
           debugPrint('mobile = ${mobileNumber}');
           debugPrint('Password = ${_passwordController.text}');
 
           if (mobileNumber.length != 10) {
-            showToast("Please enter valid mobile number");
+            showToast("Please enter valid mobile number", context);
           } else if (_passwordController.text.toString() == '') {
-            showToast("Please enter password");
+            showToast("Please enter password", context);
           } else {
-
             var map = new Map<String, String>();
             map["PhoneNumber"] = mobileNumber;
             map["Password"] = _passwordController.text;
@@ -335,18 +322,19 @@ class _LoginViewState extends State<LoginView> {
               if (loginSuccess.status == 'success') {
                 _sharedPrefUtils.save("user", loginSuccess.toJson());
                 //_sharedPrefUtils.saveBoolean("login1.2", true);
-                getPatientDetails(model, loginSuccess.data.accessToken, loginSuccess.data.user.userId);
+                getPatientDetails(model, loginSuccess.data.accessToken,
+                    loginSuccess.data.user.userId);
                 debugPrint(loginSuccess.data.user.firstName);
                 /*Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder: (context) {
                       return HomeView();
                     }), (Route<dynamic> route) => false);*/
-              }else{
-                showToast(loginSuccess.error);
+              } else {
+                showToast(loginSuccess.error, context);
               }
             } catch (CustomException) {
               model.setBusy(false);
-              showToast(CustomException.toString());
+              showToast(CustomException.toString(), context);
               debugPrint(CustomException.toString());
             }
           }
@@ -371,14 +359,15 @@ class _LoginViewState extends State<LoginView> {
                   colors: [primaryLightColor, primaryColor])),
           child: Text(
             'Login',
-            style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.w700),
+            style: TextStyle(
+                fontSize: 18, color: Colors.white, fontWeight: FontWeight.w700),
           ),
         ),
       ),
     );
   }
 
-  getPatientDetails(LoginViewModel model,String auth, String userId) async {
+  getPatientDetails(LoginViewModel model, String auth, String userId) async {
     try {
       //ApiProvider apiProvider = new ApiProvider();
 
@@ -386,31 +375,31 @@ class _LoginViewState extends State<LoginView> {
 
       var map = new Map<String, String>();
       map["Content-Type"] = "application/json";
-      map["authorization"] = "Bearer "+auth;
+      map["authorization"] = "Bearer " + auth;
 
-      var response = await apiProvider.get('/patient/'+userId , header: map);
+      var response = await apiProvider.get('/patient/' + userId, header: map);
 
-      PatientApiDetails doctorListApiResponse = PatientApiDetails.fromJson(response);
+      PatientApiDetails doctorListApiResponse =
+          PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        _sharedPrefUtils.save("patientDetails", doctorListApiResponse.data.patient.toJson());
+        _sharedPrefUtils.save(
+            "patientDetails", doctorListApiResponse.data.patient.toJson());
         _sharedPrefUtils.saveBoolean("login1.2", true);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
-              return HomeView(0);
-            }), (Route<dynamic> route) => false);
+          return HomeView(0);
+        }), (Route<dynamic> route) => false);
         model.setBusy(false);
-      }else{
-        showToast(doctorListApiResponse.message);
+      } else {
+        showToast(doctorListApiResponse.message, context);
         model.setBusy(false);
       }
-
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
-
   }
 
   Widget _divider() {
@@ -494,12 +483,10 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  _clearFeilds(){
+  _clearFeilds() {
     _mobileNumberController.clear();
     _passwordController.clear();
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   Widget _createAccountLabel() {
@@ -580,7 +567,6 @@ class _LoginViewState extends State<LoginView> {
         print('connected');
       }
     } on SocketException catch (_) {
-
       print('not connected');
     }
   }
@@ -591,7 +577,7 @@ class _LoginViewState extends State<LoginView> {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  void firebase(){
+  void firebase() {
     _fcm.getToken().then((String token) async {
       assert(token != null);
       print("Push Messaging token: $token");
@@ -600,7 +586,7 @@ class _LoginViewState extends State<LoginView> {
       _sharedPrefUtils.save("fcmToken", token);
     });
 
-    _fcm.configure(
+/*    _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
         showDialog(
@@ -655,7 +641,6 @@ class _LoginViewState extends State<LoginView> {
           ),
         );
       },
-    );
+    );*/
   }
-
 }

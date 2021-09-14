@@ -75,28 +75,28 @@ class Labs {
 
   Labs(
       {this.userId,
-        this.roleId,
-        this.firstName,
-        this.lastName,
-        this.prefix,
-        this.phoneNumber,
-        this.email,
-        this.gender,
-        this.birthDate,
-        this.imageURL,
-        this.locality,
-        this.address,
-        this.locationCoordsLongitude,
-        this.locationCoordsLattitude,
-        this.establishmentName,
-        this.specialities,
-        this.labType,
-        this.aboutUs,
-        this.operationalSince,
-        this.appointmentSlotDuration,
-        this.dateCreated,
-        this.dateUpdated,
-        this.appointmentRelatedDetails});
+      this.roleId,
+      this.firstName,
+      this.lastName,
+      this.prefix,
+      this.phoneNumber,
+      this.email,
+      this.gender,
+      this.birthDate,
+      this.imageURL,
+      this.locality,
+      this.address,
+      this.locationCoordsLongitude,
+      this.locationCoordsLattitude,
+      this.establishmentName,
+      this.specialities,
+      this.labType,
+      this.aboutUs,
+      this.operationalSince,
+      this.appointmentSlotDuration,
+      this.dateCreated,
+      this.dateUpdated,
+      this.appointmentRelatedDetails});
 
   Labs.fromJson(Map<String, dynamic> json) {
     userId = json['UserId'];
@@ -123,7 +123,7 @@ class Labs {
     dateUpdated = json['DateUpdated'];
     appointmentRelatedDetails = json['AppointmentRelatedDetails'] != null
         ? new AppointmentRelatedDetails.fromJson(
-        json['AppointmentRelatedDetails'])
+            json['AppointmentRelatedDetails'])
         : null;
   }
 
@@ -168,10 +168,10 @@ class AppointmentRelatedDetails {
 
   AppointmentRelatedDetails(
       {this.userId,
-        this.nodeId,
-        this.businessServiceId,
-        this.operationalTimeZone,
-        this.workingHours});
+      this.nodeId,
+      this.businessServiceId,
+      this.operationalTimeZone,
+      this.workingHours});
 
   AppointmentRelatedDetails.fromJson(Map<String, dynamic> json) {
     userId = json['UserId'];

@@ -1,20 +1,19 @@
-
-
 import 'dart:io';
-import 'package:share/share.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:share/share.dart';
 
 class PDFScreen extends StatelessWidget {
   String pathPDF = "";
+
   PDFScreen(this.pathPDF);
+
   static GlobalKey _globalKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    return PDFViewerScaffold(
+    return Container() /*PDFViewerScaffold(
         key: _globalKey,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -31,19 +30,21 @@ class PDFScreen extends StatelessWidget {
             ),
           ],
         ),
-        path: pathPDF);
+        path: pathPDF)*/
+        ;
   }
 
   Future<Null> urlFileShare() async {
-
     final RenderBox box = _globalKey.currentContext.findRenderObject();
     if (Platform.isAndroid) {
-    /*  var url = 'https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg';
+      /*  var url = 'https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg';
       var response = await get(url);
       final documentDirectory = (await getExternalStorageDirectory()).path;*/
       File imgFile = new File(pathPDF);
       /*imgFile.writeAsBytesSync(response.bodyBytes);*/
-      Share.shareFile(imgFile,
+      List fileList = List<String>.empty(growable: true);
+      fileList.add(imgFile);
+      Share.shareFiles(fileList,
           subject: '',
           text: '',
           sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
@@ -52,6 +53,5 @@ class PDFScreen extends StatelessWidget {
           subject: '',
           sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
     }
-
   }
 }

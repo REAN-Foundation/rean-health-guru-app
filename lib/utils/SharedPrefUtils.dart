@@ -1,11 +1,8 @@
-
-
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPrefUtils{
-
+class SharedPrefUtils {
   read(String key) async {
     final prefs = await SharedPreferences.getInstance();
     return json.decode(prefs.getString(key));
@@ -25,7 +22,6 @@ class SharedPrefUtils{
     final prefs = await SharedPreferences.getInstance();
     return prefs.getDouble(key) == null ? 0.0 : prefs.getDouble(key);
   }
-
 
   save(String key, value) async {
     final prefs = await SharedPreferences.getInstance();

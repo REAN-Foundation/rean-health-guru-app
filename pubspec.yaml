@@ -12,7 +12,7 @@ description: A new Flutter application.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.1.0+37
+version: 1.5.1+42
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -23,66 +23,70 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
-  http: ^0.12.0+2
-  provider: any
+  cupertino_icons: ^1.0.3
+  http: ^0.13.3
+  provider: ^6.0.0
   #intl_phone_number_input: ^0.6.0
-  google_fonts: ^0.3.5
-  fluttertoast: ^4.0.1
-  status_alert: ^0.1.2
-  shared_preferences: 0.5.12
-  toggle_switch: 0.1.4
-  font_awesome_flutter: ^8.5.0
+  google_fonts: ^2.1.0
+  fluttertoast: ^8.0.8
+  status_alert: ^1.0.0-nullsafety.1
+  shared_preferences: ^2.0.7
+  toggle_switch: ^1.2.0
+  font_awesome_flutter: ^9.1.0
   flutter_datetime_picker: ^1.4.0
-  location: ^3.0.0
-  geocoder: ^0.2.1
-  date_util: ^0.1.4
-  month_picker_strip: ^0.0.3
+  #location: ^3.0.0
+  #geocoder: ^2.0.0
+  #date_util: ^0.2.0
+  #month_picker_strip: ^0.0.3
   #calendar_strip: ^1.0.7
-  multiselect_formfield: ^0.1.3
-  badges: ^1.1.1
+  multiselect_formfield: ^0.1.6
+  badges: ^2.0.1
   masked_text_input_formatter: 0.0.1
-  flutter_full_pdf_viewer: ^1.0.6
-  firebase_messaging: ^7.0.0
+  syncfusion_flutter_pdfviewer: ^19.2.57-beta
+  #flutter_full_pdf_viewer: ^1.0.6
+  firebase_core: ^1.6.0
+  firebase_messaging: ^10.0.6
   #razorpay_flutter: ^1.2.3
   flutter_autolink_text: ^1.0.0+1
-  url_launcher: ^5.7.2
-  cached_network_image: 2.5.0
+  url_launcher: ^6.0.9
+  cached_network_image: ^3.1.0
   #splashscreen: ^1.2.0
-  json_serializable: ^3.3.0
-  get_it: ^5.0.1
-  carousel_slider: ^2.3.1
-  youtube_player_flutter: ^7.0.0+7
-  flip_card: ^0.4.4
-  modal_bottom_sheet: ^1.0.0+1
+  json_serializable: ^4.1.4
+  get_it: ^7.2.0
+  carousel_slider: ^4.0.0
+  youtube_player_flutter: ^8.0.0
+  flip_card: ^0.5.0
+  modal_bottom_sheet: ^2.0.0
   progress_dialog: 1.2.4
-  share:
-    git:
-      url: git://github.com/himanshusharma89/plugins.git
-      path: packages/share
+  share: ^2.0.4
   #  file_picker: 2.1.5
-  flutter_document_picker: ^4.0.0
-  photo_view: ^0.10.3
-  country_codes: ^1.0.3
-  check_radio_group: 2.0.0
-  package_info: ^0.4.0+18
-  image_picker: ^0.6.7+21
-  flutter_typeahead: ^2.0.0
+  flutter_document_picker: ^5.0.1-nullsafety.0
+  photo_view: ^0.12.0
+  #country_codes: ^2.0.1
+  devicelocale: ^0.4.2
+  check_radio_group: 2.0.2
+  package_info: ^2.0.2
+  image_picker: ^0.8.3+3
+  flutter_typeahead: ^3.2.0
   #fl_chart: 0.12.3
-  charts_flutter: ^0.10.0
-  lottie: 0.7.0+1
-  tutorial_coach_mark: ^0.6.0+1
-  intl_phone_field: ^1.4.4
-  introduction_screen: ^1.0.9
+  charts_flutter: ^0.11.0
+  lottie: ^1.1.0
+  tutorial_coach_mark: ^1.1.1
+  intl_phone_field: ^2.0.1
+  introduction_screen: ^2.1.0
   #dots_indicator: ^1.2.0
-  otp_text_field: ^1.0.2
-  health: ^3.0.3
-  percent_indicator: 2.1.9+1
+  otp_text_field: ^1.1.1
+  health: ^3.1.1+1
+  percent_indicator: ^3.0.1
+  flutter_dotenv: ^5.0.2
   #permission_handler: 5.0.1
+  get: ^4.3.8
 
 dev_dependencies:
-  flutter_lints: ^1.0.4
+  test: any
   flutter_test:
+    sdk: flutter
+  flutter_driver:
     sdk: flutter
 
 # For information on the generic Dart part of this file, see the
@@ -98,6 +102,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - res/images/
+    - res/.env
     - res/lottiefiles/
   #   - assets/images/
   #  - images/a_dot_burr.jpeg

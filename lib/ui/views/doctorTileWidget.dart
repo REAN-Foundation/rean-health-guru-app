@@ -1,11 +1,8 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 
 class DoctorTileView extends StatefulWidget {
-
   Doctors doctorDetails;
 
   DoctorTileView(@required this.doctorDetails);
@@ -15,7 +12,6 @@ class DoctorTileView extends StatefulWidget {
 }
 
 class _DoctorTileViewState extends State<DoctorTileView> {
-
   Doctors doctorDetails;
 
   _DoctorTileViewState(@required this.doctorDetails);
@@ -35,18 +31,19 @@ class _DoctorTileViewState extends State<DoctorTileView> {
               Expanded(
                 flex: 1,
                 child: Center(
-                  child: Container(
-                    height: 48,
-                    width: 48,
+                    child: Container(
+                  height: 48,
+                  width: 48,
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundColor: primaryColor,
                     child: CircleAvatar(
-                      radius: 40,
-                      backgroundColor: primaryColor,
-                      child: CircleAvatar(
-                          radius: 38,
-                          backgroundImage: doctorDetails.imageURL  == "" ? AssetImage('res/images/profile_placeholder.png') : new NetworkImage(doctorDetails.imageURL)),
-                    ),
-                  )
-                ),
+                        radius: 38,
+                        backgroundImage: doctorDetails.imageURL == ""
+                            ? AssetImage('res/images/profile_placeholder.png')
+                            : new NetworkImage(doctorDetails.imageURL)),
+                  ),
+                )),
               ),
               SizedBox(
                 width: 8,
@@ -57,16 +54,25 @@ class _DoctorTileViewState extends State<DoctorTileView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(doctorDetails.prefix+doctorDetails.firstName+' '+doctorDetails.lastName,
+                    Text(
+                        doctorDetails.prefix +
+                            doctorDetails.firstName +
+                            ' ' +
+                            doctorDetails.lastName,
                         style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.w700,  fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Montserrat',
                             color: primaryColor)),
-                    Text(doctorDetails.specialities+', '+doctorDetails.qualification,
+                    Text(
+                        doctorDetails.specialities +
+                            ', ' +
+                            doctorDetails.qualification,
                         style: TextStyle(
                             fontSize: 12.0,
                             fontWeight: FontWeight.w100,
-                            color: textBlack,  fontFamily: 'Montserrat')),
+                            color: textBlack,
+                            fontFamily: 'Montserrat')),
                   ],
                 ),
               ),
@@ -85,14 +91,16 @@ class _DoctorTileViewState extends State<DoctorTileView> {
                   style: TextStyle(
                       fontWeight: FontWeight.w700,
                       color: textBlack,
-                      fontSize: 14,  fontFamily: 'Montserrat'),
+                      fontSize: 14,
+                      fontFamily: 'Montserrat'),
                   children: <TextSpan>[
                     TextSpan(
-                        text: ' ₹'+doctorDetails.consultationFee.toString(),
+                        text: ' ₹' + doctorDetails.consultationFee.toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             color: primaryColor,
-                            fontSize: 14, fontFamily: 'Montserrat')),
+                            fontSize: 14,
+                            fontFamily: 'Montserrat')),
                   ],
                 ),
               ),
@@ -102,6 +110,4 @@ class _DoctorTileViewState extends State<DoctorTileView> {
       ),
     );
   }
-
-
 }

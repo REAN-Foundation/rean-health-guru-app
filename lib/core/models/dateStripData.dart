@@ -1,8 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable(nullable: true)
-class DateStripDate{
-
+class DateStripDate {
   bool isSelected;
   DateTime dateTime;
 

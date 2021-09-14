@@ -56,15 +56,15 @@ class DrugOrder {
 
   DrugOrder(
       {this.id,
-        this.patientUserId,
-        this.doctorUserId,
-        this.displayId,
-        this.visitId,
-        this.suggestedPharmacyId,
-        this.currentState,
-        this.referencedOrderId,
-        this.updatedAt,
-        this.createdAt});
+      this.patientUserId,
+      this.doctorUserId,
+      this.displayId,
+      this.visitId,
+      this.suggestedPharmacyId,
+      this.currentState,
+      this.referencedOrderId,
+      this.updatedAt,
+      this.createdAt});
 
   DrugOrder.fromJson(Map<String, dynamic> json) {
     id = json['id'];

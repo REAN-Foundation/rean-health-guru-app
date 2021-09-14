@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:paitent/core/models/AddTeamMemberResponse.dart';
@@ -6,18 +5,12 @@ import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/TeamCarePlanReesponse.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/models/pharmacyListApiResponse.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/addFamilyMemberDialog.dart';
 import 'package:paitent/ui/views/addNurseDialog.dart';
 import 'package:paitent/ui/views/addPharmaDialog.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 
 import 'addDoctorDialog.dart';
@@ -36,10 +29,11 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   var socialWorkerTeam = new List<Team>();
   var familyTeam = new List<Team>();
 
-
   getAHACarePlanSummary() async {
     try {
-      TeamCarePlanReesponse teamCarePlanReesponse = await model.getAHACarePlanTeam(startCarePlanResponseGlob.data.carePlan.id.toString());
+      TeamCarePlanReesponse teamCarePlanReesponse =
+          await model.getAHACarePlanTeam(
+              startCarePlanResponseGlob.data.carePlan.id.toString());
 
       if (teamCarePlanReesponse.status == 'success') {
         doctorTeam.clear();
@@ -49,37 +43,30 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
         debugPrint("AHA Care Plan ==> ${teamCarePlanReesponse.toJson()}");
         _srotTeamMembers(teamCarePlanReesponse);
       } else {
-        showToast(teamCarePlanReesponse.message);
+        showToast(teamCarePlanReesponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
   }
 
-  _srotTeamMembers(TeamCarePlanReesponse teamCarePlanReesponse){
-
-    for(var teamMemeber in teamCarePlanReesponse.data.team){
-
-      if(teamMemeber.roleName == "Doctor"){
+  _srotTeamMembers(TeamCarePlanReesponse teamCarePlanReesponse) {
+    for (var teamMemeber in teamCarePlanReesponse.data.team) {
+      if (teamMemeber.roleName == "Doctor") {
         doctorTeam.add(teamMemeber);
-      }else if(teamMemeber.roleName == "Pharmacy"){
+      } else if (teamMemeber.roleName == "Pharmacy") {
         pharmaTeam.add(teamMemeber);
-      }else if(teamMemeber.roleName == "HealthWorker"){
+      } else if (teamMemeber.roleName == "HealthWorker") {
         socialWorkerTeam.add(teamMemeber);
-      }else if(teamMemeber.roleName == "FamilyMember"){
+      } else if (teamMemeber.roleName == "FamilyMember") {
         familyTeam.add(teamMemeber);
       }
 
-      setState(() {
-
-      });
-
+      setState(() {});
     }
-
   }
-
 
   @override
   void initState() {
@@ -90,86 +77,100 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
 
   @override
   Widget build(BuildContext context) {
-
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child: Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              body: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    sectionHeader("Doctor"),
-                    const SizedBox(height: 16,),
-                  model.busy
-                      ? Container(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                sectionHeader("Doctor"),
+                const SizedBox(
+                  height: 16,
+                ),
+                model.busy
+                    ? Container(
                         height: 80,
                         child: Center(
-                        child: SizedBox(
-                            height: 32,
-                            width: 32,
-                            child: CircularProgressIndicator())),
+                            child: SizedBox(
+                                height: 32,
+                                width: 32,
+                                child: CircularProgressIndicator())),
                       )
-                      : (doctorTeam.length == 0)
-                  ? noDoctorFound()
-                  :doctorSearchResultListView(),
-                    const SizedBox(height: 16,),
-                    sectionHeader("Pharmacies"),
-                    const SizedBox(height: 16,),
-                    model.busy
-                        ? Container(
-                      height: 80,
-                      child: Center(
-                          child: SizedBox(
-                              height: 32,
-                              width: 32,
-                              child: CircularProgressIndicator())),
-                    )
-                        : (pharmaTeam.length == 0)
-                        ? noPharmacyFound()
-                        :pharmacySearchResultListView(),
-                    const SizedBox(height: 16,),
-                    sectionHeader("Nurses / Social Health Workers"),
-                    const SizedBox(height: 16,),
-                    model.busy
-                        ? Container(
-                      height: 80,
-                      child: Center(
-                          child: SizedBox(
-                              height: 32,
-                              width: 32,
-                              child: CircularProgressIndicator())),
-                    )
-                        : (socialWorkerTeam.length == 0)
-                        ? noNurseFound()
-                        :nurseSearchResultListView(),
-                    const SizedBox(height: 16,),
-                    sectionHeader("Family Members / Friends"),
-                    const SizedBox(height: 16,),
-                    model.busy
-                        ? Container(
-                      height: 80,
-                      child: Center(
-                          child: SizedBox(
-                              height: 32,
-                              width: 32,
-                              child: CircularProgressIndicator())),
-                    )
-                        : (familyTeam.length == 0)
-                        ? noFamilyMemberFound()
-                        :familyMemberSearchResultListView(),
-                    const SizedBox(height: 16,),
-                  ],
+                    : (doctorTeam.length == 0)
+                        ? noDoctorFound()
+                        : doctorSearchResultListView(),
+                const SizedBox(
+                  height: 16,
                 ),
-              ),
+                sectionHeader("Pharmacies"),
+                const SizedBox(
+                  height: 16,
+                ),
+                model.busy
+                    ? Container(
+                        height: 80,
+                        child: Center(
+                            child: SizedBox(
+                                height: 32,
+                                width: 32,
+                                child: CircularProgressIndicator())),
+                      )
+                    : (pharmaTeam.length == 0)
+                        ? noPharmacyFound()
+                        : pharmacySearchResultListView(),
+                const SizedBox(
+                  height: 16,
+                ),
+                sectionHeader("Nurses / Social Health Workers"),
+                const SizedBox(
+                  height: 16,
+                ),
+                model.busy
+                    ? Container(
+                        height: 80,
+                        child: Center(
+                            child: SizedBox(
+                                height: 32,
+                                width: 32,
+                                child: CircularProgressIndicator())),
+                      )
+                    : (socialWorkerTeam.length == 0)
+                        ? noNurseFound()
+                        : nurseSearchResultListView(),
+                const SizedBox(
+                  height: 16,
+                ),
+                sectionHeader("Family Members / Friends"),
+                const SizedBox(
+                  height: 16,
+                ),
+                model.busy
+                    ? Container(
+                        height: 80,
+                        child: Center(
+                            child: SizedBox(
+                                height: 32,
+                                width: 32,
+                                child: CircularProgressIndicator())),
+                      )
+                    : (familyTeam.length == 0)
+                        ? noFamilyMemberFound()
+                        : familyMemberSearchResultListView(),
+                const SizedBox(
+                  height: 16,
+                ),
+              ],
             ),
           ),
+        ),
+      ),
     );
   }
 
-  Widget sectionHeader(String tittle){
+  Widget sectionHeader(String tittle) {
     return Column(
       children: [
         Container(
@@ -183,10 +184,17 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(width: 16,),
+                const SizedBox(
+                  width: 16,
+                ),
                 Text(
                   tittle,
-                  style: TextStyle( color: primaryColor,fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 Expanded(
                   child: Semantics(
@@ -222,15 +230,20 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                       },
                       child: Container(
                         alignment: Alignment.centerRight,
-                        child: Icon(Icons.add_circle, color: primaryColor, size: 24,),
+                        child: Icon(
+                          Icons.add_circle,
+                          color: primaryColor,
+                          size: 24,
+                        ),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 16,),
+                const SizedBox(
+                  width: 16,
+                ),
               ],
-            )
-        ),
+            )),
       ],
     );
   }
@@ -309,7 +322,11 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.only(right: 18.0),
-                                child: Text('Dr. '+details.firstName+' '+details.lastName,
+                                child: Text(
+                                    'Dr. ' +
+                                        details.firstName +
+                                        ' ' +
+                                        details.lastName,
                                     style: TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.w700,
@@ -326,7 +343,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                  Text('Phone: +91 '+details.phoneNumber,
+                                  Text('Phone: +91 ' + details.phoneNumber,
                                       style: TextStyle(
                                           fontSize: 12.0,
                                           fontWeight: FontWeight.w300,
@@ -341,7 +358,20 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                   ),
                 ],
               ),
-              Semantics(label: 'delete_doctor', child: InkWell(onTap: (){_removeConfirmation(doctorTeam.elementAt(index));}, child: Align(alignment: Alignment.topRight, child: Icon(Icons.delete_forever, color: primaryColor, size: 24,),)))
+              Semantics(
+                  label: 'delete_doctor',
+                  child: InkWell(
+                      onTap: () {
+                        _removeConfirmation(doctorTeam.elementAt(index));
+                      },
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Icon(
+                          Icons.delete_forever,
+                          color: primaryColor,
+                          size: 24,
+                        ),
+                      )))
             ],
           ),
         ),
@@ -367,7 +397,8 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: ListView.separated(
-          itemBuilder: (context, index) => _makePharmacyListCard(context, index),
+          itemBuilder: (context, index) =>
+              _makePharmacyListCard(context, index),
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(
               height: 8,
@@ -424,13 +455,14 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.only(right: 18.0),
-                                child: Text(details.firstName+' '+details.lastName,
+                                child: Text(
+                                    details.firstName + ' ' + details.lastName,
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w700,
                                         color: primaryColor)),
                               ),
-                              Text('Phone: +91 '+details.phoneNumber,
+                              Text('Phone: +91 ' + details.phoneNumber,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
@@ -443,7 +475,20 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                   ),
                 ],
               ),
-              Semantics(label: 'delete_pharma', child: InkWell(onTap: (){_removeConfirmation(pharmaTeam.elementAt(index));}, child: Align(alignment: Alignment.topRight, child: Icon(Icons.delete_forever, color: primaryColor, size: 24,),)))
+              Semantics(
+                  label: 'delete_pharma',
+                  child: InkWell(
+                      onTap: () {
+                        _removeConfirmation(pharmaTeam.elementAt(index));
+                      },
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Icon(
+                          Icons.delete_forever,
+                          color: primaryColor,
+                          size: 24,
+                        ),
+                      )))
             ],
           ),
         ),
@@ -526,22 +571,27 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.only(right: 18.0),
-                                child: Text(details.firstName+' '+details.lastName,
+                                child: Text(
+                                    details.firstName + ' ' + details.lastName,
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w700,
                                         color: primaryColor)),
                               ),
-                              Text('Phone: +91 '+details.phoneNumber,
+                              Text('Phone: +91 ' + details.phoneNumber,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
                                       color: primaryColor)),
-                              Text(details.gender,
+                              Text(
+                                details.gender,
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w200,
-                                    color: Color(0XFF909CAC)), maxLines: 2, overflow: TextOverflow.ellipsis,),
+                                    color: Color(0XFF909CAC)),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ],
                           ),
                         ),
@@ -550,7 +600,20 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                   ),
                 ],
               ),
-              Semantics(label: 'delete_nurse', child: InkWell(onTap: (){_removeConfirmation(socialWorkerTeam.elementAt(index));}, child: Align(alignment: Alignment.topRight, child: Icon(Icons.delete_forever, color: primaryColor, size: 24,),)))
+              Semantics(
+                  label: 'delete_nurse',
+                  child: InkWell(
+                      onTap: () {
+                        _removeConfirmation(socialWorkerTeam.elementAt(index));
+                      },
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Icon(
+                          Icons.delete_forever,
+                          color: primaryColor,
+                          size: 24,
+                        ),
+                      )))
             ],
           ),
         ),
@@ -576,7 +639,8 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: ListView.separated(
-          itemBuilder: (context, index) => _makeFamilyMemberListCard(context, index),
+          itemBuilder: (context, index) =>
+              _makeFamilyMemberListCard(context, index),
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(
               height: 8,
@@ -633,22 +697,27 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.only(right: 18.0),
-                                child: Text(details.firstName+' '+details.lastName,
+                                child: Text(
+                                    details.firstName + ' ' + details.lastName,
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w700,
                                         color: primaryColor)),
                               ),
-                              Text('Phone: +91 '+details.phoneNumber,
+                              Text('Phone: +91 ' + details.phoneNumber,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
                                       color: primaryColor)),
-                              Text(details.relation,
+                              Text(
+                                details.relation,
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w200,
-                                    color: Color(0XFF909CAC)), maxLines: 2, overflow: TextOverflow.ellipsis,),
+                                    color: Color(0XFF909CAC)),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ],
                           ),
                         ),
@@ -657,14 +726,26 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                   ),
                 ],
               ),
-              Semantics(label: 'delete_family_member', child: InkWell(onTap: (){_removeConfirmation(familyTeam.elementAt(index));}, child: Align(alignment: Alignment.topRight, child: Icon(Icons.delete_forever, color: primaryColor, size: 24,),)))
+              Semantics(
+                  label: 'delete_family_member',
+                  child: InkWell(
+                      onTap: () {
+                        _removeConfirmation(familyTeam.elementAt(index));
+                      },
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Icon(
+                          Icons.delete_forever,
+                          color: primaryColor,
+                          size: 24,
+                        ),
+                      )))
             ],
           ),
         ),
       ),
     );
   }
-
 
   Widget _addEmergencyDoctorDialog(BuildContext context) {
     return Dialog(
@@ -687,6 +768,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                       Icons.close,
                       color: Colors.white,
                     ),
+                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -716,20 +798,20 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                   ),
                 ],
               ),
-              Expanded(child: AddDoctorDialog( submitButtonListner: (Doctors doctors){
-                addDoctorTeamMembers(doctors);
-                debugPrint("Call back Received ==> ${doctors.firstName}");
-                Navigator.of(context, rootNavigator: true).pop();
-              }),)
+              Expanded(
+                child: AddDoctorDialog(submitButtonListner: (Doctors doctors) {
+                  addDoctorTeamMembers(doctors);
+                  debugPrint("Call back Received ==> ${doctors.firstName}");
+                  Navigator.of(context, rootNavigator: true).pop();
+                }),
+              )
             ],
           ),
-        )
-    );
+        ));
   }
 
   addDoctorTeamMembers(Doctors doctors) async {
     try {
-
       model.setBusy(true);
       var data = new Map<String, dynamic>();
       data['UserId'] = doctors.userId;
@@ -745,19 +827,18 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       map['TeamMemberType'] = "Doctor";
       map['Details'] = data;
 
-
       AddTeamMemberResponse addTeamMemberResponse =
-      await model.addTeamMembers(map);
+          await model.addTeamMembers(map);
       debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
       if (addTeamMemberResponse.status == 'success') {
         getAHACarePlanSummary();
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       } else {
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException);
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -785,6 +866,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                       Icons.close,
                       color: Colors.white,
                     ),
+                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -814,23 +896,22 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                   ),
                 ],
               ),
-              Expanded(child: AddPharmaDialog( submitButtonListner: (Pharmacies pharmacies){
-                addPharmaciesTeamMembers(pharmacies);
-                debugPrint("Call back Received ==> ${pharmacies.firstName}");
-                Navigator.of(context, rootNavigator: true).pop();
-              }),)
+              Expanded(
+                child: AddPharmaDialog(
+                    submitButtonListner: (Pharmacies pharmacies) {
+                  addPharmaciesTeamMembers(pharmacies);
+                  debugPrint("Call back Received ==> ${pharmacies.firstName}");
+                  Navigator.of(context, rootNavigator: true).pop();
+                }),
+              )
             ],
           ),
-        )
-    );
+        ));
   }
 
   addPharmaciesTeamMembers(Pharmacies pharmacies) async {
     try {
-
       model.setBusy(true);
-
-
 
       /*TeamMemberJsonRequest jsonRequest = new TeamMemberJsonRequest();
       jsonRequest.carePlanId = startCarePlanResponse.data.carePlan.id.toString();
@@ -852,19 +933,18 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       map['TeamMemberType'] = "Pharmacy";
       map['Details'] = data;
 
-
       AddTeamMemberResponse addTeamMemberResponse =
-      await model.addTeamMembers(map);
+          await model.addTeamMembers(map);
       debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
       if (addTeamMemberResponse.status == 'success') {
         getAHACarePlanSummary();
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       } else {
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException);
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -892,6 +972,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                       Icons.close,
                       color: Colors.white,
                     ),
+                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -921,16 +1002,18 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                   ),
                 ],
               ),
-              Expanded(child: AddNurseDialog( submitButtonListner: (String firstName, String lastName, String phoneNumber, String gender){
-                debugPrint("Team Member ==> ${firstName}");
-                addTeamMembers(firstName, lastName, phoneNumber, gender, '', 'HealthWorker');
-                Navigator.of(context, rootNavigator: true).pop();
-              }),)
+              Expanded(
+                child: AddNurseDialog(submitButtonListner: (String firstName,
+                    String lastName, String phoneNumber, String gender) {
+                  debugPrint("Team Member ==> ${firstName}");
+                  addTeamMembers(firstName, lastName, phoneNumber, gender, '',
+                      'HealthWorker');
+                  Navigator.of(context, rootNavigator: true).pop();
+                }),
+              )
             ],
           ),
-
-        )
-    );
+        ));
   }
 
   Widget _addFamilyMemberDialog(BuildContext context) {
@@ -954,6 +1037,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                       Icons.close,
                       color: Colors.white,
                     ),
+                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -983,24 +1067,24 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                   ),
                 ],
               ),
-              Expanded(child: AddFamilyMemberDialog( submitButtonListner: (String firstName, String lastName, String phoneNumber, String gender, String relation){
-                debugPrint("Team Member ==> ${firstName}");
-                addTeamMembers(firstName, lastName, phoneNumber, gender, relation, 'FamilyMember');
-                Navigator.of(context, rootNavigator: true).pop();
-              }),)
+              Expanded(
+                child: AddFamilyMemberDialog(submitButtonListner:
+                    (String firstName, String lastName, String phoneNumber,
+                        String gender, String relation) {
+                  debugPrint("Team Member ==> ${firstName}");
+                  addTeamMembers(firstName, lastName, phoneNumber, gender,
+                      relation, 'FamilyMember');
+                  Navigator.of(context, rootNavigator: true).pop();
+                }),
+              )
             ],
           ),
-
-
-
-
-        )
-    );
+        ));
   }
 
-  addTeamMembers(String firstName, String lastName, String phoneNumber, String gender, String relation, String type) async {
+  addTeamMembers(String firstName, String lastName, String phoneNumber,
+      String gender, String relation, String type) async {
     try {
-
       model.setBusy(true);
 
       var data = new Map<String, dynamic>();
@@ -1017,27 +1101,25 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       map['TeamMemberType'] = type;
       map['Details'] = data;
 
-
       AddTeamMemberResponse addTeamMemberResponse =
-      await model.addTeamMembers(map);
+          await model.addTeamMembers(map);
       debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
       if (addTeamMemberResponse.status == 'success') {
         getAHACarePlanSummary();
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       } else {
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
       //progressDialog.hide();
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException);
     } catch (Exception) {
       //progressDialog.hide();
       debugPrint(Exception.toString());
     }
   }
-
 
   _removeConfirmation(Team team) {
     showDialog(
@@ -1083,23 +1165,22 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
     try {
       model.setBusy(true);
       BaseResponse addTeamMemberResponse =
-      await model.removeTeamMembers(emergencyContactId);
+          await model.removeTeamMembers(emergencyContactId);
       debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
       if (addTeamMemberResponse.status == 'success') {
         getAHACarePlanSummary();
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       } else {
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
       //progressDialog.hide();
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException);
     } catch (Exception) {
       //progressDialog.hide();
       debugPrint(Exception.toString());
     }
   }
-
 }

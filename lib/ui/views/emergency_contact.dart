@@ -1,24 +1,15 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paitent/core/models/AddTeamMemberResponse.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/EmergencyContactResponse.dart';
 import 'package:paitent/core/models/TeamCarePlanReesponse.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/common_config_model.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/addDoctorDetailsDialog.dart';
-import 'package:paitent/ui/views/addDoctorDialog.dart';
 import 'package:paitent/ui/views/addFamilyMemberDialog.dart';
 import 'package:paitent/ui/views/addNurseDialog.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
 
@@ -30,57 +21,52 @@ class EmergencyContactView extends StatefulWidget {
 class _EmergencyContactViewState extends State<EmergencyContactView> {
   var model = CommonConfigModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  ScrollController _scrollController = ScrollController(initialScrollOffset: 50.0);
+  ScrollController _scrollController =
+      ScrollController(initialScrollOffset: 50.0);
 
   var doctorTeam = new List<Contacts>();
   var pharmaTeam = new List<Contacts>();
   var socialWorkerTeam = new List<Contacts>();
   var familyTeam = new List<Contacts>();
 
-
   getEmergencyTeam() async {
     try {
-      EmergencyContactResponse emergencyContactResponse = await model.getEmergencyTeam();
+      EmergencyContactResponse emergencyContactResponse =
+          await model.getEmergencyTeam();
 
       if (emergencyContactResponse.status == 'success') {
         doctorTeam.clear();
         pharmaTeam.clear();
         socialWorkerTeam.clear();
         familyTeam.clear();
-        debugPrint("Emergency Contact ==> ${emergencyContactResponse.toJson()}");
+        debugPrint(
+            "Emergency Contact ==> ${emergencyContactResponse.toJson()}");
         _srotTeamMembers(emergencyContactResponse);
       } else {
-        showToast(emergencyContactResponse.message);
+        showToast(emergencyContactResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
   }
 
-  _srotTeamMembers(EmergencyContactResponse emergencyContactResponse){
-
-    for(var teamMemeber in emergencyContactResponse.data.contacts){
-
-      if(teamMemeber.roleName == "Doctor"){
+  _srotTeamMembers(EmergencyContactResponse emergencyContactResponse) {
+    for (var teamMemeber in emergencyContactResponse.data.contacts) {
+      if (teamMemeber.roleName == "Doctor") {
         doctorTeam.add(teamMemeber);
-      }else if(teamMemeber.roleName == "Pharmacy"){
+      } else if (teamMemeber.roleName == "Pharmacy") {
         pharmaTeam.add(teamMemeber);
-      }else if(teamMemeber.roleName == "HealthWorker"){
+      } else if (teamMemeber.roleName == "HealthWorker") {
         socialWorkerTeam.add(teamMemeber);
-      }else if(teamMemeber.roleName == "FamilyMember"){
+      } else if (teamMemeber.roleName == "FamilyMember") {
         familyTeam.add(teamMemeber);
       }
 
-      setState(() {
-
-      });
-
+      setState(() {});
     }
-
   }
-
 
   @override
   void initState() {
@@ -89,87 +75,90 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return BaseWidget<CommonConfigModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child: Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              body: Scrollbar(
-                isAlwaysShown: true,
-                controller: _scrollController,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(
-                          "Emergency Contact ",
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16),
-                        ),
-                      ),
-                      sectionHeader("Doctor"),
-                      model.busy
-                          ? Container(
-                        height: 80,
-                        child: Center(
-                            child: SizedBox(
-                                height: 32,
-                                width: 32,
-                                child: CircularProgressIndicator())),
-                      )
-                          : (doctorTeam.length == 0)
-                          ? noDoctorFound()
-                          :doctorSearchResultListView(),
-                      const SizedBox(height: 16,),
-                      sectionHeader("Nurses / Social Health Workers"),
-                      model.busy
-                          ? Container(
-                        height: 80,
-                        child: Center(
-                            child: SizedBox(
-                                height: 32,
-                                width: 32,
-                                child: CircularProgressIndicator())),
-                      )
-                          : (socialWorkerTeam.length == 0)
-                          ? noNurseFound()
-                          :nurseSearchResultListView(),
-                      const SizedBox(height: 16,),
-                      sectionHeader("Family Members / Friends"),
-                      model.busy
-                          ? Container(
-                        height: 80,
-                        child: Center(
-                            child: SizedBox(
-                                height: 32,
-                                width: 32,
-                                child: CircularProgressIndicator())),
-                      )
-                          : (familyTeam.length == 0)
-                          ? noFamilyMemberFound()
-                          :familyMemberSearchResultListView(),
-                      const SizedBox(height: 16,),
-                    ],
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          body: Scrollbar(
+            isAlwaysShown: true,
+            controller: _scrollController,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      "Emergency Contact ",
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
                   ),
-                ),
+                  sectionHeader("Doctor"),
+                  model.busy
+                      ? Container(
+                          height: 80,
+                          child: Center(
+                              child: SizedBox(
+                                  height: 32,
+                                  width: 32,
+                                  child: CircularProgressIndicator())),
+                        )
+                      : (doctorTeam.length == 0)
+                          ? noDoctorFound()
+                          : doctorSearchResultListView(),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  sectionHeader("Nurses / Social Health Workers"),
+                  model.busy
+                      ? Container(
+                          height: 80,
+                          child: Center(
+                              child: SizedBox(
+                                  height: 32,
+                                  width: 32,
+                                  child: CircularProgressIndicator())),
+                        )
+                      : (socialWorkerTeam.length == 0)
+                          ? noNurseFound()
+                          : nurseSearchResultListView(),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  sectionHeader("Family Members / Friends"),
+                  model.busy
+                      ? Container(
+                          height: 80,
+                          child: Center(
+                              child: SizedBox(
+                                  height: 32,
+                                  width: 32,
+                                  child: CircularProgressIndicator())),
+                        )
+                      : (familyTeam.length == 0)
+                          ? noFamilyMemberFound()
+                          : familyMemberSearchResultListView(),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                ],
               ),
             ),
           ),
+        ),
+      ),
     );
   }
 
-  Widget sectionHeader(String tittle){
+  Widget sectionHeader(String tittle) {
     return Column(
       children: [
         Container(
@@ -183,10 +172,17 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(width: 16,),
+                const SizedBox(
+                  width: 16,
+                ),
                 Text(
                   tittle,
-                  style: TextStyle( color: primaryColor,fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 Expanded(
                   child: Semantics(
@@ -201,7 +197,6 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 return _addEmergencyDoctorDialog(context);
                               });
                         } else if (tittle == 'Pharmacies') {
-
                         } else if (tittle == 'Nurses / Social Health Workers') {
                           showDialog(
                               context: context,
@@ -219,16 +214,23 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       child: Container(
                         key: new Key(tittle),
                         alignment: Alignment.centerRight,
-                        child: Icon(Icons.add_circle, color: primaryColor, size: 24,),
+                        child: Icon(
+                          Icons.add_circle,
+                          color: primaryColor,
+                          size: 24,
+                        ),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 16,),
+                const SizedBox(
+                  width: 16,
+                ),
               ],
-            )
+            )),
+        const SizedBox(
+          height: 8,
         ),
-        const SizedBox(height: 8,),
       ],
     );
   }
@@ -248,7 +250,6 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   Widget doctorSearchResultListView() {
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: ListView.separated(
@@ -309,7 +310,11 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                               children: <Widget>[
                                 Padding(
                                   padding: const EdgeInsets.only(right: 18.0),
-                                  child: Text('Dr. '+details.firstName+' '+details.lastName,
+                                  child: Text(
+                                      'Dr. ' +
+                                          details.firstName +
+                                          ' ' +
+                                          details.lastName,
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.w700,
@@ -326,7 +331,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
-                                    Text('Phone:  '+details.phoneNumber,
+                                    Text('Phone:  ' + details.phoneNumber,
                                         style: TextStyle(
                                             fontSize: 12.0,
                                             fontWeight: FontWeight.w300,
@@ -341,7 +346,20 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     ),
                   ],
                 ),
-                Semantics(label: 'delete_doctor', child: InkWell(onTap: (){_removeConfirmation(doctorTeam.elementAt(index));}, child: Align(alignment: Alignment.topRight, child: Icon(Icons.delete_forever, color: primaryColor, size: 24,),)))
+                Semantics(
+                    label: 'delete_doctor',
+                    child: InkWell(
+                        onTap: () {
+                          _removeConfirmation(doctorTeam.elementAt(index));
+                        },
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: Icon(
+                            Icons.delete_forever,
+                            color: primaryColor,
+                            size: 24,
+                          ),
+                        )))
               ],
             ),
           ),
@@ -368,7 +386,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: ListView.separated(
-          itemBuilder: (context, index) => _makePharmacyListCard(context, index),
+          itemBuilder: (context, index) =>
+              _makePharmacyListCard(context, index),
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(
               height: 8,
@@ -404,8 +423,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                         height: 60,
                         width: 60,
                         child: Image(
-                          image: AssetImage(
-                              'res/images/profile_placeholder.png'),
+                          image:
+                              AssetImage('res/images/profile_placeholder.png'),
                         ),
                       ),
                     ),
@@ -520,22 +539,29 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                               children: <Widget>[
                                 Padding(
                                   padding: const EdgeInsets.only(right: 18.0),
-                                  child: Text(details.firstName+' '+details.lastName,
+                                  child: Text(
+                                      details.firstName +
+                                          ' ' +
+                                          details.lastName,
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: primaryColor)),
                                 ),
-                                Text('Phone:  '+details.phoneNumber,
+                                Text('Phone:  ' + details.phoneNumber,
                                     style: TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w300,
                                         color: primaryColor)),
-                                Text(details.gender,
+                                Text(
+                                  details.gender,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w200,
-                                      color: Color(0XFF909CAC)), maxLines: 2, overflow: TextOverflow.ellipsis,),
+                                      color: Color(0XFF909CAC)),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ],
                             ),
                           ),
@@ -544,7 +570,21 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     ),
                   ],
                 ),
-                Semantics(label: 'delete_nurse', child: InkWell(onTap: (){_removeConfirmation(socialWorkerTeam.elementAt(index));}, child: Align(alignment: Alignment.topRight, child: Icon(Icons.delete_forever, color: primaryColor, size: 24,),)))
+                Semantics(
+                    label: 'delete_nurse',
+                    child: InkWell(
+                        onTap: () {
+                          _removeConfirmation(
+                              socialWorkerTeam.elementAt(index));
+                        },
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: Icon(
+                            Icons.delete_forever,
+                            color: primaryColor,
+                            size: 24,
+                          ),
+                        )))
               ],
             ),
           ),
@@ -571,7 +611,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: ListView.separated(
-          itemBuilder: (context, index) => _makeFamilyMemberListCard(context, index),
+          itemBuilder: (context, index) =>
+              _makeFamilyMemberListCard(context, index),
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(
               height: 8,
@@ -630,22 +671,29 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                               children: <Widget>[
                                 Padding(
                                   padding: const EdgeInsets.only(right: 18.0),
-                                  child: Text(details.firstName+' '+details.lastName,
+                                  child: Text(
+                                      details.firstName +
+                                          ' ' +
+                                          details.lastName,
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: primaryColor)),
                                 ),
-                                Text('Phone: '+details.phoneNumber,
+                                Text('Phone: ' + details.phoneNumber,
                                     style: TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w300,
                                         color: primaryColor)),
-                                Text(details.relation,
+                                Text(
+                                  details.relation,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w200,
-                                      color: Color(0XFF909CAC)), maxLines: 2, overflow: TextOverflow.ellipsis,),
+                                      color: Color(0XFF909CAC)),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ],
                             ),
                           ),
@@ -654,7 +702,20 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     ),
                   ],
                 ),
-                Semantics(label: 'delete_family_members', child: InkWell(onTap: (){_removeConfirmation(familyTeam.elementAt(index));}, child: Align(alignment: Alignment.topRight, child: Icon(Icons.delete_forever, color: primaryColor, size: 24,),)))
+                Semantics(
+                    label: 'delete_family_members',
+                    child: InkWell(
+                        onTap: () {
+                          _removeConfirmation(familyTeam.elementAt(index));
+                        },
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: Icon(
+                            Icons.delete_forever,
+                            color: primaryColor,
+                            size: 24,
+                          ),
+                        )))
               ],
             ),
           ),
@@ -684,6 +745,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       Icons.close,
                       color: Colors.white,
                     ),
+                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -713,20 +775,23 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   ),
                 ],
               ),
-              Expanded(child: AddDoctorDetailsDialog(submitButtonListner: (String firstName, String lastName, String phoneNumber, String gender){
-                debugPrint("Team Member ==> ${firstName}");
-                addTeamMembers(firstName, lastName, phoneNumber, gender, '', 'Doctor');
-                Navigator.of(context, rootNavigator: true).pop();
-              }),)
+              Expanded(
+                child: AddDoctorDetailsDialog(submitButtonListner:
+                    (String firstName, String lastName, String phoneNumber,
+                        String gender) {
+                  debugPrint("Team Member ==> ${firstName}");
+                  addTeamMembers(
+                      firstName, lastName, phoneNumber, gender, '', 'Doctor');
+                  Navigator.of(context, rootNavigator: true).pop();
+                }),
+              )
             ],
           ),
-        )
-    );
+        ));
   }
 
   addDoctorTeamMembers(Doctors doctors) async {
     try {
-
       model.setBusy(true);
 
       /*TeamMemberJsonRequest jsonRequest = new TeamMemberJsonRequest();
@@ -748,20 +813,17 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       map['Type'] = "Doctor";
       map['Details'] = data;
 
-
-
-      BaseResponse addTeamMemberResponse =
-      await model.addTeamMembers(map);
+      BaseResponse addTeamMemberResponse = await model.addTeamMembers(map);
       debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
       if (addTeamMemberResponse.status == 'success') {
         getEmergencyTeam();
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       } else {
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException);
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -789,6 +851,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       Icons.close,
                       color: Colors.white,
                     ),
+                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -818,16 +881,18 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   ),
                 ],
               ),
-              Expanded(child: AddNurseDialog( submitButtonListner: (String firstName, String lastName, String phoneNumber, String gender){
-                debugPrint("Team Member ==> ${firstName}");
-                addTeamMembers(firstName, lastName, phoneNumber, gender, '', 'HealthWorker');
-                Navigator.of(context, rootNavigator: true).pop();
-              }),)
+              Expanded(
+                child: AddNurseDialog(submitButtonListner: (String firstName,
+                    String lastName, String phoneNumber, String gender) {
+                  debugPrint("Team Member ==> ${firstName}");
+                  addTeamMembers(firstName, lastName, phoneNumber, gender, '',
+                      'HealthWorker');
+                  Navigator.of(context, rootNavigator: true).pop();
+                }),
+              )
             ],
           ),
-
-        )
-    );
+        ));
   }
 
   Widget _addFamilyMemberDialog(BuildContext context) {
@@ -851,6 +916,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       Icons.close,
                       color: Colors.white,
                     ),
+                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -880,27 +946,26 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   ),
                 ],
               ),
-              Expanded(child: AddFamilyMemberDialog( submitButtonListner: (String firstName, String lastName, String phoneNumber, String gender, String relation){
-                debugPrint("Team Member ==> ${firstName}");
-                addTeamMembers(firstName, lastName, phoneNumber, gender, relation, 'FamilyMember');
-                Navigator.of(context, rootNavigator: true).pop();
-              }),)
+              Expanded(
+                child: AddFamilyMemberDialog(submitButtonListner:
+                    (String firstName, String lastName, String phoneNumber,
+                        String gender, String relation) {
+                  debugPrint("Team Member ==> ${firstName}");
+                  addTeamMembers(firstName, lastName, phoneNumber, gender,
+                      relation, 'FamilyMember');
+                  Navigator.of(context, rootNavigator: true).pop();
+                }),
+              )
             ],
           ),
-
-
-
-
-        )
-    );
+        ));
   }
 
-  addTeamMembers(String firstName, String lastName, String phoneNumber, String gender, String relation, String type) async {
+  addTeamMembers(String firstName, String lastName, String phoneNumber,
+      String gender, String relation, String type) async {
     try {
-
       model.setBusy(true);
       //progressDialog.show();
-
 
       /*TeamMemberJsonRequest jsonRequest = new TeamMemberJsonRequest();
       jsonRequest.carePlanId = startCarePlanResponse.data.carePlan.id.toString();
@@ -921,27 +986,24 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       map['Type'] = type;
       map['Details'] = data;
 
-
-      BaseResponse addTeamMemberResponse =
-      await model.addTeamMembers(map);
+      BaseResponse addTeamMemberResponse = await model.addTeamMembers(map);
       debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
       if (addTeamMemberResponse.status == 'success') {
         getEmergencyTeam();
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       } else {
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
       //progressDialog.hide();
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException);
     } catch (Exception) {
       //progressDialog.hide();
       debugPrint(Exception.toString());
     }
   }
-
 
   _removeConfirmation(Contacts contact) {
     showDialog(
@@ -970,8 +1032,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
           FlatButton(
             child: Text('Yes'),
             onPressed: () {
-             removeTeamMembers(contact.id);
-             Navigator.of(context, rootNavigator: true).pop();
+              removeTeamMembers(contact.id);
+              Navigator.of(context, rootNavigator: true).pop();
             },
           ),
           FlatButton(
@@ -987,25 +1049,22 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     try {
       model.setBusy(true);
       BaseResponse addTeamMemberResponse =
-      await model.removeTeamMembers(emergencyContactId);
+          await model.removeTeamMembers(emergencyContactId);
       debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
       if (addTeamMemberResponse.status == 'success') {
         getEmergencyTeam();
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       } else {
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
       //progressDialog.hide();
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException);
     } catch (Exception) {
       //progressDialog.hide();
       debugPrint(Exception.toString());
     }
   }
-
-
-
 }

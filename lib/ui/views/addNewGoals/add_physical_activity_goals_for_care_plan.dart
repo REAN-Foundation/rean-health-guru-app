@@ -1,32 +1,23 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/assortedViewConfigs.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:paitent/ui/views/summary_of_my_care_plan.dart';
-import 'package:paitent/ui/views/team_of_my_care_plan.dart';
 import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/StringUtility.dart';
-import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class AddPhysicalActivityGoalsForCarePlanView extends StatefulWidget {
   @override
-  _AddPhysicalActivityGoalsForCarePlanViewState createState() => _AddPhysicalActivityGoalsForCarePlanViewState();
+  _AddPhysicalActivityGoalsForCarePlanViewState createState() =>
+      _AddPhysicalActivityGoalsForCarePlanViewState();
 }
 
-class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalActivityGoalsForCarePlanView> {
+class _AddPhysicalActivityGoalsForCarePlanViewState
+    extends State<AddPhysicalActivityGoalsForCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -39,7 +30,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
 
   var _durationFocus = FocusNode();
   var _frequencyFocus = FocusNode();
-  
+
   String dob = "";
   String unformatedDOB = "";
   var dateFormat = DateFormat("dd MMM, yyyy");
@@ -50,24 +41,23 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
     progressDialog = new ProgressDialog(context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child:  Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'Set Care Plan Goals',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            title: Text(
+              'Set Care Plan Goals',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700),
+            ),
+            iconTheme: new IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -77,36 +67,44 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
                   debugPrint("Clicked on profile icon");
                 },
               )*/
+            ],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  addGoals(),
                 ],
               ),
-              body: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        addGoals(),
-                      ],
-                    ),
-                  ),
-                ),
             ),
           ),
+        ),
+      ),
     );
   }
 
   Widget addGoals() {
     return Padding(
-      padding: const EdgeInsets.only(left : 0.0, right: 0.0, top: 8.0, bottom: 8.0),
+      padding:
+          const EdgeInsets.only(left: 0.0, right: 0.0, top: 8.0, bottom: 8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 16,),
-          Text("Physical activity is important. Just 150 minutes of moderate-intensity aerobic exercise a week is enough to lower both cholesterol and high blood pressure. And there are lots of options: brisk walking, swimming, bicycling or even a dance class can fit the bill.", style: TextStyle(
-              color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),),
-          const SizedBox(height: 16,),
-         /* Row(
+          const SizedBox(
+            height: 16,
+          ),
+          Text(
+            "Physical activity is important. Just 150 minutes of moderate-intensity aerobic exercise a week is enough to lower both cholesterol and high blood pressure. And there are lots of options: brisk walking, swimming, bicycling or even a dance class can fit the bill.",
+            style: TextStyle(
+                color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          /* Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               InkWell(
@@ -131,11 +129,12 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
               ),
             ],
           ),*/
-          const SizedBox(height: 16,),
+          const SizedBox(
+            height: 16,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment:
-            CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 width: 80,
@@ -152,21 +151,16 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
                             text: "",
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight:
-                                FontWeight.w700,
+                                fontWeight: FontWeight.w700,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
-                                fontStyle:
-                                FontStyle.italic)),
+                                fontStyle: FontStyle.italic)),
                       ]),
                 ),
               ),
               Expanded(
                 child: Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
+                  width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
@@ -174,27 +168,34 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
                       color: colorF6F6FF),
                   child: DropdownButton<String>(
                     isExpanded: true,
-                    hint: new Text("Select Activity", style: TextStyle(
-                        color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),),
+                    hint: new Text(
+                      "Select Activity",
+                      style: TextStyle(
+                          color: textBlack,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
+                    ),
                     items: [
                       DropdownMenuItem(
                         value: "Yoga",
                         child: Text(
                           "Yoga",
                           style: TextStyle(
-                              color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
+                              color: textBlack,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
-
                       DropdownMenuItem(
                         value: "Brisk walking",
                         child: Text(
                           "Brisk walking",
                           style: TextStyle(
-                              color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
+                              color: textBlack,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
-
                     ],
                     onChanged: (value) {
                       setState(() {
@@ -207,11 +208,12 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
               )
             ],
           ),
-          SizedBox(height: 8,),
+          SizedBox(
+            height: 8,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment:
-            CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 width: 80,
@@ -228,48 +230,40 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
                             text: " ",
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight:
-                                FontWeight.w700,
+                                fontWeight: FontWeight.w700,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
-                                fontStyle:
-                                FontStyle.italic)),
+                                fontStyle: FontStyle.italic)),
                       ]),
                 ),
               ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 8.0),
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
-                      borderRadius:
-                      BorderRadius.circular(8.0),
-                      border: Border.all(
-                          color: primaryColor, width: 1),
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: TextFormField(
-
                       controller: _durationController,
                       focusNode: _durationFocus,
                       maxLines: 1,
-                      textInputAction:
-                      TextInputAction.next,
+                      textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (term) {
                         _fieldFocusChange(
-                            context,
-                            _durationFocus,
-                            _frequencyFocus);
+                            context, _durationFocus, _frequencyFocus);
                       },
                       decoration: InputDecoration(
-
                           contentPadding: EdgeInsets.all(0),
                           border: InputBorder.none,
                           fillColor: Colors.white,
                           filled: true)),
                 ),
               ),
-              SizedBox(width: 8,),
+              SizedBox(
+                width: 8,
+              ),
               Container(
                 width: 130,
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -279,27 +273,34 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
                     color: colorF6F6FF),
                 child: DropdownButton<String>(
                   isExpanded: true,
-                  hint: new Text("Duration", style: TextStyle(
-                      color: textBlack, fontSize: 12, fontWeight: FontWeight.w600),),
+                  hint: new Text(
+                    "Duration",
+                    style: TextStyle(
+                        color: textBlack,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600),
+                  ),
                   items: [
                     DropdownMenuItem(
                       value: "Minutes",
                       child: Text(
                         "Minutes",
                         style: TextStyle(
-                            color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
+                            color: textBlack,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
-
                     DropdownMenuItem(
                       value: "Hours",
                       child: Text(
                         "Hours",
                         style: TextStyle(
-                            color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
+                            color: textBlack,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
-
                   ],
                   onChanged: (value) {
                     setState(() {
@@ -311,11 +312,12 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
               ),
             ],
           ),
-          SizedBox(height: 8,),
+          SizedBox(
+            height: 8,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment:
-            CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 width: 80,
@@ -332,31 +334,25 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
                             text: "",
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight:
-                                FontWeight.w700,
+                                fontWeight: FontWeight.w700,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
-                                fontStyle:
-                                FontStyle.italic)),
+                                fontStyle: FontStyle.italic)),
                       ]),
                 ),
               ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 8.0),
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
-                      borderRadius:
-                      BorderRadius.circular(8.0),
-                      border: Border.all(
-                          color: primaryColor, width: 1),
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: TextFormField(
                       controller: _frequncyController,
                       focusNode: _frequencyFocus,
                       maxLines: 1,
-                      textInputAction:
-                      TextInputAction.done,
+                      textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (term) {
                         /*_fieldFocusChange(
@@ -371,7 +367,9 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
                           filled: true)),
                 ),
               ),
-              SizedBox(width: 8,),
+              SizedBox(
+                width: 8,
+              ),
               Container(
                 width: 130,
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -381,27 +379,34 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
                     color: colorF6F6FF),
                 child: DropdownButton<String>(
                   isExpanded: true,
-                  hint: new Text("Daily", style: TextStyle(
-                      color: textBlack, fontSize: 12, fontWeight: FontWeight.w600),),
+                  hint: new Text(
+                    "Daily",
+                    style: TextStyle(
+                        color: textBlack,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600),
+                  ),
                   items: [
                     DropdownMenuItem(
                       value: "Daily",
                       child: Text(
                         "Daily",
                         style: TextStyle(
-                            color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
+                            color: textBlack,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
-
                     DropdownMenuItem(
                       value: "Weekly",
                       child: Text(
                         "Weekly",
                         style: TextStyle(
-                            color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
+                            color: textBlack,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
-
                   ],
                   onChanged: (value) {
                     setState(() {
@@ -413,11 +418,12 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
               ),
             ],
           ),
-          SizedBox(height: 8,),
+          SizedBox(
+            height: 8,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment:
-            CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 width: 80,
@@ -434,12 +440,10 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
                             text: "          ",
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight:
-                                FontWeight.w700,
+                                fontWeight: FontWeight.w700,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
-                                fontStyle:
-                                FontStyle.italic)),
+                                fontStyle: FontStyle.italic)),
                       ]),
                 ),
               ),
@@ -458,46 +462,53 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0,8,0,8),
+                      padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Expanded(
                             child: Text(
                               dob,
-                              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal, fontSize: 14),
                             ),
                           ),
-                          ImageIcon(AssetImage('res/images/ic_calender.png'), size: 24, color: primaryColor,),
+                          ImageIcon(
+                            AssetImage('res/images/ic_calender.png'),
+                            size: 24,
+                            color: primaryColor,
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  onTap: (){
+                  onTap: () {
                     DatePicker.showDatePicker(context,
                         showTitleActions: true,
-                        minTime: DateTime.now().subtract(Duration(days: 0)), onChanged: (date) {
-                          print('change $date');
-                        }, onConfirm: (date) {
-                          unformatedDOB = date.toIso8601String();
-                          setState(() {
-                            dob = dateFormat.format(date);
-                          });
-                          print('confirm $date');
-                        }, currentTime: DateTime.now(), locale: LocaleType.en);
+                        minTime: DateTime.now().subtract(Duration(days: 0)),
+                        onChanged: (date) {
+                      print('change $date');
+                    }, onConfirm: (date) {
+                      unformatedDOB = date.toIso8601String();
+                      setState(() {
+                        dob = dateFormat.format(date);
+                      });
+                      print('confirm $date');
+                    }, currentTime: DateTime.now(), locale: LocaleType.en);
                   },
                 ),
               )
             ],
           ),
-
-          SizedBox(height: 40,),
+          SizedBox(
+            height: 40,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
-                onTap: (){
+                onTap: () {
                   setGoals();
                   //Navigator.of(context).pop();
                   //Navigator.pushNamed(context, RoutePaths.Home);
@@ -505,23 +516,27 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
                 child: Container(
                     height: 40,
                     width: 120,
-                    padding: EdgeInsets.symmetric(horizontal: 16.0, ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24.0),
                       border: Border.all(color: primaryColor, width: 1),
-                      color: Colors.deepPurple,),
+                      color: Colors.deepPurple,
+                    ),
                     child: Center(
                       child: Text(
                         "Save",
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14),
                         textAlign: TextAlign.center,
                       ),
-                    )
-                ),
+                    )),
               ),
             ],
           ),
-
         ],
       ),
     );
@@ -549,7 +564,10 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
       body['Goal'] = map;
       body['GoalSettingTaskId'] = getTask().details.id;
 
-      BaseResponse baseResponse  = await model.addGoalsTask(startCarePlanResponseGlob.data.carePlan.id.toString(), 'physical-activity-goal' ,  body);
+      BaseResponse baseResponse = await model.addGoalsTask(
+          startCarePlanResponseGlob.data.carePlan.id.toString(),
+          'physical-activity-goal',
+          body);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
@@ -557,36 +575,40 @@ class _AddPhysicalActivityGoalsForCarePlanViewState extends State<AddPhysicalAct
         navigateToScreen();
       } else {
         progressDialog.hide();
-        if(baseResponse.error.contains('goal already exists for this care plan')){
+        if (baseResponse.error
+            .contains('goal already exists for this care plan')) {
           goalPlanScreenStack.removeAt(0);
           navigateToScreen();
-        }else {
-          showToast(baseResponse.message);
+        } else {
+          showToast(baseResponse.message, context);
         }
       }
     } catch (e) {
       progressDialog.hide();
       model.setBusy(false);
-      showToast(e.toString());
-      debugPrint('Error ==> '+e.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 
   navigateToScreen() {
     debugPrint('Set Goals Plan Stack ==> ${goalPlanScreenStack.length}');
-    if(goalPlanScreenStack.length == 0){
-      Navigator.pushReplacementNamed(context, RoutePaths.Determine_Action_For_Care_Plan);
-    }else if (goalPlanScreenStack.elementAt(0) == "Blood Pressure") {
-      Navigator.pushReplacementNamed(context, RoutePaths.ADD_BLOOD_PRESURE_GOALS);
-    }else if (goalPlanScreenStack.elementAt(0) == "Blood Sugar") {
+    if (goalPlanScreenStack.length == 0) {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.Determine_Action_For_Care_Plan);
+    } else if (goalPlanScreenStack.elementAt(0) == "Blood Pressure") {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.ADD_BLOOD_PRESURE_GOALS);
+    } else if (goalPlanScreenStack.elementAt(0) == "Blood Sugar") {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_GLUCOSE_GOALS);
-    }else if(goalPlanScreenStack.elementAt(0) == "Weight"){
+    } else if (goalPlanScreenStack.elementAt(0) == "Weight") {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_WEIGHT_GOALS);
-    }else if(goalPlanScreenStack.elementAt(0) == "Physical Activity"){
-      Navigator.pushReplacementNamed(context, RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS);
-    }else if(goalPlanScreenStack.elementAt(0) == "Quit Smoking"){
-      Navigator.pushReplacementNamed(context, RoutePaths.ADD_QUIT_SMOKING_GOALS);
+    } else if (goalPlanScreenStack.elementAt(0) == "Physical Activity") {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS);
+    } else if (goalPlanScreenStack.elementAt(0) == "Quit Smoking") {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.ADD_QUIT_SMOKING_GOALS);
     }
   }
-
 }

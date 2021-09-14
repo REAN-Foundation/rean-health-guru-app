@@ -1,28 +1,18 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
-import 'package:paitent/core/models/assortedViewConfigs.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
+import 'package:intl/intl.dart';
 import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:paitent/ui/views/summary_of_my_care_plan.dart';
-import 'package:paitent/ui/views/team_of_my_care_plan.dart';
-import 'package:paitent/utils/StringUtility.dart';
-import 'package:intl/intl.dart';
 
 class AddNutritionGoalsForCarePlanView extends StatefulWidget {
   @override
-  _AddNutritionGoalsForCarePlanViewState createState() => _AddNutritionGoalsForCarePlanViewState();
+  _AddNutritionGoalsForCarePlanViewState createState() =>
+      _AddNutritionGoalsForCarePlanViewState();
 }
 
-class _AddNutritionGoalsForCarePlanViewState extends State<AddNutritionGoalsForCarePlanView> {
+class _AddNutritionGoalsForCarePlanViewState
+    extends State<AddNutritionGoalsForCarePlanView> {
   var model = PatientMedicationViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -39,30 +29,27 @@ class _AddNutritionGoalsForCarePlanViewState extends State<AddNutritionGoalsForC
   bool switch2 = false;
   bool switch3 = false;
 
-
   @override
   Widget build(BuildContext context) {
-
     return BaseWidget<PatientMedicationViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child: Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'Set Care Plan Goals',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            title: Text(
+              'Set Care Plan Goals',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700),
+            ),
+            iconTheme: new IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -72,21 +59,21 @@ class _AddNutritionGoalsForCarePlanViewState extends State<AddNutritionGoalsForC
                   debugPrint("Clicked on profile icon");
                 },
               )*/
+            ],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  addGoals(),
                 ],
               ),
-              body: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        addGoals(),
-                      ],
-                    ),
-                  ),
-                ),
             ),
           ),
+        ),
+      ),
     );
   }
 
@@ -97,10 +84,17 @@ class _AddNutritionGoalsForCarePlanViewState extends State<AddNutritionGoalsForC
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 16,),
-          Text("Eating healthy doesn’t have to mean dieting or giving up all the foods you love. Learn how to ditch the junk, give your body the nutrient-dense fuel it needs, and love every minute of it!", style: TextStyle(
-              color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),),
-          const SizedBox(height: 16,),
+          const SizedBox(
+            height: 16,
+          ),
+          Text(
+            "Eating healthy doesn’t have to mean dieting or giving up all the foods you love. Learn how to ditch the junk, give your body the nutrient-dense fuel it needs, and love every minute of it!",
+            style: TextStyle(
+                color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
           /*Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -126,11 +120,12 @@ class _AddNutritionGoalsForCarePlanViewState extends State<AddNutritionGoalsForC
               ),
             ],
           ),*/
-          const SizedBox(height: 16,),
+          const SizedBox(
+            height: 16,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment:
-            CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               RichText(
                 text: TextSpan(
@@ -145,19 +140,17 @@ class _AddNutritionGoalsForCarePlanViewState extends State<AddNutritionGoalsForC
                           text: "",
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight:
-                              FontWeight.w700,
+                              fontWeight: FontWeight.w700,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
-                              fontStyle:
-                              FontStyle.italic)),
+                              fontStyle: FontStyle.italic)),
                     ]),
               ),
               Switch(
                 value: switch1,
-                onChanged: (value){
+                onChanged: (value) {
                   setState(() {
-                    switch1=value;
+                    switch1 = value;
                     print(switch1);
                   });
                 },
@@ -166,11 +159,12 @@ class _AddNutritionGoalsForCarePlanViewState extends State<AddNutritionGoalsForC
               ),
             ],
           ),
-          SizedBox(height: 0,),
+          SizedBox(
+            height: 0,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment:
-            CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               RichText(
                 text: TextSpan(
@@ -185,19 +179,17 @@ class _AddNutritionGoalsForCarePlanViewState extends State<AddNutritionGoalsForC
                           text: "",
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight:
-                              FontWeight.w700,
+                              fontWeight: FontWeight.w700,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
-                              fontStyle:
-                              FontStyle.italic)),
+                              fontStyle: FontStyle.italic)),
                     ]),
               ),
               Switch(
                 value: switch2,
-                onChanged: (value){
+                onChanged: (value) {
                   setState(() {
-                    switch2=value;
+                    switch2 = value;
                     print(switch2);
                   });
                 },
@@ -206,11 +198,12 @@ class _AddNutritionGoalsForCarePlanViewState extends State<AddNutritionGoalsForC
               ),
             ],
           ),
-          SizedBox(height: 0,),
+          SizedBox(
+            height: 0,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment:
-            CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               RichText(
                 text: TextSpan(
@@ -225,19 +218,17 @@ class _AddNutritionGoalsForCarePlanViewState extends State<AddNutritionGoalsForC
                           text: "",
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight:
-                              FontWeight.w700,
+                              fontWeight: FontWeight.w700,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
-                              fontStyle:
-                              FontStyle.italic)),
+                              fontStyle: FontStyle.italic)),
                     ]),
               ),
               Switch(
                 value: switch3,
-                onChanged: (value){
+                onChanged: (value) {
                   setState(() {
-                    switch3=value;
+                    switch3 = value;
                     print(switch3);
                   });
                 },
@@ -259,41 +250,37 @@ class _AddNutritionGoalsForCarePlanViewState extends State<AddNutritionGoalsForC
                       text: "  ",
                       style: TextStyle(
                           fontSize: 10,
-                          fontWeight:
-                          FontWeight.w700,
+                          fontWeight: FontWeight.w700,
                           color: primaryColor,
                           fontFamily: 'Montserrat',
-                          fontStyle:
-                          FontStyle.italic)),
+                          fontStyle: FontStyle.italic)),
                 ]),
           ),
-          SizedBox(height: 8,),
+          SizedBox(
+            height: 8,
+          ),
           Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: 8.0),
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
             decoration: BoxDecoration(
-                borderRadius:
-                BorderRadius.circular(8.0),
-                border: Border.all(
-                    color: primaryColor, width: 1),
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(color: primaryColor, width: 1),
                 color: Colors.white),
             child: TextFormField(
                 controller: _goalController,
                 focusNode: _goalFocus,
                 maxLines: 1,
-                textInputAction:
-                TextInputAction.done,
+                textInputAction: TextInputAction.done,
                 keyboardType: TextInputType.name,
-                onFieldSubmitted: (term) {
-
-                },
+                onFieldSubmitted: (term) {},
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(0),
                     border: InputBorder.none,
                     fillColor: Colors.white,
                     filled: true)),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           RichText(
             text: TextSpan(
                 text: '* I will take boiled greens and fish twice a week.',
@@ -307,44 +294,48 @@ class _AddNutritionGoalsForCarePlanViewState extends State<AddNutritionGoalsForC
                       text: "  ",
                       style: TextStyle(
                           fontSize: 10,
-                          fontWeight:
-                          FontWeight.w700,
+                          fontWeight: FontWeight.w700,
                           color: primaryColor,
                           fontFamily: 'Montserrat',
-                          fontStyle:
-                          FontStyle.italic)),
+                          fontStyle: FontStyle.italic)),
                 ]),
           ),
-          SizedBox(height: 40,),
+          SizedBox(
+            height: 40,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.of(context).pop();
                   //Navigator.pushNamed(context, RoutePaths.Home);
                 },
                 child: Container(
                     height: 40,
                     width: 120,
-                    padding: EdgeInsets.symmetric(horizontal: 16.0, ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24.0),
                       border: Border.all(color: primaryColor, width: 1),
-                      color: Colors.deepPurple,),
+                      color: Colors.deepPurple,
+                    ),
                     child: Center(
                       child: Text(
                         "Save",
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14),
                         textAlign: TextAlign.center,
                       ),
-                    )
-                ),
+                    )),
               ),
             ],
           ),
-
         ],
       ),
     );
@@ -355,5 +346,4 @@ class _AddNutritionGoalsForCarePlanViewState extends State<AddNutritionGoalsForC
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
   }
-
 }

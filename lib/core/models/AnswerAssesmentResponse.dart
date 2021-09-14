@@ -43,4 +43,3 @@ class Data {
     return data;
   }
 }
-

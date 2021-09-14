@@ -57,16 +57,16 @@ class CarePlanSummary {
 
   CarePlanSummary(
       {this.patientUserId,
-        this.carePlanDisplayId,
-        this.carePlanName,
-        this.carePlanCode,
-        this.durationInWeeks,
-        this.carePlanStartDate,
-        this.carePlanEndDate,
-        this.enrolledOn,
-        this.currentWeek,
-        this.dayOfCurrentWeek,
-        this.carePlanStatus});
+      this.carePlanDisplayId,
+      this.carePlanName,
+      this.carePlanCode,
+      this.durationInWeeks,
+      this.carePlanStartDate,
+      this.carePlanEndDate,
+      this.enrolledOn,
+      this.currentWeek,
+      this.dayOfCurrentWeek,
+      this.carePlanStatus});
 
   CarePlanSummary.fromJson(Map<String, dynamic> json) {
     patientUserId = json['PatientUserId'];

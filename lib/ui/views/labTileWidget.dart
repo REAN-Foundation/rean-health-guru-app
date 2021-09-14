@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:paitent/core/models/labsListApiResponse.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
@@ -14,7 +12,6 @@ class LabTileView extends StatefulWidget {
 }
 
 class _LabTileViewState extends State<LabTileView> {
-
   Labs labdetails;
 
   _LabTileViewState(@required this.labdetails);
@@ -38,7 +35,10 @@ class _LabTileViewState extends State<LabTileView> {
                   backgroundColor: primaryColor,
                   child: CircleAvatar(
                       radius: 48,
-                      backgroundImage: (labdetails.imageURL  == "") || (labdetails.imageURL  == null) ? AssetImage('res/images/profile_placeholder.png') : new NetworkImage(labdetails.imageURL)),
+                      backgroundImage: (labdetails.imageURL == "") ||
+                              (labdetails.imageURL == null)
+                          ? AssetImage('res/images/profile_placeholder.png')
+                          : new NetworkImage(labdetails.imageURL)),
                 ),
               ),
             ),
@@ -50,16 +50,11 @@ class _LabTileViewState extends State<LabTileView> {
             flex: 6,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment:
-              CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                    labdetails.firstName +
-                        ' ' +
-                        labdetails.lastName,
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600)),
+                Text(labdetails.firstName + ' ' + labdetails.lastName,
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                 Text(labdetails.locality,
                     style: TextStyle(
                         fontSize: 14.0,
@@ -72,5 +67,4 @@ class _LabTileViewState extends State<LabTileView> {
       ),
     );
   }
-
 }

@@ -84,14 +84,14 @@ class Records {
 
   Records(
       {this.id,
-        this.recordDate,
-        this.weight,
-        this.bloodGlucose,
-        this.systolicBloodPressure,
-        this.diastolicBloodPressure,
-        this.bloodOxygenSaturation,
-        this.pulse,
-        this.temperature});
+      this.recordDate,
+      this.weight,
+      this.bloodGlucose,
+      this.systolicBloodPressure,
+      this.diastolicBloodPressure,
+      this.bloodOxygenSaturation,
+      this.pulse,
+      this.temperature});
 
   Records.fromJson(Map<String, dynamic> json) {
     id = json['id'];

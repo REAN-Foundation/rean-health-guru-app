@@ -70,22 +70,29 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
     );
   }
 
-  Widget _continueButton(){
-    return  Row(
+  Widget _continueButton() {
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Material(  //Wrap with Material
-          shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(24.0) ),
+        Material(
+          //Wrap with Material
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
           elevation: 4.0,
           color: primaryColor,
-          clipBehavior: Clip.antiAlias, // Add This
+          clipBehavior: Clip.antiAlias,
+          // Add This
           child: MaterialButton(
             minWidth: 200,
             child: new Text('Continue to Pay',
-                style: new TextStyle(fontSize: 14.0, color: Colors.white, fontWeight: FontWeight.normal)),
+                style: new TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.normal)),
             onPressed: () {
-              Navigator.pushNamed(context, RoutePaths.Booking_Appoinment_Done_View);
+              Navigator.pushNamed(
+                  context, RoutePaths.Booking_Appoinment_Done_View);
               debugPrint("Clicked On Proceed");
             },
           ),
@@ -108,9 +115,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
             hintText: "Ammount",
             contentPadding: const EdgeInsets.only(left: 20, right: 20)),
         style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: primaryColor ),
+            fontSize: 20, fontWeight: FontWeight.w600, color: primaryColor),
       ),
     );
   }
@@ -235,7 +240,9 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
               onChanged: (_) {},
             ),
           ),
-          SizedBox(height: 14,),
+          SizedBox(
+            height: 14,
+          ),
           Text(
             "Name of the cardholder",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
@@ -256,7 +263,6 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
               ),
             ),
             child: TextFormField(
-
                 maxLines: 1,
                 enabled: true,
                 textInputAction: TextInputAction.next,
@@ -266,8 +272,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     fillColor: Colors.white,
-                    filled: true)
-            ),
+                    filled: true)),
           ),
           SizedBox(
             height: 16,
@@ -308,8 +313,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     fillColor: Colors.white,
-                    filled: true)
-            ),
+                    filled: true)),
           ),
           SizedBox(
             height: 16,
@@ -325,7 +329,8 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                     children: <Widget>[
                       Text(
                         "Expiry Date",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                       SizedBox(
                         height: 8,
@@ -343,24 +348,24 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                           ),
                         ),
                         child: TextFormField(
-                            inputFormatters: [
-                              MaskedTextInputFormatter(
-                                mask: 'MM/YY',
-                                separator: '/',
-                              ),
-                            ],
-                            maxLines: 1,
-                            enabled: true,
-                            textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.number,
-                            onFieldSubmitted: (term) {
-                              //_fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
-                            },
-                            decoration: InputDecoration(
-                                hintText: 'MM/YY',
-                                border: InputBorder.none,
-                                fillColor: Colors.white,
-                                filled: true),
+                          inputFormatters: [
+                            MaskedTextInputFormatter(
+                              mask: 'MM/YY',
+                              separator: '/',
+                            ),
+                          ],
+                          maxLines: 1,
+                          enabled: true,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.number,
+                          onFieldSubmitted: (term) {
+                            //_fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
+                          },
+                          decoration: InputDecoration(
+                              hintText: 'MM/YY',
+                              border: InputBorder.none,
+                              fillColor: Colors.white,
+                              filled: true),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -368,7 +373,9 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                   ),
                 ),
               ),
-              SizedBox(width: 20,),
+              SizedBox(
+                width: 20,
+              ),
               Expanded(
                 flex: 3,
                 child: Container(
@@ -377,7 +384,8 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                     children: <Widget>[
                       Text(
                         "Security Code (CVV)",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                       SizedBox(
                         height: 8,

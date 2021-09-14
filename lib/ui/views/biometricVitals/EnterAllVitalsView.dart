@@ -1,20 +1,12 @@
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lottie/lottie.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
+import 'package:intl/intl.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/GetMyVitalsHistory.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/core/viewmodels/views/patients_vitals.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/SimpleTimeSeriesChart.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:intl/intl.dart';
-
 
 class EnterAllVitalsView extends StatefulWidget {
   @override
@@ -22,7 +14,6 @@ class EnterAllVitalsView extends StatefulWidget {
 }
 
 class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
-
   var model = PatientVitalsViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   var dateFormatStandard = DateFormat("MMM dd, yyyy");
@@ -44,19 +35,14 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
   ProgressDialog progressDialog;
   String unit = 'Kg';
 
-  CountryDetails details = CountryCodes.detailsForLocale();
-  Locale locale = CountryCodes.getDeviceLocale();
-
   var scrollContainer = new ScrollController();
   ScrollController _scrollController = ScrollController();
 
-
-
   @override
   void initState() {
-    debugPrint('Country Local ==> ${details.alpha2Code}');
+    debugPrint('Country Local ==> ${getCurrentLocale()}');
     // TODO: implement initState
-    if(details.alpha2Code == "US"){
+    if (getCurrentLocale() == "US") {
       unit = 'lbs';
     }
     super.initState();
@@ -68,93 +54,131 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child:  Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: SingleChildScrollView(
-                  controller: _scrollController,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      //const SizedBox(height: 16,),
-                      weightFeilds(),
-                      const SizedBox(height: 8,),
-                      bloodPresureFeilds(),
-                      const SizedBox(height: 8,),
-                      bloodGlucoseFeilds(),
-                      const SizedBox(height: 8,),
-                      bloodOxygenSaturationFeilds(),
-                      const SizedBox(height: 8,),
-                      pulseRateFeilds(),
-                      const SizedBox(height: 8,),
-                      bodyTempratureFeilds(),
-                      const SizedBox(height: 32,),
-                      Align(
-                        alignment: Alignment.center,
-                        child: model.busy ? SizedBox( width: 32, height: 32, child: CircularProgressIndicator()) :
-                        Semantics(
-                          label: 'Save',
-                          child: InkWell(
-                            onTap: (){
-                              toastDisplay = true;
-                              /*if(_controller.text.toString().isEmpty){
-                                showToast('Please enter your pulse');
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  //const SizedBox(height: 16,),
+                  weightFeilds(),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  bloodPresureFeilds(),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  bloodGlucoseFeilds(),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  bloodOxygenSaturationFeilds(),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  pulseRateFeilds(),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  bodyTempratureFeilds(),
+                  const SizedBox(
+                    height: 32,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: model.busy
+                        ? SizedBox(
+                            width: 32,
+                            height: 32,
+                            child: CircularProgressIndicator())
+                        : Semantics(
+                            label: 'Save',
+                            child: InkWell(
+                              onTap: () {
+                                toastDisplay = true;
+                                /*if(_controller.text.toString().isEmpty){
+                                showToast('Please enter your pulse', context);
                               }else{
                                 addvitals();
                               }*/
-                              if(!_weightController.text.toString().isEmpty) {
-                                addWeightVitals();
-                              }
-                              if(!_systolicController.text.toString().isEmpty && !_diastolicController.text.toString().isEmpty) {
-                                addBPVitals();
-                              }
-                              if(!_bloodGlucosecontroller.text.toString().isEmpty) {
-                                addBloodGlucoseVitals();
-                              }
-                              if(!_bloodOxygenSaturationController.text.toString().isEmpty) {
-                                addBloodOxygenSaturationVitals();
-                              }
-                              if(!_pulseRateController.text.toString().isEmpty) {
-                                addPulseVitals();
-                              }
-                              if(!_bodyTempratureController.text.toString().isEmpty) {
-                                addTemperatureVitals();
-                              }
-                            },
-                            child: Container(
-                                height: 40,
-                                width: 200,
-                                padding: EdgeInsets.symmetric(horizontal: 16.0, ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(24.0),
-                                  border: Border.all(color: primaryColor, width: 1),
-                                  color: Colors.deepPurple,),
-                                child: Center(
-                                  child: Text(
-                                    "Save",
-                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
-                                    textAlign: TextAlign.center,
+                                if (!_weightController.text
+                                    .toString()
+                                    .isEmpty) {
+                                  addWeightVitals();
+                                }
+                                if (!_systolicController.text
+                                        .toString()
+                                        .isEmpty &&
+                                    !_diastolicController.text
+                                        .toString()
+                                        .isEmpty) {
+                                  addBPVitals();
+                                }
+                                if (!_bloodGlucosecontroller.text
+                                    .toString()
+                                    .isEmpty) {
+                                  addBloodGlucoseVitals();
+                                }
+                                if (!_bloodOxygenSaturationController.text
+                                    .toString()
+                                    .isEmpty) {
+                                  addBloodOxygenSaturationVitals();
+                                }
+                                if (!_pulseRateController.text
+                                    .toString()
+                                    .isEmpty) {
+                                  addPulseVitals();
+                                }
+                                if (!_bodyTempratureController.text
+                                    .toString()
+                                    .isEmpty) {
+                                  addTemperatureVitals();
+                                }
+                              },
+                              child: Container(
+                                  height: 40,
+                                  width: 200,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 16.0,
                                   ),
-                                )
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(24.0),
+                                    border: Border.all(
+                                        color: primaryColor, width: 1),
+                                    color: Colors.deepPurple,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Save",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 14),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )),
                             ),
                           ),
-                        ),
-                      ),
-                      const SizedBox(height: 48,),
-                    ],
                   ),
-                ),
+                  const SizedBox(
+                    height: 48,
+                  ),
+                ],
               ),
             ),
           ),
+        ),
+      ),
     );
   }
 
-  Widget weightFeilds(){
+  Widget weightFeilds() {
     return Card(
       elevation: 8,
       child: Padding(
@@ -170,10 +194,15 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   size: 24,
                   color: primaryColor,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 Text(
                   "Enter your weight",
-                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w500, fontSize: 14),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
                 RichText(
@@ -188,22 +217,20 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 ),
               ],
             ),
-            const SizedBox(height: 8,),
+            const SizedBox(
+              height: 8,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-
                 Expanded(
                   flex: 8,
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 8.0),
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
                     decoration: BoxDecoration(
-                        borderRadius:
-                        BorderRadius.circular(8.0),
-                        border: Border.all(
-                            color: primaryColor, width: 1),
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
                       label: 'weight',
@@ -211,21 +238,23 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           controller: _weightController,
                           focusNode: _weightFocus,
                           maxLines: 1,
-                          textInputAction:
-                          TextInputAction.next,
+                          textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {
                             _fieldFocusChange(
-                                context,
-                                _weightFocus,
-                                _systolicFocus);
+                                context, _weightFocus, _systolicFocus);
                           },
                           inputFormatters: [
-                            new BlacklistingTextInputFormatter(new RegExp('[\\,|\\+|\\-]')),
+                            new BlacklistingTextInputFormatter(
+                                new RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
-                              hintText: unit == "lbs" ? "(100 to 200)" : "(50 to 100)",
-                              hintStyle: TextStyle(fontSize: 12, ),
+                              hintText: unit == "lbs"
+                                  ? "(100 to 200)"
+                                  : "(50 to 100)",
+                              hintStyle: TextStyle(
+                                fontSize: 12,
+                              ),
                               contentPadding: EdgeInsets.all(0),
                               border: InputBorder.none,
                               fillColor: Colors.white,
@@ -241,7 +270,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     );
   }
 
-  Widget bloodPresureFeilds(){
+  Widget bloodPresureFeilds() {
     return Card(
       elevation: 8,
       child: Padding(
@@ -257,74 +286,87 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     size: 24,
                     color: primaryColor,
                   ),
-                  SizedBox(width: 8,),
+                  SizedBox(
+                    width: 8,
+                  ),
                   Text(
                     "Enter your blood pressure",
-                    style: TextStyle(color: primaryColor, fontWeight: FontWeight.w500, fontSize: 14),
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
                 ],
               ),
-              const SizedBox(height: 8,),
+              const SizedBox(
+                height: 8,
+              ),
               Row(
                 children: [
                   Expanded(
                     flex: 1,
                     child: Text(
                       "Systolic (mmHg)",
-                      style: TextStyle(color: primaryColor, fontWeight: FontWeight.w500, fontSize: 12),
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12),
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  SizedBox(width: 8,),
+                  SizedBox(
+                    width: 8,
+                  ),
                   Expanded(
                     flex: 1,
                     child: Text(
                       "Diastolic (mmHg)",
-                      style: TextStyle(color: primaryColor, fontWeight: FontWeight.w500, fontSize: 12),
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12),
                       textAlign: TextAlign.left,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 8,),
+              SizedBox(
+                height: 8,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment:
-                CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                     flex: 1,
                     child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 8.0),
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
                       decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.circular(8.0),
-                          border: Border.all(
-                              color: primaryColor, width: 1),
+                          borderRadius: BorderRadius.circular(8.0),
+                          border: Border.all(color: primaryColor, width: 1),
                           color: Colors.white),
                       child: Semantics(
                         label: 'Systolic',
                         child: TextFormField(
                             inputFormatters: [
-                              new BlacklistingTextInputFormatter(new RegExp('[\\,|\\+|\\-]')),
+                              new BlacklistingTextInputFormatter(
+                                  new RegExp('[\\,|\\+|\\-]')),
                             ],
                             controller: _systolicController,
                             focusNode: _systolicFocus,
                             maxLines: 1,
-                            textInputAction:
-                            TextInputAction.next,
+                            textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.number,
                             onFieldSubmitted: (term) {
                               _fieldFocusChange(
-                                  context,
-                                  _systolicFocus,
-                                  _diastolicFocus);
+                                  context, _systolicFocus, _diastolicFocus);
                             },
                             decoration: InputDecoration(
                                 hintText: "(80 to 120)",
-                                hintStyle: TextStyle(fontSize: 12, ),
+                                hintStyle: TextStyle(
+                                  fontSize: 12,
+                                ),
                                 contentPadding: EdgeInsets.all(0),
                                 border: InputBorder.none,
                                 fillColor: Colors.white,
@@ -332,17 +374,16 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 8,),
+                  SizedBox(
+                    width: 8,
+                  ),
                   Expanded(
                     flex: 1,
                     child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 8.0),
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
                       decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.circular(8.0),
-                          border: Border.all(
-                              color: primaryColor, width: 1),
+                          borderRadius: BorderRadius.circular(8.0),
+                          border: Border.all(color: primaryColor, width: 1),
                           color: Colors.white),
                       child: Semantics(
                         label: 'diastolic',
@@ -350,21 +391,21 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                             controller: _diastolicController,
                             focusNode: _diastolicFocus,
                             maxLines: 1,
-                            textInputAction:
-                            TextInputAction.next,
+                            textInputAction: TextInputAction.next,
                             inputFormatters: [
-                              new BlacklistingTextInputFormatter(new RegExp('[\\,|\\+|\\-]')),
+                              new BlacklistingTextInputFormatter(
+                                  new RegExp('[\\,|\\+|\\-]')),
                             ],
                             keyboardType: TextInputType.number,
                             onFieldSubmitted: (term) {
                               _fieldFocusChange(
-                                  context,
-                                  _diastolicFocus,
-                                  _bloodGlucoseFocus);
+                                  context, _diastolicFocus, _bloodGlucoseFocus);
                             },
                             decoration: InputDecoration(
                                 hintText: "(60 to 80)",
-                                hintStyle: TextStyle(fontSize: 12, ),
+                                hintStyle: TextStyle(
+                                  fontSize: 12,
+                                ),
                                 contentPadding: EdgeInsets.all(0),
                                 border: InputBorder.none,
                                 fillColor: Colors.white,
@@ -476,12 +517,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 ],
               ),*/
             ],
-          )
-      ),
+          )),
     );
   }
 
-  Widget bloodGlucoseFeilds(){
+  Widget bloodGlucoseFeilds() {
     return Card(
       elevation: 8,
       child: Padding(
@@ -497,10 +537,15 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   size: 24,
                   color: primaryColor,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 Text(
                   "Enter your blood glucose",
-                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w500, fontSize: 14),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
                 RichText(
@@ -515,7 +560,9 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 ),
               ],
             ),
-            const SizedBox(height: 8,),
+            const SizedBox(
+              height: 8,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -523,13 +570,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 Expanded(
                   flex: 8,
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 8.0),
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
                     decoration: BoxDecoration(
-                        borderRadius:
-                        BorderRadius.circular(8.0),
-                        border: Border.all(
-                            color: primaryColor, width: 1),
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
                       label: 'blood_glucose',
@@ -537,18 +581,21 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           focusNode: _bloodGlucoseFocus,
                           controller: _bloodGlucosecontroller,
                           maxLines: 1,
-                          textInputAction:
-                          TextInputAction.next,
+                          textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {
-                              _fieldFocusChange(context, _bloodGlucoseFocus, _bloodOxygenSaturationFocus);
+                            _fieldFocusChange(context, _bloodGlucoseFocus,
+                                _bloodOxygenSaturationFocus);
                           },
                           inputFormatters: [
-                            new BlacklistingTextInputFormatter(new RegExp('[\\,|\\+|\\-]')),
+                            new BlacklistingTextInputFormatter(
+                                new RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
                               hintText: "(100 to 125)",
-                              hintStyle: TextStyle(fontSize: 12, ),
+                              hintStyle: TextStyle(
+                                fontSize: 12,
+                              ),
                               contentPadding: EdgeInsets.all(0),
                               border: InputBorder.none,
                               fillColor: Colors.white,
@@ -564,7 +611,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     );
   }
 
-  Widget bloodOxygenSaturationFeilds(){
+  Widget bloodOxygenSaturationFeilds() {
     return Card(
       elevation: 8,
       child: Padding(
@@ -580,10 +627,15 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   size: 24,
                   color: primaryColor,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 Text(
                   "Enter your blood oxygen saturation",
-                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w500, fontSize: 14),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
                 RichText(
@@ -598,22 +650,20 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 ),
               ],
             ),
-            const SizedBox(height: 8,),
+            const SizedBox(
+              height: 8,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-
                 Expanded(
                   flex: 8,
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 8.0),
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
                     decoration: BoxDecoration(
-                        borderRadius:
-                        BorderRadius.circular(8.0),
-                        border: Border.all(
-                            color: primaryColor, width: 1),
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
                       label: 'blood_oxygen_saturation',
@@ -621,18 +671,21 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           focusNode: _bloodOxygenSaturationFocus,
                           controller: _bloodOxygenSaturationController,
                           maxLines: 1,
-                          textInputAction:
-                          TextInputAction.next,
+                          textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {
-                              _fieldFocusChange(context, _bloodOxygenSaturationFocus, _pulseRateFocus);
+                            _fieldFocusChange(context,
+                                _bloodOxygenSaturationFocus, _pulseRateFocus);
                           },
                           inputFormatters: [
-                            new BlacklistingTextInputFormatter(new RegExp('[\\,|\\+|\\-]')),
+                            new BlacklistingTextInputFormatter(
+                                new RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
                               hintText: "(92 to 100)",
-                              hintStyle: TextStyle(fontSize: 12, ),
+                              hintStyle: TextStyle(
+                                fontSize: 12,
+                              ),
                               contentPadding: EdgeInsets.all(0),
                               border: InputBorder.none,
                               fillColor: Colors.white,
@@ -648,7 +701,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     );
   }
 
-  Widget pulseRateFeilds(){
+  Widget pulseRateFeilds() {
     return Card(
       elevation: 8,
       child: Padding(
@@ -664,10 +717,15 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   size: 24,
                   color: primaryColor,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 Text(
                   "Enter your pulse rate",
-                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w500, fontSize: 14),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
                 RichText(
@@ -682,22 +740,20 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 ),
               ],
             ),
-            const SizedBox(height: 8,),
+            const SizedBox(
+              height: 8,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-
                 Expanded(
                   flex: 8,
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 8.0),
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
                     decoration: BoxDecoration(
-                        borderRadius:
-                        BorderRadius.circular(8.0),
-                        border: Border.all(
-                            color: primaryColor, width: 1),
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
                       label: 'pulse_rate',
@@ -705,14 +761,15 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           focusNode: _pulseRateFocus,
                           controller: _pulseRateController,
                           maxLines: 1,
-                          textInputAction:
-                          TextInputAction.next,
+                          textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {
-                              _fieldFocusChange(context, _pulseRateFocus, _bodyTempratureFocus);
+                            _fieldFocusChange(
+                                context, _pulseRateFocus, _bodyTempratureFocus);
                           },
                           inputFormatters: [
-                            new BlacklistingTextInputFormatter(new RegExp('[\\,|\\+|\\-]')),
+                            new BlacklistingTextInputFormatter(
+                                new RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
                               hintText: "(65 to 95)",
@@ -724,17 +781,15 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     ),
                   ),
                 ),
-
               ],
             ),
-
           ],
         ),
       ),
     );
   }
 
-  Widget bodyTempratureFeilds(){
+  Widget bodyTempratureFeilds() {
     return Card(
       elevation: 8,
       child: Padding(
@@ -749,10 +804,15 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   AssetImage('res/images/ic_thermometer.png'),
                   color: primaryColor,
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Text(
                   "Enter your body temperature",
-                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w500, fontSize: 14),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
                 RichText(
@@ -767,22 +827,20 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 ),
               ],
             ),
-            const SizedBox(height: 8,),
+            const SizedBox(
+              height: 8,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-
                 Expanded(
                   flex: 8,
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 8.0),
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
                     decoration: BoxDecoration(
-                        borderRadius:
-                        BorderRadius.circular(8.0),
-                        border: Border.all(
-                            color: primaryColor, width: 1),
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
                       label: 'body_temperature',
@@ -790,18 +848,18 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           focusNode: _bodyTempratureFocus,
                           controller: _bodyTempratureController,
                           maxLines: 1,
-                          textInputAction:
-                          TextInputAction.done,
+                          textInputAction: TextInputAction.done,
                           keyboardType: TextInputType.number,
-                          onFieldSubmitted: (term) {
-
-                          },
+                          onFieldSubmitted: (term) {},
                           inputFormatters: [
-                            new BlacklistingTextInputFormatter(new RegExp('[\\,|\\+|\\-]')),
+                            new BlacklistingTextInputFormatter(
+                                new RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
                               hintText: "(95 to 100)",
-                              hintStyle: TextStyle(fontSize: 12, ),
+                              hintStyle: TextStyle(
+                                fontSize: 12,
+                              ),
                               contentPadding: EdgeInsets.all(0),
                               border: InputBorder.none,
                               fillColor: Colors.white,
@@ -809,7 +867,6 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ],
@@ -824,28 +881,25 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-
   addWeightVitals() async {
     try {
-
       double entertedWeight = double.parse(_weightController.text.toString());
 
-      if(unit == 'lbs'){
+      if (unit == 'lbs') {
         entertedWeight = entertedWeight / 2.20462;
       }
       var map = new Map<String, dynamic>();
       map['Weight'] = entertedWeight.toString();
 
-      BaseResponse baseResponse  = await model.addMyVitals('weight', map);
+      BaseResponse baseResponse = await model.addMyVitals('weight', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {
-      }
+      } else {}
     } catch (e) {
       model.setBusy(false);
-      showToast(e.toString());
-      debugPrint('Error ==> '+e.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 
@@ -855,16 +909,16 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       map['SystolicBloodPressure'] = _systolicController.text.toString();
       map['DiastolicBloodPressure'] = _diastolicController.text.toString();
 
-      BaseResponse baseResponse  = await model.addMyVitals('blood-pressure', map);
+      BaseResponse baseResponse =
+          await model.addMyVitals('blood-pressure', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {
-      }
+      } else {}
     } catch (e) {
       model.setBusy(false);
-      showToast(e.toString());
-      debugPrint('Error ==> '+e.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 
@@ -873,34 +927,34 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       var map = new Map<String, dynamic>();
       map['BloodGlucose'] = _bloodGlucosecontroller.text.toString();
 
-      BaseResponse baseResponse  = await model.addMyVitals('blood-sugar', map);
+      BaseResponse baseResponse = await model.addMyVitals('blood-sugar', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {
-      }
+      } else {}
     } catch (e) {
       model.setBusy(false);
-      showToast(e.toString());
-      debugPrint('Error ==> '+e.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 
   addBloodOxygenSaturationVitals() async {
     try {
       var map = new Map<String, dynamic>();
-      map['BloodOxygenSaturation'] = _bloodOxygenSaturationController.text.toString();
+      map['BloodOxygenSaturation'] =
+          _bloodOxygenSaturationController.text.toString();
 
-      BaseResponse baseResponse  = await model.addMyVitals('blood-oxygen-saturation', map);
+      BaseResponse baseResponse =
+          await model.addMyVitals('blood-oxygen-saturation', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {
-      }
+      } else {}
     } catch (e) {
       model.setBusy(false);
-      showToast(e.toString());
-      debugPrint('Error ==> '+e.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 
@@ -909,17 +963,15 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       var map = new Map<String, dynamic>();
       map['Pulse'] = _pulseRateController.text.toString();
 
-      BaseResponse baseResponse  = await model.addMyVitals('pulse', map);
+      BaseResponse baseResponse = await model.addMyVitals('pulse', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {
-
-      }
+      } else {}
     } catch (e) {
       model.setBusy(false);
-      showToast(e.toString());
-      debugPrint('Error ==> '+e.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 
@@ -928,30 +980,26 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       var map = new Map<String, dynamic>();
       map['Temperature'] = _bodyTempratureController.text.toString();
 
-      BaseResponse baseResponse  = await model.addMyVitals('temperature', map);
+      BaseResponse baseResponse = await model.addMyVitals('temperature', map);
 
       if (baseResponse.status == 'success') {
         //showToast('Record added successfully');
         clearAllFeilds();
-      } else {
-      }
+      } else {}
     } catch (e) {
       model.setBusy(false);
-      showToast(e.toString());
-      debugPrint('Error ==> '+e.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 
   bool toastDisplay = true;
 
-  clearAllFeilds(){
-
-    if(toastDisplay){
-      _scrollController.animateTo(
-          0.0,
-          duration: Duration(seconds: 2),
-          curve: Curves.ease);
-      showToast("Record Updated Successfully");
+  clearAllFeilds() {
+    if (toastDisplay) {
+      _scrollController.animateTo(0.0,
+          duration: Duration(seconds: 2), curve: Curves.ease);
+      showToast("Record Updated Successfully", context);
       toastDisplay = false;
     }
 
@@ -989,6 +1037,5 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     _bodyTempratureController.selection = TextSelection.fromPosition(
       TextPosition(offset: _bodyTempratureController.text.length),
     );
-
   }
 }

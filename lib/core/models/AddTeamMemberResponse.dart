@@ -54,11 +54,11 @@ class TeamMember {
 
   TeamMember(
       {this.id,
-        this.carePlanId,
-        this.userId,
-        this.role,
-        this.roleName,
-        this.details});
+      this.carePlanId,
+      this.userId,
+      this.role,
+      this.roleName,
+      this.details});
 
   TeamMember.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -67,7 +67,7 @@ class TeamMember {
     role = json['Role'];
     roleName = json['RoleName'];
     details =
-    json['Details'] != null ? new Details.fromJson(json['Details']) : null;
+        json['Details'] != null ? new Details.fromJson(json['Details']) : null;
   }
 
   Map<String, dynamic> toJson() {

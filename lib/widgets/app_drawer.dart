@@ -7,18 +7,14 @@ import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/ui/views/login_view.dart';
 import 'package:paitent/ui/views/login_with_otp_view.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 
-
 class AppDrawer extends StatefulWidget {
   @override
   _AppDrawerState createState() => _AppDrawerState();
-
 }
-
 
 class _AppDrawerState extends State<AppDrawer> {
   var _sharedPrefUtils = new SharedPrefUtils();
@@ -37,10 +33,11 @@ class _AppDrawerState extends State<AppDrawer> {
   loadSharedPrefs() async {
     try {
       UserData user = UserData.fromJson(await _sharedPrefUtils.read("user"));
-      Patient patient = Patient.fromJson(await _sharedPrefUtils.read("patientDetails"));
+      Patient patient =
+          Patient.fromJson(await _sharedPrefUtils.read("patientDetails"));
       //debugPrint(user.toJson().toString());
       setState(() {
-        name = patient.firstName+' '+patient.lastName;
+        name = patient.firstName + ' ' + patient.lastName;
 
         mobileNumber = patient.phoneNumber;
         profileImage = patient.imageURL == null ? "" : patient.imageURL;
@@ -80,7 +77,7 @@ class _AppDrawerState extends State<AppDrawer> {
             children: <Widget>[
               _createHeader(),
               InkWell(
-                onTap:(){
+                onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.Edit_Profile);
                 },
                 child: Container(
@@ -88,14 +85,20 @@ class _AppDrawerState extends State<AppDrawer> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(width: 40,),
-                      Text("My Profile", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),),
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        "My Profile",
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w700),
+                      ),
                     ],
                   ),
                 ),
               ),
               InkWell(
-                onTap:(){
+                onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.My_Vitals);
                 },
                 child: Container(
@@ -103,8 +106,14 @@ class _AppDrawerState extends State<AppDrawer> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(width: 40,),
-                      Text("My Vitals", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),),
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        "My Vitals",
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w700),
+                      ),
                     ],
                   ),
                 ),
@@ -125,22 +134,29 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
               InkWell(
-                onTap:(){
-                  Navigator.popAndPushNamed(context, RoutePaths.My_Medical_Profile);
+                onTap: () {
+                  Navigator.popAndPushNamed(
+                      context, RoutePaths.My_Medical_Profile);
                 },
                 child: Container(
                   height: 48,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(width: 40,),
-                      Text("My Medical Profile", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),),
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        "My Medical Profile",
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w700),
+                      ),
                     ],
                   ),
                 ),
               ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.My_Medications);
                 },
                 child: Container(
@@ -148,14 +164,20 @@ class _AppDrawerState extends State<AppDrawer> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(width: 40,),
-                      Text("My Medications", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),),
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        "My Medications",
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w700),
+                      ),
                     ],
                   ),
                 ),
               ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
                 },
                 child: Container(
@@ -163,8 +185,35 @@ class _AppDrawerState extends State<AppDrawer> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(width: 40,),
-                      Text("My Activity", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),),
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        "My Activity",
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.popAndPushNamed(context, RoutePaths.My_Nutrition);
+                },
+                child: Container(
+                  height: 48,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        "My Nutrition",
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w700),
+                      ),
                     ],
                   ),
                 ),
@@ -172,12 +221,13 @@ class _AppDrawerState extends State<AppDrawer> {
               Visibility(
                 visible: false,
                 child: InkWell(
-                  onTap: (){
-                    if(startCarePlanResponseGlob == null) {
-                      Navigator.popAndPushNamed(context, RoutePaths
-                          .Select_Care_Plan);
-                    }else{
-                      Navigator.popAndPushNamed(context, RoutePaths.My_Care_Plan);
+                  onTap: () {
+                    if (startCarePlanResponseGlob == null) {
+                      Navigator.popAndPushNamed(
+                          context, RoutePaths.Select_Care_Plan);
+                    } else {
+                      Navigator.popAndPushNamed(
+                          context, RoutePaths.My_Care_Plan);
                     }
                   },
                   child: Container(
@@ -185,8 +235,14 @@ class _AppDrawerState extends State<AppDrawer> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        SizedBox(width: 40,),
-                        Text("My Care Plan", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Text(
+                          "My Care Plan",
+                          style: TextStyle(
+                              color: primaryColor, fontWeight: FontWeight.w700),
+                        ),
                       ],
                     ),
                   ),
@@ -254,8 +310,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
 
-
-                 /* InkWell(
+              /* InkWell(
                 onTap: (){
 
                 },
@@ -271,23 +326,29 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
               InkWell(
-                onTap: (){
-                  Navigator.popAndPushNamed(context, RoutePaths.ABOUT_REAN_CARE);
+                onTap: () {
+                  Navigator.popAndPushNamed(
+                      context, RoutePaths.ABOUT_REAN_CARE);
                 },
                 child: Container(
                   height: 48,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(width: 40,),
-                      Text("About REAN", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),),
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        "About REAN",
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w700),
+                      ),
                     ],
                   ),
                 ),
               ),
-
               InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.CONTACT_US);
                 },
                 child: Container(
@@ -295,18 +356,24 @@ class _AppDrawerState extends State<AppDrawer> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(width: 40,),
-                      Text("Contact Us", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),),
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        "Contact Us",
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w700),
+                      ),
                     ],
                   ),
                 ),
               ),
-
-              SizedBox(height: 48,),
-
+              SizedBox(
+                height: 48,
+              ),
               Semantics(
                 child: InkWell(
-                  onTap: (){
+                  onTap: () {
                     _logoutConfirmation();
                   },
                   child: Container(
@@ -315,8 +382,14 @@ class _AppDrawerState extends State<AppDrawer> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        SizedBox(width: 40,),
-                        Text("Logout", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Text(
+                          "Logout",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w700),
+                        ),
                       ],
                     ),
                   ),
@@ -328,16 +401,28 @@ class _AppDrawerState extends State<AppDrawer> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(width: 40,),
-                      Text("Version "+(_baseUrl.contains('dev') ? "Dev_" : _baseUrl.contains('uat') ? "Alpha_" : "")+_packageInfo.version,
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w200, color: primaryColor),
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        "Version " +
+                            (_baseUrl.contains('dev')
+                                ? "Dev_"
+                                : _baseUrl.contains('uat')
+                                    ? "Alpha_"
+                                    : "") +
+                            _packageInfo.version,
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w200,
+                            color: primaryColor),
                       ),
                     ],
                   ),
                 ),
               ),
 
-             /* _createDrawerItem(
+              /* _createDrawerItem(
                   icon: Icons.note,
                   text: 'Notes',
                   onTap: () =>
@@ -350,7 +435,7 @@ class _AppDrawerState extends State<AppDrawer> {
               _createDrawerItem(icon: Icons.stars, text: 'Useful Links'),
               Divider(),
               _createDrawerItem(icon: Icons.bug_report, text: 'Report an issue'),*/
-             /* ListTile(
+              /* ListTile(
                 title: Text('0.0.1'),
                 onTap: () {},
               ),*/
@@ -394,8 +479,8 @@ class _AppDrawerState extends State<AppDrawer> {
               _sharedPrefUtils.clearAll();
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (context) {
-                    return LoginWithOTPView();
-                  }), (Route<dynamic> route) => false);
+                return LoginWithOTPView();
+              }), (Route<dynamic> route) => false);
             },
           ),
           FlatButton(
@@ -415,55 +500,73 @@ class _AppDrawerState extends State<AppDrawer> {
             image: DecorationImage(
                 fit: BoxFit.fill,
                 image: AssetImage('res/images/drawer_header_background.png'))),
-        child:*/ Container(
-          height: 300,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                height: 88,
-                width: 88,
-                child: Stack(
-                  children: <Widget>[
-                    /*CircleAvatar(
+        child:*/
+        Container(
+      height: 300,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            height: 88,
+            width: 88,
+            child: Stack(
+              children: <Widget>[
+                /*CircleAvatar(
                       radius: 88,
                       backgroundColor: Colors.white,
                       child: CircleAvatar(
                           radius: 88,
                           backgroundImage:  profileImage == "" ? AssetImage('res/images/profile_placeholder.png') : new NetworkImage(profileImage)),
                     ),*/
-                    Container(
-                      width: 120.0,
-                      height: 120.0,
-                      decoration: new BoxDecoration(
-                        color: const Color(0xff7c94b6),
-                        image: new DecorationImage(
-                          image: profileImage == ""
-                              ? AssetImage('res/images/profile_placeholder.png')
-                              : new CachedNetworkImageProvider(profileImage),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
-                        border: new Border.all(
-                          color: Colors.deepPurple,
-                          width: 2.0,
-                        ),
-                      ),
+                Container(
+                  width: 120.0,
+                  height: 120.0,
+                  decoration: new BoxDecoration(
+                    color: const Color(0xff7c94b6),
+                    image: new DecorationImage(
+                      image: profileImage == ""
+                          ? AssetImage('res/images/profile_placeholder.png')
+                          : new CachedNetworkImageProvider(profileImage),
+                      fit: BoxFit.cover,
                     ),
-                    /*Align(
+                    borderRadius:
+                        new BorderRadius.all(new Radius.circular(50.0)),
+                    border: new Border.all(
+                      color: Colors.deepPurple,
+                      width: 2.0,
+                    ),
+                  ),
+                ),
+                /*Align(
                       alignment: Alignment.topRight,
                       child: InkWell( onTap: (){ }, child: SizedBox( height: 32, width: 32, child: new Image.asset('res/images/ic_camera.png'))),
                     )*/
-                  ],
-                ),
-              ),
-              SizedBox(height: 8,),
-              Semantics( label: name, child: Text(name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: primaryColor), semanticsLabel: name,)),
-              Text(mobileNumber, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: textBlack), semanticsLabel: mobileNumber,),
-            ],
+              ],
+            ),
           ),
-       // )
+          SizedBox(
+            height: 8,
+          ),
+          Semantics(
+              label: name,
+              child: Text(
+                name,
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: primaryColor),
+                semanticsLabel: name,
+              )),
+          Text(
+            mobileNumber,
+            style: TextStyle(
+                fontSize: 14, fontWeight: FontWeight.w500, color: textBlack),
+            semanticsLabel: mobileNumber,
+          ),
+        ],
+      ),
+      // )
     );
   }
 
@@ -472,7 +575,6 @@ class _AppDrawerState extends State<AppDrawer> {
     return ListTile(
       title: Row(
         children: <Widget>[
-
           Padding(
             padding: EdgeInsets.only(left: 8.0),
             child: Text(text),

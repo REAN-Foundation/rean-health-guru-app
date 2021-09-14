@@ -1,12 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 
 class OnBoardingPage extends StatefulWidget {
-
   @override
   _OnBoardingPageState createState() => _OnBoardingPageState();
 }
@@ -19,12 +16,16 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   }
 
   Widget _buildFullscrenImage() {
-    return Image.asset(
-      'assets/fullscreen.jpg',
-      fit: BoxFit.cover,
-      height: double.infinity,
-      width: double.infinity,
-      alignment: Alignment.center,
+    return Semantics(
+      label: 'splash screen',
+      image: true,
+      child: Image.asset(
+        'assets/fullscreen.jpg',
+        fit: BoxFit.cover,
+        height: double.infinity,
+        width: double.infinity,
+        alignment: Alignment.center,
+      ),
     );
   }
 
@@ -34,10 +35,12 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    const bodyStyle = TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: primaryColor);
+    const bodyStyle = TextStyle(
+        fontSize: 18.0, fontWeight: FontWeight.w500, color: primaryColor);
 
     const pageDecoration = const PageDecoration(
-      titleTextStyle: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w700, color: primaryColor),
+      titleTextStyle: TextStyle(
+          fontSize: 22.0, fontWeight: FontWeight.w700, color: primaryColor),
       bodyTextStyle: bodyStyle,
       descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
       pageColor: Colors.white,
@@ -70,26 +73,22 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       pages: [
         PageViewModel(
           title: "Medications",
-          body:
-          "Include medication reminders in your daily tasks.",
+          body: "Include medication reminders in your daily tasks.",
           image: _buildImage('walkthrough_img_1.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
           title: "Vitals",
-          body:
-          "Keep a close watch on your vitals.",
+          body: "Keep a close watch on your vitals.",
           image: _buildImage('walkthrough_img_2.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
           title: "Medical Records",
-          body:
-          "Have all your documents safe in one place.",
+          body: "Have all your documents safe in one place.",
           image: _buildImage('walkthrough_img_3.png'),
           decoration: pageDecoration,
         ),
-
       ],
       onDone: () => _onIntroEnd(context),
       //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
@@ -97,9 +96,16 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       skipFlex: 0,
       nextFlex: 0,
       //rtl: true, // Display as right-to-left
-      skip: const Text('Skip', style: TextStyle(color: primaryColor),),
-      next: const Icon(Icons.arrow_forward, color: primaryColor,),
-      done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600, color: primaryColor)),
+      skip: const Text(
+        'Skip',
+        style: TextStyle(color: primaryColor),
+      ),
+      next: const Icon(
+        Icons.arrow_forward,
+        color: primaryColor,
+      ),
+      done: const Text('Done',
+          style: TextStyle(fontWeight: FontWeight.w600, color: primaryColor)),
       curve: Curves.fastLinearToSlowEaseIn,
       //controlsMargin: const EdgeInsets.all(16),
       /*controlsPadding: kIsWeb

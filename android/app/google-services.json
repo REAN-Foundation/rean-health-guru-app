@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "368263292047",
+    "firebase_url": "https://reancare-healthcare.firebaseio.com",
+    "project_id": "reancare-healthcare",
+    "storage_bucket": "reancare-healthcare.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368263292047:android:f78f6fbf11da2ea799bcfa",
+        "android_client_info": {
+          "package_name": "org.reanfoundation.patient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "368263292047-lveu06dr89ogdh8dv1ocaqs4qmd8pspk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkwb2IfD6UDOA_LF0L0uJABMYBnwvr6Ws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "368263292047-lveu06dr89ogdh8dv1ocaqs4qmd8pspk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "368263292047-a5bb2si9hviket65bi289p03jhhf028i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.reancare.paitent"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

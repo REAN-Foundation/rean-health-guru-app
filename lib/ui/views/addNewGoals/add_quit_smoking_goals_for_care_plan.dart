@@ -1,37 +1,29 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/assortedViewConfigs.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:paitent/ui/views/summary_of_my_care_plan.dart';
-import 'package:paitent/ui/views/team_of_my_care_plan.dart';
 import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/StringUtility.dart';
-import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class AddQuitSmokingGoalsForCarePlanView extends StatefulWidget {
   @override
-  _AddQuitSmokingGoalsForCarePlanViewState createState() => _AddQuitSmokingGoalsForCarePlanViewState();
+  _AddQuitSmokingGoalsForCarePlanViewState createState() =>
+      _AddQuitSmokingGoalsForCarePlanViewState();
 }
 
-class _AddQuitSmokingGoalsForCarePlanViewState extends State<AddQuitSmokingGoalsForCarePlanView> {
+class _AddQuitSmokingGoalsForCarePlanViewState
+    extends State<AddQuitSmokingGoalsForCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   // Default Radio Button Selected Item When App Starts.
   String radioButtonItem = 'Tobacco Free Till';
+
   // Group Value for Radio Button.
   int id = 1;
 
@@ -52,24 +44,23 @@ class _AddQuitSmokingGoalsForCarePlanViewState extends State<AddQuitSmokingGoals
     progressDialog = new ProgressDialog(context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child:  Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'Set Care Plan Goals',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            title: Text(
+              'Set Care Plan Goals',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700),
+            ),
+            iconTheme: new IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -79,21 +70,21 @@ class _AddQuitSmokingGoalsForCarePlanViewState extends State<AddQuitSmokingGoals
                   debugPrint("Clicked on profile icon");
                 },
               )*/
+            ],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  addGoals(),
                 ],
               ),
-              body: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        addGoals(),
-                      ],
-                    ),
-                  ),
-                ),
             ),
           ),
+        ),
+      ),
     );
   }
 
@@ -104,10 +95,17 @@ class _AddQuitSmokingGoalsForCarePlanViewState extends State<AddQuitSmokingGoals
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 16,),
-          Text("Smoking is the leading preventable cause of death and disability in the United States. Cigarette smoking results in a much higher risk of dying of coronary heart disease. Smoking robs the heart of oxygen-rich blood and increases the effects of other risk factors, including blood pressure, blood cholesterol levels and physical inactivity.", style: TextStyle(
-              color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),),
-          const SizedBox(height: 16,),
+          const SizedBox(
+            height: 16,
+          ),
+          Text(
+            "Smoking is the leading preventable cause of death and disability in the United States. Cigarette smoking results in a much higher risk of dying of coronary heart disease. Smoking robs the heart of oxygen-rich blood and increases the effects of other risk factors, including blood pressure, blood cholesterol levels and physical inactivity.",
+            style: TextStyle(
+                color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
           /*Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -133,7 +131,9 @@ class _AddQuitSmokingGoalsForCarePlanViewState extends State<AddQuitSmokingGoals
               ),
             ],
           ),*/
-          const SizedBox(height: 16,),
+          const SizedBox(
+            height: 16,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -152,8 +152,9 @@ class _AddQuitSmokingGoalsForCarePlanViewState extends State<AddQuitSmokingGoals
                 'Forever',
                 style: new TextStyle(fontSize: 14.0),
               ),
-              SizedBox(width: 40,),
-
+              SizedBox(
+                width: 40,
+              ),
             ],
           ),
           Row(
@@ -174,7 +175,9 @@ class _AddQuitSmokingGoalsForCarePlanViewState extends State<AddQuitSmokingGoals
                 'Tobacco Free Till',
                 style: new TextStyle(fontSize: 14.0),
               ),
-              SizedBox(width: 8,),
+              SizedBox(
+                width: 8,
+              ),
               Expanded(
                 child: GestureDetector(
                   child: Container(
@@ -190,33 +193,39 @@ class _AddQuitSmokingGoalsForCarePlanViewState extends State<AddQuitSmokingGoals
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0,8,0,8),
+                      padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Expanded(
                             child: Text(
                               dob,
-                              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal, fontSize: 14),
                             ),
                           ),
-                          ImageIcon(AssetImage('res/images/ic_calender.png'), size: 24, color: primaryColor,),
+                          ImageIcon(
+                            AssetImage('res/images/ic_calender.png'),
+                            size: 24,
+                            color: primaryColor,
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  onTap: (){
+                  onTap: () {
                     DatePicker.showDatePicker(context,
                         showTitleActions: true,
-                        minTime: DateTime.now().subtract(Duration(days: 0)), onChanged: (date) {
-                          print('change $date');
-                        }, onConfirm: (date) {
-                          unformatedDOB = date.toIso8601String();
-                          setState(() {
-                            dob = dateFormat.format(date);
-                          });
-                          print('confirm $date');
-                        }, currentTime: DateTime.now(), locale: LocaleType.en);
+                        minTime: DateTime.now().subtract(Duration(days: 0)),
+                        onChanged: (date) {
+                      print('change $date');
+                    }, onConfirm: (date) {
+                      unformatedDOB = date.toIso8601String();
+                      setState(() {
+                        dob = dateFormat.format(date);
+                      });
+                      print('confirm $date');
+                    }, currentTime: DateTime.now(), locale: LocaleType.en);
                   },
                 ),
               )
@@ -240,17 +249,20 @@ class _AddQuitSmokingGoalsForCarePlanViewState extends State<AddQuitSmokingGoals
                 'I Don\'t Smoke',
                 style: new TextStyle(fontSize: 14.0),
               ),
-              SizedBox(width: 40,),
-
+              SizedBox(
+                width: 40,
+              ),
             ],
           ),
-          SizedBox(height: 40,),
+          SizedBox(
+            height: 40,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
-                onTap: (){
+                onTap: () {
                   setGoals();
                   //Navigator.of(context).pop();
                   //Navigator.pushNamed(context, RoutePaths.Home);
@@ -258,19 +270,24 @@ class _AddQuitSmokingGoalsForCarePlanViewState extends State<AddQuitSmokingGoals
                 child: Container(
                     height: 40,
                     width: 120,
-                    padding: EdgeInsets.symmetric(horizontal: 16.0, ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24.0),
                       border: Border.all(color: primaryColor, width: 1),
-                      color: Colors.deepPurple,),
+                      color: Colors.deepPurple,
+                    ),
                     child: Center(
                       child: Text(
                         "Save",
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14),
                         textAlign: TextAlign.center,
                       ),
-                    )
-                ),
+                    )),
               ),
             ],
           ),
@@ -297,7 +314,10 @@ class _AddQuitSmokingGoalsForCarePlanViewState extends State<AddQuitSmokingGoals
       body['Goal'] = map;
       body['GoalSettingTaskId'] = 'e73575f5-cd5d-4177-9af8-ae1565a576a8';
 
-      BaseResponse baseResponse  = await model.addGoalsTask(startCarePlanResponseGlob.data.carePlan.id.toString(), 'physical-activity-goal' ,  body);
+      BaseResponse baseResponse = await model.addGoalsTask(
+          startCarePlanResponseGlob.data.carePlan.id.toString(),
+          'physical-activity-goal',
+          body);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
@@ -305,36 +325,40 @@ class _AddQuitSmokingGoalsForCarePlanViewState extends State<AddQuitSmokingGoals
         navigateToScreen();
       } else {
         progressDialog.hide();
-        if(baseResponse.error.contains('goal already exists for this care plan')){
+        if (baseResponse.error
+            .contains('goal already exists for this care plan')) {
           goalPlanScreenStack.removeAt(0);
           navigateToScreen();
-        }else {
-          showToast(baseResponse.message);
+        } else {
+          showToast(baseResponse.message, context);
         }
       }
     } catch (e) {
       progressDialog.hide();
       model.setBusy(false);
-      showToast(e.toString());
-      debugPrint('Error ==> '+e.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 
   navigateToScreen() {
     debugPrint('Set Goals Plan Stack ==> ${goalPlanScreenStack.length}');
-    if(goalPlanScreenStack.length == 0){
-      Navigator.pushReplacementNamed(context, RoutePaths.Determine_Action_For_Care_Plan);
-    }else if (goalPlanScreenStack.elementAt(0) == "Blood Pressure") {
-      Navigator.pushReplacementNamed(context, RoutePaths.ADD_BLOOD_PRESURE_GOALS);
-    }else if (goalPlanScreenStack.elementAt(0) == "Blood Sugar") {
+    if (goalPlanScreenStack.length == 0) {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.Determine_Action_For_Care_Plan);
+    } else if (goalPlanScreenStack.elementAt(0) == "Blood Pressure") {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.ADD_BLOOD_PRESURE_GOALS);
+    } else if (goalPlanScreenStack.elementAt(0) == "Blood Sugar") {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_GLUCOSE_GOALS);
-    }else if(goalPlanScreenStack.elementAt(0) == "Weight"){
+    } else if (goalPlanScreenStack.elementAt(0) == "Weight") {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_WEIGHT_GOALS);
-    }else if(goalPlanScreenStack.elementAt(0) == "Physical Activity"){
-      Navigator.pushReplacementNamed(context, RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS);
-    }else if(goalPlanScreenStack.elementAt(0) == "Quit Smoking"){
-      Navigator.pushReplacementNamed(context, RoutePaths.ADD_QUIT_SMOKING_GOALS);
+    } else if (goalPlanScreenStack.elementAt(0) == "Physical Activity") {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS);
+    } else if (goalPlanScreenStack.elementAt(0) == "Quit Smoking") {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.ADD_QUIT_SMOKING_GOALS);
     }
   }
-
 }

@@ -1,22 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/AddTeamMemberResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
-import 'package:paitent/core/models/TeamMemberJsonRequest.dart';
 import 'package:paitent/core/models/pharmacyListApiResponse.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/addPharmaDialog.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:intl/intl.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
@@ -34,12 +25,15 @@ class _SetUpPharmacyForCarePlanViewState
   var _searchController = new TextEditingController();
   SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
   StartCarePlanResponse startCarePlanResponse;
+
   //var parmacySearchList = new List<Pharmacies>();
 
   loadSharedPrefrance() async {
     try {
-      startCarePlanResponse = StartCarePlanResponse.fromJson(await _sharedPrefUtils.read("CarePlan"));
-      debugPrint("AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}");
+      startCarePlanResponse = StartCarePlanResponse.fromJson(
+          await _sharedPrefUtils.read("CarePlan"));
+      debugPrint(
+          "AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}");
     } catch (Excepetion) {
       // do something
       debugPrint(Excepetion);
@@ -47,7 +41,7 @@ class _SetUpPharmacyForCarePlanViewState
   }
 
   @override
-  void initState()  {
+  void initState() {
     loadSharedPrefrance();
     // TODO: implement initState
     super.initState();
@@ -101,7 +95,7 @@ class _SetUpPharmacyForCarePlanViewState
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                     /* Container(
+                      /* Container(
                         height: 40,
                         decoration: new BoxDecoration(
                             color: Colors.white,
@@ -162,9 +156,10 @@ class _SetUpPharmacyForCarePlanViewState
                               height: 32,
                               width: 32,
                               child: CircularProgressIndicator()))
-                          :*/ (parmacySearchListGlobe.length == 0)
-                          ? noDoctorFound()
-                          : doctorSearchResultListView()) //,
+                          :*/
+                              (parmacySearchListGlobe.length == 0)
+                                  ? noDoctorFound()
+                                  : doctorSearchResultListView()) //,
                     ],
                   ),
                 ),
@@ -172,37 +167,56 @@ class _SetUpPharmacyForCarePlanViewState
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  model.busy ? Container() : InkWell(
-                    onTap: (){
-                      /*parmacySearchListGlobe.clear();
+                  model.busy
+                      ? Container()
+                      : InkWell(
+                          onTap: () {
+                            /*parmacySearchListGlobe.clear();
                       parmacySearchListGlobe.addAll(parmacySearchListGlobe);*/
-                      Navigator.pushNamed(context, RoutePaths.Setup_Nurse_For_Care_Plan);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Container(
-                        height: 40,
-                        width: 160,
-                        padding: EdgeInsets.symmetric(horizontal: 16.0, ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24.0),
-                          border: Border.all(color: primaryColor, width: 1),
-                          color: Colors.deepPurple,),
-                        child:  Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Icons.arrow_back_ios, color: Colors.deepPurple, size: 16,),
-                            Text(
-                              'Next',
-                              style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14),
+                            Navigator.pushNamed(
+                                context, RoutePaths.Setup_Nurse_For_Care_Plan);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Container(
+                              height: 40,
+                              width: 160,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(24.0),
+                                border:
+                                    Border.all(color: primaryColor, width: 1),
+                                color: Colors.deepPurple,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.arrow_back_ios,
+                                    color: Colors.deepPurple,
+                                    size: 16,
+                                  ),
+                                  Text(
+                                    'Next',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                        fontSize: 14),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.white,
+                                    size: 16,
+                                  ),
+                                ],
+                              ),
                             ),
-                            Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16,),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                 ],
               )
             ],
@@ -284,8 +298,7 @@ class _SetUpPharmacyForCarePlanViewState
             decoration: new BoxDecoration(
                 color: Color(0XFFF5F8FA),
                 border: Border.all(color: Color(0XFFF5F8FA)),
-                borderRadius: new BorderRadius.all(Radius.circular(8.0))
-            ),
+                borderRadius: new BorderRadius.all(Radius.circular(8.0))),
             child: Column(
               children: <Widget>[
                 Expanded(
@@ -300,27 +313,43 @@ class _SetUpPharmacyForCarePlanViewState
                           child: Container(
                             height: 60,
                             width: 60,
-                            child:  Center(
+                            child: Center(
                               child: SizedBox(
                                 width: 60,
                                 height: 60,
                                 child: Image(
-                                  image: AssetImage('res/images/profile_placeholder.png'),
+                                  image: AssetImage(
+                                      'res/images/profile_placeholder.png'),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(width: 8,),
+                        SizedBox(
+                          width: 8,
+                        ),
                         Expanded(
                           flex: 8,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(pharmaciesDetails.firstName+' '+pharmaciesDetails.lastName, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: primaryColor)),
-                              Text(pharmaciesDetails.address, style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.w300, color: Color(0XFF909CAC)), maxLines: 2,),
-
+                              Text(
+                                  pharmaciesDetails.firstName +
+                                      ' ' +
+                                      pharmaciesDetails.lastName,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: primaryColor)),
+                              Text(
+                                pharmaciesDetails.address,
+                                style: TextStyle(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w300,
+                                    color: Color(0XFF909CAC)),
+                                maxLines: 2,
+                              ),
                             ],
                           ),
                         ),
@@ -328,7 +357,6 @@ class _SetUpPharmacyForCarePlanViewState
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -456,6 +484,7 @@ class _SetUpPharmacyForCarePlanViewState
                       Icons.close,
                       color: Colors.white,
                     ),
+                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -485,23 +514,22 @@ class _SetUpPharmacyForCarePlanViewState
                   ),
                 ],
               ),
-              Expanded(child: AddPharmaDialog( submitButtonListner: (Pharmacies pharmacies){
-                addTeamMembers(pharmacies);
-                debugPrint("Call back Received ==> ${pharmacies.firstName}");
-                Navigator.of(context, rootNavigator: true).pop();
-              }),)
+              Expanded(
+                child: AddPharmaDialog(
+                    submitButtonListner: (Pharmacies pharmacies) {
+                  addTeamMembers(pharmacies);
+                  debugPrint("Call back Received ==> ${pharmacies.firstName}");
+                  Navigator.of(context, rootNavigator: true).pop();
+                }),
+              )
             ],
           ),
-        )
-    );
+        ));
   }
 
   addTeamMembers(Pharmacies pharmacies) async {
     try {
-
       model.setBusy(true);
-
-
 
       /*TeamMemberJsonRequest jsonRequest = new TeamMemberJsonRequest();
       jsonRequest.carePlanId = startCarePlanResponse.data.carePlan.id.toString();
@@ -523,25 +551,23 @@ class _SetUpPharmacyForCarePlanViewState
       map['TeamMemberType'] = "Pharmacy";
       map['Details'] = data;
 
-
       AddTeamMemberResponse addTeamMemberResponse =
-      await model.addTeamMembers(map);
+          await model.addTeamMembers(map);
       debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
       if (addTeamMemberResponse.status == 'success') {
         setState(() {
           parmacySearchListGlobe.add(pharmacies);
         });
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       } else {
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException);
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
   }
-
 }

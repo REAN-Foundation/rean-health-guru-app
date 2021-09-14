@@ -1,9 +1,7 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:country_codes/country_codes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:paitent/core/constants/Constants.dart';
+import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/DashboardTile.dart';
@@ -11,16 +9,13 @@ import 'package:paitent/core/models/GetMyMedicationsResponse.dart';
 import 'package:paitent/core/models/KnowledgeTopicResponse.dart';
 import 'package:paitent/core/models/SearchSymptomAssesmentTempleteResponse.dart';
 import 'package:paitent/core/models/TaskSummaryResponse.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/dashboard_summary_model.dart';
 import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
-import 'package:intl/intl.dart';
 import 'package:paitent/utils/StringUtility.dart';
-import 'package:paitent/utils/TimeAgo.dart';
 
 class DashBoardVer2View extends StatefulWidget {
   Function positionToChangeNavigationBar;
@@ -51,16 +46,14 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   int incompleteTaskCount = 0;
   int completedMedicationCount = 0;
   int incompleteMedicationCount = 0;
-  Weight weight = null;
-  BloodPressure bloodPressure = null;
-  BloodSugar bloodSugar = null;
-  BloodOxygenSaturation bloodOxygenSaturation = null;
-  Pulse pulse = null;
-  Temperature temperature = null;
+  Weight weight;
+  BloodPressure bloodPressure;
+  BloodSugar bloodSugar;
+  BloodOxygenSaturation bloodOxygenSaturation;
+  Pulse pulse;
+  Temperature temperature;
   String unit = 'Kg';
-  CountryDetails details = CountryCodes.detailsForLocale();
-  Locale locale = CountryCodes.getDeviceLocale();
-  String topicId = null;
+  String topicId;
   String topicName = "";
   String briefInformation = "";
   var emergencyDetailsTextControler = TextEditingController();
@@ -73,9 +66,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
           DashboardTile.fromJson(await _sharedPrefUtils.read("emergency"));
       //debugPrint('Emergency Dashboard Tile ==> ${emergencyDashboardTile.date}');
       setState(() {});
-    }on FetchDataException catch(e) {
+    } on FetchDataException catch (e) {
       print('error caught: $e');
-    } /*catch (Excepetion) {
+    }
+    /*catch (Excepetion) {
       // do something
       debugPrint(Excepetion);
     }*/
@@ -96,9 +90,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       },
     );
     // TODO: implement initState
-    debugPrint('Country Local ==> ${details.alpha2Code}');
+    debugPrint('Country Local ==> ${getCurrentLocale()}');
     // TODO: implement initState
-    if (details.alpha2Code == "US") {
+    if (getCurrentLocale() == "US") {
       unit = 'lbs';
     }
     super.initState();
@@ -121,10 +115,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -134,7 +126,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
           .getMedicationSummary(dateFormat.format(new DateTime.now()));
       debugPrint("Medication Summary ==> ${taskSummaryResponse.toJson()}");
       if (taskSummaryResponse.status == 'success') {
-        completedMedicationCount = taskSummaryResponse.data.summary.taken + taskSummaryResponse.data.summary.missed;
+        completedMedicationCount = taskSummaryResponse.data.summary.taken +
+            taskSummaryResponse.data.summary.missed;
         incompleteMedicationCount = taskSummaryResponse.data.summary.unknown +
             taskSummaryResponse.data.summary.overdue +
             taskSummaryResponse.data.summary.upcoming;
@@ -145,10 +138,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -172,10 +163,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -439,7 +428,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     ),
                     InkWell(
                       onTap: () {
-                        showToast("Coming Soon...");
+                        showToast("Coming Soon...", context);
                       },
                       child: Container(
                         width: 100,
@@ -478,7 +467,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   children: [
                     InkWell(
                       onTap: () {
-                        showToast("Coming Soon...");
+                        showToast("Coming Soon...", context);
                       },
                       child: Container(
                         width: 100,
@@ -508,7 +497,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     ),
                     InkWell(
                       onTap: () {
-                        showToast("Coming Soon...");
+                        showToast("Coming Soon...", context);
                       },
                       child: Container(
                         width: 100,
@@ -538,7 +527,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     ),
                     InkWell(
                       onTap: () {
-                        showToast("Coming Soon...");
+                        showToast("Coming Soon...", context);
                       },
                       child: Container(
                         width: 100,
@@ -640,8 +629,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                               iconColor),
                                     ))
                                 : Semantics(
-                                  label: 'pendingTask',
-                                  child: Text(
+                                    label: 'pendingTask',
+                                    child: Text(
                                       incompleteTaskCount.toString(),
                                       style: TextStyle(
                                           fontSize: 24,
@@ -649,7 +638,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                           fontFamily: 'Montserrat',
                                           color: Colors.orange),
                                     ),
-                                ),
+                                  ),
                           ),
                         ),
                         SizedBox(
@@ -690,8 +679,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                               iconColor),
                                     ))
                                 : Semantics(
-                                  label: 'completedTask',
-                                  child: Text(
+                                    label: 'completedTask',
+                                    child: Text(
                                       completedTaskCount.toString(),
                                       style: TextStyle(
                                           fontSize: 24,
@@ -699,7 +688,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                           fontFamily: 'Montserrat',
                                           color: Colors.green),
                                     ),
-                                ),
+                                  ),
                           ),
                         ),
                         SizedBox(
@@ -929,32 +918,34 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
 
                   discription != ''
                       ? Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(discription,
-                                style: TextStyle(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(discription,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Montserrat')),
+                              Semantics(
+                                label: 'edit_emergency_text',
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.edit,
+                                    size: 24,
                                     color: primaryColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'Montserrat')),
-
-                            Semantics(
-                              label: 'edit_emergency_text',
-                              child: IconButton(
-                                icon: Icon(Icons.edit , size: 24, color: primaryColor,),
-                                onPressed: () {
-                                  _emergencyDetailDialog(true);
-                                },
+                                  ),
+                                  onPressed: () {
+                                    _emergencyDetailDialog(true);
+                                  },
+                                ),
                               ),
-                            ),
-
-                          ],
-                        ),
-                      )
+                            ],
+                          ),
+                        )
                       : Semantics(
-                        label: 'emergency_yes',
-                        child: InkWell(
+                          label: 'emergency_yes',
+                          child: InkWell(
                             onTap: () {
                               _emergencyDetailDialog(false);
                             },
@@ -979,7 +970,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               ],
                             ),
                           ),
-                      )
+                        )
                 ],
               ),
             ),
@@ -1422,8 +1413,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   }
 
   _emergencyDetailDialog(bool isEdit) async {
-
-    if(isEdit) {
+    if (isEdit) {
       emergencyDetailsTextControler.text = emergencyDashboardTile.discription;
       emergencyDetailsTextControler.selection = TextSelection.fromPosition(
         TextPosition(offset: emergencyDetailsTextControler.text.length),
@@ -1447,7 +1437,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   color: Colors.black),
               decoration: new InputDecoration(
                   labelStyle: TextStyle(fontSize: 16),
-                  labelText: 'Enter emergency details', hintText: ''),
+                  labelText: 'Enter emergency details',
+                  hintText: ''),
             ),
           ),
         ),
@@ -1462,7 +1453,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
               child: const Text('Submit'),
               onPressed: () {
                 if (emergencyDetailsTextControler.text.isEmpty) {
-                  showToast('Please enter emergency details');
+                  showToast('Please enter emergency details', context);
                 } else {
                   addMedicalEmergencyEvent(emergencyDetailsTextControler.text);
                   Navigator.of(context, rootNavigator: true).pop();
@@ -1492,7 +1483,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -1513,7 +1504,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
             'emergency',
             DashboardTile(new DateTime.now(), 'emergency', emergencyBreif)
                 .toJson());
-        showToast('Emergency details saved successfully');
+        showToast('Emergency details saved successfully', context);
         loadSharedPrefs();
         setState(() {});
       } else {
@@ -1521,7 +1512,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -1535,17 +1526,18 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
           await model.getMyMedications(dateFormat.format(new DateTime.now()));
       debugPrint("Medication ==> ${getMyMedicationsResponse.toJson()}");
       if (getMyMedicationsResponse.status == 'success') {
-        debugPrint("Medication Length ==> ${getMyMedicationsResponse.data.medConsumptions.length}");
-        if(getMyMedicationsResponse.data.medConsumptions.length != 0) {
+        debugPrint(
+            "Medication Length ==> ${getMyMedicationsResponse.data.medConsumptions.length}");
+        if (getMyMedicationsResponse.data.medConsumptions.length != 0) {
           currentMedicationList
               .addAll(getMyMedicationsResponse.data.medConsumptions);
         }
       } else {
-        showToast(getMyMedicationsResponse.message);
+        showToast(getMyMedicationsResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -1572,18 +1564,18 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
         debugPrint("Medication ==> ${baseResponse.toJson()}");
         if (baseResponse.status == 'success') {
           //progressDialog.hide();
-          showToast(baseResponse.message);
+          showToast(baseResponse.message, context);
           getMyMedications();
         } else {
-          showToast(baseResponse.message);
+          showToast(baseResponse.message, context);
           //progressDialog.hide();
-          showToast(baseResponse.message);
+          showToast(baseResponse.message, context);
         }
       }
     } catch (CustomException) {
       //progressDialog.hide();
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -1592,37 +1584,34 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
 
   recordHowAreYouFeeling(int feeling) async {
     try {
+      var body = new Map<String, dynamic>();
+      body['PatientUserId'] = patientUserId;
+      body['Feeling'] = feeling;
+      body['RecordDate'] = dateFormat.format(new DateTime.now());
+      body['Comments'] = '';
+      body['SymptomAssessmentId'];
 
-
-        var body = new Map<String, dynamic>();
-        body['PatientUserId'] = patientUserId;
-        body['Feeling'] = feeling;
-        body['RecordDate'] = dateFormat.format(new DateTime.now());
-        body['Comments'] = '';
-        body['SymptomAssessmentId'] = null;
-
-        BaseResponse baseResponse =
-        await model.recordHowAreYouFeeling(body);
-        debugPrint("Medication ==> ${baseResponse.toJson()}");
-        if (baseResponse.status == 'success') {
-          //progressDialog.hide();
-          //showToast(baseResponse.message);
-          if(feeling == 1){
-            showToast('Good to hear that');
-          }else if(feeling == 0) {
-            showToast('Please follow your medications');
-          }else if(feeling == -1) {
-            getSymptomAssesmentTemplete();
-          }
-        } else {
-          showToast(baseResponse.error);
-          //progressDialog.hide();
-         // showToast(baseResponse.message);
+      BaseResponse baseResponse = await model.recordHowAreYouFeeling(body);
+      debugPrint("Medication ==> ${baseResponse.toJson()}");
+      if (baseResponse.status == 'success') {
+        //progressDialog.hide();
+        //showToast(baseResponse.message, context);
+        if (feeling == 1) {
+          showToast('Good to hear that', context);
+        } else if (feeling == 0) {
+          showToast('Please follow your medications', context);
+        } else if (feeling == -1) {
+          getSymptomAssesmentTemplete();
         }
+      } else {
+        showToast(baseResponse.error, context);
+        //progressDialog.hide();
+        // showToast(baseResponse.message, context);
+      }
     } catch (CustomException) {
       //progressDialog.hide();
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -1648,7 +1637,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());

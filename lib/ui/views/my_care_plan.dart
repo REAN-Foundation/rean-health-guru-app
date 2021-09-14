@@ -1,14 +1,8 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
 import 'package:paitent/ui/views/summary_of_my_care_plan.dart';
 import 'package:paitent/ui/views/team_of_my_care_plan.dart';
 import 'package:paitent/ui/views/week_my_care_plan.dart';
@@ -41,24 +35,23 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
 
     return BaseWidget<PatientMedicationViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child: Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'My Care Plan',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            title: Text(
+              'My Care Plan',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700),
+            ),
+            iconTheme: new IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -68,20 +61,20 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
                   debugPrint("Clicked on profile icon");
                 },
               )*/
-                ],
-              ),
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: _buildTabDesign(),
-                  ),
-                  Expanded(child: screen)
-                ],
-              ),
-            ),
+            ],
           ),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: _buildTabDesign(),
+              ),
+              Expanded(child: screen)
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -95,29 +88,35 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          InkWell(
-            onTap: () {
-              setState(() {
-                _currentIndex = 0;
-              });
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ImageIcon(
-                  AssetImage('res/images/ic_summary_care_plan.png'),
-                  size: 32,
-                  color: _currentIndex == 0 ? Colors.white : Colors.grey,
-                ),
-                SizedBox(height: 4,),
-                Text(
-                  'Summary',
-                  style: TextStyle(
-                      color: _currentIndex == 0 ? Colors.white : Colors.grey,
-                      fontSize: 12),
-                ),
-              ],
+          Semantics(
+            label: 'give summary of my care plan view',
+            button: true,
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  _currentIndex = 0;
+                });
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ImageIcon(
+                    AssetImage('res/images/ic_summary_care_plan.png'),
+                    size: 32,
+                    color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    'Summary',
+                    style: TextStyle(
+                        color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                        fontSize: 12),
+                  ),
+                ],
+              ),
             ),
           ),
           InkWell(
@@ -135,7 +134,9 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
                   size: 32,
                   color: _currentIndex == 1 ? Colors.white : Colors.grey,
                 ),
-                SizedBox(height: 4,),
+                SizedBox(
+                  height: 4,
+                ),
                 Text(
                   'Team',
                   style: TextStyle(

@@ -1,8 +1,7 @@
 import 'dart:io';
 
-import 'package:country_codes/country_codes.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -10,7 +9,6 @@ import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/CheckUserExistOrNotResonse.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
-import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/login_view_model.dart';
 import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/networking/CustomException.dart';
@@ -18,8 +16,6 @@ import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/home_view.dart';
 import 'package:paitent/ui/views/signup_view.dart';
 import 'package:paitent/ui/widgets/bezierContainer.dart';
-import 'package:paitent/ui/widgets/login_header.dart';
-import 'package:flutter/material.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:provider/provider.dart';
@@ -39,10 +35,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   String mobileNumber = '';
   String countryCode = '';
   SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
-  final FirebaseMessaging _fcm = FirebaseMessaging();
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   String _fcmToken = "";
-  CountryDetails details = CountryCodes.detailsForLocale();
-  Locale locale = CountryCodes.getDeviceLocale();
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
   @override
@@ -50,7 +44,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     // TODO: implement initState
     permissionDialog();
     //if(apiProvider.getBaseUrl().contains('dev')) {
-      setUpDummyNumbers();
+    setUpDummyNumbers();
     //}
     firebase();
     super.initState();
@@ -76,63 +70,65 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     return BaseWidget<LoginViewModel>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       builder: (context, model, child) => Container(
-        child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            backgroundColor: colorF6F6FF,
-            body: Container(
-              height: height,
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                      top: -height * .20,
-                      right: -MediaQuery.of(context).size.width * .4,
-                      child: BezierContainer()),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(height: height * .2),
-                          _title(),
-                          SizedBox(height: 100),
-                          //_emailPasswordWidget(),
-                          _textFeild("Mobile Number"),
-                          SizedBox(height: 40),
-                          model.busy
-                              ? CircularProgressIndicator()
-                              :_getOTPButton(model),
-                         /* model.busy
+          child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              backgroundColor: colorF6F6FF,
+              body: Container(
+                height: height,
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                        top: -height * .20,
+                        right: -MediaQuery.of(context).size.width * .4,
+                        child: BezierContainer()),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(height: height * .2),
+                            _title(),
+                            Semantics(
+                                label: 'Mobile number',
+                                readOnly: true,
+                                child: SizedBox(height: 100)),
+                            //_emailPasswordWidget(),
+                            _textFeild("Mobile Number"),
+                            SizedBox(height: 40),
+                            model.busy
+                                ? CircularProgressIndicator()
+                                : _getOTPButton(model),
+                            /* model.busy
                               ? CircularProgressIndicator()
                               :_submitButton(model),*/
-                          /*Container(
+                            /*Container(
                             padding: EdgeInsets.symmetric(vertical: 10),
                             alignment: Alignment.centerRight,
                             child: Text('Forgot Password ?',
                                 style: TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.w500)),
                           ),*/
-                          //_divider(),
-                          //_facebookButton(),
-                          //SizedBox(height: height * .099),
-                          //_createAccountLabel(),
-                        ],
+                            //_divider(),
+                            //_facebookButton(),
+                            //SizedBox(height: height * .099),
+                            //_createAccountLabel(),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                      bottom: -height * .30,
-                      right: MediaQuery.of(context).size.width * .35,
-                      child: Transform.rotate( angle: 160, child: BezierContainer())),
-                  //Positioned(top: 40, left: 0, child: _backButton()),
-                ],
-              ),
-            ))
-      ),
+                    Positioned(
+                        bottom: -height * .30,
+                        right: MediaQuery.of(context).size.width * .35,
+                        child: Transform.rotate(
+                            angle: 160, child: BezierContainer())),
+                    //Positioned(top: 40, left: 0, child: _backButton()),
+                  ],
+                ),
+              ))),
     );
   }
-
 
   Widget _backButton() {
     return InkWell(
@@ -155,14 +151,14 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     );
   }
 
-  Widget _textFeild(String title){
+  Widget _textFeild(String title) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            '  '+title,
+            '  ' + title,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           SizedBox(
@@ -170,7 +166,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
           ),
           Card(
             elevation: 4,
-            shape:RoundedRectangleBorder(
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
             child: Container(
@@ -178,7 +174,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: new BoxDecoration(
                     color: Colors.white,
-                    borderRadius: new BorderRadius.all( Radius.circular(12.0))),
+                    borderRadius: new BorderRadius.all(Radius.circular(12.0))),
                 child: IntlPhoneField(
                   /*decoration: InputDecoration(
                     labelText: 'Phone Number',
@@ -195,7 +191,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       border: InputBorder.none,
                       fillColor: Colors.white,
                       filled: true),
-                  initialCountryCode: details.alpha2Code,
+                  initialCountryCode: getCurrentLocale(),
                   onChanged: (phone) {
                     debugPrint(phone.countryCode);
                     print(phone.number);
@@ -205,10 +201,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/
                   },
-                )
-
-
-            ),
+                )),
           ),
         ],
       ),
@@ -218,40 +211,37 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   Widget _getOTPButton(LoginViewModel model) {
     return Semantics(
       label: 'getOTP',
+      button: true,
+      hint: 'press to get OTP',
       child: SizedBox(
         width: 160,
         height: 40,
         child: ElevatedButton(
-            child: Text(
-                "Get OTP",
-                style: TextStyle(fontSize: 14)
-            ),
-            style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.deepPurple),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(24)),
-                        side: BorderSide(color: Colors.deepPurple)
-                    )
-                )
-            ),
-            onPressed: () {
-              if(mobileNumber.length == 10) {
-                countryCodeGlobe =  countryCode;
-                model.setBusy(true);
-                if(dummyNumberList.contains(mobileNumber)){
-                  Navigator.pushNamed(
-                      context, RoutePaths.OTP_Screen, arguments: mobileNumber);
-                  model.setBusy(false);
-                }else {
-                  checkUserExistsOrNot(model);
-                }
-              }else{
-                debugPrint('Please enter valid number');
-                showToast('Please enter valid number');
+          child: Text("Get OTP", style: TextStyle(fontSize: 14)),
+          style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Colors.deepPurple),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(24)),
+                      side: BorderSide(color: Colors.deepPurple)))),
+          onPressed: () {
+            if (mobileNumber.length == 10) {
+              countryCodeGlobe = countryCode;
+              model.setBusy(true);
+              if (dummyNumberList.contains(mobileNumber)) {
+                Navigator.pushNamed(context, RoutePaths.OTP_Screen,
+                    arguments: mobileNumber);
+                model.setBusy(false);
+              } else {
+                checkUserExistsOrNot(model);
               }
-            },
+            } else {
+              debugPrint('Please enter valid number');
+              showToast('Please enter valid number', context);
+            }
+          },
         ),
       ),
     );
@@ -261,103 +251,104 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     try {
       debugPrint('Mobile = ${mobileNumber}');
 
-      var response = await apiProvider.get('/user/exists?phone='+mobileNumber);
+      var response =
+          await apiProvider.get('/user/exists?phone=' + mobileNumber);
 
-      CheckUserExistOrNotResonse checkUserExistOrNotResonse = CheckUserExistOrNotResonse.fromJson(response);
+      CheckUserExistOrNotResonse checkUserExistOrNotResonse =
+          CheckUserExistOrNotResonse.fromJson(response);
 
       if (checkUserExistOrNotResonse.status == 'success') {
-
-        if(checkUserExistOrNotResonse.data.exists.result){
+        if (checkUserExistOrNotResonse.data.exists.result) {
           generateOTPForExistingUser(model);
-        }else{
+        } else {
           generateOTP(model);
         }
-
-      }else{
+      } else {
         model.setBusy(false);
-        showToast(checkUserExistOrNotResonse.error);
+        showToast(checkUserExistOrNotResonse.error, context);
         setState(() {});
       }
-    } on FetchDataException catch(e) {
+    } on FetchDataException catch (e) {
       print('error caught: $e');
       model.setBusy(false);
       setState(() {});
-      showToast(e.toString());
+      showToast(e.toString(), context);
     }
-
   }
 
   generateOTPForExistingUser(LoginViewModel model) async {
     try {
-
       var map = new Map<String, String>();
       map["Content-Type"] = "application/json";
 
       debugPrint('Mobile = ${mobileNumber}');
 
       var body = new Map<String, dynamic>();
-      body["PhoneNumber"] = countryCode+'-'+mobileNumber;
+      body["PhoneNumber"] = countryCode + '-' + mobileNumber;
       body["Purpose"] = 'Login';
 
-      var response = await apiProvider.post('/user/generate-otp' , header: map, body: body);
+      var response =
+          await apiProvider.post('/user/generate-otp', header: map, body: body);
 
       BaseResponse doctorListApiResponse = BaseResponse.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        showToast('OTP has been successfully sent on your mobile number');
-        Navigator.pushNamed(
-            context, RoutePaths.OTP_Screen, arguments: mobileNumber);
+        showToast(
+            'OTP has been successfully sent on your mobile number', context);
+        Navigator.pushNamed(context, RoutePaths.OTP_Screen,
+            arguments: mobileNumber);
         model.setBusy(false);
-      }else{
+      } else {
         model.setBusy(false);
-        showToast(doctorListApiResponse.error);
+        showToast(doctorListApiResponse.error, context);
         setState(() {});
       }
-    } on FetchDataException catch(e) {
+    } on FetchDataException catch (e) {
       print('error caught: $e');
       model.setBusy(false);
       setState(() {});
-      showToast(e.toString());
+      showToast(e.toString(), context);
     }
-
   }
 
   generateOTP(LoginViewModel model) async {
     try {
-
       var map = new Map<String, String>();
       map["Content-Type"] = "application/json";
 
       debugPrint('Mobile = ${mobileNumber}');
 
       var body = new Map<String, dynamic>();
-      body["PhoneNumber"] = countryCode+'-'+mobileNumber;
+      body["PhoneNumber"] = countryCode + '-' + mobileNumber;
       body["GenerateLoginOTP"] = true;
 
-      var response = await apiProvider.post('/patient' , header: map, body: body);
+      var response =
+          await apiProvider.post('/patient', header: map, body: body);
 
-      PatientApiDetails doctorListApiResponse = PatientApiDetails.fromJson(response);
+      PatientApiDetails doctorListApiResponse =
+          PatientApiDetails.fromJson(response);
       if (doctorListApiResponse.status == 'success') {
-        showToast('OTP has been successfully sent on your mobile number');
-        _sharedPrefUtils.save("patientDetails", doctorListApiResponse.data.patient.toJson());
-        Navigator.pushNamed(
-            context, RoutePaths.OTP_Screen, arguments: mobileNumber);
+        showToast(
+            'OTP has been successfully sent on your mobile number', context);
+        _sharedPrefUtils.save(
+            "patientDetails", doctorListApiResponse.data.patient.toJson());
+        Navigator.pushNamed(context, RoutePaths.OTP_Screen,
+            arguments: mobileNumber);
         model.setBusy(false);
-      }else{
+      } else {
         model.setBusy(false);
-        showToast(doctorListApiResponse.error);
+        showToast(doctorListApiResponse.error, context);
         setState(() {});
       }
-    } on FetchDataException catch(e) {
+    } on FetchDataException catch (e) {
       print('error caught: $e');
       model.setBusy(false);
       setState(() {});
-      showToast(e.toString());
+      showToast(e.toString(), context);
     }
-
   }
 
-  getPatientDetails(LoginViewModel model,String auth, String userId) async {
+  getPatientDetails(LoginViewModel model, String auth, String userId) async {
     try {
       //ApiProvider apiProvider = new ApiProvider();
 
@@ -365,34 +356,35 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
       var map = new Map<String, String>();
       map["Content-Type"] = "application/json";
-      map["authorization"] = "Bearer "+auth;
+      map["authorization"] = "Bearer " + auth;
 
-      var response = await apiProvider.get('/patient/'+userId , header: map);
+      var response = await apiProvider.get('/patient/' + userId, header: map);
 
-      PatientApiDetails doctorListApiResponse = PatientApiDetails.fromJson(response);
+      PatientApiDetails doctorListApiResponse =
+          PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        showToast('OTP has been successfully sent on your mobile number');
-        _sharedPrefUtils.save("patientDetails", doctorListApiResponse.data.patient.toJson());
+        showToast(
+            'OTP has been successfully sent on your mobile number', context);
+        _sharedPrefUtils.save(
+            "patientDetails", doctorListApiResponse.data.patient.toJson());
         _sharedPrefUtils.saveBoolean("login1.2", true);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
-              return HomeView(0);
-            }), (Route<dynamic> route) => false);
+          return HomeView(0);
+        }), (Route<dynamic> route) => false);
         model.setBusy(false);
-      }else{
+      } else {
         debugPrint('Its API Failuar');
         model.setBusy(false);
-        showToast(doctorListApiResponse.error);
+        showToast(doctorListApiResponse.error, context);
       }
-
-    } on FetchDataException catch(e) {
-      showToast('Opps! Something went wrong, Please try again');
+    } on FetchDataException catch (e) {
+      showToast('Opps! Something went wrong, Please try again', context);
       model.setBusy(false);
-      showToast(e.toString());
+      showToast(e.toString(), context);
       debugPrint(e.toString());
     }
-
   }
 
   Widget _divider() {
@@ -476,12 +468,10 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     );
   }
 
-  _clearFeilds(){
+  _clearFeilds() {
     _mobileNumberController.clear();
     _passwordController.clear();
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   Widget _createAccountLabel() {
@@ -519,38 +509,44 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   }
 
   Widget _title() {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'REAN',
-          style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.headline1,
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-            color: primaryColor,
-          ),
-          children: [
-            TextSpan(
-              text: ' ',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'H',
-              style: TextStyle(color: primaryColor, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'ealth',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'G',
-              style: TextStyle(color: primaryColor, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'uru',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-          ]),
+    return MergeSemantics(
+      child: Semantics(
+        label: 'App name',
+        readOnly: true,
+        child: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+              text: 'REAN',
+              style: GoogleFonts.portLligatSans(
+                textStyle: Theme.of(context).textTheme.display1,
+                fontSize: 30,
+                fontWeight: FontWeight.w700,
+                color: primaryColor,
+              ),
+              children: [
+                TextSpan(
+                  text: ' ',
+                  style: TextStyle(color: Colors.black, fontSize: 30),
+                ),
+                TextSpan(
+                  text: 'H',
+                  style: TextStyle(color: primaryColor, fontSize: 30),
+                ),
+                TextSpan(
+                  text: 'ealth',
+                  style: TextStyle(color: Colors.black, fontSize: 30),
+                ),
+                TextSpan(
+                  text: 'G',
+                  style: TextStyle(color: primaryColor, fontSize: 30),
+                ),
+                TextSpan(
+                  text: 'uru',
+                  style: TextStyle(color: Colors.black, fontSize: 30),
+                ),
+              ]),
+        ),
+      ),
     );
   }
 
@@ -561,7 +557,6 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         print('connected');
       }
     } on SocketException catch (_) {
-
       print('not connected');
     }
   }
@@ -572,7 +567,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  void firebase(){
+  void firebase() {
     _fcm.getToken().then((String token) async {
       assert(token != null);
       print("Push Messaging token: $token");
@@ -581,7 +576,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       _sharedPrefUtils.save("fcmToken", token);
     });
 
-    _fcm.configure(
+/*    _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
         showDialog(
@@ -636,7 +631,6 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
           ),
         );
       },
-    );
+    );*/
   }
-
 }

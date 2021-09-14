@@ -6,16 +6,16 @@ class TeamMemberJsonRequest {
 
   TeamMemberJsonRequest(
       {this.carePlanId,
-        this.isEmergencyContact,
-        this.teamMemberType,
-        this.details});
+      this.isEmergencyContact,
+      this.teamMemberType,
+      this.details});
 
   TeamMemberJsonRequest.fromJson(Map<String, dynamic> json) {
     carePlanId = json['CarePlanId'];
     isEmergencyContact = json['IsEmergencyContact'];
     teamMemberType = json['TeamMemberType'];
     details =
-    json['Details'] != null ? new Details.fromJson(json['Details']) : null;
+        json['Details'] != null ? new Details.fromJson(json['Details']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -40,11 +40,11 @@ class Details {
 
   Details(
       {this.userId,
-        this.firstName,
-        this.lastName,
-        this.prefix,
-        this.phoneNumber,
-        this.gender});
+      this.firstName,
+      this.lastName,
+      this.prefix,
+      this.phoneNumber,
+      this.gender});
 
   Details.fromJson(Map<String, dynamic> json) {
     userId = json['UserId'];

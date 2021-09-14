@@ -1,24 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GetGoalPriorities.dart';
-import 'package:paitent/core/models/assortedViewConfigs.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:paitent/ui/views/summary_of_my_care_plan.dart';
-import 'package:paitent/ui/views/team_of_my_care_plan.dart';
 import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/StringUtility.dart';
-import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class SetPrioritiesGoalsForCarePlanView extends StatefulWidget {
@@ -45,29 +33,28 @@ class _SetPrioritiesGoalsForCarePlanViewState
     super.initState();
   }
 
-
   getGoalsPriority() async {
     try {
-      _getGoalPriorities = await model.getGoalsPriority(startCarePlanResponseGlob.data.carePlan.id.toString());
+      _getGoalPriorities = await model.getGoalsPriority(
+          startCarePlanResponseGlob.data.carePlan.id.toString());
 
       if (_getGoalPriorities.status == 'success') {
         debugPrint("AHA Care Plan ==> ${_getGoalPriorities.toJson()}");
 
-        _carePlanMenuItems = buildDropDownMenuItemsForCarePlan(
-            _getGoalPriorities.data.goals);
-
+        _carePlanMenuItems =
+            buildDropDownMenuItemsForCarePlan(_getGoalPriorities.data.goals);
       } else {
-        showToast(_getGoalPriorities.message);
+        showToast(_getGoalPriorities.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
   }
 
-  List<DropdownMenuItem<String>> buildDropDownMenuItemsForCarePlan(List<String> list) {
-
+  List<DropdownMenuItem<String>> buildDropDownMenuItemsForCarePlan(
+      List<String> list) {
     List<DropdownMenuItem<String>> items = List();
     for (int i = 0; i < list.length; i++) {
       items.add(DropdownMenuItem(
@@ -283,10 +270,9 @@ class _SetPrioritiesGoalsForCarePlanViewState
           )
         : InkWell(
             onTap: () {
-
-              if(selectedPrimaryGoal == selectedSecondaryGoal){
-                showToast("Please select different secondary goal");
-              }else{
+              if (selectedPrimaryGoal == selectedSecondaryGoal) {
+                showToast("Please select different secondary goal", context);
+              } else {
                 setPriorityGoal();
               }
 
@@ -340,21 +326,21 @@ class _SetPrioritiesGoalsForCarePlanViewState
       var body = new Map<String, dynamic>();
       body['Priorities'] = map;
 
-      BaseResponse baseResponse  = await model.setGoalsPriority(startCarePlanResponseGlob.data.carePlan.id.toString(),  body);
+      BaseResponse baseResponse = await model.setGoalsPriority(
+          startCarePlanResponseGlob.data.carePlan.id.toString(), body);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
         Navigator.pushNamed(context, RoutePaths.Select_Goals_Care_Plan);
       } else {
         progressDialog.hide();
-        showToast(baseResponse.message);
+        showToast(baseResponse.message, context);
       }
     } catch (e) {
       progressDialog.hide();
       model.setBusy(false);
-      showToast(e.toString());
-      debugPrint('Error ==> '+e.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
-
 }

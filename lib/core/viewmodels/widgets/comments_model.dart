@@ -1,7 +1,6 @@
-import 'dart:html';
+import 'package:flutter/widgets.dart';
 import 'package:paitent/core/models/comment.dart';
 import 'package:paitent/core/services/api.dart';
-import 'package:flutter/widgets.dart';
 
 import '../base_model.dart';
 

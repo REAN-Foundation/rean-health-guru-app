@@ -26,8 +26,7 @@ class _DashBoardViewState extends State<DashBoardView> {
         'It is health that is the real wealth, and not pieces of gold and silver.\n- Mahatma Gandhi');
     quotes.add(
         'Physical fitness is the first requisite of happiness.\n– Joseph Pilates');
-    quotes.add(
-        'Happiness is the highest form of health.\n- Dalai Lama');
+    quotes.add('Happiness is the highest form of health.\n- Dalai Lama');
   }
 
   @override
@@ -57,25 +56,35 @@ class _DashBoardViewState extends State<DashBoardView> {
                 ),
                 //_buildTabDesign(),
                 doctorWidget(),
-                SizedBox(height: 8,),
+                SizedBox(
+                  height: 8,
+                ),
                 labWidget(),
-                SizedBox(height: 8,),
+                SizedBox(
+                  height: 8,
+                ),
                 pharmacyWidget(),
-                SizedBox(height: 8,),
+                SizedBox(
+                  height: 8,
+                ),
                 Row(
                   children: [
                     Expanded(
                       flex: 1,
                       child: nurseWidget(),
                     ),
-                    SizedBox(width: 8,),
+                    SizedBox(
+                      width: 8,
+                    ),
                     Expanded(
                       flex: 1,
                       child: ambulanceWidget(),
                     )
                   ],
                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           ),
@@ -83,6 +92,7 @@ class _DashBoardViewState extends State<DashBoardView> {
       ),
     );
   }
+
 //bg_gray_hexa.png
   Widget _addCrousal() {
     return CarouselSlider(
@@ -130,7 +140,7 @@ class _DashBoardViewState extends State<DashBoardView> {
     );
   }
 
-  Widget reportWidgets(){
+  Widget reportWidgets() {
     return Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         child: Row(
@@ -139,22 +149,24 @@ class _DashBoardViewState extends State<DashBoardView> {
               flex: 1,
               child: myReportWidget(),
             ),
-            SizedBox(width: 8,),
+            SizedBox(
+              width: 8,
+            ),
             Expanded(
               flex: 1,
               child: myPrescriptionsWidget(),
             )
           ],
-        )
-    );
+        ));
   }
 
-  Widget myReportWidget(){
+  Widget myReportWidget() {
     return InkWell(
-        onTap: (){
-          Navigator.pushNamed(context, RoutePaths.My_Reports, arguments: "Reports");
+        onTap: () {
+          Navigator.pushNamed(context, RoutePaths.My_Reports,
+              arguments: "Reports");
         },
-        child:Container(
+        child: Container(
           height: 40,
           decoration: new BoxDecoration(
               border: Border.all(color: primaryColor),
@@ -171,7 +183,9 @@ class _DashBoardViewState extends State<DashBoardView> {
                       color: Colors.deepPurple,
                     ),
                   ),
-                  SizedBox(width: 0,),
+                  SizedBox(
+                    width: 0,
+                  ),
                   Expanded(
                     flex: 8,
                     child: Text(
@@ -187,16 +201,16 @@ class _DashBoardViewState extends State<DashBoardView> {
                   )
                 ],
               )),
-        )
-    );
+        ));
   }
 
-  Widget myPrescriptionsWidget(){
+  Widget myPrescriptionsWidget() {
     return InkWell(
-        onTap: (){
-          Navigator.pushNamed(context, RoutePaths.My_Reports, arguments: "Prescriptions");
+        onTap: () {
+          Navigator.pushNamed(context, RoutePaths.My_Reports,
+              arguments: "Prescriptions");
         },
-        child:Container(
+        child: Container(
           height: 40,
           decoration: new BoxDecoration(
               border: Border.all(color: primaryColor),
@@ -213,7 +227,9 @@ class _DashBoardViewState extends State<DashBoardView> {
                       color: Colors.deepPurple,
                     ),
                   ),
-                  SizedBox(width: 0,),
+                  SizedBox(
+                    width: 0,
+                  ),
                   Expanded(
                     flex: 8,
                     child: Text(
@@ -229,13 +245,12 @@ class _DashBoardViewState extends State<DashBoardView> {
                   )
                 ],
               )),
-        )
-    );
+        ));
   }
 
   Widget doctorWidget() {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.pushNamed(context, RoutePaths.Doctor_Appoinment);
       },
       child: Padding(
@@ -261,7 +276,9 @@ class _DashBoardViewState extends State<DashBoardView> {
                       color: Colors.deepPurple,
                     ),
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(
+                    width: 20,
+                  ),
                   Expanded(
                     flex: 8,
                     child: Column(
@@ -299,7 +316,7 @@ class _DashBoardViewState extends State<DashBoardView> {
 
   Widget labWidget() {
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.pushNamed(context, RoutePaths.Lab_Appoinment);
       },
       child: Padding(
@@ -325,7 +342,9 @@ class _DashBoardViewState extends State<DashBoardView> {
                       color: Colors.deepPurple,
                     ),
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(
+                    width: 20,
+                  ),
                   Expanded(
                     flex: 8,
                     child: Column(
@@ -363,9 +382,9 @@ class _DashBoardViewState extends State<DashBoardView> {
 
   Widget pharmacyWidget() {
     return InkWell(
-      onTap: (){
+      onTap: () {
         //Navigator.pushNamed(context, RoutePaths.Doctor_Appoinment);
-        showToast("Coming Soon...");
+        showToast("Coming Soon...", context);
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -390,7 +409,9 @@ class _DashBoardViewState extends State<DashBoardView> {
                       color: Colors.deepPurple,
                     ),
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(
+                    width: 20,
+                  ),
                   Expanded(
                     flex: 8,
                     child: Column(
@@ -428,12 +449,14 @@ class _DashBoardViewState extends State<DashBoardView> {
 
   Widget nurseWidget() {
     return InkWell(
-      onTap: (){
+      onTap: () {
         //Navigator.pushNamed(context, RoutePaths.Doctor_Appoinment);
-        showToast("Coming Soon...");
+        showToast("Coming Soon...", context);
       },
       child: Padding(
-        padding: const EdgeInsets.only(left: 16.0,),
+        padding: const EdgeInsets.only(
+          left: 16.0,
+        ),
         child: Container(
           height: 100,
           decoration: new BoxDecoration(
@@ -448,16 +471,22 @@ class _DashBoardViewState extends State<DashBoardView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 4,),
+                  SizedBox(
+                    height: 4,
+                  ),
                   Row(
                     children: [
-                      SizedBox(width: 12,),
+                      SizedBox(
+                        width: 12,
+                      ),
                       ImageIcon(
                         AssetImage('res/images/ic_nurse.png'),
                         size: 40,
                         color: Colors.deepPurple,
                       ),
-                      SizedBox(width: 8,),
+                      SizedBox(
+                        width: 8,
+                      ),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -477,7 +506,9 @@ class _DashBoardViewState extends State<DashBoardView> {
                       )
                     ],
                   ),
-                  SizedBox(height: 8,),
+                  SizedBox(
+                    height: 8,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 16.0),
                     child: Text(
@@ -500,12 +531,14 @@ class _DashBoardViewState extends State<DashBoardView> {
 
   Widget ambulanceWidget() {
     return InkWell(
-      onTap: (){
+      onTap: () {
         //Navigator.pushNamed(context, RoutePaths.Word_Of_The_Week_Care_Plan);
-        showToast("Coming Soon...");
+        showToast("Coming Soon...", context);
       },
       child: Padding(
-        padding: const EdgeInsets.only(right: 16.0,),
+        padding: const EdgeInsets.only(
+          right: 16.0,
+        ),
         child: Container(
           height: 100,
           decoration: new BoxDecoration(
@@ -520,16 +553,22 @@ class _DashBoardViewState extends State<DashBoardView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 4,),
+                  SizedBox(
+                    height: 4,
+                  ),
                   Row(
                     children: [
-                      SizedBox(width: 12,),
+                      SizedBox(
+                        width: 12,
+                      ),
                       ImageIcon(
                         AssetImage('res/images/ic_ambulance.png'),
                         size: 40,
                         color: Colors.deepPurple,
                       ),
-                      SizedBox(width: 8,),
+                      SizedBox(
+                        width: 8,
+                      ),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -549,7 +588,9 @@ class _DashBoardViewState extends State<DashBoardView> {
                       )
                     ],
                   ),
-                  SizedBox(height: 8,),
+                  SizedBox(
+                    height: 8,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 16.0),
                     child: Text(
@@ -628,7 +669,7 @@ class _DashBoardViewState extends State<DashBoardView> {
           ),
           InkWell(
             onTap: () {
-              showToast("Coming Soon...");
+              showToast("Coming Soon...", context);
               //Navigator.pushNamed(context, RoutePaths.Order_Medicine);
             },
             child: Column(
@@ -652,7 +693,7 @@ class _DashBoardViewState extends State<DashBoardView> {
           ),
           InkWell(
             onTap: () {
-              showToast("Coming Soon...");
+              showToast("Coming Soon...", context);
               //Navigator.pushNamed(context, RoutePaths.Order_Ambulance);
             },
             child: Column(

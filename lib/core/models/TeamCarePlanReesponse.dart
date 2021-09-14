@@ -56,12 +56,12 @@ class Team {
 
   Team(
       {this.id,
-        this.carePlanId,
-        this.userId,
-        this.role,
-        this.roleName,
-        this.isEmergencyContact,
-        this.details});
+      this.carePlanId,
+      this.userId,
+      this.role,
+      this.roleName,
+      this.isEmergencyContact,
+      this.details});
 
   Team.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -70,8 +70,9 @@ class Team {
     role = json['Role'];
     roleName = json['RoleName'];
     isEmergencyContact = json['IsEmergencyContact'];
-    details =
-    json['Details'] != String ? new Details.fromJson(json['Details']) : String;
+    details = json['Details'] != String
+        ? new Details.fromJson(json['Details'])
+        : String;
   }
 
   Map<String, dynamic> toJson() {
@@ -96,6 +97,7 @@ class Details {
   String phoneNumber;
   String email;
   String gender;
+
   /*String address;
   String imageURL;
   String locationCoordsLongitude;
@@ -110,16 +112,17 @@ class Details {
   String appointmentSlotDuration;
   String practisingSince;*/
   String relation;
- // String description;
 
-  Details(
-      {this.firstName,
-        this.lastName,
-        this.prefix,
-        this.phoneNumber,
-        this.email,
-        this.gender,
-        /*this.address,
+  // String description;
+
+  Details({
+    this.firstName,
+    this.lastName,
+    this.prefix,
+    this.phoneNumber,
+    this.email,
+    this.gender,
+    /*this.address,
         this.imageURL,
         this.locationCoordsLongitude,
         this.locationCoordsLattitude,
@@ -132,9 +135,9 @@ class Details {
         this.consultationFee,
         this.appointmentSlotDuration,
         this.practisingSince,*/
-        this.relation,
-        //this.description
-      });
+    this.relation,
+    //this.description
+  });
 
   Details.fromJson(Map<String, dynamic> json) {
     firstName = json['FirstName'];

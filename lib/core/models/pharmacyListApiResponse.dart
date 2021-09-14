@@ -65,18 +65,18 @@ class Pharmacies {
 
   Pharmacies(
       {this.userId,
-        this.pharmacyRoleId,
-        this.firstName,
-        this.lastName,
-        this.gender,
-        this.birthDate,
-        this.imageURL,
-        this.locality,
-        this.address,
-        this.locationCoordsLongitude,
-        this.locationCoordsLattitude,
-        this.pharmacyName,
-        this.operationalSince});
+      this.pharmacyRoleId,
+      this.firstName,
+      this.lastName,
+      this.gender,
+      this.birthDate,
+      this.imageURL,
+      this.locality,
+      this.address,
+      this.locationCoordsLongitude,
+      this.locationCoordsLattitude,
+      this.pharmacyName,
+      this.operationalSince});
 
   Pharmacies.fromJson(Map<String, dynamic> json) {
     userId = json['UserId'];
@@ -112,4 +112,3 @@ class Pharmacies {
     return data;
   }
 }
-

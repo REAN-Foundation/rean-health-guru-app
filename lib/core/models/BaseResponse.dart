@@ -27,5 +27,3 @@ class BaseResponse {
     return data;
   }
 }
-
-

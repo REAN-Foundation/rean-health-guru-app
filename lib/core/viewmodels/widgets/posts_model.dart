@@ -1,6 +1,6 @@
+import 'package:meta/meta.dart';
 import 'package:paitent/core/models/post.dart';
 import 'package:paitent/core/services/api.dart';
-import 'package:meta/meta.dart';
 
 import '../base_model.dart';
 

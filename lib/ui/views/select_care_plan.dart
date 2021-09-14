@@ -1,17 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/GetAHACarePlansResponse.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -50,19 +43,18 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
         _carePlanMenuItems = buildDropDownMenuItemsForCarePlan(
             _ahaCarePlansResponse.data.carePlanTypes);
-
       } else {
-        showToast(_ahaCarePlansResponse.message);
+        showToast(_ahaCarePlansResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
   }
 
-  List<DropdownMenuItem<String>> buildDropDownMenuItemsForCarePlan(List<CarePlanTypes> list) {
-
+  List<DropdownMenuItem<String>> buildDropDownMenuItemsForCarePlan(
+      List<CarePlanTypes> list) {
     List<DropdownMenuItem<String>> items = List();
     for (int i = 0; i < list.length; i++) {
       items.add(DropdownMenuItem(
@@ -73,37 +65,35 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     return items;
   }
 
-  getCarePlanDetails(){
+  getCarePlanDetails() {
     for (int i = 0; i < _ahaCarePlansResponse.data.carePlanTypes.length; i++) {
-      if(selectedCarePlan == _ahaCarePlansResponse.data.carePlanTypes.elementAt(i).code)
-      carePlanTypes = _ahaCarePlansResponse.data.carePlanTypes.elementAt(i);
+      if (selectedCarePlan ==
+          _ahaCarePlansResponse.data.carePlanTypes.elementAt(i).code)
+        carePlanTypes = _ahaCarePlansResponse.data.carePlanTypes.elementAt(i);
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child: Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'Select Care Plan',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            title: Text(
+              'Select Care Plan',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700),
+            ),
+            iconTheme: new IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -113,32 +103,40 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                   debugPrint("Clicked on profile icon");
                 },
               )*/
-                ],
-              ),
-              body:  model.busy ? Center(child: CircularProgressIndicator(),) : Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 8,),
-                  headerText(),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          selectCarePlanDropDown(),
-                          selectedCarePlan == "" ? Container(): descriptionOfCarePlan(),
-                          //eligibilityOfCarePlan(),
-                          //recomandationForCarePlan(),
-                        ],
+            ],
+          ),
+          body: model.busy
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 8,
+                    ),
+                    headerText(),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            selectCarePlanDropDown(),
+                            selectedCarePlan == ""
+                                ? Container()
+                                : descriptionOfCarePlan(),
+                            //eligibilityOfCarePlan(),
+                            //recomandationForCarePlan(),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  registerFooter(),
-                ],
-              ),
-            ),
-          ),
+                    registerFooter(),
+                  ],
+                ),
+        ),
+      ),
     );
   }
 
@@ -150,37 +148,48 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         color: colorF6F6FF,
       ),
       child: Center(
-        child: Text("You do not have any registered care plan.",
-          style: TextStyle(color: textBlack, fontWeight: FontWeight.w700),),
+        child: Text(
+          "You do not have any registered care plan.",
+          style: TextStyle(color: textBlack, fontWeight: FontWeight.w700),
+        ),
       ),
     );
   }
 
   Widget selectCarePlanDropDown() {
     return Padding(
-      padding: const EdgeInsets.only(left : 16.0, right: 16.0, top: 8.0, bottom: 8.0),
+      padding:
+          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Select Care Plan", style: TextStyle(
-              color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),),
-          const SizedBox(height: 4,),
+          Text(
+            "Select Care Plan",
+            style: TextStyle(
+                color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
           Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: primaryColor, width: 1),
-                  color: colorF6F6FF),
-              child: DropdownButton<String>(
-                isExpanded: true,
-                hint: new Text("Select Care Plan", style: TextStyle(
-                    color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),),
-                items: _carePlanMenuItems/*[
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(color: primaryColor, width: 1),
+                color: colorF6F6FF),
+            child: DropdownButton<String>(
+              isExpanded: true,
+              hint: new Text(
+                "Select Care Plan",
+                style: TextStyle(
+                    color: textBlack,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
+              ),
+              items:
+                  _carePlanMenuItems /*[
                   DropdownMenuItem(
                     value: "Heart Failure - AHAHF ",
                     child: Text(
@@ -190,19 +199,25 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     ),
                   ),
 
-                ]*/,
-                onChanged: (value) {
-                  setState(() {
-                    selectedCarePlan = value;
-                    getCarePlanDetails();
-                  });
-                },
-                value: selectedCarePlan == "" ? null : selectedCarePlan,
-              ),
+                ]*/
+              ,
+              onChanged: (value) {
+                setState(() {
+                  selectedCarePlan = value;
+                  getCarePlanDetails();
+                });
+              },
+              value: selectedCarePlan == "" ? null : selectedCarePlan,
+            ),
           ),
-          const SizedBox(height: 4,),
-          Text( selectedCarePlan == "" ? "" : carePlanTypes.name, style: TextStyle(
-              color: textBlack, fontSize: 16, fontWeight: FontWeight.w300),),
+          const SizedBox(
+            height: 4,
+          ),
+          Text(
+            selectedCarePlan == "" ? "" : carePlanTypes.name,
+            style: TextStyle(
+                color: textBlack, fontSize: 16, fontWeight: FontWeight.w300),
+          ),
         ],
       ),
     );
@@ -210,23 +225,30 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   Widget descriptionOfCarePlan() {
     return Padding(
-      padding: const EdgeInsets.only(left : 16.0, right: 16.0, top: 8.0, bottom: 8.0),
+      padding:
+          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Description", style: TextStyle(
-              color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),),
-          const SizedBox(height: 4,),
-         /* Text("dfbbd", style: TextStyle(
+          Text(
+            "Description",
+            style: TextStyle(
+                color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          /* Text("dfbbd", style: TextStyle(
               color: textBlack, fontSize: 16, fontFamily: 'Montserrat', fontWeight: FontWeight.w200,),),*/
           RichText(
             text: TextSpan(
               text: carePlanTypes.description,
               style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w200,
-                  color: textBlack,),
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w200,
+                color: textBlack,
+              ),
               children: <TextSpan>[
                 /*TextSpan(
                     text: 'https://www.heart.org',
@@ -235,7 +257,6 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 TextSpan(
                     text: ') to improve your cardiovascular health if you have experienced heart attack, heart failure, angioplasty or heart surgery.',
                     style: TextStyle( fontWeight: FontWeight.w200, color: textBlack, fontFamily: 'Montserrat')),*/
-
               ],
             ),
           ),
@@ -246,32 +267,52 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   Widget eligibilityOfCarePlan() {
     return Padding(
-      padding: const EdgeInsets.only(left : 16.0, right: 16.0, top: 8.0, bottom: 8.0),
+      padding:
+          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Check Eligibility", style: TextStyle(
-              color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),),
-          const SizedBox(height: 4,),
+          Text(
+            "Check Eligibility",
+            style: TextStyle(
+                color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
           RichText(
             text: TextSpan(
-              text: 'People of all ages with heart conditions can benefit from a cardiac rehab program. You may benefit if you have or have experienced a:',
+              text:
+                  'People of all ages with heart conditions can benefit from a cardiac rehab program. You may benefit if you have or have experienced a:',
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.w200,
-                color: textBlack,),
+                color: textBlack,
+              ),
               children: <TextSpan>[
                 TextSpan(
                   text: '\n• heart attack (myocardial infarction)',
-                  style: TextStyle( fontWeight: FontWeight.w200, color: textBlack, fontFamily: 'Montserrat',),),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w200,
+                    color: textBlack,
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
                 TextSpan(
-                    text: '\n• heart condition, such as coronary artery disease (CAD), angina or heart failure',
-                    style: TextStyle( fontWeight: FontWeight.w200, color: textBlack, fontFamily: 'Montserrat')),
+                    text:
+                        '\n• heart condition, such as coronary artery disease (CAD), angina or heart failure',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w200,
+                        color: textBlack,
+                        fontFamily: 'Montserrat')),
                 TextSpan(
-                    text: '\n• heart procedure or surgery, including coronary artery bypass graft (CABG) surgery, percutaneous coronary intervention (PCI, including coronary or balloon angioplasty and stenting), valve replacement, a pacemaker or implantable cardioverter defibrillator (ICD)',
-                    style: TextStyle( fontWeight: FontWeight.w200, color: textBlack, fontFamily: 'Montserrat')),
-
+                    text:
+                        '\n• heart procedure or surgery, including coronary artery bypass graft (CABG) surgery, percutaneous coronary intervention (PCI, including coronary or balloon angioplasty and stenting), valve replacement, a pacemaker or implantable cardioverter defibrillator (ICD)',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w200,
+                        color: textBlack,
+                        fontFamily: 'Montserrat')),
               ],
             ),
           ),
@@ -279,9 +320,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               InkWell(
-                onTap: (){
-
-                },
+                onTap: () {},
                 child: Container(
                   width: 120,
                   height: 30,
@@ -290,10 +329,13 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                       borderRadius: BorderRadius.circular(24.0),
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
-                  child:  Center(
+                  child: Center(
                     child: Text(
                       'View more >>',
-                      style: TextStyle(fontWeight: FontWeight.w700, color: primaryColor, fontSize: 12),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: primaryColor,
+                          fontSize: 12),
                     ),
                   ),
                 ),
@@ -307,19 +349,22 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   Widget recomandationForCarePlan() {
     return Padding(
-      padding: const EdgeInsets.only(left : 16.0, right: 16.0, top: 8.0, bottom: 8.0),
+      padding:
+          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Get Doctor Recommendation", style: TextStyle(
-              color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),),
-          const SizedBox(height: 4,),
+          Text(
+            "Get Doctor Recommendation",
+            style: TextStyle(
+                color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
           Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             height: 40,
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             decoration: BoxDecoration(
@@ -335,29 +380,41 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     style: TextStyle(fontWeight: FontWeight.normal),
                   ),
                 ),
-                SizedBox( height: 32, width: 32, child: new Icon(Icons.search, size: 32, color: Colors.deepPurple,)),
+                SizedBox(
+                    height: 32,
+                    width: 32,
+                    child: new Icon(
+                      Icons.search,
+                      size: 32,
+                      color: Colors.deepPurple,
+                    )),
               ],
             ),
           ),
-          const SizedBox(height: 8,),
+          const SizedBox(
+            height: 8,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               InkWell(
-                onTap: (){
-
-                },
+                onTap: () {},
                 child: Container(
                   height: 40,
-                  padding: EdgeInsets.symmetric(horizontal: 16.0, ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                  ),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24.0),
                       border: Border.all(color: primaryColor, width: 1),
                       color: primaryColor),
-                  child:  Center(
+                  child: Center(
                     child: Text(
                       'Get Recommendation',
-                      style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                          fontSize: 14),
                     ),
                   ),
                 ),
@@ -369,54 +426,55 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     );
   }
 
-  Widget registerFooter(){
+  Widget registerFooter() {
     return Container(
-      height: 60,
-      padding: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        color: colorF6F6FF,
-      ),
-      child:  Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          InkWell(
-            onTap: (){
-              if(selectedCarePlan == ""){
-                showToast("Please select care plan");
-              }else {
-                Navigator.pushNamed(context, RoutePaths.Start_Care_Plan,
-                    arguments: selectedCarePlan);
-              }
-            },
-            child: Container(
-              height: 40,
-              width: 160,
-              padding: EdgeInsets.symmetric(horizontal: 16.0, ),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24.0),
-                  border: Border.all(color: primaryColor, width: 1),
-                  color: primaryColor),
-              child:  Center(
-                child: Text(
-                  'Register',
-                  style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14),
+        height: 60,
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          color: colorF6F6FF,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            InkWell(
+              onTap: () {
+                if (selectedCarePlan == "") {
+                  showToast("Please select care plan", context);
+                } else {
+                  Navigator.pushNamed(context, RoutePaths.Start_Care_Plan,
+                      arguments: selectedCarePlan);
+                }
+              },
+              child: Container(
+                height: 40,
+                width: 160,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24.0),
+                    border: Border.all(color: primaryColor, width: 1),
+                    color: primaryColor),
+                child: Center(
+                  child: Text(
+                    'Register',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                        fontSize: 14),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      )
-    );
+          ],
+        ));
   }
-
 
   void _urlLauncher(String url) async {
     if (await canLaunch(url))
-    await launch(url);
+      await launch(url);
     else
-    // can't launch url, there is some error
-    throw "Could not launch $url";
-
+      // can't launch url, there is some error
+      throw "Could not launch $url";
   }
-
 }

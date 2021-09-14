@@ -4,7 +4,8 @@ class CheckUserExistOrNotResonse {
   String error;
   Data data;
 
-  CheckUserExistOrNotResonse({this.status, this.message, this.error, this.data});
+  CheckUserExistOrNotResonse(
+      {this.status, this.message, this.error, this.data});
 
   CheckUserExistOrNotResonse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -32,7 +33,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     exists =
-    json['exists'] != null ? new Exists.fromJson(json['exists']) : null;
+        json['exists'] != null ? new Exists.fromJson(json['exists']) : null;
   }
 
   Map<String, dynamic> toJson() {

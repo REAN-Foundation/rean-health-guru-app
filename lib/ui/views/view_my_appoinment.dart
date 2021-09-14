@@ -1,18 +1,16 @@
-
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:paitent/core/models/MyAppointmentApiResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/utils/SharedPrefUtils.dart';
-import 'package:flutter/material.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/pdfViewer.dart';
-import 'package:toggle_switch/toggle_switch.dart';
-import 'package:intl/intl.dart';
+import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:path_provider/path_provider.dart';
+
 import 'base_widget.dart';
 
 class ViewMyAppointment extends StatefulWidget {
@@ -39,8 +37,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
       //debugPrint(user.toJson().toString());
       auth = user.data.accessToken;
       _getMyAppointments(auth);
-      setState(() {
-      });
+      setState(() {});
     } catch (Excepetion) {
       // do something
       debugPrint(Excepetion);
@@ -67,88 +64,90 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
       model: model,
       builder: (context, model, child) => Container(
         child: Padding(
-          padding: const EdgeInsets.only(left: 0, right: 0),
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    "Appointments ",
-                    style: TextStyle(
-                        color: primaryColor,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
+            padding: const EdgeInsets.only(left: 0, right: 0),
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      "Appointments ",
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
                   ),
-                ),
-                Container(
-                  color: colorF6F6FF,
-                  height: 40,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 1,
-                        child: InkWell(
-                          onTap: () {
-                            _getMyAppointments(auth);
-                            isUpCommingSelected = true;
-                          },
-                          child: Center(
-                            child: Text(
-                              "Upcoming",
-                              style: TextStyle(
-                                  color: isUpCommingSelected
-                                      ? primaryColor
-                                      : textBlack,
-                                  fontWeight: isUpCommingSelected
-                                      ? FontWeight.w700
-                                      : FontWeight.w300,
-                                  fontSize: 16),
+                  Container(
+                    color: colorF6F6FF,
+                    height: 40,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: InkWell(
+                            onTap: () {
+                              _getMyAppointments(auth);
+                              isUpCommingSelected = true;
+                            },
+                            child: Center(
+                              child: Text(
+                                "Upcoming",
+                                style: TextStyle(
+                                    color: isUpCommingSelected
+                                        ? primaryColor
+                                        : textBlack,
+                                    fontWeight: isUpCommingSelected
+                                        ? FontWeight.w700
+                                        : FontWeight.w300,
+                                    fontSize: 16),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: InkWell(
-                          onTap: () {
-                            _getMyCompletedAppointments(auth);
-                            isUpCommingSelected = false;
-                          },
-                          child: Center(
-                            child: Text(
-                              "Completed",
-                              style: TextStyle(
-                                  color: isUpCommingSelected
-                                      ? textBlack
-                                      : primaryColor,
-                                  fontWeight: isUpCommingSelected
-                                      ? FontWeight.w300
-                                      : FontWeight.w700,
-                                  fontSize: 16),
+                        Expanded(
+                          flex: 1,
+                          child: InkWell(
+                            onTap: () {
+                              _getMyCompletedAppointments(auth);
+                              isUpCommingSelected = false;
+                            },
+                            child: Center(
+                              child: Text(
+                                "Completed",
+                                style: TextStyle(
+                                    color: isUpCommingSelected
+                                        ? textBlack
+                                        : primaryColor,
+                                    fontWeight: isUpCommingSelected
+                                        ? FontWeight.w300
+                                        : FontWeight.w700,
+                                    fontSize: 16),
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: model.busy ? Center(child: CircularProgressIndicator()) : appointments.length == 0 ? noAppointmentFound() : listWidget()
-                    )),
-              ],
-            ),
-          )
-        ),
+                  Expanded(
+                      child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: model.busy
+                              ? Center(child: CircularProgressIndicator())
+                              : appointments.length == 0
+                                  ? noAppointmentFound()
+                                  : listWidget())),
+                ],
+              ),
+            )),
       ),
     );
   }
 
-  Widget listWidget(){
+  Widget listWidget() {
     return ListView.separated(
         itemBuilder: (context, index) => isUpCommingSelected
             ? _makeUpcommingAppointmentCard(context, index)
@@ -163,27 +162,33 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
         shrinkWrap: true);
   }
 
-  Widget noAppointmentFound(){
+  Widget noAppointmentFound() {
     return Center(
-      child: Text("No appointment found", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14,fontFamily: 'Montserrat', color: primaryLightColor)),
+      child: Text("No appointment found",
+          style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+              fontFamily: 'Montserrat',
+              color: primaryLightColor)),
     );
   }
 
   Widget _makeUpcommingAppointmentCard(BuildContext context, int index) {
-    
     Appointments appointment = appointments.elementAt(index);
-    
+
     bool isDateVisible = true;
 
-    if(index != 0){
-      if(dateFormat.format(appointment.startTimeUtc.toLocal()) == dateFormat.format(appointments.elementAt(index-1).startTimeUtc.toLocal())){
+    if (index != 0) {
+      if (dateFormat.format(appointment.startTimeUtc.toLocal()) ==
+          dateFormat.format(
+              appointments.elementAt(index - 1).startTimeUtc.toLocal())) {
         isDateVisible = false;
-      }else{
+      } else {
         isDateVisible = true;
       }
     }
 
-   /* if (index.isEven) {
+    /* if (index.isEven) {
       isDateVisible = true;
     } else {
       isDateVisible = false;
@@ -204,7 +209,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                 ),
                 Text(dateFormat.format(appointment.startTimeUtc.toLocal()),
                     style:
-                    TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
                 SizedBox(
                   height: 16,
                 ),
@@ -253,7 +258,8 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                     child: Text(appointment.businessNodeName,
                                         style: TextStyle(
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w700, color: primaryColor)),
+                                            fontWeight: FontWeight.w700,
+                                            color: primaryColor)),
                                   ),
                                   Text(appointment.businessUserName,
                                       style: TextStyle(
@@ -265,13 +271,19 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                   ),
                                   Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      Text(timeFormat.format(appointment.startTimeUtc.toLocal()),
+                                      Text(
+                                          timeFormat.format(appointment
+                                              .startTimeUtc
+                                              .toLocal()),
                                           style: TextStyle(
                                               fontSize: 14.0,
                                               fontWeight: FontWeight.w500)),
-                                      Text('ID: '+appointment.displayId.substring(15),
+                                      Text(
+                                          'ID: ' +
+                                              appointment.displayId
+                                                  .substring(15),
                                           style: TextStyle(
                                               fontSize: 12.0,
                                               fontWeight: FontWeight.w300,
@@ -358,7 +370,8 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 14,
-                                      fontWeight: FontWeight.w700, color: primaryColor)),
+                                      fontWeight: FontWeight.w700,
+                                      color: primaryColor)),
                               Text('',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -366,7 +379,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w300,
                                       color: Color(0XFF909CAC))),
-                              Text('ID: '+appointment.displayId.substring(15),
+                              Text('ID: ' + appointment.displayId.substring(15),
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
@@ -382,7 +395,9 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                               SizedBox(
                                 height: 8,
                               ),
-                              Text(timeFormat.format(appointment.startTimeUtc.toLocal()),
+                              Text(
+                                  timeFormat.format(
+                                      appointment.startTimeUtc.toLocal()),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -439,7 +454,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                         color: colorF6F6FF,
                         border: Border.all(color: primaryLightColor),
                         borderRadius:
-                        new BorderRadius.all(Radius.circular(8.0))),
+                            new BorderRadius.all(Radius.circular(8.0))),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
@@ -490,16 +505,19 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
 
   _getMyAppointments(String auth) async {
     try {
-      MyAppointmentApiResponse bookingAppoinmentForDoctor = await model.getMyAppoinmentByDateList('Bearer ' + auth, dateFormatFull.format(DateTime.now()),dateFormatFull.format(DateTime.now().add(new Duration(days: 90))));
+      MyAppointmentApiResponse bookingAppoinmentForDoctor =
+          await model.getMyAppoinmentByDateList(
+              'Bearer ' + auth,
+              dateFormatFull.format(DateTime.now()),
+              dateFormatFull
+                  .format(DateTime.now().add(new Duration(days: 90))));
 
       if (bookingAppoinmentForDoctor.status == 'success') {
         appointments.clear();
         setState(() {
           appointments.addAll(bookingAppoinmentForDoctor.data.appointments);
         });
-      } else {
-
-      }
+      } else {}
     } catch (CustomException) {
       model.setBusy(false);
       debugPrint("Error " + CustomException.toString());
@@ -512,16 +530,20 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
     try {
       //cancelled, completed, confirmed
       appointments.clear();
-      MyAppointmentApiResponse bookingAppoinmentForDoctor = await model.getMyAppoinmentByDateLisAndStatus('Bearer ' + auth, "completed", dateFormatFull.format(DateTime.now().subtract(new Duration(days: 90))),dateFormatFull.format(DateTime.now()));
+      MyAppointmentApiResponse bookingAppoinmentForDoctor =
+          await model.getMyAppoinmentByDateLisAndStatus(
+              'Bearer ' + auth,
+              "completed",
+              dateFormatFull
+                  .format(DateTime.now().subtract(new Duration(days: 90))),
+              dateFormatFull.format(DateTime.now()));
 
       if (bookingAppoinmentForDoctor.status == 'success') {
         appointments.clear();
         setState(() {
           appointments.addAll(bookingAppoinmentForDoctor.data.appointments);
         });
-      } else {
-
-      }
+      } else {}
     } catch (CustomException) {
       model.setBusy(false);
       debugPrint("Error " + CustomException.toString());

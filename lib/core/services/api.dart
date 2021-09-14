@@ -1,19 +1,18 @@
 import 'dart:convert';
-import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/comment.dart';
 import 'package:paitent/core/models/post.dart';
-import 'package:http/http.dart' as http;
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/networking/ApiProvider.dart';
 
 /// The service responsible for networking requests
 class Api {
   //static const endpoint = 'https://hca-bff-dev.services.tikme.app';
-  
+
   //var client = new http.Client();
 
   //ApiProvider apiProvider = new ApiProvider();
@@ -28,7 +27,8 @@ class Api {
     var map = new Map<String, String>();
     map["Content-Type"] = "application/json";
 
-    var response = await apiProvider.post('/user/login' , body: body, header: map);
+    var response =
+        await apiProvider.post('/user/login', body: body, header: map);
 
     print(response);
 
@@ -44,7 +44,7 @@ class Api {
     var map = new Map<String, String>();
     map["Content-Type"] = "application/json";
 
-    var response = await apiProvider.post('/patient' , body: body, header: map);
+    var response = await apiProvider.post('/patient', body: body, header: map);
 
     print(response);
 
@@ -60,7 +60,8 @@ class Api {
     var map = new Map<String, String>();
     map["Content-Type"] = "application/json";
 
-    var response = await apiProvider.post('/user/validate-otp' , body: body, header: map);
+    var response =
+        await apiProvider.post('/user/validate-otp', body: body, header: map);
 
     print(response);
 
@@ -76,7 +77,7 @@ class Api {
     var map = new Map<String, String>();
     map["Content-Type"] = "application/json";
 
-    var response = await apiProvider.post('/Patient' , body: body, header: map);
+    var response = await apiProvider.post('/Patient', body: body, header: map);
 
     print(response);
 
@@ -84,16 +85,16 @@ class Api {
     return BaseResponse.fromJson(response);
   }
 
-  Future<BaseResponse> updateProfilePatient(Map body, String userId, String auth) async {
+  Future<BaseResponse> updateProfilePatient(
+      Map body, String userId, String auth) async {
     // Get user profile for id
 
     var map = new Map<String, String>();
     map["Content-Type"] = "application/json";
     map["authorization"] = auth;
 
-
-
-    var response = await apiProvider.put('/patient/'+userId , body: body, header: map);
+    var response =
+        await apiProvider.put('/patient/' + userId, body: body, header: map);
 
     print(response);
 
@@ -125,7 +126,7 @@ class Api {
 
     // Parse into List
     var parsed = json.decode(response.body) as List<dynamic>;
-    
+
     // Loop and convert each item to a Comment
     for (var comment in parsed) {
       comments.add(Comment.fromJson(comment));

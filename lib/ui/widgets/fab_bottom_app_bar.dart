@@ -1,8 +1,9 @@
-
 import 'package:flutter/material.dart';
+
 //https://github.com/bizz84/bottom_bar_fab_flutter/blob/master/lib/main.dart
 class FABBottomAppBarItem {
   FABBottomAppBarItem({this.iconData, this.text});
+
   AssetImage iconData;
   String text;
 }
@@ -21,6 +22,7 @@ class FABBottomAppBar extends StatefulWidget {
   }) {
     assert(this.items.length == 2 || this.items.length == 5);
   }
+
   final List<FABBottomAppBarItem> items;
   final String centerItemText;
   final double height;

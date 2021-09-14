@@ -1,21 +1,19 @@
-import 'package:country_codes/country_codes.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/viewmodels/views/login_view_model.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/widgets/bezierContainer.dart';
 import 'package:paitent/ui/widgets/login_header.dart';
-import 'package:flutter/material.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:provider/provider.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import 'package:intl/intl.dart';
+
 import 'base_widget.dart';
 
 class SignUpView extends StatefulWidget {
@@ -42,57 +40,54 @@ class _SignUpViewState extends State<SignUpView> {
   String selectedGender = "Male";
   String selectedDate = "";
   DateTime selectedDateObject;
-  CountryDetails details = CountryCodes.detailsForLocale();
-  Locale locale = CountryCodes.getDeviceLocale();
   String countryCode = '';
-
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     return BaseWidget<LoginViewModel>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
-      child: LoginHeader(mobileNumberController: _mobileNumberController, passwordController: _passwordController,),
+      child: LoginHeader(
+        mobileNumberController: _mobileNumberController,
+        passwordController: _passwordController,
+      ),
       builder: (context, model, child) => Container(
-
-        child: Scaffold(
-            backgroundColor: colorF6F6FF,
-            body: Container(
-              height: height,
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                      top: -height * .15,
-                      right: -MediaQuery.of(context).size.width * .4,
-                      child: BezierContainer()),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(height: height * .2),
-                          _title(),
-                          SizedBox(height: 50),
-                          _textFeildWidget(),
-                          SizedBox(height: 20),
-                          model.busy
-                              ? CircularProgressIndicator()
-                              :_submitButton(model),
-                          SizedBox(height: 20),
-                        ],
+          child: Scaffold(
+              backgroundColor: colorF6F6FF,
+              body: Container(
+                height: height,
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                        top: -height * .15,
+                        right: -MediaQuery.of(context).size.width * .4,
+                        child: BezierContainer()),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(height: height * .2),
+                            _title(),
+                            SizedBox(height: 50),
+                            _textFeildWidget(),
+                            SizedBox(height: 20),
+                            model.busy
+                                ? CircularProgressIndicator()
+                                : _submitButton(model),
+                            SizedBox(height: 20),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(top: 40, left: 0, child: _backButton()),
-                ],
-              ),
-            ))
-      ),
+                    Positioned(top: 40, left: 0, child: _backButton()),
+                  ],
+                ),
+              ))),
     );
   }
-
 
   Widget _backButton() {
     return InkWell(
@@ -104,7 +99,8 @@ class _SignUpViewState extends State<SignUpView> {
         padding: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           color: primaryColor,
-          borderRadius: BorderRadius.only( topRight: Radius.circular(16), bottomRight: Radius.circular(16)),
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(16), bottomRight: Radius.circular(16)),
           boxShadow: <BoxShadow>[
             BoxShadow(
                 color: Colors.grey.shade200,
@@ -118,7 +114,11 @@ class _SignUpViewState extends State<SignUpView> {
           children: <Widget>[
             Container(
               //padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.white, size: 40,),
+              child: Icon(
+                Icons.keyboard_arrow_left,
+                color: Colors.white,
+                size: 40,
+              ),
             ),
             /*Text('Back',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))*/
@@ -128,7 +128,7 @@ class _SignUpViewState extends State<SignUpView> {
     );
   }
 
-  Widget _entryFirstNameField(String title,  {bool isPassword = false}) {
+  Widget _entryFirstNameField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -156,8 +156,7 @@ class _SignUpViewState extends State<SignUpView> {
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     fillColor: Colors.white,
-                    filled: true)
-            ),
+                    filled: true)),
           )
         ],
       ),
@@ -199,7 +198,6 @@ class _SignUpViewState extends State<SignUpView> {
     );
   }
 
-
   Widget _entryPasswordField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -220,9 +218,7 @@ class _SignUpViewState extends State<SignUpView> {
                 controller: _passwordController,
                 focusNode: _passwordFocus,
                 textInputAction: TextInputAction.done,
-                onFieldSubmitted: (term) {
-
-                },
+                onFieldSubmitted: (term) {},
                 maxLines: 1,
                 decoration: InputDecoration(
                     border: InputBorder.none,
@@ -256,9 +252,7 @@ class _SignUpViewState extends State<SignUpView> {
                 keyboardType: TextInputType.emailAddress,
                 maxLines: 1,
                 textInputAction: TextInputAction.done,
-                onFieldSubmitted: (term) {
-
-                },
+                onFieldSubmitted: (term) {},
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     fillColor: Colors.white,
@@ -285,44 +279,47 @@ class _SignUpViewState extends State<SignUpView> {
           Semantics(
             label: title,
             child: InkWell(
-              onTap:(){
+              onTap: () {
                 DatePicker.showDatePicker(context,
                     showTitleActions: true,
                     minTime: DateTime(1940, 1, 1),
-                    maxTime: DateTime.now(), onChanged: (date) {
-                    }, onConfirm: (date) {
-                      print('confirm $date');
-                      selectedDateObject = date.toUtc();
-                      selectedDate = dateFormat.format(date);
-                      _fieldFocusChange(context, _mobileNumberFocus, _mobileNumberFocus);
-                    }, currentTime: DateTime.now(), locale: LocaleType.en);
+                    maxTime: DateTime.now(),
+                    onChanged: (date) {}, onConfirm: (date) {
+                  print('confirm $date');
+                  selectedDateObject = date.toUtc();
+                  selectedDate = dateFormat.format(date);
+                  _fieldFocusChange(
+                      context, _mobileNumberFocus, _mobileNumberFocus);
+                }, currentTime: DateTime.now(), locale: LocaleType.en);
               },
               child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  color: Colors.white,
-                  child:Row(
-                    children: [
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                    selectedDate,
-                                    style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
-                                  ),
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            selectedDate,
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal, fontSize: 16),
                           ),
                         ),
                       ),
-                      SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: new Image.asset(
-                              'res/images/ic_calender.png')),
-                      const SizedBox(width: 16,),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                        height: 24,
+                        width: 24,
+                        child: new Image.asset('res/images/ic_calender.png')),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -332,7 +329,6 @@ class _SignUpViewState extends State<SignUpView> {
   }
 
   Widget _entryMobileNoField(String title) {
-
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -351,7 +347,8 @@ class _SignUpViewState extends State<SignUpView> {
                 height: 50,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 color: Colors.white,
-                child: /*Row(
+                child:
+                    /*Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Padding(
@@ -380,7 +377,7 @@ class _SignUpViewState extends State<SignUpView> {
                     )
                   ],
                 )*/
-                /*InternationalPhoneNumberInput(
+                    /*InternationalPhoneNumberInput(
                   onInputChanged:
                       (PhoneNumber number) {
                     mobileNumber = number
@@ -445,7 +442,7 @@ class _SignUpViewState extends State<SignUpView> {
                     ),
                   ),
                 )*/
-              /*InternationalPhoneNumberInput
+                    /*InternationalPhoneNumberInput
                 .withCustomDecoration(
                 onInputChanged: (PhoneNumber number) {
                   mobileNumber = number.toString().trim();
@@ -490,7 +487,7 @@ class _SignUpViewState extends State<SignUpView> {
                       border: InputBorder.none,
                       fillColor: Colors.white,
                       filled: true),
-                  initialCountryCode: details.alpha2Code,
+                  initialCountryCode: getCurrentLocale(),
                   onChanged: (phone) {
                     debugPrint(phone.countryCode);
                     print(phone.number);
@@ -500,8 +497,7 @@ class _SignUpViewState extends State<SignUpView> {
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/
                   },
-                )
-            ),
+                )),
           ),
         ],
       ),
@@ -559,59 +555,56 @@ class _SignUpViewState extends State<SignUpView> {
     );
   }*/
 
-  Widget _submitButton( model) {
+  Widget _submitButton(model) {
     return Semantics(
       label: 'SignUp',
       child: GestureDetector(
         onTap: () async {
-
-           if (_firstNameController.text == '') {
-            showToast("Please enter first name");
+          if (_firstNameController.text == '') {
+            showToast("Please enter first name", context);
           } else if (_lastNameController.text == '') {
-            showToast("Please enter last name");
-          } else if(validateEmail(_emailController.text)) {
-             showToast("Please enter valid email");
-           } else if(selectedGender == '') {
-             showToast("Please select gender");
-           } else if(selectedDate == '') {
-             showToast("Please select date of birth");
-           } else if (mobileNumber.length != 10) {
-             showToast("Please enter valid mobile number");
-           } else if (_passwordController.text == '') {
-             showToast("Please enter password");
-           } else{
+            showToast("Please enter last name", context);
+          } else if (validateEmail(_emailController.text)) {
+            showToast("Please enter valid email", context);
+          } else if (selectedGender == '') {
+            showToast("Please select gender", context);
+          } else if (selectedDate == '') {
+            showToast("Please select date of birth", context);
+          } else if (mobileNumber.length != 10) {
+            showToast("Please enter valid mobile number", context);
+          } else if (_passwordController.text == '') {
+            showToast("Please enter password", context);
+          } else {
+            var map = new Map<String, String>();
+            map["FirstName"] = _firstNameController.text;
+            map["LastName"] = _lastNameController.text;
+            map["PhoneNumber"] = mobileNumber;
+            map["Password"] = _passwordController.text;
+            map["Email"] = _emailController.text;
+            map["Prefix"] = "   ";
+            map["Gender"] = selectedGender;
+            map["BirthDate"] = selectedDateObject.toIso8601String();
+            map["TimeZone"] = DateTime.now().timeZoneOffset.toString();
 
-               var map = new Map<String, String>();
-               map["FirstName"] = _firstNameController.text;
-               map["LastName"] = _lastNameController.text;
-               map["PhoneNumber"] = mobileNumber;
-               map["Password"] = _passwordController.text;
-               map["Email"] = _emailController.text;
-               map["Prefix"] = "   ";
-               map["Gender"] = selectedGender;
-               map["BirthDate"] = selectedDateObject.toIso8601String();
-               map["TimeZone"] = DateTime.now().timeZoneOffset.toString();
+            try {
+              BaseResponse signUpSuccess = await model.signUp(map);
 
-               try {
-                 BaseResponse signUpSuccess = await model.signUp(map);
-
-                 if (signUpSuccess.status == 'success') {
-                   showAlert("Success",
-                       "Please login your account for doctor appointment booking");
-                   if (Navigator.canPop(context)) {
-                     Navigator.pop(context);
-                   }
-                   //Navigator.pushNamed(context, RoutePaths.Home);
-                 }else{
-                   showToast(signUpSuccess.error);
-                 }
-               } catch (CustomException) {
-                 model.setBusy(false);
-                 showToast(CustomException.toString());
-                 debugPrint(CustomException.toString());
-               }
-             }
-
+              if (signUpSuccess.status == 'success') {
+                showAlert("Success",
+                    "Please login your account for doctor appointment booking");
+                if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+                //Navigator.pushNamed(context, RoutePaths.Home);
+              } else {
+                showToast(signUpSuccess.error, context);
+              }
+            } catch (CustomException) {
+              model.setBusy(false);
+              showToast(CustomException.toString(), context);
+              debugPrint(CustomException.toString());
+            }
+          }
         },
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -633,7 +626,8 @@ class _SignUpViewState extends State<SignUpView> {
                   colors: [primaryLightColor, primaryColor])),
           child: Text(
             'SignUp',
-            style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.w700),
+            style: TextStyle(
+                fontSize: 18, color: Colors.white, fontWeight: FontWeight.w700),
           ),
         ),
       ),
@@ -782,7 +776,7 @@ class _SignUpViewState extends State<SignUpView> {
     );
   }
 
-  Widget _genderWidget(){
+  Widget _genderWidget() {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -797,27 +791,27 @@ class _SignUpViewState extends State<SignUpView> {
             height: 10,
           ),
           Semantics(
-            label: 'Gender',
-            child: ToggleSwitch(
-                minWidth: 90.0,
-                cornerRadius: 20,
-                activeBgColor: Colors.green,
-                activeTextColor: Colors.white,
-                inactiveBgColor: Colors.grey,
-                inactiveTextColor: Colors.white,
-                labels: ['Male', 'Female'],
-                icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
-                activeColors: [Colors.blue, Colors.pink],
-                onToggle: (index) {
-                  print('switched to: $index');
-                  if(index == 0){
-                    selectedGender = "Male";
-                  }else{
-                    selectedGender = "Female";
-                  }
-                }
-            ),
-          )
+              label: 'Gender',
+              child: ToggleSwitch(
+                  totalSwitches: 2,
+                  minWidth: 90.0,
+                  cornerRadius: 20,
+                  activeBgColor: [Colors.green],
+                  inactiveBgColor: Colors.grey,
+                  labels: ['Male', 'Female'],
+                  icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
+                  activeBgColors: [
+                    [Colors.blue],
+                    [Colors.pink]
+                  ],
+                  onToggle: (index) {
+                    print('switched to: $index');
+                    if (index == 0) {
+                      selectedGender = "Male";
+                    } else {
+                      selectedGender = "Female";
+                    }
+                  }))
         ],
       ),
     );
@@ -832,7 +826,7 @@ class _SignUpViewState extends State<SignUpView> {
         _genderWidget(),
         _dobField("Date of Birth"),
         _entryMobileNoField("Mobile Number"),
-      //_entryPasswordField("Password", isPassword: true),
+        //_entryPasswordField("Password", isPassword: true),
       ],
     );
   }
@@ -843,7 +837,7 @@ class _SignUpViewState extends State<SignUpView> {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  showAlert(String title, String subtitle){
+  showAlert(String title, String subtitle) {
     StatusAlert.show(
       context,
       duration: Duration(seconds: 2),

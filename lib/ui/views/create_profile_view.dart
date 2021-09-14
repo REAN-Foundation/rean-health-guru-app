@@ -1,15 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:country_codes/country_codes.dart';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/UploadImageResponse.dart';
@@ -19,18 +20,14 @@ import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/home_view.dart';
-import 'package:paitent/ui/widgets/bezierContainer.dart';
-import 'package:paitent/ui/widgets/login_header.dart';
-import 'package:flutter/material.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import 'package:intl/intl.dart';
+
 import 'base_widget.dart';
-import 'package:http/http.dart' as http;
 
 class CreateProfile extends StatefulWidget {
   @override
@@ -73,16 +70,14 @@ class _CreateProfileState extends State<CreateProfile> {
   ProgressDialog progressDialog;
   String fullName = "";
   var dateFormat = DateFormat("dd MMM, yyyy");
+
   //Patient patient;
   //String profileImage = "";
   String emergencymobileNumber = "";
-  CountryDetails details = CountryCodes.detailsForLocale();
-  Locale locale = CountryCodes.getDeviceLocale();
   bool isEditable = false;
 
   @override
   void initState() {
-
     debugPrint('TimeZone ==> ${DateTime.now().timeZoneOffset}');
 
     super.initState();
@@ -97,7 +92,7 @@ class _CreateProfileState extends State<CreateProfile> {
       userId = user.data.user.userId.toString();
       auth = user.data.accessToken;
 
-     /* fullName = user.data.user.firstName + " " + user.data.user.lastName;
+      /* fullName = user.data.user.firstName + " " + user.data.user.lastName;
       mobileNumber = user.data.user.phoneNumber;
 
       _firstNameController.text = user.data.user.firstName;
@@ -144,7 +139,7 @@ class _CreateProfileState extends State<CreateProfile> {
         debugPrint('Patient UserId ==> ${userId}');
         //selectedGender = patient.gender.toString();
       });
-    } on FetchDataException catch(e) {
+    } on FetchDataException catch (e) {
       // do something
       debugPrint(e.toString());
     }
@@ -197,24 +192,24 @@ class _CreateProfileState extends State<CreateProfile> {
 
   Future<bool> _onBackPressed() {
     return showDialog(
-      context: context,
-      builder: (context) => new AlertDialog(
-        title: new Text('Alert!'),
-        content: new Text('Are you sure you want to discard the changes?'),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Yes'),
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: new Text('Alert!'),
+            content: new Text('Are you sure you want to discard the changes?'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+              FlatButton(
+                child: Text('No'),
+                onPressed: () => Navigator.of(context).pop(false),
+              ),
+            ],
           ),
-          FlatButton(
-            child: Text('No'),
-            onPressed: () => Navigator.of(context).pop(false),
-          ),
-        ],
-      ),
-    ) ??
+        ) ??
         false;
   }
 
@@ -237,18 +232,18 @@ class _CreateProfileState extends State<CreateProfile> {
     try {
       result = await FlutterDocumentPicker.openDocument(params: params);
 
-      if(result != '') {
+      if (result != '') {
         File file = File(result);
         debugPrint(result);
         String fileName = file.path.split('/').last;
         print("File Name ==> ${fileName}");
-      //file.renameSync(pFile.name);
-      uploadProfilePicture(file);
-    } else {
-      showToast('Opps, something wents wrong!');
-    }
+        //file.renameSync(pFile.name);
+        uploadProfilePicture(file);
+      } else {
+        showToast('Opps, something wents wrong!', context);
+      }
     } catch (e) {
-      showToast('Please select document');
+      showToast('Please select document', context);
       print(e);
       result = 'Error: $e';
     }
@@ -276,8 +271,7 @@ class _CreateProfileState extends State<CreateProfile> {
       map["enc"] = "multipart/form-data";
       map["Authorization"] = 'Bearer ' + auth;
 
-      var postUri =
-          Uri.parse(_baseUrl+"/resources/upload/");
+      var postUri = Uri.parse(_baseUrl + "/resources/upload/");
       var request = new http.MultipartRequest("POST", postUri);
       request.headers.addAll(map);
       request.files.add(http.MultipartFile(
@@ -295,12 +289,13 @@ class _CreateProfileState extends State<CreateProfile> {
           if (uploadResponse.status == "success") {
             profileImagePath = uploadResponse.data.details.elementAt(0).url;
             //profileImage = uploadResponse.data.details.elementAt(0).url;
-            showToast(uploadResponse.message);
+            showToast(uploadResponse.message, context);
             setState(() {
-              debugPrint('File Public URL ==> ${uploadResponse.data.details.elementAt(0).url}');
+              debugPrint(
+                  'File Public URL ==> ${uploadResponse.data.details.elementAt(0).url}');
             });
           } else {
-            showToast('Opps, something wents wrong!');
+            showToast('Opps, something wents wrong!', context);
           }
         } else {
           print("Upload Faild !");
@@ -309,7 +304,7 @@ class _CreateProfileState extends State<CreateProfile> {
 
     } catch (CustomException) {
       debugPrint("4");
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     }
   }
@@ -347,14 +342,14 @@ class _CreateProfileState extends State<CreateProfile> {
                           : new NetworkImage(profileImagePath),
                       fit: BoxFit.cover,
                     ),
-                    borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
+                    borderRadius:
+                        new BorderRadius.all(new Radius.circular(50.0)),
                     border: new Border.all(
                       color: Colors.deepPurple,
                       width: 2.0,
                     ),
                   ),
                 ),
-
                 Align(
                   alignment: Alignment.topRight,
                   child: Visibility(
@@ -365,7 +360,8 @@ class _CreateProfileState extends State<CreateProfile> {
                               isDismissible: true,
                               backgroundColor: Colors.transparent,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(25.0)),
                               ),
                               context: context,
                               builder: (context) => _uploadImageSelector());
@@ -374,7 +370,8 @@ class _CreateProfileState extends State<CreateProfile> {
                         child: SizedBox(
                             height: 32,
                             width: 32,
-                            child: new Image.asset('res/images/ic_camera.png'))),
+                            child:
+                                new Image.asset('res/images/ic_camera.png'))),
                   ),
                 )
               ],
@@ -431,9 +428,7 @@ class _CreateProfileState extends State<CreateProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -529,9 +524,7 @@ class _CreateProfileState extends State<CreateProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -711,9 +704,6 @@ class _CreateProfileState extends State<CreateProfile> {
     );
   }
 
-
-
-
   /*Widget _entryMobileNoField(String title) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -787,13 +777,13 @@ class _CreateProfileState extends State<CreateProfile> {
                       fontWeight: FontWeight.w700)),
               onPressed: () async {
                 if (_firstNameController.text.toString() == '') {
-                  showToast('Please enter First Name');
+                  showToast('Please enter First Name', context);
                 } else if (_lastNameController.text.toString() == '') {
-                  showToast('Please enter Last Name');
+                  showToast('Please enter Last Name', context);
                 } else if (unformatedDOB == '') {
-                  showToast('Please select your date of birth');
+                  showToast('Please select your date of birth', context);
                 } else if (selectedGender == '') {
-                  showToast('Please select your gender');
+                  showToast('Please select your gender', context);
                 } else {
                   progressDialog.show();
                   var map = new Map<String, String>();
@@ -809,7 +799,7 @@ class _CreateProfileState extends State<CreateProfile> {
 
                     if (updateProfileSuccess.status == 'success') {
                       progressDialog.hide();
-                      showToast('Welcome to REAN HealthGuru');
+                      showToast('Welcome to REAN HealthGuru', context);
                       /* if (Navigator.canPop(context)) {
                     Navigator.pop(context);
                   }*/
@@ -818,12 +808,12 @@ class _CreateProfileState extends State<CreateProfile> {
                       //Navigator.pushNamed(context, RoutePaths.Home);
                     } else {
                       progressDialog.hide();
-                      showToast(updateProfileSuccess.message);
+                      showToast(updateProfileSuccess.message, context);
                     }
                   } catch (CustomException) {
                     model.setBusy(false);
                     progressDialog.hide();
-                    showToast(CustomException.toString());
+                    showToast(CustomException.toString(), context);
                     debugPrint(CustomException.toString());
                   }
                 }
@@ -859,12 +849,12 @@ class _CreateProfileState extends State<CreateProfile> {
         }), (Route<dynamic> route) => false);
         model.setBusy(false);
       } else {
-        showToast(doctorListApiResponse.message);
+        showToast(doctorListApiResponse.message, context);
         model.setBusy(false);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
   }
@@ -904,7 +894,7 @@ class _CreateProfileState extends State<CreateProfile> {
           }
           } catch (CustomException) {
             model.setBusy(false);
-            showToast(CustomException.toString());
+            showToast(CustomException.toString(), context);
             debugPrint(CustomException.toString());
           }
       },
@@ -1104,16 +1094,18 @@ class _CreateProfileState extends State<CreateProfile> {
             height: 10,
           ),
           ToggleSwitch(
-              initialLabelIndex: selectedGender == "Male" ? 0 : 1,
-              minWidth: 90.0,
+              minWidth: 120.0,
               cornerRadius: 20,
-              activeBgColor: Colors.green,
-              activeTextColor: Colors.white,
+              initialLabelIndex: 0,
+              totalSwitches: 2,
+              activeBgColor: [Colors.green],
               inactiveBgColor: Colors.grey,
-              inactiveTextColor: Colors.white,
               labels: ['Male', 'Female'],
               icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
-              activeColors: [Colors.blue, Colors.pink],
+              activeBgColors: [
+                [Colors.blue],
+                [Colors.pink]
+              ],
               onToggle: (index) {
                 print('switched to: $index');
                 if (index == 0) {
@@ -1121,8 +1113,7 @@ class _CreateProfileState extends State<CreateProfile> {
                 } else {
                   selectedGender = "Female";
                 }
-              }
-            )
+              })
         ],
       ),
     );
@@ -1169,7 +1160,9 @@ class _CreateProfileState extends State<CreateProfile> {
                     SizedBox(
                         height: 32,
                         width: 32,
-                        child: new ImageIcon(AssetImage('res/images/ic_calender.png'), color: Colors.black12)),
+                        child: new ImageIcon(
+                            AssetImage('res/images/ic_calender.png'),
+                            color: Colors.black12)),
                   ],
                 ),
               ),
@@ -1179,15 +1172,16 @@ class _CreateProfileState extends State<CreateProfile> {
               DatePicker.showDatePicker(context,
                   showTitleActions: true,
                   minTime: DateTime(1940, 1, 1),
-                  maxTime: DateTime.now().subtract(Duration(days: 1)), onChanged: (date) {
-                    print('change $date');
-                  }, onConfirm: (date) {
-                    unformatedDOB = date.toIso8601String();
-                    setState(() {
-                      dob = dateFormat.format(date);
-                    });
-                    print('confirm $date');
-                  }, currentTime: DateTime.now(), locale: LocaleType.en);
+                  maxTime: DateTime.now().subtract(Duration(days: 1)),
+                  onChanged: (date) {
+                print('change $date');
+              }, onConfirm: (date) {
+                unformatedDOB = date.toIso8601String();
+                setState(() {
+                  dob = dateFormat.format(date);
+                });
+                print('confirm $date');
+              }, currentTime: DateTime.now(), locale: LocaleType.en);
             },
           ),
         ],
@@ -1203,7 +1197,7 @@ class _CreateProfileState extends State<CreateProfile> {
         //_entryMobileNoField("Mobile Number"),
         _dateOfBirthField("Date Of Birth"),
         _genderWidget(),
-       /* _entryEmailField('Email'),
+        /* _entryEmailField('Email'),
         //_entryBloodGroupField("Blood Group"),
         _entryEmergencyMobileNoField("Emergency Contact Number"),
         _entryAddressField("Address"),
@@ -1235,8 +1229,8 @@ class _CreateProfileState extends State<CreateProfile> {
       child: Container(
         decoration: new BoxDecoration(
           color: Colors.white,
-          borderRadius:
-          new BorderRadius.only(topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
+          borderRadius: new BorderRadius.only(
+              topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1245,7 +1239,7 @@ class _CreateProfileState extends State<CreateProfile> {
             Semantics(
               label: 'Camera',
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                   openCamera();
                 },
@@ -1260,18 +1254,27 @@ class _CreateProfileState extends State<CreateProfile> {
                         decoration: new BoxDecoration(
                           color: primaryLightColor,
                           borderRadius:
-                          new BorderRadius.all(new Radius.circular(50.0)),
+                              new BorderRadius.all(new Radius.circular(50.0)),
                           border: new Border.all(
                             color: Colors.deepPurple,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
-                          child: Icon(Icons.camera_alt, color: Colors.deepPurple, size: 24,),
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: Colors.deepPurple,
+                            size: 24,
+                          ),
                         ),
                       ),
-                      SizedBox(height: 8,),
-                      Text('Camera\n   ', style: TextStyle(fontSize: 12),),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        'Camera\n   ',
+                        style: TextStyle(fontSize: 12),
+                      ),
                     ],
                   ),
                 ),
@@ -1280,7 +1283,7 @@ class _CreateProfileState extends State<CreateProfile> {
             Semantics(
               label: 'Gallery',
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                   openGallery();
                 },
@@ -1295,58 +1298,77 @@ class _CreateProfileState extends State<CreateProfile> {
                         decoration: new BoxDecoration(
                           color: primaryLightColor,
                           borderRadius:
-                          new BorderRadius.all(new Radius.circular(50.0)),
+                              new BorderRadius.all(new Radius.circular(50.0)),
                           border: new Border.all(
                             color: Colors.deepPurple,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
-                          child: Icon(Icons.image, color: Colors.deepPurple, size: 24,),
-                        ),
-                      ),
-                      SizedBox(height: 8,),
-                      Text('Gallery\n   ', style: TextStyle(fontSize: 12),),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            if(profileImagePath != '')...[
-            Semantics(
-              label: 'removeProfileImage',
-              child: InkWell(
-                onTap: (){
-                  profileImagePath = '';
-                },
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: new BoxDecoration(
-                          color: primaryLightColor,
-                          borderRadius:
-                          new BorderRadius.all(new Radius.circular(50.0)),
-                          border: new Border.all(
+                          child: Icon(
+                            Icons.image,
                             color: Colors.deepPurple,
-                            width: 1.0,
+                            size: 24,
                           ),
                         ),
-                        child: Center(
-                          child: Icon(Icons.close, color: Colors.deepPurple, size: 24,),
-                        ),
                       ),
-                      SizedBox(height: 8,),
-                      Text('Remove\nPhoto', style: TextStyle(fontSize: 12), textAlign: TextAlign.center,),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        'Gallery\n   ',
+                        style: TextStyle(fontSize: 12),
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
+            if (profileImagePath != '') ...[
+              Semantics(
+                label: 'removeProfileImage',
+                child: InkWell(
+                  onTap: () {
+                    profileImagePath = '';
+                  },
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: new BoxDecoration(
+                            color: primaryLightColor,
+                            borderRadius:
+                                new BorderRadius.all(new Radius.circular(50.0)),
+                            border: new Border.all(
+                              color: Colors.deepPurple,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.close,
+                              color: Colors.deepPurple,
+                              size: 24,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          'Remove\nPhoto',
+                          style: TextStyle(fontSize: 12),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ],
         ),
@@ -1355,11 +1377,10 @@ class _CreateProfileState extends State<CreateProfile> {
   }
 
   openGallery() async {
-      getFile();
+    getFile();
   }
 
   openCamera() async {
-
     var picture = await _picker.getImage(
       source: ImageSource.camera,
     );
@@ -1369,5 +1390,4 @@ class _CreateProfileState extends State<CreateProfile> {
     print("File Name ==> ${fileName}");
     uploadProfilePicture(file);
   }
-
 }

@@ -1,7 +1,8 @@
+import 'package:flutter/widgets.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/services/authentication_service.dart';
-import 'package:flutter/widgets.dart';
+
 import '../base_model.dart';
 
 class LoginViewModel extends BaseModel {
@@ -27,9 +28,11 @@ class LoginViewModel extends BaseModel {
     return response;
   }
 
-  Future<BaseResponse> updateProfile(Map body, String userId,  String auth) async {
+  Future<BaseResponse> updateProfile(
+      Map body, String userId, String auth) async {
     setBusy(true);
-    BaseResponse response = await _authenticationService.updateProfile(body, userId, auth);
+    BaseResponse response =
+        await _authenticationService.updateProfile(body, userId, auth);
     print(response.status.toString());
     setBusy(false);
     return response;

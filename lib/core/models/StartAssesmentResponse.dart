@@ -24,6 +24,7 @@ class StartAssesmentResponse {
     return data;
   }
 }
+
 @JsonSerializable(nullable: true)
 class Data {
   Assessmment assessmment;
@@ -44,6 +45,7 @@ class Data {
     return data;
   }
 }
+
 @JsonSerializable(nullable: true)
 class Assessmment {
   String qnAId;
@@ -58,14 +60,14 @@ class Assessmment {
 
   Assessmment(
       {this.qnAId,
-        this.taskId,
-        this.assessmentTitle,
-        this.assessmentDate,
-        this.carePlanId,
-        this.question,
-        this.isBiometric,
-        this.biometricName,
-        this.biometricMeasureUnit});
+      this.taskId,
+      this.assessmentTitle,
+      this.assessmentDate,
+      this.carePlanId,
+      this.question,
+      this.isBiometric,
+      this.biometricName,
+      this.biometricMeasureUnit});
 
   Assessmment.fromJson(Map<String, dynamic> json) {
     qnAId = json['QnAId'];
@@ -97,6 +99,7 @@ class Assessmment {
     return data;
   }
 }
+
 @JsonSerializable(nullable: true)
 class Question {
   int index;
@@ -107,10 +110,10 @@ class Question {
 
   Question(
       {this.index,
-        this.isLastQuestion,
-        this.questionText,
-        this.questionType,
-        this.answerOptions});
+      this.isLastQuestion,
+      this.questionText,
+      this.questionType,
+      this.answerOptions});
 
   Question.fromJson(Map<String, dynamic> json) {
     index = json['Index'];
@@ -131,10 +134,9 @@ class Question {
   }
 }
 
-class Answer{
+class Answer {
   int index;
   String text;
 
   Answer(this.index, this.text);
-
 }

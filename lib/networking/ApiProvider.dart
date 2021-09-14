@@ -1,29 +1,28 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
-import 'dart:io';
-import 'dart:convert';
-import 'dart:async';
+
 import 'CustomException.dart';
-import 'package:paitent/utils/StringUtility.dart';
 
 class ApiProvider {
+  String _baseUrl = "";
 
-   String _baseUrl = "";
-
-   ApiProvider(String baseUrl){
-     this._baseUrl = baseUrl;
-   }
+  ApiProvider(String baseUrl) {
+    this._baseUrl = baseUrl;
+  }
 
   Future<dynamic> get(String url, {Map header}) async {
-
-    debugPrint('Base Url ==> GET ${_baseUrl+url}');
+    debugPrint('Base Url ==> GET ${_baseUrl + url}');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
 
     var responseJson;
     try {
-      final response = await http.get(_baseUrl + url, headers: header).timeout(const Duration(seconds: 40));
+      final response = await http
+          .get(Uri.parse(_baseUrl + url), headers: header)
+          .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -34,14 +33,17 @@ class ApiProvider {
     return responseJson;
   }
 
-  Future<dynamic> post(String url, {Map body,  Map header}) async {
-    debugPrint('Base Url ==> POST ${_baseUrl+url}');
+  Future<dynamic> post(String url, {Map body, Map header}) async {
+    debugPrint('Base Url ==> POST ${_baseUrl + url}');
     debugPrint('Request Body ==> ${json.encode(body).toString()}');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
 
     var responseJson;
     try {
-      final response = await http.post(_baseUrl + url, body: json.encode(body) , headers: header).timeout(const Duration(seconds: 40));
+      final response = await http
+          .post(Uri.parse(_baseUrl + url),
+              body: json.encode(body), headers: header)
+          .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -52,14 +54,17 @@ class ApiProvider {
     return responseJson;
   }
 
-  Future<dynamic> put(String url, {Map body,  Map header}) async {
-    debugPrint('Base Url ==> PUT ${_baseUrl+url}');
+  Future<dynamic> put(String url, {Map body, Map header}) async {
+    debugPrint('Base Url ==> PUT ${_baseUrl + url}');
     debugPrint('Request Body ==> ${json.encode(body).toString()}');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
 
     var responseJson;
     try {
-      final response = await http.put(_baseUrl + url, body: json.encode(body) , headers: header).timeout(const Duration(seconds: 40));
+      final response = await http
+          .put(Uri.parse(_baseUrl + url),
+              body: json.encode(body), headers: header)
+          .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -70,22 +75,24 @@ class ApiProvider {
     return responseJson;
   }
 
-   Future<dynamic> delete(String url, {Map header}) async {
-     debugPrint('Base Url ==> DELETE ${_baseUrl+url}');
-     debugPrint('Headers ==> ${json.encode(header).toString()}');
+  Future<dynamic> delete(String url, {Map header}) async {
+    debugPrint('Base Url ==> DELETE ${_baseUrl + url}');
+    debugPrint('Headers ==> ${json.encode(header).toString()}');
 
-     var responseJson;
-     try {
-       final response = await http.delete(_baseUrl + url, headers: header).timeout(const Duration(seconds: 40));
-       responseJson = _response(response);
-     } on SocketException {
-       throw FetchDataException('No Internet connection');
-     } on TimeoutException catch (_) {
-       // A timeout occurred.
-       throw FetchDataException('No Internet connection');
-     }
-     return responseJson;
-   }
+    var responseJson;
+    try {
+      final response = await http
+          .delete(Uri.parse(_baseUrl + url), headers: header)
+          .timeout(const Duration(seconds: 40));
+      responseJson = _response(response);
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    } on TimeoutException catch (_) {
+      // A timeout occurred.
+      throw FetchDataException('No Internet connection');
+    }
+    return responseJson;
+  }
 
   dynamic _response(http.Response response) {
     switch (response.statusCode) {
@@ -96,9 +103,6 @@ class ApiProvider {
       case 403:
       //case 404:
       case 500:
-
-
-
         var responseJson = json.decode(response.body.toString());
         print(responseJson);
         return responseJson;
@@ -107,7 +111,6 @@ class ApiProvider {
         var code = response.statusCode.toString();
         print('Status_Code ${code.toString()}');
         throw FetchDataException('Opps! Something wents wrong.');
-
 
 //      case 400:
 //        throw BadRequestException(response.body.toString());
@@ -145,34 +148,36 @@ class ApiProvider {
   //   return responseJson;
   // }
 
-   multipart(String url, {String filePath,  Map header}) async {
-    debugPrint('Base Url ==> POST ${_baseUrl+url}');
+  multipart(String url, {String filePath, Map header}) async {
+    debugPrint('Base Url ==> POST ${_baseUrl + url}');
     debugPrint('Request File Path ==> ${filePath}');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
 
     var responseJson;
     try {
-      var postUri = Uri.parse(_baseUrl+url);
+      var postUri = Uri.parse(_baseUrl + url);
       var request = new http.MultipartRequest("POST", postUri);
       request.headers.addAll(header);
-      request.files.add(new http.MultipartFile.fromBytes('name', await File.fromUri(Uri.parse(filePath)).readAsBytes()));
+      request.files.add(new http.MultipartFile.fromBytes(
+          'name', await File.fromUri(Uri.parse(filePath)).readAsBytes()));
 
-      request.send().then((response) async {
-       /* try {
+      request
+          .send()
+          .then((response) async {
+            /* try {
           var responseFinal = await http.Response.fromStream(response);
           responseJson = _response(responseFinal);
         } on CustomException{
           debugPrint("test");
         }*/
 
+            if (response.statusCode == 200) {
+              final respStr = await response.stream.bytesToString();
+              debugPrint("Uploded " + respStr);
+              responseJson = respStr;
+            }
 
-       if(response.statusCode == 200){
-         final respStr = await response.stream.bytesToString();
-         debugPrint("Uploded "+respStr);
-         responseJson = respStr;
-       }
-
-        /*http.Response.fromStream(response)
+            /*http.Response.fromStream(response)
             .then((response) {
 
           if (response.statusCode == 200)
@@ -184,11 +189,10 @@ class ApiProvider {
           return response.body;
 
         });*/
-
-      }).catchError((err) => print('error : '+err.toString()))
-          .whenComplete(()
-      {});;
-
+          })
+          .catchError((err) => print('error : ' + err.toString()))
+          .whenComplete(() {});
+      ;
     } on SocketException {
       throw FetchDataException('No Internet connection');
     } on TimeoutException catch (_) {
@@ -198,8 +202,7 @@ class ApiProvider {
     return responseJson;
   }
 
-  String getBaseUrl(){
-     return _baseUrl;
+  String getBaseUrl() {
+    return _baseUrl;
   }
-
 }

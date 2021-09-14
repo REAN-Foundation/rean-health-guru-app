@@ -61,20 +61,20 @@ class CarePlan {
 
   CarePlan(
       {this.isStopped,
-        this.isActive,
-        this.id,
-        this.patientUserId,
-        this.displayId,
-        this.allyMRN,
-        this.carePlanName,
-        this.carePlanCode,
-        this.enrollmentBeginDate,
-        this.enrollmentEndDate,
-        this.durationInWeeks,
-        this.endEnrollmentAfterDays,
-        this.enrolledOn,
-        this.updatedAt,
-        this.createdAt});
+      this.isActive,
+      this.id,
+      this.patientUserId,
+      this.displayId,
+      this.allyMRN,
+      this.carePlanName,
+      this.carePlanCode,
+      this.enrollmentBeginDate,
+      this.enrollmentEndDate,
+      this.durationInWeeks,
+      this.endEnrollmentAfterDays,
+      this.enrolledOn,
+      this.updatedAt,
+      this.createdAt});
 
   CarePlan.fromJson(Map<String, dynamic> json) {
     isStopped = json['IsStopped'];

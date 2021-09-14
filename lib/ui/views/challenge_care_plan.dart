@@ -1,32 +1,19 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
-import 'package:paitent/core/models/assortedViewConfigs.dart';
 import 'package:paitent/core/models/startTaskOfAHACarePlanResponse.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:intl/intl.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'home_view.dart';
 
 class ChallengeCarePlanView extends StatefulWidget {
-
   Task task;
 
-  ChallengeCarePlanView(@required Task task){
+  ChallengeCarePlanView(@required Task task) {
     this.task = task;
   }
 
@@ -43,9 +30,8 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
   @override
   void initState() {
     // TODO: implement initState
-    if(widget.task.details.challengeNotes != null) {
-      _textController.text =
-          widget.task.details.challengeNotes.toString();
+    if (widget.task.details.challengeNotes != null) {
+      _textController.text = widget.task.details.challengeNotes.toString();
       _textController.selection = TextSelection.fromPosition(
         TextPosition(offset: _textController.text.length),
       );
@@ -53,29 +39,27 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child: Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'Challenge',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            title: Text(
+              'Challenge',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700),
+            ),
+            iconTheme: new IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -85,23 +69,22 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
                   debugPrint("Clicked on profile icon");
                 },
               )*/
-                ],
-              ),
-              body:
-                  SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        //headerText(),
-                        questionText(),
-                        _entryField(),
-                        _submitButton(),
-                      ],
-                    ),
-                  ),
+            ],
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                //headerText(),
+                questionText(),
+                _entryField(),
+                _submitButton(),
+              ],
             ),
           ),
+        ),
+      ),
     );
   }
 
@@ -121,7 +104,6 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
       ),
     );
   }
-
 
   Widget questionText() {
     return Container(
@@ -157,16 +139,16 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
             width: 1.0,
           ),
         ),
-        child:TextFormField(
+        child: TextFormField(
             enabled: !widget.task.finished,
             obscureText: false,
             controller: _textController,
             keyboardType: TextInputType.multiline,
             maxLines: null,
-            style: TextStyle(color: Colors.black54,),
-            onFieldSubmitted: (term) {
-
-            },
+            style: TextStyle(
+              color: Colors.black54,
+            ),
+            onFieldSubmitted: (term) {},
             decoration: InputDecoration(
                 hintText: 'Write down your notes here...',
                 border: InputBorder.none,
@@ -176,28 +158,34 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
     );
   }
 
-  Widget _submitButton(){
-    return  Row(
+  Widget _submitButton() {
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Material(  //Wrap with Material
-          shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(24.0) ),
+        Material(
+          //Wrap with Material
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
           elevation: 4.0,
           color: primaryColor,
-          clipBehavior: Clip.antiAlias, // Add This
+          clipBehavior: Clip.antiAlias,
+          // Add This
           child: MaterialButton(
             minWidth: 200,
             child: new Text(!widget.task.finished ? 'Save' : 'Done',
-                style: new TextStyle(fontSize: 14.0, color: Colors.white, fontWeight: FontWeight.normal)),
+                style: new TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.normal)),
             onPressed: () {
-              if(!widget.task.finished) {
+              if (!widget.task.finished) {
                 if (_textController.text == "") {
-                  showToast("Please enter challenge text");
+                  showToast("Please enter challenge text", context);
                 } else {
                   completeChallengeTaskOfAHACarePlan(widget.task);
                 }
-              }else{
+              } else {
                 Navigator.pop(context);
               }
             },
@@ -207,28 +195,29 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
     );
   }
 
-
   completeChallengeTaskOfAHACarePlan(Task task) async {
     try {
-
       var map = new Map<String, String>();
       map["ChallengeNotes"] = _textController.text;
 
-      StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse = await model.completeChallengeTask(task.details.carePlanId.toString(), task.details.id, map);
+      StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
+          await model.completeChallengeTask(
+              task.details.carePlanId.toString(), task.details.id, map);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
-              return HomeView( 1 );
-            }), (Route<dynamic> route) => false);
-        debugPrint("AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}");
+          return HomeView(1);
+        }), (Route<dynamic> route) => false);
+        debugPrint(
+            "AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}");
       } else {
-        showToast(_startTaskOfAHACarePlanResponse.message);
+        showToast(_startTaskOfAHACarePlanResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
   }

@@ -58,11 +58,11 @@ class SlotsByDate {
 
   SlotsByDate(
       {this.date,
-        this.weekDayId,
-        this.weekDay,
-        this.dayStartTime,
-        this.dayEndTime,
-        this.slots});
+      this.weekDayId,
+      this.weekDay,
+      this.dayStartTime,
+      this.dayEndTime,
+      this.slots});
 
   SlotsByDate.fromJson(Map<String, dynamic> json) {
     date = json['date'];

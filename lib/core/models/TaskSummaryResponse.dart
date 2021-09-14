@@ -29,7 +29,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     summary =
-    json['summary'] != null ? new Summary.fromJson(json['summary']) : null;
+        json['summary'] != null ? new Summary.fromJson(json['summary']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -58,18 +58,18 @@ class Summary {
 
   Summary(
       {this.completedTaskCount,
-        this.incompleteTaskCount,
-        this.missed,
-        this.taken,
-        this.unknown,
-        this.upcoming,
-        this.overdue,
-        this.weight,
-        this.bloodPressure,
-        this.bloodSugar,
-        this.bloodOxygenSaturation,
-        this.pulse,
-        this.temperature});
+      this.incompleteTaskCount,
+      this.missed,
+      this.taken,
+      this.unknown,
+      this.upcoming,
+      this.overdue,
+      this.weight,
+      this.bloodPressure,
+      this.bloodSugar,
+      this.bloodOxygenSaturation,
+      this.pulse,
+      this.temperature});
 
   Summary.fromJson(Map<String, dynamic> json) {
     completedTaskCount = json['CompletedTaskCount'];
@@ -80,7 +80,7 @@ class Summary {
     upcoming = json['Upcoming'];
     overdue = json['Overdue'];
     weight =
-    json['Weight'] != null ? new Weight.fromJson(json['Weight']) : null;
+        json['Weight'] != null ? new Weight.fromJson(json['Weight']) : null;
     bloodPressure = json['BloodPressure'] != null
         ? new BloodPressure.fromJson(json['BloodPressure'])
         : null;
@@ -157,9 +157,9 @@ class BloodPressure {
 
   BloodPressure(
       {this.bloodPressureSystolic,
-        this.bloodPressureDiastolic,
-        this.unit,
-        this.recordDate});
+      this.bloodPressureDiastolic,
+      this.unit,
+      this.recordDate});
 
   BloodPressure.fromJson(Map<String, dynamic> json) {
     bloodPressureSystolic = json['BloodPressure_Systolic'];

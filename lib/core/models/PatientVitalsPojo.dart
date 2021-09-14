@@ -63,16 +63,16 @@ class Vitals {
 
   Vitals(
       {this.id,
-        this.visitId,
-        this.patientUserId,
-        this.doctorUserId,
-        this.weight,
-        this.height,
-        this.temperature,
-        this.pulse,
-        this.systolicBloodPressure,
-        this.diastolicBloodPressure,
-        this.bloodOxygenSaturation});
+      this.visitId,
+      this.patientUserId,
+      this.doctorUserId,
+      this.weight,
+      this.height,
+      this.temperature,
+      this.pulse,
+      this.systolicBloodPressure,
+      this.diastolicBloodPressure,
+      this.bloodOxygenSaturation});
 
   Vitals.fromJson(Map<String, dynamic> json) {
     id = json['id'];

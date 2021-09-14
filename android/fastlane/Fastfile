@@ -3,9 +3,6 @@
 default_platform(:android)
 
 platform :android do
-  before_all do
-    setup_ci
-  end
 
   lane :publish_to_browserstack do |options|
     upload_to_browserstack_app_automate(
@@ -22,14 +19,14 @@ platform :android do
     build_notes = "Release candidate. #{commit[:message]}. Built by #{commit[:author]}"
 
     firebase_app_distribution(
-       app: ENV["FIREBASE_APP_ID_ANDROID"],
+       app: "#{options[:app_id]}",
        release_notes: build_notes,
        groups: "distribution-team",
        android_artifact_type: "APK",
       #  android_artifact_type: "AAB",
        android_artifact_path: "./build/app/outputs/apk/#{options[:flavor]}/#{options[:mode]}/app-#{options[:flavor]}-#{options[:mode]}.apk",
       #  android_artifact_path: "./build/bundle/#{options[:flavor]}#{options[:mode].capitalize}/app-#{options[:flavor]}-#{options[:mode]}.aab",
-       firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"]
+       firebase_cli_token: ENV["FIREBASE_TOKEN"]
     )
   end
 
@@ -60,6 +57,7 @@ platform :android do
       aab: "#{options[:aab_path]}"
     )
   end
+  
   # Beta and Prod share the same prod backend
   desc "Upload Beta Build to PlayStore"
   lane :release_beta_build do |options|
@@ -74,8 +72,11 @@ platform :android do
 
   desc "Promote Beta to Production"
   lane :promote_beta_to_production do
+    versions = google_play_track_version_codes(track: "beta")
+    version_code = versions[0]
+
     upload_to_play_store(
-      track: 'beta',
+      track: 'beta', 
       track_promote_to: 'production',
       package_name: "org.reanfoundation.patient",
       json_key_data: ENV["PLAYSTORE_JSON_KEY_DATA"]

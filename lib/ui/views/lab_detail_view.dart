@@ -1,22 +1,12 @@
-import 'dart:ffi';
-
-import 'package:badges/badges.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_autolink_text/flutter_autolink_text.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:location/location.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/labsListApiResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/appoinment_view_model.dart';
-import 'package:paitent/core/viewmodels/views/login_view_model.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/ui/shared/text_styles.dart';
-import 'package:paitent/ui/shared/ui_helpers.dart';
-import 'package:flutter/material.dart';
 import 'package:paitent/ui/views/labTileWidget.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
-import 'package:paitent/widgets/app_drawer.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'base_widget.dart';
@@ -31,14 +21,14 @@ class LabDetailsView extends StatefulWidget {
 }
 
 class _LabDetailsViewState extends State<LabDetailsView> {
-  Location location = new Location();
+  /*Location location = new Location();
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
   LocationData _locationData;
+  List<Address> addresses;
+  Address first;*/
   SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
   String name = "";
-  List<Address> addresses;
-  Address first;
   int _currentNav = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   var _searchController = new TextEditingController();
@@ -60,7 +50,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
   }
 
   void getLocation() async {
-    _serviceEnabled = await location.serviceEnabled();
+    /* _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
@@ -82,14 +72,14 @@ class _LabDetailsViewState extends State<LabDetailsView> {
           'Latitude = ${currentLocation.latitude} Longitude = ${currentLocation.longitude}');
       findOutCityFromGeoCord(
           currentLocation.latitude, currentLocation.longitude);
-    });
+    });*/
   }
 
   void findOutCityFromGeoCord(double lat, double long) async {
-    final coordinates = new Coordinates(lat, long);
+    /*final coordinates = new Coordinates(lat, long);
     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     first = addresses.first;
-    debugPrint("${first.featureName} : ${first.locality}");
+    debugPrint("${first.featureName} : ${first.locality}");*/
   }
 
   @override
@@ -141,7 +131,9 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                           Text(
                             "About",
                             style: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 16, color: primaryColor),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                color: primaryColor),
                           ),
                           SizedBox(
                             height: 4,
@@ -198,7 +190,9 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                           Text(
                             "Address",
                             style: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 16, color: primaryColor),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                color: primaryColor),
                           ),
                           SizedBox(
                             height: 4,
@@ -214,34 +208,37 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                           Text(
                             "Contact No.",
                             style: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 16, color: primaryColor),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                color: primaryColor),
                           ),
                           SizedBox(
                             height: 4,
                           ),
                           AutolinkText(
-                              text:'+91 '+labDetails.phoneNumber,
+                              text: '+91 ' + labDetails.phoneNumber,
                               textStyle: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w200,
                                   color: textBlack),
                               linkStyle: TextStyle(color: Colors.blue),
                               onPhoneTap: (link) async {
-                                String url = 'tel://'+link;
+                                String url = 'tel://' + link;
                                 if (await canLaunch(url)) {
                                   await launch(url);
                                 } else {
                                   throw 'Could not launch $url';
                                 }
-                              }
-                          ),
+                              }),
                           SizedBox(
                             height: 16,
                           ),
                           Text(
                             "Working Hours",
                             style: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 16, color: primaryColor),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                color: primaryColor),
                           ),
                           SizedBox(
                             height: 4,
@@ -260,9 +257,11 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                             RichText(
                               text: TextSpan(
                                 text: labDetails
-                                    .appointmentRelatedDetails.workingHours
-                                    .elementAt(i)
-                                    .substring(0, 3).toUpperCase()+" : ",
+                                        .appointmentRelatedDetails.workingHours
+                                        .elementAt(i)
+                                        .substring(0, 3)
+                                        .toUpperCase() +
+                                    " : ",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     color: textBlack,

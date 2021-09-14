@@ -1,21 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
-import 'package:paitent/core/models/assortedViewConfigs.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:intl/intl.dart';
-import 'package:paitent/utils/StringUtility.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'home_view.dart';
 
@@ -128,7 +115,8 @@ class _AssessmentFinalCarePlanViewState
                                 borderRadius:
                                     new BorderRadius.all(Radius.circular(8.0))),
                             child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Row(
@@ -165,7 +153,8 @@ class _AssessmentFinalCarePlanViewState
                                               borderRadius:
                                                   BorderRadius.circular(8.0),
                                               border: Border.all(
-                                                  color: primaryColor, width: 1),
+                                                  color: primaryColor,
+                                                  width: 1),
                                               color: Colors.white),
                                           child: TextFormField(
                                               controller: _systolicController,
@@ -173,7 +162,8 @@ class _AssessmentFinalCarePlanViewState
                                               maxLines: 1,
                                               textInputAction:
                                                   TextInputAction.next,
-                                              keyboardType: TextInputType.number,
+                                              keyboardType:
+                                                  TextInputType.number,
                                               onFieldSubmitted: (term) {
                                                 _fieldFocusChange(
                                                     context,
@@ -191,7 +181,7 @@ class _AssessmentFinalCarePlanViewState
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                     children: [
                                       RichText(
                                         text: TextSpan(
@@ -207,11 +197,11 @@ class _AssessmentFinalCarePlanViewState
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
-                                                      FontWeight.w700,
+                                                          FontWeight.w700,
                                                       color: primaryColor,
                                                       fontFamily: 'Montserrat',
                                                       fontStyle:
-                                                      FontStyle.italic)),
+                                                          FontStyle.italic)),
                                             ]),
                                       ),
                                       Expanded(
@@ -220,17 +210,19 @@ class _AssessmentFinalCarePlanViewState
                                               horizontal: 8.0),
                                           decoration: BoxDecoration(
                                               borderRadius:
-                                              BorderRadius.circular(8.0),
+                                                  BorderRadius.circular(8.0),
                                               border: Border.all(
-                                                  color: primaryColor, width: 1),
+                                                  color: primaryColor,
+                                                  width: 1),
                                               color: Colors.white),
                                           child: TextFormField(
                                               controller: _diastolicController,
                                               focusNode: _diastolicFocus,
                                               maxLines: 1,
                                               textInputAction:
-                                              TextInputAction.next,
-                                              keyboardType: TextInputType.number,
+                                                  TextInputAction.next,
+                                              keyboardType:
+                                                  TextInputType.number,
                                               onFieldSubmitted: (term) {
                                                 _fieldFocusChange(
                                                     context,
@@ -247,7 +239,9 @@ class _AssessmentFinalCarePlanViewState
                                   ),
                                 ]),
                           ),
-                          SizedBox(height: 32,),
+                          SizedBox(
+                            height: 32,
+                          ),
                           Container(
                             padding: const EdgeInsets.all(16.0),
                             height: 100,
@@ -256,15 +250,16 @@ class _AssessmentFinalCarePlanViewState
                                 color: colorF6F6FF,
                                 border: Border.all(color: primaryLightColor),
                                 borderRadius:
-                                new BorderRadius.all(Radius.circular(8.0))),
+                                    new BorderRadius.all(Radius.circular(8.0))),
                             child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                     children: [
                                       RichText(
                                         text: TextSpan(
@@ -280,11 +275,11 @@ class _AssessmentFinalCarePlanViewState
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
-                                                      FontWeight.w700,
+                                                          FontWeight.w700,
                                                       color: primaryColor,
                                                       fontFamily: 'Montserrat',
                                                       fontStyle:
-                                                      FontStyle.italic)),
+                                                          FontStyle.italic)),
                                             ]),
                                       ),
                                       Expanded(
@@ -293,20 +288,20 @@ class _AssessmentFinalCarePlanViewState
                                               horizontal: 8.0),
                                           decoration: BoxDecoration(
                                               borderRadius:
-                                              BorderRadius.circular(8.0),
+                                                  BorderRadius.circular(8.0),
                                               border: Border.all(
-                                                  color: primaryColor, width: 1),
+                                                  color: primaryColor,
+                                                  width: 1),
                                               color: Colors.white),
                                           child: TextFormField(
                                               controller: _weightController,
                                               focusNode: _weightFocus,
                                               maxLines: 1,
                                               textInputAction:
-                                              TextInputAction.done,
-                                              keyboardType: TextInputType.number,
-                                              onFieldSubmitted: (term) {
-
-                                              },
+                                                  TextInputAction.done,
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              onFieldSubmitted: (term) {},
                                               decoration: InputDecoration(
                                                   border: InputBorder.none,
                                                   fillColor: Colors.white,
@@ -317,9 +312,11 @@ class _AssessmentFinalCarePlanViewState
                                   ),
                                 ]),
                           ),
-                          SizedBox(height: 60,),
+                          SizedBox(
+                            height: 60,
+                          ),
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               showDialog(
                                   context: context,
                                   builder: (_) {
@@ -329,25 +326,28 @@ class _AssessmentFinalCarePlanViewState
                             child: Container(
                                 height: 40,
                                 width: 120,
-                                padding: EdgeInsets.symmetric(horizontal: 16.0, ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16.0,
+                                ),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(24.0),
-                                  border: Border.all(color: primaryColor, width: 1),
-                                  color: Colors.deepPurple,),
+                                  border:
+                                      Border.all(color: primaryColor, width: 1),
+                                  color: Colors.deepPurple,
+                                ),
                                 child: Center(
                                   child: Text(
                                     "Done",
-                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 12),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 12),
                                     textAlign: TextAlign.center,
                                   ),
-                                )
-                            ),
+                                )),
                           ),
                         ],
-                      )
-                  )
-              )
-          ),
+                      )))),
         ],
       ),
     );
@@ -358,7 +358,6 @@ class _AssessmentFinalCarePlanViewState
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
   }
-
 
   Widget _dialog(BuildContext context) {
     return Dialog(
@@ -396,13 +395,17 @@ class _AssessmentFinalCarePlanViewState
                   ],
                 ),
               ),
-              SizedBox(height: 24,),
+              SizedBox(
+                height: 24,
+              ),
               ImageIcon(
                 AssetImage('res/images/ic_applause.png'),
                 size: 48,
-                color:  Colors.deepPurple,
+                color: Colors.deepPurple,
               ),
-              SizedBox(height: 24,),
+              SizedBox(
+                height: 24,
+              ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
@@ -418,40 +421,39 @@ class _AssessmentFinalCarePlanViewState
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: InkWell(
-                  onTap: (){
+                  onTap: () {
                     //Navigator.of(context).pop();
                     Navigator.of(context, rootNavigator: true).pop();
                     Navigator.pushAndRemoveUntil(context,
                         MaterialPageRoute(builder: (context) {
-                          return HomeView( 1 );
-                        }), (Route<dynamic> route) => false);
+                      return HomeView(1);
+                    }), (Route<dynamic> route) => false);
                   },
                   child: Container(
                       height: 40,
                       width: 120,
-                      padding: EdgeInsets.symmetric(horizontal: 16.0, ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                      ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24.0),
                         border: Border.all(color: primaryColor, width: 1),
-                        color: Colors.deepPurple,),
+                        color: Colors.deepPurple,
+                      ),
                       child: Center(
                         child: Text(
                           "Close",
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 12),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12),
                           textAlign: TextAlign.center,
                         ),
-                      )
-                  ),
+                      )),
                 ),
               ),
             ],
           ),
-
-
-
-
-        )
-    );
+        ));
   }
-
 }

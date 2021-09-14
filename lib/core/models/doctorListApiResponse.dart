@@ -47,6 +47,7 @@ class Data {
     return data;
   }
 }
+
 @JsonSerializable(nullable: true)
 class Doctors {
   String userId;
@@ -77,30 +78,30 @@ class Doctors {
 
   Doctors(
       {this.userId,
-        this.doctorRoleId,
-        this.firstName,
-        this.lastName,
-        this.prefix,
-        this.phoneNumber,
-        this.email,
-        this.gender,
-        this.birthDate,
-        this.imageURL,
-        this.locality,
-        this.address,
-        this.locationCoordsLongitude,
-        this.locationCoordsLattitude,
-        this.establishmentName,
-        this.qualification,
-        this.specialities,
-        this.aboutMe,
-        this.professionalHighlights,
-        this.consultationFee,
-        this.appointmentSlotDuration,
-        this.practisingSince,
-        this.dateCreated,
-        this.dateUpdated,
-        this.appointmentRelatedDetails});
+      this.doctorRoleId,
+      this.firstName,
+      this.lastName,
+      this.prefix,
+      this.phoneNumber,
+      this.email,
+      this.gender,
+      this.birthDate,
+      this.imageURL,
+      this.locality,
+      this.address,
+      this.locationCoordsLongitude,
+      this.locationCoordsLattitude,
+      this.establishmentName,
+      this.qualification,
+      this.specialities,
+      this.aboutMe,
+      this.professionalHighlights,
+      this.consultationFee,
+      this.appointmentSlotDuration,
+      this.practisingSince,
+      this.dateCreated,
+      this.dateUpdated,
+      this.appointmentRelatedDetails});
 
   Doctors.fromJson(Map<String, dynamic> json) {
     userId = json['UserId'];
@@ -119,7 +120,7 @@ class Doctors {
     locationCoordsLattitude = json['LocationCoords_Lattitude'];
     establishmentName = json['EstablishmentName'];
     qualification = json['Qualification'];
-    specialities = json['Specialities'] ??  '';
+    specialities = json['Specialities'] ?? '';
     aboutMe = json['AboutMe'];
     professionalHighlights = json['ProfessionalHighlights'];
     consultationFee = json['ConsultationFee'];
@@ -129,7 +130,7 @@ class Doctors {
     dateUpdated = json['DateUpdated'];
     appointmentRelatedDetails = json['AppointmentRelatedDetails'] != null
         ? new AppointmentRelatedDetails.fromJson(
-        json['AppointmentRelatedDetails'])
+            json['AppointmentRelatedDetails'])
         : null;
   }
 
@@ -176,10 +177,10 @@ class AppointmentRelatedDetails {
 
   AppointmentRelatedDetails(
       {this.userId,
-        this.nodeId,
-        this.businessServiceId,
-        this.operationalTimeZone,
-        this.workingHours});
+      this.nodeId,
+      this.businessServiceId,
+      this.operationalTimeZone,
+      this.workingHours});
 
   AppointmentRelatedDetails.fromJson(Map<String, dynamic> json) {
     userId = json['UserId'];

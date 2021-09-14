@@ -1,18 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
+import 'package:intl/intl.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GetMyMedicationsResponse.dart';
-import 'package:paitent/core/models/MyCurrentMedication.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:intl/intl.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
@@ -50,19 +45,20 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
           .getMyMedications(dateFormatStandard.format(new DateTime.now()));
       debugPrint("Medication ==> ${getMyMedicationsResponse.toJson()}");
       if (getMyMedicationsResponse.status == 'success') {
-        debugPrint("Medication Length ==> ${getMyMedicationsResponse.data.medConsumptions.length}");
-        if(getMyMedicationsResponse.data.medConsumptions.length != 0) {
+        debugPrint(
+            "Medication Length ==> ${getMyMedicationsResponse.data.medConsumptions.length}");
+        if (getMyMedicationsResponse.data.medConsumptions.length != 0) {
           currentMedicationList
               .addAll(getMyMedicationsResponse.data.medConsumptions);
           formatMedicationSectionWise(
               getMyMedicationsResponse.data.medConsumptions);
         }
       } else {
-        showToast(getMyMedicationsResponse.message);
+        showToast(getMyMedicationsResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -76,13 +72,21 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     nightMedicationList.clear();
 
     medications.forEach((currentMedication) {
-      if (currentMedication.details.contains('morning') && !currentMedication.isMissed && !currentMedication.isTaken) {
+      if (currentMedication.details.contains('morning') &&
+          !currentMedication.isMissed &&
+          !currentMedication.isTaken) {
         morningMedicationList.add(currentMedication);
-      } else if (currentMedication.details.contains('afternoon') && !currentMedication.isMissed && !currentMedication.isTaken) {
+      } else if (currentMedication.details.contains('afternoon') &&
+          !currentMedication.isMissed &&
+          !currentMedication.isTaken) {
         afternoonMedicationList.add(currentMedication);
-      } else if (currentMedication.details.contains('evening') && !currentMedication.isMissed && !currentMedication.isTaken) {
+      } else if (currentMedication.details.contains('evening') &&
+          !currentMedication.isMissed &&
+          !currentMedication.isTaken) {
         eveningMedicationList.add(currentMedication);
-      } else if (currentMedication.details.contains('night') && !currentMedication.isMissed && !currentMedication.isTaken) {
+      } else if (currentMedication.details.contains('night') &&
+          !currentMedication.isMissed &&
+          !currentMedication.isTaken) {
         nightMedicationList.add(currentMedication);
       }
     });
@@ -99,46 +103,60 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
         child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: Colors.white,
-          body: model.busy ? Center( child: SizedBox(height: 32, width: 32, child: CircularProgressIndicator(),),) : (currentMedicationList.length == 0
-              ? noMedicationFound()
-              : SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                morningMedicationList.length != 0
-                    ? medicationTimeWiseSection(
-                    'Morning',
-                    'res/images/ic_sunrise.png',
-                    morningMedicationList)
-                    : Container(),
-                const SizedBox(
-                  height: 0,
-                ),
-                afternoonMedicationList.length != 0
-                    ? medicationTimeWiseSection('Afternoon',
-                    'res/images/ic_sun.png', afternoonMedicationList)
-                    : Container(),
-                const SizedBox(
-                  height: 0,
-                ),
-                eveningMedicationList.length != 0
-                    ? medicationTimeWiseSection('Evening',
-                    'res/images/ic_sunset.png', eveningMedicationList)
-                    : Container(),
-                const SizedBox(
-                  height: 0,
-                ),
-                nightMedicationList.length != 0
-                    ? medicationTimeWiseSection('Night',
-                    'res/images/ic_night.png', nightMedicationList)
-                    : Container(),
-                SizedBox(
-                  height: 48,
+          body: model.busy
+              ? Center(
+                  child: SizedBox(
+                    height: 32,
+                    width: 32,
+                    child: CircularProgressIndicator(),
+                  ),
                 )
-              ],
-            ),
-          )),
+              : (currentMedicationList.length == 0
+                  ? noMedicationFound()
+                  : SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          morningMedicationList.length != 0
+                              ? medicationTimeWiseSection(
+                                  'Morning',
+                                  'res/images/ic_sunrise.png',
+                                  morningMedicationList)
+                              : Container(),
+                          const SizedBox(
+                            height: 0,
+                          ),
+                          afternoonMedicationList.length != 0
+                              ? medicationTimeWiseSection(
+                                  'Afternoon',
+                                  'res/images/ic_sun.png',
+                                  afternoonMedicationList)
+                              : Container(),
+                          const SizedBox(
+                            height: 0,
+                          ),
+                          eveningMedicationList.length != 0
+                              ? medicationTimeWiseSection(
+                                  'Evening',
+                                  'res/images/ic_sunset.png',
+                                  eveningMedicationList)
+                              : Container(),
+                          const SizedBox(
+                            height: 0,
+                          ),
+                          nightMedicationList.length != 0
+                              ? medicationTimeWiseSection(
+                                  'Night',
+                                  'res/images/ic_night.png',
+                                  nightMedicationList)
+                              : Container(),
+                          SizedBox(
+                            height: 48,
+                          )
+                        ],
+                      ),
+                    )),
         ),
       ),
     );
@@ -179,7 +197,9 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
             color: colorF6F6FF,
             child: listWidget(medications),
           ),
-          SizedBox(height: 16,)
+          SizedBox(
+            height: 16,
+          )
         ],
       ),
     );
@@ -217,8 +237,8 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     );
   }
 
-  Widget _makeMedicineSwipeCard(BuildContext context, int index, List<MedConsumptions> medications) {
-
+  Widget _makeMedicineSwipeCard(
+      BuildContext context, int index, List<MedConsumptions> medications) {
     MedConsumptions medication = medications.elementAt(index);
 
     return Dismissible(
@@ -232,18 +252,14 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               imageUrl: symptomTypes.publicImageUrl,
             ),),*/
             title: Text(
-              '        '+medication.drugName,
+              '        ' + medication.drugName,
               style: TextStyle(
                   fontSize: 14.0,
                   color: primaryColor,
                   fontWeight: FontWeight.w600),
             ),
             tileColor: index.isEven ? primaryLightColor : colorF6F6FF,
-          )
-
-
-
-      ),
+          )),
       background: slideRightBackground(),
       secondaryBackground: slideLeftBackground(),
       confirmDismiss: (direction) async {
@@ -294,7 +310,6 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               });*/
           //return res;
         } else {
-
           markMedicationsAsMissed(medication.id);
           setState(() {
             if (medication.details.contains('morning')) {
@@ -477,12 +492,12 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
         //getMyMedications();
       } else {
         progressDialog.hide();
-        showToast(baseResponse.message);
+        showToast(baseResponse.message, context);
       }
     } catch (CustomException) {
       progressDialog.hide();
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -500,12 +515,12 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
         //getMyMedications();
       } else {
         progressDialog.hide();
-        showToast(baseResponse.message);
+        showToast(baseResponse.message, context);
       }
     } catch (CustomException) {
       progressDialog.hide();
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());

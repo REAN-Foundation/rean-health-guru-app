@@ -1,31 +1,18 @@
 import 'dart:async';
-import 'dart:ffi';
 
-import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:location/location.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
-import 'package:paitent/core/viewmodels/views/appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/common_config_model.dart';
-import 'package:paitent/core/viewmodels/views/login_view_model.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/ui/shared/text_styles.dart';
-import 'package:paitent/ui/shared/ui_helpers.dart';
-import 'package:flutter/material.dart';
-import 'package:paitent/ui/views/dashboard.dart';
-import 'package:paitent/ui/views/dashboard_ver_1.dart';
 import 'package:paitent/ui/views/emergency_contact.dart';
 import 'package:paitent/ui/views/myReportsUpload.dart';
-import 'package:paitent/ui/views/pdfViewer.dart';
 import 'package:paitent/ui/views/search_doctor_list_view.dart';
 import 'package:paitent/ui/views/search_lab_list_view.dart';
-import 'package:paitent/ui/views/search_pharmacy_list_view.dart';
-import 'package:paitent/ui/views/view_my_appoinment.dart';
-import 'package:paitent/ui/widgets/fab_bottom_app_bar.dart';
 import 'package:paitent/utils/CoachMarkUtilities.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/GetAllConfigrations.dart';
@@ -33,28 +20,17 @@ import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringConstant.dart';
 import 'package:paitent/utils/StringUtility.dart';
 import 'package:paitent/widgets/app_drawer.dart';
-import 'package:provider/provider.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import 'base_widget.dart';
 import 'care_plan_task.dart';
 import 'dashboard_ver_2.dart';
-import 'edit_profile_view.dart';
-
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
-import 'package:path_provider/path_provider.dart';
-
 import 'login_with_otp_view.dart';
 
 class HomeView extends StatefulWidget {
-
   int screenPosition = 0;
 
-  HomeView(int screenPosition){
+  HomeView(int screenPosition) {
     this.screenPosition = screenPosition;
   }
 
@@ -63,14 +39,14 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  Location location = new Location();
+  /*Location location = new Location();
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
   LocationData _locationData;
+  List<Address> addresses;
+  Address first;*/
   SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
   String name = "";
-  List<Address> addresses;
-  Address first;
   int _currentNav = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String pathPDF = "";
@@ -92,34 +68,36 @@ class _HomeViewState extends State<HomeView> {
   List<TargetFocus> targets = List();
   CoachMarkUtilites coackMarkUtilites = new CoachMarkUtilites();
 
-  _HomeViewState(int screenPosition){
+  _HomeViewState(int screenPosition) {
     this._currentNav = screenPosition;
   }
 
   loadSharedPrefs() async {
     try {
       UserData user = UserData.fromJson(await _sharedPrefUtils.read("user"));
-      Patient patient = Patient.fromJson(await _sharedPrefUtils.read("patientDetails"));
+      Patient patient =
+          Patient.fromJson(await _sharedPrefUtils.read("patientDetails"));
       auth = user.data.accessToken;
       patientUserId = user.data.user.userId;
       patientGender = patient.gender;
       //debugPrint(user.toJson().toString());
 
-     /* */
+      /* */
       setState(() {
         //debugPrint('Gender ==> ${patient.gender.toString()}');
         name = patient.firstName;
         profileImage = patient.imageURL == null ? "" : patient.imageURL;
       });
 
-      if(!user.data.user.verifiedPhoneNumber || user.data.user.verifiedPhoneNumber == null ){
+      if (!user.data.user.verifiedPhoneNumber ||
+          user.data.user.verifiedPhoneNumber == null) {
         startCarePlanResponseGlob = null;
         _sharedPrefUtils.save("CarePlan", null);
         _sharedPrefUtils.saveBoolean("login", null);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
-              return LoginWithOTPView();
-            }), (Route<dynamic> route) => false);
+          return LoginWithOTPView();
+        }), (Route<dynamic> route) => false);
       }
 
       //if(!isCoachMarkDisplayed) {
@@ -132,10 +110,9 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
-  getCarePlanSubscribe() async{
+  getCarePlanSubscribe() async {
     try {
       if (_sharedPrefUtils.read("CarePlan") == null) {
-
       } else {
         startCarePlanResponseGlob = StartCarePlanResponse.fromJson(
             await _sharedPrefUtils.read("CarePlan"));
@@ -146,26 +123,25 @@ class _HomeViewState extends State<HomeView> {
       });
       Future.delayed(
         Duration(seconds: 4),
-            () => GetAllConfigrations(),
+        () => GetAllConfigrations(),
       );
-    } catch (Excepetion){
+    } catch (Excepetion) {
       Timer(Duration(seconds: 3), () {
         getCarePlan();
       });
       Future.delayed(
         Duration(seconds: 4),
-            () => GetAllConfigrations(),
+        () => GetAllConfigrations(),
       );
     }
   }
 
   getCarePlan() async {
     try {
-      StartCarePlanResponse startCarePlanResponse =
-      await model.getCarePlan();
+      StartCarePlanResponse startCarePlanResponse = await model.getCarePlan();
       debugPrint("Registered Care Plan ==> ${startCarePlanResponse.toJson()}");
       if (startCarePlanResponse.status == 'success') {
-        if(startCarePlanResponse.data.carePlan != null){
+        if (startCarePlanResponse.data.carePlan != null) {
           debugPrint("Care Plan");
           _sharedPrefUtils.save("CarePlan", startCarePlanResponse.toJson());
           startCarePlanResponseGlob = startCarePlanResponse;
@@ -176,7 +152,7 @@ class _HomeViewState extends State<HomeView> {
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -184,7 +160,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void getLocation() async {
-    _serviceEnabled = await location.serviceEnabled();
+    /*_serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
@@ -206,14 +182,14 @@ class _HomeViewState extends State<HomeView> {
           'Latitude = ${currentLocation.latitude} Longitude = ${currentLocation.longitude}');
       findOutCityFromGeoCord(
           currentLocation.latitude, currentLocation.longitude);
-    });
+    });*/
   }
 
   void findOutCityFromGeoCord(double lat, double long) async {
-    final coordinates = new Coordinates(lat, long);
+    /*final coordinates = new Coordinates(lat, long);
     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     first = addresses.first;
-    debugPrint("${first.featureName} : ${first.locality}");
+    debugPrint("${first.featureName} : ${first.locality}");*/
   }
 
   void _selectedTab(int index) {
@@ -224,15 +200,15 @@ class _HomeViewState extends State<HomeView> {
     });
   }
 
-
   void _layout(_) async {
     Future.delayed(Duration(milliseconds: 1000));
     bool isCoachMarkDisplayed = false;
 
-    isCoachMarkDisplayed = await _sharedPrefUtils.readBoolean(StringConstant.Is_Home_View_Coach_Mark_Completed);
+    isCoachMarkDisplayed = await _sharedPrefUtils
+        .readBoolean(StringConstant.Is_Home_View_Coach_Mark_Completed);
 
     debugPrint('isCoachMarkDisplayed ==> ${isCoachMarkDisplayed}');
-    if(!isCoachMarkDisplayed || isCoachMarkDisplayed == null) {
+    if (!isCoachMarkDisplayed || isCoachMarkDisplayed == null) {
       Future.delayed(const Duration(seconds: 2), () => showTutorial());
       //showTutorial();
     }
@@ -263,35 +239,53 @@ class _HomeViewState extends State<HomeView> {
   }*/
 
   void showTutorial() {
-    coackMarkUtilites.displayCoachMark(context, targets, onCoachMartkFinish: (){
-      _sharedPrefUtils.saveBoolean(StringConstant.Is_Home_View_Coach_Mark_Completed, true);
+    coackMarkUtilites.displayCoachMark(context, targets,
+        onCoachMartkFinish: () {
+      _sharedPrefUtils.saveBoolean(
+          StringConstant.Is_Home_View_Coach_Mark_Completed, true);
       debugPrint("Coach Mark Finish");
-    },
-    onCoachMartkSkip: (){
-      _sharedPrefUtils.saveBoolean(StringConstant.Is_Home_View_Coach_Mark_Completed, true);
+    }, onCoachMartkSkip: () {
+      _sharedPrefUtils.saveBoolean(
+          StringConstant.Is_Home_View_Coach_Mark_Completed, true);
       debugPrint("Coach Mark Skip");
-    },
-    onCoachMartkClickTarget: (target){
+    }, onCoachMartkClickTarget: (target) {
       debugPrint("Coach Mark target click");
-    },
-    onCoachMartkClickOverlay: (){
+    }, onCoachMartkClickOverlay: () {
       debugPrint("Coach Mark overlay click");
-    }
-    )..show();
+    })
+      ..show();
   }
 
   void initTargets() async {
-    targets.add(coackMarkUtilites.getTargetFocus(_keyNavigation_drawer, (targets.length + 1).toString(), 'Navigation menu', 'Update your Profile, Add Vitals and Medical information.', CoachMarkContentPosition.bottom));
-    targets.add(coackMarkUtilites.getTargetFocus(_keyMyTasks, (targets.length + 1).toString(), 'Daily Tasks', 'Keep a watch on your Daily Tasks.', CoachMarkContentPosition.top));
-    targets.add(coackMarkUtilites.getTargetFocus(_keyUploadReports, (targets.length + 1).toString(), 'Upload Reports', 'Upload all your reports here.', CoachMarkContentPosition.top));
+    targets.add(coackMarkUtilites.getTargetFocus(
+        _keyNavigation_drawer,
+        (targets.length + 1).toString(),
+        'Navigation menu',
+        'Update your Profile, Add Vitals and Medical information.',
+        CoachMarkContentPosition.bottom));
+    targets.add(coackMarkUtilites.getTargetFocus(
+        _keyMyTasks,
+        (targets.length + 1).toString(),
+        'Daily Tasks',
+        'Keep a watch on your Daily Tasks.',
+        CoachMarkContentPosition.top));
+    targets.add(coackMarkUtilites.getTargetFocus(
+        _keyUploadReports,
+        (targets.length + 1).toString(),
+        'Upload Reports',
+        'Upload all your reports here.',
+        CoachMarkContentPosition.top));
     //targets.add(GetTargetFocus.getTargetFocus(_keyViewAppointments, (targets.length + 1).toString(), 'Appointments List', 'View all your Appointments here.', CoachMarkContentPosition.top));
-    targets.add(coackMarkUtilites.getTargetFocus(_keyEmergencyContacts, (targets.length + 1).toString(), 'Emergency Contacts', 'Add your Emergency Contacts here.', CoachMarkContentPosition.top));
-
+    targets.add(coackMarkUtilites.getTargetFocus(
+        _keyEmergencyContacts,
+        (targets.length + 1).toString(),
+        'Emergency Contacts',
+        'Add your Emergency Contacts here.',
+        CoachMarkContentPosition.top));
   }
 
-
   @override
-  void initState()  {
+  void initState() {
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
     getCarePlanSubscribe();
     initTargets();
@@ -308,10 +302,12 @@ class _HomeViewState extends State<HomeView> {
     Widget screen;
     switch (_currentNav) {
       case 0:
-        screen = DashBoardVer2View(positionToChangeNavigationBar: (int tabPosition){
-          print('Tapped Tab ${tabPosition}');
-          _selectedTab(tabPosition);
-        },);
+        screen = DashBoardVer2View(
+          positionToChangeNavigationBar: (int tabPosition) {
+            print('Tapped Tab ${tabPosition}');
+            _selectedTab(tabPosition);
+          },
+        );
         break;
       case 1:
         screen = CarePlanTasksView();
@@ -350,25 +346,30 @@ class _HomeViewState extends State<HomeView> {
                   children: <TextSpan>[
                     TextSpan(
                         text: name,
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: primaryColor, fontFamily: 'Montserrat')),
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: primaryColor,
+                            fontFamily: 'Montserrat')),
                   ],
                 ),
               ),
               iconTheme: new IconThemeData(color: Colors.black),
               leading: InkWell(
-                onTap: (){
+                onTap: () {
                   _scaffoldKey.currentState.openDrawer();
                 },
                 child: new Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 8.0, 0.0, 8.0),
-                  child: /*CircleAvatar(
+                  child:
+                      /*CircleAvatar(
                     radius: 48,
                     backgroundColor: primaryLightColor,
                     child: CircleAvatar(
                         radius: 48,
                         backgroundImage:  profileImage == "" ? AssetImage('res/images/profile_placeholder.png') : new NetworkImage(profileImage)),
                   )*/
-                  Semantics(
+                      Semantics(
                     label: 'navigation_drawer',
                     child: Container(
                       key: _keyNavigation_drawer,
@@ -382,7 +383,8 @@ class _HomeViewState extends State<HomeView> {
                               : new CachedNetworkImageProvider(profileImage),
                           fit: BoxFit.cover,
                         ),
-                        borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
+                        borderRadius:
+                            new BorderRadius.all(new Radius.circular(50.0)),
                         border: new Border.all(
                           color: Colors.deepPurple,
                           width: 1.0,
@@ -392,9 +394,8 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
               ),
-              /*
               actions: <Widget>[
-                Badge(
+                /*Badge(
                   position: BadgePosition.topRight(top: 4, right: 4),
                   animationType: BadgeAnimationType.scale,
                   badgeColor: primaryColor,
@@ -408,9 +409,18 @@ class _HomeViewState extends State<HomeView> {
                       debugPrint("Clicked on notification icon");
                     },
                   ),
+                ),*/
+                IconButton(
+                  icon: Icon(
+                    Icons.chat,
+                    size: 32,
+                    color: primaryColor,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, RoutePaths.FAQ_BOT);
+                  },
                 ),
               ],
-              */
             ),
           ),
           drawer: AppDrawer(),
@@ -422,7 +432,8 @@ class _HomeViewState extends State<HomeView> {
                   color: Colors.black,
                   blurRadius: 10,
                 ),
-              ],),
+              ],
+            ),
             child: BottomNavigationBar(
               backgroundColor: primaryColor,
               currentIndex: _currentNav,
@@ -433,11 +444,15 @@ class _HomeViewState extends State<HomeView> {
               items: [
                 BottomNavigationBarItem(
                   icon: _currentNav == 0
-                      ? SizedBox(
-                          height: 24,
-                          width: 24,
-                          child:
-                              new Image.asset('res/images/ic_home_colored.png'))
+                      ? Semantics(
+                          label: 'home page',
+                          readOnly: true,
+                          child: SizedBox(
+                              height: 24,
+                              width: 24,
+                              child: new Image.asset(
+                                  'res/images/ic_home_colored.png')),
+                        )
                       : SizedBox(
                           height: 24,
                           width: 24,
@@ -446,28 +461,42 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 BottomNavigationBarItem(
                   icon: _currentNav == 1
-                      ? SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: new Image.asset(
-                              'res/images/ic_daily_tasks_colored.png'))
+                      ? Semantics(
+                          label: 'daily task',
+                          readOnly: true,
+                          child: SizedBox(
+                              height: 24,
+                              width: 24,
+                              child: new Image.asset(
+                                  'res/images/ic_daily_tasks_colored.png')),
+                        )
                       : SizedBox(
                           height: 24,
                           width: 24,
-                          child: new Image.asset('res/images/ic_daily_tasks.png', key: _keyMyTasks,)),
+                          child: new Image.asset(
+                            'res/images/ic_daily_tasks.png',
+                            key: _keyMyTasks,
+                          )),
                   title: Container(height: 10.0),
                 ),
                 BottomNavigationBarItem(
                   icon: _currentNav == 2
-                      ? SizedBox(
-                          height: 28,
-                          width: 28,
-                          child:
-                              new Image.asset('res/images/ic_upload_files_colored.png'))
+                      ? Semantics(
+                          label: 'upload files',
+                          readOnly: true,
+                          child: SizedBox(
+                              height: 28,
+                              width: 28,
+                              child: new Image.asset(
+                                  'res/images/ic_upload_files_colored.png')),
+                        )
                       : SizedBox(
                           height: 28,
                           width: 28,
-                          child: new Image.asset('res/images/ic_upload_files.png', key: _keyUploadReports,)),
+                          child: new Image.asset(
+                            'res/images/ic_upload_files.png',
+                            key: _keyUploadReports,
+                          )),
                   title: Container(height: 10.0),
                 ),
                 /*BottomNavigationBarItem(
@@ -486,16 +515,22 @@ class _HomeViewState extends State<HomeView> {
                 ),*/
                 BottomNavigationBarItem(
                   icon: _currentNav == 3
-                      ? SizedBox(
-                      height: 24,
-                      width: 24,
-                      child: new Image.asset(
-                          'res/images/ic_call_colered.png'))
+                      ? Semantics(
+                          label: 'emergency contact',
+                          readOnly: true,
+                          child: SizedBox(
+                              height: 24,
+                              width: 24,
+                              child: new Image.asset(
+                                  'res/images/ic_call_colered.png')),
+                        )
                       : SizedBox(
-                      height: 24,
-                      width: 24,
-                      child:
-                      new Image.asset('res/images/ic_call.png', key: _keyEmergencyContacts,)),
+                          height: 24,
+                          width: 24,
+                          child: new Image.asset(
+                            'res/images/ic_call.png',
+                            key: _keyEmergencyContacts,
+                          )),
                   title: Container(height: 10.0),
                 ),
               ],
@@ -510,7 +545,5 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
   }
-
-
 }
 //right_arrow

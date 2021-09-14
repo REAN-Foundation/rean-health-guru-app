@@ -1,21 +1,12 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
+import 'package:intl/intl.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/assortedViewConfigs.dart';
 import 'package:paitent/core/models/startTaskOfAHACarePlanResponse.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:intl/intl.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,8 +15,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'home_view.dart';
 
 class LearnMoreCarePlanView extends StatefulWidget {
-
- AssortedViewConfigs assortedViewConfigs;
+  AssortedViewConfigs assortedViewConfigs;
 
   LearnMoreCarePlanView(@required this.assortedViewConfigs);
 
@@ -36,11 +26,15 @@ class LearnMoreCarePlanView extends StatefulWidget {
 class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
 //https://www.youtube.com/watch?v=s1pG7k_1nSw
   String videourl = "https://www.youtube.com/watch?v=d8PzoTr95ik";
-  ScrollController _scrollController = ScrollController(initialScrollOffset: 50.0);
-  String textMsg1 = "Welcome to the Connected Heart Health CarePlan. For the next 12 weeks you will be given daily activities designed to help you manage your condition.\n\nThese activities will include education, assessments, challenges, and communication. We will begin with some foundational information and developing your self CarePlan.";
-  String textMsg2 = "Heart Failure is a chronic, progressive condition in which the heart muscle is unable to pump enough blood through the heart to meet the body's needs for blood and oxygen.\n\nHeart failure usually results in an enlarged heart.";
+  ScrollController _scrollController =
+      ScrollController(initialScrollOffset: 50.0);
+  String textMsg1 =
+      "Welcome to the Connected Heart Health CarePlan. For the next 12 weeks you will be given daily activities designed to help you manage your condition.\n\nThese activities will include education, assessments, challenges, and communication. We will begin with some foundational information and developing your self CarePlan.";
+  String textMsg2 =
+      "Heart Failure is a chronic, progressive condition in which the heart muscle is unable to pump enough blood through the heart to meet the body's needs for blood and oxygen.\n\nHeart failure usually results in an enlarged heart.";
 
   YoutubePlayerController _controller = YoutubePlayerController(
     initialVideoId: "d8PzoTr95ik",
@@ -64,24 +58,25 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
   Widget build(BuildContext context) {
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child: Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  widget.assortedViewConfigs.header == "" ? 'Learn More!' : widget.assortedViewConfigs.header,
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            title: Text(
+              widget.assortedViewConfigs.header == ""
+                  ? 'Learn More!'
+                  : widget.assortedViewConfigs.header,
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700),
+            ),
+            iconTheme: new IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -91,21 +86,27 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
                   debugPrint("Clicked on profile icon");
                 },
               )*/
-                ],
-              ),
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  headerText(),
-                  SizedBox(height: 16,),
-                  Expanded(
-                    child: widget.assortedViewConfigs.toShow == "1" ? iMageView() : widget.assortedViewConfigs.toShow == "2" ? audioView() : videoView(),
-                  ),
-                  footer(),
-                ],
-              ),
-            ),
+            ],
           ),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              headerText(),
+              SizedBox(
+                height: 16,
+              ),
+              Expanded(
+                child: widget.assortedViewConfigs.toShow == "1"
+                    ? iMageView()
+                    : widget.assortedViewConfigs.toShow == "2"
+                        ? audioView()
+                        : videoView(),
+              ),
+              footer(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -199,33 +200,37 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              model.busy ? CircularProgressIndicator()
-                  :InkWell(
-                onTap: (){
-                    /*assrotedUICount = 0;
+              model.busy
+                  ? CircularProgressIndicator()
+                  : InkWell(
+                      onTap: () {
+                        /*assrotedUICount = 0;
                     Navigator.pushAndRemoveUntil(context,
                         MaterialPageRoute(builder: (context) {
                           return HomeView( 0 );
                         }), (Route<dynamic> route) => false);*/
-                  if(widget.assortedViewConfigs.task.finished) {
-                     Navigator.pop(context);
-                  }else {
-                    completeMessageTaskOfAHACarePlan(
-                        widget.assortedViewConfigs.task);
-                  }
-
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                    height: 40,
-                    width: 160,
-                    padding: EdgeInsets.symmetric(horizontal: 16.0, ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24.0),
-                      border: Border.all(color: primaryColor, width: 1),
-                      color: Colors.deepPurple,),
-                    child:/* assrotedUICount != 3 ?  Row(
+                        if (widget.assortedViewConfigs.task.finished) {
+                          Navigator.pop(context);
+                        } else {
+                          completeMessageTaskOfAHACarePlan(
+                              widget.assortedViewConfigs.task);
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                            height: 40,
+                            width: 160,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24.0),
+                              border: Border.all(color: primaryColor, width: 1),
+                              color: Colors.deepPurple,
+                            ),
+                            child:
+                                /* assrotedUICount != 3 ?  Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -238,19 +243,21 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
                       ],
                     )
                     :*/
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Done',
-                          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14),
-                        ),
-                      ],
-                    )
-                  ),
-                ),
-              ),
+                                Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Done',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                      fontSize: 14),
+                                ),
+                              ],
+                            )),
+                      ),
+                    ),
             ],
           )
         ],
@@ -258,7 +265,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
     );
   }
 
-  Widget audioView(){
+  Widget audioView() {
     return Scrollbar(
       isAlwaysShown: true,
       controller: _scrollController,
@@ -271,20 +278,25 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: (){
-                    _launchURL(widget.assortedViewConfigs.task.details.concreteTask.mediaUrl);
+                  onTap: () {
+                    _launchURL(widget.assortedViewConfigs.task.details
+                        .concreteTask.mediaUrl);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Container(
                         height: 40,
                         width: 160,
-                        padding: EdgeInsets.symmetric(horizontal: 16.0, ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24.0),
                           border: Border.all(color: primaryColor, width: 1),
-                          color: Colors.deepPurple,),
-                        child:/* assrotedUICount != 3 ?  Row(
+                          color: Colors.deepPurple,
+                        ),
+                        child:
+                            /* assrotedUICount != 3 ?  Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -297,27 +309,34 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
                         ],
                       )
                       :*/
-                        Row(
+                            Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               'Play Audio',
-                              style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                  fontSize: 14),
                             ),
                           ],
-                        )
-                    ),
+                        )),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 8,),
+            SizedBox(
+              height: 8,
+            ),
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                widget.assortedViewConfigs.task.details.concreteTask.text != null ? widget.assortedViewConfigs.task.details.concreteTask.text : '',
-                style: TextStyle( fontWeight: FontWeight.w300, fontSize: 16),
+                widget.assortedViewConfigs.task.details.concreteTask.text !=
+                        null
+                    ? widget.assortedViewConfigs.task.details.concreteTask.text
+                    : '',
+                style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
               ),
             ),
           ],
@@ -326,8 +345,9 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
     );
   }
 
-  Widget iMageView(){
-    debugPrint('Image Visible ==> ${widget.assortedViewConfigs.task.details.type == 'Infographics'}');
+  Widget iMageView() {
+    debugPrint(
+        'Image Visible ==> ${widget.assortedViewConfigs.task.details.type == 'Infographics'}');
     debugPrint('Image URL ==> ${widget.assortedViewConfigs.task.details.url}');
     return Scrollbar(
       isAlwaysShown: true,
@@ -337,22 +357,23 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if(widget.assortedViewConfigs.task.details.url != null)...[
-            Visibility(
-              visible: widget.assortedViewConfigs.task.details.type == 'Infographics',
-              child: Container(
-                  padding: const EdgeInsets.all(16.0),
-                  child: new Image.network(widget.assortedViewConfigs.task.details.url,
-                  fit: BoxFit.cover,
-                  )
-                ),
-            ),
+            if (widget.assortedViewConfigs.task.details.url != null) ...[
+              Visibility(
+                visible: widget.assortedViewConfigs.task.details.type ==
+                    'Infographics',
+                child: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    child: new Image.network(
+                      widget.assortedViewConfigs.task.details.url,
+                      fit: BoxFit.cover,
+                    )),
+              ),
             ],
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 widget.assortedViewConfigs.task.details.text,
-                style: TextStyle( fontWeight: FontWeight.w300, fontSize: 16),
+                style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
               ),
             ),
           ],
@@ -360,7 +381,6 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
       ),
     );
   }
-
 
   videoView() {
     return SingleChildScrollView(
@@ -380,31 +400,33 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      showToast('Could not launch $url');
+      showToast('Could not launch $url', context);
       //throw 'Could not launch $url';
     }
   }
 
   completeMessageTaskOfAHACarePlan(Task task) async {
     try {
-      StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse = await model.completeMessageTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), task.details.id);
+      StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
+          await model.completeMessageTaskOfAHACarePlan(
+              startCarePlanResponseGlob.data.carePlan.id.toString(),
+              task.details.id);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
-              return HomeView( 1 );
-            }), (Route<dynamic> route) => false);
-        debugPrint("AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}");
+          return HomeView(1);
+        }), (Route<dynamic> route) => false);
+        debugPrint(
+            "AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}");
       } else {
-        showToast(_startTaskOfAHACarePlanResponse.message);
+        showToast(_startTaskOfAHACarePlanResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
   }
-
-
 }

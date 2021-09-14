@@ -53,12 +53,12 @@ class Assessment {
 
   Assessment(
       {this.id,
-        this.patientUserId,
-        this.title,
-        this.assessmentTemplateId,
-        this.assessmentDate,
-        this.overallStatus,
-        this.symptomsRecorded});
+      this.patientUserId,
+      this.title,
+      this.assessmentTemplateId,
+      this.assessmentDate,
+      this.overallStatus,
+      this.symptomsRecorded});
 
   Assessment.fromJson(Map<String, dynamic> json) {
     id = json['id'];

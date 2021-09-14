@@ -1,39 +1,17 @@
-
-import 'dart:convert';
-import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
-import 'package:paitent/core/models/AddTeamMemberResponse.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/DoctorAppoinmentBookedSuccessfully.dart';
-import 'package:paitent/core/models/EmergencyContactResponse.dart';
-import 'package:paitent/core/models/GetAllRecordResponse.dart';
 import 'package:paitent/core/models/GetAssesmentTemplateByIdResponse.dart';
 import 'package:paitent/core/models/GetMyAssesmentIdResponse.dart';
 import 'package:paitent/core/models/GetMyMedicationsResponse.dart';
-import 'package:paitent/core/models/GetSharablePublicLink.dart';
 import 'package:paitent/core/models/KnowledgeTopicResponse.dart';
-import 'package:paitent/core/models/MyAppointmentApiResponse.dart';
-import 'package:paitent/core/models/PatientMedicalProfilePojo.dart';
-import 'package:paitent/core/models/PatientVitalsPojo.dart';
 import 'package:paitent/core/models/SearchSymptomAssesmentTempleteResponse.dart';
-import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/core/models/TaskSummaryResponse.dart';
-import 'package:paitent/core/models/TeamCarePlanReesponse.dart';
-import 'package:paitent/core/models/getAvailableDoctorSlot.dart';
-import 'package:paitent/core/models/labsListApiResponse.dart';
-import 'package:paitent/core/models/pharmacyListApiResponse.dart';
-import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/networking/ApiProvider.dart';
-import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/utils/StringUtility.dart';
-
 
 import '../base_model.dart';
 
 class DashboardSummaryModel extends BaseModel {
-
   //ApiProvider apiProvider = new ApiProvider();
 
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
@@ -44,7 +22,9 @@ class DashboardSummaryModel extends BaseModel {
     map["Content-Type"] = "application/json";
     map["authorization"] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get('/patient-task/patient/'+patientUserId+'/summary-for-today' , header: map);
+    var response = await apiProvider.get(
+        '/patient-task/patient/' + patientUserId + '/summary-for-today',
+        header: map);
     setBusy(false);
     // Convert and return
     return TaskSummaryResponse.fromJson(response);
@@ -56,7 +36,9 @@ class DashboardSummaryModel extends BaseModel {
     map["Content-Type"] = "application/json";
     map["authorization"] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get('/medication-consumption/summary-for-day/'+patientUserId+'/'+date , header: map);
+    var response = await apiProvider.get(
+        '/medication-consumption/summary-for-day/' + patientUserId + '/' + date,
+        header: map);
     setBusy(false);
     // Convert and return
     return TaskSummaryResponse.fromJson(response);
@@ -68,7 +50,9 @@ class DashboardSummaryModel extends BaseModel {
     map["Content-Type"] = "application/json";
     map["authorization"] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get('/biometrics/'+patientUserId+'/latest-biometrics-summary' , header: map);
+    var response = await apiProvider.get(
+        '/biometrics/' + patientUserId + '/latest-biometrics-summary',
+        header: map);
     setBusy(false);
     // Convert and return
     return TaskSummaryResponse.fromJson(response);
@@ -80,7 +64,8 @@ class DashboardSummaryModel extends BaseModel {
     map["Content-Type"] = "application/json";
     map["authorization"] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get('/patient-knowledge/today/'+patientUserId, header: map);
+    var response = await apiProvider
+        .get('/patient-knowledge/today/' + patientUserId, header: map);
     setBusy(false);
     // Convert and return
     return KnowledgeTopicResponse.fromJson(response);
@@ -92,7 +77,8 @@ class DashboardSummaryModel extends BaseModel {
     map["Content-Type"] = "application/json";
     map["authorization"] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post('/emergency-event/', header: map, body: body);
+    var response =
+        await apiProvider.post('/emergency-event/', header: map, body: body);
     setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);
@@ -106,7 +92,12 @@ class DashboardSummaryModel extends BaseModel {
     map["Content-Type"] = "application/json";
     map["authorization"] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get('/medication-consumption/schedule-for-day/'+patientUserId+'/'+date , header: map);
+    var response = await apiProvider.get(
+        '/medication-consumption/schedule-for-day/' +
+            patientUserId +
+            '/' +
+            date,
+        header: map);
 
     setBusy(false);
     // Convert and return
@@ -121,8 +112,10 @@ class DashboardSummaryModel extends BaseModel {
     map["Content-Type"] = "application/json";
     map["authorization"] = 'Bearer ' + auth;
 
-
-    var response = await apiProvider.put('/medication-consumption/mark-list-as-taken/', header: map, body: body);
+    var response = await apiProvider.put(
+        '/medication-consumption/mark-list-as-taken/',
+        header: map,
+        body: body);
 
     setBusy(false);
     // Convert and return
@@ -137,15 +130,16 @@ class DashboardSummaryModel extends BaseModel {
     map["Content-Type"] = "application/json";
     map["authorization"] = 'Bearer ' + auth;
 
-
-    var response = await apiProvider.post('/how-do-you-feel/', header: map, body: body);
+    var response =
+        await apiProvider.post('/how-do-you-feel/', header: map, body: body);
 
     setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);
   }
 
-  Future<SearchSymptomAssesmentTempleteResponse> searchSymptomAssesmentTemplete(String keyword) async {
+  Future<SearchSymptomAssesmentTempleteResponse> searchSymptomAssesmentTemplete(
+      String keyword) async {
     // Get user profile for id
     setBusy(true);
 
@@ -153,14 +147,17 @@ class DashboardSummaryModel extends BaseModel {
     map["Content-Type"] = "application/json";
     map["authorization"] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get('/symptom-assessment-templates/search?title='+keyword , header: map);
+    var response = await apiProvider.get(
+        '/symptom-assessment-templates/search?title=' + keyword,
+        header: map);
 
     setBusy(false);
     // Convert and return
     return SearchSymptomAssesmentTempleteResponse.fromJson(response);
   }
 
-  Future<GetAssesmentTemplateByIdResponse> getAssesmentTemplateById(String assesmentId) async {
+  Future<GetAssesmentTemplateByIdResponse> getAssesmentTemplateById(
+      String assesmentId) async {
     // Get user profile for id
     setBusy(true);
 
@@ -168,7 +165,8 @@ class DashboardSummaryModel extends BaseModel {
     map["Content-Type"] = "application/json";
     map["authorization"] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get('/symptom-assessment-templates/'+assesmentId , header: map);
+    var response = await apiProvider
+        .get('/symptom-assessment-templates/' + assesmentId, header: map);
 
     setBusy(false);
     // Convert and return
@@ -183,7 +181,8 @@ class DashboardSummaryModel extends BaseModel {
     map["Content-Type"] = "application/json";
     map["authorization"] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post('/symptom-assessments/' , header: map, body: body);
+    var response = await apiProvider.post('/symptom-assessments/',
+        header: map, body: body);
 
     setBusy(false);
     // Convert and return
@@ -198,11 +197,11 @@ class DashboardSummaryModel extends BaseModel {
     map["Content-Type"] = "application/json";
     map["authorization"] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post('/symptoms/' , header: map, body: body);
+    var response =
+        await apiProvider.post('/symptoms/', header: map, body: body);
 
     //setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);
   }
-
 }

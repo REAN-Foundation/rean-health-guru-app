@@ -48,6 +48,7 @@ class Data {
     return data;
   }
 }
+
 @JsonSerializable(nullable: true)
 class MedConsumptions {
   String id;
@@ -70,22 +71,22 @@ class MedConsumptions {
 
   MedConsumptions(
       {this.id,
-        this.patientUserId,
-        this.medicationId,
-        this.drugOrderId,
-        this.drugName,
-        this.details,
-        this.timeScheduleStart,
-        this.timeScheduleEnd,
-        this.takenAt,
-        this.isTaken,
-        this.isMissed,
-        this.isCancelled,
-        this.cancelledOn,
-        this.note,
-        this.status,
-        this.dateCreated,
-        this.dateUpdated});
+      this.patientUserId,
+      this.medicationId,
+      this.drugOrderId,
+      this.drugName,
+      this.details,
+      this.timeScheduleStart,
+      this.timeScheduleEnd,
+      this.takenAt,
+      this.isTaken,
+      this.isMissed,
+      this.isCancelled,
+      this.cancelledOn,
+      this.note,
+      this.status,
+      this.dateCreated,
+      this.dateUpdated});
 
   MedConsumptions.fromJson(Map<String, dynamic> json) {
     id = json['id'];

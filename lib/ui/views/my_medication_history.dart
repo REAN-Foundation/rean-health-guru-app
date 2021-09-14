@@ -1,9 +1,6 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:paitent/core/models/MyMedicationSummaryRespose.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
@@ -11,35 +8,34 @@ import 'package:paitent/utils/CommonUtils.dart';
 
 class MyMedicationHistoryView extends StatefulWidget {
   @override
-  _MyMedicationHistoryViewState createState() => _MyMedicationHistoryViewState();
+  _MyMedicationHistoryViewState createState() =>
+      _MyMedicationHistoryViewState();
 }
 
 class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
-
   var model = PatientMedicationViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   List<Summary> summarys = new List<Summary>();
 
   getMyMedicationSummary() async {
     try {
-
       MyMedicationSummaryRespose myMedicationSummaryRespose =
-      await model.getMyMedicationSummary();
+          await model.getMyMedicationSummary();
       debugPrint("Medication ==> ${myMedicationSummaryRespose.toJson()}");
       if (myMedicationSummaryRespose.status == 'success') {
         summarys.clear();
-        for(var item in myMedicationSummaryRespose.data.summary){
-          if(item.summaryForMonth.length > 0){
+        for (var item in myMedicationSummaryRespose.data.summary) {
+          if (item.summaryForMonth.length > 0) {
             summarys.add(item);
           }
         }
         debugPrint("Summary Length ==> ${summarys.length}");
       } else {
-        showToast(myMedicationSummaryRespose.message);
+        showToast(myMedicationSummaryRespose.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -62,17 +58,15 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
         child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: Colors.white,
-          body:  Padding(
+          body: Padding(
             padding: EdgeInsets.all(16.0),
             child: model.busy
                 ? Center(
-                child: SizedBox(
-                    height: 32,
-                    width: 32,
-                    child: CircularProgressIndicator()))
-                : (summarys.length == 0
-                ? noMedicationFound()
-                : listWidget()),
+                    child: SizedBox(
+                        height: 32,
+                        width: 32,
+                        child: CircularProgressIndicator()))
+                : (summarys.length == 0 ? noMedicationFound() : listWidget()),
           ),
         ),
       ),
@@ -90,9 +84,10 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
     );
   }
 
-  Widget listWidget(){
+  Widget listWidget() {
     return ListView.separated(
-        itemBuilder: (context, index) => _makeMedicinePrescriptionCard(context, index),
+        itemBuilder: (context, index) =>
+            _makeMedicinePrescriptionCard(context, index),
         separatorBuilder: (BuildContext context, int index) {
           return SizedBox(
             height: 8,
@@ -103,140 +98,168 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
         shrinkWrap: true);
   }
 
-
-
   Widget _makeMedicinePrescriptionCard(BuildContext context, int index) {
     Summary summary = summarys.elementAt(index);
     return Container(
-
-          decoration: new BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: primaryLightColor),
-              borderRadius: new BorderRadius.all(Radius.circular(4.0))),
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: 40,
-                decoration: new BoxDecoration(
-                    color: colorF6F6FF,
-                    borderRadius:
-                    new BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
+      decoration: new BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: primaryLightColor),
+          borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: 40,
+            decoration: new BoxDecoration(
+                color: colorF6F6FF,
+                borderRadius: new BorderRadius.only(
+                    topLeft: Radius.circular(4.0),
+                    topRight: Radius.circular(4.0))),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    flex: 6,
+                    child: Semantics(
+                      label: summary.month,
+                      readOnly: true,
+                      child: Text(summary.month,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: textBlack)),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 16,
+                              height: 16,
+                              decoration: new BoxDecoration(
+                                color: Colors.green,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Container(
+                              width: 16,
+                              height: 16,
+                              decoration: new BoxDecoration(
+                                border: Border.all(color: Colors.red),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Icon(
+                              Icons.help_outline,
+                              size: 16,
+                              color: Colors.deepPurple,
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                for (var item in summary.summaryForMonth) ...[
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Expanded(
                         flex: 6,
-                        child: Text(summary.month,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700, color: textBlack)),
+                        child: Semantics(
+                          label: item.drug,
+                          readOnly: true,
+                          child: Text(item.drug,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: textBlack)),
+                        ),
                       ),
                       Expanded(
                         flex: 4,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: new BoxDecoration(
-                                    color: Colors.green,
-                                    shape: BoxShape.circle,
+                        child: MergeSemantics(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(item.drugSummary.taken.toString(),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: textBlack)),
+                                  SizedBox(
+                                    width: 8,
                                   ),
-                                ),
-                                SizedBox(width: 8,),
-                                Container(
-                                  width: 16,
-                                  height: 16,
-                                  decoration: new BoxDecoration(
-                                    border: Border.all(color: Colors.red),
-                                    shape: BoxShape.circle,
+                                  Text(item.drugSummary.missed.toString(),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: textBlack)),
+                                  SizedBox(
+                                    width: 8,
                                   ),
-                                ),
-                                SizedBox(width: 8,),
-                                Icon(Icons.help_outline, size: 16, color: Colors.deepPurple,)
-                              ],
-                            ),
-                          ],
+                                  Text(item.drugSummary.unknown.toString(),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: textBlack)),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    for(var item in summary.summaryForMonth)...[
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 6,
-                            child: Text(item.drug,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500, color: textBlack)),
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(item.drugSummary.taken.toString(),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500, color: textBlack)),
-                                    SizedBox(width: 8,),
-                                    Text(item.drugSummary.missed.toString(),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500, color: textBlack)),
-                                    SizedBox(width: 8,),
-                                    Text(item.drugSummary.unknown.toString(),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500, color: textBlack)),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 8,),
-                    ],
-                  ],
-                ),
-              ),
-            ],
+                  SizedBox(
+                    height: 8,
+                  ),
+                ],
+              ],
+            ),
           ),
-        );
+        ],
+      ),
+    );
   }
 }

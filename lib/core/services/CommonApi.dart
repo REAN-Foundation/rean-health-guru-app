@@ -1,9 +1,3 @@
-
-
-class CommonApi{
-
-  stopApi(){
-
-  }
-
+class CommonApi {
+  stopApi() {}
 }

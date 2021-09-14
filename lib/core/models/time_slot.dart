@@ -7,10 +7,9 @@ class TimeSlot {
   bool isSelected;
   bool isAvaliable;
 
-  TimeSlot({ this.id, this.title, this.isSelected, this.isAvaliable });
+  TimeSlot({this.id, this.title, this.isSelected, this.isAvaliable});
 
   TimeSlot.fromJson(Map<String, dynamic> json) {
-
     id = json['id'];
     title = json['title'];
     isSelected = json['body'];

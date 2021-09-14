@@ -12,8 +12,7 @@ class CustomException implements Exception {
 class FetchDataException extends CustomException {
   /*FetchDataException([String message])
       : super(message, "Error During Communication: ");*/
-  FetchDataException([String message])
-      : super(message, "");
+  FetchDataException([String message]) : super(message, "");
 }
 
 class BadRequestException extends CustomException {

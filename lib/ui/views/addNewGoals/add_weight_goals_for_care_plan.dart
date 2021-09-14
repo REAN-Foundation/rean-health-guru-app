@@ -1,32 +1,23 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/assortedViewConfigs.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:paitent/ui/views/summary_of_my_care_plan.dart';
-import 'package:paitent/ui/views/team_of_my_care_plan.dart';
 import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/StringUtility.dart';
-import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class AddWeightGoalsForCarePlanView extends StatefulWidget {
   @override
-  _AddWeightGoalsForCarePlanViewState createState() => _AddWeightGoalsForCarePlanViewState();
+  _AddWeightGoalsForCarePlanViewState createState() =>
+      _AddWeightGoalsForCarePlanViewState();
 }
 
-class _AddWeightGoalsForCarePlanViewState extends State<AddWeightGoalsForCarePlanView> {
+class _AddWeightGoalsForCarePlanViewState
+    extends State<AddWeightGoalsForCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -47,24 +38,23 @@ class _AddWeightGoalsForCarePlanViewState extends State<AddWeightGoalsForCarePla
     progressDialog = new ProgressDialog(context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child:  Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'Set Care Plan Goals',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            title: Text(
+              'Set Care Plan Goals',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700),
+            ),
+            iconTheme: new IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -74,21 +64,21 @@ class _AddWeightGoalsForCarePlanViewState extends State<AddWeightGoalsForCarePla
                   debugPrint("Clicked on profile icon");
                 },
               )*/
+            ],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  addGoals(),
                 ],
               ),
-              body: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        addGoals(),
-                      ],
-                    ),
-                  ),
-                ),
             ),
           ),
+        ),
+      ),
     );
   }
 
@@ -99,10 +89,17 @@ class _AddWeightGoalsForCarePlanViewState extends State<AddWeightGoalsForCarePla
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 16,),
-          Text("Weight loss may help lower your blood pressure and improve both cholesterol and blood sugar. The tips and tools in this website can help you lose 5 to 10 pounds. Your waist circumference also helps determine whether you need to lose weight — all you need is an ordinary measuring tape.", style: TextStyle(
-              color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),),
-          const SizedBox(height: 16,),
+          const SizedBox(
+            height: 16,
+          ),
+          Text(
+            "Weight loss may help lower your blood pressure and improve both cholesterol and blood sugar. The tips and tools in this website can help you lose 5 to 10 pounds. Your waist circumference also helps determine whether you need to lose weight — all you need is an ordinary measuring tape.",
+            style: TextStyle(
+                color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
           /*Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -128,11 +125,12 @@ class _AddWeightGoalsForCarePlanViewState extends State<AddWeightGoalsForCarePla
               ),
             ],
           ),*/
-          const SizedBox(height: 16,),
+          const SizedBox(
+            height: 16,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment:
-            CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 width: 100,
@@ -149,41 +147,30 @@ class _AddWeightGoalsForCarePlanViewState extends State<AddWeightGoalsForCarePla
                             text: "  Kg",
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight:
-                                FontWeight.w700,
+                                fontWeight: FontWeight.w700,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
-                                fontStyle:
-                                FontStyle.italic)),
+                                fontStyle: FontStyle.italic)),
                       ]),
                 ),
               ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 8.0),
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
-                      borderRadius:
-                      BorderRadius.circular(8.0),
-                      border: Border.all(
-                          color: primaryColor, width: 1),
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: TextFormField(
-
                       controller: _weightController,
                       focusNode: _weightFocus,
                       maxLines: 1,
-                      textInputAction:
-                      TextInputAction.next,
+                      textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (term) {
-                        _fieldFocusChange(
-                            context,
-                            _weightFocus,
-                            _wastFocus);
+                        _fieldFocusChange(context, _weightFocus, _wastFocus);
                       },
                       decoration: InputDecoration(
-
                           contentPadding: EdgeInsets.all(0),
                           border: InputBorder.none,
                           fillColor: Colors.white,
@@ -192,8 +179,10 @@ class _AddWeightGoalsForCarePlanViewState extends State<AddWeightGoalsForCarePla
               )
             ],
           ),
-          SizedBox(height: 8,),
-         /* Row(
+          SizedBox(
+            height: 8,
+          ),
+          /* Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment:
             CrossAxisAlignment.center,
@@ -240,10 +229,10 @@ class _AddWeightGoalsForCarePlanViewState extends State<AddWeightGoalsForCarePla
                       TextInputAction.done,
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (term) {
-                        *//*_fieldFocusChange(
+                        */ /*_fieldFocusChange(
                             context,
                             _wastFocus,
-                            _weightFocus);*//*
+                            _weightFocus);*/ /*
                       },
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(0),
@@ -257,8 +246,7 @@ class _AddWeightGoalsForCarePlanViewState extends State<AddWeightGoalsForCarePla
           SizedBox(height: 8,),*/
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment:
-            CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 width: 100,
@@ -275,12 +263,10 @@ class _AddWeightGoalsForCarePlanViewState extends State<AddWeightGoalsForCarePla
                             text: "          ",
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight:
-                                FontWeight.w700,
+                                fontWeight: FontWeight.w700,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
-                                fontStyle:
-                                FontStyle.italic)),
+                                fontStyle: FontStyle.italic)),
                       ]),
                 ),
               ),
@@ -299,51 +285,58 @@ class _AddWeightGoalsForCarePlanViewState extends State<AddWeightGoalsForCarePla
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0,8,0,8),
+                      padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Expanded(
                             child: Text(
                               dob,
-                              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal, fontSize: 14),
                             ),
                           ),
-                          ImageIcon(AssetImage('res/images/ic_calender.png'), size: 24, color: primaryColor,),
+                          ImageIcon(
+                            AssetImage('res/images/ic_calender.png'),
+                            size: 24,
+                            color: primaryColor,
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  onTap: (){
+                  onTap: () {
                     DatePicker.showDatePicker(context,
                         showTitleActions: true,
-                        minTime: DateTime.now().subtract(Duration(days: 0)), onChanged: (date) {
-                          print('change $date');
-                        }, onConfirm: (date) {
-                          unformatedDOB = date.toIso8601String();
-                          setState(() {
-                            dob = dateFormat.format(date);
-                          });
-                          print('confirm $date');
-                        }, currentTime: DateTime.now(), locale: LocaleType.en);
+                        minTime: DateTime.now().subtract(Duration(days: 0)),
+                        onChanged: (date) {
+                      print('change $date');
+                    }, onConfirm: (date) {
+                      unformatedDOB = date.toIso8601String();
+                      setState(() {
+                        dob = dateFormat.format(date);
+                      });
+                      print('confirm $date');
+                    }, currentTime: DateTime.now(), locale: LocaleType.en);
                   },
                 ),
               )
             ],
           ),
-
-          SizedBox(height: 40,),
+          SizedBox(
+            height: 40,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
-                onTap: (){
-                  if(_weightController.text == ''){
-                    showToast('Please enter weight');
-                  }else if(dob.isEmpty){
-                    showToast('Please select taget date');
-                  }else{
+                onTap: () {
+                  if (_weightController.text == '') {
+                    showToast('Please enter weight', context);
+                  } else if (dob.isEmpty) {
+                    showToast('Please select taget date', context);
+                  } else {
                     setGoals();
                   }
                   //Navigator.of(context).pop();
@@ -352,23 +345,27 @@ class _AddWeightGoalsForCarePlanViewState extends State<AddWeightGoalsForCarePla
                 child: Container(
                     height: 40,
                     width: 120,
-                    padding: EdgeInsets.symmetric(horizontal: 16.0, ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24.0),
                       border: Border.all(color: primaryColor, width: 1),
-                      color: Colors.deepPurple,),
+                      color: Colors.deepPurple,
+                    ),
                     child: Center(
                       child: Text(
                         "Save",
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14),
                         textAlign: TextAlign.center,
                       ),
-                    )
-                ),
+                    )),
               ),
             ],
           ),
-
         ],
       ),
     );
@@ -395,7 +392,10 @@ class _AddWeightGoalsForCarePlanViewState extends State<AddWeightGoalsForCarePla
       body['Goal'] = map;
       body['GoalSettingTaskId'] = getTask().details.id;
 
-      BaseResponse baseResponse  = await model.addGoalsTask(startCarePlanResponseGlob.data.carePlan.id.toString(), 'weight-goal' ,  body);
+      BaseResponse baseResponse = await model.addGoalsTask(
+          startCarePlanResponseGlob.data.carePlan.id.toString(),
+          'weight-goal',
+          body);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
@@ -403,36 +403,40 @@ class _AddWeightGoalsForCarePlanViewState extends State<AddWeightGoalsForCarePla
         navigateToScreen();
       } else {
         progressDialog.hide();
-        if(baseResponse.error.contains('goal already exists for this care plan')){
+        if (baseResponse.error
+            .contains('goal already exists for this care plan')) {
           goalPlanScreenStack.removeAt(0);
           navigateToScreen();
-        }else {
-          showToast(baseResponse.message);
+        } else {
+          showToast(baseResponse.message, context);
         }
       }
     } catch (e) {
       progressDialog.hide();
       model.setBusy(false);
-      showToast(e.toString());
-      debugPrint('Error ==> '+e.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 
   navigateToScreen() {
     debugPrint('Set Goals Plan Stack ==> ${goalPlanScreenStack.length}');
-    if(goalPlanScreenStack.length == 0){
-      Navigator.pushReplacementNamed(context, RoutePaths.Determine_Action_For_Care_Plan);
-    }else if (goalPlanScreenStack.elementAt(0) == "Blood Pressure") {
-      Navigator.pushReplacementNamed(context, RoutePaths.ADD_BLOOD_PRESURE_GOALS);
-    }else if (goalPlanScreenStack.elementAt(0) == "Blood Sugar") {
+    if (goalPlanScreenStack.length == 0) {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.Determine_Action_For_Care_Plan);
+    } else if (goalPlanScreenStack.elementAt(0) == "Blood Pressure") {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.ADD_BLOOD_PRESURE_GOALS);
+    } else if (goalPlanScreenStack.elementAt(0) == "Blood Sugar") {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_GLUCOSE_GOALS);
-    }else if(goalPlanScreenStack.elementAt(0) == "Weight"){
+    } else if (goalPlanScreenStack.elementAt(0) == "Weight") {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_WEIGHT_GOALS);
-    }else if(goalPlanScreenStack.elementAt(0) == "Physical Activity"){
-      Navigator.pushReplacementNamed(context, RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS);
-    }else if(goalPlanScreenStack.elementAt(0) == "Quit Smoking"){
-      Navigator.pushReplacementNamed(context, RoutePaths.ADD_QUIT_SMOKING_GOALS);
+    } else if (goalPlanScreenStack.elementAt(0) == "Physical Activity") {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS);
+    } else if (goalPlanScreenStack.elementAt(0) == "Quit Smoking") {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.ADD_QUIT_SMOKING_GOALS);
     }
   }
-
 }

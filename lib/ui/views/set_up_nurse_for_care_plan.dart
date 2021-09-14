@@ -1,21 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/AddTeamMemberResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
-import 'package:paitent/core/models/TeamMemberJsonRequest.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/addNurseDialog.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:intl/intl.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
@@ -27,20 +18,22 @@ class SetUpNurseForCarePlanView extends StatefulWidget {
       _SetUpNurseForCarePlanViewState();
 }
 
-class _SetUpNurseForCarePlanViewState
-    extends State<SetUpNurseForCarePlanView> {
+class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   var _searchController = new TextEditingController();
   SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
   StartCarePlanResponse startCarePlanResponse;
+
   //var nurseMemberList = new List<TeamMember>();
   ProgressDialog progressDialog;
 
   loadSharedPrefrance() async {
     try {
-      startCarePlanResponse = StartCarePlanResponse.fromJson(await _sharedPrefUtils.read("CarePlan"));
-      debugPrint("AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}");
+      startCarePlanResponse = StartCarePlanResponse.fromJson(
+          await _sharedPrefUtils.read("CarePlan"));
+      debugPrint(
+          "AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}");
     } catch (Excepetion) {
       // do something
       debugPrint(Excepetion);
@@ -48,7 +41,7 @@ class _SetUpNurseForCarePlanViewState
   }
 
   @override
-  void initState()  {
+  void initState() {
     loadSharedPrefrance();
     // TODO: implement initState
     super.initState();
@@ -107,17 +100,15 @@ class _SetUpNurseForCarePlanViewState
                         height: 16,
                       ),
                       Expanded(
-                          child:
-                              model.busy
-                          ? Center(
-                          child: SizedBox(
-                              height: 32,
-                              width: 32,
-                              child: CircularProgressIndicator()))
-                          : (nurseMemberListGlobe.length == 0)
-                          ? noDoctorFound()
-                          :
-                              doctorSearchResultListView()) //,
+                          child: model.busy
+                              ? Center(
+                                  child: SizedBox(
+                                      height: 32,
+                                      width: 32,
+                                      child: CircularProgressIndicator()))
+                              : (nurseMemberListGlobe.length == 0)
+                                  ? noDoctorFound()
+                                  : doctorSearchResultListView()) //,
                     ],
                   ),
                 ),
@@ -127,37 +118,56 @@ class _SetUpNurseForCarePlanViewState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    model.busy ? Container() :InkWell(
-                      onTap: (){
-                        /*nurseMemberListGlobe.clear();
+                    model.busy
+                        ? Container()
+                        : InkWell(
+                            onTap: () {
+                              /*nurseMemberListGlobe.clear();
                         nurseMemberListGlobe.addAll(nurseMemberListGlobe);*/
-                        Navigator.pushNamed(context, RoutePaths.Setup_Family_Member_For_Care_Plan);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                          height: 40,
-                          width: 160,
-                          padding: EdgeInsets.symmetric(horizontal: 16.0, ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24.0),
-                            border: Border.all(color: primaryColor, width: 1),
-                            color: Colors.deepPurple,),
-                          child:  Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(Icons.arrow_back_ios, color: Colors.deepPurple, size: 16,),
-                              Text(
-                                'Next',
-                                style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14),
+                              Navigator.pushNamed(context,
+                                  RoutePaths.Setup_Family_Member_For_Care_Plan);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Container(
+                                height: 40,
+                                width: 160,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                  border:
+                                      Border.all(color: primaryColor, width: 1),
+                                  color: Colors.deepPurple,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.arrow_back_ios,
+                                      color: Colors.deepPurple,
+                                      size: 16,
+                                    ),
+                                    Text(
+                                      'Next',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                          fontSize: 14),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: Colors.white,
+                                      size: 16,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16,),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               )
@@ -266,7 +276,10 @@ class _SetUpNurseForCarePlanViewState
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.only(right: 18.0),
-                              child: Text(teamMember.details.firstName+' '+teamMember.details.lastName,
+                              child: Text(
+                                  teamMember.details.firstName +
+                                      ' ' +
+                                      teamMember.details.lastName,
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700,
@@ -277,11 +290,15 @@ class _SetUpNurseForCarePlanViewState
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w300,
                                     color: Color(0XFF909CAC))),
-                            Text(teamMember.details.gender,
-                                style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w200,
-                                    color: Color(0XFF909CAC)), maxLines: 2, overflow: TextOverflow.ellipsis,),
+                            Text(
+                              teamMember.details.gender,
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w200,
+                                  color: Color(0XFF909CAC)),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ],
                         ),
                       ),
@@ -415,6 +432,7 @@ class _SetUpNurseForCarePlanViewState
                       Icons.close,
                       color: Colors.white,
                     ),
+                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -444,24 +462,24 @@ class _SetUpNurseForCarePlanViewState
                   ),
                 ],
               ),
-              Expanded(child: AddNurseDialog( submitButtonListner: (String firstName, String lastName, String phoneNumber, String gender){
-                debugPrint("Team Member ==> ${firstName}");
-                addTeamMembers(firstName, lastName, phoneNumber, gender);
-                Navigator.of(context, rootNavigator: true).pop();
-              }),)
+              Expanded(
+                child: AddNurseDialog(submitButtonListner: (String firstName,
+                    String lastName, String phoneNumber, String gender) {
+                  debugPrint("Team Member ==> ${firstName}");
+                  addTeamMembers(firstName, lastName, phoneNumber, gender);
+                  Navigator.of(context, rootNavigator: true).pop();
+                }),
+              )
             ],
           ),
-
-        )
-    );
+        ));
   }
 
-  addTeamMembers(String firstName, String lastName, String phoneNumber, String gender) async {
+  addTeamMembers(String firstName, String lastName, String phoneNumber,
+      String gender) async {
     try {
-
       model.setBusy(true);
       //progressDialog.show();
-
 
       /*TeamMemberJsonRequest jsonRequest = new TeamMemberJsonRequest();
       jsonRequest.carePlanId = startCarePlanResponse.data.carePlan.id.toString();
@@ -482,29 +500,27 @@ class _SetUpNurseForCarePlanViewState
       map['TeamMemberType'] = "HealthWorker";
       map['Details'] = data;
 
-
       AddTeamMemberResponse addTeamMemberResponse =
-      await model.addTeamMembers(map);
+          await model.addTeamMembers(map);
       debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
       if (addTeamMemberResponse.status == 'success') {
         //progressDialog.hide();
         setState(() {
           nurseMemberListGlobe.add(addTeamMemberResponse.data.teamMember);
         });
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       } else {
         //progressDialog.hide();
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
       //progressDialog.hide();
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException);
     } catch (Exception) {
       //progressDialog.hide();
       debugPrint(Exception.toString());
     }
   }
-
 }

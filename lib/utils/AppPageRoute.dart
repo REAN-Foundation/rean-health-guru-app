@@ -35,10 +35,10 @@ class AppPageRoute extends MaterialPageRoute<String> {
         assert(maintainState != null),
         assert(fullscreenDialog != null),
         super(
-        settings: settings,
-        fullscreenDialog: fullscreenDialog,
-        builder: builder,
-      ) {
+          settings: settings,
+          fullscreenDialog: fullscreenDialog,
+          builder: builder,
+        ) {
     assert(opaque); // PageRoute makes it return true.
   }
 
@@ -64,11 +64,13 @@ class AppPageRoute extends MaterialPageRoute<String> {
   }
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
     final Widget result = builder(context);
     assert(() {
       if (result == null) {
-        throw new FlutterError('The builder for route "${settings.name}" returned null.\n'
+        throw new FlutterError(
+            'The builder for route "${settings.name}" returned null.\n'
             'Route builders must never return null.');
       }
       return true;
@@ -77,13 +79,17 @@ class AppPageRoute extends MaterialPageRoute<String> {
   }
 
   @override
-  Widget buildTransitions(
-      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
     if (_useCupertinoTransitions) {
-      return _cupertinoPageRoute.buildTransitions(context, animation, secondaryAnimation, child);
+      return _cupertinoPageRoute.buildTransitions(
+          context, animation, secondaryAnimation, child);
     }
 
-    return new _CustomPageTransition(routeAnimation: animation, child: child, fullscreenDialog: fullscreenDialog);
+    return new _CustomPageTransition(
+        routeAnimation: animation,
+        child: child,
+        fullscreenDialog: fullscreenDialog);
   }
 }
 
@@ -99,14 +105,15 @@ class _CustomPageTransition extends StatelessWidget {
     @required this.child,
     @required this.fullscreenDialog,
   })  : _positionAnimation = !fullscreenDialog
-      ? _kRightMiddleTween.animate(new CurvedAnimation(
-    parent: routeAnimation,
-    curve: Curves.elasticIn,
-  ))
-      : _kBottomUpTween.animate(new CurvedAnimation(
-    parent: routeAnimation, // The route's linear 0.0 - 1.0 animation.
-    curve: Curves.elasticIn,
-  )),
+            ? _kRightMiddleTween.animate(new CurvedAnimation(
+                parent: routeAnimation,
+                curve: Curves.elasticIn,
+              ))
+            : _kBottomUpTween.animate(new CurvedAnimation(
+                parent:
+                    routeAnimation, // The route's linear 0.0 - 1.0 animation.
+                curve: Curves.elasticIn,
+              )),
         super(key: key);
 
   @override

@@ -34,8 +34,9 @@ class Data {
   Data({this.patient});
 
   Data.fromJson(Map<String, dynamic> json) {
-    patient =
-    json['patient'] != String ? new Patient.fromJson(json['patient']) : String;
+    patient = json['patient'] != String
+        ? new Patient.fromJson(json['patient'])
+        : String;
   }
 
   Map<String, dynamic> toJson() {
@@ -75,29 +76,29 @@ class Patient {
 
   Patient(
       {this.userId,
-        this.roleId,
-        this.displayId,
-        this.medicalProfileId,
-        this.firstName,
-        this.lastName,
-        this.prefix,
-        this.phoneNumber,
-        this.email,
-        this.gender,
-        this.birthDate,
-        this.imageURL,
-        this.locality,
-        this.address,
-        this.locationCoordsLongitude,
-        this.locationCoordsLattitude,
-        this.insuranceProvider,
-        this.insurancePolicyCode,
-        this.emergencyContactName,
-        this.emergencyContactRelation,
-        this.emergencyContactNumber,
-        this.inAppUser,
-        this.dateCreated,
-        this.dateUpdated});
+      this.roleId,
+      this.displayId,
+      this.medicalProfileId,
+      this.firstName,
+      this.lastName,
+      this.prefix,
+      this.phoneNumber,
+      this.email,
+      this.gender,
+      this.birthDate,
+      this.imageURL,
+      this.locality,
+      this.address,
+      this.locationCoordsLongitude,
+      this.locationCoordsLattitude,
+      this.insuranceProvider,
+      this.insurancePolicyCode,
+      this.emergencyContactName,
+      this.emergencyContactRelation,
+      this.emergencyContactNumber,
+      this.inAppUser,
+      this.dateCreated,
+      this.dateUpdated});
 
   Patient.fromJson(Map<String, dynamic> json) {
     userId = json['UserId'];
@@ -110,7 +111,9 @@ class Patient {
     phoneNumber = json['PhoneNumber'];
     email = json['Email'];
     gender = json['Gender'];
-    birthDate = json['BirthDate'] != null ? DateTime.parse(json['BirthDate']) : json['BirthDate'];
+    birthDate = json['BirthDate'] != null
+        ? DateTime.parse(json['BirthDate'])
+        : json['BirthDate'];
     imageURL = json['ImageURL'];
     locality = json['Locality'];
     address = json['Address'];
@@ -138,7 +141,9 @@ class Patient {
     data['PhoneNumber'] = this.phoneNumber;
     data['Email'] = this.email;
     data['Gender'] = this.gender;
-    data['BirthDate'] = this.birthDate != null ? this.birthDate.toIso8601String() : this.birthDate;
+    data['BirthDate'] = this.birthDate != null
+        ? this.birthDate.toIso8601String()
+        : this.birthDate;
     data['ImageURL'] = this.imageURL;
     data['Locality'] = this.locality;
     data['Address'] = this.address;

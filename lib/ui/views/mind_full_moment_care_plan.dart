@@ -1,50 +1,38 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
-import 'package:paitent/core/models/assortedViewConfigs.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
+import 'package:intl/intl.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:intl/intl.dart';
-import 'package:paitent/utils/StringUtility.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import 'home_view.dart';
-
 class MindFullMomentCarePlanView extends StatefulWidget {
-
-
   @override
-  _MindFullMomentCarePlanViewState createState() => _MindFullMomentCarePlanViewState();
+  _MindFullMomentCarePlanViewState createState() =>
+      _MindFullMomentCarePlanViewState();
 }
 
-class _MindFullMomentCarePlanViewState extends State<MindFullMomentCarePlanView> {
+class _MindFullMomentCarePlanViewState
+    extends State<MindFullMomentCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
 //https://www.youtube.com/watch?v=s1pG7k_1nSw
   String videourl = "https://www.youtube.com/watch?v=d8PzoTr95ik";
 
   String textMsg1 = "Welcome to this heart meditation brought to you "
       "by the American Heart Association. Bring your"
-  " attention to your breathing. You may want to close"
-  " your eyes and block out other sounds. Without"
-  " trying to change the pace or volume of your"
-  ' breathing try to pay attention to each breath as you'
-  ' inhale (pause), and exhale (pause). Breathe in,'
-  ' breath out; breathe in, breathe out; breath in, breath'
-  " out. As you become more aware of your breathing,"
-     ' gradually bring your attention to your'
-  ' heart. Try to see if you can feel your heart beating.'
-  ' Your heart has been beating every moment of your'
-  " entire life. It speeds up when you need to provide ";
+      " attention to your breathing. You may want to close"
+      " your eyes and block out other sounds. Without"
+      " trying to change the pace or volume of your"
+      ' breathing try to pay attention to each breath as you'
+      ' inhale (pause), and exhale (pause). Breathe in,'
+      ' breath out; breathe in, breathe out; breath in, breath'
+      " out. As you become more aware of your breathing,"
+      ' gradually bring your attention to your'
+      ' heart. Try to see if you can feel your heart beating.'
+      ' Your heart has been beating every moment of your'
+      " entire life. It speeds up when you need to provide ";
 
   YoutubePlayerController _controller = YoutubePlayerController(
     initialVideoId: "s1pG7k_1nSw",
@@ -61,24 +49,23 @@ class _MindFullMomentCarePlanViewState extends State<MindFullMomentCarePlanView>
   Widget build(BuildContext context) {
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child: Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'Mindful Moment',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            title: Text(
+              'Mindful Moment',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700),
+            ),
+            iconTheme: new IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -88,20 +75,22 @@ class _MindFullMomentCarePlanViewState extends State<MindFullMomentCarePlanView>
                   debugPrint("Clicked on profile icon");
                 },
               )*/
-                ],
-              ),
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  headerText(),
-                  SizedBox(height: 16,),
-                  Expanded(
-                    child: videoView(),
-                  ),
-                ],
-              ),
-            ),
+            ],
           ),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              headerText(),
+              SizedBox(
+                height: 16,
+              ),
+              Expanded(
+                child: videoView(),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -130,14 +119,17 @@ class _MindFullMomentCarePlanViewState extends State<MindFullMomentCarePlanView>
         YoutubePlayer(
           controller: _controller,
         ),
-        const SizedBox(height: 16,),
+        const SizedBox(
+          height: 16,
+        ),
         SingleChildScrollView(
           child: Column(
             children: [
               Container(
                 padding: const EdgeInsets.all(16.0),
-                child: Text(textMsg1,
-                  style: TextStyle( fontWeight: FontWeight.w300, fontSize: 12),
+                child: Text(
+                  textMsg1,
+                  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
                 ),
               ),
             ],
@@ -146,7 +138,4 @@ class _MindFullMomentCarePlanViewState extends State<MindFullMomentCarePlanView>
       ],
     );
   }
-
-
-
 }

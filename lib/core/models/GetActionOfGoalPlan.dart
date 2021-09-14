@@ -61,16 +61,16 @@ class Goals {
 
   Goals(
       {this.id,
-        this.assetID,
-        this.assetType,
-        this.assetName,
-        this.description,
-        this.language,
-        this.category,
-        this.source,
-        this.tags,
-        this.createdAt,
-        this.updatedAt});
+      this.assetID,
+      this.assetType,
+      this.assetName,
+      this.description,
+      this.language,
+      this.category,
+      this.source,
+      this.tags,
+      this.createdAt,
+      this.updatedAt});
 
   Goals.fromJson(Map<String, dynamic> json) {
     id = json['id'];

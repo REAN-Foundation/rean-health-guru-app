@@ -1,49 +1,42 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/DoctorAppoinmentBookedSuccessfully.dart';
 import 'package:paitent/core/models/DoctorBookingAppoinmentPojo.dart';
-import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/UploadImageResponse.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/models/labsListApiResponse.dart';
 import 'package:paitent/core/models/time_slot.dart';
 import 'package:paitent/core/models/user_data.dart';
-import 'package:paitent/core/viewmodels/views/appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
-import 'package:paitent/core/viewmodels/views/login_view_model.dart';
 import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/ui/shared/text_styles.dart';
-import 'package:paitent/ui/shared/ui_helpers.dart';
-import 'package:flutter/material.dart';
 import 'package:paitent/ui/views/doctorTileWidget.dart';
 import 'package:paitent/ui/views/labTileWidget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
-import 'package:paitent/widgets/app_drawer.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:provider/provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import 'package:flutter/foundation.dart';
+
 import 'base_widget.dart';
-import 'package:path/path.dart' as path;
-import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
 class BookingInfoView extends StatefulWidget {
-
   DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;
 
   BookingInfoView(@required this.bookingAppoinmentsDetails);
 
   @override
-  _BookingInfoViewState createState() => _BookingInfoViewState(bookingAppoinmentsDetails);
+  _BookingInfoViewState createState() =>
+      _BookingInfoViewState(bookingAppoinmentsDetails);
 }
 
 class _BookingInfoViewState extends State<BookingInfoView> {
@@ -75,17 +68,19 @@ class _BookingInfoViewState extends State<BookingInfoView> {
   var patientId = "";
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
   Labs labDetails;
+
   _BookingInfoViewState(@required this.bookingAppoinmentsDetails);
+
   String auth = "";
   var model = new BookAppoinmentViewModel();
 
   loadSharedPrefs() async {
     try {
-       user = UserData.fromJson(await _sharedPrefUtils.read("user"));
-       patientId = user.data.user.userId.toString();
-       auth = user.data.accessToken;
+      user = UserData.fromJson(await _sharedPrefUtils.read("user"));
+      patientId = user.data.user.userId.toString();
+      auth = user.data.accessToken;
 
-       setSelfData();
+      setSelfData();
       debugPrint(user.toJson().toString());
     } catch (Excepetion) {
       // do something
@@ -93,8 +88,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
     }
   }
 
-  setSelfData(){
-
+  setSelfData() {
     dob = dateFormat.format(bookingAppoinmentsDetails.patient.birthDate);
 
     _firstNameController.text = user.data.user.firstName;
@@ -113,9 +107,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
     );
     _emailController.text = user.data.user.email;
 
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
@@ -123,15 +115,13 @@ class _BookingInfoViewState extends State<BookingInfoView> {
     // TODO: implement initState
     super.initState();
     loadSharedPrefs();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
-    if(bookingAppoinmentsDetails.whichFlow == "Lab"){
+    if (bookingAppoinmentsDetails.whichFlow == "Lab") {
       labDetails = bookingAppoinmentsDetails.labs;
-    }else {
+    } else {
       doctorDetails = bookingAppoinmentsDetails.doctors;
     }
 
@@ -163,23 +153,33 @@ class _BookingInfoViewState extends State<BookingInfoView> {
             //padding: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(height: 16,),
-                    bookingAppoinmentsDetails.whichFlow == "Lab" ?  Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: LabTileView(labDetails),
-                    ) : Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: DoctorTileView(doctorDetails),
-                    ),
-                    _makeDateAndTimeTile(),
-                    //_bookAppoinmentFor(),
-                    _textFeildWidget(),
-                    SizedBox(height: 16,),
-                    model.busy ? Center(child: CircularProgressIndicator()) : _continueButton(),
-                    SizedBox(height: 24,),
-                  ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    height: 16,
+                  ),
+                  bookingAppoinmentsDetails.whichFlow == "Lab"
+                      ? Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: LabTileView(labDetails),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: DoctorTileView(doctorDetails),
+                        ),
+                  _makeDateAndTimeTile(),
+                  //_bookAppoinmentFor(),
+                  _textFeildWidget(),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  model.busy
+                      ? Center(child: CircularProgressIndicator())
+                      : _continueButton(),
+                  SizedBox(
+                    height: 24,
+                  ),
+                ],
               ),
             ),
           ),
@@ -188,36 +188,44 @@ class _BookingInfoViewState extends State<BookingInfoView> {
     );
   }
 
-  Widget _continueButton(){
-    return  Row(
+  Widget _continueButton() {
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Material(  //Wrap with Material
-          shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(24.0) ),
+        Material(
+          //Wrap with Material
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
           elevation: 4.0,
           color: primaryColor,
-          clipBehavior: Clip.antiAlias, // Add This
+          clipBehavior: Clip.antiAlias,
+          // Add This
           child: MaterialButton(
             minWidth: 200,
             child: new Text('Continue',
-                style: new TextStyle(fontSize: 14.0, color: Colors.white, fontWeight: FontWeight.normal)),
+                style: new TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.normal)),
             onPressed: () {
               if (_firstNameController.text == '') {
-                showToast("Please enter first name");
+                showToast("Please enter first name", context);
               } else if (_lastNameController.text == '') {
-                showToast("Please enter last name");
+                showToast("Please enter last name", context);
               } else if (_mobileNumberController.text.toString().length != 10) {
-                showToast("Please enter valid mobile number");
-              } else if(selectedGender == '') {
-                showToast("Please select gender");
-              } else if(dob == '') {
-                showToast("Please select Date of Birth");
-              } /*else if(validateEmail(_emailController.text)) {
+                showToast("Please enter valid mobile number", context);
+              } else if (selectedGender == '') {
+                showToast("Please select gender", context);
+              } else if (dob == '') {
+                showToast("Please select Date of Birth", context);
+              }
+              /*else if(validateEmail(_emailController.text)) {
                 showToast("Please enter valid email");
               }  else if (_noteController.text == '') {
                 showToast("Please enter password");
-              } */else {
+              } */
+              else {
                 bookingAppoinmentsDetails.patientNote =
                     _noteController.text.toString();
                 bookingAppoinmentsDetails.attachmentPath = attachmentPath;
@@ -226,7 +234,6 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                     arguments: bookingAppoinmentsDetails);
               }
               //bookADoctorAppoinmentSlot();
-
             },
           ),
         ),
@@ -239,25 +246,27 @@ class _BookingInfoViewState extends State<BookingInfoView> {
       model.setBusy(true);
       var map = new Map<String, String>();
       map["patientUserId"] = patientId;
-      map["date"] = dateFormatFull.format(DateTime.parse(bookingAppoinmentsDetails.selectedDate));
+      map["date"] = dateFormatFull
+          .format(DateTime.parse(bookingAppoinmentsDetails.selectedDate));
       map["startTime"] = bookingAppoinmentsDetails.slotStart;
       map["endTime"] = bookingAppoinmentsDetails.slotEnd;
 
-      DoctorAppoinmentBookedSuccessfully bookAAppoinmentForDoctor = await model.bookAAppoinmentForDoctor(doctorDetails.userId.toString(), map, 'Bearer '+auth);
+      DoctorAppoinmentBookedSuccessfully bookAAppoinmentForDoctor =
+          await model.bookAAppoinmentForDoctor(
+              doctorDetails.userId.toString(), map, 'Bearer ' + auth);
 
       if (bookAAppoinmentForDoctor.status == 'success') {
         //Navigator.pushNamed(context, RoutePaths.Booking_Appoinment_Confirmation_View);
-        showToast(bookAAppoinmentForDoctor.message);
+        showToast(bookAAppoinmentForDoctor.message, context);
         debugPrint("Clicked On Proceed");
       } else {
-        showToast(bookAAppoinmentForDoctor.message);
+        showToast(bookAAppoinmentForDoctor.message, context);
       }
-
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
-      debugPrint("Error "+CustomException.toString());
-    } catch (Exception){
+      showToast(CustomException.toString(), context);
+      debugPrint("Error " + CustomException.toString());
+    } catch (Exception) {
       debugPrint(Exception.toString());
     }
   }
@@ -335,7 +344,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                       fontFamily: 'Montserrat'),
                   children: <TextSpan>[
                     TextSpan(
-                        text: ' ₹'+doctorDetails.consultationFee.toString(),
+                        text: ' ₹' + doctorDetails.consultationFee.toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             color: primaryColor,
@@ -382,17 +391,13 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                          labDetails.firstName +
-                              ' ' +
-                              labDetails.lastName,
+                      Text(labDetails.firstName + ' ' + labDetails.lastName,
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                               fontFamily: 'Montserrat',
                               color: primaryColor)),
-                      Text(
-                          labDetails.locality,
+                      Text(labDetails.locality,
                           style: TextStyle(
                               fontSize: 12.0,
                               fontWeight: FontWeight.w100,
@@ -409,7 +414,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
     );
   }
 
-  Widget _makeDateAndTimeTile(){
+  Widget _makeDateAndTimeTile() {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 60,
@@ -418,14 +423,32 @@ class _BookingInfoViewState extends State<BookingInfoView> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text('Appointment On', style: TextStyle(fontWeight: FontWeight.normal, color: Colors.white, fontSize: 14)),
-          SizedBox(width: 4,),
+          Text('Appointment On',
+              style: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white,
+                  fontSize: 14)),
+          SizedBox(
+            width: 4,
+          ),
           RichText(
             text: TextSpan(
-              text: dateFormat.format(DateTime.parse(bookingAppoinmentsDetails.selectedDate)),
-              style: TextStyle(fontWeight: FontWeight.normal, color: Colors.white, fontSize: 14),
+              text: dateFormat.format(
+                  DateTime.parse(bookingAppoinmentsDetails.selectedDate)),
+              style: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white,
+                  fontSize: 14),
               children: <TextSpan>[
-                TextSpan(text: ' : '+timeFormat.format(DateTime.parse(bookingAppoinmentsDetails.slotStart).toLocal()), style: TextStyle(fontWeight: FontWeight.normal, color: Colors.white, fontSize: 14)),
+                TextSpan(
+                    text: ' : ' +
+                        timeFormat.format(
+                            DateTime.parse(bookingAppoinmentsDetails.slotStart)
+                                .toLocal()),
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Colors.white,
+                        fontSize: 14)),
               ],
             ),
           ),
@@ -444,11 +467,10 @@ class _BookingInfoViewState extends State<BookingInfoView> {
           )*/
         ],
       ),
-
     );
   }
 
-  Widget _genderWidget(){
+  Widget _genderWidget() {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -462,7 +484,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
           SizedBox(
             height: 10,
           ),
-         /* InkWell(
+          /* InkWell(
             onTap: (){},
             child: ToggleSwitch(
                 initialLabelIndex: bookingAppoinmentsDetails.patient.gender == "M" || bookingAppoinmentsDetails.patient.gender == "Male" ? 0 : 1,
@@ -498,14 +520,20 @@ class _BookingInfoViewState extends State<BookingInfoView> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(8.0,8,0,8),
+              padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      bookingAppoinmentsDetails.patient.gender == "M" || bookingAppoinmentsDetails.patient.gender == "Male" ? "Male" : "Female",
-                      style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black54),
+                      bookingAppoinmentsDetails.patient.gender == "M" ||
+                              bookingAppoinmentsDetails.patient.gender == "Male"
+                          ? "Male"
+                          : "Female",
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16,
+                          color: Colors.black54),
                     ),
                   ),
                 ],
@@ -517,7 +545,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
     );
   }
 
-  Widget _bookAppoinmentFor(){
+  Widget _bookAppoinmentFor() {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -534,24 +562,24 @@ class _BookingInfoViewState extends State<BookingInfoView> {
           ToggleSwitch(
               minWidth: 120.0,
               cornerRadius: 20,
-              activeBgColor: Color(0xFFC8DDFF),
-              activeTextColor: Colors.black,
-              inactiveBgColor: Colors.black12,
-              inactiveTextColor: Colors.black,
-              labels: ['Self', 'Others'],
+              initialLabelIndex: 0,
+              totalSwitches: 2,
+              activeBgColor: [Colors.green],
+              inactiveBgColor: Colors.grey,
+              labels: ['Male', 'Female'],
+              icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
+              activeBgColors: [
+                [Colors.blue],
+                [Colors.pink]
+              ],
               onToggle: (index) {
                 print('switched to: $index');
-                if(index == 0){
-                  setSelfData();
-                }else{
-                  setState(() {
-                    _firstNameController.clear();
-                    _lastNameController.clear();
-                    _mobileNumberController.clear();
-                  });
+                if (index == 0) {
+                  selectedGender = "Male";
+                } else {
+                  selectedGender = "Female";
                 }
-              }
-          )
+              })
         ],
       ),
     );
@@ -602,23 +630,29 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(8.0,8,0,8),
+                padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
                       child: Text(
                         dob,
-                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black54),
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16,
+                            color: Colors.black54),
                       ),
                     ),
-                    SizedBox( height: 32, width: 32, child: new Image.asset('res/images/ic_calender.png')),
+                    SizedBox(
+                        height: 32,
+                        width: 32,
+                        child: new Image.asset('res/images/ic_calender.png')),
                   ],
                 ),
               ),
             ),
-            onTap: (){
-             /* DatePicker.showDatePicker(context,
+            onTap: () {
+              /* DatePicker.showDatePicker(context,
                   showTitleActions: true,
                   maxTime: DateTime.now().subtract(Duration(days: 1)), onChanged: (date) {
                     print('change $date');
@@ -644,11 +678,17 @@ class _BookingInfoViewState extends State<BookingInfoView> {
           RichText(
             text: TextSpan(
               text: 'Email',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.black87),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: Colors.black87),
               children: <TextSpan>[
                 TextSpan(
                     text: '(Optional)',
-                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 12, color: Colors.black87)),
+                    style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 12,
+                        color: Colors.black87)),
               ],
             ),
           ),
@@ -671,7 +711,9 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                 keyboardType: TextInputType.emailAddress,
                 maxLines: 1,
                 enabled: false,
-                style: TextStyle(color: Colors.black54,),
+                style: TextStyle(
+                  color: Colors.black54,
+                ),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (term) {
                   _fieldFocusChange(context, _emailFocus, _noteFocus);
@@ -714,7 +756,9 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                 controller: _firstNameController,
                 focusNode: _firstNameFocus,
                 maxLines: 1,
-                style: TextStyle(color: Colors.black54,),
+                style: TextStyle(
+                  color: Colors.black54,
+                ),
                 enabled: false,
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (term) {
@@ -723,8 +767,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     fillColor: Colors.white,
-                    filled: true)
-                ),
+                    filled: true)),
           )
         ],
       ),
@@ -760,16 +803,18 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                 focusNode: _lastNameFocus,
                 enabled: false,
                 maxLines: 1,
-                style: TextStyle(color: Colors.black54,),
+                style: TextStyle(
+                  color: Colors.black54,
+                ),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (term) {
-                  _fieldFocusChange(context, _lastNameFocus, _mobileNumberFocus);
+                  _fieldFocusChange(
+                      context, _lastNameFocus, _mobileNumberFocus);
                 },
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     fillColor: Colors.white,
-                    filled: true)
-                ),
+                    filled: true)),
           )
         ],
       ),
@@ -807,7 +852,10 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                     child: Text(
                       "+91",
                       style: TextStyle(
-                          fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black54,),
+                        fontWeight: FontWeight.normal,
+                        fontSize: 16,
+                        color: Colors.black54,
+                      ),
                     ),
                   ),
                   Expanded(
@@ -818,7 +866,9 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                         textInputAction: TextInputAction.next,
                         maxLength: 10,
                         enabled: false,
-                        style: TextStyle(color: Colors.black54,),
+                        style: TextStyle(
+                          color: Colors.black54,
+                        ),
                         onFieldSubmitted: (term) {
                           _fieldFocusChange(
                               context, _mobileNumberFocus, _noteFocus);
@@ -833,7 +883,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                 ],
               )
 
-            /*InternationalPhoneNumberInput
+              /*InternationalPhoneNumberInput
               .withCustomDecoration(
               onInputChanged: (PhoneNumber number) {
                 mobileNumber = number.toString().trim();
@@ -862,7 +912,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                   fillColor: Color(0xfff3f3f4),
                   filled: true)
           ),*/
-          ),
+              ),
         ],
       ),
     );
@@ -916,94 +966,86 @@ class _BookingInfoViewState extends State<BookingInfoView> {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-
   Future getFile() async {
     String result;
     try {
       result = await FlutterDocumentPicker.openDocument();
       debugPrint('File Result ==> ${result}');
 
-      if(result != '') {
+      if (result != '') {
         File file = File(result);
         debugPrint(result);
         String fileName = file.path.split('/').last;
         print("File Name ==> ${fileName}");
         uploadProfilePicture(file);
       } else {
-        showToast('Please select document');
+        showToast('Please select document', context);
       }
     } catch (e) {
-      showToast('Please select document');
+      showToast('Please select document', context);
       print(e);
       result = 'Error: $e';
     }
   }
 
   uploadProfilePicture(File file) async {
-
     try {
       progressDialog.show();
       var map = new Map<String, String>();
       map["enc"] = "multipart/form-data";
-      map["Authorization"] = 'Bearer '+auth;
+      map["Authorization"] = 'Bearer ' + auth;
 
       String _baseUrl = apiProvider.getBaseUrl();
 
-      var postUri = Uri.parse(_baseUrl+"/resources/upload/");
+      var postUri = Uri.parse(_baseUrl + "/resources/upload/");
       var request = new http.MultipartRequest("POST", postUri);
       request.headers.addAll(map);
-      request.files.add(
-          http.MultipartFile('name',
-              file.readAsBytes().asStream(),
-              file.lengthSync(),
-              filename: file.path.split('/').last
-          )
-      );
+      request.files.add(http.MultipartFile(
+          'name', file.readAsBytes().asStream(), file.lengthSync(),
+          filename: file.path.split('/').last));
       request.fields['isPublicprofile'] = "true";
 
       request.send().then((response) async {
-        if (response.statusCode == 200){
+        if (response.statusCode == 200) {
           progressDialog.hide();
           print("Uploaded!");
           final respStr = await response.stream.bytesToString();
-          debugPrint("Uploded "+respStr);
-          UploadImageResponse uploadResponse = UploadImageResponse.fromJson(json.decode(respStr));
-          if(uploadResponse.status == "success"){
+          debugPrint("Uploded " + respStr);
+          UploadImageResponse uploadResponse =
+              UploadImageResponse.fromJson(json.decode(respStr));
+          if (uploadResponse.status == "success") {
             progressDialog.hide();
             attachmentPath = uploadResponse.data.details.elementAt(0).url;
             listFiles.add(attachmentPath);
-            showToast('File uploaded successfully!');
-            setState(() {
-            });
-          }else{
+            showToast('File uploaded successfully!', context);
+            setState(() {});
+          } else {
             progressDialog.hide();
-            showToast('Opps, something wents wrong!');
+            showToast('Opps, something wents wrong!', context);
           }
-
-        }else{
+        } else {
           progressDialog.hide();
           print("Upload Faild !");
         }
-      });// debugPrint("3");
+      }); // debugPrint("3");
 
     } catch (CustomException) {
       progressDialog.hide();
       debugPrint("4");
-      showToast(CustomException.toString());
-      debugPrint("Error "+CustomException.toString());
+      showToast(CustomException.toString(), context);
+      debugPrint("Error " + CustomException.toString());
     }
   }
 
-
   var listFiles = new List<String>();
 
-  Widget _addAttachment(){
+  Widget _addAttachment() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         InkWell(
-          onTap: (){
+          onTap: () {
             getFile();
           },
           child: Container(
@@ -1014,30 +1056,34 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                   "Attachment",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
-                SizedBox(width: 4,),
-                SizedBox(height: 24, width: 24, child:  Image(
-                  image: AssetImage('res/images/ic_attachment.png'),
+                SizedBox(
+                  width: 4,
+                ),
+                SizedBox(
+                  height: 24,
+                  width: 24,
+                  child: Image(
+                    image: AssetImage('res/images/ic_attachment.png'),
                   ),
                 ),
-                (listFiles.length != 0 ? Container(
-                  height: 40,
-                   width: 40,
-                  child: Image(
-                   image: AssetImage(
-                         'res/images/ic_lab_report.png'),),
-                ) :
-                 SizedBox()),
+                (listFiles.length != 0
+                    ? Container(
+                        height: 40,
+                        width: 40,
+                        child: Image(
+                          image: AssetImage('res/images/ic_lab_report.png'),
+                        ),
+                      )
+                    : SizedBox()),
               ],
             ),
           ),
         ),
-
-
       ],
     );
   }
 
- /* uploadAttachment() async {
+  /* uploadAttachment() async {
     Dio dio = new Dio();
     FormData formdata = new FormData(); // just like JS
      formdata.add("photos", new UploadFileInfo(_image, path.basename(_image.path)));
@@ -1046,15 +1092,14 @@ class _BookingInfoViewState extends State<BookingInfoView> {
      )).then((response) => print(response)).catchError((error) => print(error));
   }*/
 
-
-    bool validateEmail(String value) {
-      Pattern pattern =
-      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-      RegExp regex = new RegExp(pattern);
-      if (regex.hasMatch(value))
+  bool validateEmail(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (regex.hasMatch(value))
       return false;
-      else
+    else
       return true;
-    }
+  }
 }
 //right_arrow

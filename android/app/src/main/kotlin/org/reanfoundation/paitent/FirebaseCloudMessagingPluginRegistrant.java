@@ -1,8 +1,6 @@
 package org.reanfoundation.patient;
 
 import io.flutter.plugin.common.PluginRegistry;
-import io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin;
-
 public final class FirebaseCloudMessagingPluginRegistrant {
     public static void registerWith(PluginRegistry registry) {
         if (alreadyRegisteredWith(registry)) {

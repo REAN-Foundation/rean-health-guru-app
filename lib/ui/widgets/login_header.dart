@@ -1,5 +1,3 @@
-import 'package:paitent/ui/shared/text_styles.dart';
-import 'package:paitent/ui/shared/ui_helpers.dart';
 import 'package:flutter/material.dart';
 
 class LoginHeader extends StatelessWidget {

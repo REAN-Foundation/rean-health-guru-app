@@ -64,16 +64,16 @@ class User {
 
   User(
       {this.userId,
-        this.roleId,
-        this.firstName,
-        this.lastName,
-        this.phoneNumber,
-        this.email,
-        this.userName,
-        this.verifiedPhoneNumber,
-        this.basicProfileComplete,
-        this.dateCreated,
-        this.dateUpdated});
+      this.roleId,
+      this.firstName,
+      this.lastName,
+      this.phoneNumber,
+      this.email,
+      this.userName,
+      this.verifiedPhoneNumber,
+      this.basicProfileComplete,
+      this.dateCreated,
+      this.dateUpdated});
 
   User.fromJson(Map<String, dynamic> json) {
     userId = json['UserId'];

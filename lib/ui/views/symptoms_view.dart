@@ -1,36 +1,33 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GetAssesmentTemplateByIdResponse.dart';
 import 'package:paitent/core/models/GetMyAssesmentIdResponse.dart';
-import 'package:paitent/core/models/StartAssesmentResponse.dart';
 import 'package:paitent/core/viewmodels/views/dashboard_summary_model.dart';
-import 'package:paitent/core/viewmodels/views/patients_vitals.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/home_view.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
-import 'package:intl/intl.dart';
-import 'package:status_alert/status_alert.dart';
+
 import 'base_widget.dart';
 
 class SymptomsView extends StatefulWidget {
-
   String assessmmentId = '';
 
-  SymptomsView(String id){
-      this.assessmmentId = id;
+  SymptomsView(String id) {
+    this.assessmmentId = id;
   }
 
-@override
-_SymptomsViewState createState() => _SymptomsViewState();
+  @override
+  _SymptomsViewState createState() => _SymptomsViewState();
 }
 
 class _SymptomsViewState extends State<SymptomsView> {
-
   var model = DashboardSummaryModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   AssessmentTemplate assessmentTemplate;
+
   //List symptomList = new List<SymptomsPojo>();
   var dateFormat = DateFormat("yyyy-MM-dd");
   String myAssesssmentId = '';
@@ -62,24 +59,23 @@ class _SymptomsViewState extends State<SymptomsView> {
   Widget build(BuildContext context) {
     return BaseWidget<DashboardSummaryModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child:  Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'Symptoms',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            title: Text(
+              'Symptoms',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700),
+            ),
+            iconTheme: new IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -89,75 +85,95 @@ class _SymptomsViewState extends State<SymptomsView> {
                   debugPrint("Clicked on profile icon");
                 },
               )*/
-                ],
-              ),
-              body: model.busy ? Center(child: SizedBox( height: 32, width: 32, child: CircularProgressIndicator()),) :
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 60,
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: primaryColor,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: Text('Are these symptoms getting Better or Worse?',
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            listWidget(),
-                            SizedBox(height: 8,),
-                            doneButon(),
-                            SizedBox(height: 8,),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            ],
           ),
+          body: model.busy
+              ? Center(
+                  child: SizedBox(
+                      height: 32,
+                      width: 32,
+                      child: CircularProgressIndicator()),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 60,
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: primaryColor,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Semantics(
+                            label: 'swipe right for better or left for worse',
+                            readOnly: true,
+                            child: Text(
+                              'Are these symptoms getting Better or Worse?',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              listWidget(),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              doneButon(),
+                              SizedBox(
+                                height: 8,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+        ),
+      ),
     );
   }
 
-  Widget doneButon(){
+  Widget doneButon() {
     return Align(
       alignment: Alignment.center,
       child: RaisedButton.icon(
         onPressed: () async {
-          showToast("Symptoms recorded successfully");
+          showToast("Symptoms recorded successfully", context);
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
-                return HomeView( 0 );
-              }), (Route<dynamic> route) => false);
-
+            return HomeView(0);
+          }), (Route<dynamic> route) => false);
         },
         icon: Icon(
           Icons.done,
           color: Colors.white,
           size: 24,
         ),
-        label: Text(
-          'Done',
-          style: TextStyle(
-              fontSize: 16.0,
-              color: Colors.white,
-              fontWeight: FontWeight.w700),
+        label: Semantics(
+          label: 'tap when done with symptoms',
+          readOnly: true,
+          child: Text(
+            'Done',
+            style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.white,
+                fontWeight: FontWeight.w700),
+          ),
         ),
         color: primaryColor,
         shape: RoundedRectangleBorder(
@@ -167,7 +183,7 @@ class _SymptomsViewState extends State<SymptomsView> {
     );
   }
 
-  Widget listWidget(){
+  Widget listWidget() {
     return ListView.separated(
         itemBuilder: (context, index) => _createSymptomsListUI(context, index),
         separatorBuilder: (BuildContext context, int index) {
@@ -180,7 +196,6 @@ class _SymptomsViewState extends State<SymptomsView> {
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true);
   }
-
 
   /*ListView generateItemsList() {
     return ListView.builder(
@@ -250,8 +265,8 @@ class _SymptomsViewState extends State<SymptomsView> {
   }
 
   Widget _createSymptomsListUI(BuildContext context, int index) {
-
-    TemplateSymptomTypes symptomTypes = assessmentTemplate.templateSymptomTypes.elementAt(index);
+    TemplateSymptomTypes symptomTypes =
+        assessmentTemplate.templateSymptomTypes.elementAt(index);
 
     return Dismissible(
       key: Key(symptomTypes.symptom),
@@ -260,22 +275,22 @@ class _SymptomsViewState extends State<SymptomsView> {
             print("${symptomTypes.symptom} clicked");
           },
           child: ListTile(
-              leading:SizedBox( height: 40, width: 40, child: CachedNetworkImage(
+            leading: SizedBox(
+              height: 40,
+              width: 40,
+              child: CachedNetworkImage(
                 imageUrl: symptomTypes.publicImageUrl,
-              ),),
-              title: Text(
-                symptomTypes.symptom,
-                style: TextStyle(
-                    fontSize: 14.0,
-                    color: primaryColor,
-                    fontWeight: FontWeight.w600),
               ),
-              tileColor: index.isEven ? primaryLightColor : colorF6F6FF,
-          )
-
-
-
-      ),
+            ),
+            title: Text(
+              symptomTypes.symptom,
+              style: TextStyle(
+                  fontSize: 14.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w600),
+            ),
+            tileColor: index.isEven ? primaryLightColor : colorF6F6FF,
+          )),
       background: slideRightBackground(),
       secondaryBackground: slideLeftBackground(),
       confirmDismiss: (direction) async {
@@ -332,18 +347,20 @@ class _SymptomsViewState extends State<SymptomsView> {
     try {
       GetAssesmentTemplateByIdResponse searchSymptomAssesmentTempleteResponse =
           await model.getAssesmentTemplateById(widget.assessmmentId);
-      debugPrint("Get Assesment Template By Id Response ==> ${searchSymptomAssesmentTempleteResponse.toJson()}");
+      debugPrint(
+          "Get Assesment Template By Id Response ==> ${searchSymptomAssesmentTempleteResponse.toJson()}");
       if (searchSymptomAssesmentTempleteResponse.status == 'success') {
-        assessmentTemplate = searchSymptomAssesmentTempleteResponse.data.assessmentTemplate;
+        assessmentTemplate =
+            searchSymptomAssesmentTempleteResponse.data.assessmentTemplate;
         setState(() {});
         getMyAssesmentId();
       } else {
         getAssesmentTemplateById();
-        showToast(searchSymptomAssesmentTempleteResponse.message);
+        showToast(searchSymptomAssesmentTempleteResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -365,11 +382,11 @@ class _SymptomsViewState extends State<SymptomsView> {
         setState(() {});
       } else {
         getAssesmentTemplateById();
-        showToast(response.message);
+        showToast(response.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     }
   }
@@ -389,26 +406,24 @@ class _SymptomsViewState extends State<SymptomsView> {
       BaseResponse response = await model.addPatientSymptomsInAssesment(body);
       debugPrint("Get My Assesment Id Response ==> ${response.toJson()}");
       if (response.status == 'success') {
-
         setState(() {});
       } else {
-        showToast(response.message);
+        showToast(response.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     }
   }
 }
 
-class SymptomsPojo{
+class SymptomsPojo {
   String imageUrl;
   String text;
 
-  SymptomsPojo(String imageUrl, String text){
+  SymptomsPojo(String imageUrl, String text) {
     this.imageUrl = imageUrl;
     this.text = text;
   }
-
 }

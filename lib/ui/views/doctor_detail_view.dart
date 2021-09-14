@@ -1,45 +1,35 @@
-import 'dart:ffi';
-
-import 'package:badges/badges.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_autolink_text/flutter_autolink_text.dart';
-import 'package:geocoder/geocoder.dart';
-import 'package:location/location.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/appoinment_view_model.dart';
-import 'package:paitent/core/viewmodels/views/login_view_model.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/ui/shared/text_styles.dart';
-import 'package:paitent/ui/shared/ui_helpers.dart';
-import 'package:flutter/material.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
-import 'package:paitent/widgets/app_drawer.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'base_widget.dart';
 import 'doctorTileWidget.dart';
 
 class DoctorDetailsView extends StatefulWidget {
-
   Doctors doctorDetails;
 
   DoctorDetailsView(@required this.doctorDetails);
 
   @override
-  _DoctorDetailsViewState createState() => _DoctorDetailsViewState(doctorDetails);
+  _DoctorDetailsViewState createState() =>
+      _DoctorDetailsViewState(doctorDetails);
 }
 
 class _DoctorDetailsViewState extends State<DoctorDetailsView> {
-  Location location = new Location();
+  /*Location location = new Location();
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
   LocationData _locationData;
+  List<Address> addresses;
+  Address first;*/
   SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
   String name = "";
-  List<Address> addresses;
-  Address first;
   int _currentNav = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   var _searchController = new TextEditingController();
@@ -61,7 +51,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
   }
 
   void getLocation() async {
-    _serviceEnabled = await location.serviceEnabled();
+    /*_serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
@@ -83,14 +73,14 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
           'Latitude = ${currentLocation.latitude} Longitude = ${currentLocation.longitude}');
       findOutCityFromGeoCord(
           currentLocation.latitude, currentLocation.longitude);
-    });
+    });*/
   }
 
   void findOutCityFromGeoCord(double lat, double long) async {
-    final coordinates = new Coordinates(lat, long);
+    /*final coordinates = new Coordinates(lat, long);
     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     first = addresses.first;
-    debugPrint("${first.featureName} : ${first.locality}");
+    debugPrint("${first.featureName} : ${first.locality}");*/
   }
 
   @override
@@ -101,10 +91,9 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-
-    var highlights = doctorDetails.professionalHighlights != null ? doctorDetails.professionalHighlights.split('*') : new List<String>();
-
-
+    var highlights = doctorDetails.professionalHighlights != null
+        ? doctorDetails.professionalHighlights.split('*')
+        : new List<String>();
 
     return BaseWidget<AppoinmentViewModel>(
       model: AppoinmentViewModel(),
@@ -122,7 +111,8 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
-                    fontWeight: FontWeight.w700,  fontFamily: 'Montserrat'),
+                    fontWeight: FontWeight.w700,
+                    fontFamily: 'Montserrat'),
               ),
               iconTheme: new IconThemeData(color: Colors.black),
             ),
@@ -146,35 +136,42 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                           ),
                           Text(
                             "About",
-                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, fontFamily: 'Montserrat', color: primaryColor),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                fontFamily: 'Montserrat',
+                                color: primaryColor),
                           ),
                           SizedBox(
                             height: 4,
                           ),
-                          Text(
-                              doctorDetails.aboutMe,
+                          Text(doctorDetails.aboutMe,
                               style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w200,
-                                  color: textBlack, fontFamily: 'Montserrat')),
+                                  color: textBlack,
+                                  fontFamily: 'Montserrat')),
                           SizedBox(
                             height: 16,
                           ),
                           Text(
                             "Highlights",
-                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, fontFamily: 'Montserrat', color: primaryColor),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                fontFamily: 'Montserrat',
+                                color: primaryColor),
                           ),
                           SizedBox(
                             height: 4,
                           ),
-
-                          for (int i = 1; i < highlights.length; i++)...[
+                          for (int i = 1; i < highlights.length; i++) ...[
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Expanded(
-                                    //child: Container(color: Colors.white,),),
+                                      //child: Container(color: Colors.white,),),
                                       child: Icon(
                                         Icons.star,
                                         color: color909CAC,
@@ -189,7 +186,8 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.w200,
-                                          color: textBlack, fontFamily: 'Montserrat'),
+                                          color: textBlack,
+                                          fontFamily: 'Montserrat'),
                                       textAlign: TextAlign.left,
                                     ),
                                   )
@@ -200,54 +198,69 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                           ),
                           Text(
                             "Address",
-                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, fontFamily: 'Montserrat', color: primaryColor),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                fontFamily: 'Montserrat',
+                                color: primaryColor),
                           ),
                           SizedBox(
                             height: 4,
                           ),
-                          Text(
-                              doctorDetails.address,
+                          Text(doctorDetails.address,
                               style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w200,
-                                  color: textBlack, fontFamily: 'Montserrat')),
+                                  color: textBlack,
+                                  fontFamily: 'Montserrat')),
                           SizedBox(
                             height: 16,
                           ),
                           Text(
                             "Contact No.",
-                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, fontFamily: 'Montserrat', color: primaryColor),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                fontFamily: 'Montserrat',
+                                color: primaryColor),
                           ),
                           SizedBox(
                             height: 4,
                           ),
                           AutolinkText(
-                              text:'+91 '+doctorDetails.phoneNumber,
+                              text: '+91 ' + doctorDetails.phoneNumber,
                               textStyle: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w200,
                                   color: textBlack),
                               linkStyle: TextStyle(color: Colors.blue),
                               onPhoneTap: (link) async {
-                                String url = 'tel://'+link;
+                                String url = 'tel://' + link;
                                 if (await canLaunch(url)) {
                                   await launch(url);
                                 } else {
                                   throw 'Could not launch $url';
                                 }
-                              }
-                          ),
+                              }),
                           SizedBox(
                             height: 16,
                           ),
                           Text(
                             "Working Hours",
-                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16, fontFamily: 'Montserrat', color: primaryColor),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                fontFamily: 'Montserrat',
+                                color: primaryColor),
                           ),
                           SizedBox(
                             height: 4,
                           ),
-                          for(int i = 0 ; i < doctorDetails.appointmentRelatedDetails.workingHours.length; i++)...[
+                          for (int i = 0;
+                              i <
+                                  doctorDetails.appointmentRelatedDetails
+                                      .workingHours.length;
+                              i++) ...[
                             /*Text(doctorDetails.appointmentRelatedDetails.workingHours.elementAt(i),
                                 style: TextStyle(
                                     fontSize: 14.0,
@@ -256,27 +269,42 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
 
                             RichText(
                               text: TextSpan(
-                                text: doctorDetails.appointmentRelatedDetails.workingHours.elementAt(i).substring(0,3).toUpperCase()+' : ',
+                                text: doctorDetails
+                                        .appointmentRelatedDetails.workingHours
+                                        .elementAt(i)
+                                        .substring(0, 3)
+                                        .toUpperCase() +
+                                    ' : ',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     color: textBlack,
-                                    fontSize: 14,  fontFamily: 'Montserrat'),
+                                    fontSize: 14,
+                                    fontFamily: 'Montserrat'),
                                 children: <TextSpan>[
                                   TextSpan(
-                                      text: doctorDetails.appointmentRelatedDetails.workingHours.elementAt(i).substring(3,doctorDetails.appointmentRelatedDetails.workingHours.elementAt(i).length),
+                                      text: doctorDetails
+                                          .appointmentRelatedDetails
+                                          .workingHours
+                                          .elementAt(i)
+                                          .substring(
+                                              3,
+                                              doctorDetails
+                                                  .appointmentRelatedDetails
+                                                  .workingHours
+                                                  .elementAt(i)
+                                                  .length),
                                       style: TextStyle(
                                           fontWeight: FontWeight.w300,
                                           color: textBlack,
-                                          fontSize: 14, fontFamily: 'Montserrat')),
+                                          fontSize: 14,
+                                          fontFamily: 'Montserrat')),
                                 ],
                               ),
                             ),
-
                           ],
                           SizedBox(
                             height: 24,
                           ),
-
                         ],
                       ),
                     ),
@@ -296,22 +324,31 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
       ),
     );
   }
-  Widget _continueButton(){
-    return  Row(
+
+  Widget _continueButton() {
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Material(  //Wrap with Material
-          shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(24.0) ),
+        Material(
+          //Wrap with Material
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
           elevation: 4.0,
           color: primaryColor,
-          clipBehavior: Clip.antiAlias, // Add This
+          clipBehavior: Clip.antiAlias,
+          // Add This
           child: MaterialButton(
             minWidth: 200,
             child: new Text('Book A Visit',
-                style: new TextStyle(fontSize: 14.0, color: Colors.white, fontWeight: FontWeight.normal)),
+                style: new TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.normal)),
             onPressed: () {
-              Navigator.pushNamed(context, RoutePaths.Select_Date_And_Time_Book_Appoinment, arguments: doctorDetails);
+              Navigator.pushNamed(
+                  context, RoutePaths.Select_Date_And_Time_Book_Appoinment,
+                  arguments: doctorDetails);
               debugPrint("Clicked On Proceed");
             },
           ),

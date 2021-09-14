@@ -1,11 +1,9 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter/material.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GetMyVitalsHistory.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/core/viewmodels/views/patients_vitals.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
@@ -13,17 +11,16 @@ import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SimpleTimeSeriesChart.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-
 class BiometricPulseVitalsView extends StatefulWidget {
-
   bool allUIViewsVisible = false;
 
-  BiometricPulseVitalsView(bool allUIViewsVisible){
+  BiometricPulseVitalsView(bool allUIViewsVisible) {
     this.allUIViewsVisible = allUIViewsVisible;
   }
 
   @override
-  _BiometricPulseVitalsViewState createState() => _BiometricPulseVitalsViewState();
+  _BiometricPulseVitalsViewState createState() =>
+      _BiometricPulseVitalsViewState();
 }
 
 class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
@@ -49,25 +46,24 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
     // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child: widget.allUIViewsVisible ?
-            Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
+      builder: (context, model, child) => Container(
+        child: widget.allUIViewsVisible
+            ? Scaffold(
+                key: _scaffoldKey,
                 backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'Pulse Rate',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+                appBar: AppBar(
+                  backgroundColor: Colors.white,
+                  brightness: Brightness.light,
+                  title: Text(
+                    'Pulse Rate',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        color: primaryColor,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  iconTheme: new IconThemeData(color: Colors.black),
+                  actions: <Widget>[
+                    /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -77,83 +73,91 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   debugPrint("Clicked on profile icon");
                 },
               )*/
-                ],
-              ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      const SizedBox(height: 16,),
-                      weightFeilds(),
-                      const SizedBox(height: 16,),
-                      weightHistoryListFeilds(),
-                      const SizedBox(height: 16,),
-                      records.length == 0 ? Container() : graph(),
-                      //allGoal(),
-                      const SizedBox(height: 16,),
-                    ],
+                  ],
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        weightFeilds(),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        weightHistoryListFeilds(),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        records.length == 0 ? Container() : graph(),
+                        //allGoal(),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            )
-                : Padding(
+              )
+            : Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     weightHistoryListFeilds(),
-                    const SizedBox(height: 16,),
+                    const SizedBox(
+                      height: 16,
+                    ),
                     records.length == 0 ? Container() : graph(),
-
                   ],
                 ),
               ),
-            ),
+      ),
     );
   }
 
-  Widget weightFeilds(){
+  Widget weightFeilds() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 16,),
+          const SizedBox(
+            height: 16,
+          ),
           Text(
             "Enter your pulse rate:",
-            style: TextStyle(color: primaryColor, fontWeight: FontWeight.w500, fontSize: 16),
+            style: TextStyle(
+                color: primaryColor, fontWeight: FontWeight.w500, fontSize: 16),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16,),
+          const SizedBox(
+            height: 16,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 8.0),
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
-                      borderRadius:
-                      BorderRadius.circular(8.0),
-                      border: Border.all(
-                          color: primaryColor, width: 1),
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: TextFormField(
                       controller: _controller,
                       maxLines: 1,
-                      textInputAction:
-                      TextInputAction.done,
+                      textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
-                      onFieldSubmitted: (term) {
-
-                      },
+                      onFieldSubmitted: (term) {},
                       inputFormatters: [
-                        new BlacklistingTextInputFormatter(new RegExp('[\\,|\\+|\\-]')),
+                        new BlacklistingTextInputFormatter(
+                            new RegExp('[\\,|\\+|\\-]')),
                       ],
                       decoration: InputDecoration(
                           hintText: "(65 to 95)",
@@ -176,43 +180,48 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                           text: "    bpm    ",
                           style: TextStyle(
                               fontSize: 14,
-                              fontWeight:
-                              FontWeight.w700,
+                              fontWeight: FontWeight.w700,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
-                              fontStyle:
-                              FontStyle.italic)),
+                              fontStyle: FontStyle.italic)),
                     ]),
               ),
             ],
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Align(
             alignment: Alignment.centerRight,
             child: InkWell(
-              onTap: (){
-                if(_controller.text.toString().isEmpty){
-                  showToast('Please enter your pulse');
-                }else{
+              onTap: () {
+                if (_controller.text.toString().isEmpty) {
+                  showToast('Please enter your pulse', context);
+                } else {
                   addvitals();
                 }
               },
               child: Container(
                   height: 40,
                   width: 120,
-                  padding: EdgeInsets.symmetric(horizontal: 16.0, ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                  ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24.0),
                     border: Border.all(color: primaryColor, width: 1),
-                    color: Colors.deepPurple,),
+                    color: Colors.deepPurple,
+                  ),
                   child: Center(
                     child: Text(
                       "Save",
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14),
                       textAlign: TextAlign.center,
                     ),
-                  )
-              ),
+                  )),
             ),
           ),
         ],
@@ -220,55 +229,74 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
     );
   }
 
-  Widget weightHistoryListFeilds(){
+  Widget weightHistoryListFeilds() {
     return Container(
       color: colorF6F6FF,
       constraints: BoxConstraints(
           minHeight: 100, minWidth: double.infinity, maxHeight: 160),
-      padding: EdgeInsets.only(left:16.0, right: 16.0, top: 16, bottom: 16),
+      padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16, bottom: 16),
       //height: 160,
-      child: model.busy ? Center( child: CircularProgressIndicator(),) :
-      (records.length == 0 ? noHistoryFound() : Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Date",
-                  style: TextStyle( color: primaryColor,fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  "Pulse Rate",
-                  style: TextStyle( color: primaryColor,fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16,),
-          Expanded(
-            child: Scrollbar(
-              isAlwaysShown: true,
-              controller: _scrollController,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: ListView.separated(
-                    itemBuilder: (context, index) => _makeWeightList(context, index),
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: 8,
-                      );
-                    },
-                    itemCount: records.length,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true),
-              ),
-            ),
-          ),
-        ],
-      )),
+      child: model.busy
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : (records.length == 0
+              ? noHistoryFound()
+              : Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Date",
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            "Pulse Rate",
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Expanded(
+                      child: Scrollbar(
+                        isAlwaysShown: true,
+                        controller: _scrollController,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: ListView.separated(
+                              itemBuilder: (context, index) =>
+                                  _makeWeightList(context, index),
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return SizedBox(
+                                  height: 8,
+                                );
+                              },
+                              itemCount: records.length,
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true),
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
     );
   }
 
@@ -291,17 +319,23 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
       children: [
         Text(
           dateFormatStandard.format(DateTime.parse(record.recordDate)),
-          style: TextStyle( color: primaryColor,fontSize: 14, fontWeight: FontWeight.w300), maxLines: 1, overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+              color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
         Text(
-          record.pulse.toString()+" bpm",
-          style: TextStyle( color: primaryColor,fontSize: 14, fontWeight: FontWeight.w300), maxLines: 1, overflow: TextOverflow.ellipsis,
+          record.pulse.toString() + " bpm",
+          style: TextStyle(
+              color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
   }
 
-  Widget graph(){
+  Widget graph() {
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Column(
@@ -322,10 +356,15 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
               child: SimpleTimeSeriesChart(_createSampleData()),
             ),
           ),
-          const SizedBox(height: 8,),
+          const SizedBox(
+            height: 8,
+          ),
           Text(
             'Pulse Rate',
-            style: TextStyle( color: primaryColor,fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+                color: primaryColor, fontSize: 14, fontWeight: FontWeight.w700),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),
@@ -341,8 +380,10 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
       new TimeSeriesSales(new DateTime(2017, 10, 10), 75),
     ];*/
 
-    for(int i = 0 ; i < records.length ; i++){
-      data.add(new TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate), double.parse(records.elementAt(i).pulse.toString())));
+    for (int i = 0; i < records.length; i++) {
+      data.add(new TimeSeriesSales(
+          DateTime.parse(records.elementAt(i).recordDate),
+          double.parse(records.elementAt(i).pulse.toString())));
     }
 
     return [
@@ -356,103 +397,149 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
     ];
   }
 
-  Widget allGoal(){
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-
-          Container(
-            height: 60,
-            color: primaryColor,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(width: 16,),
-                ImageIcon(
-                  AssetImage('res/images/ic_dart_goal.png'),
-                  size: 24,
-                  color: Colors.white,
-                ),
-                const SizedBox(width: 8,),
-                Text(
-                  "Your progress with goals",
-                  style: TextStyle( color: Colors.white,fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Initial",
-                style: TextStyle( color: primaryColor,fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis,
-              ),
-              Text(
-                "85",
-                style: TextStyle( color: primaryColor,fontSize: 14, fontWeight: FontWeight.w500), maxLines: 1, overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-          const SizedBox(height: 4,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Target",
-                style: TextStyle( color: primaryColor,fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis,
-              ),
-              Text(
-                "65",
-                style: TextStyle( color: primaryColor,fontSize: 14, fontWeight: FontWeight.w500), maxLines: 1, overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-          const SizedBox(height: 4,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Latest",
-                style: TextStyle( color: primaryColor,fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis,
-              ),
-              Text(
-                "74",
-                style: TextStyle( color: primaryColor,fontSize: 14, fontWeight: FontWeight.w500), maxLines: 1, overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                 Expanded(
-                   flex: 6,
-                   child: Container(
-                     height: 10,
-                     color: primaryColor,
-                   ),
-                 ),
-                Expanded(
-                  flex: 4,
-                  child: Container(
-                    height: 10,
-                    color: primaryLightColor,
+  Widget allGoal() {
+    return MergeSemantics(
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 60,
+              color: primaryColor,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    width: 16,
                   ),
-                )
+                  ImageIcon(
+                    AssetImage('res/images/ic_dart_goal.png'),
+                    size: 24,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    "Your progress with goals",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Initial",
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  "85",
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
             ),
-          ),
-        ],
+            const SizedBox(
+              height: 4,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Target",
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  "65",
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Latest",
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  "74",
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    flex: 6,
+                    child: Container(
+                      height: 10,
+                      color: primaryColor,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: Container(
+                      height: 10,
+                      color: primaryLightColor,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -463,37 +550,38 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
       var map = new Map<String, dynamic>();
       map['Pulse'] = _controller.text.toString();
 
-      BaseResponse baseResponse  = await model.addMyVitals('pulse', map);
+      BaseResponse baseResponse = await model.addMyVitals('pulse', map);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
-        showToast(baseResponse.message);
+        showToast(baseResponse.message, context);
         Navigator.pop(context);
       } else {
         progressDialog.hide();
-        showToast(baseResponse.message);
+        showToast(baseResponse.message, context);
       }
     } catch (e) {
       progressDialog.hide();
       model.setBusy(false);
-      showToast(e.toString());
-      debugPrint('Error ==> '+e.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 
   getVitalsHistory() async {
     try {
-      GetMyVitalsHistory getMyVitalsHistory  = await model.getMyVitalsHistory('pulse');
+      GetMyVitalsHistory getMyVitalsHistory =
+          await model.getMyVitalsHistory('pulse');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
         records.addAll(getMyVitalsHistory.data.biometrics.records);
       } else {
-        showToast(getMyVitalsHistory.message);
+        showToast(getMyVitalsHistory.message, context);
       }
     } catch (e) {
       model.setBusy(false);
-      showToast(e.toString());
-      debugPrint('Error ==> '+e.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 }

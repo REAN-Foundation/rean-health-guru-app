@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/post.dart';
 import 'package:paitent/ui/views/AfterSplashScreen.dart';
 import 'package:paitent/ui/views/BiomatricTask.dart';
-import 'package:paitent/ui/views/BiomatricVitals.dart';
 import 'package:paitent/ui/views/OnBoardingPage.dart';
 import 'package:paitent/ui/views/about_rean_care.dart';
 import 'package:paitent/ui/views/addNewGoals/add_blood_presure_goals_for_care_plan.dart';
@@ -34,6 +35,7 @@ import 'package:paitent/ui/views/bookingAppoinmentConformation.dart';
 import 'package:paitent/ui/views/booking_confirm_screen.dart';
 import 'package:paitent/ui/views/booking_info_view.dart';
 import 'package:paitent/ui/views/challenge_care_plan.dart';
+import 'package:paitent/ui/views/chat/FAQChatScreen.dart';
 import 'package:paitent/ui/views/create_profile_view.dart';
 import 'package:paitent/ui/views/date_and_time_for_book_Appoinment_view.dart';
 import 'package:paitent/ui/views/date_and_time_for_labs_book_Appoinment_view.dart';
@@ -43,20 +45,15 @@ import 'package:paitent/ui/views/edit_profile_view.dart';
 import 'package:paitent/ui/views/home_view.dart';
 import 'package:paitent/ui/views/lab_detail_view.dart';
 import 'package:paitent/ui/views/lean_more_care_plan.dart';
-import 'package:paitent/ui/views/login_view.dart';
 import 'package:paitent/ui/views/login_with_otp_view.dart';
 import 'package:paitent/ui/views/mind_full_moment_care_plan.dart';
 import 'package:paitent/ui/views/myReportsUpload.dart';
 import 'package:paitent/ui/views/my_care_plan.dart';
-import 'package:paitent/ui/views/my_current_medication.dart';
 import 'package:paitent/ui/views/my_medication.dart';
 import 'package:paitent/ui/views/otp_screen_view.dart';
 import 'package:paitent/ui/views/patient_medical_profile.dart';
-import 'package:paitent/ui/views/patient_vitals.dart';
 import 'package:paitent/ui/views/payment_conformation.dart';
 import 'package:paitent/ui/views/post_view.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:paitent/ui/views/quiz_for_care_plan.dart';
 import 'package:paitent/ui/views/search_doctor_list_view.dart';
 import 'package:paitent/ui/views/search_lab_list_view.dart';
@@ -73,6 +70,7 @@ import 'package:paitent/ui/views/statusPastCheckTask.dart';
 import 'package:paitent/ui/views/successfully_setup_care_plan.dart';
 import 'package:paitent/ui/views/support_view.dart';
 import 'package:paitent/ui/views/symptoms_view.dart';
+import 'package:paitent/ui/views/userActivity/nutrition_daily_view.dart';
 import 'package:paitent/ui/views/userActivity/view_my_daily_activity.dart';
 import 'package:paitent/ui/views/video_more_care_plan.dart';
 import 'package:paitent/ui/views/word_of_the_week_care_plan.dart';
@@ -82,21 +80,28 @@ class Routers {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case RoutePaths.Splash_Screen:
-        return MaterialPageRoute(builder: (_) => SplashScreen(
-          seconds: 3,
-          navigateAfterSeconds: AfterSplashScreen(getSessionFlag()),
-          title: new Text('REAN HealthGuru\n\nDev-Build' , style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700, color: Colors.white)),
-          image: new Image.asset('res/images/app_logo_tranparent.png'),
-          backgroundColor: Colors.deepPurple,
-          styleTextUnderTheLoader: new TextStyle(),
-          photoSize: 100.0,
-          loaderColor: Colors.transparent,
-          baseUrl: getBaseUrl(),
-        ),);
+        return MaterialPageRoute(
+          builder: (_) => SplashScreen(
+            seconds: 3,
+            navigateAfterSeconds: AfterSplashScreen(getSessionFlag()),
+            title: new Text('REAN HealthGuru\n\nDev-Build',
+                style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white)),
+            image: new Image.asset('res/images/app_logo_tranparent.png'),
+            backgroundColor: Colors.deepPurple,
+            styleTextUnderTheLoader: new TextStyle(),
+            photoSize: 100.0,
+            loaderColor: Colors.transparent,
+            baseUrl: getBaseUrl(),
+          ),
+        );
       case RoutePaths.On_Boarding:
         return MaterialPageRoute(builder: (_) => OnBoardingPage());
       case RoutePaths.OTP_Screen:
-        return MaterialPageRoute(builder: (_) => OTPScreenView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => OTPScreenView(settings.arguments));
       case RoutePaths.CREATE_PROFILE:
         return MaterialPageRoute(builder: (_) => CreateProfile());
       case RoutePaths.ABOUT_REAN_CARE:
@@ -106,29 +111,40 @@ class Routers {
       case RoutePaths.Payment_Confirmation_View:
         return MaterialPageRoute(builder: (_) => PaymentConfirmationView());
       case RoutePaths.Booking_Appoinment_Confirmation_View:
-        return MaterialPageRoute(builder: (_) => BookingAppoinmentConfirmationView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) =>
+                BookingAppoinmentConfirmationView(settings.arguments));
       case RoutePaths.Lab_Details_View:
-        return MaterialPageRoute(builder: (_) => LabDetailsView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => LabDetailsView(settings.arguments));
       case RoutePaths.Search_Lab_List_View:
         return MaterialPageRoute(builder: (_) => SearchLabListView());
       case RoutePaths.Doctor_Details_View:
-        return MaterialPageRoute(builder: (_) => DoctorDetailsView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => DoctorDetailsView(settings.arguments));
       case RoutePaths.Search_Doctor_List_View:
         return MaterialPageRoute(builder: (_) => SearchDoctorListView());
       case RoutePaths.Booking_Appoinment_Done_View:
-        return MaterialPageRoute(builder: (_) => BookingConfirmedView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => BookingConfirmedView(settings.arguments));
       case RoutePaths.Booking_Appoinment_Info_View:
-        return MaterialPageRoute(builder: (_) => BookingInfoView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => BookingInfoView(settings.arguments));
       case RoutePaths.Select_Date_And_Time_Lab_Book_Appoinment:
-        return MaterialPageRoute(builder: (_) => DateAndTimeForLabsBookAppoinmentView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) =>
+                DateAndTimeForLabsBookAppoinmentView(settings.arguments));
       case RoutePaths.Select_Date_And_Time_Book_Appoinment:
-        return MaterialPageRoute(builder: (_) => DateAndTimeForBookAppoinmentView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) =>
+                DateAndTimeForBookAppoinmentView(settings.arguments));
       case RoutePaths.Edit_Profile:
         return MaterialPageRoute(builder: (_) => EditProfile());
       case RoutePaths.Home:
         return MaterialPageRoute(builder: (_) => HomeView(0));
       case RoutePaths.Symptoms:
-        return MaterialPageRoute(builder: (_) => SymptomsView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => SymptomsView(settings.arguments));
       case RoutePaths.Login:
         return MaterialPageRoute(builder: (_) => LoginWithOTPView());
       case RoutePaths.My_Vitals:
@@ -136,24 +152,33 @@ class Routers {
         return MaterialPageRoute(builder: (_) => BiometricVitalsTrendsView());
       case RoutePaths.My_Activity:
         return MaterialPageRoute(builder: (_) => ViewMyDailyActivity());
+      case RoutePaths.My_Nutrition:
+        return MaterialPageRoute(builder: (_) => NutritionDailyView());
       /*case RoutePaths.My_Vitals_By_Device_Framework:
         return MaterialPageRoute(builder: (_) => BiomatricVitalsByDeviceFrameWork());*/
       case RoutePaths.Biometric_Weight_Vitals_Care_Plan:
-        return MaterialPageRoute(builder: (_) => BiometricWeightVitalsView(true));
+        return MaterialPageRoute(
+            builder: (_) => BiometricWeightVitalsView(true));
       case RoutePaths.Biometric_Blood_Presure_Vitals_Care_Plan:
-        return MaterialPageRoute(builder: (_) => BiometricBloodPresureVitalsView(true));
+        return MaterialPageRoute(
+            builder: (_) => BiometricBloodPresureVitalsView(true));
       case RoutePaths.Biometric_Blood_Glucose_Vitals_Care_Plan:
-        return MaterialPageRoute(builder: (_) => BiometricBloodSugarVitalsView(true));
+        return MaterialPageRoute(
+            builder: (_) => BiometricBloodSugarVitalsView(true));
       case RoutePaths.Biometric_Blood_Oxygen_Vitals_Care_Plan:
-        return MaterialPageRoute(builder: (_) => BiometricBloodOxygenVitalsView());
+        return MaterialPageRoute(
+            builder: (_) => BiometricBloodOxygenVitalsView());
       case RoutePaths.Biometric_Pulse_Vitals_Care_Plan:
-        return MaterialPageRoute(builder: (_) => BiometricPulseVitalsView(true));
+        return MaterialPageRoute(
+            builder: (_) => BiometricPulseVitalsView(true));
       case RoutePaths.Biometric_Temperature_Vitals_Care_Plan:
-        return MaterialPageRoute(builder: (_) => BiometricBodyTemperatureVitalsView());
+        return MaterialPageRoute(
+            builder: (_) => BiometricBodyTemperatureVitalsView());
       case RoutePaths.My_Medical_Profile:
         return MaterialPageRoute(builder: (_) => PatientMedicalProfileView());
       case RoutePaths.Patient_EDIT_MEDIACL_PROFILE:
-        return MaterialPageRoute(builder: (_) => EditPatientMedicalProfileView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => EditPatientMedicalProfileView(settings.arguments));
       case RoutePaths.My_Medications:
         return MaterialPageRoute(builder: (_) => MyMedicationView());
       case RoutePaths.ADD_MY_MEDICATION:
@@ -163,78 +188,105 @@ class Routers {
       case RoutePaths.Select_Care_Plan:
         return MaterialPageRoute(builder: (_) => SelectCarePlanView());
       case RoutePaths.Start_Care_Plan:
-        return MaterialPageRoute(builder: (_) => StartCarePlanView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => StartCarePlanView(settings.arguments));
       case RoutePaths.Setup_Doctor_For_Care_Plan:
         return MaterialPageRoute(builder: (_) => SetUpDoctorForCarePlanView());
       case RoutePaths.Setup_Pharmacies_For_Care_Plan:
-        return MaterialPageRoute(builder: (_) => SetUpPharmacyForCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => SetUpPharmacyForCarePlanView());
       case RoutePaths.Setup_Nurse_For_Care_Plan:
         return MaterialPageRoute(builder: (_) => SetUpNurseForCarePlanView());
       case RoutePaths.Setup_Family_Member_For_Care_Plan:
-        return MaterialPageRoute(builder: (_) => SetUpFamilyMemberForCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => SetUpFamilyMemberForCarePlanView());
       case RoutePaths.Successfully_Setup_For_Care_Plan:
-        return MaterialPageRoute(builder: (_) => SuccessfullySetupCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => SuccessfullySetupCarePlanView());
       case RoutePaths.Learn_More_Care_Plan:
-        return MaterialPageRoute(builder: (_) => LearnMoreCarePlanView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => LearnMoreCarePlanView(settings.arguments));
       case RoutePaths.Video_More_Care_Plan:
-        return MaterialPageRoute(builder: (_) => VideoMoreCarePlanView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => VideoMoreCarePlanView(settings.arguments));
       case RoutePaths.Mindfull_Moment_Care_Plan:
         return MaterialPageRoute(builder: (_) => MindFullMomentCarePlanView());
       case RoutePaths.Challenge_Care_Plan:
-        return MaterialPageRoute(builder: (_) => ChallengeCarePlanView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => ChallengeCarePlanView(settings.arguments));
       case RoutePaths.Word_Of_The_Week_Care_Plan:
-        return MaterialPageRoute(builder: (_) => WordOfTheWeekCarePlanView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => WordOfTheWeekCarePlanView(settings.arguments));
       case RoutePaths.Quiz_Care_Plan:
         return MaterialPageRoute(builder: (_) => QuizForCarePlanView());
       case RoutePaths.Assessment_Navigator:
-        return MaterialPageRoute(builder: (_) => AssesmentTaskNavigatorView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => AssesmentTaskNavigatorView(settings.arguments));
       case RoutePaths.Biometric_Care_Plan_Line:
-        return MaterialPageRoute(builder: (_) => BiomatricTask(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => BiomatricTask(settings.arguments));
       case RoutePaths.Assessment_Start_Care_Plan:
-        return MaterialPageRoute(builder: (_) => AssessmentStartCarePlanView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => AssessmentStartCarePlanView(settings.arguments));
       case RoutePaths.Assessment_Question_Care_Plan:
-        return MaterialPageRoute(builder: (_) => AssessmentQuestionCarePlanView(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => AssessmentQuestionCarePlanView(settings.arguments));
       case RoutePaths.Assessment_Question_Two_Care_Plan:
-        return MaterialPageRoute(builder: (_) => AssessmentQuestionTwoCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => AssessmentQuestionTwoCarePlanView());
       case RoutePaths.Assessment_Final_Care_Plan:
         return MaterialPageRoute(builder: (_) => AssessmentFinalCarePlanView());
       case RoutePaths.Set_Prority_For_Goals_Care_Plan:
-        return MaterialPageRoute(builder: (_) => SetPrioritiesGoalsForCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => SetPrioritiesGoalsForCarePlanView());
       case RoutePaths.Select_Goals_Care_Plan:
         return MaterialPageRoute(builder: (_) => SelectGoalsForCarePlanView());
       case RoutePaths.Determine_Action_For_Care_Plan:
-        return MaterialPageRoute(builder: (_) => DeterminActionPlansForCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => DeterminActionPlansForCarePlanView());
       case RoutePaths.Set_Goals_Care_Plan:
         return MaterialPageRoute(builder: (_) => SetGoalPlanCarePlanView());
       case RoutePaths.Self_Reflection_For_Goals_Care_Plan:
-        return MaterialPageRoute(builder: (_) => SelfReflactionWeek_1_View(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => SelfReflactionWeek_1_View(settings.arguments));
       case RoutePaths.Care_Plan_Status_Check:
-        return MaterialPageRoute(builder: (_) => StatusPastCheckTask(settings.arguments));
+        return MaterialPageRoute(
+            builder: (_) => StatusPastCheckTask(settings.arguments));
       case RoutePaths.Add_Goals_Care_Plan:
         return MaterialPageRoute(builder: (_) => AddGoalsForCarePlanView());
       case RoutePaths.Approve_Doctor_Goals_Care_Plan:
-        return MaterialPageRoute(builder: (_) => ApproveDoctorForGoalCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => ApproveDoctorForGoalCarePlanView());
       case RoutePaths.ADD_BLOOD_PRESURE_GOALS:
-        return MaterialPageRoute(builder: (_) => AddBloodPresureeGoalsForCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => AddBloodPresureeGoalsForCarePlanView());
       case RoutePaths.ADD_CHOLESTEROL_GOALS:
-        return MaterialPageRoute(builder: (_) => AddCholesterolGoalsForCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => AddCholesterolGoalsForCarePlanView());
       case RoutePaths.ADD_GLUCOSE_GOALS:
-        return MaterialPageRoute(builder: (_) => AddGlucoseLevelGoalsForCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => AddGlucoseLevelGoalsForCarePlanView());
       case RoutePaths.ADD_NUTRITION_GOALS:
-        return MaterialPageRoute(builder: (_) => AddNutritionGoalsForCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => AddNutritionGoalsForCarePlanView());
       case RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS:
-        return MaterialPageRoute(builder: (_) => AddPhysicalActivityGoalsForCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => AddPhysicalActivityGoalsForCarePlanView());
       case RoutePaths.ADD_QUIT_SMOKING_GOALS:
-        return MaterialPageRoute(builder: (_) => AddQuitSmokingGoalsForCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => AddQuitSmokingGoalsForCarePlanView());
       case RoutePaths.ADD_WEIGHT_GOALS:
-        return MaterialPageRoute(builder: (_) => AddWeightGoalsForCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => AddWeightGoalsForCarePlanView());
       case RoutePaths.Doctor_Appoinment:
         return MaterialPageRoute(builder: (_) => SearchDoctorListView());
       case RoutePaths.Lab_Appoinment:
         return MaterialPageRoute(builder: (_) => SearchLabListView());
       case RoutePaths.My_Reports:
         return MaterialPageRoute(builder: (_) => MyReportsView());
-     /* case RoutePaths.Order_Medicine:
+      case RoutePaths.FAQ_BOT:
+        return MaterialPageRoute(builder: (_) => FAQChatScreen());
+      /* case RoutePaths.Order_Medicine:
         return MaterialPageRoute(builder: (_) =>
       case RoutePaths.Order_Ambulance:
         return MaterialPageRoute(builder: (_) => ;*/

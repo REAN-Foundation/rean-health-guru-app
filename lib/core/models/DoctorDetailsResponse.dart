@@ -1,5 +1,5 @@
-import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:paitent/core/models/doctorListApiResponse.dart';
 
 @JsonSerializable(nullable: true)
 class DoctorDetailsResponse {
@@ -34,7 +34,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     doctor =
-    json['doctor'] != null ? new Doctors.fromJson(json['doctor']) : null;
+        json['doctor'] != null ? new Doctors.fromJson(json['doctor']) : null;
   }
 
   Map<String, dynamic> toJson() {

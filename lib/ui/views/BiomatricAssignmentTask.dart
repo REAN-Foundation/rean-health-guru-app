@@ -1,30 +1,21 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
-import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/StartAssesmentResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/home_view.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:intl/intl.dart';
-
 
 class BiomatricAssignmentTask extends StatefulWidget {
-
   Assessmment assessmment;
 
-  BiomatricAssignmentTask(@required Assessmment assessmment){
+  BiomatricAssignmentTask(@required Assessmment assessmment) {
     this.assessmment = assessmment;
   }
 
   @override
-  _BiomatricAssignmentTaskViewState createState() => _BiomatricAssignmentTaskViewState();
+  _BiomatricAssignmentTaskViewState createState() =>
+      _BiomatricAssignmentTaskViewState();
 }
 
 class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
@@ -33,7 +24,6 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
   final ScrollController _scrollController = ScrollController();
 
   final TextEditingController _Controller = TextEditingController();
-
 
   ProgressDialog progressDialog;
 
@@ -44,24 +34,23 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
     // TODO: implement build
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child:  Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'Biometrics',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            title: Text(
+              'Biometrics',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700),
+            ),
+            iconTheme: new IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -71,86 +60,87 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
                   debugPrint("Clicked on profile icon");
                 },
               )*/
-                ],
-              ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      questionText(),
-                      SizedBox(height: 32,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            ],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 0.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  questionText(),
+                  SizedBox(
+                    height: 32,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          border: Border.all(color: primaryColor, width: 1),
+                          color: Colors.white),
+                      child: TextFormField(
+                          controller: _Controller,
+                          maxLines: 1,
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.number,
+                          onFieldSubmitted: (term) {},
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(0),
+                              border: InputBorder.none,
+                              fillColor: Colors.white,
+                              filled: true)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 32,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          if (!_Controller.text.isEmpty) {
+                            Navigator.pop(context, _Controller.text);
+                          } else {
+                            showToast('Please enter measures', context);
+                          }
+                          //Navigator.of(context).pop();
+                          //Navigator.pushNamed(context, RoutePaths.Home);
+                        },
                         child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 8.0),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.circular(8.0),
-                              border: Border.all(
-                                  color: primaryColor, width: 1),
-                              color: Colors.white),
-                          child: TextFormField(
-
-                              controller: _Controller,
-                              maxLines: 1,
-                              textInputAction:
-                              TextInputAction.done,
-                              keyboardType: TextInputType.number,
-                              onFieldSubmitted: (term) {
-
-                              },
-                              decoration: InputDecoration(
-
-                                  contentPadding: EdgeInsets.all(0),
-                                  border: InputBorder.none,
-                                  fillColor: Colors.white,
-                                  filled: true)),
-                        ),
-                      ),
-                      SizedBox(height: 32,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: (){
-                              if(!_Controller.text.isEmpty) {
-                                Navigator.pop(context, _Controller.text);
-                              }else{
-                                showToast('Please enter measures');
-                              }
-                              //Navigator.of(context).pop();
-                              //Navigator.pushNamed(context, RoutePaths.Home);
-                            },
-                            child: Container(
-                                height: 40,
-                                width: 120,
-                                padding: EdgeInsets.symmetric(horizontal: 16.0, ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(24.0),
-                                  border: Border.all(color: primaryColor, width: 1),
-                                  color: Colors.deepPurple,),
-                                child: Center(
-                                  child: Text(
-                                    "Save",
-                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )
+                            height: 40,
+                            width: 120,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16.0,
                             ),
-                          ),
-                        ],
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24.0),
+                              border: Border.all(color: primaryColor, width: 1),
+                              color: Colors.deepPurple,
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Save",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14),
+                                textAlign: TextAlign.center,
+                              ),
+                            )),
                       ),
                     ],
                   ),
-                ),
+                ],
               ),
             ),
           ),
+        ),
+      ),
     );
   }
 
@@ -165,7 +155,7 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
         padding: const EdgeInsets.all(8.0),
         child: Center(
           child: Text(
-            'Enter '+widget.assessmment.biometricName,
+            'Enter ' + widget.assessmment.biometricName,
             style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
             textAlign: TextAlign.center,
           ),
@@ -173,9 +163,4 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
       ),
     );
   }
-
-
-
-
-
 }

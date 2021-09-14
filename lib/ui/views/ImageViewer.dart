@@ -3,21 +3,17 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/utils/StringUtility.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-
 
 class ImageViewer extends StatelessWidget {
-
   static GlobalKey _globalKey = GlobalKey();
   String path = "";
   String fileName;
+
   ImageViewer(this.path, this.fileName);
+
   ProgressDialog progressDialog;
 
   @override
@@ -30,32 +26,31 @@ class ImageViewer extends StatelessWidget {
         backgroundColor: Colors.white,
         brightness: Brightness.light,
         iconTheme: new IconThemeData(color: Colors.black),
-        title: Text("Reports", style: TextStyle(
-            fontSize: 16.0,
-            color: primaryColor,
-            fontWeight: FontWeight.w700),),
+        title: Text(
+          "Reports",
+          style: TextStyle(
+              fontSize: 16.0, color: primaryColor, fontWeight: FontWeight.w700),
+        ),
         actions: <Widget>[
-          Platform.isAndroid ? IconButton(
-            icon: Icon(Icons.share),
-            onPressed: () {
-              urlFileShare();
-              },
-          ) : Container()
+          Platform.isAndroid
+              ? IconButton(
+                  icon: Icon(Icons.share),
+                  onPressed: () {
+                    urlFileShare();
+                  },
+                )
+              : Container()
         ],
       ),
       body: Container(
           child: PhotoView.customChild(
-            child: Image.file(file),
-            //imageProvider: NetworkImage(path),
-          )
-      ),
+        child: Image.file(file),
+        //imageProvider: NetworkImage(path),
+      )),
     );
   }
 
-
-
   Future<Null> urlFileShare() async {
-
     final RenderBox box = _globalKey.currentContext.findRenderObject();
     if (Platform.isAndroid) {
       /*  var url = 'https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg';
@@ -64,15 +59,16 @@ class ImageViewer extends StatelessWidget {
       File imgFile = new File(path);
       /*imgFile.writeAsBytesSync(response.bodyBytes);*/
       debugPrint('File Path ==> ${imgFile.path}');
-      Share.shareFile(imgFile,
-          subject: 'URL File Share',
-          text: 'Hello, check your share files!',
+      List fileList = List<String>.empty(growable: true);
+      fileList.add(imgFile);
+      Share.shareFiles(fileList,
+          subject: '',
+          text: '',
           sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
     } else {
       Share.share('Hello, check your share files!',
           subject: 'URL File Share',
           sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
     }
-
   }
 }

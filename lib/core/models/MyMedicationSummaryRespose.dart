@@ -155,22 +155,22 @@ class Schedule {
 
   Schedule(
       {this.id,
-        this.patientUserId,
-        this.medicationId,
-        this.drugOrderId,
-        this.drugName,
-        this.details,
-        this.timeScheduleStart,
-        this.timeScheduleEnd,
-        this.takenAt,
-        this.isTaken,
-        this.isMissed,
-        this.isCancelled,
-        this.cancelledOn,
-        this.note,
-        this.status,
-        this.dateCreated,
-        this.dateUpdated});
+      this.patientUserId,
+      this.medicationId,
+      this.drugOrderId,
+      this.drugName,
+      this.details,
+      this.timeScheduleStart,
+      this.timeScheduleEnd,
+      this.takenAt,
+      this.isTaken,
+      this.isMissed,
+      this.isCancelled,
+      this.cancelledOn,
+      this.note,
+      this.status,
+      this.dateCreated,
+      this.dateUpdated});
 
   Schedule.fromJson(Map<String, dynamic> json) {
     id = json['id'];

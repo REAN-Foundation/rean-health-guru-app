@@ -1,12 +1,12 @@
-import 'dart:core';
 import 'dart:async';
+import 'dart:core';
+
+import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info/package_info.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/ui/widgets/bezierContainer.dart';
-import 'package:paitent/utils/AppPageRoute.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -32,34 +32,26 @@ class SplashScreen extends StatefulWidget {
   );
 
   SplashScreen(
-      {
-        this.loaderColor,
-        @required this.seconds,
-        this.photoSize,
-        this.onClick,
-        this.navigateAfterSeconds,
-        this.title = const Text(''),
-        this.backgroundColor = Colors.white,
-        this.styleTextUnderTheLoader = const TextStyle(
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.black
-        ),
-        this.image,
-        this.loadingText  = const Text(""),
-        this.imageBackground,
-        this.gradientBackground,
-        this.baseUrl
-      }
-      );
-
+      {this.loaderColor,
+      @required this.seconds,
+      this.photoSize,
+      this.onClick,
+      this.navigateAfterSeconds,
+      this.title = const Text(''),
+      this.backgroundColor = Colors.white,
+      this.styleTextUnderTheLoader = const TextStyle(
+          fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
+      this.image,
+      this.loadingText = const Text(""),
+      this.imageBackground,
+      this.gradientBackground,
+      this.baseUrl});
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   PackageInfo _packageInfo = PackageInfo(
     appName: '',
     packageName: '',
@@ -68,22 +60,26 @@ class _SplashScreenState extends State<SplashScreen> {
   );
 
   Future<void> _initPackageInfo() async {
+    String currentLocale;
     final PackageInfo info = await PackageInfo.fromPlatform();
     if (this.mounted) {
       setState(() {
         _packageInfo = info;
       });
     }
+
+    Locale locale = await Devicelocale.currentAsLocale;
+    setCurrentLocale(locale.countryCode);
+
+    debugPrint('Country Local ==> ${locale.countryCode}');
   }
 
   @override
   void initState() {
     _initPackageInfo();
     super.initState();
-    Timer(
-        Duration(seconds: widget.seconds),
-            () {
-          /*if (widget.navigateAfterSeconds is String) {
+    Timer(Duration(seconds: widget.seconds), () {
+      /*if (widget.navigateAfterSeconds is String) {
             // It's fairly safe to assume this is using the in-built material
             // named route component
             Navigator.of(context).pushReplacementNamed(
@@ -98,26 +94,17 @@ class _SplashScreenState extends State<SplashScreen> {
             );
           }*/
 
-              if(getSessionFlag()){
-                Navigator.of(context).pushReplacementNamed(
-                    RoutePaths.Home);
-              }else{
-                Navigator.of(context).pushReplacementNamed(
-                    RoutePaths.On_Boarding);
-              }
-
-
-
-        }
-    );
+      if (getSessionFlag()) {
+        Navigator.of(context).pushReplacementNamed(RoutePaths.Home);
+      } else {
+        Navigator.of(context).pushReplacementNamed(RoutePaths.On_Boarding);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: primaryColor,
@@ -133,68 +120,85 @@ class _SplashScreenState extends State<SplashScreen> {
                     .size
                     .width * .4,
                 child: BezierContainer()),*/
-            new Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                new Expanded(
-                  flex: 2,
-                  child: new Container(
-                      child: new Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Container(
-                            padding: const EdgeInsets.all(0.0),
-                            height: 240,
-                            width: 240,
+            MergeSemantics(
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  new Expanded(
+                    flex: 2,
+                    child: new Container(
+                        child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.all(0.0),
+                          height: 240,
+                          width: 240,
                           /*  decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(12))
-                            ),*/
+                                  color: primaryColor,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(12))
+                              ),*/
+                          child: Semantics(
+                            label: 'REAN care app logo',
+                            image: true,
                             child: new Image.asset(
                                 'res/images/app_logo_tranparent.png'),
                           ),
-                          SizedBox(height: 16,),
-                          //_title(),
-                          //SizedBox(height: 60,),
-                          /*new CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            child: new Container(
-                                child: widget.image
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        //_title(),
+                        //SizedBox(height: 60,),
+                        /*new CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              child: new Container(
+                                  child: widget.image
+                              ),
+                              radius: widget.photoSize,
                             ),
-                            radius: widget.photoSize,
-                          ),
-                          new Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                          ),
-                          widget.title*/
-                        ],
-                      )),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-
-                      CircularProgressIndicator(
-                        valueColor: new AlwaysStoppedAnimation<Color>(
-                            widget.loaderColor),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                      ),
-                      //widget.loadingText
-                      new Text("Version " +
-                          (widget.baseUrl.contains('dev') ? "Dev_" : widget
-                              .baseUrl.contains('uat') ? "Alpha_" : "") +
-                          _packageInfo.version, style: TextStyle(fontSize: 16,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.white)),
-                    ],
+                            new Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                            ),
+                            widget.title*/
+                      ],
+                    )),
                   ),
-                ),
-              ],
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        CircularProgressIndicator(
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              widget.loaderColor),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20.0),
+                        ),
+                        //widget.loadingText
+                        Semantics(
+                          label: 'display version',
+                          readOnly: true,
+                          child: new Text(
+                              "Version " +
+                                  (widget.baseUrl.contains('dev')
+                                      ? "Dev_"
+                                      : widget.baseUrl.contains('uat')
+                                          ? "Alpha_"
+                                          : "") +
+                                  _packageInfo.version,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w300,
+                                  color: Colors.white)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
             /*Positioned(
                 bottom: -height * .30,
@@ -275,5 +279,4 @@ class _SplashScreenState extends State<SplashScreen> {
           ]),
     );
   }
-
 }

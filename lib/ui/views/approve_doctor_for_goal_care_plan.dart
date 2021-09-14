@@ -1,17 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:intl/intl.dart';
 
 import 'home_view.dart';
 
@@ -38,12 +29,17 @@ class _ApproveDoctorForCarePlanViewState
           appBar: AppBar(
             backgroundColor: Colors.white,
             brightness: Brightness.light,
-            title: Text(
-              'Approval of Goals',
-              style: TextStyle(
-                  fontSize: 16.0,
-                  color: primaryColor,
-                  fontWeight: FontWeight.w700),
+            title: MergeSemantics(
+              child: Semantics(
+                readOnly: true,
+                child: Text(
+                  'Approval of Goals',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      color: primaryColor,
+                      fontWeight: FontWeight.w700),
+                ),
+              ),
             ),
             iconTheme: new IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -62,7 +58,6 @@ class _ApproveDoctorForCarePlanViewState
           body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-
               headerText(),
               Expanded(
                 child: Padding(
@@ -70,7 +65,6 @@ class _ApproveDoctorForCarePlanViewState
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-
                       Expanded(
                           child:
                               /*model.busy
@@ -88,28 +82,37 @@ class _ApproveDoctorForCarePlanViewState
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               Navigator.pushAndRemoveUntil(context,
                                   MaterialPageRoute(builder: (context) {
-                                    return HomeView( 0 );
-                                  }), (Route<dynamic> route) => false);
+                                return HomeView(0);
+                              }), (Route<dynamic> route) => false);
                             },
                             child: Container(
                                 height: 40,
                                 width: 200,
-                                padding: EdgeInsets.symmetric(horizontal: 16.0, ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16.0,
+                                ),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(24.0),
-                                  border: Border.all(color: primaryColor, width: 1),
-                                  color: Colors.deepPurple,),
-                                child: Center(
-                                  child: Text(
-                                    "Send for Approval",
-                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
-                                    textAlign: TextAlign.center,
+                                  border:
+                                      Border.all(color: primaryColor, width: 1),
+                                  color: Colors.deepPurple,
+                                ),
+                                child: Semantics(
+                                  readOnly: true,
+                                  child: Center(
+                                    child: Text(
+                                      "Send for Approval",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 14),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
-                                )
-                            ),
+                                )),
                           ),
                         ],
                       ),
@@ -117,7 +120,9 @@ class _ApproveDoctorForCarePlanViewState
                   ),
                 ),
               ),
-             SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),
@@ -189,8 +194,8 @@ class _ApproveDoctorForCarePlanViewState
                         height: 60,
                         width: 60,
                         child: Image(
-                          image: AssetImage(
-                              'res/images/profile_placeholder.png'),
+                          image:
+                              AssetImage('res/images/profile_placeholder.png'),
                         ),
                       ),
                     ),
@@ -199,36 +204,40 @@ class _ApproveDoctorForCarePlanViewState
                     ),
                     Expanded(
                       flex: 8,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(right: 18.0),
-                            child: Text('Dr. Abhijeet Mule',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                    color: primaryColor)),
-                          ),
-                          Text('Cardiologist, MD MBBS',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w300,
-                                  color: Color(0XFF909CAC))),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Phone: +91 43242333343',
+                      child: Semantics(
+                        label: 'Information about doctor',
+                        readOnly: true,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(right: 18.0),
+                              child: Text('Dr. Abhijeet Mule',
                                   style: TextStyle(
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w300,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
                                       color: primaryColor)),
-                            ],
-                          ),
-                        ],
+                            ),
+                            Text('Cardiologist, MD MBBS',
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w300,
+                                    color: Color(0XFF909CAC))),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Text('Phone: +91 43242333343',
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w300,
+                                        color: primaryColor)),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

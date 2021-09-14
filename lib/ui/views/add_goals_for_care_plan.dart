@@ -1,22 +1,10 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
-import 'package:paitent/core/models/assortedViewConfigs.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/addNewGoals/add_blood_presure_goals_for_care_plan.dart';
 import 'package:paitent/ui/views/addNewGoals/add_glucose_level_goals_for_care_plan.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:paitent/ui/views/summary_of_my_care_plan.dart';
-import 'package:paitent/ui/views/team_of_my_care_plan.dart';
-import 'package:paitent/utils/StringUtility.dart';
 
 import 'addNewGoals/add_cholesterol_goals_for_care_plan.dart';
 import 'addNewGoals/add_nutrition_goals_for_care_plan.dart';
@@ -26,7 +14,8 @@ import 'addNewGoals/add_weight_goals_for_care_plan.dart';
 
 class AddGoalsForCarePlanView extends StatefulWidget {
   @override
-  _AddGoalsForCarePlanViewState createState() => _AddGoalsForCarePlanViewState();
+  _AddGoalsForCarePlanViewState createState() =>
+      _AddGoalsForCarePlanViewState();
 }
 
 class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
@@ -37,7 +26,6 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
 
   @override
   Widget build(BuildContext context) {
-
     Widget screen;
     switch (selectedGoal) {
       case "Blood Pressure":
@@ -61,29 +49,31 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
       case "Weight":
         screen = AddWeightGoalsForCarePlanView();
         break;
-
     }
 
     return BaseWidget<PatientMedicationViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child: Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'Add New Goals',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            title: Semantics(
+              label: 'add new goals for care plan',
+              readOnly: true,
+              child: Text(
+                'Add New Goals',
+                style: TextStyle(
+                    fontSize: 16.0,
+                    color: primaryColor,
+                    fontWeight: FontWeight.w700),
+              ),
+            ),
+            iconTheme: new IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -93,132 +83,147 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
                   debugPrint("Clicked on profile icon");
                 },
               )*/
+            ],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  selectGoalForCarePlanDropDown(),
+                  Container(
+                    child: screen,
+                  )
                 ],
-              ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      selectGoalForCarePlanDropDown(),
-                      Container(
-                        child: screen,
-                      )
-
-
-                    ],
-                  ),
-                ),
               ),
             ),
           ),
+        ),
+      ),
     );
   }
 
-
   Widget selectGoalForCarePlanDropDown() {
     return Padding(
-      padding: const EdgeInsets.only(left : 16.0, right: 16.0, top: 8.0, bottom: 8.0),
+      padding:
+          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 16,),
-          Text("Select and set goal", style: TextStyle(
-              color: primaryColor, fontSize: 14, fontWeight: FontWeight.w600),),
-          const SizedBox(height: 16,),
+          const SizedBox(
+            height: 16,
+          ),
+          Text(
+            "Select and set goal",
+            style: TextStyle(
+                color: primaryColor, fontSize: 14, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
           Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.0),
                 border: Border.all(color: primaryColor, width: 1),
                 color: colorF6F6FF),
-            child: DropdownButton<String>(
-              isExpanded: true,
-              hint: new Text("Select Care Plan", style: TextStyle(
-                  color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),),
-              items: [
-                DropdownMenuItem(
-                  value: "Blood Pressure",
-                  child: Text(
-                    "Blood Pressure",
-                    style: TextStyle(
-                        color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
-                  ),
+            child: Semantics(
+              hint: 'Drop down button',
+              child: DropdownButton<String>(
+                isExpanded: true,
+                hint: new Text(
+                  "Select Care Plan",
+                  style: TextStyle(
+                      color: textBlack,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
                 ),
-
-                DropdownMenuItem(
-                  value: "Cholesterol",
-                  child: Text(
-                    "Cholesterol",
-                    style: TextStyle(
-                        color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
+                items: [
+                  DropdownMenuItem(
+                    value: "Blood Pressure",
+                    child: Text(
+                      "Blood Pressure",
+                      style: TextStyle(
+                          color: textBlack,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
-                ),
-
-                DropdownMenuItem(
-                  value: "Physical Activity",
-                  child: Text(
-                    "Physical Activity",
-                    style: TextStyle(
-                        color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
+                  DropdownMenuItem(
+                    value: "Cholesterol",
+                    child: Text(
+                      "Cholesterol",
+                      style: TextStyle(
+                          color: textBlack,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
-                ),
-
-
-                DropdownMenuItem(
-                  value: "Quit Smoking",
-                  child: Text(
-                    "Quit Smoking",
-                    style: TextStyle(
-                        color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
+                  DropdownMenuItem(
+                    value: "Physical Activity",
+                    child: Text(
+                      "Physical Activity",
+                      style: TextStyle(
+                          color: textBlack,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
-                ),
-
-                DropdownMenuItem(
-                  value: "Glucose Level",
-                  child: Text(
-                    "Glucose Level",
-                    style: TextStyle(
-                        color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
+                  DropdownMenuItem(
+                    value: "Quit Smoking",
+                    child: Text(
+                      "Quit Smoking",
+                      style: TextStyle(
+                          color: textBlack,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
-                ),
-
-                DropdownMenuItem(
-                  value: "Nutrition",
-                  child: Text(
-                    "Nutrition",
-                    style: TextStyle(
-                        color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
+                  DropdownMenuItem(
+                    value: "Glucose Level",
+                    child: Text(
+                      "Glucose Level",
+                      style: TextStyle(
+                          color: textBlack,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
-                ),
-
-                DropdownMenuItem(
-                  value: "Weight",
-                  child: Text(
-                    "Weight",
-                    style: TextStyle(
-                        color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
+                  DropdownMenuItem(
+                    value: "Nutrition",
+                    child: Text(
+                      "Nutrition",
+                      style: TextStyle(
+                          color: textBlack,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
-                ),
-
-              ],
-              onChanged: (value) {
-                setState(() {
-                  selectedGoal = value;
-                });
-              },
-              value: selectedGoal == "" ? null : selectedGoal,
+                  DropdownMenuItem(
+                    value: "Weight",
+                    child: Text(
+                      "Weight",
+                      style: TextStyle(
+                          color: textBlack,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    selectedGoal = value;
+                  });
+                },
+                value: selectedGoal == "" ? null : selectedGoal,
+              ),
             ),
           ),
         ],
       ),
     );
   }
-
 }

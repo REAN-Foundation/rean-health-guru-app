@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/core/viewmodels/views/patients_vitals.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/biometricVitals/BiometricTrendView.dart';
+
 import '../base_widget.dart';
 import 'EnterAllVitalsView.dart';
 
 class BiometricVitalsTrendsView extends StatefulWidget {
   @override
-  _BiometricVitalsTrendsViewState createState() => _BiometricVitalsTrendsViewState();
+  _BiometricVitalsTrendsViewState createState() =>
+      _BiometricVitalsTrendsViewState();
 }
 
 class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
@@ -20,7 +20,6 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
 
   @override
   Widget build(BuildContext context) {
-
     Widget screen;
     switch (_currentIndex) {
       case 0:
@@ -34,24 +33,23 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
     // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child:  Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'Vitals',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            title: Text(
+              'Vitals',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700),
+            ),
+            iconTheme: new IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -61,20 +59,20 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
                   debugPrint("Clicked on profile icon");
                 },
               )*/
-                ],
-              ),
-              body: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: _buildTabDesign(),
-                  ),
-                  Expanded(child: screen)
-                ],
-              ),
-            ),
+            ],
           ),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: _buildTabDesign(),
+              ),
+              Expanded(child: screen)
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -103,7 +101,9 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
                   size: 24,
                   color: _currentIndex == 0 ? Colors.white : Colors.grey,
                 ),
-                SizedBox(height: 4,),
+                SizedBox(
+                  height: 4,
+                ),
                 Text(
                   'Vitals',
                   style: TextStyle(
@@ -128,7 +128,9 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
                   size: 28,
                   color: _currentIndex == 1 ? Colors.white : Colors.grey,
                 ),
-                SizedBox(height: 4,),
+                SizedBox(
+                  height: 4,
+                ),
                 Text(
                   'Trends',
                   style: TextStyle(

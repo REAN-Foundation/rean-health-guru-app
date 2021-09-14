@@ -57,11 +57,11 @@ class AssessmentTemplates {
 
   AssessmentTemplates(
       {this.id,
-        this.title,
-        this.description,
-        this.tags,
-        this.createdAt,
-        this.updatedAt});
+      this.title,
+      this.description,
+      this.tags,
+      this.createdAt,
+      this.updatedAt});
 
   AssessmentTemplates.fromJson(Map<String, dynamic> json) {
     id = json['id'];

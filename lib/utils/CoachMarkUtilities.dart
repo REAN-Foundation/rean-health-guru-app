@@ -5,13 +5,8 @@ import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 enum CoachMarkContentPosition { top, bottom }
 
 class CoachMarkUtilites {
-
-  TargetFocus getTargetFocus(
-      GlobalKey key,
-      String sequence,
-      String heading,
-      String description,
-      CoachMarkContentPosition coachMarkContentPosition) {
+  TargetFocus getTargetFocus(GlobalKey key, String sequence, String heading,
+      String description, CoachMarkContentPosition coachMarkContentPosition) {
     debugPrint('Target Sequence ==> ${'Target ' + sequence}');
     debugPrint('Coach Mark Content Position ==> ${coachMarkContentPosition}');
     return TargetFocus(
@@ -50,12 +45,17 @@ class CoachMarkUtilites {
     );
   }
 
-  TutorialCoachMark displayCoachMark(BuildContext context, List<TargetFocus> targets, {@required Function onCoachMartkFinish, @required Function onCoachMartkSkip, @required Function onCoachMartkClickTarget, @required Function onCoachMartkClickOverlay}){
+  TutorialCoachMark displayCoachMark(
+      BuildContext context, List<TargetFocus> targets,
+      {@required Function onCoachMartkFinish,
+      @required Function onCoachMartkSkip,
+      @required Function onCoachMartkClickTarget,
+      @required Function onCoachMartkClickOverlay}) {
     return TutorialCoachMark(
       context,
       targets: targets,
       colorShadow: Colors.black,
-      alignSkip : Alignment.topRight,
+      alignSkip: Alignment.topRight,
       textSkip: "SKIP",
       paddingFocus: 10,
       opacityShadow: 0.8,
@@ -77,5 +77,4 @@ class CoachMarkUtilites {
       },
     );
   }
-
 }

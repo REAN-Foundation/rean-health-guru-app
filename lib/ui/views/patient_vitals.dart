@@ -1,9 +1,7 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/models/PatientVitalsPojo.dart';
-import 'package:paitent/core/viewmodels/views/appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_observation.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/utils/StringUtility.dart';
@@ -11,16 +9,11 @@ import 'package:paitent/utils/StringUtility.dart';
 import 'base_widget.dart';
 
 class PatientVitalsView extends StatefulWidget {
-
-
-
   @override
-  _PatientVitalsViewState createState() =>
-      _PatientVitalsViewState();
+  _PatientVitalsViewState createState() => _PatientVitalsViewState();
 }
 
 class _PatientVitalsViewState extends State<PatientVitalsView> {
-
   var model = PatientObservationsViewModel();
 
   var _heightController = TextEditingController();
@@ -53,26 +46,32 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
     // TODO: implement build
     return BaseWidget<PatientObservationsViewModel>(
         model: model,
-        builder: (context, model, child) =>
-        Scaffold(
-            backgroundColor: Colors.white,
-            appBar: AppBar(
-              brightness: Brightness.light,
+        builder: (context, model, child) => Scaffold(
               backgroundColor: Colors.white,
-              title: Text(
-                'My Vitals',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    color: primaryColor,
-                    fontWeight: FontWeight.w600),
+              appBar: AppBar(
+                brightness: Brightness.light,
+                backgroundColor: Colors.white,
+                title: Text(
+                  'My Vitals',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      color: primaryColor,
+                      fontWeight: FontWeight.w600),
+                ),
+                iconTheme: new IconThemeData(color: Colors.black),
               ),
-              iconTheme: new IconThemeData(color: Colors.black),
-            ),
-          body: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: model.busy ? Center(child: SizedBox( height : 32, width: 32 ,child:CircularProgressIndicator())) : vitals.length == 0 ? _noVitalsFound() : _makeVitalsColumn()
-          ),
-            /*floatingActionButton: new FloatingActionButton(
+              body: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: model.busy
+                      ? Center(
+                          child: SizedBox(
+                              height: 32,
+                              width: 32,
+                              child: CircularProgressIndicator()))
+                      : vitals.length == 0
+                          ? _noVitalsFound()
+                          : _makeVitalsColumn()),
+              /*floatingActionButton: new FloatingActionButton(
                 elevation: 0.0,
                 child: new Icon(Icons.add, color: Colors.white,),
                 backgroundColor: primaryColor,
@@ -85,229 +84,277 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
 
                 }
             )*/
-        )
-      );
+            ));
   }
 
-  Widget _noVitalsFound(){
+  Widget _noVitalsFound() {
     return Center(
-      child: Text("No Vitals added yet.", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14,fontFamily: 'Montserrat', color: primaryColor)),
+      child: Text("No Vitals added yet.",
+          style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+              fontFamily: 'Montserrat',
+              color: primaryColor)),
     );
   }
 
-  Widget _makeVitalsColumn(){
+  Widget _makeVitalsColumn() {
     Vitals vital = vitals.elementAt(0);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(height: 8,),
-        /*Row(
-          children: <Widget>[
-            SizedBox(width: 150,
-              child: Text('Date of Recording',
+    return MergeSemantics(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 8,
+          ),
+          /*Row(
+            children: <Widget>[
+              SizedBox(width: 150,
+                child: Text('Date of Recording',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700,
+                        color: primaryColor)),
+              ),
+              Text(':',
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w700,
-                      color: primaryColor)),
-            ),
-            Text(':',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
-                    color: textBlack)),
-            SizedBox(width: 8,),
-            Text('Today, '+dateFormatForHeader.format(new DateTime.now()),
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                    color: textBlack)),
-          ],
-        ),
-        SizedBox(height: 24,),*/
-        Row(
-          children: <Widget>[
-            SizedBox(width: 150,
-              child: Text('Weight',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
-            ),
-            Text(':',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
-                    color: textBlack)),
-            SizedBox(width: 8,),
-            Text(vital.weight,
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                    color: textBlack)),
-            SizedBox(width: 8,),
-            Text('Kg',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                    color: textBlack)),
-          ],
-        ),
-        SizedBox(height: 20,),
-        Row(
-          children: <Widget>[
-            SizedBox(width: 150,
-              child: Text('Temperature',
+              SizedBox(width: 8,),
+              Text('Today, '+dateFormatForHeader.format(new DateTime.now()),
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w500,
                       color: textBlack)),
-            ),
-            Text(':',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
-                    color: textBlack)),
-            SizedBox(width: 8,),
-            Text(vital.temperature,
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                    color: textBlack)),
-            SizedBox(width: 8,),
-            Text('\u2109',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                    color: textBlack)),
-          ],
-        ),
-        SizedBox(height: 20,),
-        Row(
-          children: <Widget>[
-            SizedBox(width: 150,
-              child: Text('Pulse',
+            ],
+          ),
+          SizedBox(height: 24,),*/
+          Row(
+            children: <Widget>[
+              SizedBox(
+                width: 150,
+                child: Text('Weight',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700,
+                        color: textBlack)),
+              ),
+              Text(':',
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
-            ),
-            Text(':',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
-                    color: textBlack)),
-            SizedBox(width: 8,),
-            Text(vital.pulse,
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                    color: textBlack)),
-            SizedBox(width: 8,),
-            Text('bpm',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                    color: textBlack)),
-          ],
-        ),
-        SizedBox(height: 20,),
-        Row(
-          children: <Widget>[
-            SizedBox(width: 150,
-              child: Text('Systolic Blood Pressure',
+              SizedBox(
+                width: 8,
+              ),
+              Text(vital.weight,
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w500,
                       color: textBlack)),
-            ),
-            Text(':',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
-                    color: textBlack)),
-            SizedBox(width: 8,),
-            Text(vital.systolicBloodPressure,
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                    color: textBlack)),
-            SizedBox(width: 8,),
-            Text('mm of Hg',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                    color: textBlack)),
-          ],
-        ),
-        SizedBox(height: 20,),
-        Row(
-          children: <Widget>[
-            SizedBox(width: 150,
-              child: Text('Diastolic Blood Pressure',
+              SizedBox(
+                width: 8,
+              ),
+              Text('Kg',
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w500,
                       color: textBlack)),
-            ),
-            Text(':',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
-                    color: textBlack)),
-            SizedBox(width: 8,),
-            Text(vital.diastolicBloodPressure,
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                    color: textBlack)),
-            SizedBox(width: 8,),
-            Text('mm of Hg',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                    color: textBlack)),
-          ],
-        ),
-        SizedBox(height: 20,),
-        Row(
-          children: <Widget>[
-            SizedBox(width: 150,
-              child: Text('Blood Oxygen Saturation',
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: <Widget>[
+              SizedBox(
+                width: 150,
+                child: Text('Temperature',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700,
+                        color: textBlack)),
+              ),
+              Text(':',
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
-            ),
-            Text(':',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
-                    color: textBlack)),
-            SizedBox(width: 8,),
-            Text(vital.bloodOxygenSaturation,
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                    color: textBlack)),
-            SizedBox(width: 8,),
-            Text('%',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                    color: textBlack)),
-          ],
-        ),
-        SizedBox(height: 20,),
-      ],
+              SizedBox(
+                width: 8,
+              ),
+              Text(vital.temperature,
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500,
+                      color: textBlack)),
+              SizedBox(
+                width: 8,
+              ),
+              Text('\u2109',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500,
+                      color: textBlack)),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: <Widget>[
+              SizedBox(
+                width: 150,
+                child: Text('Pulse',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700,
+                        color: textBlack)),
+              ),
+              Text(':',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w600,
+                      color: textBlack)),
+              SizedBox(
+                width: 8,
+              ),
+              Text(vital.pulse,
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500,
+                      color: textBlack)),
+              SizedBox(
+                width: 8,
+              ),
+              Text('bpm',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500,
+                      color: textBlack)),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: <Widget>[
+              SizedBox(
+                width: 150,
+                child: Text('Systolic Blood Pressure',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700,
+                        color: textBlack)),
+              ),
+              Text(':',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w600,
+                      color: textBlack)),
+              SizedBox(
+                width: 8,
+              ),
+              Text(vital.systolicBloodPressure,
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500,
+                      color: textBlack)),
+              SizedBox(
+                width: 8,
+              ),
+              Text('mm of Hg',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500,
+                      color: textBlack)),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: <Widget>[
+              SizedBox(
+                width: 150,
+                child: Text('Diastolic Blood Pressure',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700,
+                        color: textBlack)),
+              ),
+              Text(':',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w600,
+                      color: textBlack)),
+              SizedBox(
+                width: 8,
+              ),
+              Text(vital.diastolicBloodPressure,
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500,
+                      color: textBlack)),
+              SizedBox(
+                width: 8,
+              ),
+              Text('mm of Hg',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500,
+                      color: textBlack)),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: <Widget>[
+              SizedBox(
+                width: 150,
+                child: Text('Blood Oxygen Saturation',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700,
+                        color: textBlack)),
+              ),
+              Text(':',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w600,
+                      color: textBlack)),
+              SizedBox(
+                width: 8,
+              ),
+              Text(vital.bloodOxygenSaturation,
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500,
+                      color: textBlack)),
+              SizedBox(
+                width: 8,
+              ),
+              Text('%',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500,
+                      color: textBlack)),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
     );
   }
 
   _makeAllergriesCard(BuildContext context, int index) {
     return InkWell(
-      onTap: (){
-
-      },
+      onTap: () {},
       child: Container(
         height: 68,
         decoration: new BoxDecoration(
@@ -319,7 +366,9 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              SizedBox(width: 16,),
+              SizedBox(
+                width: 16,
+              ),
               Expanded(
                 flex: 3,
                 child: Text('Dust allergy',
@@ -328,7 +377,9 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                         color: textBlack,
                         fontWeight: FontWeight.w600)),
               ),
-              SizedBox(width: 8,),
+              SizedBox(
+                width: 8,
+              ),
               Expanded(
                 flex: 3,
                 child: Text('Moderate',
@@ -337,7 +388,9 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                         color: textBlack,
                         fontWeight: FontWeight.w600)),
               ),
-              SizedBox(width: 8,),
+              SizedBox(
+                width: 8,
+              ),
               Expanded(
                 flex: 5,
                 child: Text('Runny nose. Since childhood',
@@ -346,10 +399,15 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                         color: textBlack,
                         fontWeight: FontWeight.w600)),
               ),
-              SizedBox(width: 8,),
+              SizedBox(
+                width: 8,
+              ),
               Expanded(
                 flex: 1,
-                child: Icon(Icons.edit, color: primaryColor,),
+                child: Icon(
+                  Icons.edit,
+                  color: primaryColor,
+                ),
               ),
             ],
           ),
@@ -384,7 +442,11 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               IconButton(
-                icon: Icon(Icons.close, color: colorF6F6FF,),
+                icon: Icon(
+                  Icons.close,
+                  color: colorF6F6FF,
+                ),
+                onPressed: () {},
               ),
               Expanded(
                 flex: 8,
@@ -411,7 +473,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
           Expanded(
             child: SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Padding(
@@ -426,58 +488,80 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                                 flex: 1,
                                 child: _entryHeightField("Height (Cm)"),
                               ),
-                              SizedBox(width: 16,),
+                              SizedBox(
+                                width: 16,
+                              ),
                               Expanded(
                                 flex: 1,
-                                child:  _entryWeightField("Weight (Kg)"),
+                                child: _entryWeightField("Weight (Kg)"),
                               ),
                             ],
                           ),
-                          SizedBox(height: 8,),
+                          SizedBox(
+                            height: 8,
+                          ),
                           Row(
                             children: [
                               Expanded(
                                 flex: 1,
                                 child: _entryPulseField("Pulse (bpm)"),
                               ),
-                              SizedBox(width: 16,),
+                              SizedBox(
+                                width: 16,
+                              ),
                               Expanded(
                                 flex: 1,
-                                child:  _entryBodyOxygenField("Blood Oxygen Saturation (%)"),
+                                child: _entryBodyOxygenField(
+                                    "Blood Oxygen Saturation (%)"),
                               ),
                             ],
                           ),
-                          SizedBox(height: 8,),
+                          SizedBox(
+                            height: 8,
+                          ),
                           Row(
                             children: [
                               Expanded(
                                 flex: 1,
-                                child: _entrySystolicBPField("Systolic Blood Pressure (mm of Hg)"),
+                                child: _entrySystolicBPField(
+                                    "Systolic Blood Pressure (mm of Hg)"),
                               ),
-                              SizedBox(width: 16,),
+                              SizedBox(
+                                width: 16,
+                              ),
                               Expanded(
                                 flex: 1,
-                                child:  _entryDiastolicBPField("Diastolic Blood Pressure (mm of Hg)"),
+                                child: _entryDiastolicBPField(
+                                    "Diastolic Blood Pressure (mm of Hg)"),
                               ),
                             ],
                           ),
-                          SizedBox(height: 8,),
+                          SizedBox(
+                            height: 8,
+                          ),
                           Row(
                             children: [
                               Expanded(
                                 flex: 1,
-                                child: _entryBodyTempField("Temperature (\u2109)"),
+                                child:
+                                    _entryBodyTempField("Temperature (\u2109)"),
                               ),
-                              SizedBox(width: 16,),
+                              SizedBox(
+                                width: 16,
+                              ),
                               Expanded(
                                 flex: 1,
-                                child:  Container(
+                                child: Container(
                                   child: Column(
                                     children: [
-                                      SizedBox(height: 16,),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
                                       Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           _submitButton(context),
                                         ],
@@ -488,11 +572,9 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                               ),
                             ],
                           ),
-
                         ],
                       ),
                     )
-
                   ]),
             ),
           ),
@@ -501,25 +583,28 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
     );
   }
 
-  Widget _submitButton(BuildContext context){
-    return  RaisedButton.icon(
+  Widget _submitButton(BuildContext context) {
+    return RaisedButton.icon(
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
         //_addPatientVital(context);
       },
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-              Radius.circular(24.0))),
-      label: Text('Submit',
-        style: TextStyle(color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold),),
-      icon: Icon(Icons.done, color: Colors.white,),
+          borderRadius: BorderRadius.all(Radius.circular(24.0))),
+      label: Text(
+        'Submit',
+        style: TextStyle(
+            color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+      ),
+      icon: Icon(
+        Icons.done,
+        color: Colors.white,
+      ),
       textColor: Colors.white,
       splashColor: Colors.red,
-      color: primaryColor,);
+      color: primaryColor,
+    );
   }
-
 
   /*Widget _textFeilds(String hint, TextEditingController editingController, FocusNode focusNode, FocusNode nextFocusNode){
     return TextFormField(
@@ -546,7 +631,8 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
     );
   }*/
 
-  _fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+  _fieldFocusChange(
+      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
     debugPrint("Click 2");
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
@@ -577,9 +663,9 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                 _fieldFocusChange(context, _heightFocus, _weightFocus);
               },
               decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: primaryColor, width: 1),
-                  ),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: primaryColor, width: 1),
+                ),
                 fillColor: Colors.white,
               ))
         ],
@@ -611,11 +697,11 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                 _fieldFocusChange(context, _weightFocus, _pulseFocus);
               },
               decoration: InputDecoration(
-          border: OutlineInputBorder(
-          borderSide: BorderSide(color: primaryColor, width: 1),
-    ),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: primaryColor, width: 1),
+                ),
                 fillColor: Colors.white,
-    ))
+              ))
         ],
       ),
     );
@@ -777,9 +863,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               maxLines: 1,
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.done,
-              onFieldSubmitted: (term) {
-
-              },
+              onFieldSubmitted: (term) {},
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: primaryColor, width: 1),
@@ -793,16 +877,15 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
 
   _getPatientVitals() async {
     try {
-      PatientVitalsPojo patientVitalsPojo = await model.getPatientVitals('Bearer ' + auth, patientUserId);
+      PatientVitalsPojo patientVitalsPojo =
+          await model.getPatientVitals('Bearer ' + auth, patientUserId);
 
       if (patientVitalsPojo.status == 'success') {
         vitals.clear();
         setState(() {
           vitals.addAll(patientVitalsPojo.data.vitals);
         });
-      } else {
-
-      }
+      } else {}
     } catch (CustomException) {
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
@@ -810,7 +893,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
     }
   }
 
-  /*_addPatientVital(BuildContext context) async {
+/*_addPatientVital(BuildContext context) async {
     try {
 
       var map = new Map<String, String>();

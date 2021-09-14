@@ -10,10 +10,15 @@ class GetAHACarePlansResponse {
   }
 
   String get status => _status;
+
   set status(String status) => _status = status;
+
   String get message => _message;
+
   set message(String message) => _message = message;
+
   Data get data => _data;
+
   set data(Data data) => _data = data;
 
   GetAHACarePlansResponse.fromJson(Map<String, dynamic> json) {
@@ -41,6 +46,7 @@ class Data {
   }
 
   List<CarePlanTypes> get carePlanTypes => _carePlanTypes;
+
   set carePlanTypes(List<CarePlanTypes> carePlanTypes) =>
       _carePlanTypes = carePlanTypes;
 
@@ -74,12 +80,12 @@ class CarePlanTypes {
 
   CarePlanTypes(
       {int id,
-        String code,
-        String name,
-        int durationInWeeks,
-        String description,
-        String createdAt,
-        String updatedAt}) {
+      String code,
+      String name,
+      int durationInWeeks,
+      String description,
+      String createdAt,
+      String updatedAt}) {
     this._id = id;
     this._code = code;
     this._name = name;
@@ -90,19 +96,32 @@ class CarePlanTypes {
   }
 
   int get id => _id;
+
   set id(int id) => _id = id;
+
   String get code => _code;
+
   set code(String code) => _code = code;
+
   String get name => _name;
+
   set name(String name) => _name = name;
+
   int get durationInWeeks => _durationInWeeks;
+
   set durationInWeeks(int durationInWeeks) =>
       _durationInWeeks = durationInWeeks;
+
   String get description => _description;
+
   set description(String description) => _description = description;
+
   String get createdAt => _createdAt;
+
   set createdAt(String createdAt) => _createdAt = createdAt;
+
   String get updatedAt => _updatedAt;
+
   set updatedAt(String updatedAt) => _updatedAt = updatedAt;
 
   CarePlanTypes.fromJson(Map<String, dynamic> json) {

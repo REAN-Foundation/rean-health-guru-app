@@ -1,9 +1,6 @@
-
-
 import 'GetTaskOfAHACarePlanResponse.dart';
 
-class AssortedViewConfigs{
-
+class AssortedViewConfigs {
   //toShow
   // 0 For Video
   // 1 For Image
@@ -13,5 +10,4 @@ class AssortedViewConfigs{
   bool isNextButtonVisible = false;
   String header = "";
   Task task;
-
 }

@@ -58,12 +58,12 @@ class MedicationStockImages {
 
   MedicationStockImages(
       {this.id,
-        this.code,
-        this.fileName,
-        this.resourceId,
-        this.urlPublic,
-        this.createdAt,
-        this.updatedAt});
+      this.code,
+      this.fileName,
+      this.resourceId,
+      this.urlPublic,
+      this.createdAt,
+      this.updatedAt});
 
   MedicationStockImages.fromJson(Map<String, dynamic> json) {
     id = json['id'];

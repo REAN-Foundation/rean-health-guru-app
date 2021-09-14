@@ -1,21 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/AddTeamMemberResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
-import 'package:paitent/core/models/TeamMemberJsonRequest.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:intl/intl.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
@@ -33,14 +24,17 @@ class _SetUpDoctorForCarePlanViewState
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   var _searchController = new TextEditingController();
+
   //var doctorSearchList = new List<Doctors>();
   SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
   StartCarePlanResponse startCarePlanResponse;
 
   loadSharedPrefrance() async {
     try {
-      startCarePlanResponse = StartCarePlanResponse.fromJson(await _sharedPrefUtils.read("CarePlan"));
-      debugPrint("AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}");
+      startCarePlanResponse = StartCarePlanResponse.fromJson(
+          await _sharedPrefUtils.read("CarePlan"));
+      debugPrint(
+          "AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}");
     } catch (Excepetion) {
       // do something
       debugPrint(Excepetion);
@@ -48,7 +42,7 @@ class _SetUpDoctorForCarePlanViewState
   }
 
   @override
-  void initState()  {
+  void initState() {
     loadSharedPrefrance();
     // TODO: implement initState
     super.initState();
@@ -56,7 +50,6 @@ class _SetUpDoctorForCarePlanViewState
 
   @override
   Widget build(BuildContext context) {
-
     /*if(doctorSearchListGlobe.length != 0){
       doctorSearchListGlobe.addAll(doctorSearchListGlobe);
     }*/
@@ -104,7 +97,7 @@ class _SetUpDoctorForCarePlanViewState
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                    /*  Container(
+                      /*  Container(
                         height: 40,
                         decoration: new BoxDecoration(
                             color: Colors.white,
@@ -159,16 +152,16 @@ class _SetUpDoctorForCarePlanViewState
                       ),*/
                       Expanded(
                           child:
-                             /* model.busy
+                              /* model.busy
                           ? Center(
                           child: SizedBox(
                               height: 32,
                               width: 32,
                               child: CircularProgressIndicator()))
-                          : */(doctorSearchListGlobe.length == 0)
-                          ? noDoctorFound()
-                          :
-                              doctorSearchResultListView()) //,
+                          : */
+                              (doctorSearchListGlobe.length == 0)
+                                  ? noDoctorFound()
+                                  : doctorSearchResultListView()) //,
                     ],
                   ),
                 ),
@@ -176,37 +169,56 @@ class _SetUpDoctorForCarePlanViewState
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  model.busy ? Container() : InkWell(
-                    onTap: (){
-                      /*doctorSearchListGlobe.clear();
+                  model.busy
+                      ? Container()
+                      : InkWell(
+                          onTap: () {
+                            /*doctorSearchListGlobe.clear();
                       doctorSearchListGlobe.addAll(doctorSearchListGlobe);*/
-                      Navigator.pushNamed(context, RoutePaths.Setup_Pharmacies_For_Care_Plan);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Container(
-                        height: 40,
-                        width: 160,
-                        padding: EdgeInsets.symmetric(horizontal: 16.0, ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24.0),
-                          border: Border.all(color: primaryColor, width: 1),
-                          color: Colors.deepPurple,),
-                        child:  Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Icons.arrow_back_ios, color: Colors.deepPurple, size: 16,),
-                            Text(
-                              'Next',
-                              style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14),
+                            Navigator.pushNamed(context,
+                                RoutePaths.Setup_Pharmacies_For_Care_Plan);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Container(
+                              height: 40,
+                              width: 160,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(24.0),
+                                border:
+                                    Border.all(color: primaryColor, width: 1),
+                                color: Colors.deepPurple,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.arrow_back_ios,
+                                    color: Colors.deepPurple,
+                                    size: 16,
+                                  ),
+                                  Text(
+                                    'Next',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                        fontSize: 14),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.white,
+                                    size: 16,
+                                  ),
+                                ],
+                              ),
                             ),
-                            Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16,),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                 ],
               )
             ],
@@ -298,7 +310,8 @@ class _SetUpDoctorForCarePlanViewState
                       backgroundColor: primaryColor,
                       child: CircleAvatar(
                           radius: 38,
-                          backgroundImage: doctorDetails.imageURL == "" || doctorDetails.imageURL == null
+                          backgroundImage: doctorDetails.imageURL == "" ||
+                                  doctorDetails.imageURL == null
                               ? AssetImage('res/images/profile_placeholder.png')
                               : new NetworkImage(doctorDetails.imageURL)),
                     ),
@@ -330,7 +343,7 @@ class _SetUpDoctorForCarePlanViewState
                           Text(
                               doctorDetails.specialities == null
                                   ? doctorDetails.qualification
-                                  : doctorDetails.specialities ,
+                                  : doctorDetails.specialities,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -338,8 +351,10 @@ class _SetUpDoctorForCarePlanViewState
                                   fontWeight: FontWeight.w300,
                                   color: textBlack)),
                           Expanded(
-                            child: Text(doctorDetails.qualification == null ? '' : ', ' +
-                                doctorDetails.qualification,
+                            child: Text(
+                              doctorDetails.qualification == null
+                                  ? ''
+                                  : ', ' + doctorDetails.qualification,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -350,8 +365,7 @@ class _SetUpDoctorForCarePlanViewState
                           ),
                         ],
                       ),
-                      Text(
-                          doctorDetails.phoneNumber,
+                      Text(doctorDetails.phoneNumber,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -489,6 +503,7 @@ class _SetUpDoctorForCarePlanViewState
                       Icons.close,
                       color: Colors.white,
                     ),
+                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -505,7 +520,7 @@ class _SetUpDoctorForCarePlanViewState
                       ),
                     ),
                   ),
-                   IconButton(
+                  IconButton(
                     alignment: Alignment.topRight,
                     icon: Icon(
                       Icons.close,
@@ -518,20 +533,20 @@ class _SetUpDoctorForCarePlanViewState
                   ),
                 ],
               ),
-              Expanded(child: AddDoctorDialog( submitButtonListner: (Doctors doctors){
-                addTeamMembers(doctors);
-                debugPrint("Call back Received ==> ${doctors.firstName}");
-                Navigator.of(context, rootNavigator: true).pop();
-              }),)
+              Expanded(
+                child: AddDoctorDialog(submitButtonListner: (Doctors doctors) {
+                  addTeamMembers(doctors);
+                  debugPrint("Call back Received ==> ${doctors.firstName}");
+                  Navigator.of(context, rootNavigator: true).pop();
+                }),
+              )
             ],
           ),
-        )
-    );
+        ));
   }
 
   addTeamMembers(Doctors doctors) async {
     try {
-
       model.setBusy(true);
 
       /*TeamMemberJsonRequest jsonRequest = new TeamMemberJsonRequest();
@@ -554,23 +569,21 @@ class _SetUpDoctorForCarePlanViewState
       map['TeamMemberType'] = "Doctor";
       map['Details'] = data;
 
-
-
       AddTeamMemberResponse addTeamMemberResponse =
-      await model.addTeamMembers(map);
+          await model.addTeamMembers(map);
       debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
       if (addTeamMemberResponse.status == 'success') {
         setState(() {
           doctorSearchListGlobe.add(doctors);
         });
         debugPrint("Docotr List Size ==> ${doctorSearchListGlobe.length}");
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       } else {
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException);
     } catch (Exception) {
       debugPrint(Exception.toString());

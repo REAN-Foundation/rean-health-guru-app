@@ -1,32 +1,23 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/assortedViewConfigs.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:paitent/ui/views/summary_of_my_care_plan.dart';
-import 'package:paitent/ui/views/team_of_my_care_plan.dart';
 import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/StringUtility.dart';
-import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class AddGlucoseLevelGoalsForCarePlanView extends StatefulWidget {
   @override
-  _AddGlucoseLevelGoalsForCarePlanViewState createState() => _AddGlucoseLevelGoalsForCarePlanViewState();
+  _AddGlucoseLevelGoalsForCarePlanViewState createState() =>
+      _AddGlucoseLevelGoalsForCarePlanViewState();
 }
 
-class _AddGlucoseLevelGoalsForCarePlanViewState extends State<AddGlucoseLevelGoalsForCarePlanView> {
+class _AddGlucoseLevelGoalsForCarePlanViewState
+    extends State<AddGlucoseLevelGoalsForCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -47,24 +38,23 @@ class _AddGlucoseLevelGoalsForCarePlanViewState extends State<AddGlucoseLevelGoa
     progressDialog = new ProgressDialog(context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child:  Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'Set Care Plan Goals',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            title: Text(
+              'Set Care Plan Goals',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700),
+            ),
+            iconTheme: new IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -74,21 +64,21 @@ class _AddGlucoseLevelGoalsForCarePlanViewState extends State<AddGlucoseLevelGoa
                   debugPrint("Clicked on profile icon");
                 },
               )*/
+            ],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  addGoals(),
                 ],
               ),
-              body: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        addGoals(),
-                      ],
-                    ),
-                  ),
-                ),
             ),
           ),
+        ),
+      ),
     );
   }
 
@@ -99,10 +89,17 @@ class _AddGlucoseLevelGoalsForCarePlanViewState extends State<AddGlucoseLevelGoa
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 16,),
-          Text("Normal fasting blood glucose level should be less than 100 mg/dL. If you are diabetic, a HbA1c (glycosylated hemoglobin) below 7 percent is recommended, but your safe range may be lower or higher. Managing diabetes is important to your long-term health, especially if you have heart disease. Diabetes is best controlled by diet, weight loss, ", style: TextStyle(
-              color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),),
-          const SizedBox(height: 16,),
+          const SizedBox(
+            height: 16,
+          ),
+          Text(
+            "Normal fasting blood glucose level should be less than 100 mg/dL. If you are diabetic, a HbA1c (glycosylated hemoglobin) below 7 percent is recommended, but your safe range may be lower or higher. Managing diabetes is important to your long-term health, especially if you have heart disease. Diabetes is best controlled by diet, weight loss, ",
+            style: TextStyle(
+                color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
           /*Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -130,57 +127,49 @@ class _AddGlucoseLevelGoalsForCarePlanViewState extends State<AddGlucoseLevelGoa
           ),
           const SizedBox(height: 16,),*/
 
-              RichText(
-                text: TextSpan(
-                    text: 'Fasting Blood Glucose',
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
-                        color: primaryColor,
-                        fontSize: 14),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: "  mg / dL     ",
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight:
-                              FontWeight.w700,
-                              color: primaryColor,
-                              fontFamily: 'Montserrat',
-                              fontStyle:
-                              FontStyle.italic)),
-                    ]),
-              ),
-          SizedBox(height: 4,),
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 8.0),
-                decoration: BoxDecoration(
-                    borderRadius:
-                    BorderRadius.circular(8.0),
-                    border: Border.all(
-                        color: primaryColor, width: 1),
-                    color: Colors.white),
-                child: TextFormField(
+          RichText(
+            text: TextSpan(
+                text: 'Fasting Blood Glucose',
+                style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
+                    color: primaryColor,
+                    fontSize: 14),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: "  mg / dL     ",
+                      style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: primaryColor,
+                          fontFamily: 'Montserrat',
+                          fontStyle: FontStyle.italic)),
+                ]),
+          ),
+          SizedBox(
+            height: 4,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(color: primaryColor, width: 1),
+                color: Colors.white),
+            child: TextFormField(
+                controller: _fastingController,
+                focusNode: _fastingFocus,
+                maxLines: 1,
+                textInputAction: TextInputAction.done,
+                keyboardType: TextInputType.number,
+                onFieldSubmitted: (term) {},
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(0),
+                    border: InputBorder.none,
+                    fillColor: Colors.white,
+                    filled: true)),
+          ),
 
-                    controller: _fastingController,
-                    focusNode: _fastingFocus,
-                    maxLines: 1,
-                    textInputAction:
-                    TextInputAction.done,
-                    keyboardType: TextInputType.number,
-                    onFieldSubmitted: (term) {
-
-                    },
-                    decoration: InputDecoration(
-
-                        contentPadding: EdgeInsets.all(0),
-                        border: InputBorder.none,
-                        fillColor: Colors.white,
-                        filled: true)),
-              ),
-
-         /* SizedBox(height: 16,),
+          /* SizedBox(height: 16,),
 
               RichText(
                 text: TextSpan(
@@ -221,10 +210,10 @@ class _AddGlucoseLevelGoalsForCarePlanViewState extends State<AddGlucoseLevelGoa
                     TextInputAction.done,
                     keyboardType: TextInputType.number,
                     onFieldSubmitted: (term) {
-                      *//*_fieldFocusChange(
+                      */ /*_fieldFocusChange(
                           context,
                           _ppFocus,
-                          _weightFocus);*//*
+                          _weightFocus);*/ /*
                     },
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(0),
@@ -233,11 +222,12 @@ class _AddGlucoseLevelGoalsForCarePlanViewState extends State<AddGlucoseLevelGoa
                         filled: true)),
               ),*/
 
-          SizedBox(height: 16,),
+          SizedBox(
+            height: 16,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment:
-            CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               RichText(
                 text: TextSpan(
@@ -252,12 +242,10 @@ class _AddGlucoseLevelGoalsForCarePlanViewState extends State<AddGlucoseLevelGoa
                           text: "          ",
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight:
-                              FontWeight.w700,
+                              fontWeight: FontWeight.w700,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
-                              fontStyle:
-                              FontStyle.italic)),
+                              fontStyle: FontStyle.italic)),
                     ]),
               ),
               Expanded(
@@ -275,51 +263,58 @@ class _AddGlucoseLevelGoalsForCarePlanViewState extends State<AddGlucoseLevelGoa
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0,8,0,8),
+                      padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Expanded(
                             child: Text(
                               dob,
-                              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal, fontSize: 14),
                             ),
                           ),
-                          ImageIcon(AssetImage('res/images/ic_calender.png'), size: 24, color: primaryColor,),
+                          ImageIcon(
+                            AssetImage('res/images/ic_calender.png'),
+                            size: 24,
+                            color: primaryColor,
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  onTap: (){
+                  onTap: () {
                     DatePicker.showDatePicker(context,
                         showTitleActions: true,
-                        minTime: DateTime.now().subtract(Duration(days: 0)), onChanged: (date) {
-                          print('change $date');
-                        }, onConfirm: (date) {
-                          unformatedDOB = date.toIso8601String();
-                          setState(() {
-                            dob = dateFormat.format(date);
-                          });
-                          print('confirm $date');
-                        }, currentTime: DateTime.now(), locale: LocaleType.en);
+                        minTime: DateTime.now().subtract(Duration(days: 0)),
+                        onChanged: (date) {
+                      print('change $date');
+                    }, onConfirm: (date) {
+                      unformatedDOB = date.toIso8601String();
+                      setState(() {
+                        dob = dateFormat.format(date);
+                      });
+                      print('confirm $date');
+                    }, currentTime: DateTime.now(), locale: LocaleType.en);
                   },
                 ),
               )
             ],
           ),
-
-          SizedBox(height: 40,),
+          SizedBox(
+            height: 40,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
-                onTap: (){
-                  if(_fastingController.text == ''){
-                    showToast('Please enter fasting blood sugar');
-                  }else if(dob.isEmpty){
-                    showToast('Please select taget date');
-                  }else{
+                onTap: () {
+                  if (_fastingController.text == '') {
+                    showToast('Please enter fasting blood sugar', context);
+                  } else if (dob.isEmpty) {
+                    showToast('Please select taget date', context);
+                  } else {
                     setGoals();
                   }
                   //Navigator.of(context).pop();
@@ -328,23 +323,27 @@ class _AddGlucoseLevelGoalsForCarePlanViewState extends State<AddGlucoseLevelGoa
                 child: Container(
                     height: 40,
                     width: 120,
-                    padding: EdgeInsets.symmetric(horizontal: 16.0, ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24.0),
                       border: Border.all(color: primaryColor, width: 1),
-                      color: Colors.deepPurple,),
+                      color: Colors.deepPurple,
+                    ),
                     child: Center(
                       child: Text(
                         "Save",
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14),
                         textAlign: TextAlign.center,
                       ),
-                    )
-                ),
+                    )),
               ),
             ],
           ),
-
         ],
       ),
     );
@@ -371,7 +370,10 @@ class _AddGlucoseLevelGoalsForCarePlanViewState extends State<AddGlucoseLevelGoa
       body['Goal'] = map;
       body['GoalSettingTaskId'] = getTask().details.id;
 
-      BaseResponse baseResponse  = await model.addGoalsTask(startCarePlanResponseGlob.data.carePlan.id.toString(), 'blood-sugar-goal' ,  body);
+      BaseResponse baseResponse = await model.addGoalsTask(
+          startCarePlanResponseGlob.data.carePlan.id.toString(),
+          'blood-sugar-goal',
+          body);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
@@ -379,35 +381,40 @@ class _AddGlucoseLevelGoalsForCarePlanViewState extends State<AddGlucoseLevelGoa
         navigateToScreen();
       } else {
         progressDialog.hide();
-        if(baseResponse.error.contains('goal already exists for this care plan')){
+        if (baseResponse.error
+            .contains('goal already exists for this care plan')) {
           goalPlanScreenStack.removeAt(0);
           navigateToScreen();
-        }else {
-          showToast(baseResponse.message);
+        } else {
+          showToast(baseResponse.message, context);
         }
       }
     } catch (e) {
       progressDialog.hide();
       model.setBusy(false);
-      showToast(e.toString());
-      debugPrint('Error ==> '+e.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 
   navigateToScreen() {
     debugPrint('Set Goals Plan Stack ==> ${goalPlanScreenStack.length}');
-    if(goalPlanScreenStack.length == 0){
-      Navigator.pushReplacementNamed(context, RoutePaths.Determine_Action_For_Care_Plan);
-    }else if (goalPlanScreenStack.elementAt(0) == "Blood Pressure") {
-      Navigator.pushReplacementNamed(context, RoutePaths.ADD_BLOOD_PRESURE_GOALS);
-    }else if (goalPlanScreenStack.elementAt(0) == "Blood Sugar") {
+    if (goalPlanScreenStack.length == 0) {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.Determine_Action_For_Care_Plan);
+    } else if (goalPlanScreenStack.elementAt(0) == "Blood Pressure") {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.ADD_BLOOD_PRESURE_GOALS);
+    } else if (goalPlanScreenStack.elementAt(0) == "Blood Sugar") {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_GLUCOSE_GOALS);
-    }else if(goalPlanScreenStack.elementAt(0) == "Weight"){
+    } else if (goalPlanScreenStack.elementAt(0) == "Weight") {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_WEIGHT_GOALS);
-    }else if(goalPlanScreenStack.elementAt(0) == "Physical Activity"){
-      Navigator.pushReplacementNamed(context, RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS);
-    }else if(goalPlanScreenStack.elementAt(0) == "Quit Smoking"){
-      Navigator.pushReplacementNamed(context, RoutePaths.ADD_QUIT_SMOKING_GOALS);
+    } else if (goalPlanScreenStack.elementAt(0) == "Physical Activity") {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS);
+    } else if (goalPlanScreenStack.elementAt(0) == "Quit Smoking") {
+      Navigator.pushReplacementNamed(
+          context, RoutePaths.ADD_QUIT_SMOKING_GOALS);
     }
   }
 }

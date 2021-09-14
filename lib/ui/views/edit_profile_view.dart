@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
@@ -75,17 +74,15 @@ class _EditProfileState extends State<EditProfile> {
   String fullName = "";
   var dateFormat = DateFormat("dd MMM, yyyy");
   Patient patient;
+
   //String profileImage = "";
   String emergencymobileNumber = "";
-  CountryDetails details = CountryCodes.detailsForLocale();
-  Locale locale = CountryCodes.getDeviceLocale();
   bool isEditable = false;
 
   String countryCode = '';
 
   @override
   void initState() {
-
     debugPrint('TimeZone ==> ${DateTime.now().timeZoneOffset}');
 
     super.initState();
@@ -150,9 +147,9 @@ class _EditProfileState extends State<EditProfile> {
         debugPrint(patientGender);
         selectedGender = patientGender;
       });
-    } on FetchDataException catch(e) {
+    } on FetchDataException catch (e) {
       print('error caught: $e');
-      showToast(e.toString());
+      showToast(e.toString(), context);
     }
   }
 
@@ -168,11 +165,11 @@ class _EditProfileState extends State<EditProfile> {
       ),
       builder: (context, model, child) => Container(
         child: WillPopScope(
-          onWillPop:() async {
-            if(isEditable){
+          onWillPop: () async {
+            if (isEditable) {
               var result = await _onBackPressed();
               return result;
-            }else{
+            } else {
               Navigator.of(context).pop();
             }
           },
@@ -224,9 +221,7 @@ class _EditProfileState extends State<EditProfile> {
                   mini: false,
                   onPressed: () {
                     isEditable = true;
-                    setState(() {
-
-                    });
+                    setState(() {});
                   },
                   child: Icon(Icons.edit),
                 ),
@@ -240,24 +235,24 @@ class _EditProfileState extends State<EditProfile> {
 
   Future<bool> _onBackPressed() {
     return showDialog(
-      context: context,
-      builder: (context) => new AlertDialog(
-        title: new Text('Alert!'),
-        content: new Text('Are you sure you want to discard the changes?'),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Yes'),
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: new Text('Alert!'),
+            content: new Text('Are you sure you want to discard the changes?'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+              FlatButton(
+                child: Text('No'),
+                onPressed: () => Navigator.of(context).pop(false),
+              ),
+            ],
           ),
-          FlatButton(
-            child: Text('No'),
-            onPressed: () => Navigator.of(context).pop(false),
-          ),
-        ],
-      ),
-    ) ??
+        ) ??
         false;
   }
 
@@ -280,18 +275,18 @@ class _EditProfileState extends State<EditProfile> {
     try {
       result = await FlutterDocumentPicker.openDocument(params: params);
 
-      if(result != '') {
+      if (result != '') {
         File file = File(result);
         debugPrint(result);
         String fileName = file.path.split('/').last;
         print("File Name ==> ${fileName}");
-      //file.renameSync(pFile.name);
-      uploadProfilePicture(file);
-    } else {
-      showToast('Opps, something wents wrong!');
-    }
+        //file.renameSync(pFile.name);
+        uploadProfilePicture(file);
+      } else {
+        showToast('Opps, something wents wrong!', context);
+      }
     } catch (e) {
-      showToast('Please select document');
+      showToast('Please select document', context);
       print(e);
       result = 'Error: $e';
     }
@@ -319,8 +314,7 @@ class _EditProfileState extends State<EditProfile> {
       map["enc"] = "multipart/form-data";
       map["Authorization"] = 'Bearer ' + auth;
 
-      var postUri =
-          Uri.parse(_baseUrl+"/resources/upload/");
+      var postUri = Uri.parse(_baseUrl + "/resources/upload/");
       var request = new http.MultipartRequest("POST", postUri);
       request.headers.addAll(map);
       request.files.add(http.MultipartFile(
@@ -338,12 +332,13 @@ class _EditProfileState extends State<EditProfile> {
           if (uploadResponse.status == "success") {
             profileImagePath = uploadResponse.data.details.elementAt(0).url;
             //profileImage = uploadResponse.data.details.elementAt(0).url;
-            showToast(uploadResponse.message);
+            showToast(uploadResponse.message, context);
             setState(() {
-              debugPrint('File Public URL ==> ${uploadResponse.data.details.elementAt(0).url}');
+              debugPrint(
+                  'File Public URL ==> ${uploadResponse.data.details.elementAt(0).url}');
             });
           } else {
-            showToast('Opps, something wents wrong!');
+            showToast('Opps, something wents wrong!', context);
           }
         } else {
           print("Upload Faild !");
@@ -352,7 +347,7 @@ class _EditProfileState extends State<EditProfile> {
 
     } catch (CustomException) {
       debugPrint("4");
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     }
   }
@@ -390,14 +385,14 @@ class _EditProfileState extends State<EditProfile> {
                           : new NetworkImage(profileImagePath),
                       fit: BoxFit.cover,
                     ),
-                    borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
+                    borderRadius:
+                        new BorderRadius.all(new Radius.circular(50.0)),
                     border: new Border.all(
                       color: Colors.deepPurple,
                       width: 2.0,
                     ),
                   ),
                 ),
-
                 Align(
                   alignment: Alignment.topRight,
                   child: Visibility(
@@ -408,7 +403,8 @@ class _EditProfileState extends State<EditProfile> {
                               isDismissible: true,
                               backgroundColor: Colors.transparent,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(25.0)),
                               ),
                               context: context,
                               builder: (context) => _uploadImageSelector());
@@ -417,7 +413,8 @@ class _EditProfileState extends State<EditProfile> {
                         child: SizedBox(
                             height: 32,
                             width: 32,
-                            child: new Image.asset('res/images/ic_camera.png'))),
+                            child:
+                                new Image.asset('res/images/ic_camera.png'))),
                   ),
                 )
               ],
@@ -474,9 +471,7 @@ class _EditProfileState extends State<EditProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -576,9 +571,7 @@ class _EditProfileState extends State<EditProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -770,26 +763,24 @@ class _EditProfileState extends State<EditProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           SizedBox(
             height: 10,
           ),
           Container(
-              height: 50,
-              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-                border: Border.all(
-                  color: Colors.black26,
-                  width: 1.0,
-                ),
+            height: 50,
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              border: Border.all(
+                color: Colors.black26,
+                width: 1.0,
               ),
-              child:
-                  /*Row(
+            ),
+            child:
+                /*Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
@@ -823,7 +814,7 @@ class _EditProfileState extends State<EditProfile> {
                 ],
               )*/
 
-                  /*InternationalPhoneNumberInput(
+                /*InternationalPhoneNumberInput(
                 onInputChanged: (PhoneNumber number) {
                   mobileNumber = number.parseNumber();
                   debugPrint(number.parseNumber());
@@ -865,36 +856,36 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               )*/
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal:  12.0),
-                child: TextFormField(
-                      controller: _mobileNumberController,
-                      focusNode: _mobileNumberFocus,
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.next,
-                      maxLength: 10,
-                      enabled: false,
-                      onFieldSubmitted: (term) {
-                        /*_fieldFocusChange(
+                Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: TextFormField(
+                  controller: _mobileNumberController,
+                  focusNode: _mobileNumberFocus,
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.next,
+                  maxLength: 10,
+                  enabled: false,
+                  onFieldSubmitted: (term) {
+                    /*_fieldFocusChange(
                                         context, _mobileNumberFocus, _passwordFocus);*/
-                      },
-                      style: TextStyle(
-                        color: Colors.black26,
-                      ),
-                      maxLines: 1,
-                      decoration: InputDecoration(
-                          counterText: "",
-                          border: InputBorder.none,
-                          filled: false)),
-              ),
+                  },
+                  style: TextStyle(
+                    color: Colors.black26,
+                  ),
+                  maxLines: 1,
+                  decoration: InputDecoration(
+                      counterText: "",
+                      border: InputBorder.none,
+                      filled: false)),
+            ),
 
             /*IntlPhoneField(
-                *//*decoration: InputDecoration(
+                */ /*decoration: InputDecoration(
                     labelText: 'Phone Number',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(),
                     ),
-                  ),*//*
+                  ),*/ /*
                 readOnly: true,
                 style: TextStyle(fontSize: 16, color: Colors.black26),
                 autoValidate: true,
@@ -913,13 +904,13 @@ class _EditProfileState extends State<EditProfile> {
                   print(phone.number);
                   mobileNumber = phone.number;
                   countryCode = phone.countryCode;
-                  *//*if(mobileNumber.length == 10){
+                  */ /*if(mobileNumber.length == 10){
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
-                    }*//*
+                    }*/ /*
                 },
               )*/
 
-              /*InternationalPhoneNumberInput
+            /*InternationalPhoneNumberInput
               .withCustomDecoration(
               onInputChanged: (PhoneNumber number) {
                 mobileNumber = number.toString().trim();
@@ -948,7 +939,7 @@ class _EditProfileState extends State<EditProfile> {
                   fillColor: Color(0xfff3f3f4),
                   filled: true)
           ),*/
-              ),
+          ),
         ],
       ),
     );
@@ -1015,7 +1006,7 @@ class _EditProfileState extends State<EditProfile> {
                 ],
               )*/
 
-                 /* InternationalPhoneNumberInput(
+                  /* InternationalPhoneNumberInput(
                 onInputChanged: (PhoneNumber number) {
                   emergencymobileNumber = number.parseNumber();
                   debugPrint(number.parseNumber());
@@ -1057,7 +1048,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               )*/
 
-              IntlPhoneField(
+                  IntlPhoneField(
                 /*decoration: InputDecoration(
                     labelText: 'Phone Number',
                     border: OutlineInputBorder(
@@ -1075,7 +1066,7 @@ class _EditProfileState extends State<EditProfile> {
                     border: InputBorder.none,
                     fillColor: Colors.white,
                     filled: true),
-                initialCountryCode: details.alpha2Code,
+                initialCountryCode: getCurrentLocale(),
                 controller: _emergencyMobileNumberController,
                 textInputAction: TextInputAction.next,
                 onSubmitted: (term) {
@@ -1193,7 +1184,7 @@ class _EditProfileState extends State<EditProfile> {
           clipBehavior: Clip.antiAlias,
           // Add This
           child: Semantics(
-            label : "saveProfile",
+            label: "saveProfile",
             child: MaterialButton(
                 minWidth: 200,
                 child: new Text('Save',
@@ -1203,7 +1194,7 @@ class _EditProfileState extends State<EditProfile> {
                         fontWeight: FontWeight.w700)),
                 onPressed: () async {
                   if (_emailController.text.toString() == '') {
-                    showToast('Please enter email');
+                    showToast('Please enter email', context);
                   } else {
                     progressDialog.show();
                     var map = new Map<String, String>();
@@ -1225,7 +1216,7 @@ class _EditProfileState extends State<EditProfile> {
 
                       if (updateProfileSuccess.status == 'success') {
                         progressDialog.hide();
-                        showToast(updateProfileSuccess.message);
+                        showToast(updateProfileSuccess.message, context);
                         /* if (Navigator.canPop(context)) {
                       Navigator.pop(context);
                     }*/
@@ -1234,12 +1225,12 @@ class _EditProfileState extends State<EditProfile> {
                         //Navigator.pushNamed(context, RoutePaths.Home);
                       } else {
                         progressDialog.hide();
-                        showToast(updateProfileSuccess.message);
+                        showToast(updateProfileSuccess.message, context);
                       }
                     } catch (CustomException) {
                       model.setBusy(false);
                       progressDialog.hide();
-                      showToast(CustomException.toString());
+                      showToast(CustomException.toString(), context);
                       debugPrint(CustomException.toString());
                     }
                   }
@@ -1275,12 +1266,12 @@ class _EditProfileState extends State<EditProfile> {
         }), (Route<dynamic> route) => false);
         model.setBusy(false);
       } else {
-        showToast(doctorListApiResponse.message);
+        showToast(doctorListApiResponse.message, context);
         model.setBusy(false);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
   }
@@ -1320,7 +1311,7 @@ class _EditProfileState extends State<EditProfile> {
           }
           } catch (CustomException) {
             model.setBusy(false);
-            showToast(CustomException.toString());
+            showToast(CustomException.toString(), context);
             debugPrint(CustomException.toString());
           }
       },
@@ -1520,27 +1511,28 @@ class _EditProfileState extends State<EditProfile> {
             height: 10,
           ),
           AbsorbPointer(
-            absorbing: !isEditable,
-            child: ToggleSwitch(
-                initialLabelIndex: patientGender == "Male" ? 0 : patientGender == "Female" ? 1 : 2,
-                minWidth: 90.0,
-                cornerRadius: 20,
-                activeBgColor: Colors.green,
-                activeTextColor: Colors.white,
-                inactiveBgColor: Colors.grey,
-                inactiveTextColor: Colors.white,
-                labels: ['Male', 'Female'],
-                icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
-                activeColors: [Colors.blue, Colors.pink],
-                onToggle: (index) {
-                  print('switched to: $index');
-                  if (index == 0) {
-                    selectedGender = "Male";
-                  } else {
-                    selectedGender = "Female";
-                  }
-                }),
-          )
+              absorbing: !isEditable,
+              child: ToggleSwitch(
+                  minWidth: 120.0,
+                  cornerRadius: 20,
+                  initialLabelIndex: 0,
+                  totalSwitches: 2,
+                  activeBgColor: [Colors.green],
+                  inactiveBgColor: Colors.grey,
+                  labels: ['Male', 'Female'],
+                  icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
+                  activeBgColors: [
+                    [Colors.blue],
+                    [Colors.pink]
+                  ],
+                  onToggle: (index) {
+                    print('switched to: $index');
+                    if (index == 0) {
+                      selectedGender = "Male";
+                    } else {
+                      selectedGender = "Female";
+                    }
+                  }))
         ],
       ),
     );
@@ -1581,13 +1573,17 @@ class _EditProfileState extends State<EditProfile> {
                       child: Text(
                         dob,
                         style: TextStyle(
-                            fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black26),
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16,
+                            color: Colors.black26),
                       ),
                     ),
                     SizedBox(
                         height: 32,
                         width: 32,
-                        child: new ImageIcon(AssetImage('res/images/ic_calender.png'), color: Colors.black12)),
+                        child: new ImageIcon(
+                            AssetImage('res/images/ic_calender.png'),
+                            color: Colors.black12)),
                   ],
                 ),
               ),
@@ -1596,15 +1592,16 @@ class _EditProfileState extends State<EditProfile> {
               DatePicker.showDatePicker(context,
                   showTitleActions: true,
                   minTime: DateTime(1940, 1, 1),
-                  maxTime: DateTime.now().subtract(Duration(days: 1)), onChanged: (date) {
-                    print('change $date');
-                  }, onConfirm: (date) {
-                    unformatedDOB = date.toIso8601String();
-                    setState(() {
-                      dob = dateFormat.format(date);
-                    });
-                    print('confirm $date');
-                  }, currentTime: DateTime.now(), locale: LocaleType.en);
+                  maxTime: DateTime.now().subtract(Duration(days: 1)),
+                  onChanged: (date) {
+                print('change $date');
+              }, onConfirm: (date) {
+                unformatedDOB = date.toIso8601String();
+                setState(() {
+                  dob = dateFormat.format(date);
+                });
+                print('confirm $date');
+              }, currentTime: DateTime.now(), locale: LocaleType.en);
             },
           ),
         ],
@@ -1652,8 +1649,8 @@ class _EditProfileState extends State<EditProfile> {
       child: Container(
         decoration: new BoxDecoration(
           color: Colors.white,
-          borderRadius:
-          new BorderRadius.only(topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
+          borderRadius: new BorderRadius.only(
+              topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1662,7 +1659,7 @@ class _EditProfileState extends State<EditProfile> {
             Semantics(
               label: 'Camera',
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                   openCamera();
                 },
@@ -1677,18 +1674,27 @@ class _EditProfileState extends State<EditProfile> {
                         decoration: new BoxDecoration(
                           color: primaryLightColor,
                           borderRadius:
-                          new BorderRadius.all(new Radius.circular(50.0)),
+                              new BorderRadius.all(new Radius.circular(50.0)),
                           border: new Border.all(
                             color: Colors.deepPurple,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
-                          child: Icon(Icons.camera_alt, color: Colors.deepPurple, size: 24,),
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: Colors.deepPurple,
+                            size: 24,
+                          ),
                         ),
                       ),
-                      SizedBox(height: 8,),
-                      Text('Camera\n   ', style: TextStyle(fontSize: 12),),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        'Camera\n   ',
+                        style: TextStyle(fontSize: 12),
+                      ),
                     ],
                   ),
                 ),
@@ -1697,7 +1703,7 @@ class _EditProfileState extends State<EditProfile> {
             Semantics(
               label: 'Gallery',
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                   openGallery();
                 },
@@ -1712,58 +1718,77 @@ class _EditProfileState extends State<EditProfile> {
                         decoration: new BoxDecoration(
                           color: primaryLightColor,
                           borderRadius:
-                          new BorderRadius.all(new Radius.circular(50.0)),
+                              new BorderRadius.all(new Radius.circular(50.0)),
                           border: new Border.all(
                             color: Colors.deepPurple,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
-                          child: Icon(Icons.image, color: Colors.deepPurple, size: 24,),
-                        ),
-                      ),
-                      SizedBox(height: 8,),
-                      Text('Gallery\n   ', style: TextStyle(fontSize: 12),),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            if(profileImagePath != '')...[
-            Semantics(
-              label: 'removeProfileImage',
-              child: InkWell(
-                onTap: (){
-                  profileImagePath = '';
-                },
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: new BoxDecoration(
-                          color: primaryLightColor,
-                          borderRadius:
-                          new BorderRadius.all(new Radius.circular(50.0)),
-                          border: new Border.all(
+                          child: Icon(
+                            Icons.image,
                             color: Colors.deepPurple,
-                            width: 1.0,
+                            size: 24,
                           ),
                         ),
-                        child: Center(
-                          child: Icon(Icons.close, color: Colors.deepPurple, size: 24,),
-                        ),
                       ),
-                      SizedBox(height: 8,),
-                      Text('Remove\nPhoto', style: TextStyle(fontSize: 12), textAlign: TextAlign.center,),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        'Gallery\n   ',
+                        style: TextStyle(fontSize: 12),
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
+            if (profileImagePath != '') ...[
+              Semantics(
+                label: 'removeProfileImage',
+                child: InkWell(
+                  onTap: () {
+                    profileImagePath = '';
+                  },
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: new BoxDecoration(
+                            color: primaryLightColor,
+                            borderRadius:
+                                new BorderRadius.all(new Radius.circular(50.0)),
+                            border: new Border.all(
+                              color: Colors.deepPurple,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.close,
+                              color: Colors.deepPurple,
+                              size: 24,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          'Remove\nPhoto',
+                          style: TextStyle(fontSize: 12),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ],
         ),
@@ -1772,11 +1797,10 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   openGallery() async {
-      getFile();
+    getFile();
   }
 
   openCamera() async {
-
     var picture = await _picker.getImage(
       source: ImageSource.camera,
     );
@@ -1786,5 +1810,4 @@ class _EditProfileState extends State<EditProfile> {
     print("File Name ==> ${fileName}");
     uploadProfilePicture(file);
   }
-
 }

@@ -57,11 +57,11 @@ class Contacts {
 
   Contacts(
       {this.id,
-        this.patientUserId,
-        this.userId,
-        this.role,
-        this.roleName,
-        this.details});
+      this.patientUserId,
+      this.userId,
+      this.role,
+      this.roleName,
+      this.details});
 
   Contacts.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -70,7 +70,7 @@ class Contacts {
     role = json['Role'];
     roleName = json['RoleName'];
     details =
-    json['Details'] != null ? new Details.fromJson(json['Details']) : null;
+        json['Details'] != null ? new Details.fromJson(json['Details']) : null;
   }
 
   Map<String, dynamic> toJson() {

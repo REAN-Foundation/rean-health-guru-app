@@ -1,14 +1,10 @@
 import 'dart:io';
 
-import 'package:country_codes/country_codes.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/user_data.dart';
@@ -19,17 +15,12 @@ import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/ui/views/create_profile_view.dart';
 import 'package:paitent/ui/views/home_view.dart';
-import 'package:paitent/ui/views/signup_view.dart';
 import 'package:paitent/ui/widgets/bezierContainer.dart';
-import 'package:paitent/ui/widgets/login_header.dart';
-import 'package:flutter/material.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:provider/provider.dart';
 
-
 class OTPScreenView extends StatefulWidget {
-
   String mobileNumber = '';
 
   OTPScreenView(@required this.mobileNumber);
@@ -46,10 +37,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
   String mobileNumber = '';
   String otp = '';
   SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
-  final FirebaseMessaging _fcm = FirebaseMessaging();
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   String _fcmToken = "";
-  CountryDetails details = CountryCodes.detailsForLocale();
-  Locale locale = CountryCodes.getDeviceLocale();
   bool loginOTP = false;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
@@ -69,68 +58,77 @@ class _OTPScreenViewState extends State<OTPScreenView> {
     return BaseWidget<LoginViewModel>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       builder: (context, model, child) => Container(
-        child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            backgroundColor: colorF6F6FF,
-            body: Container(
-              height: height,
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                      top: -height * .20,
-                      right: -MediaQuery.of(context).size.width * .4,
-                      child: BezierContainer()),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(height: height * .2),
-                          //_title(),
-                          SizedBox(height: 16),
-                          Align( alignment: Alignment.centerLeft, child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: ImageIcon(AssetImage('res/images/mobile_verified.png'), size: 56, color: Colors.deepPurple,),
-                          )),
-                          //SizedBox(height: 30),
-                          //_emailPasswordWidget(),
-                          _textFeild(model),
-                          SizedBox(height: 40),
-                          model.busy
-                              ? CircularProgressIndicator()
-                              :_submitOTPButton(model),
-                         /* model.busy
+          child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              backgroundColor: colorF6F6FF,
+              body: Container(
+                height: height,
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                        top: -height * .20,
+                        right: -MediaQuery.of(context).size.width * .4,
+                        child: BezierContainer()),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(height: height * .2),
+                            //_title(),
+                            SizedBox(height: 16),
+                            Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Semantics(
+                                      label: 'mobile verification logo',
+                                      image: true,
+                                      child: ImageIcon(
+                                        AssetImage(
+                                            'res/images/mobile_verified.png'),
+                                        size: 56,
+                                        color: Colors.deepPurple,
+                                      )),
+                                )),
+                            //SizedBox(height: 30),
+                            //_emailPasswordWidget(),
+                            _textFeild(model),
+                            SizedBox(height: 40),
+                            model.busy
+                                ? CircularProgressIndicator()
+                                : _submitOTPButton(model),
+                            /* model.busy
                               ? CircularProgressIndicator()
                               :_submitButton(model),*/
-                          /*Container(
+                            /*Container(
                             padding: EdgeInsets.symmetric(vertical: 10),
                             alignment: Alignment.centerRight,
                             child: Text('Forgot Password ?',
                                 style: TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.w500)),
                           ),*/
-                          //_divider(),
-                          //_facebookButton(),
-                          //SizedBox(height: height * .099),
-                          //_createAccountLabel(),
-                        ],
+                            //_divider(),
+                            //_facebookButton(),
+                            //SizedBox(height: height * .099),
+                            //_createAccountLabel(),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                      bottom: -height * .30,
-                      right: MediaQuery.of(context).size.width * .35,
-                      child: Transform.rotate( angle: 160, child: BezierContainer())),
-                  //Positioned(top: 40, left: 0, child: _backButton()),
-                ],
-              ),
-            ))
-      ),
+                    Positioned(
+                        bottom: -height * .30,
+                        right: MediaQuery.of(context).size.width * .35,
+                        child: Transform.rotate(
+                            angle: 160, child: BezierContainer())),
+                    //Positioned(top: 40, left: 0, child: _backButton()),
+                  ],
+                ),
+              ))),
     );
   }
-
 
   Widget _backButton() {
     return InkWell(
@@ -153,7 +151,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
     );
   }
 
-  Widget _textFeild(LoginViewModel model){
+  Widget _textFeild(LoginViewModel model) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -167,7 +165,10 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             height: 4,
           ),
           Text(
-            '  OTP has been sent to your mobile number\n  '+ (dummyNumberList.contains(mobileNumber) ? mobileNumber : countryCodeGlobe+'-'+mobileNumber),
+            '  OTP has been sent to your mobile number\n  ' +
+                (dummyNumberList.contains(mobileNumber)
+                    ? mobileNumber
+                    : countryCodeGlobe + '-' + mobileNumber),
             style: TextStyle(fontSize: 14, color: Colors.grey),
           ),
           SizedBox(
@@ -177,15 +178,12 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             length: 6,
             width: MediaQuery.of(context).size.width,
             fieldWidth: 40,
-            style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w700
-            ),
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
             textFieldAlignment: MainAxisAlignment.spaceAround,
             fieldStyle: FieldStyle.box,
             onCompleted: (pin) {
               otp = pin;
-             /* model.setBusy(true);
+              /* model.setBusy(true);
               loginWithOTP(model);*/
             },
           ),
@@ -199,25 +197,27 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                 '  Didn’t received OTP?',
                 style: TextStyle(fontSize: 14, color: Colors.grey),
               ),
-              loginOTP ?
-              SizedBox( height: 24, width: 24, child: CircularProgressIndicator())
-                  :
-              InkWell(
-                onTap: (){
-                  generateOTPForExistingUser(model);
-                },
-                child: Text(
-                  'Resend OTP?',
-                  style: TextStyle(fontSize: 14, color: Colors.deepPurple, fontWeight: FontWeight.w700),
-                ),
-              ),
+              loginOTP
+                  ? SizedBox(
+                      height: 24, width: 24, child: CircularProgressIndicator())
+                  : InkWell(
+                      onTap: () {
+                        generateOTPForExistingUser(model);
+                      },
+                      child: Text(
+                        'Resend OTP?',
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
             ],
           )
         ],
       ),
     );
   }
-
 
   Widget _submitOTPButton(LoginViewModel model) {
     return Semantics(
@@ -226,34 +226,28 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         width: 160,
         height: 40,
         child: ElevatedButton(
-            child: Text(
-                "Submit",
-                style: TextStyle(fontSize: 14)
-            ),
+            child: Text("Submit", style: TextStyle(fontSize: 14)),
             style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.deepPurple),
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Colors.deepPurple),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(24)),
-                        side: BorderSide(color: Colors.deepPurple)
-                    )
-                )
-            ),
+                        side: BorderSide(color: Colors.deepPurple)))),
             onPressed: () async {
               debugPrint('mobile = ${widget.mobileNumber}');
               debugPrint('OTP = ${otp}');
 
               if (widget.mobileNumber.length != 10) {
-                showToast("Please enter valid mobile number");
+                showToast("Please enter valid mobile number", context);
               } else if (otp.toString() == '') {
-                showToast("Please enter otp");
+                showToast("Please enter otp", context);
               } else {
                 model.setBusy(true);
                 loginWithOTP(model);
               }
-            }
-        ),
+            }),
       ),
     );
   }
@@ -288,42 +282,42 @@ class _OTPScreenViewState extends State<OTPScreenView> {
     } on FetchDataException catch(e) {
       print('error caught: $e');
       model.setBusy(false);
-      showToast(e.toString());
+      showToast(e.toString(), context);
     }
 
   }*/
 
   generateOTPForExistingUser(LoginViewModel model) async {
     try {
-
       var map = new Map<String, String>();
       map["Content-Type"] = "application/json";
 
       debugPrint('Mobile = ${mobileNumber}');
 
       var body = new Map<String, dynamic>();
-      body["PhoneNumber"] = countryCodeGlobe+'-'+mobileNumber;
+      body["PhoneNumber"] = countryCodeGlobe + '-' + mobileNumber;
       body["Purpose"] = 'Login';
 
-      var response = await apiProvider.post('/user/generate-otp' , header: map, body: body);
+      var response =
+          await apiProvider.post('/user/generate-otp', header: map, body: body);
 
       BaseResponse doctorListApiResponse = BaseResponse.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        showToast('OTP has been successfully sent on your mobile number');
+        showToast(
+            'OTP has been successfully sent on your mobile number', context);
         model.setBusy(false);
-      }else{
+      } else {
         model.setBusy(false);
-        showToast(doctorListApiResponse.error);
+        showToast(doctorListApiResponse.error, context);
         setState(() {});
       }
-    } on FetchDataException catch(e) {
+    } on FetchDataException catch (e) {
       print('error caught: $e');
       model.setBusy(false);
       setState(() {});
-      showToast(e.toString());
+      showToast(e.toString(), context);
     }
-
   }
 
   loginWithOTP(LoginViewModel model) async {
@@ -335,90 +329,85 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       debugPrint('OTP = ${otp}');
 
       var body = new Map<String, dynamic>();
-      body["PhoneNumber"] = dummyNumberList.contains(mobileNumber) ? mobileNumber : countryCodeGlobe+'-'+mobileNumber;
+      body["PhoneNumber"] = dummyNumberList.contains(mobileNumber)
+          ? mobileNumber
+          : countryCodeGlobe + '-' + mobileNumber;
       body["OTP"] = otp;
 
-      var response = await apiProvider.post('/user/validate-otp' , header: map, body: body);
+      var response =
+          await apiProvider.post('/user/validate-otp', header: map, body: body);
 
       UserData userData = UserData.fromJson(response);
       if (userData.status == 'success') {
         _sharedPrefUtils.save("user", userData.toJson());
-        if(userData.data.user.basicProfileComplete){
-         /* _sharedPrefUtils.saveBoolean("login1.2", true);
+        if (userData.data.user.basicProfileComplete) {
+          /* _sharedPrefUtils.saveBoolean("login1.2", true);
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
                 return HomeView(0);
               }), (Route<dynamic> route) => false);*/
 
-          getPatientDetails(model, userData.data.accessToken, userData.data.user.userId);
-        }else{
+          getPatientDetails(
+              model, userData.data.accessToken, userData.data.user.userId);
+        } else {
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
-                return CreateProfile();
-              }), (Route<dynamic> route) => false);
+            return CreateProfile();
+          }), (Route<dynamic> route) => false);
           model.setBusy(false);
         }
-
-      }else{
-        showToast(userData.message);
-        setState(() {
-
-        });
+      } else {
+        showToast(userData.message, context);
+        setState(() {});
         model.setBusy(false);
       }
-    } on Exception catch(e) {
-      showToast("Opps something went worng.");
+    } on Exception catch (e) {
+      showToast("Opps something went worng.", context);
       print('error caught: $e');
       model.setBusy(false);
-      setState(() {
-
-      });
+      setState(() {});
     }
-
   }
 
-  getPatientDetails(LoginViewModel model,String auth, String userId) async {
+  getPatientDetails(LoginViewModel model, String auth, String userId) async {
     try {
       //ApiProvider apiProvider = new ApiProvider();
 
-
       var map = new Map<String, String>();
       map["Content-Type"] = "application/json";
-      map["authorization"] = "Bearer "+auth;
+      map["authorization"] = "Bearer " + auth;
 
-      var response = await apiProvider.get('/patient/'+userId , header: map);
+      var response = await apiProvider.get('/patient/' + userId, header: map);
 
-      PatientApiDetails doctorListApiResponse = PatientApiDetails.fromJson(response);
+      PatientApiDetails doctorListApiResponse =
+          PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        showToast('Welcome to REAN HealthGuru');
-        _sharedPrefUtils.save("patientDetails", doctorListApiResponse.data.patient.toJson());
+        showToast('Welcome to REAN HealthGuru', context);
+        _sharedPrefUtils.save(
+            "patientDetails", doctorListApiResponse.data.patient.toJson());
         _sharedPrefUtils.saveBoolean("login1.2", true);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
-              return HomeView(0);
-            }), (Route<dynamic> route) => false);
+          return HomeView(0);
+        }), (Route<dynamic> route) => false);
         model.setBusy(false);
-      }else{
+      } else {
         model.setBusy(false);
-        showToast(doctorListApiResponse.error);
+        showToast(doctorListApiResponse.error, context);
       }
-
-    } on FetchDataException catch(e) {
-      showToast('Opps! Something went wrong, Please try again');
+    } on FetchDataException catch (e) {
+      showToast('Opps! Something went wrong, Please try again', context);
       model.setBusy(false);
-      showToast(e.toString());
+      showToast(e.toString(), context);
       debugPrint(e.toString());
     }
-
   }
 
-  _clearFeilds(){
+  _clearFeilds() {
     _mobileNumberController.clear();
     _passwordController.clear();
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   void checkItenetConnection() async {
@@ -428,7 +417,6 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         print('connected');
       }
     } on SocketException catch (_) {
-
       print('not connected');
     }
   }
@@ -439,7 +427,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  void firebase(){
+  void firebase() {
     _fcm.getToken().then((String token) async {
       assert(token != null);
       print("Push Messaging token: $token");
@@ -448,7 +436,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       _sharedPrefUtils.save("fcmToken", token);
     });
 
-    _fcm.configure(
+    /*_fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("onMessage: $message");
         showDialog(
@@ -503,7 +491,6 @@ class _OTPScreenViewState extends State<OTPScreenView> {
           ),
         );
       },
-    );
+    );*/
   }
-
 }

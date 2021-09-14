@@ -51,10 +51,10 @@ class AssessmentTemplate {
 
   AssessmentTemplate(
       {this.id,
-        this.title,
-        this.description,
-        this.tags,
-        this.templateSymptomTypes});
+      this.title,
+      this.description,
+      this.tags,
+      this.templateSymptomTypes});
 
   AssessmentTemplate.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -94,12 +94,12 @@ class TemplateSymptomTypes {
 
   TemplateSymptomTypes(
       {this.index,
-        this.id,
-        this.symptom,
-        this.description,
-        this.tags,
-        this.imageResourceId,
-        this.publicImageUrl});
+      this.id,
+      this.symptom,
+      this.description,
+      this.tags,
+      this.imageResourceId,
+      this.publicImageUrl});
 
   TemplateSymptomTypes.fromJson(Map<String, dynamic> json) {
     index = json['Index'];

@@ -1,20 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/AddTeamMemberResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/addFamilyMemberDialog.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:intl/intl.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
@@ -33,14 +25,17 @@ class _SetUpFamilyMemberForCarePlanViewState
   var _searchController = new TextEditingController();
   SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
   StartCarePlanResponse startCarePlanResponse;
+
   //var teamMemberList = new List<TeamMember>();
   ProgressDialog progressDialog;
 
   loadSharedPrefrance() async {
     try {
-      startCarePlanResponse = StartCarePlanResponse.fromJson(await _sharedPrefUtils.read("CarePlan"));
+      startCarePlanResponse = StartCarePlanResponse.fromJson(
+          await _sharedPrefUtils.read("CarePlan"));
       startCarePlanResponseGlob = startCarePlanResponse;
-      debugPrint("AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}");
+      debugPrint(
+          "AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}");
     } catch (Excepetion) {
       // do something
       debugPrint(Excepetion);
@@ -48,7 +43,7 @@ class _SetUpFamilyMemberForCarePlanViewState
   }
 
   @override
-  void initState()  {
+  void initState() {
     loadSharedPrefrance();
     // TODO: implement initState
     super.initState();
@@ -108,17 +103,15 @@ class _SetUpFamilyMemberForCarePlanViewState
                         height: 16,
                       ),
                       Expanded(
-                          child:
-                              model.busy
-                          ? Center(
-                          child: SizedBox(
-                              height: 32,
-                              width: 32,
-                              child: CircularProgressIndicator()))
-                          : (familyMemberListGlobe.length == 0)
-                          ? noDoctorFound()
-                          :
-                              doctorSearchResultListView()) //,
+                          child: model.busy
+                              ? Center(
+                                  child: SizedBox(
+                                      height: 32,
+                                      width: 32,
+                                      child: CircularProgressIndicator()))
+                              : (familyMemberListGlobe.length == 0)
+                                  ? noDoctorFound()
+                                  : doctorSearchResultListView()) //,
                     ],
                   ),
                 ),
@@ -128,37 +121,56 @@ class _SetUpFamilyMemberForCarePlanViewState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    model.busy ? Container() : InkWell(
-                      onTap: (){
-                        /*familyMemberListGlobe.clear();
+                    model.busy
+                        ? Container()
+                        : InkWell(
+                            onTap: () {
+                              /*familyMemberListGlobe.clear();
                         familyMemberListGlobe.addAll(teamMemberList);*/
-                        Navigator.pushNamed(context, RoutePaths.Successfully_Setup_For_Care_Plan);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                          height: 40,
-                          width: 160,
-                          padding: EdgeInsets.symmetric(horizontal: 16.0, ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24.0),
-                            border: Border.all(color: primaryColor, width: 1),
-                            color: Colors.deepPurple,),
-                          child:  Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(Icons.arrow_back_ios, color: Colors.deepPurple, size: 16,),
-                              Text(
-                                'Next',
-                                style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14),
+                              Navigator.pushNamed(context,
+                                  RoutePaths.Successfully_Setup_For_Care_Plan);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Container(
+                                height: 40,
+                                width: 160,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                  border:
+                                      Border.all(color: primaryColor, width: 1),
+                                  color: Colors.deepPurple,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.arrow_back_ios,
+                                      color: Colors.deepPurple,
+                                      size: 16,
+                                    ),
+                                    Text(
+                                      'Next',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                          fontSize: 14),
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: Colors.white,
+                                      size: 16,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16,),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               )
@@ -267,22 +279,29 @@ class _SetUpFamilyMemberForCarePlanViewState
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.only(right: 18.0),
-                              child: Text(teamMember.details.firstName+' '+teamMember.details.lastName,
+                              child: Text(
+                                  teamMember.details.firstName +
+                                      ' ' +
+                                      teamMember.details.lastName,
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700,
                                       color: primaryColor)),
                             ),
-                            Text('+91 '+teamMember.details.phoneNumber,
+                            Text('+91 ' + teamMember.details.phoneNumber,
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w300,
                                     color: Color(0XFF909CAC))),
-                            Text(teamMember.details.relation,
-                                style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w200,
-                                    color: Color(0XFF909CAC)), maxLines: 2, overflow: TextOverflow.ellipsis,),
+                            Text(
+                              teamMember.details.relation,
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w200,
+                                  color: Color(0XFF909CAC)),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ],
                         ),
                       ),
@@ -416,6 +435,7 @@ class _SetUpFamilyMemberForCarePlanViewState
                       Icons.close,
                       color: Colors.white,
                     ),
+                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -445,23 +465,23 @@ class _SetUpFamilyMemberForCarePlanViewState
                   ),
                 ],
               ),
-              Expanded(child: AddFamilyMemberDialog( submitButtonListner: (String firstName, String lastName, String phoneNumber, String gender, String relation){
-                debugPrint("Team Member ==> ${firstName}");
-                addTeamMembers(firstName, lastName, phoneNumber, gender, relation);
-                Navigator.of(context, rootNavigator: true).pop();
-              }),)
+              Expanded(
+                child: AddFamilyMemberDialog(submitButtonListner:
+                    (String firstName, String lastName, String phoneNumber,
+                        String gender, String relation) {
+                  debugPrint("Team Member ==> ${firstName}");
+                  addTeamMembers(
+                      firstName, lastName, phoneNumber, gender, relation);
+                  Navigator.of(context, rootNavigator: true).pop();
+                }),
+              )
             ],
           ),
-
-
-
-
-        )
-    );
+        ));
   }
 
-
-  addTeamMembers(String firstName, String lastName, String phoneNumber, String gender, String relation) async {
+  addTeamMembers(String firstName, String lastName, String phoneNumber,
+      String gender, String relation) async {
     try {
       //progressDialog.show();
       model.setBusy(true);
@@ -487,24 +507,23 @@ class _SetUpFamilyMemberForCarePlanViewState
       map['TeamMemberType'] = "FamilyMember";
       map['Details'] = data;
 
-
       AddTeamMemberResponse addTeamMemberResponse =
-      await model.addTeamMembers(map);
+          await model.addTeamMembers(map);
       debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
       if (addTeamMemberResponse.status == 'success') {
         //progressDialog.hide();
         setState(() {
           familyMemberListGlobe.add(addTeamMemberResponse.data.teamMember);
         });
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       } else {
         //progressDialog.hide();
-        showToast(addTeamMemberResponse.message);
+        showToast(addTeamMemberResponse.message, context);
       }
     } catch (CustomException) {
       //progressDialog.hide();
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException);
     } catch (Exception) {
       //progressDialog.hide();

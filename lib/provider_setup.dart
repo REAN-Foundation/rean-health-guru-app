@@ -11,9 +11,7 @@ List<SingleChildWidget> providers = [
   ...uiConsumableProviders
 ];
 
-List<SingleChildWidget> independentServices = [
-  Provider.value(value: Api())
-];
+List<SingleChildWidget> independentServices = [Provider.value(value: Api())];
 
 List<SingleChildWidget> dependentServices = [
   ProxyProvider<Api, AuthenticationService>(
@@ -24,6 +22,8 @@ List<SingleChildWidget> dependentServices = [
 
 List<SingleChildWidget> uiConsumableProviders = [
   StreamProvider<UserData>(
-    create: (context) => Provider.of<AuthenticationService>(context, listen: false).user,
+    create: (context) =>
+        Provider.of<AuthenticationService>(context, listen: false).user,
+    initialData: UserData.fromJson(new Map()),
   )
 ];

@@ -1,33 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/GetGoalPriorities.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
-import 'package:paitent/core/models/assortedViewConfigs.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
-import 'package:paitent/ui/views/my_medication_remainder.dart';
-import 'package:paitent/ui/views/summary_of_my_care_plan.dart';
-import 'package:paitent/ui/views/team_of_my_care_plan.dart';
 import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/StringUtility.dart';
-import 'package:intl/intl.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class SelfReflactionWeek_1_View extends StatefulWidget {
-
   Task task;
 
-  SelfReflactionWeek_1_View(@required Task task){
+  SelfReflactionWeek_1_View(@required Task task) {
     this.task = task;
   }
 
@@ -36,8 +20,7 @@ class SelfReflactionWeek_1_View extends StatefulWidget {
       _SelfReflactionWeek_1_ViewState();
 }
 
-class _SelfReflactionWeek_1_ViewState
-    extends State<SelfReflactionWeek_1_View> {
+class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -51,20 +34,16 @@ class _SelfReflactionWeek_1_ViewState
   var question5TextControler = new TextEditingController();
   var question6TextControler = new TextEditingController();
 
-
   var focus2Node = new FocusNode();
   var focus3Node = new FocusNode();
   var focus4Node = new FocusNode();
   var focus5Node = new FocusNode();
   var focus6Node = new FocusNode();
 
-
-
   @override
   void initState() {
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -107,21 +86,37 @@ class _SelfReflactionWeek_1_ViewState
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   _makeQuestion1(),
-                  const SizedBox(height: 16,),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   _makeQuestion2(),
-                  const SizedBox(height: 16,),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   _makeQuestion3(),
-                  const SizedBox(height: 16,),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   _makeQuestion4(),
-                  const SizedBox(height: 16,),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   _makeQuestion5(),
-                  const SizedBox(height: 16,),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   _makeQuestion6(),
-                  const SizedBox(height: 16,),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   _makeQuestion7(),
-                  const SizedBox(height: 16,),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   _nextWeetTask(),
-                  const SizedBox(height: 32,),
+                  const SizedBox(
+                    height: 32,
+                  ),
                   submitButton(),
                 ],
               ),
@@ -132,12 +127,8 @@ class _SelfReflactionWeek_1_ViewState
     );
   }
 
-
-
   Widget _makeQuestion1() {
-
     return Container(
-
       decoration: new BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
@@ -148,8 +139,9 @@ class _SelfReflactionWeek_1_ViewState
             height: 40,
             decoration: new BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius:
-                new BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+                borderRadius: new BorderRadius.only(
+                    topLeft: Radius.circular(4.0),
+                    topRight: Radius.circular(4.0))),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -161,7 +153,8 @@ class _SelfReflactionWeek_1_ViewState
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700, color: primaryColor)),
+                          fontWeight: FontWeight.w700,
+                          color: primaryColor)),
                 ],
               ),
             ),
@@ -172,72 +165,76 @@ class _SelfReflactionWeek_1_ViewState
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
                 Expanded(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ImageIcon(
-                          AssetImage('res/images/ic_smile.png'),
-                          size: 48,
-                          color: Colors.deepPurple,
-                        ),
-                        SizedBox(height: 8,),
-                        SizedBox(
-                          width: 150,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: answer1 == 'Good' ? Colors.deepPurple :colorF6F6FF)),
-                            onPressed: () {
-                              answer1 = "Good";
-                              setState(() {
-                              });
-                            },
-                            color: colorF6F6FF,
-                            textColor: Colors.deepPurple,
-                            child: Text("Good",
-                                style: TextStyle(fontSize: 14)),
-                          ),
-                        ),
-                      ],
-                    )
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ImageIcon(
+                      AssetImage('res/images/ic_smile.png'),
+                      size: 48,
+                      color: Colors.deepPurple,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    SizedBox(
+                      width: 150,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(
+                                color: answer1 == 'Good'
+                                    ? Colors.deepPurple
+                                    : colorF6F6FF)),
+                        onPressed: () {
+                          answer1 = "Good";
+                          setState(() {});
+                        },
+                        color: colorF6F6FF,
+                        textColor: Colors.deepPurple,
+                        child: Text("Good", style: TextStyle(fontSize: 14)),
+                      ),
+                    ),
+                  ],
+                )),
+                SizedBox(
+                  width: 16,
                 ),
-                SizedBox(width: 16,),
                 Expanded(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ImageIcon(
-                          AssetImage('res/images/ic_sad.png'),
-                          size: 48,
-                          color: Colors.deepPurple,
-                        ),
-                        SizedBox(height: 8,),
-                        SizedBox(
-                          width: 150,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: answer1 == 'Not so good' ? Colors.deepPurple :colorF6F6FF)),
-                            onPressed: () {
-                              answer1 = "Not so good";
-                              setState(() {
-
-                              });
-                            },
-                            color: colorF6F6FF,
-                            textColor: Colors.deepPurple,
-                            child: Text("Not so good",
-                                style: TextStyle(fontSize: 14)),
-                          ),
-                        ),
-                      ],
-                    )
-                )
-
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ImageIcon(
+                      AssetImage('res/images/ic_sad.png'),
+                      size: 48,
+                      color: Colors.deepPurple,
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    SizedBox(
+                      width: 150,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(
+                                color: answer1 == 'Not so good'
+                                    ? Colors.deepPurple
+                                    : colorF6F6FF)),
+                        onPressed: () {
+                          answer1 = "Not so good";
+                          setState(() {});
+                        },
+                        color: colorF6F6FF,
+                        textColor: Colors.deepPurple,
+                        child:
+                            Text("Not so good", style: TextStyle(fontSize: 14)),
+                      ),
+                    ),
+                  ],
+                ))
               ],
             ),
           ),
@@ -247,9 +244,7 @@ class _SelfReflactionWeek_1_ViewState
   }
 
   Widget _makeQuestion2() {
-
     return Container(
-
       decoration: new BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
@@ -260,8 +255,9 @@ class _SelfReflactionWeek_1_ViewState
             height: 40,
             decoration: new BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius:
-                new BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+                borderRadius: new BorderRadius.only(
+                    topLeft: Radius.circular(4.0),
+                    topRight: Radius.circular(4.0))),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -273,7 +269,8 @@ class _SelfReflactionWeek_1_ViewState
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700, color: primaryColor)),
+                          fontWeight: FontWeight.w700,
+                          color: primaryColor)),
                 ],
               ),
             ),
@@ -288,12 +285,13 @@ class _SelfReflactionWeek_1_ViewState
                   focusNode: focus2Node,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
-                  style: TextStyle(color: Colors.black54,),
-                  onFieldSubmitted: (term) {
-
-                  },
+                  style: TextStyle(
+                    color: Colors.black54,
+                  ),
+                  onFieldSubmitted: (term) {},
                   decoration: InputDecoration(
-                      hintText: 'Give your view of care plan progress here.\n\nPositives, negatives, frustrations and\ncertainly your accomplishments....',
+                      hintText:
+                          'Give your view of care plan progress here.\n\nPositives, negatives, frustrations and\ncertainly your accomplishments....',
                       hintMaxLines: 4,
                       hintStyle: TextStyle(fontSize: 12),
                       border: InputBorder.none,
@@ -307,9 +305,7 @@ class _SelfReflactionWeek_1_ViewState
   }
 
   Widget _makeQuestion3() {
-
     return Container(
-
       decoration: new BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
@@ -320,8 +316,9 @@ class _SelfReflactionWeek_1_ViewState
             height: 40,
             decoration: new BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius:
-                new BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+                borderRadius: new BorderRadius.only(
+                    topLeft: Radius.circular(4.0),
+                    topRight: Radius.circular(4.0))),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -333,7 +330,8 @@ class _SelfReflactionWeek_1_ViewState
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700, color: primaryColor)),
+                          fontWeight: FontWeight.w700,
+                          color: primaryColor)),
                 ],
               ),
             ),
@@ -348,12 +346,13 @@ class _SelfReflactionWeek_1_ViewState
                   focusNode: focus3Node,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
-                  style: TextStyle(color: Colors.black54,),
-                  onFieldSubmitted: (term) {
-
-                  },
+                  style: TextStyle(
+                    color: Colors.black54,
+                  ),
+                  onFieldSubmitted: (term) {},
                   decoration: InputDecoration(
-                      hintText: 'Mention the things in care plan which are working for you. Add your comments here...',
+                      hintText:
+                          'Mention the things in care plan which are working for you. Add your comments here...',
                       hintMaxLines: 4,
                       hintStyle: TextStyle(fontSize: 12),
                       border: InputBorder.none,
@@ -367,9 +366,7 @@ class _SelfReflactionWeek_1_ViewState
   }
 
   Widget _makeQuestion4() {
-
     return Container(
-
       decoration: new BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
@@ -380,8 +377,9 @@ class _SelfReflactionWeek_1_ViewState
             height: 40,
             decoration: new BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius:
-                new BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+                borderRadius: new BorderRadius.only(
+                    topLeft: Radius.circular(4.0),
+                    topRight: Radius.circular(4.0))),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -393,7 +391,8 @@ class _SelfReflactionWeek_1_ViewState
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700, color: primaryColor)),
+                          fontWeight: FontWeight.w700,
+                          color: primaryColor)),
                 ],
               ),
             ),
@@ -408,12 +407,13 @@ class _SelfReflactionWeek_1_ViewState
                   focusNode: focus4Node,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
-                  style: TextStyle(color: Colors.black54,),
-                  onFieldSubmitted: (term) {
-
-                  },
+                  style: TextStyle(
+                    color: Colors.black54,
+                  ),
+                  onFieldSubmitted: (term) {},
                   decoration: InputDecoration(
-                      hintText: 'Any new learnings and experiences for you?\nAdd your comments here...',
+                      hintText:
+                          'Any new learnings and experiences for you?\nAdd your comments here...',
                       hintMaxLines: 4,
                       hintStyle: TextStyle(fontSize: 12),
                       border: InputBorder.none,
@@ -427,9 +427,7 @@ class _SelfReflactionWeek_1_ViewState
   }
 
   Widget _makeQuestion5() {
-
     return Container(
-
       decoration: new BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
@@ -440,8 +438,9 @@ class _SelfReflactionWeek_1_ViewState
             height: 40,
             decoration: new BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius:
-                new BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+                borderRadius: new BorderRadius.only(
+                    topLeft: Radius.circular(4.0),
+                    topRight: Radius.circular(4.0))),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -453,7 +452,8 @@ class _SelfReflactionWeek_1_ViewState
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700, color: primaryColor)),
+                          fontWeight: FontWeight.w700,
+                          color: primaryColor)),
                 ],
               ),
             ),
@@ -468,12 +468,13 @@ class _SelfReflactionWeek_1_ViewState
                   focusNode: focus5Node,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
-                  style: TextStyle(color: Colors.black54,),
-                  onFieldSubmitted: (term) {
-
-                  },
+                  style: TextStyle(
+                    color: Colors.black54,
+                  ),
+                  onFieldSubmitted: (term) {},
                   decoration: InputDecoration(
-                      hintText: 'Do you think you need course correction? \nComment here...',
+                      hintText:
+                          'Do you think you need course correction? \nComment here...',
                       hintMaxLines: 4,
                       hintStyle: TextStyle(fontSize: 12),
                       border: InputBorder.none,
@@ -487,9 +488,7 @@ class _SelfReflactionWeek_1_ViewState
   }
 
   Widget _makeQuestion6() {
-
     return Container(
-
       decoration: new BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
@@ -500,8 +499,9 @@ class _SelfReflactionWeek_1_ViewState
             height: 40,
             decoration: new BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius:
-                new BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+                borderRadius: new BorderRadius.only(
+                    topLeft: Radius.circular(4.0),
+                    topRight: Radius.circular(4.0))),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -513,7 +513,8 @@ class _SelfReflactionWeek_1_ViewState
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700, color: primaryColor)),
+                          fontWeight: FontWeight.w700,
+                          color: primaryColor)),
                 ],
               ),
             ),
@@ -528,12 +529,13 @@ class _SelfReflactionWeek_1_ViewState
                   focusNode: focus6Node,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
-                  style: TextStyle(color: Colors.black54,),
-                  onFieldSubmitted: (term) {
-
-                  },
+                  style: TextStyle(
+                    color: Colors.black54,
+                  ),
+                  onFieldSubmitted: (term) {},
                   decoration: InputDecoration(
-                      hintText: 'Add your concerns, doubts and notes to your doctor here...',
+                      hintText:
+                          'Add your concerns, doubts and notes to your doctor here...',
                       hintMaxLines: 4,
                       hintStyle: TextStyle(fontSize: 12),
                       border: InputBorder.none,
@@ -547,9 +549,7 @@ class _SelfReflactionWeek_1_ViewState
   }
 
   Widget _makeQuestion7() {
-
     return Container(
-
       decoration: new BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
@@ -560,8 +560,9 @@ class _SelfReflactionWeek_1_ViewState
             height: 40,
             decoration: new BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius:
-                new BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+                borderRadius: new BorderRadius.only(
+                    topLeft: Radius.circular(4.0),
+                    topRight: Radius.circular(4.0))),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -573,7 +574,8 @@ class _SelfReflactionWeek_1_ViewState
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700, color: primaryColor)),
+                          fontWeight: FontWeight.w700,
+                          color: primaryColor)),
                 ],
               ),
             ),
@@ -584,13 +586,11 @@ class _SelfReflactionWeek_1_ViewState
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-
                 Text('Are you ready and confident to continue with care plan?',
-
                     style: TextStyle(
                         fontSize: 14,
-                        fontWeight: FontWeight.w300, color: textBlack)),
-
+                        fontWeight: FontWeight.w300,
+                        color: textBlack)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -600,41 +600,42 @@ class _SelfReflactionWeek_1_ViewState
                       child: RaisedButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(color: answer7 == 'Yes' ? Colors.deepPurple :colorF6F6FF)),
+                            side: BorderSide(
+                                color: answer7 == 'Yes'
+                                    ? Colors.deepPurple
+                                    : colorF6F6FF)),
                         onPressed: () {
                           answer7 = "Yes";
-                          setState(() {
-                          });
+                          setState(() {});
                         },
                         color: colorF6F6FF,
                         textColor: Colors.deepPurple,
-                        child: Text("Yes",
-                            style: TextStyle(fontSize: 14)),
+                        child: Text("Yes", style: TextStyle(fontSize: 14)),
                       ),
                     ),
                     SizedBox(
-                      width: 16,),
+                      width: 16,
+                    ),
                     SizedBox(
                       width: 80,
                       child: RaisedButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(color: answer7 == 'No' ? Colors.deepPurple :colorF6F6FF)),
+                            side: BorderSide(
+                                color: answer7 == 'No'
+                                    ? Colors.deepPurple
+                                    : colorF6F6FF)),
                         onPressed: () {
                           answer7 = "No";
-                          setState(() {
-
-                          });
+                          setState(() {});
                         },
                         color: colorF6F6FF,
                         textColor: Colors.deepPurple,
-                        child: Text("No",
-                            style: TextStyle(fontSize: 14)),
+                        child: Text("No", style: TextStyle(fontSize: 14)),
                       ),
                     ),
                   ],
                 ),
-
               ],
             ),
           ),
@@ -644,9 +645,7 @@ class _SelfReflactionWeek_1_ViewState
   }
 
   Widget _nextWeetTask() {
-
     return Container(
-
       decoration: new BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
@@ -657,8 +656,9 @@ class _SelfReflactionWeek_1_ViewState
             height: 40,
             decoration: new BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius:
-                new BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+                borderRadius: new BorderRadius.only(
+                    topLeft: Radius.circular(4.0),
+                    topRight: Radius.circular(4.0))),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -670,7 +670,8 @@ class _SelfReflactionWeek_1_ViewState
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700, color: primaryColor)),
+                          fontWeight: FontWeight.w700,
+                          color: primaryColor)),
                 ],
               ),
             ),
@@ -686,10 +687,9 @@ class _SelfReflactionWeek_1_ViewState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Expanded(
-                        //child: Container(color: Colors.white,),),
+                          //child: Container(color: Colors.white,),),
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                                0, 4.0, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 0),
                             child: Icon(
                               Icons.brightness_1,
                               color: Colors.deepPurple,
@@ -700,7 +700,8 @@ class _SelfReflactionWeek_1_ViewState
                       //SizedBox(width: 8.0,),
                       Expanded(
                         flex: 10,
-                        child: Text('You will learn why \'Heart Failure Management\' is important.',
+                        child: Text(
+                          'You will learn why \'Heart Failure Management\' is important.',
                           style: TextStyle(
                               fontStyle: FontStyle.normal,
                               color: Colors.deepPurple,
@@ -711,16 +712,16 @@ class _SelfReflactionWeek_1_ViewState
                       )
                     ]),
                 SizedBox(
-                  height: 8,),
+                  height: 8,
+                ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Expanded(
-                        //child: Container(color: Colors.white,),),
+                          //child: Container(color: Colors.white,),),
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                                0, 4.0, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 0),
                             child: Icon(
                               Icons.brightness_1,
                               color: Colors.deepPurple,
@@ -731,7 +732,8 @@ class _SelfReflactionWeek_1_ViewState
                       //SizedBox(width: 8.0,),
                       Expanded(
                         flex: 10,
-                        child: Text('Learn about the risks of heart failure.',
+                        child: Text(
+                          'Learn about the risks of heart failure.',
                           style: TextStyle(
                               fontStyle: FontStyle.normal,
                               color: Colors.deepPurple,
@@ -742,16 +744,16 @@ class _SelfReflactionWeek_1_ViewState
                       )
                     ]),
                 SizedBox(
-                  height: 8,),
+                  height: 8,
+                ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Expanded(
-                        //child: Container(color: Colors.white,),),
+                          //child: Container(color: Colors.white,),),
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                                0, 4.0, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 0),
                             child: Icon(
                               Icons.brightness_1,
                               color: Colors.deepPurple,
@@ -762,7 +764,8 @@ class _SelfReflactionWeek_1_ViewState
                       //SizedBox(width: 8.0,),
                       Expanded(
                         flex: 10,
-                        child: Text('Learn about treatments for heart failure',
+                        child: Text(
+                          'Learn about treatments for heart failure',
                           style: TextStyle(
                               fontStyle: FontStyle.normal,
                               color: Colors.deepPurple,
@@ -773,7 +776,8 @@ class _SelfReflactionWeek_1_ViewState
                       )
                     ]),
                 SizedBox(
-                  height: 8,),
+                  height: 8,
+                ),
               ],
             ),
           ),
@@ -781,7 +785,6 @@ class _SelfReflactionWeek_1_ViewState
       ),
     );
   }
-
 
   Widget submitButton() {
     return model.busy
@@ -832,22 +835,22 @@ class _SelfReflactionWeek_1_ViewState
       map['QuestionsAndConcerns_Text'] = question6TextControler.text;
       map['ReadyToProceedFurther'] = answer7 == 'Yes';
 
-
-
-      BaseResponse baseResponse  = await model.statusCheck(startCarePlanResponseGlob.data.carePlan.id.toString(),   widget.task.details.id,  map);
+      BaseResponse baseResponse = await model.statusCheck(
+          startCarePlanResponseGlob.data.carePlan.id.toString(),
+          widget.task.details.id,
+          map);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
         Navigator.pop(context);
       } else {
-          showToast(baseResponse.message);
+        showToast(baseResponse.message, context);
       }
     } catch (e) {
       progressDialog.hide();
       model.setBusy(false);
-      showToast(e.toString());
-      debugPrint('Error ==> '+e.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
-
 }

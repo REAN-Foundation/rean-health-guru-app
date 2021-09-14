@@ -1,34 +1,28 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GetAllRecordResponse.dart';
 import 'package:paitent/core/models/GetSharablePublicLink.dart';
-import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
-import 'package:paitent/core/models/UploadImageResponse.dart';
 import 'package:paitent/core/viewmodels/views/common_config_model.dart';
-import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/ImageViewer.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/home_view.dart';
 import 'package:paitent/ui/views/pdfViewer.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
-import 'package:progress_dialog/progress_dialog.dart';
-import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
-import 'package:path/path.dart' as path;
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:share/share.dart';
 
 class MyReportsView extends StatefulWidget {
@@ -79,7 +73,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -109,12 +103,12 @@ class _MyReportsViewState extends State<MyReportsView> {
         //showToast(startCarePlanResponse.message);
       } else {
         progressDialog.hide();
-        showToast(getSharablePublicLink.message);
+        showToast(getSharablePublicLink.message, context);
       }
     } catch (CustomException) {
       progressDialog.hide();
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       progressDialog.hide();
@@ -132,13 +126,13 @@ class _MyReportsViewState extends State<MyReportsView> {
       debugPrint("Records ==> ${baseResponse.toJson()}");
       if (baseResponse.status == 'success') {
         getAllRecords();
-        showToast('Document renamed successfully.');
+        showToast('Document renamed successfully.', context);
       } else {
-        showToast(baseResponse.message);
+        showToast(baseResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -151,13 +145,13 @@ class _MyReportsViewState extends State<MyReportsView> {
       debugPrint("Records ==> ${baseResponse.toJson()}");
       if (baseResponse.status == 'success') {
         getAllRecords();
-        showToast(baseResponse.message);
+        showToast(baseResponse.message, context);
       } else {
-        showToast(baseResponse.message);
+        showToast(baseResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
@@ -267,11 +261,11 @@ class _MyReportsViewState extends State<MyReportsView> {
                 isDismissible: true,
                 backgroundColor: Colors.transparent,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(25.0)),
                 ),
                 context: context,
                 builder: (context) => _uploadImageSelector());
-
           },
           icon: Icon(
             Icons.file_upload,
@@ -339,7 +333,7 @@ class _MyReportsViewState extends State<MyReportsView> {
             //getDocumentPublicLink(document, true);
 
           } else {
-            showToast('Opps, something wents wrong!');
+            showToast('Opps, something wents wrong!', context);
           }
         },
         child: Container(
@@ -459,7 +453,8 @@ class _MyReportsViewState extends State<MyReportsView> {
                               if (document.mimeType != null) {
                                 getDocumentPublicLink(document, false);
                               } else {
-                                showToast('Opps, something wents wrong!');
+                                showToast(
+                                    'Opps, something wents wrong!', context);
                               }
                             },
                             child: Container(
@@ -565,10 +560,10 @@ class _MyReportsViewState extends State<MyReportsView> {
         print("File Name ==> ${fileName}");
         uploadProfilePicture(file, type);
       } else {
-        showToast('Please select document');
+        showToast('Please select document', context);
       }
     } catch (e) {
-      showToast('Please select document');
+      showToast('Please select document', context);
       print(e);
       result = 'Error: $e';
     }
@@ -666,20 +661,20 @@ class _MyReportsViewState extends State<MyReportsView> {
               GetAllRecordResponse.fromJson(json.decode(respStr));
           if (uploadResponse.status == "success") {
             getAllRecords();
-            showToast(uploadResponse.message);
+            showToast(uploadResponse.message, context);
           } else {
-            showToast('Opps, something wents wrong!');
+            showToast('Opps, something wents wrong!', context);
           }
         } else {
           progressDialog.hide();
-          showToast('Opps, something wents wrong!');
+          showToast('Opps, something wents wrong!', context);
           print("Upload Faild !");
         }
       }); // debugPrint("3");
 
     } catch (CustomException) {
       progressDialog.hide();
-      showToast(CustomException.toString());
+      showToast(CustomException.toString(), context);
       debugPrint("Error " + CustomException.toString());
     }
   }
@@ -759,10 +754,10 @@ class _MyReportsViewState extends State<MyReportsView> {
           new FlatButton(
               child: const Text('Ok'),
               onPressed: () {
-                if(document.fileName == renameControler.text){
-                  showToast('Document renamed successfully ');
+                if (document.fileName == renameControler.text) {
+                  showToast('Document renamed successfully ', context);
                   Navigator.of(context, rootNavigator: true).pop();
-                }else {
+                } else {
                   renameDocument(document.id, renameControler.text);
                   Navigator.of(context, rootNavigator: true).pop();
                 }
@@ -779,8 +774,8 @@ class _MyReportsViewState extends State<MyReportsView> {
       child: Container(
         decoration: new BoxDecoration(
           color: Colors.white,
-          borderRadius:
-          new BorderRadius.only(topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
+          borderRadius: new BorderRadius.only(
+              topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -789,7 +784,7 @@ class _MyReportsViewState extends State<MyReportsView> {
             Semantics(
               label: 'Camera',
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                   openCamera();
                 },
@@ -811,11 +806,20 @@ class _MyReportsViewState extends State<MyReportsView> {
                           ),
                         ),
                         child: Center(
-                          child: Icon(Icons.camera_alt, color: Colors.deepPurple, size: 24,),
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: Colors.deepPurple,
+                            size: 24,
+                          ),
                         ),
                       ),
-                      SizedBox(height: 8,),
-                      Text('Camera', style: TextStyle(fontSize: 12),),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        'Camera',
+                        style: TextStyle(fontSize: 12),
+                      ),
                     ],
                   ),
                 ),
@@ -824,7 +828,7 @@ class _MyReportsViewState extends State<MyReportsView> {
             Semantics(
               label: 'Gallery',
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                   openGallery();
                 },
@@ -839,18 +843,27 @@ class _MyReportsViewState extends State<MyReportsView> {
                         decoration: new BoxDecoration(
                           color: primaryLightColor,
                           borderRadius:
-                          new BorderRadius.all(new Radius.circular(50.0)),
+                              new BorderRadius.all(new Radius.circular(50.0)),
                           border: new Border.all(
                             color: Colors.deepPurple,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
-                          child: Icon(Icons.image, color: Colors.deepPurple, size: 24,),
+                          child: Icon(
+                            Icons.image,
+                            color: Colors.deepPurple,
+                            size: 24,
+                          ),
                         ),
                       ),
-                      SizedBox(height: 8,),
-                      Text('Gallery', style: TextStyle(fontSize: 12),),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        'Gallery',
+                        style: TextStyle(fontSize: 12),
+                      ),
                     ],
                   ),
                 ),
@@ -902,7 +915,7 @@ class _MyReportsViewState extends State<MyReportsView> {
     if (type != null) {
       getFile(type);
     } else {
-      showToast('Please select document type');
+      showToast('Please select document type', context);
     }
   }
 
@@ -919,7 +932,6 @@ class _MyReportsViewState extends State<MyReportsView> {
     print("File Name ==> ${fileName}");
     uploadProfilePicture(file, type);
   }
-
 }
 
 /*setTimerForProgress(){

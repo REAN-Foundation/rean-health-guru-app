@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_autolink_text/flutter_autolink_text.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
+import 'package:intl/intl.dart';
 import 'package:paitent/core/models/DoctorBookingAppoinmentPojo.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/models/labsListApiResponse.dart';
 import 'package:paitent/core/viewmodels/views/appoinment_view_model.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/ui/shared/text_styles.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/ui/views/home_view.dart';
-import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BookingConfirmedView extends StatefulWidget {
-
   DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;
 
   BookingConfirmedView(@required this.bookingAppoinmentsDetails);
 
   @override
-  _BookingConfirmedViewState createState() => _BookingConfirmedViewState(bookingAppoinmentsDetails);
+  _BookingConfirmedViewState createState() =>
+      _BookingConfirmedViewState(bookingAppoinmentsDetails);
 }
 
 class _BookingConfirmedViewState extends State<BookingConfirmedView> {
-
   DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;
   Doctors doctorDetails;
   var dateFormat = DateFormat("dd MMM, yyyy");
@@ -35,9 +32,9 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
 
   @override
   Widget build(BuildContext context) {
-    if(bookingAppoinmentsDetails.whichFlow == "Lab"){
+    if (bookingAppoinmentsDetails.whichFlow == "Lab") {
       labDetails = bookingAppoinmentsDetails.labs;
-    }else {
+    } else {
       doctorDetails = bookingAppoinmentsDetails.doctors;
     }
     // TODO: implement build
@@ -45,87 +42,97 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
         model: AppoinmentViewModel(),
         builder: (context, model, child) => Container(
                 child: WillPopScope(
-                  onWillPop: _onBackPressed,
-                  child: Scaffold(
-                    backgroundColor: Colors.white,
-                    body: Column(
-                      children: [
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-
-                                  color: Colors.white,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      SizedBox(
-                                        height: 40,
-                                      ),
-                                      Container(
-                                        height: 60,
-                                        width: 60,
-                                        child: Image(
-                                          image: AssetImage('res/images/ic_tick.png'),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 16,
-                                      ),
-                                      Text('Appointment Confirmed',
-                                          style: TextStyle(
-                                              fontSize: 18, fontWeight: FontWeight.w700)),
-                                      Text('ID: 2359852',
-                                          style: TextStyle(
-                                              fontSize: 12, fontWeight: FontWeight.bold, color: primaryColor)),
-                                      SizedBox(
-                                        height: 24,
-                                      ),
-                                      /*Text(
+              onWillPop: _onBackPressed,
+              child: Scaffold(
+                backgroundColor: Colors.white,
+                body: Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              color: Colors.white,
+                              width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 40,
+                                  ),
+                                  Container(
+                                    height: 60,
+                                    width: 60,
+                                    child: Image(
+                                      image:
+                                          AssetImage('res/images/ic_tick.png'),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 16,
+                                  ),
+                                  Text('Appointment Confirmed',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w700)),
+                                  Text('ID: 2359852',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: primaryColor)),
+                                  SizedBox(
+                                    height: 24,
+                                  ),
+                                  /*Text(
                                         'Confirmation email and sms has been sent to\nyour registered details',
                                         style: TextStyle(
                                             fontSize: 12, fontWeight: FontWeight.normal),
                                         textAlign: TextAlign.center,
                                       ),*/
-                                      SizedBox(
-                                        height: 24,
-                                      ),
-                                    ],
+                                  SizedBox(
+                                    height: 24,
                                   ),
-                                ),
-                                _makeDateAndTimeTile(),
-                                Container(
-                                  height: 360,
-                                  child: bookingAppoinmentsDetails.whichFlow == "Lab" ?  _makeLabTile() : _makeDoctorTile(),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
+                            _makeDateAndTimeTile(),
+                            Container(
+                              height: 360,
+                              child:
+                                  bookingAppoinmentsDetails.whichFlow == "Lab"
+                                      ? _makeLabTile()
+                                      : _makeDoctorTile(),
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 8,),
-                        _continueButton(),
-                        SizedBox(height: 16,),
-                      ],
+                      ),
                     ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    _continueButton(),
+                    SizedBox(
+                      height: 16,
+                    ),
+                  ],
+                ),
               ),
             )));
   }
 
-  Widget _makeDoctorTile(){
+  Widget _makeDoctorTile() {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(height: 24,),
+          SizedBox(
+            height: 24,
+          ),
           Text('Appointment Details',
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700)),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
           SizedBox(
             height: 16,
           ),
@@ -137,16 +144,15 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
               backgroundColor: primaryColor,
               child: CircleAvatar(
                   radius: 38,
-                  backgroundImage: doctorDetails.imageURL  == "" ? AssetImage('res/images/profile_placeholder.png') : new NetworkImage(doctorDetails.imageURL)),
+                  backgroundImage: doctorDetails.imageURL == ""
+                      ? AssetImage('res/images/profile_placeholder.png')
+                      : new NetworkImage(doctorDetails.imageURL)),
             ),
           ),
           SizedBox(
             height: 16,
           ),
-          Text('Dr.' +
-              doctorDetails.firstName +
-              ' ' +
-              doctorDetails.lastName,
+          Text('Dr.' + doctorDetails.firstName + ' ' + doctorDetails.lastName,
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -173,13 +179,11 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
             height: 4,
           ),
           Padding(
-            padding: const EdgeInsets.only(left:16, right: 16),
+            padding: const EdgeInsets.only(left: 16, right: 16),
             child: Text(
               doctorDetails.address,
               style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300,
-                  color: textBlack),
+                  fontSize: 14, fontWeight: FontWeight.w300, color: textBlack),
               textAlign: TextAlign.center,
             ),
           ),
@@ -201,21 +205,20 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
                 width: 8,
               ),
               AutolinkText(
-                  text:'+91 '+doctorDetails.phoneNumber,
+                  text: '+91 ' + doctorDetails.phoneNumber,
                   textStyle: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w200,
                       color: textBlack),
                   linkStyle: TextStyle(color: Colors.blue),
                   onPhoneTap: (link) async {
-                    String url = 'tel://'+link;
+                    String url = 'tel://' + link;
                     if (await canLaunch(url)) {
                       await launch(url);
                     } else {
                       throw 'Could not launch $url';
                     }
-                  }
-              ),
+                  }),
             ],
           ),
           SizedBox(
@@ -231,7 +234,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
           SizedBox(
             height: 4,
           ),
-         /* RichText(
+          /* RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
               text: 'Medical Complaint\n',
@@ -252,20 +255,19 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
           SizedBox(
             height: 16,
           ),
-
         ]);
   }
 
-  Widget _makeLabTile(){
+  Widget _makeLabTile() {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(height: 24,),
+          SizedBox(
+            height: 24,
+          ),
           Text('Appointment Details',
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700)),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
           SizedBox(
             height: 16,
           ),
@@ -277,15 +279,16 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
               backgroundColor: primaryColor,
               child: CircleAvatar(
                   radius: 48,
-                  backgroundImage: (labDetails.imageURL  == "") || (labDetails.imageURL  == null) ? AssetImage('res/images/profile_placeholder.png') : new NetworkImage(labDetails.imageURL)),
+                  backgroundImage: (labDetails.imageURL == "") ||
+                          (labDetails.imageURL == null)
+                      ? AssetImage('res/images/profile_placeholder.png')
+                      : new NetworkImage(labDetails.imageURL)),
             ),
           ),
           SizedBox(
             height: 16,
           ),
-          Text(labDetails.firstName +
-              ' ' +
-              labDetails.lastName,
+          Text(labDetails.firstName + ' ' + labDetails.lastName,
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -312,13 +315,11 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
             height: 4,
           ),
           Padding(
-            padding: const EdgeInsets.only(left:16, right: 16),
+            padding: const EdgeInsets.only(left: 16, right: 16),
             child: Text(
               labDetails.address,
               style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300,
-                  color: textBlack),
+                  fontSize: 14, fontWeight: FontWeight.w300, color: textBlack),
               textAlign: TextAlign.center,
             ),
           ),
@@ -340,21 +341,20 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
                 width: 8,
               ),
               AutolinkText(
-                  text:'+91 '+labDetails.phoneNumber,
+                  text: '+91 ' + labDetails.phoneNumber,
                   textStyle: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w200,
                       color: textBlack),
                   linkStyle: TextStyle(color: Colors.blue),
                   onPhoneTap: (link) async {
-                    String url = 'tel://'+link;
+                    String url = 'tel://' + link;
                     if (await canLaunch(url)) {
                       await launch(url);
                     } else {
                       throw 'Could not launch $url';
                     }
-                  }
-              ),
+                  }),
             ],
           ),
           SizedBox(
@@ -393,14 +393,18 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
           ),
           RichText(
             text: TextSpan(
-              text: dateFormat.format(DateTime.parse(bookingAppoinmentsDetails.selectedDate)),
+              text: dateFormat.format(
+                  DateTime.parse(bookingAppoinmentsDetails.selectedDate)),
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                   fontSize: 20),
               children: <TextSpan>[
                 TextSpan(
-                    text: ' : '+timeFormat.format(DateTime.parse(bookingAppoinmentsDetails.slotStart).toLocal()),
+                    text: ' : ' +
+                        timeFormat.format(
+                            DateTime.parse(bookingAppoinmentsDetails.slotStart)
+                                .toLocal()),
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -482,7 +486,9 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
             onPressed: () {
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (context) {
-                return HomeView( 3,);
+                return HomeView(
+                  3,
+                );
               }), (Route<dynamic> route) => false);
               debugPrint("Clicked On Proceed");
             },
@@ -502,7 +508,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
               new GestureDetector(
                 onTap: () => Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder: (context) {
-                  return HomeView( 4 );
+                  return HomeView(4);
                 }), (Route<dynamic> route) => false),
                 child: Text("Ok"),
               ),

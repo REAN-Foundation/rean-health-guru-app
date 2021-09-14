@@ -68,24 +68,24 @@ class Documents {
 
   Documents(
       {this.id,
-        this.documentType,
-        this.displayId,
-        this.patientUserId,
-        this.labUserId,
-        this.pharmacyUserId,
-        this.doctorUserId,
-        this.doctorVisitId,
-        this.labOrderId,
-        this.drugOrderId,
-        this.addedBy,
-        this.fileName,
-        this.resourceId,
-        this.urlAuth,
-        this.mimeType,
-        this.size,
-        this.dateCreated,
-        this.createdAt,
-        this.updatedAt});
+      this.documentType,
+      this.displayId,
+      this.patientUserId,
+      this.labUserId,
+      this.pharmacyUserId,
+      this.doctorUserId,
+      this.doctorVisitId,
+      this.labOrderId,
+      this.drugOrderId,
+      this.addedBy,
+      this.fileName,
+      this.resourceId,
+      this.urlAuth,
+      this.mimeType,
+      this.size,
+      this.dateCreated,
+      this.createdAt,
+      this.updatedAt});
 
   Documents.fromJson(Map<String, dynamic> json) {
     id = json['id'];

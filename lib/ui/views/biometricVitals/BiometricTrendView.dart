@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
-import 'package:paitent/core/models/TaskSummaryResponse.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/core/viewmodels/views/patients_vitals.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/biometricVitals/BiomatricBloodOxygenVitals.dart';
@@ -11,8 +8,8 @@ import 'package:paitent/ui/views/biometricVitals/BiomatricBloodSugartVitals.dart
 import 'package:paitent/ui/views/biometricVitals/BiomatricBodyTempratureVitals.dart';
 import 'package:paitent/ui/views/biometricVitals/BiomatricPulseVitals.dart';
 import 'package:paitent/ui/views/biometricVitals/BiomatricWeightVitals.dart';
+
 import '../base_widget.dart';
-import 'EnterAllVitalsView.dart';
 
 class BiometricTrendView extends StatefulWidget {
   @override
@@ -25,7 +22,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
 
   var _currentIndex = 0;
 
-  Widget loadProgress(){
+  Widget loadProgress() {
     return Center(
       child: Lottie.asset('res/lottiefiles/heart_loading.json'),
     );
@@ -33,45 +30,55 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
 
   @override
   Widget build(BuildContext context) {
-
-
     // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
-      builder: (context, model, child) =>
-          Container(
-            child:  Scaffold(
-              key: _scaffoldKey,
-              backgroundColor: Colors.white,
-
-              body: model.busy ? loadProgress() : Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      weightTrends(),
-                      const SizedBox(height: 8,),
-                      bloodPresureTrends(),
-                      const SizedBox(height: 8,),
-                      bloodGlucoseTrends(),
-                      const SizedBox(height: 8,),
-                      bloodOxygenSaturationTrends(),
-                      const SizedBox(height: 8,),
-                      pulseRateTrends(),
-                      const SizedBox(height: 8,),
-                      bodyTempratureTrends(),
-                      const SizedBox(height: 32,),
-                    ],
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Colors.white,
+          body: model.busy
+              ? loadProgress()
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        weightTrends(),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        bloodPresureTrends(),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        bloodGlucoseTrends(),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        bloodOxygenSaturationTrends(),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        pulseRateTrends(),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        bodyTempratureTrends(),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
+        ),
+      ),
     );
   }
 
-  Widget weightTrends(){
+  Widget weightTrends() {
     return Card(
       elevation: 8,
       child: Padding(
@@ -85,15 +92,22 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   size: 24,
                   color: primaryColor,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 Text(
                   "Weight",
-                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700, fontSize: 14),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
-            SizedBox(height: 8,),
+            SizedBox(
+              height: 8,
+            ),
             BiometricWeightVitalsView(false),
           ],
         ),
@@ -101,7 +115,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
     );
   }
 
-  Widget bloodPresureTrends(){
+  Widget bloodPresureTrends() {
     return Card(
       elevation: 8,
       child: Padding(
@@ -117,23 +131,29 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                     size: 24,
                     color: primaryColor,
                   ),
-                  SizedBox(width: 8,),
+                  SizedBox(
+                    width: 8,
+                  ),
                   Text(
                     "Blood Pressure",
-                    style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700, fontSize: 14),
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
                 ],
               ),
-              const SizedBox(height: 8,),
+              const SizedBox(
+                height: 8,
+              ),
               BiometricBloodPresureVitalsView(false),
             ],
-          )
-      ),
+          )),
     );
   }
 
-  Widget bloodGlucoseTrends(){
+  Widget bloodGlucoseTrends() {
     return Card(
       elevation: 8,
       child: Padding(
@@ -149,15 +169,22 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   size: 24,
                   color: primaryColor,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 Text(
                   "Blood Glucose",
-                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700, fontSize: 14),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
-            const SizedBox(height: 8,),
+            const SizedBox(
+              height: 8,
+            ),
             BiometricBloodSugarVitalsView(false)
           ],
         ),
@@ -165,7 +192,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
     );
   }
 
-  Widget bloodOxygenSaturationTrends(){
+  Widget bloodOxygenSaturationTrends() {
     return Card(
       elevation: 8,
       child: Padding(
@@ -181,15 +208,22 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   size: 24,
                   color: primaryColor,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 Text(
                   "Blood Oxygen Saturation",
-                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700, fontSize: 14),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
-            const SizedBox(height: 8,),
+            const SizedBox(
+              height: 8,
+            ),
             BiometricBloodOxygenVitalsView(),
           ],
         ),
@@ -197,7 +231,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
     );
   }
 
-  Widget pulseRateTrends(){
+  Widget pulseRateTrends() {
     return Card(
       elevation: 8,
       child: Padding(
@@ -213,24 +247,30 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   size: 24,
                   color: primaryColor,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 Text(
                   "Pulse Rate",
-                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700, fontSize: 14),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
-            const SizedBox(height: 8,),
-           BiometricPulseVitalsView(false)
-
+            const SizedBox(
+              height: 8,
+            ),
+            BiometricPulseVitalsView(false)
           ],
         ),
       ),
     );
   }
 
-  Widget bodyTempratureTrends(){
+  Widget bodyTempratureTrends() {
     return Card(
       elevation: 8,
       child: Padding(
@@ -246,20 +286,26 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   size: 24,
                   color: primaryColor,
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
                 Text(
                   "Body Temperature",
-                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700, fontSize: 14),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
               ],
             ),
-            const SizedBox(height: 8,),
+            const SizedBox(
+              height: 8,
+            ),
             BiometricBodyTemperatureVitalsView()
           ],
         ),
       ),
     );
   }
-
 }

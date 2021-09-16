@@ -22,16 +22,16 @@ class TeamOfMyCarePlanView extends StatefulWidget {
 
 class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var doctorTeam = new List<Team>();
-  var pharmaTeam = new List<Team>();
-  var socialWorkerTeam = new List<Team>();
-  var familyTeam = new List<Team>();
+  var doctorTeam = <Team>[];
+  var pharmaTeam = <Team>[];
+  var socialWorkerTeam = <Team>[];
+  var familyTeam = <Team>[];
 
   getAHACarePlanSummary() async {
     try {
-      TeamCarePlanReesponse teamCarePlanReesponse =
+      final TeamCarePlanReesponse teamCarePlanReesponse =
           await model.getAHACarePlanTeam(
               startCarePlanResponseGlob.data.carePlan.id.toString());
 
@@ -40,7 +40,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
         pharmaTeam.clear();
         socialWorkerTeam.clear();
         familyTeam.clear();
-        debugPrint("AHA Care Plan ==> ${teamCarePlanReesponse.toJson()}");
+        debugPrint('AHA Care Plan ==> ${teamCarePlanReesponse.toJson()}');
         _srotTeamMembers(teamCarePlanReesponse);
       } else {
         showToast(teamCarePlanReesponse.message, context);
@@ -53,14 +53,14 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   }
 
   _srotTeamMembers(TeamCarePlanReesponse teamCarePlanReesponse) {
-    for (var teamMemeber in teamCarePlanReesponse.data.team) {
-      if (teamMemeber.roleName == "Doctor") {
+    for (final teamMemeber in teamCarePlanReesponse.data.team) {
+      if (teamMemeber.roleName == 'Doctor') {
         doctorTeam.add(teamMemeber);
-      } else if (teamMemeber.roleName == "Pharmacy") {
+      } else if (teamMemeber.roleName == 'Pharmacy') {
         pharmaTeam.add(teamMemeber);
-      } else if (teamMemeber.roleName == "HealthWorker") {
+      } else if (teamMemeber.roleName == 'HealthWorker') {
         socialWorkerTeam.add(teamMemeber);
-      } else if (teamMemeber.roleName == "FamilyMember") {
+      } else if (teamMemeber.roleName == 'FamilyMember') {
         familyTeam.add(teamMemeber);
       }
 
@@ -86,79 +86,83 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                sectionHeader("Doctor"),
+                sectionHeader('Doctor'),
                 const SizedBox(
                   height: 16,
                 ),
-                model.busy
-                    ? Container(
-                        height: 80,
-                        child: Center(
-                            child: SizedBox(
-                                height: 32,
-                                width: 32,
-                                child: CircularProgressIndicator())),
-                      )
-                    : (doctorTeam.length == 0)
-                        ? noDoctorFound()
-                        : doctorSearchResultListView(),
+                if (model.busy)
+                  Container(
+                    height: 80,
+                    child: Center(
+                        child: SizedBox(
+                            height: 32,
+                            width: 32,
+                            child: CircularProgressIndicator())),
+                  )
+                else
+                  (doctorTeam.isEmpty)
+                      ? noDoctorFound()
+                      : doctorSearchResultListView(),
                 const SizedBox(
                   height: 16,
                 ),
-                sectionHeader("Pharmacies"),
+                sectionHeader('Pharmacies'),
                 const SizedBox(
                   height: 16,
                 ),
-                model.busy
-                    ? Container(
-                        height: 80,
-                        child: Center(
-                            child: SizedBox(
-                                height: 32,
-                                width: 32,
-                                child: CircularProgressIndicator())),
-                      )
-                    : (pharmaTeam.length == 0)
-                        ? noPharmacyFound()
-                        : pharmacySearchResultListView(),
+                if (model.busy)
+                  Container(
+                    height: 80,
+                    child: Center(
+                        child: SizedBox(
+                            height: 32,
+                            width: 32,
+                            child: CircularProgressIndicator())),
+                  )
+                else
+                  (pharmaTeam.isEmpty)
+                      ? noPharmacyFound()
+                      : pharmacySearchResultListView(),
                 const SizedBox(
                   height: 16,
                 ),
-                sectionHeader("Nurses / Social Health Workers"),
+                sectionHeader('Nurses / Social Health Workers'),
                 const SizedBox(
                   height: 16,
                 ),
-                model.busy
-                    ? Container(
-                        height: 80,
-                        child: Center(
-                            child: SizedBox(
-                                height: 32,
-                                width: 32,
-                                child: CircularProgressIndicator())),
-                      )
-                    : (socialWorkerTeam.length == 0)
-                        ? noNurseFound()
-                        : nurseSearchResultListView(),
+                if (model.busy)
+                  Container(
+                    height: 80,
+                    child: Center(
+                        child: SizedBox(
+                            height: 32,
+                            width: 32,
+                            child: CircularProgressIndicator())),
+                  )
+                else
+                  (socialWorkerTeam.isEmpty)
+                      ? noNurseFound()
+                      : nurseSearchResultListView(),
                 const SizedBox(
                   height: 16,
                 ),
-                sectionHeader("Family Members / Friends"),
+                sectionHeader('Family Members / Friends'),
                 const SizedBox(
                   height: 16,
                 ),
-                model.busy
-                    ? Container(
-                        height: 80,
-                        child: Center(
-                            child: SizedBox(
-                                height: 32,
-                                width: 32,
-                                child: CircularProgressIndicator())),
-                      )
-                    : (familyTeam.length == 0)
-                        ? noFamilyMemberFound()
-                        : familyMemberSearchResultListView(),
+                if (model.busy)
+                  Container(
+                    height: 80,
+                    child: Center(
+                        child: SizedBox(
+                            height: 32,
+                            width: 32,
+                            child: CircularProgressIndicator())),
+                  )
+                else
+                  (familyTeam.isEmpty)
+                      ? noFamilyMemberFound()
+                      : familyMemberSearchResultListView(),
                 const SizedBox(
                   height: 16,
                 ),
@@ -252,7 +256,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
     return Container(
       height: 80,
       child: Center(
-        child: Text("No doctor found",
+        child: Text('No doctor found',
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
@@ -279,13 +283,13 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   }
 
   Widget _makeDoctorListCard(BuildContext context, int index) {
-    Details details = doctorTeam.elementAt(index).details;
+    final Details details = doctorTeam.elementAt(index).details;
     return Container(
       height: 80,
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Card(
@@ -383,7 +387,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
     return Container(
       height: 80,
       child: Center(
-        child: Text("No pharmacy found",
+        child: Text('No pharmacy found',
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
@@ -411,13 +415,13 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   }
 
   Widget _makePharmacyListCard(BuildContext context, int index) {
-    Details details = pharmaTeam.elementAt(index).details;
+    final Details details = pharmaTeam.elementAt(index).details;
     return Container(
       height: 80,
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Card(
@@ -500,7 +504,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
     return Container(
       height: 80,
       child: Center(
-        child: Text("No nurse / social health worker found",
+        child: Text('No nurse / social health worker found',
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
@@ -527,13 +531,13 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   }
 
   Widget _makeNurseListCard(BuildContext context, int index) {
-    Details details = socialWorkerTeam.elementAt(index).details;
+    final Details details = socialWorkerTeam.elementAt(index).details;
     return Container(
       height: 80,
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Card(
@@ -625,7 +629,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
     return Container(
       height: 80,
       child: Center(
-        child: Text("No family member found",
+        child: Text('No family member found',
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
@@ -653,13 +657,13 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   }
 
   Widget _makeFamilyMemberListCard(BuildContext context, int index) {
-    Details details = familyTeam.elementAt(index).details;
+    final Details details = familyTeam.elementAt(index).details;
     return Container(
       height: 80,
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Card(
@@ -801,7 +805,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
               Expanded(
                 child: AddDoctorDialog(submitButtonListner: (Doctors doctors) {
                   addDoctorTeamMembers(doctors);
-                  debugPrint("Call back Received ==> ${doctors.firstName}");
+                  debugPrint('Call back Received ==> ${doctors.firstName}');
                   Navigator.of(context, rootNavigator: true).pop();
                 }),
               )
@@ -813,23 +817,23 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   addDoctorTeamMembers(Doctors doctors) async {
     try {
       model.setBusy(true);
-      var data = new Map<String, dynamic>();
+      final data = <String, dynamic>{};
       data['UserId'] = doctors.userId;
-      data['FirstName'] = "";
-      data['LastName'] = "";
-      data['Prefix'] = "";
-      data['PhoneNumber'] = "";
-      data['Gender'] = "";
+      data['FirstName'] = '';
+      data['LastName'] = '';
+      data['Prefix'] = '';
+      data['PhoneNumber'] = '';
+      data['Gender'] = '';
 
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['CarePlanId'] = startCarePlanResponseGlob.data.carePlan.id.toString();
       map['IsEmergencyContact'] = true;
-      map['TeamMemberType'] = "Doctor";
+      map['TeamMemberType'] = 'Doctor';
       map['Details'] = data;
 
-      AddTeamMemberResponse addTeamMemberResponse =
+      final AddTeamMemberResponse addTeamMemberResponse =
           await model.addTeamMembers(map);
-      debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
+      debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getAHACarePlanSummary();
         showToast(addTeamMemberResponse.message, context);
@@ -839,7 +843,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException);
+      debugPrint('Error ' + CustomException);
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -899,8 +903,8 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
               Expanded(
                 child: AddPharmaDialog(
                     submitButtonListner: (Pharmacies pharmacies) {
-                  addPharmaciesTeamMembers(pharmacies);
-                  debugPrint("Call back Received ==> ${pharmacies.firstName}");
+                      addPharmaciesTeamMembers(pharmacies);
+                  debugPrint('Call back Received ==> ${pharmacies.firstName}');
                   Navigator.of(context, rootNavigator: true).pop();
                 }),
               )
@@ -919,23 +923,23 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       jsonRequest.isEmergencyContact = true;*/
       //jsonRequest.details.userId = pharmacies.userId.toString();
 
-      var data = new Map<String, dynamic>();
+      final data = <String, dynamic>{};
       data['UserId'] = pharmacies.userId.toString();
-      data['FirstName'] = "";
-      data['LastName'] = "";
-      data['Prefix'] = "";
-      data['PhoneNumber'] = "";
-      data['Gender'] = "";
+      data['FirstName'] = '';
+      data['LastName'] = '';
+      data['Prefix'] = '';
+      data['PhoneNumber'] = '';
+      data['Gender'] = '';
 
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['CarePlanId'] = startCarePlanResponseGlob.data.carePlan.id.toString();
       map['IsEmergencyContact'] = true;
-      map['TeamMemberType'] = "Pharmacy";
+      map['TeamMemberType'] = 'Pharmacy';
       map['Details'] = data;
 
-      AddTeamMemberResponse addTeamMemberResponse =
+      final AddTeamMemberResponse addTeamMemberResponse =
           await model.addTeamMembers(map);
-      debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
+      debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getAHACarePlanSummary();
         showToast(addTeamMemberResponse.message, context);
@@ -945,7 +949,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException);
+      debugPrint('Error ' + CustomException);
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -1005,7 +1009,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
               Expanded(
                 child: AddNurseDialog(submitButtonListner: (String firstName,
                     String lastName, String phoneNumber, String gender) {
-                  debugPrint("Team Member ==> ${firstName}");
+                  debugPrint('Team Member ==> $firstName');
                   addTeamMembers(firstName, lastName, phoneNumber, gender, '',
                       'HealthWorker');
                   Navigator.of(context, rootNavigator: true).pop();
@@ -1071,7 +1075,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                 child: AddFamilyMemberDialog(submitButtonListner:
                     (String firstName, String lastName, String phoneNumber,
                         String gender, String relation) {
-                  debugPrint("Team Member ==> ${firstName}");
+                      debugPrint('Team Member ==> $firstName');
                   addTeamMembers(firstName, lastName, phoneNumber, gender,
                       relation, 'FamilyMember');
                   Navigator.of(context, rootNavigator: true).pop();
@@ -1087,23 +1091,23 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
     try {
       model.setBusy(true);
 
-      var data = new Map<String, dynamic>();
+      final data = <String, dynamic>{};
       data['FirstName'] = firstName;
       data['LastName'] = lastName;
-      data['Prefix'] = " ";
+      data['Prefix'] = ' ';
       data['PhoneNumber'] = phoneNumber;
       data['Gender'] = gender;
       data['Relation'] = relation;
 
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['CarePlanId'] = startCarePlanResponseGlob.data.carePlan.id.toString();
       map['IsEmergencyContact'] = true;
       map['TeamMemberType'] = type;
       map['Details'] = data;
 
-      AddTeamMemberResponse addTeamMemberResponse =
+      final AddTeamMemberResponse addTeamMemberResponse =
           await model.addTeamMembers(map);
-      debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
+      debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getAHACarePlanSummary();
         showToast(addTeamMemberResponse.message, context);
@@ -1114,7 +1118,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       model.setBusy(false);
       //progressDialog.hide();
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException);
+      debugPrint('Error ' + CustomException);
     } catch (Exception) {
       //progressDialog.hide();
       debugPrint(Exception.toString());
@@ -1127,7 +1131,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       builder: (context) => AlertDialog(
         content: ListTile(
           title: Text(
-            "Alert!",
+            'Alert!',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.normal,
@@ -1164,9 +1168,9 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   removeTeamMembers(String emergencyContactId) async {
     try {
       model.setBusy(true);
-      BaseResponse addTeamMemberResponse =
+      final BaseResponse addTeamMemberResponse =
           await model.removeTeamMembers(emergencyContactId);
-      debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
+      debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getAHACarePlanSummary();
         showToast(addTeamMemberResponse.message, context);
@@ -1177,7 +1181,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       model.setBusy(false);
       //progressDialog.hide();
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException);
+      debugPrint('Error ' + CustomException);
     } catch (Exception) {
       //progressDialog.hide();
       debugPrint(Exception.toString());

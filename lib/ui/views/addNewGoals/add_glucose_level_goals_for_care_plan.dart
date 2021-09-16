@@ -19,23 +19,23 @@ class AddGlucoseLevelGoalsForCarePlanView extends StatefulWidget {
 class _AddGlucoseLevelGoalsForCarePlanViewState
     extends State<AddGlucoseLevelGoalsForCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String selectedGoal = "";
+  String selectedGoal = '';
 
   final TextEditingController _fastingController = TextEditingController();
   final TextEditingController _ppController = TextEditingController();
 
-  var _fastingFocus = FocusNode();
-  var _ppFocus = FocusNode();
-  String dob = "";
-  String unformatedDOB = "";
-  var dateFormat = DateFormat("dd MMM, yyyy");
+  final _fastingFocus = FocusNode();
+  final _ppFocus = FocusNode();
+  String dob = '';
+  String unformatedDOB = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
   ProgressDialog progressDialog;
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -52,7 +52,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -93,7 +93,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
             height: 16,
           ),
           Text(
-            "Normal fasting blood glucose level should be less than 100 mg/dL. If you are diabetic, a HbA1c (glycosylated hemoglobin) below 7 percent is recommended, but your safe range may be lower or higher. Managing diabetes is important to your long-term health, especially if you have heart disease. Diabetes is best controlled by diet, weight loss, ",
+            'Normal fasting blood glucose level should be less than 100 mg/dL. If you are diabetic, a HbA1c (glycosylated hemoglobin) below 7 percent is recommended, but your safe range may be lower or higher. Managing diabetes is important to your long-term health, especially if you have heart disease. Diabetes is best controlled by diet, weight loss, ',
             style: TextStyle(
                 color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
           ),
@@ -137,7 +137,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
                     fontSize: 14),
                 children: <TextSpan>[
                   TextSpan(
-                      text: "  mg / dL     ",
+                      text: '  mg / dL     ',
                       style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
@@ -239,7 +239,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: "          ",
+                          text: '          ',
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -333,7 +333,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
                     ),
                     child: Center(
                       child: Text(
-                        "Save",
+                        'Save',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
@@ -358,7 +358,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
   setGoals() async {
     try {
       progressDialog.show();
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['TargetDate'] = dob;
       map['BloodSugar_Target'] = _fastingController.text;
       map['BloodSugar_HealthyRangeStart'] = 100;
@@ -366,11 +366,11 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
       map['BloodSugar_StartingValue'] = 140;
       map['MeasurementUnit'] = 'mg/dl';
 
-      var body = new Map<String, dynamic>();
+      final body = <String, dynamic>{};
       body['Goal'] = map;
       body['GoalSettingTaskId'] = getTask().details.id;
 
-      BaseResponse baseResponse = await model.addGoalsTask(
+      final BaseResponse baseResponse = await model.addGoalsTask(
           startCarePlanResponseGlob.data.carePlan.id.toString(),
           'blood-sugar-goal',
           body);
@@ -399,20 +399,20 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
 
   navigateToScreen() {
     debugPrint('Set Goals Plan Stack ==> ${goalPlanScreenStack.length}');
-    if (goalPlanScreenStack.length == 0) {
+    if (goalPlanScreenStack.isEmpty) {
       Navigator.pushReplacementNamed(
           context, RoutePaths.Determine_Action_For_Care_Plan);
-    } else if (goalPlanScreenStack.elementAt(0) == "Blood Pressure") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Blood Pressure') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_BLOOD_PRESURE_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Blood Sugar") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Blood Sugar') {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_GLUCOSE_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Weight") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Weight') {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_WEIGHT_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Physical Activity") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Physical Activity') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Quit Smoking") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Quit Smoking') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_QUIT_SMOKING_GOALS);
     }

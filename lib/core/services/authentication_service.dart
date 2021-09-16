@@ -10,16 +10,17 @@ class AuthenticationService {
 
   AuthenticationService({Api api}) : _api = api;
 
-  StreamController<UserData> _userController = StreamController<UserData>();
-  StreamController<BaseResponse> _baseResponseController =
+  final StreamController<UserData> _userController =
+      StreamController<UserData>();
+  final StreamController<BaseResponse> _baseResponseController =
       StreamController<BaseResponse>();
-  StreamController<BaseResponse> _updateProfileBaseResponseController =
+  final StreamController<BaseResponse> _updateProfileBaseResponseController =
       StreamController<BaseResponse>();
 
   Stream<UserData> get user => _userController.stream;
 
   Future<UserData> login(Map body) async {
-    UserData fetchedUser = await _api.loginPatient(body);
+    final UserData fetchedUser = await _api.loginPatient(body);
 
     print(fetchedUser.status.toString());
     //UserData hasUser = fetchedUser != null;
@@ -31,7 +32,7 @@ class AuthenticationService {
   }
 
   Future<BaseResponse> signUp(Map body) async {
-    BaseResponse fetchedUser = await _api.signUpPatient(body);
+    final BaseResponse fetchedUser = await _api.signUpPatient(body);
 
     print(fetchedUser.status.toString());
     //UserData hasUser = fetchedUser != null;
@@ -44,7 +45,7 @@ class AuthenticationService {
 
   Future<BaseResponse> updateProfile(
       Map body, String userId, String auth) async {
-    BaseResponse fetchedUser =
+    final BaseResponse fetchedUser =
         await _api.updateProfilePatient(body, userId, auth);
 
     print(fetchedUser.status.toString());

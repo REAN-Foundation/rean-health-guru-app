@@ -23,20 +23,20 @@ class BiomatricTask extends StatefulWidget {
 
 class _BiomatricTaskViewState extends State<BiomatricTask> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
-  var dateFormat = DateFormat("yyyy-MM-dd");
-  var timeFormat = DateFormat("hh:mm:ss");
+  var dateFormat = DateFormat('yyyy-MM-dd');
+  var timeFormat = DateFormat('hh:mm:ss');
 
   final TextEditingController _systolicController = TextEditingController();
   final TextEditingController _diastolicController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _fastingController = TextEditingController();
 
-  var _systolicFocus = FocusNode();
-  var _diastolicFocus = FocusNode();
-  var _weightFocus = FocusNode();
-  var _fastingFocus = FocusNode();
+  final _systolicFocus = FocusNode();
+  final _diastolicFocus = FocusNode();
+  final _weightFocus = FocusNode();
+  final _fastingFocus = FocusNode();
 
   ProgressDialog progressDialog;
 
@@ -75,7 +75,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
 
     debugPrint('Country Local ==> ${getCurrentLocale()}');
     // TODO: implement initState
-    if (getCurrentLocale() == "US") {
+    if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
 
@@ -84,7 +84,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
 
     // TODO: implement build
     return BaseWidget<PatientCarePlanViewModel>(
@@ -106,7 +106,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                     fontWeight: FontWeight.w700),
               ),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -196,7 +196,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                             fontSize: 14),
                         children: <TextSpan>[
                           TextSpan(
-                              text: "  mm Hg     ",
+                              text: '  mm Hg     ',
                               style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,
@@ -225,8 +225,8 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                               context, _systolicFocus, _diastolicFocus);
                         },
                         inputFormatters: [
-                          new BlacklistingTextInputFormatter(
-                              new RegExp('[\\,|\\+|\\-]')),
+                          BlacklistingTextInputFormatter(
+                              RegExp('[\\,|\\+|\\-]')),
                         ],
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(0),
@@ -257,7 +257,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                             fontSize: 14),
                         children: <TextSpan>[
                           TextSpan(
-                              text: "  mm Hg  ",
+                              text: '  mm Hg  ',
                               style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,
@@ -288,8 +288,8 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                             _weightFocus);*/
                         },
                         inputFormatters: [
-                          new BlacklistingTextInputFormatter(
-                              new RegExp('[\\,|\\+|\\-]')),
+                          BlacklistingTextInputFormatter(
+                              RegExp('[\\,|\\+|\\-]')),
                         ],
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(0),
@@ -333,7 +333,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                         readOnly: true,
                         child: Center(
                           child: Text(
-                            !widget.task.finished ? "Save" : "Done",
+                            !widget.task.finished ? 'Save' : 'Done',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
@@ -375,9 +375,9 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                               fontSize: 14),
                           children: <TextSpan>[
                             TextSpan(
-                                text: unit == "lbs"
-                                    ? "    lbs    "
-                                    : "    Kg    ",
+                                text: unit == 'lbs'
+                                    ? '    lbs    '
+                                    : '    Kg    ',
                                 style: TextStyle(
                                     fontSize: 10,
                                     fontWeight: FontWeight.w700,
@@ -408,13 +408,13 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {},
                           inputFormatters: [
-                            new BlacklistingTextInputFormatter(
-                                new RegExp('[\\,|\\+|\\-]')),
+                            BlacklistingTextInputFormatter(
+                                RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
-                              hintText: unit == "lbs"
-                                  ? "(100 to 200)"
-                                  : "(50 to 100)",
+                              hintText: unit == 'lbs'
+                                  ? '(100 to 200)'
+                                  : '(50 to 100)',
                               contentPadding: EdgeInsets.all(0),
                               border: InputBorder.none,
                               fillColor: Colors.white,
@@ -459,7 +459,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                           child: Semantics(
                             label: 'Entry saved',
                             child: Text(
-                              !widget.task.finished ? "Save" : "Done",
+                              !widget.task.finished ? 'Save' : 'Done',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
@@ -504,7 +504,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                               fontSize: 14),
                           children: <TextSpan>[
                             TextSpan(
-                                text: "  mg / dL     ",
+                                text: '  mg / dL     ',
                                 style: TextStyle(
                                     fontSize: 10,
                                     fontWeight: FontWeight.w700,
@@ -537,8 +537,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                   keyboardType: TextInputType.number,
                   onFieldSubmitted: (term) {},
                   inputFormatters: [
-                    new BlacklistingTextInputFormatter(
-                        new RegExp('[\\,|\\+|\\-]')),
+                    BlacklistingTextInputFormatter(RegExp('[\\,|\\+|\\-]')),
                   ],
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(0),
@@ -581,7 +580,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                           child: Semantics(
                             label: 'Entry saved',
                             child: Text(
-                              !widget.task.finished ? "Save" : "Done",
+                              !widget.task.finished ? 'Save' : 'Done',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
@@ -601,7 +600,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
   nextQuestion() async {
     try {
       progressDialog.show();
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
 
       if (widget.task.details.subTitle.contains('weight')) {
         double entertedWeight = double.parse(_weightController.text.toString());
@@ -615,12 +614,12 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
         map['BloodPressure_Systolic'] = _systolicController.text.toString();
         map['BloodPressure_Diastolic'] = _diastolicController.text.toString();
       }
-      map['MeasuredOn'] = dateFormat.format(new DateTime.now()) +
+      map['MeasuredOn'] = dateFormat.format(DateTime.now()) +
           'T' +
-          timeFormat.format(new DateTime.now()) +
+          timeFormat.format(DateTime.now()) +
           '.000Z';
 
-      BaseResponse baseResponse = await model.addBiometricTask(
+      final BaseResponse baseResponse = await model.addBiometricTask(
           startCarePlanResponseGlob.data.carePlan.id.toString(),
           widget.task.details.id,
           map);

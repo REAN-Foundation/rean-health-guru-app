@@ -15,9 +15,9 @@ class AddCholesterolGoalsForCarePlanView extends StatefulWidget {
 class _AddCholesterolGoalsForCarePlanViewState
     extends State<AddCholesterolGoalsForCarePlanView> {
   var model = PatientMedicationViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String selectedGoal = "";
+  String selectedGoal = '';
 
   final TextEditingController _ldlController = TextEditingController();
   final TextEditingController _hdlController = TextEditingController();
@@ -25,14 +25,14 @@ class _AddCholesterolGoalsForCarePlanViewState
   final TextEditingController _triglyceridesController =
       TextEditingController();
 
-  var _ldlFocus = FocusNode();
-  var _hdlFocus = FocusNode();
-  var _totalFocus = FocusNode();
-  var _triglyceridesFocus = FocusNode();
+  final _ldlFocus = FocusNode();
+  final _hdlFocus = FocusNode();
+  final _totalFocus = FocusNode();
+  final _triglyceridesFocus = FocusNode();
 
-  String dob = "";
-  String unformatedDOB = "";
-  var dateFormat = DateFormat("dd MMM, yyyy");
+  String dob = '';
+  String unformatedDOB = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -93,7 +93,7 @@ class _AddCholesterolGoalsForCarePlanViewState
             height: 16,
           ),
           Text(
-            "Low-density lipoprotein (LDL) cholesterol is often called the “bad” kind. When you have too much LDL cholesterol in your blood, it can join with fats and other substances to build up in the inner walls of your arteries, creating a thick, hard substance called plaque. ",
+            'Low-density lipoprotein (LDL) cholesterol is often called the “bad” kind. When you have too much LDL cholesterol in your blood, it can join with fats and other substances to build up in the inner walls of your arteries, creating a thick, hard substance called plaque. ',
             style: TextStyle(
                 color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
           ),
@@ -145,7 +145,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                           fontSize: 14),
                       children: <TextSpan>[
                         TextSpan(
-                            text: "  mg / dL",
+                            text: '  mg / dL',
                             style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
@@ -199,7 +199,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                           fontSize: 14),
                       children: <TextSpan>[
                         TextSpan(
-                            text: "  mg / dL",
+                            text: '  mg / dL',
                             style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
@@ -253,7 +253,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                           fontSize: 14),
                       children: <TextSpan>[
                         TextSpan(
-                            text: "  mg / dL",
+                            text: '  mg / dL',
                             style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
@@ -308,7 +308,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                           fontSize: 14),
                       children: <TextSpan>[
                         TextSpan(
-                            text: "",
+                            text: '',
                             style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
@@ -360,7 +360,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                           fontSize: 14),
                       children: <TextSpan>[
                         TextSpan(
-                            text: "          ",
+                            text: '          ',
                             style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
@@ -448,7 +448,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                     ),
                     child: Center(
                       child: Text(
-                        "Save",
+                        'Save',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,

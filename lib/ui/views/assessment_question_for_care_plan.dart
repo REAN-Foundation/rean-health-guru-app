@@ -9,7 +9,7 @@ class AssessmentQuestionCarePlanView extends StatefulWidget {
   Assessmment assesment;
 
   AssessmentQuestionCarePlanView(Assessmment assesmentC) {
-    this.assesment = assesmentC;
+    assesment = assesmentC;
   }
 
   @override
@@ -20,11 +20,11 @@ class AssessmentQuestionCarePlanView extends StatefulWidget {
 class _AssessmentQuestionCarePlanViewState
     extends State<AssessmentQuestionCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var _textController = new TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _textController = TextEditingController();
 
   // Default Radio Button Selected Item When App Questions.
-  var answers = new List<Answer>();
+  var answers = <Answer>[];
 
   Map<String, bool> numbers = {
     'Chest pain, or pain in your jaw,\nshoulder or arm': false,
@@ -54,8 +54,8 @@ class _AssessmentQuestionCarePlanViewState
 
   processAnswer() {
     for (int i = 0; i < widget.assesment.question.answerOptions.length; i++) {
-      answers.add(
-          new Answer(i, widget.assesment.question.answerOptions.elementAt(i)));
+      answers
+          .add(Answer(i, widget.assesment.question.answerOptions.elementAt(i)));
     }
     setState(() {});
   }
@@ -85,7 +85,7 @@ class _AssessmentQuestionCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -148,7 +148,7 @@ class _AssessmentQuestionCarePlanViewState
             child: Column(
               children: answers
                   .map((data) => RadioListTile(
-                        title: Text("${data.text}"),
+                title: Text(data.text),
                         groupValue: id,
                         value: data.index,
                         onChanged: (val) {
@@ -182,7 +182,7 @@ class _AssessmentQuestionCarePlanViewState
                 ),
                 child: Center(
                   child: Text(
-                    "Next",
+                    'Next',
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,

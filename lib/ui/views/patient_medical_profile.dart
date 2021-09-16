@@ -27,13 +27,13 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
   final TextEditingController _obstetricHistoryController =
       TextEditingController();
 
-  String mobileNumber = "";
+  String mobileNumber = '';
 
-  var _majorComplaintFocus = FocusNode();
-  var _ocupationFocus = FocusNode();
-  var _nationalityFocus = FocusNode();
-  var _surgicalHistoryFocus = FocusNode();
-  var _obstetricHistoryFocus = FocusNode();
+  final _majorComplaintFocus = FocusNode();
+  final _ocupationFocus = FocusNode();
+  final _nationalityFocus = FocusNode();
+  final _surgicalHistoryFocus = FocusNode();
+  final _obstetricHistoryFocus = FocusNode();
 
   @override
   void initState() {
@@ -60,7 +60,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                           color: primaryColor,
                           fontWeight: FontWeight.w700),
                     ),
-                    iconTheme: new IconThemeData(color: Colors.black),
+                    iconTheme: IconThemeData(color: Colors.black),
                   ),
                   body: model.busy
                       ? Center(child: CircularProgressIndicator())
@@ -533,9 +533,9 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                       ? Container()
                       : Semantics(
                           label: 'edit_medical_profile',
-                          child: new FloatingActionButton(
+                    child: FloatingActionButton(
                               elevation: 0.0,
-                              child: new Icon(
+                              child: Icon(
                                 Icons.edit,
                                 color: Colors.white,
                               ),
@@ -553,8 +553,8 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
   }
 
   String replaceNull(String text) {
-    debugPrint('Medical Profile ==> ${text}');
-    return text == null ? '' : text;
+    debugPrint('Medical Profile ==> $text');
+    return text ?? '';
   }
 
   String yesOrNo(bool flag) {
@@ -563,14 +563,14 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
 
   _getPatientMedicalProfile() async {
     try {
-      PatientMedicalProfilePojo allergiesPojo =
+      final PatientMedicalProfilePojo allergiesPojo =
           await model.getPatientMedicalProfile('Bearer ' + auth, patientUserId);
 
       if (allergiesPojo.status == 'success') {
         medicalProfiles = allergiesPojo.data.medicalProfiles;
       } else {}
     } catch (CustomException) {
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -643,21 +643,21 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                       child: Column(
                         children: [
                           _textFeilds(
-                              "Major Complaint",
+                              'Major Complaint',
                               _majorComplaintController,
                               _majorComplaintFocus,
                               _ocupationFocus),
-                          _textFeilds("Occupation", _ocupationController,
+                          _textFeilds('Occupation', _ocupationController,
                               _ocupationFocus, _nationalityFocus),
-                          _textFeilds("Nationality", _nationalityController,
+                          _textFeilds('Nationality', _nationalityController,
                               _nationalityFocus, _surgicalHistoryFocus),
                           _textFeilds(
-                              "Surgical history",
+                              'Surgical history',
                               _surgicalHistoryController,
                               _surgicalHistoryFocus,
                               _obstetricHistoryFocus),
                           _textFeilds(
-                              "Obstetric history",
+                              'Obstetric history',
                               _obstetricHistoryController,
                               _obstetricHistoryFocus,
                               _obstetricHistoryFocus),

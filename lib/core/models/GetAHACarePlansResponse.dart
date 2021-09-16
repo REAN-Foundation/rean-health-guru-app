@@ -4,9 +4,9 @@ class GetAHACarePlansResponse {
   Data _data;
 
   GetAHACarePlansResponse({String status, String message, Data data}) {
-    this._status = status;
-    this._message = message;
-    this._data = data;
+    _status = status;
+    _message = message;
+    _data = data;
   }
 
   String get status => _status;
@@ -24,15 +24,15 @@ class GetAHACarePlansResponse {
   GetAHACarePlansResponse.fromJson(Map<String, dynamic> json) {
     _status = json['status'];
     _message = json['message'];
-    _data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    _data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this._status;
-    data['message'] = this._message;
-    if (this._data != null) {
-      data['data'] = this._data.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = _status;
+    data['message'] = _message;
+    if (_data != null) {
+      data['data'] = _data.toJson();
     }
     return data;
   }
@@ -42,7 +42,7 @@ class Data {
   List<CarePlanTypes> _carePlanTypes;
 
   Data({List<CarePlanTypes> carePlanTypes}) {
-    this._carePlanTypes = carePlanTypes;
+    _carePlanTypes = carePlanTypes;
   }
 
   List<CarePlanTypes> get carePlanTypes => _carePlanTypes;
@@ -52,18 +52,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['carePlanTypes'] != null) {
-      _carePlanTypes = new List<CarePlanTypes>();
+      _carePlanTypes = <CarePlanTypes>[];
       json['carePlanTypes'].forEach((v) {
-        _carePlanTypes.add(new CarePlanTypes.fromJson(v));
+        _carePlanTypes.add(CarePlanTypes.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this._carePlanTypes != null) {
-      data['carePlanTypes'] =
-          this._carePlanTypes.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (_carePlanTypes != null) {
+      data['carePlanTypes'] = _carePlanTypes.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -86,13 +85,13 @@ class CarePlanTypes {
       String description,
       String createdAt,
       String updatedAt}) {
-    this._id = id;
-    this._code = code;
-    this._name = name;
-    this._durationInWeeks = durationInWeeks;
-    this._description = description;
-    this._createdAt = createdAt;
-    this._updatedAt = updatedAt;
+    _id = id;
+    _code = code;
+    _name = name;
+    _durationInWeeks = durationInWeeks;
+    _description = description;
+    _createdAt = createdAt;
+    _updatedAt = updatedAt;
   }
 
   int get id => _id;
@@ -135,14 +134,14 @@ class CarePlanTypes {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this._id;
-    data['Code'] = this._code;
-    data['Name'] = this._name;
-    data['DurationInWeeks'] = this._durationInWeeks;
-    data['Description'] = this._description;
-    data['created_at'] = this._createdAt;
-    data['updated_at'] = this._updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = _id;
+    data['Code'] = _code;
+    data['Name'] = _name;
+    data['DurationInWeeks'] = _durationInWeeks;
+    data['Description'] = _description;
+    data['created_at'] = _createdAt;
+    data['updated_at'] = _updatedAt;
     return data;
   }
 }

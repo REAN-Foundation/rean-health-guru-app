@@ -25,11 +25,11 @@ class BiometricWeightVitalsView extends StatefulWidget {
 
 class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   var model = PatientVitalsViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
-  List<Records> records = new List<Records>();
-  var dateFormatStandard = DateFormat("MMM dd, yyyy");
-  var _weightController = new TextEditingController();
+  List<Records> records = <Records>[];
+  var dateFormatStandard = DateFormat('MMM dd, yyyy');
+  final _weightController = TextEditingController();
   ProgressDialog progressDialog;
   String unit = 'Kg';
 
@@ -38,7 +38,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     getVitalsHistory();
     debugPrint('Country Local ==> ${getCurrentLocale()}');
     // TODO: implement initState
-    if (getCurrentLocale() == "US") {
+    if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
     super.initState();
@@ -46,7 +46,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
@@ -65,7 +65,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                         color: primaryColor,
                         fontWeight: FontWeight.w700),
                   ),
-                  iconTheme: new IconThemeData(color: Colors.black),
+                  iconTheme: IconThemeData(color: Colors.black),
                   actions: <Widget>[
                     /*IconButton(
                 icon: Icon(
@@ -96,7 +96,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                         const SizedBox(
                           height: 16,
                         ),
-                        records.length == 0 ? Container() : graph(),
+                        if (records.isEmpty) Container() else graph(),
                         //allGoal(),
                         const SizedBox(
                           height: 16,
@@ -118,7 +118,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                     const SizedBox(
                       height: 16,
                     ),
-                    records.length == 0 ? Container() : graph(),
+                    if (records.isEmpty) Container() else graph(),
                     //allGoal(),
                     //const SizedBox(height: 16,),
                   ],
@@ -139,7 +139,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
             height: 16,
           ),
           Text(
-            "Enter your weight:",
+            'Enter your weight:',
             style: TextStyle(
                 color: primaryColor, fontWeight: FontWeight.w500, fontSize: 16),
             textAlign: TextAlign.center,
@@ -165,12 +165,11 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (term) {},
                       inputFormatters: [
-                        new BlacklistingTextInputFormatter(
-                            new RegExp('[\\,|\\+|\\-]')),
+                        BlacklistingTextInputFormatter(RegExp('[\\,|\\+|\\-]')),
                       ],
                       decoration: InputDecoration(
                           hintText:
-                              unit == "lbs" ? "(100 to 200)" : "(50 to 100)",
+                              unit == 'lbs' ? '(100 to 200)' : '(50 to 100)',
                           contentPadding: EdgeInsets.all(0),
                           border: InputBorder.none,
                           fillColor: Colors.white,
@@ -187,7 +186,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: unit == "lbs" ? "    lbs    " : "    Kg    ",
+                          text: unit == 'lbs' ? '    lbs    ' : '    Kg    ',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
@@ -224,7 +223,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                   ),
                   child: Center(
                     child: Text(
-                      "Save",
+                      'Save',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
@@ -250,7 +249,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : (records.length == 0
+          : (records.isEmpty
               ? noHistoryFound()
               : Column(
                   children: [
@@ -261,7 +260,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Date",
+                            'Date',
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -270,7 +269,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            "Weight ",
+                            'Weight ',
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -312,7 +311,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
   Widget noHistoryFound() {
     return Center(
-      child: Text("No vital history found",
+      child: Text('No vital history found',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -322,7 +321,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   }
 
   Widget _makeWeightList(BuildContext context, int index) {
-    Records record = records.elementAt(index);
+    final Records record = records.elementAt(index);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -335,11 +334,11 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           overflow: TextOverflow.ellipsis,
         ),
         Text(
-          unit == "lbs"
+          unit == 'lbs'
               ? (double.parse(record.weight.toString()) * 2.20462)
                       .toStringAsFixed(1) +
                   ' lbs'
-              : record.weight.toString() + " Kgs",
+              : record.weight.toString() + ' Kgs',
           style: TextStyle(
               color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
           maxLines: 1,
@@ -360,13 +359,13 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                       colors: [primaryLightColor, colorF6F6FF]),
                   border: Border.all(color: primaryLightColor),
-                  borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
               padding: const EdgeInsets.all(16),
               height: 200,
               child: Center(
@@ -392,7 +391,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   }
 
   List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
-    List<TimeSeriesSales> data = new List<TimeSeriesSales>();
+    final List<TimeSeriesSales> data = <TimeSeriesSales>[];
     /*[
       new TimeSeriesSales(new DateTime(2017, 9, 19), 5),
       new TimeSeriesSales(new DateTime(2017, 9, 26), 25),
@@ -401,17 +400,16 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     ];*/
 
     for (int i = 0; i < records.length; i++) {
-      String receivedWeight = unit == "lbs"
+      final String receivedWeight = unit == 'lbs'
           ? (double.parse(records.elementAt(i).weight.toString()) * 2.20462)
               .toStringAsFixed(1)
           : records.elementAt(i).weight.toString();
-      data.add(new TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
           double.parse(receivedWeight)));
     }
 
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'vitals',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
@@ -446,7 +444,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                   width: 8,
                 ),
                 Text(
-                  "Your progress with goals",
+                  'Your progress with goals',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
@@ -465,7 +463,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Initial",
+                'Initial',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -474,7 +472,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                "85",
+                '85',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -492,7 +490,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Target",
+                'Target',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -501,7 +499,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                "65",
+                '65',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -519,7 +517,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Latest",
+                'Latest',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -528,7 +526,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                "74",
+                '74',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -576,10 +574,10 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         entertedWeight = entertedWeight / 2.20462;
       }
 
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['Weight'] = entertedWeight.toString();
 
-      BaseResponse baseResponse = await model.addMyVitals('weight', map);
+      final BaseResponse baseResponse = await model.addMyVitals('weight', map);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
@@ -599,7 +597,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
   getVitalsHistory() async {
     try {
-      GetMyVitalsHistory getMyVitalsHistory =
+      final GetMyVitalsHistory getMyVitalsHistory =
           await model.getMyVitalsHistory('weight');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();

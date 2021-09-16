@@ -26,11 +26,11 @@ class BookAppoinmentViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/doctor?name=' +
             searchKeyword +
             '&locality=' +
@@ -50,11 +50,11 @@ class BookAppoinmentViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response =
+    final response =
         await apiProvider.get('/doctor?&name=' + searchKeyword, header: map);
 
     print(response);
@@ -67,11 +67,11 @@ class BookAppoinmentViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response = await apiProvider.get('/doctor', header: map);
+    final response = await apiProvider.get('/doctor', header: map);
 
     print(response);
     setBusy(false);
@@ -84,11 +84,11 @@ class BookAppoinmentViewModel extends BaseModel {
     // Get user profile for id
     //setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response =
+    final response =
         await apiProvider.get('/doctor/' + doctorUserId, header: map);
 
     print(response);
@@ -102,11 +102,11 @@ class BookAppoinmentViewModel extends BaseModel {
     // Get user profile for id
     //setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response = await apiProvider.get('/lab/' + labUserId, header: map);
+    final response = await apiProvider.get('/lab/' + labUserId, header: map);
 
     print(response);
     //setBusy(false);
@@ -119,11 +119,11 @@ class BookAppoinmentViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response =
+    final response =
         await apiProvider.get('/lab?&name=' + searchKeyword, header: map);
 
     print(response);
@@ -137,11 +137,11 @@ class BookAppoinmentViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response =
+    final response =
         await apiProvider.get('/lab?long=' + long + '&lat=' + lat, header: map);
 
     print(response);
@@ -154,11 +154,11 @@ class BookAppoinmentViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response = await apiProvider.get('/lab', header: map);
+    final response = await apiProvider.get('/lab', header: map);
 
     print(response);
     setBusy(false);
@@ -171,11 +171,11 @@ class BookAppoinmentViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response = await apiProvider
+    final response = await apiProvider
         .get('/pharmacy?long=' + long + '&lat=' + lat, header: map);
 
     print(response);
@@ -189,11 +189,11 @@ class BookAppoinmentViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/appointment/slots/doctor/' +
             doctorId +
             '?from_date=' +
@@ -213,11 +213,11 @@ class BookAppoinmentViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/appointment/slots/lab/' +
             labId +
             '?from_date=' +
@@ -236,11 +236,11 @@ class BookAppoinmentViewModel extends BaseModel {
     // Get user profile for id
     //setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post(
+    final response = await apiProvider.post(
         '/appointment/patient/' + patientUserId + '/check-slot-conflict',
         header: map,
         body: body);
@@ -257,11 +257,11 @@ class BookAppoinmentViewModel extends BaseModel {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response = await apiProvider
+    final response = await apiProvider
         .post('/appointment/book/doctor/' + doctorId, body: body, header: map);
 
     print(response);
@@ -276,11 +276,11 @@ class BookAppoinmentViewModel extends BaseModel {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response = await apiProvider.post('/appointment/book/lab/' + labId,
+    final response = await apiProvider.post('/appointment/book/lab/' + labId,
         body: body, header: map);
 
     print(response);
@@ -291,11 +291,11 @@ class BookAppoinmentViewModel extends BaseModel {
 
   Future<MyAppointmentApiResponse> getMyAppoinmentList(String auth) async {
     setBusy(true);
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response = await apiProvider.get('/appointment/for-me/', header: map);
+    final response = await apiProvider.get('/appointment/for-me/', header: map);
 
     print(response);
     setBusy(false);
@@ -306,11 +306,11 @@ class BookAppoinmentViewModel extends BaseModel {
   Future<MyAppointmentApiResponse> getMyAppoinmentByDateList(
       String auth, String startDate, String endDate) async {
     setBusy(true);
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/appointment/for-me/?from_date=' +
             startDate +
             '&to_date=' +
@@ -327,11 +327,11 @@ class BookAppoinmentViewModel extends BaseModel {
   Future<MyAppointmentApiResponse> getMyAppoinmentByDateLisAndStatus(
       String auth, String status, String startDate, String endDate) async {
     setBusy(true);
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/appointment/for-me/?show=' +
             status +
             '&from_date=' +

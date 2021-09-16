@@ -6,7 +6,7 @@ class SimpleTimeSeriesChart extends StatelessWidget {
   final List<charts.Series> seriesList;
   final bool animate;
 
-  SimpleTimeSeriesChart(this.seriesList, {this.animate});
+  const SimpleTimeSeriesChart(this.seriesList, {this.animate});
 
   /// Creates a [TimeSeriesChart] with sample data and no transition.
   /*factory SimpleTimeSeriesChart.withSampleData() {
@@ -19,7 +19,7 @@ class SimpleTimeSeriesChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new charts.TimeSeriesChart(
+    return charts.TimeSeriesChart(
       seriesList,
       animate: animate,
       // Optionally pass in a [DateTimeFactory] used by the chart. The factory
@@ -32,14 +32,14 @@ class SimpleTimeSeriesChart extends StatelessWidget {
   /// Create one series with sample hard coded data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
     final data = [
-      new TimeSeriesSales(new DateTime(2017, 9, 19), 5),
-      new TimeSeriesSales(new DateTime(2017, 9, 26), 25),
-      new TimeSeriesSales(new DateTime(2017, 10, 3), 100),
-      new TimeSeriesSales(new DateTime(2017, 10, 10), 75),
+      TimeSeriesSales(DateTime(2017, 9, 19), 5),
+      TimeSeriesSales(DateTime(2017, 9, 26), 25),
+      TimeSeriesSales(DateTime(2017, 10, 3), 100),
+      TimeSeriesSales(DateTime(2017, 10, 10), 75),
     ];
 
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,

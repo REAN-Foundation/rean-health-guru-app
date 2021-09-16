@@ -23,15 +23,15 @@ class CarePlanTasksView extends StatefulWidget {
 class _CarePlanTasksViewState extends State<CarePlanTasksView>
     with WidgetsBindingObserver {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var dateFormat = DateFormat("MMM, dd - hh:mm a");
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  var dateFormat = DateFormat('MMM, dd - hh:mm a');
   GetTaskOfAHACarePlanResponse _carePlanTaskResponse;
-  List<Task> tasks = new List<Task>();
+  List<Task> tasks = <Task>[];
   bool isSubscribe = false;
   ProgressDialog progressDialog;
   bool isUpCommingSelected = true;
   String query = 'incomplete';
-  ScrollController _scrollController =
+  final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
 
   getAHACarePlanSummary() async {
@@ -42,9 +42,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       if (_carePlanTaskResponse.status == 'success') {
         tasks.clear();
         tasks.addAll(_carePlanTaskResponse.data.tasks);
-        debugPrint("AHA Care Plan ==> ${_carePlanTaskResponse.toJson()}");
+        debugPrint('AHA Care Plan ==> ${_carePlanTaskResponse.toJson()}');
         debugPrint(
-            "AHA Care Plan Task Count ==> ${_carePlanTaskResponse.data.tasks.length}");
+            'AHA Care Plan Task Count ==> ${_carePlanTaskResponse.data.tasks.length}');
       } else {
         tasks.clear();
         showToast(_carePlanTaskResponse.message, context);
@@ -81,7 +81,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     //debugPrint("startCarePlanResponseGlob ==> ${startCarePlanResponseGlob}");
     // TODO: implement initState
     triggerApiCall();
@@ -115,7 +115,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                 child: Row(
                   children: [
                     Text(
-                      "Tasks ",
+                      'Tasks ',
                       style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.w700,
@@ -172,7 +172,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         },
                         child: Center(
                           child: Text(
-                            "Completed",
+                            'Completed',
                             style: TextStyle(
                                 color: isUpCommingSelected
                                     ? textBlack
@@ -193,7 +193,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       padding: const EdgeInsets.all(16.0),
                       child: model.busy
                           ? Center(child: CircularProgressIndicator())
-                          : tasks.length == 0
+                          : tasks.isEmpty
                               ? noTaskFound()
                               : listWidget())),
             ],
@@ -206,7 +206,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 //isSubscribe ?  model.busy ? Center(child: CircularProgressIndicator(),) : tasks.length == 0 ? noTaskFound() : listWidget() : noDoctorFound(),
   Widget noTaskFound() {
     return Center(
-      child: Text("No tasks for today",
+      child: Text('No tasks for today',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -217,7 +217,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   Widget noDoctorFound() {
     return Center(
-      child: Text("No AHA plan subscribe yet",
+      child: Text('No AHA plan subscribe yet',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -244,7 +244,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   }
 
   Widget _createToDos(BuildContext context, int index) {
-    Task task = tasks.elementAt(index);
+    final Task task = tasks.elementAt(index);
 
     return task.categoryName == 'Care-plan-task'
         ? _makeTaskCard(context, index)
@@ -256,7 +256,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   }
 
   Widget _makeTaskCard(BuildContext context, int index) {
-    Task task = tasks.elementAt(index);
+    final Task task = tasks.elementAt(index);
     //debugPrint('Category Name ==> ${task.categoryName} && Task Tittle ==> ${task.details.mainTitle}');
     return InkWell(
       onTap: () {
@@ -273,17 +273,17 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         child: Semantics(
           label: task.details.mainTitle,
           child: Container(
-            key: new Key(task.details.type),
-            decoration: new BoxDecoration(
+            key: Key(task.details.type),
+            decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: primaryLightColor),
-                borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+                borderRadius: BorderRadius.all(Radius.circular(4.0))),
             child: Column(
               children: <Widget>[
                 Container(
-                  decoration: new BoxDecoration(
+                  decoration: BoxDecoration(
                       color: colorF6F6FF,
-                      borderRadius: new BorderRadius.only(
+                      borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(4.0),
                           topRight: Radius.circular(4.0))),
                   child: Container(
@@ -427,8 +427,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   }
 
   Widget _makeMedicineCard(BuildContext context, int index) {
-    Task task = tasks.elementAt(index);
-    DateTime startTime =
+    final Task task = tasks.elementAt(index);
+    final DateTime startTime =
         DateTime.parse(task.details.timeScheduleStart).toLocal();
     debugPrint(
         'Medication Taken ==> ${task.details.isTaken}  && Start Time ==> ${DateTime.now().isAfter(startTime)} ');
@@ -437,19 +437,19 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         label: task.details.mainTitle,
         child: Container(
           height: 100,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               color: Colors.white,
               border: Border.all(color: primaryLightColor),
-              borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+              borderRadius: BorderRadius.all(Radius.circular(4.0))),
           child: ExcludeSemantics(
             child: Column(
               children: <Widget>[
                 Expanded(
                   flex: 3,
                   child: Container(
-                    decoration: new BoxDecoration(
+                    decoration: BoxDecoration(
                         color: colorF6F6FF,
-                        borderRadius: new BorderRadius.only(
+                        borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(4.0),
                             topRight: Radius.circular(4.0))),
                     child: Row(
@@ -514,15 +514,16 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                task.details.drugName == null
-                                    ? Container()
-                                    : Text(task.details.drugName,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w200,
-                                            color: textBlack)),
+                                if (task.details.drugName == null)
+                                  Container()
+                                else
+                                  Text(task.details.drugName,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w200,
+                                          color: textBlack)),
                                 SizedBox(
                                   height: 4,
                                 ),
@@ -565,7 +566,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             visible:
                                 !(DateTime.parse(task.details.timeScheduleStart)
                                         .toLocal())
-                                    .isAfter(new DateTime.now()),
+                                    .isAfter(DateTime.now()),
                             child: Expanded(
                               flex: 2,
                               child: InkWell(
@@ -573,7 +574,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                   markMedicationsAsTaken(task.details.id);
                                 },
                                 child: Container(
-                                  decoration: new BoxDecoration(
+                                  decoration: BoxDecoration(
                                     color: primaryColor,
                                     borderRadius: BorderRadius.only(
                                         bottomRight: Radius.circular(4)),
@@ -610,7 +611,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             child: InkWell(
                               onTap: () {},
                               child: Container(
-                                decoration: new BoxDecoration(
+                                decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.only(
                                       bottomRight: Radius.circular(4)),
@@ -636,7 +637,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             child: InkWell(
                               onTap: () {},
                               child: Container(
-                                decoration: new BoxDecoration(
+                                decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.only(
                                       bottomRight: Radius.circular(4)),
@@ -695,9 +696,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   markMedicationsAsTaken(String consumptionId) async {
     try {
       progressDialog.show();
-      BaseResponse baseResponse =
+      final BaseResponse baseResponse =
           await model.markMedicationsAsTaken(consumptionId);
-      debugPrint("Medication ==> ${baseResponse.toJson()}");
+      debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         progressDialog.hide();
         triggerApiCall();
@@ -709,24 +710,24 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       progressDialog.hide();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
   }
 
   Widget _makeUpcommingAppointmentCard(BuildContext context, int index) {
-    Task task = tasks.elementAt(index);
+    final Task task = tasks.elementAt(index);
     return InkWell(
       onTap: () {},
       child: MergeSemantics(
         child: Semantics(
           label: task.details.mainTitle,
           child: Container(
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: primaryLightColor),
-                borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
             child: ExcludeSemantics(
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
@@ -804,7 +805,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                     child: SizedBox(
                         height: 20,
                         width: 20,
-                        child: new Image.asset(
+                        child: Image.asset(
                             'res/images/ic_appoinment_confirmed.png')),
                   ),
                 ]),
@@ -819,7 +820,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   startAHACarePlanSummary(Task task) async {
     try {
       progressDialog.show();
-      StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
+      final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.startTaskOfAHACarePlan(
               startCarePlanResponseGlob.data.carePlan.id.toString(),
               task.details.id);
@@ -829,7 +830,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         //debugPrint(_startTaskOfAHACarePlanResponse.data.task.details.carePlanId.toString());
         _taskNavigator(task);
         debugPrint(
-            "AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}");
+            'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
         progressDialog.hide();
         showToast(_startTaskOfAHACarePlanResponse.message, context);
@@ -852,11 +853,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     setTask(task);
     debugPrint('Task Type ==> ${task.details.type}');
     switch (task.details.type) {
-      case "Message":
+      case 'Message':
         assrotedUICount = 3;
-        AssortedViewConfigs newAssortedViewConfigs = new AssortedViewConfigs();
-        newAssortedViewConfigs.toShow = "1";
-        newAssortedViewConfigs.testToshow = "2";
+        final AssortedViewConfigs newAssortedViewConfigs =
+            AssortedViewConfigs();
+        newAssortedViewConfigs.toShow = '1';
+        newAssortedViewConfigs.testToshow = '2';
         newAssortedViewConfigs.isNextButtonVisible = false;
         newAssortedViewConfigs.header = task.details.mainTitle;
         newAssortedViewConfigs.task = task;
@@ -868,7 +870,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           //showToast('Task completed successfully');
         });
         break;
-      case "Assessment":
+      case 'Assessment':
         if (!task.finished) {
           Navigator.pushNamed(context, RoutePaths.Assessment_Navigator,
                   arguments: task)
@@ -881,7 +883,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         }
         //Navigator.pushNamed(context, RoutePaths.Assessment_Start_Care_Plan);
         break;
-      case "Link":
+      case 'Link':
         _launchURL(task.details.url.replaceAll(' ', '%20')).then((value) {
           getAHACarePlanSummary();
           //showToast('Task completed successfully');
@@ -890,7 +892,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           completeMessageTaskOfAHACarePlan(task);
         }
         break;
-      case "Biometrics":
+      case 'Biometrics':
         Navigator.pushNamed(context, RoutePaths.Biometric_Care_Plan_Line,
                 arguments: task)
             .then((value) {
@@ -898,7 +900,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           //showToast('Task completed successfully');
         });
         break;
-      case "Challenge":
+      case 'Challenge':
         Navigator.pushNamed(context, RoutePaths.Challenge_Care_Plan,
                 arguments: task)
             .then((value) {
@@ -906,7 +908,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           //showToast('Task completed successfully');
         });
         break;
-      case "Goal":
+      case 'Goal':
         if (!task.finished) {
           Navigator.pushNamed(
                   context, RoutePaths.Set_Prority_For_Goals_Care_Plan)
@@ -918,11 +920,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           showToast('Task is already completed', context);
         }
         break;
-      case "Mindful Moment":
+      case 'Mindful Moment':
         assrotedUICount = 3;
-        AssortedViewConfigs newAssortedViewConfigs = new AssortedViewConfigs();
-        newAssortedViewConfigs.toShow = "2";
-        newAssortedViewConfigs.testToshow = "2";
+        final AssortedViewConfigs newAssortedViewConfigs =
+            AssortedViewConfigs();
+        newAssortedViewConfigs.toShow = '2';
+        newAssortedViewConfigs.testToshow = '2';
         newAssortedViewConfigs.isNextButtonVisible = false;
         newAssortedViewConfigs.header = task.details.mainTitle;
         newAssortedViewConfigs.task = task;
@@ -933,11 +936,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           //showToast('Task completed successfully');
         });
         break;
-      case "Word bank":
+      case 'Word bank':
         assrotedUICount = 3;
-        AssortedViewConfigs newAssortedViewConfigs = new AssortedViewConfigs();
-        newAssortedViewConfigs.toShow = "2";
-        newAssortedViewConfigs.testToshow = "2";
+        final AssortedViewConfigs newAssortedViewConfigs =
+            AssortedViewConfigs();
+        newAssortedViewConfigs.toShow = '2';
+        newAssortedViewConfigs.testToshow = '2';
         newAssortedViewConfigs.isNextButtonVisible = false;
         newAssortedViewConfigs.header = task.details.mainTitle;
         newAssortedViewConfigs.task = task;
@@ -948,7 +952,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           //showToast('Task completed successfully');
         });
         break;
-      case "Patient Weekly Relection":
+      case 'Patient Weekly Relection':
         if (!task.finished) {
           Navigator.pushNamed(
                   context, RoutePaths.Self_Reflection_For_Goals_Care_Plan,
@@ -961,7 +965,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           showToast('Task is already completed', context);
         }
         break;
-      case "Care Plan Status Check":
+      case 'Care Plan Status Check':
         if (!task.finished) {
           Navigator.pushNamed(context, RoutePaths.Care_Plan_Status_Check,
                   arguments: task)
@@ -973,17 +977,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           showToast('Task is already completed', context);
         }
         break;
-      case "Link":
-        debugPrint('URL ==> ${task.details.url.replaceAll(' ', '%20')}');
-        _launchURL(task.details.url.replaceAll(' ', '%20')).then((value) {
-          getAHACarePlanSummary();
-          //showToast('Task completed successfully');
-        });
-        if (!task.finished) {
-          completeMessageTaskOfAHACarePlan(task);
-        }
-        break;
-      case "Video":
+      case 'Video':
         debugPrint('URL ==> ${task.details.url.replaceAll(' ', '%20')}');
         /*if(task.details.url.contains('youtube')){
         assrotedUICount = 3;
@@ -1009,7 +1003,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           completeMessageTaskOfAHACarePlan(task);
         }
         break;
-      case "Infographics":
+      case 'Infographics':
         debugPrint('URL ==> ${task.details.url.replaceAll(' ', '%20')}');
         _launchURL(task.details.url.replaceAll(' ', '%20')).then((value) {
           getAHACarePlanSummary();
@@ -1019,7 +1013,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           completeMessageTaskOfAHACarePlan(task);
         }
         break;
-      case "Animation":
+      case 'Animation':
         debugPrint('URL ==> ${task.details.url.replaceAll(' ', '%20')}');
         _launchURL(task.details.url.replaceAll(' ', '%20')).then((value) {
           getAHACarePlanSummary();
@@ -1034,7 +1028,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   completeMessageTaskOfAHACarePlan(Task task) async {
     try {
-      StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
+      final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.stopTaskOfAHACarePlan(
               startCarePlanResponseGlob.data.carePlan.id.toString(),
               task.details.id);
@@ -1043,7 +1037,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         assrotedUICount = 0;
 
         debugPrint(
-            "AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}");
+            'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
         showToast(_startTaskOfAHACarePlanResponse.message, context);
       }

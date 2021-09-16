@@ -14,29 +14,29 @@ class MyMedicationHistoryView extends StatefulWidget {
 
 class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
   var model = PatientMedicationViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  List<Summary> summarys = new List<Summary>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<Summary> summarys = <Summary>[];
 
   getMyMedicationSummary() async {
     try {
-      MyMedicationSummaryRespose myMedicationSummaryRespose =
+      final MyMedicationSummaryRespose myMedicationSummaryRespose =
           await model.getMyMedicationSummary();
-      debugPrint("Medication ==> ${myMedicationSummaryRespose.toJson()}");
+      debugPrint('Medication ==> ${myMedicationSummaryRespose.toJson()}');
       if (myMedicationSummaryRespose.status == 'success') {
         summarys.clear();
-        for (var item in myMedicationSummaryRespose.data.summary) {
-          if (item.summaryForMonth.length > 0) {
+        for (final item in myMedicationSummaryRespose.data.summary) {
+          if (item.summaryForMonth.isNotEmpty) {
             summarys.add(item);
           }
         }
-        debugPrint("Summary Length ==> ${summarys.length}");
+        debugPrint('Summary Length ==> ${summarys.length}');
       } else {
         showToast(myMedicationSummaryRespose.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -66,7 +66,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                         height: 32,
                         width: 32,
                         child: CircularProgressIndicator()))
-                : (summarys.length == 0 ? noMedicationFound() : listWidget()),
+                : (summarys.isEmpty ? noMedicationFound() : listWidget()),
           ),
         ),
       ),
@@ -75,7 +75,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
 
   Widget noMedicationFound() {
     return Center(
-      child: Text("No medication history",
+      child: Text('No medication history',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -99,19 +99,19 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
   }
 
   Widget _makeMedicinePrescriptionCard(BuildContext context, int index) {
-    Summary summary = summarys.elementAt(index);
+    final Summary summary = summarys.elementAt(index);
     return Container(
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+          borderRadius: BorderRadius.all(Radius.circular(4.0))),
       child: Column(
         children: <Widget>[
           Container(
             height: 40,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius: new BorderRadius.only(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(4.0),
                     topRight: Radius.circular(4.0))),
             child: Padding(
@@ -147,7 +147,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                             Container(
                               width: 16,
                               height: 16,
-                              decoration: new BoxDecoration(
+                              decoration: BoxDecoration(
                                 color: Colors.green,
                                 shape: BoxShape.circle,
                               ),
@@ -158,7 +158,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                             Container(
                               width: 16,
                               height: 16,
-                              decoration: new BoxDecoration(
+                              decoration: BoxDecoration(
                                 border: Border.all(color: Colors.red),
                                 shape: BoxShape.circle,
                               ),

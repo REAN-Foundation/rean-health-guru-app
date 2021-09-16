@@ -5,7 +5,7 @@ import 'package:paitent/core/services/api.dart';
 import '../base_model.dart';
 
 class CommentsModel extends BaseModel {
-  Api _api;
+  final Api _api;
 
   CommentsModel({
     @required Api api,

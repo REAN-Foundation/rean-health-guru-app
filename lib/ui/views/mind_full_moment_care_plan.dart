@@ -15,35 +15,35 @@ class MindFullMomentCarePlanView extends StatefulWidget {
 class _MindFullMomentCarePlanViewState
     extends State<MindFullMomentCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 //https://www.youtube.com/watch?v=s1pG7k_1nSw
-  String videourl = "https://www.youtube.com/watch?v=d8PzoTr95ik";
+  String videourl = 'https://www.youtube.com/watch?v=d8PzoTr95ik';
 
-  String textMsg1 = "Welcome to this heart meditation brought to you "
-      "by the American Heart Association. Bring your"
-      " attention to your breathing. You may want to close"
-      " your eyes and block out other sounds. Without"
-      " trying to change the pace or volume of your"
+  String textMsg1 = 'Welcome to this heart meditation brought to you '
+      'by the American Heart Association. Bring your'
+      ' attention to your breathing. You may want to close'
+      ' your eyes and block out other sounds. Without'
+      ' trying to change the pace or volume of your'
       ' breathing try to pay attention to each breath as you'
       ' inhale (pause), and exhale (pause). Breathe in,'
       ' breath out; breathe in, breathe out; breath in, breath'
-      " out. As you become more aware of your breathing,"
+      ' out. As you become more aware of your breathing,'
       ' gradually bring your attention to your'
       ' heart. Try to see if you can feel your heart beating.'
       ' Your heart has been beating every moment of your'
-      " entire life. It speeds up when you need to provide ";
+      ' entire life. It speeds up when you need to provide ';
 
-  YoutubePlayerController _controller = YoutubePlayerController(
-    initialVideoId: "s1pG7k_1nSw",
+  final YoutubePlayerController _controller = YoutubePlayerController(
+    initialVideoId: 's1pG7k_1nSw',
     flags: YoutubePlayerFlags(
       autoPlay: false,
       mute: false,
     ),
   );
 
-  String unformatedDOB = "";
-  var dateFormat = DateFormat("dd MMM, yyyy");
+  String unformatedDOB = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class _MindFullMomentCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -103,7 +103,7 @@ class _MindFullMomentCarePlanViewState
       ),
       child: Center(
         child: Text(
-          "Heart Meditation",
+          'Heart Meditation',
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
           textAlign: TextAlign.center,
         ),

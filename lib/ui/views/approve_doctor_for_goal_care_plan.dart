@@ -15,8 +15,8 @@ class ApproveDoctorForGoalCarePlanView extends StatefulWidget {
 class _ApproveDoctorForCarePlanViewState
     extends State<ApproveDoctorForGoalCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var _searchController = new TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class _ApproveDoctorForCarePlanViewState
                 ),
               ),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -104,7 +104,7 @@ class _ApproveDoctorForCarePlanViewState
                                   readOnly: true,
                                   child: Center(
                                     child: Text(
-                                      "Send for Approval",
+                                      'Send for Approval',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w700,
@@ -139,7 +139,7 @@ class _ApproveDoctorForCarePlanViewState
       ),
       child: Center(
         child: Text(
-          "Get Goals Approved!",
+          'Get Goals Approved!',
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
         ),
       ),
@@ -148,7 +148,7 @@ class _ApproveDoctorForCarePlanViewState
 
   Widget noDoctorFound() {
     return Center(
-      child: Text("No Doctor found in your Locality",
+      child: Text('No Doctor found in your Locality',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -173,10 +173,10 @@ class _ApproveDoctorForCarePlanViewState
   Widget _makeDoctorListCard(BuildContext context, int index) {
     return Container(
       height: 100,
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Card(

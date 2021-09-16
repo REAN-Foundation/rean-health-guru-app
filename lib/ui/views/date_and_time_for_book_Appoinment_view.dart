@@ -32,12 +32,12 @@ class DateAndTimeForBookAppoinmentView extends StatefulWidget {
 
 class _DateAndTimeForBookAppoinmentViewState
     extends State<DateAndTimeForBookAppoinmentView> {
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
-  String name = "";
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  String name = '';
   var value;
-  List<Slots> timeSlot = new List();
-  List<Slots> timeSlotAm = new List();
-  List<Slots> timeSlotPm = new List();
+  List<Slots> timeSlot = [];
+  List<Slots> timeSlotAm = [];
+  List<Slots> timeSlotPm = [];
   List _myActivities;
   String _myActivitiesResult;
 
@@ -45,26 +45,27 @@ class _DateAndTimeForBookAppoinmentViewState
   DateTime userSelectedDate;
   bool isAmSelected = true;
   Doctors doctorDetails;
-  List<String> dayLabels = ["Mon", "Tue", "Wed", "Thr", "Fri", "Sat", "Sun"];
-  String auth = "";
-  var model = new BookAppoinmentViewModel();
-  String startTime = "";
-  String endTime = "";
+  List<String> dayLabels = ['Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat', 'Sun'];
+  String auth = '';
+  var model = BookAppoinmentViewModel();
+  String startTime = '';
+  String endTime = '';
 
   _DateAndTimeForBookAppoinmentViewState(@required this.doctorDetails);
 
-  var dateFormat = DateFormat("yyyy-MM-dd");
-  var timeFormat = DateFormat("hh:mm a");
-  List<Slots> timeSlots = new List<Slots>();
+  var dateFormat = DateFormat('yyyy-MM-dd');
+  var timeFormat = DateFormat('hh:mm a');
+  List<Slots> timeSlots = <Slots>[];
   var bookingAppoinmentsDetails = DoctorBookingAppoinmentPojo();
   ProgressDialog progressDialog;
 
   loadSharedPrefs() async {
     try {
-      UserData user = UserData.fromJson(await _sharedPrefUtils.read("user"));
+      final UserData user =
+          UserData.fromJson(await _sharedPrefUtils.read('user'));
       //debugPrint(user.toJson().toString());
-      Patient patient =
-          Patient.fromJson(await _sharedPrefUtils.read("patientDetails"));
+      final Patient patient =
+          Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       bookingAppoinmentsDetails.patient = patient;
       bookingAppoinmentsDetails.userData = user;
       auth = user.data.accessToken;
@@ -80,7 +81,7 @@ class _DateAndTimeForBookAppoinmentViewState
 
   getAvailableDoctorSlot() async {
     try {
-      GetAvailableDoctorSlot getAvailableDoctorSlot =
+      final GetAvailableDoctorSlot getAvailableDoctorSlot =
           await model.getAvailableDoctorSlot(
               doctorDetails.userId.toString(),
               dateFormat.format(userSelectedDate),
@@ -93,7 +94,7 @@ class _DateAndTimeForBookAppoinmentViewState
         timeSlotAm.clear();
         timeSlotPm.clear();
 
-        if (getAvailableDoctorSlot.data.slotsByDate.length != 0) {
+        if (getAvailableDoctorSlot.data.slotsByDate.isNotEmpty) {
           timeSlot.addAll(
               getAvailableDoctorSlot.data.slotsByDate.elementAt(0).slots);
 
@@ -102,13 +103,13 @@ class _DateAndTimeForBookAppoinmentViewState
                 .format(timeSlot.elementAt(i).slotStart.toLocal()));
             if (DateFormat.jm()
                 .format(timeSlot.elementAt(i).slotStart.toLocal())
-                .contains("AM")) {
+                .contains('AM')) {
               timeSlotAm.add(timeSlot.elementAt(i));
             } else {
               timeSlotPm.add(timeSlot.elementAt(i));
             }
           }
-          print("Am ${timeSlotAm.length}  PM ${timeSlotPm.length}");
+          print('Am ${timeSlotAm.length}  PM ${timeSlotPm.length}');
         }
       } else {
         showToast(getAvailableDoctorSlot.message, context);
@@ -116,7 +117,7 @@ class _DateAndTimeForBookAppoinmentViewState
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -127,7 +128,7 @@ class _DateAndTimeForBookAppoinmentViewState
     // TODO: implement initState
     super.initState();
 
-    selectedMonth = new DateTime(new DateTime.now().year, DateTime.now().month);
+    selectedMonth = DateTime(DateTime.now().year, DateTime.now().month);
     debugPrint(selectedMonth.toIso8601String());
     //prepareData();
     _dateAndTimeCalculation();
@@ -191,7 +192,7 @@ class _DateAndTimeForBookAppoinmentViewState
     //loadSharedPrefs();
     //UserData data = UserData.fromJson(_sharedPrefUtils.read("user"));
     //debugPrint(_sharedPrefUtils.read("user"));
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     return BaseWidget<BookAppoinmentViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -207,7 +208,7 @@ class _DateAndTimeForBookAppoinmentViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -263,7 +264,7 @@ class _DateAndTimeForBookAppoinmentViewState
                           });
                         },
                         child: Text(
-                          "AM",
+                          'AM',
                           style: TextStyle(
                               fontSize: 16,
                               color: isAmSelected
@@ -277,7 +278,7 @@ class _DateAndTimeForBookAppoinmentViewState
                             isAmSelected = false;
                           });
                         },
-                        child: Text("PM",
+                        child: Text('PM',
                             style: TextStyle(
                                 fontSize: 16,
                                 color: isAmSelected
@@ -285,11 +286,11 @@ class _DateAndTimeForBookAppoinmentViewState
                                     : primaryColor,
                                 fontWeight: FontWeight.w700))),
                     Text(
-                      "Cm",
+                      'Cm',
                       style: TextStyle(fontSize: 16, color: Colors.white),
                     ),
                     Text(
-                      "Cm",
+                      'Cm',
                       style: TextStyle(fontSize: 16, color: Colors.white),
                     ),
                   ],
@@ -302,7 +303,7 @@ class _DateAndTimeForBookAppoinmentViewState
                               height: 32,
                               width: 32,
                               child: CircularProgressIndicator()))
-                      : (timeSlot.length == 0
+                      : (timeSlot.isEmpty
                           ? noSlotsFound()
                           : _makeTimeSlotGridView())),
               SizedBox(
@@ -322,9 +323,9 @@ class _DateAndTimeForBookAppoinmentViewState
   Widget noSlotsFound() {
     return Center(
       child: Text(
-        timeSlot.length == 0
-            ? "Clinic closed,\nPlease select another date"
-            : "No slots found",
+        timeSlot.isEmpty
+            ? 'Clinic closed,\nPlease select another date'
+            : 'No slots found',
         style: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 14,
@@ -351,14 +352,14 @@ class _DateAndTimeForBookAppoinmentViewState
           // Add This
           child: MaterialButton(
             minWidth: 200,
-            child: new Text('Next',
-                style: new TextStyle(
+            child: Text('Next',
+                style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
             onPressed: () {
-              if (startTime == "") {
-                showToast("Please select time slot", context);
+              if (startTime == '') {
+                showToast('Please select time slot', context);
               } else {
                 bookingAppoinmentsDetails.slotStart = startTime;
                 bookingAppoinmentsDetails.slotEnd = endTime;
@@ -369,7 +370,7 @@ class _DateAndTimeForBookAppoinmentViewState
                 Navigator.pushNamed(
                     context, RoutePaths.Booking_Appoinment_Info_View,
                     arguments: bookingAppoinmentsDetails);
-                debugPrint("Clicked On Proceed");
+                debugPrint('Clicked On Proceed');
               }
             },
           ),
@@ -389,12 +390,12 @@ class _DateAndTimeForBookAppoinmentViewState
       },
       dataSource: [
         {
-          "display": "General CheckUp",
-          "value": "Climbing",
+          'display': 'General CheckUp',
+          'value': 'Climbing',
         },
         {
-          "display": "Sonography",
-          "value": "Sonography",
+          'display': 'Sonography',
+          'value': 'Sonography',
         },
       ],
       textField: 'display',
@@ -413,7 +414,7 @@ class _DateAndTimeForBookAppoinmentViewState
   }
 
   Widget _makeTimeSlotGridView() {
-    print("${isAmSelected}");
+    print('$isAmSelected');
     if (isAmSelected) {
       timeSlots.clear();
       timeSlots.addAll(timeSlotAm);
@@ -424,14 +425,14 @@ class _DateAndTimeForBookAppoinmentViewState
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(40.0, 16, 40, 16),
-      child: timeSlots.length == 0
+      child: timeSlots.isEmpty
           ? noSlotsFound()
           : GridView.builder(
               itemCount: timeSlots.length,
-              controller: new ScrollController(keepScrollOffset: false),
+              controller: ScrollController(keepScrollOffset: false),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
@@ -442,7 +443,7 @@ class _DateAndTimeForBookAppoinmentViewState
   }
 
   Widget _makeTimeSlotBox(BuildContext context, int index) {
-    Slots slot = timeSlots.elementAt(index);
+    final Slots slot = timeSlots.elementAt(index);
     Color selcetedColor = Colors.white;
     //debugPrint("isAvailable ${slot.isAvailable} isSelected ${slot.isSelected}, Time Slot ${slot.slotStart.substring(0,5)+" - "+slot.slotEnd.substring(0,5)}");
     if (slot.isAvailable) {
@@ -490,7 +491,7 @@ class _DateAndTimeForBookAppoinmentViewState
         debugPrint('index click true');
         timeSlots.elementAt(i).isSelected = true;
         print(
-            "UTC ${timeSlots.elementAt(i).slotStart.toUtc().toIso8601String()}");
+            'UTC ${timeSlots.elementAt(i).slotStart.toUtc().toIso8601String()}');
         startTime = timeSlots.elementAt(i).slotStart.toUtc().toIso8601String();
         endTime = timeSlots.elementAt(i).slotEnd.toUtc().toIso8601String();
       } else {
@@ -532,7 +533,7 @@ class _DateAndTimeForBookAppoinmentViewState
   }
 
   void handleReadOnlyInputClick(context) {
-    debugPrint("In");
+    debugPrint('In');
     showBottomSheet(
         context: context,
         builder: (BuildContext context) => Container(
@@ -638,12 +639,12 @@ class _DateAndTimeForBookAppoinmentViewState
     );
   }
 
-  var dateNtimeStrip = List<DateStripDate>();
+  var dateNtimeStrip = <DateStripDate>[];
 
   _dateAndTimeCalculation() {
     dateNtimeStrip.clear();
 
-    debugPrint("+++++++++++++++++++ Calculation Start ++++++++++++++++++++++");
+    debugPrint('+++++++++++++++++++ Calculation Start ++++++++++++++++++++++');
 
     //var dateUtility = DateUtil();
     startDate = selectedMonth;
@@ -679,7 +680,7 @@ class _DateAndTimeForBookAppoinmentViewState
         dateNtimeStrip.add(date);
       }
     }*/
-    debugPrint("+++++++++++++++++++ Calculation End ++++++++++++++++++++++");
+    debugPrint('+++++++++++++++++++ Calculation End ++++++++++++++++++++++');
   }
 
   _dateSelection() {
@@ -752,19 +753,19 @@ class _DateAndTimeForBookAppoinmentViewState
   }
 
   dateTileBuilderNew(BuildContext context, int index) {
-    DateStripDate dateDetails = dateNtimeStrip.elementAt(index);
+    final DateStripDate dateDetails = dateNtimeStrip.elementAt(index);
 
-    bool isSelectedDate = dateDetails.isSelected;
+    final bool isSelectedDate = dateDetails.isSelected;
     //Color fontColor = isDateOutOfRange ? Colors.black12 : Colors.black87;
-    TextStyle normalStyle = TextStyle(
+    final TextStyle normalStyle = TextStyle(
         fontSize: 16, fontWeight: FontWeight.w600, color: primaryColor);
-    TextStyle selectedStyle = TextStyle(
+    final TextStyle selectedStyle = TextStyle(
         fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white);
-    TextStyle normalDayNameStyle = TextStyle(
+    final TextStyle normalDayNameStyle = TextStyle(
         fontSize: 12, color: primaryColor, fontWeight: FontWeight.w300);
-    TextStyle selectedDayNameStyle = TextStyle(
+    final TextStyle selectedDayNameStyle = TextStyle(
         fontSize: 12, color: Colors.white, fontWeight: FontWeight.w300);
-    List<Widget> _children = [
+    final List<Widget> _children = [
       Text(dayLabels[dateDetails.dateTime.weekday - 1],
           style: !isSelectedDate ? normalDayNameStyle : selectedDayNameStyle),
       Text(dateDetails.dateTime.day.toString(),
@@ -800,14 +801,14 @@ class _DateAndTimeForBookAppoinmentViewState
   checkSlotConflict(DateTime startTime, DateTime endTime, int index) async {
     try {
       progressDialog.show();
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
       map['StartTime'] = startTime.toString();
       map['EndTime'] = endTime.toString();
 
-      CheckConflictResponse checkConflictResponse =
+      final CheckConflictResponse checkConflictResponse =
           await model.checkSlotConflict(map);
-      debugPrint("Conflict ==> ${checkConflictResponse.toJson()}");
+      debugPrint('Conflict ==> ${checkConflictResponse.toJson()}');
       if (checkConflictResponse.status == 'success') {
         progressDialog.hide();
         if (checkConflictResponse.data.result.canBook) {
@@ -824,7 +825,7 @@ class _DateAndTimeForBookAppoinmentViewState
       progressDialog.hide();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       progressDialog.hide();
       debugPrint(Exception.toString());
@@ -838,7 +839,7 @@ class _DateAndTimeForBookAppoinmentViewState
         debugPrint('index click true');
         dateNtimeStrip.elementAt(i).isSelected = true;
         userSelectedDate = dateNtimeStrip.elementAt(i).dateTime;
-        startTime = "";
+        startTime = '';
         getAvailableDoctorSlot();
       } else {
         debugPrint('index click false');

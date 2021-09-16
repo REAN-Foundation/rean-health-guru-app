@@ -32,20 +32,20 @@ class OTPScreenView extends StatefulWidget {
 class _OTPScreenViewState extends State<OTPScreenView> {
   final TextEditingController _mobileNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  var _mobileNumberFocus = FocusNode();
-  var _passwordFocus = FocusNode();
+  final _mobileNumberFocus = FocusNode();
+  final _passwordFocus = FocusNode();
   String mobileNumber = '';
   String otp = '';
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  String _fcmToken = "";
+  String _fcmToken = '';
   bool loginOTP = false;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
   @override
   void initState() {
     mobileNumber = widget.mobileNumber;
-    debugPrint("Mobile ==> ${widget.mobileNumber}");
+    debugPrint('Mobile ==> ${widget.mobileNumber}');
     // TODO: implement initState
     firebase();
     super.initState();
@@ -97,9 +97,10 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                             //_emailPasswordWidget(),
                             _textFeild(model),
                             SizedBox(height: 40),
-                            model.busy
-                                ? CircularProgressIndicator()
-                                : _submitOTPButton(model),
+                            if (model.busy)
+                              CircularProgressIndicator()
+                            else
+                              _submitOTPButton(model),
                             /* model.busy
                               ? CircularProgressIndicator()
                               :_submitButton(model),*/
@@ -197,21 +198,22 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                 '  Didn’t received OTP?',
                 style: TextStyle(fontSize: 14, color: Colors.grey),
               ),
-              loginOTP
-                  ? SizedBox(
-                      height: 24, width: 24, child: CircularProgressIndicator())
-                  : InkWell(
-                      onTap: () {
-                        generateOTPForExistingUser(model);
-                      },
-                      child: Text(
-                        'Resend OTP?',
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.deepPurple,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ),
+              if (loginOTP)
+                SizedBox(
+                    height: 24, width: 24, child: CircularProgressIndicator())
+              else
+                InkWell(
+                  onTap: () {
+                    generateOTPForExistingUser(model);
+                  },
+                  child: Text(
+                    'Resend OTP?',
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
             ],
           )
         ],
@@ -226,7 +228,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         width: 160,
         height: 40,
         child: ElevatedButton(
-            child: Text("Submit", style: TextStyle(fontSize: 14)),
+            child: Text('Submit', style: TextStyle(fontSize: 14)),
             style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                 backgroundColor:
@@ -237,12 +239,12 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                         side: BorderSide(color: Colors.deepPurple)))),
             onPressed: () async {
               debugPrint('mobile = ${widget.mobileNumber}');
-              debugPrint('OTP = ${otp}');
+              debugPrint('OTP = $otp');
 
               if (widget.mobileNumber.length != 10) {
-                showToast("Please enter valid mobile number", context);
+                showToast('Please enter valid mobile number', context);
               } else if (otp.toString() == '') {
-                showToast("Please enter otp", context);
+                showToast('Please enter otp', context);
               } else {
                 model.setBusy(true);
                 loginWithOTP(model);
@@ -289,19 +291,20 @@ class _OTPScreenViewState extends State<OTPScreenView> {
 
   generateOTPForExistingUser(LoginViewModel model) async {
     try {
-      var map = new Map<String, String>();
-      map["Content-Type"] = "application/json";
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
 
-      debugPrint('Mobile = ${mobileNumber}');
+      debugPrint('Mobile = $mobileNumber');
 
-      var body = new Map<String, dynamic>();
-      body["PhoneNumber"] = countryCodeGlobe + '-' + mobileNumber;
-      body["Purpose"] = 'Login';
+      final body = <String, dynamic>{};
+      body['PhoneNumber'] = countryCodeGlobe + '-' + mobileNumber;
+      body['Purpose'] = 'Login';
 
-      var response =
+      final response =
           await apiProvider.post('/user/generate-otp', header: map, body: body);
 
-      BaseResponse doctorListApiResponse = BaseResponse.fromJson(response);
+      final BaseResponse doctorListApiResponse =
+          BaseResponse.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
         showToast(
@@ -322,24 +325,24 @@ class _OTPScreenViewState extends State<OTPScreenView> {
 
   loginWithOTP(LoginViewModel model) async {
     try {
-      var map = new Map<String, String>();
-      map["Content-Type"] = "application/json";
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
 
-      debugPrint('Mobile = ${mobileNumber}');
-      debugPrint('OTP = ${otp}');
+      debugPrint('Mobile = $mobileNumber');
+      debugPrint('OTP = $otp');
 
-      var body = new Map<String, dynamic>();
-      body["PhoneNumber"] = dummyNumberList.contains(mobileNumber)
+      final body = <String, dynamic>{};
+      body['PhoneNumber'] = dummyNumberList.contains(mobileNumber)
           ? mobileNumber
           : countryCodeGlobe + '-' + mobileNumber;
-      body["OTP"] = otp;
+      body['OTP'] = otp;
 
-      var response =
+      final response =
           await apiProvider.post('/user/validate-otp', header: map, body: body);
 
-      UserData userData = UserData.fromJson(response);
+      final UserData userData = UserData.fromJson(response);
       if (userData.status == 'success') {
-        _sharedPrefUtils.save("user", userData.toJson());
+        _sharedPrefUtils.save('user', userData.toJson());
         if (userData.data.user.basicProfileComplete) {
           /* _sharedPrefUtils.saveBoolean("login1.2", true);
           Navigator.pushAndRemoveUntil(context,
@@ -362,7 +365,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         model.setBusy(false);
       }
     } on Exception catch (e) {
-      showToast("Opps something went worng.", context);
+      showToast('Opps something went worng.', context);
       print('error caught: $e');
       model.setBusy(false);
       setState(() {});
@@ -373,20 +376,20 @@ class _OTPScreenViewState extends State<OTPScreenView> {
     try {
       //ApiProvider apiProvider = new ApiProvider();
 
-      var map = new Map<String, String>();
-      map["Content-Type"] = "application/json";
-      map["authorization"] = "Bearer " + auth;
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth;
 
-      var response = await apiProvider.get('/patient/' + userId, header: map);
+      final response = await apiProvider.get('/patient/' + userId, header: map);
 
-      PatientApiDetails doctorListApiResponse =
+      final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
         showToast('Welcome to REAN HealthGuru', context);
         _sharedPrefUtils.save(
-            "patientDetails", doctorListApiResponse.data.patient.toJson());
-        _sharedPrefUtils.saveBoolean("login1.2", true);
+            'patientDetails', doctorListApiResponse.data.patient.toJson());
+        _sharedPrefUtils.saveBoolean('login1.2', true);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);
@@ -430,10 +433,10 @@ class _OTPScreenViewState extends State<OTPScreenView> {
   void firebase() {
     _fcm.getToken().then((String token) async {
       assert(token != null);
-      print("Push Messaging token: $token");
+      print('Push Messaging token: $token');
       debugPrint(token);
       _fcmToken = token;
-      _sharedPrefUtils.save("fcmToken", token);
+      _sharedPrefUtils.save('fcmToken', token);
     });
 
     /*_fcm.configure(

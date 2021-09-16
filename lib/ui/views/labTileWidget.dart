@@ -35,10 +35,10 @@ class _LabTileViewState extends State<LabTileView> {
                   backgroundColor: primaryColor,
                   child: CircleAvatar(
                       radius: 48,
-                      backgroundImage: (labdetails.imageURL == "") ||
+                      backgroundImage: (labdetails.imageURL == '') ||
                               (labdetails.imageURL == null)
                           ? AssetImage('res/images/profile_placeholder.png')
-                          : new NetworkImage(labdetails.imageURL)),
+                          : NetworkImage(labdetails.imageURL)),
                 ),
               ),
             ),

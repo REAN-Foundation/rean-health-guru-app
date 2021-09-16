@@ -45,35 +45,35 @@ class _CreateProfileState extends State<CreateProfile> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _bloodGroupController = TextEditingController();
-  String profileImagePath = "";
-  ImagePicker _picker = new ImagePicker();
-  String mobileNumber = "";
+  String profileImagePath = '';
+  final ImagePicker _picker = ImagePicker();
+  String mobileNumber = '';
 
   //ApiProvider apiProvider = new ApiProvider();
 
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
-  var _firstNameFocus = FocusNode();
-  var _lastNameFocus = FocusNode();
-  var _mobileNumberFocus = FocusNode();
-  var _emergencyMobileNumberFocus = FocusNode();
-  var _emailFocus = FocusNode();
-  var _bloodGroupFocus = FocusNode();
-  var _cityFocus = FocusNode();
-  var _addressFocus = FocusNode();
-  var _sharedPrefUtils = new SharedPrefUtils();
-  String selectedGender = "Male";
-  String dob = "";
-  String unformatedDOB = "";
-  String userId = "";
-  String auth = "";
+  final _firstNameFocus = FocusNode();
+  final _lastNameFocus = FocusNode();
+  final _mobileNumberFocus = FocusNode();
+  final _emergencyMobileNumberFocus = FocusNode();
+  final _emailFocus = FocusNode();
+  final _bloodGroupFocus = FocusNode();
+  final _cityFocus = FocusNode();
+  final _addressFocus = FocusNode();
+  final _sharedPrefUtils = SharedPrefUtils();
+  String selectedGender = 'Male';
+  String dob = '';
+  String unformatedDOB = '';
+  String userId = '';
+  String auth = '';
   ProgressDialog progressDialog;
-  String fullName = "";
-  var dateFormat = DateFormat("dd MMM, yyyy");
+  String fullName = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
 
   //Patient patient;
   //String profileImage = "";
-  String emergencymobileNumber = "";
+  String emergencymobileNumber = '';
   bool isEditable = false;
 
   @override
@@ -86,7 +86,8 @@ class _CreateProfileState extends State<CreateProfile> {
 
   loadSharedPrefs() async {
     try {
-      UserData user = UserData.fromJson(await _sharedPrefUtils.read("user"));
+      final UserData user =
+          UserData.fromJson(await _sharedPrefUtils.read('user'));
       //patient = Patient.fromJson(await _sharedPrefUtils.read("patientDetails"));
       debugPrint(user.toJson().toString());
       userId = user.data.user.userId.toString();
@@ -136,7 +137,7 @@ class _CreateProfileState extends State<CreateProfile> {
       profileImagePath = patient.imageURL == null ? "" : patient.imageURL;*/
 
       setState(() {
-        debugPrint('Patient UserId ==> ${userId}');
+        debugPrint('Patient UserId ==> $userId');
         //selectedGender = patient.gender.toString();
       });
     } on FetchDataException catch (e) {
@@ -147,7 +148,7 @@ class _CreateProfileState extends State<CreateProfile> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     final height = MediaQuery.of(context).size.height;
     return BaseWidget<LoginViewModel>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
@@ -164,7 +165,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
           ),
           body: Container(
             padding: EdgeInsets.symmetric(horizontal: 20),
@@ -177,9 +178,10 @@ class _CreateProfileState extends State<CreateProfile> {
                   //_profileIcon(),
                   _textFeildWidget(),
                   SizedBox(height: 20),
-                  model.busy
-                      ? CircularProgressIndicator()
-                      : _submitButton(model),
+                  if (model.busy)
+                    CircularProgressIndicator()
+                  else
+                    _submitButton(model),
                   SizedBox(height: 20),
                 ],
               ),
@@ -192,10 +194,10 @@ class _CreateProfileState extends State<CreateProfile> {
 
   Future<bool> _onBackPressed() {
     return showDialog(
-          context: context,
-          builder: (context) => new AlertDialog(
-            title: new Text('Alert!'),
-            content: new Text('Are you sure you want to discard the changes?'),
+      context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Alert!'),
+            content: Text('Are you sure you want to discard the changes?'),
             actions: <Widget>[
               FlatButton(
                 child: Text('Yes'),
@@ -220,7 +222,7 @@ class _CreateProfileState extends State<CreateProfile> {
     );*/
 
     //With parameters:
-    FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
+    final FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
       allowedMimeTypes: ['image/*'],
       invalidFileNameSymbols: ['/'],
     );
@@ -233,10 +235,10 @@ class _CreateProfileState extends State<CreateProfile> {
       result = await FlutterDocumentPicker.openDocument(params: params);
 
       if (result != '') {
-        File file = File(result);
+        final File file = File(result);
         debugPrint(result);
-        String fileName = file.path.split('/').last;
-        print("File Name ==> ${fileName}");
+        final String fileName = file.path.split('/').last;
+        print('File Name ==> $fileName');
         //file.renameSync(pFile.name);
         uploadProfilePicture(file);
       } else {
@@ -266,27 +268,27 @@ class _CreateProfileState extends State<CreateProfile> {
 
   uploadProfilePicture(File file) async {
     try {
-      String _baseUrl = apiProvider.getBaseUrl();
-      var map = new Map<String, String>();
-      map["enc"] = "multipart/form-data";
-      map["Authorization"] = 'Bearer ' + auth;
+      final String _baseUrl = apiProvider.getBaseUrl();
+      final map = <String, String>{};
+      map['enc'] = 'multipart/form-data';
+      map['Authorization'] = 'Bearer ' + auth;
 
-      var postUri = Uri.parse(_baseUrl + "/resources/upload/");
-      var request = new http.MultipartRequest("POST", postUri);
+      final postUri = Uri.parse(_baseUrl + '/resources/upload/');
+      final request = http.MultipartRequest('POST', postUri);
       request.headers.addAll(map);
       request.files.add(http.MultipartFile(
           'name', file.readAsBytes().asStream(), file.lengthSync(),
           filename: file.path.split('/').last));
-      request.fields['isPublicResource'] = "true";
+      request.fields['isPublicResource'] = 'true';
 
       request.send().then((response) async {
         if (response.statusCode == 200) {
-          print("Uploaded!");
+          print('Uploaded!');
           final respStr = await response.stream.bytesToString();
-          debugPrint("Uploded " + respStr);
-          UploadImageResponse uploadResponse =
+          debugPrint('Uploded ' + respStr);
+          final UploadImageResponse uploadResponse =
               UploadImageResponse.fromJson(json.decode(respStr));
-          if (uploadResponse.status == "success") {
+          if (uploadResponse.status == 'success') {
             profileImagePath = uploadResponse.data.details.elementAt(0).url;
             //profileImage = uploadResponse.data.details.elementAt(0).url;
             showToast(uploadResponse.message, context);
@@ -298,19 +300,19 @@ class _CreateProfileState extends State<CreateProfile> {
             showToast('Opps, something wents wrong!', context);
           }
         } else {
-          print("Upload Faild !");
+          print('Upload Faild !');
         }
       }); // debugPrint("3");
 
     } catch (CustomException) {
-      debugPrint("4");
+      debugPrint('4');
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
   Widget _profileIcon() {
-    debugPrint('Profile Pic ==> ${profileImagePath}');
+    debugPrint('Profile Pic ==> $profileImagePath');
     return Container(
       height: 200,
       child: Column(
@@ -334,17 +336,16 @@ class _CreateProfileState extends State<CreateProfile> {
                 Container(
                   width: 120.0,
                   height: 120.0,
-                  decoration: new BoxDecoration(
+                  decoration: BoxDecoration(
                     color: const Color(0xff7c94b6),
-                    image: new DecorationImage(
-                      image: profileImagePath == ""
+                    image: DecorationImage(
+                      image: profileImagePath == ''
                           ? AssetImage('res/images/profile_placeholder.png')
-                          : new NetworkImage(profileImagePath),
+                          : NetworkImage(profileImagePath),
                       fit: BoxFit.cover,
                     ),
-                    borderRadius:
-                        new BorderRadius.all(new Radius.circular(50.0)),
-                    border: new Border.all(
+                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                    border: Border.all(
                       color: Colors.deepPurple,
                       width: 2.0,
                     ),
@@ -370,8 +371,7 @@ class _CreateProfileState extends State<CreateProfile> {
                         child: SizedBox(
                             height: 32,
                             width: 32,
-                            child:
-                                new Image.asset('res/images/ic_camera.png'))),
+                            child: Image.asset('res/images/ic_camera.png'))),
                   ),
                 )
               ],
@@ -770,8 +770,8 @@ class _CreateProfileState extends State<CreateProfile> {
           // Add This
           child: MaterialButton(
               minWidth: 200,
-              child: new Text('Save',
-                  style: new TextStyle(
+              child: Text('Save',
+                  style: TextStyle(
                       fontSize: 14.0,
                       color: Colors.white,
                       fontWeight: FontWeight.w700)),
@@ -786,15 +786,15 @@ class _CreateProfileState extends State<CreateProfile> {
                   showToast('Please select your gender', context);
                 } else {
                   progressDialog.show();
-                  var map = new Map<String, String>();
-                  map["FirstName"] = _firstNameController.text;
-                  map["LastName"] = _lastNameController.text;
-                  map["BirthDate"] = unformatedDOB;
-                  map["Gender"] = selectedGender;
-                  map["EmergencyContactNumber"] = "";
+                  final map = <String, String>{};
+                  map['FirstName'] = _firstNameController.text;
+                  map['LastName'] = _lastNameController.text;
+                  map['BirthDate'] = unformatedDOB;
+                  map['Gender'] = selectedGender;
+                  map['EmergencyContactNumber'] = '';
 
                   try {
-                    BaseResponse updateProfileSuccess = await model
+                    final BaseResponse updateProfileSuccess = await model
                         .updateProfile(map, userId, 'Bearer ' + auth);
 
                     if (updateProfileSuccess.status == 'success') {
@@ -829,20 +829,20 @@ class _CreateProfileState extends State<CreateProfile> {
 
       ApiProvider apiProvider = GetIt.instance<ApiProvider>();*/
 
-      var map = new Map<String, String>();
-      map["Content-Type"] = "application/json";
-      map["authorization"] = "Bearer " + auth;
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth;
 
-      var response = await apiProvider.get('/patient/' + userId, header: map);
+      final response = await apiProvider.get('/patient/' + userId, header: map);
 
-      PatientApiDetails doctorListApiResponse =
+      final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        _sharedPrefUtils.saveBoolean("login1.2", true);
+        _sharedPrefUtils.saveBoolean('login1.2', true);
         await _sharedPrefUtils.save(
-            "patientDetails", doctorListApiResponse.data.patient.toJson());
-        _sharedPrefUtils.saveBoolean("login1.2", true);
+            'patientDetails', doctorListApiResponse.data.patient.toJson());
+        _sharedPrefUtils.saveBoolean('login1.2', true);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);
@@ -1079,7 +1079,7 @@ class _CreateProfileState extends State<CreateProfile> {
   }*/
 
   Widget _genderWidget() {
-    debugPrint("Gender: ${selectedGender}");
+    debugPrint('Gender: $selectedGender');
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -1087,7 +1087,7 @@ class _CreateProfileState extends State<CreateProfile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Gender",
+            'Gender',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           SizedBox(
@@ -1109,9 +1109,9 @@ class _CreateProfileState extends State<CreateProfile> {
               onToggle: (index) {
                 print('switched to: $index');
                 if (index == 0) {
-                  selectedGender = "Male";
+                  selectedGender = 'Male';
                 } else {
-                  selectedGender = "Female";
+                  selectedGender = 'Female';
                 }
               })
         ],
@@ -1160,7 +1160,7 @@ class _CreateProfileState extends State<CreateProfile> {
                     SizedBox(
                         height: 32,
                         width: 32,
-                        child: new ImageIcon(
+                        child: ImageIcon(
                             AssetImage('res/images/ic_calender.png'),
                             color: Colors.black12)),
                   ],
@@ -1192,10 +1192,10 @@ class _CreateProfileState extends State<CreateProfile> {
   Widget _textFeildWidget() {
     return Column(
       children: <Widget>[
-        _entryFirstNameField("First Name"),
-        _entryLastNameField("Last Name"),
+        _entryFirstNameField('First Name'),
+        _entryLastNameField('Last Name'),
         //_entryMobileNoField("Mobile Number"),
-        _dateOfBirthField("Date Of Birth"),
+        _dateOfBirthField('Date Of Birth'),
         _genderWidget(),
         /* _entryEmailField('Email'),
         //_entryBloodGroupField("Blood Group"),
@@ -1227,9 +1227,9 @@ class _CreateProfileState extends State<CreateProfile> {
       height: 160,
       color: Colors.transparent,
       child: Container(
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: new BorderRadius.only(
+          borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
         ),
         child: Row(
@@ -1251,11 +1251,10 @@ class _CreateProfileState extends State<CreateProfile> {
                       Container(
                         height: 60,
                         width: 60,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                           color: primaryLightColor,
-                          borderRadius:
-                              new BorderRadius.all(new Radius.circular(50.0)),
-                          border: new Border.all(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          border: Border.all(
                             color: Colors.deepPurple,
                             width: 1.0,
                           ),
@@ -1295,11 +1294,10 @@ class _CreateProfileState extends State<CreateProfile> {
                       Container(
                         height: 60,
                         width: 60,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                           color: primaryLightColor,
-                          borderRadius:
-                              new BorderRadius.all(new Radius.circular(50.0)),
-                          border: new Border.all(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          border: Border.all(
                             color: Colors.deepPurple,
                             width: 1.0,
                           ),
@@ -1339,11 +1337,11 @@ class _CreateProfileState extends State<CreateProfile> {
                         Container(
                           height: 60,
                           width: 60,
-                          decoration: new BoxDecoration(
+                          decoration: BoxDecoration(
                             color: primaryLightColor,
                             borderRadius:
-                                new BorderRadius.all(new Radius.circular(50.0)),
-                            border: new Border.all(
+                                BorderRadius.all(Radius.circular(50.0)),
+                            border: Border.all(
                               color: Colors.deepPurple,
                               width: 1.0,
                             ),
@@ -1381,13 +1379,13 @@ class _CreateProfileState extends State<CreateProfile> {
   }
 
   openCamera() async {
-    var picture = await _picker.getImage(
+    final picture = await _picker.getImage(
       source: ImageSource.camera,
     );
-    File file = File(picture.path);
+    final File file = File(picture.path);
     debugPrint(picture.path);
-    String fileName = file.path.split('/').last;
-    print("File Name ==> ${fileName}");
+    final String fileName = file.path.split('/').last;
+    print('File Name ==> $fileName');
     uploadProfilePicture(file);
   }
 }

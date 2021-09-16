@@ -21,9 +21,9 @@ class SetUpFamilyMemberForCarePlanView extends StatefulWidget {
 class _SetUpFamilyMemberForCarePlanViewState
     extends State<SetUpFamilyMemberForCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var _searchController = new TextEditingController();
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _searchController = TextEditingController();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   StartCarePlanResponse startCarePlanResponse;
 
   //var teamMemberList = new List<TeamMember>();
@@ -32,10 +32,10 @@ class _SetUpFamilyMemberForCarePlanViewState
   loadSharedPrefrance() async {
     try {
       startCarePlanResponse = StartCarePlanResponse.fromJson(
-          await _sharedPrefUtils.read("CarePlan"));
+          await _sharedPrefUtils.read('CarePlan'));
       startCarePlanResponseGlob = startCarePlanResponse;
       debugPrint(
-          "AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}");
+          'AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}');
     } catch (Excepetion) {
       // do something
       debugPrint(Excepetion);
@@ -54,7 +54,7 @@ class _SetUpFamilyMemberForCarePlanViewState
     /*if(familyMemberListGlobe.length != 0){
       teamMemberList.addAll(familyMemberListGlobe);
     }*/
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
 
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
@@ -72,7 +72,7 @@ class _SetUpFamilyMemberForCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -109,7 +109,7 @@ class _SetUpFamilyMemberForCarePlanViewState
                                       height: 32,
                                       width: 32,
                                       child: CircularProgressIndicator()))
-                              : (familyMemberListGlobe.length == 0)
+                              : (familyMemberListGlobe.isEmpty)
                                   ? noDoctorFound()
                                   : doctorSearchResultListView()) //,
                     ],
@@ -121,20 +121,21 @@ class _SetUpFamilyMemberForCarePlanViewState
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    model.busy
-                        ? Container()
-                        : InkWell(
-                            onTap: () {
-                              /*familyMemberListGlobe.clear();
+                    if (model.busy)
+                      Container()
+                    else
+                      InkWell(
+                        onTap: () {
+                          /*familyMemberListGlobe.clear();
                         familyMemberListGlobe.addAll(teamMemberList);*/
-                              Navigator.pushNamed(context,
-                                  RoutePaths.Successfully_Setup_For_Care_Plan);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Container(
-                                height: 40,
-                                width: 160,
+                          Navigator.pushNamed(context,
+                              RoutePaths.Successfully_Setup_For_Care_Plan);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Container(
+                            height: 40,
+                            width: 160,
                                 padding: EdgeInsets.symmetric(
                                   horizontal: 16.0,
                                 ),
@@ -206,7 +207,7 @@ class _SetUpFamilyMemberForCarePlanViewState
       ),
       child: Center(
         child: Text(
-          "Add Family Member / Friend",
+          'Add Family Member / Friend',
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
         ),
       ),
@@ -215,7 +216,7 @@ class _SetUpFamilyMemberForCarePlanViewState
 
   Widget noDoctorFound() {
     return Center(
-      child: Text("No family member / friend found",
+      child: Text('No family member / friend found',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -238,13 +239,13 @@ class _SetUpFamilyMemberForCarePlanViewState
   }
 
   Widget _makeDoctorListCard(BuildContext context, int index) {
-    TeamMember teamMember = familyMemberListGlobe.elementAt(index);
+    final TeamMember teamMember = familyMemberListGlobe.elementAt(index);
     return Container(
       height: 80,
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Stack(children: <Widget>[
@@ -469,7 +470,7 @@ class _SetUpFamilyMemberForCarePlanViewState
                 child: AddFamilyMemberDialog(submitButtonListner:
                     (String firstName, String lastName, String phoneNumber,
                         String gender, String relation) {
-                  debugPrint("Team Member ==> ${firstName}");
+                      debugPrint('Team Member ==> $firstName');
                   addTeamMembers(
                       firstName, lastName, phoneNumber, gender, relation);
                   Navigator.of(context, rootNavigator: true).pop();
@@ -492,24 +493,24 @@ class _SetUpFamilyMemberForCarePlanViewState
       jsonRequest.isEmergencyContact = true;*/
       //jsonRequest.details.userId = pharmacies.userId.toString();
 
-      var data = new Map<String, dynamic>();
+      final data = <String, dynamic>{};
 
       data['FirstName'] = firstName;
       data['LastName'] = lastName;
       data['Relation'] = relation;
       data['PhoneNumber'] = phoneNumber;
       data['Gender'] = gender;
-      data['Prefix'] = " ";
+      data['Prefix'] = ' ';
 
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['CarePlanId'] = startCarePlanResponse.data.carePlan.id.toString();
       map['IsEmergencyContact'] = true;
-      map['TeamMemberType'] = "FamilyMember";
+      map['TeamMemberType'] = 'FamilyMember';
       map['Details'] = data;
 
-      AddTeamMemberResponse addTeamMemberResponse =
+      final AddTeamMemberResponse addTeamMemberResponse =
           await model.addTeamMembers(map);
-      debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
+      debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         //progressDialog.hide();
         setState(() {
@@ -524,7 +525,7 @@ class _SetUpFamilyMemberForCarePlanViewState
       //progressDialog.hide();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException);
+      debugPrint('Error ' + CustomException);
     } catch (Exception) {
       //progressDialog.hide();
       debugPrint(Exception.toString());

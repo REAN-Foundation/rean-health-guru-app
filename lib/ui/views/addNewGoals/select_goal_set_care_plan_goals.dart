@@ -17,16 +17,16 @@ class SelectGoalsForCarePlanView extends StatefulWidget {
 class _SelectGoalsForCarePlanViewState
     extends State<SelectGoalsForCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int id = 10;
   int id1 = 10;
   String radioButtonItem = 'ONE';
-  String radioButtonItem1 = "";
+  String radioButtonItem1 = '';
   GetGoalPriorities _getBiometricGoalPriorities;
   GetGoalPriorities _getBehavioralGoalPriorities;
   ProgressDialog progressDialog;
-  List<CheckBoxModel> biometricGoalList = new List<CheckBoxModel>();
-  List<CheckBoxModel> behaviouralGoalList = new List<CheckBoxModel>();
+  List<CheckBoxModel> biometricGoalList = <CheckBoxModel>[];
+  List<CheckBoxModel> behaviouralGoalList = <CheckBoxModel>[];
 
   @override
   void initState() {
@@ -41,12 +41,12 @@ class _SelectGoalsForCarePlanViewState
           startCarePlanResponseGlob.data.carePlan.carePlanCode.toString());
 
       if (_getBiometricGoalPriorities.status == 'success') {
-        debugPrint("AHA Care Plan ==> ${_getBiometricGoalPriorities.toJson()}");
+        debugPrint('AHA Care Plan ==> ${_getBiometricGoalPriorities.toJson()}');
 
         for (int i = 0;
             i < _getBiometricGoalPriorities.data.goals.length;
             i++) {
-          biometricGoalList.add(new CheckBoxModel(
+          biometricGoalList.add(CheckBoxModel(
               _getBiometricGoalPriorities.data.goals.elementAt(i), false));
         }
 
@@ -68,11 +68,11 @@ class _SelectGoalsForCarePlanViewState
 
       if (_getBehavioralGoalPriorities.status == 'success') {
         debugPrint(
-            "AHA Care Plan ==> ${_getBehavioralGoalPriorities.toJson()}");
+            'AHA Care Plan ==> ${_getBehavioralGoalPriorities.toJson()}');
         for (int i = 0;
             i < _getBehavioralGoalPriorities.data.goals.length;
             i++) {
-          behaviouralGoalList.add(new CheckBoxModel(
+          behaviouralGoalList.add(CheckBoxModel(
               _getBehavioralGoalPriorities.data.goals.elementAt(i), false));
         }
       } else {
@@ -103,7 +103,7 @@ class _SelectGoalsForCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -177,7 +177,7 @@ class _SelectGoalsForCarePlanViewState
                     width: 0, color: primaryColor, style: BorderStyle.solid)),
             child: Center(
               child: Text(
-                "2",
+                '2',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 32,
@@ -191,7 +191,7 @@ class _SelectGoalsForCarePlanViewState
             height: 16,
           ),
           Text(
-            "Set Priorities",
+            'Set Priorities',
             style: TextStyle(
                 color: primaryColor, fontSize: 20, fontWeight: FontWeight.w700),
           ),
@@ -214,7 +214,7 @@ class _SelectGoalsForCarePlanViewState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Biometric Goals",
+            'Biometric Goals',
             style: TextStyle(
                 color: primaryColor, fontSize: 16, fontWeight: FontWeight.w700),
           ),
@@ -226,9 +226,9 @@ class _SelectGoalsForCarePlanViewState
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: biometricGoalList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return new CheckboxListTile(
+                  return CheckboxListTile(
                       value: biometricGoalList[index].isCheck,
-                      title: new Text(biometricGoalList[index].title),
+                      title: Text(biometricGoalList[index].title),
                       controlAffinity: ListTileControlAffinity.leading,
                       onChanged: (bool val) {
                         biometricGoalItemChange(val, index);
@@ -259,7 +259,7 @@ class _SelectGoalsForCarePlanViewState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Behavioral Goals",
+                'Behavioral Goals',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 16,
@@ -273,9 +273,9 @@ class _SelectGoalsForCarePlanViewState
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: behaviouralGoalList.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return new CheckboxListTile(
+                      return CheckboxListTile(
                           value: behaviouralGoalList[index].isCheck,
-                          title: new Text(behaviouralGoalList[index].title),
+                          title: Text(behaviouralGoalList[index].title),
                           controlAffinity: ListTileControlAffinity.leading,
                           onChanged: (bool val) {
                             behaviouralGoalItemChange(val, index);
@@ -312,8 +312,8 @@ class _SelectGoalsForCarePlanViewState
                 }
               }
 
-              goalPlanScreenStack.remove("Medication Adherence");
-              goalPlanScreenStack.remove("Nutrition");
+              goalPlanScreenStack.remove('Medication Adherence');
+              goalPlanScreenStack.remove('Nutrition');
               navigateToScreen();
               //Navigator.pushNamed(context, RoutePaths.Determine_Action_For_Care_Plan);
             },
@@ -357,15 +357,15 @@ class _SelectGoalsForCarePlanViewState
 
   navigateToScreen() {
     debugPrint('Set Goals Plan Stack ==> ${goalPlanScreenStack.length}');
-    if (goalPlanScreenStack.elementAt(0) == "Blood Pressure") {
+    if (goalPlanScreenStack.elementAt(0) == 'Blood Pressure') {
       Navigator.pushNamed(context, RoutePaths.ADD_BLOOD_PRESURE_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Blood Sugar") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Blood Sugar') {
       Navigator.pushNamed(context, RoutePaths.ADD_GLUCOSE_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Weight") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Weight') {
       Navigator.pushNamed(context, RoutePaths.ADD_WEIGHT_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Physical Activity") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Physical Activity') {
       Navigator.pushNamed(context, RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Quit Smoking") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Quit Smoking') {
       Navigator.pushNamed(context, RoutePaths.ADD_QUIT_SMOKING_GOALS);
     }
   }

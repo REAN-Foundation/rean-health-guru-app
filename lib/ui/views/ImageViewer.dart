@@ -8,8 +8,8 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:share/share.dart';
 
 class ImageViewer extends StatelessWidget {
-  static GlobalKey _globalKey = GlobalKey();
-  String path = "";
+  static final GlobalKey _globalKey = GlobalKey();
+  String path = '';
   String fileName;
 
   ImageViewer(this.path, this.fileName);
@@ -18,28 +18,29 @@ class ImageViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    File file = new File(path);
-    progressDialog = new ProgressDialog(context);
+    final File file = File(path);
+    progressDialog = ProgressDialog(context);
     return Scaffold(
       key: _globalKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         brightness: Brightness.light,
-        iconTheme: new IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.black),
         title: Text(
-          "Reports",
+          'Reports',
           style: TextStyle(
               fontSize: 16.0, color: primaryColor, fontWeight: FontWeight.w700),
         ),
         actions: <Widget>[
-          Platform.isAndroid
-              ? IconButton(
-                  icon: Icon(Icons.share),
-                  onPressed: () {
-                    urlFileShare();
-                  },
-                )
-              : Container()
+          if (Platform.isAndroid)
+            IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () {
+                urlFileShare();
+              },
+            )
+          else
+            Container()
         ],
       ),
       body: Container(
@@ -56,10 +57,10 @@ class ImageViewer extends StatelessWidget {
       /*  var url = 'https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg';
       var response = await get(url);
       final documentDirectory = (await getExternalStorageDirectory()).path;*/
-      File imgFile = new File(path);
+      final File imgFile = File(path);
       /*imgFile.writeAsBytesSync(response.bodyBytes);*/
       debugPrint('File Path ==> ${imgFile.path}');
-      List fileList = List<String>.empty(growable: true);
+      final List fileList = List<String>.empty(growable: true);
       fileList.add(imgFile);
       Share.shareFiles(fileList,
           subject: '',

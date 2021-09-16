@@ -24,10 +24,10 @@ class Api {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
 
-    var response =
+    final response =
         await apiProvider.post('/user/login', body: body, header: map);
 
     print(response);
@@ -41,10 +41,11 @@ class Api {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
 
-    var response = await apiProvider.post('/patient', body: body, header: map);
+    final response =
+        await apiProvider.post('/patient', body: body, header: map);
 
     print(response);
 
@@ -57,10 +58,10 @@ class Api {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
 
-    var response =
+    final response =
         await apiProvider.post('/user/validate-otp', body: body, header: map);
 
     print(response);
@@ -74,10 +75,11 @@ class Api {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
 
-    var response = await apiProvider.post('/Patient', body: body, header: map);
+    final response =
+        await apiProvider.post('/Patient', body: body, header: map);
 
     print(response);
 
@@ -89,11 +91,11 @@ class Api {
       Map body, String userId, String auth) async {
     // Get user profile for id
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response =
+    final response =
         await apiProvider.put('/patient/' + userId, body: body, header: map);
 
     print(response);
@@ -103,15 +105,15 @@ class Api {
   }
 
   Future<List<Post>> getPostsForUser(int userId) async {
-    var posts = List<Post>();
+    final posts = <Post>[];
     // Get user posts for id
-    var response = await apiProvider.get('/posts?userId=$userId');
+    final response = await apiProvider.get('/posts?userId=$userId');
 
     // parse into List
-    var parsed = json.decode(response.body) as List<dynamic>;
+    final parsed = json.decode(response.body) as List<dynamic>;
 
     // loop and convert each item to Post
-    for (var post in parsed) {
+    for (final post in parsed) {
       posts.add(Post.fromJson(post));
     }
 
@@ -119,16 +121,16 @@ class Api {
   }
 
   Future<List<Comment>> getCommentsForPost(int postId) async {
-    var comments = List<Comment>();
+    final comments = <Comment>[];
 
     // Get comments for post
-    var response = await apiProvider.get('/comments?postId=$postId');
+    final response = await apiProvider.get('/comments?postId=$postId');
 
     // Parse into List
-    var parsed = json.decode(response.body) as List<dynamic>;
+    final parsed = json.decode(response.body) as List<dynamic>;
 
     // Loop and convert each item to a Comment
-    for (var comment in parsed) {
+    for (final comment in parsed) {
       comments.add(Comment.fromJson(comment));
     }
 

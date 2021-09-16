@@ -14,11 +14,11 @@ class PatientHealthMarkerViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post('/exercise/daily-burned-calories/',
+    final response = await apiProvider.post('/exercise/daily-burned-calories/',
         header: map, body: body);
 
     setBusy(false);
@@ -30,11 +30,11 @@ class PatientHealthMarkerViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post('/exercise/daily-steps/',
+    final response = await apiProvider.post('/exercise/daily-steps/',
         header: map, body: body);
 
     setBusy(false);
@@ -46,12 +46,12 @@ class PatientHealthMarkerViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post('/nutrition/daily-water-consumption/',
-        header: map, body: body);
+    final response = await apiProvider
+        .post('/nutrition/daily-water-consumption/', header: map, body: body);
 
     setBusy(false);
     // Convert and return
@@ -62,11 +62,11 @@ class PatientHealthMarkerViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response =
+    final response =
         await apiProvider.post('/nutrition/generic', header: map, body: body);
 
     print(response);

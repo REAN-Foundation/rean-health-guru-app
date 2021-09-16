@@ -8,13 +8,13 @@ class TeamCarePlanReesponse {
   TeamCarePlanReesponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != String ? new Data.fromJson(json['data']) : String;
+    data = json['data'] != String ? Data.fromJson(json['data']) : String;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != String) {
       data['data'] = this.data.toJson();
     }
@@ -29,17 +29,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['team'] != String) {
-      team = new List<Team>();
+      team = <Team>[];
       json['team'].forEach((v) {
-        team.add(new Team.fromJson(v));
+        team.add(Team.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.team != String) {
-      data['team'] = this.team.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (team != String) {
+      data['team'] = team.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -70,21 +70,19 @@ class Team {
     role = json['Role'];
     roleName = json['RoleName'];
     isEmergencyContact = json['IsEmergencyContact'];
-    details = json['Details'] != String
-        ? new Details.fromJson(json['Details'])
-        : String;
+    details = json['Details'] != String ? Details.fromJson(json['Details']) : String;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['CarePlanId'] = this.carePlanId;
-    data['UserId'] = this.userId;
-    data['Role'] = this.role;
-    data['RoleName'] = this.roleName;
-    data['IsEmergencyContact'] = this.isEmergencyContact;
-    if (this.details != String) {
-      data['Details'] = this.details.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['CarePlanId'] = carePlanId;
+    data['UserId'] = userId;
+    data['Role'] = role;
+    data['RoleName'] = roleName;
+    data['IsEmergencyContact'] = isEmergencyContact;
+    if (details != String) {
+      data['Details'] = details.toJson();
     }
     return data;
   }
@@ -164,13 +162,13 @@ class Details {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['FirstName'] = this.firstName;
-    data['LastName'] = this.lastName;
-    data['Prefix'] = this.prefix;
-    data['PhoneNumber'] = this.phoneNumber;
-    data['Email'] = this.email;
-    data['Gender'] = this.gender;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['FirstName'] = firstName;
+    data['LastName'] = lastName;
+    data['Prefix'] = prefix;
+    data['PhoneNumber'] = phoneNumber;
+    data['Email'] = email;
+    data['Gender'] = gender;
     /*data['Address'] = this.address;
     data['ImageURL'] = this.imageURL;
     data['LocationCoords_Longitude'] = this.locationCoordsLongitude;
@@ -184,7 +182,7 @@ class Details {
     data['ConsultationFee'] = this.consultationFee;
     data['AppointmentSlotDuration'] = this.appointmentSlotDuration;
     data['PractisingSince'] = this.practisingSince;*/
-    data['Relation'] = this.relation;
+    data['Relation'] = relation;
     //data['Description'] = this.description;
     return data;
   }

@@ -20,33 +20,33 @@ class AddGoalsForCarePlanView extends StatefulWidget {
 
 class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
   var model = PatientMedicationViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String selectedGoal = "Blood Pressure";
+  String selectedGoal = 'Blood Pressure';
 
   @override
   Widget build(BuildContext context) {
     Widget screen;
     switch (selectedGoal) {
-      case "Blood Pressure":
+      case 'Blood Pressure':
         screen = AddBloodPresureeGoalsForCarePlanView();
         break;
-      case "Cholesterol":
+      case 'Cholesterol':
         screen = AddCholesterolGoalsForCarePlanView();
         break;
-      case "Physical Activity":
+      case 'Physical Activity':
         screen = AddPhysicalActivityGoalsForCarePlanView();
         break;
-      case "Quit Smoking":
+      case 'Quit Smoking':
         screen = AddQuitSmokingGoalsForCarePlanView();
         break;
-      case "Glucose Level":
+      case 'Glucose Level':
         screen = AddGlucoseLevelGoalsForCarePlanView();
         break;
-      case "Nutrition":
+      case 'Nutrition':
         screen = AddNutritionGoalsForCarePlanView();
         break;
-      case "Weight":
+      case 'Weight':
         screen = AddWeightGoalsForCarePlanView();
         break;
     }
@@ -71,7 +71,7 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
                     fontWeight: FontWeight.w700),
               ),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -116,7 +116,7 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
             height: 16,
           ),
           Text(
-            "Select and set goal",
+            'Select and set goal',
             style: TextStyle(
                 color: primaryColor, fontSize: 14, fontWeight: FontWeight.w600),
           ),
@@ -134,8 +134,8 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
               hint: 'Drop down button',
               child: DropdownButton<String>(
                 isExpanded: true,
-                hint: new Text(
-                  "Select Care Plan",
+                hint: Text(
+                  'Select Care Plan',
                   style: TextStyle(
                       color: textBlack,
                       fontSize: 14,
@@ -143,9 +143,9 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
                 ),
                 items: [
                   DropdownMenuItem(
-                    value: "Blood Pressure",
+                    value: 'Blood Pressure',
                     child: Text(
-                      "Blood Pressure",
+                      'Blood Pressure',
                       style: TextStyle(
                           color: textBlack,
                           fontSize: 14,
@@ -153,9 +153,9 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
                     ),
                   ),
                   DropdownMenuItem(
-                    value: "Cholesterol",
+                    value: 'Cholesterol',
                     child: Text(
-                      "Cholesterol",
+                      'Cholesterol',
                       style: TextStyle(
                           color: textBlack,
                           fontSize: 14,
@@ -163,9 +163,9 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
                     ),
                   ),
                   DropdownMenuItem(
-                    value: "Physical Activity",
+                    value: 'Physical Activity',
                     child: Text(
-                      "Physical Activity",
+                      'Physical Activity',
                       style: TextStyle(
                           color: textBlack,
                           fontSize: 14,
@@ -173,9 +173,9 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
                     ),
                   ),
                   DropdownMenuItem(
-                    value: "Quit Smoking",
+                    value: 'Quit Smoking',
                     child: Text(
-                      "Quit Smoking",
+                      'Quit Smoking',
                       style: TextStyle(
                           color: textBlack,
                           fontSize: 14,
@@ -183,9 +183,9 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
                     ),
                   ),
                   DropdownMenuItem(
-                    value: "Glucose Level",
+                    value: 'Glucose Level',
                     child: Text(
-                      "Glucose Level",
+                      'Glucose Level',
                       style: TextStyle(
                           color: textBlack,
                           fontSize: 14,
@@ -193,9 +193,9 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
                     ),
                   ),
                   DropdownMenuItem(
-                    value: "Nutrition",
+                    value: 'Nutrition',
                     child: Text(
-                      "Nutrition",
+                      'Nutrition',
                       style: TextStyle(
                           color: textBlack,
                           fontSize: 14,
@@ -203,9 +203,9 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
                     ),
                   ),
                   DropdownMenuItem(
-                    value: "Weight",
+                    value: 'Weight',
                     child: Text(
-                      "Weight",
+                      'Weight',
                       style: TextStyle(
                           color: textBlack,
                           fontSize: 14,
@@ -218,7 +218,7 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
                     selectedGoal = value;
                   });
                 },
-                value: selectedGoal == "" ? null : selectedGoal,
+                value: selectedGoal == '' ? null : selectedGoal,
               ),
             ),
           ),

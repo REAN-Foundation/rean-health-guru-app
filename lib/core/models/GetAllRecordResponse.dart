@@ -8,13 +8,13 @@ class GetAllRecordResponse {
   GetAllRecordResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -29,17 +29,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['documents'] != null) {
-      documents = new List<Documents>();
+      documents = <Documents>[];
       json['documents'].forEach((v) {
-        documents.add(new Documents.fromJson(v));
+        documents.add(Documents.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.documents != null) {
-      data['documents'] = this.documents.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (documents != null) {
+      data['documents'] = documents.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -110,26 +110,26 @@ class Documents {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['DocumentType'] = this.documentType;
-    data['DisplayId'] = this.displayId;
-    data['PatientUserId'] = this.patientUserId;
-    data['LabUserId'] = this.labUserId;
-    data['PharmacyUserId'] = this.pharmacyUserId;
-    data['DoctorUserId'] = this.doctorUserId;
-    data['DoctorVisitId'] = this.doctorVisitId;
-    data['LabOrderId'] = this.labOrderId;
-    data['DrugOrderId'] = this.drugOrderId;
-    data['AddedBy'] = this.addedBy;
-    data['FileName'] = this.fileName;
-    data['ResourceId'] = this.resourceId;
-    data['Url_Auth'] = this.urlAuth;
-    data['MimeType'] = this.mimeType;
-    data['Size'] = this.size;
-    data['DateCreated'] = this.dateCreated.toIso8601String();
-    data['created_at'] = this.createdAt.toIso8601String();
-    data['updated_at'] = this.updatedAt.toIso8601String();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['DocumentType'] = documentType;
+    data['DisplayId'] = displayId;
+    data['PatientUserId'] = patientUserId;
+    data['LabUserId'] = labUserId;
+    data['PharmacyUserId'] = pharmacyUserId;
+    data['DoctorUserId'] = doctorUserId;
+    data['DoctorVisitId'] = doctorVisitId;
+    data['LabOrderId'] = labOrderId;
+    data['DrugOrderId'] = drugOrderId;
+    data['AddedBy'] = addedBy;
+    data['FileName'] = fileName;
+    data['ResourceId'] = resourceId;
+    data['Url_Auth'] = urlAuth;
+    data['MimeType'] = mimeType;
+    data['Size'] = size;
+    data['DateCreated'] = dateCreated.toIso8601String();
+    data['created_at'] = createdAt.toIso8601String();
+    data['updated_at'] = updatedAt.toIso8601String();
     return data;
   }
 }

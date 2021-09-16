@@ -15,34 +15,34 @@ class EnterAllVitalsView extends StatefulWidget {
 
 class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
   var model = PatientVitalsViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var dateFormatStandard = DateFormat("MMM dd, yyyy");
-  var _weightController = new TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  var dateFormatStandard = DateFormat('MMM dd, yyyy');
+  final _weightController = TextEditingController();
   final TextEditingController _systolicController = TextEditingController();
   final TextEditingController _diastolicController = TextEditingController();
-  var _bloodGlucosecontroller = new TextEditingController();
-  var _bloodOxygenSaturationController = new TextEditingController();
-  var _pulseRateController = new TextEditingController();
-  var _bodyTempratureController = new TextEditingController();
+  final _bloodGlucosecontroller = TextEditingController();
+  final _bloodOxygenSaturationController = TextEditingController();
+  final _pulseRateController = TextEditingController();
+  final _bodyTempratureController = TextEditingController();
 
-  var _bodyTempratureFocus = FocusNode();
-  var _pulseRateFocus = FocusNode();
-  var _bloodOxygenSaturationFocus = FocusNode();
-  var _bloodGlucoseFocus = FocusNode();
-  var _weightFocus = FocusNode();
-  var _systolicFocus = FocusNode();
-  var _diastolicFocus = FocusNode();
+  final _bodyTempratureFocus = FocusNode();
+  final _pulseRateFocus = FocusNode();
+  final _bloodOxygenSaturationFocus = FocusNode();
+  final _bloodGlucoseFocus = FocusNode();
+  final _weightFocus = FocusNode();
+  final _systolicFocus = FocusNode();
+  final _diastolicFocus = FocusNode();
   ProgressDialog progressDialog;
   String unit = 'Kg';
 
-  var scrollContainer = new ScrollController();
-  ScrollController _scrollController = ScrollController();
+  var scrollContainer = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     debugPrint('Country Local ==> ${getCurrentLocale()}');
     // TODO: implement initState
-    if (getCurrentLocale() == "US") {
+    if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
     super.initState();
@@ -50,7 +50,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
@@ -107,37 +107,37 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                               }else{
                                 addvitals();
                               }*/
-                                if (!_weightController.text
+                                if (_weightController.text
                                     .toString()
-                                    .isEmpty) {
+                                    .isNotEmpty) {
                                   addWeightVitals();
                                 }
-                                if (!_systolicController.text
+                                if (_systolicController.text
                                         .toString()
-                                        .isEmpty &&
-                                    !_diastolicController.text
+                                        .isNotEmpty &&
+                                    _diastolicController.text
                                         .toString()
-                                        .isEmpty) {
+                                        .isNotEmpty) {
                                   addBPVitals();
                                 }
-                                if (!_bloodGlucosecontroller.text
+                                if (_bloodGlucosecontroller.text
                                     .toString()
-                                    .isEmpty) {
+                                    .isNotEmpty) {
                                   addBloodGlucoseVitals();
                                 }
-                                if (!_bloodOxygenSaturationController.text
+                                if (_bloodOxygenSaturationController.text
                                     .toString()
-                                    .isEmpty) {
+                                    .isNotEmpty) {
                                   addBloodOxygenSaturationVitals();
                                 }
-                                if (!_pulseRateController.text
+                                if (_pulseRateController.text
                                     .toString()
-                                    .isEmpty) {
+                                    .isNotEmpty) {
                                   addPulseVitals();
                                 }
-                                if (!_bodyTempratureController.text
+                                if (_bodyTempratureController.text
                                     .toString()
-                                    .isEmpty) {
+                                    .isNotEmpty) {
                                   addTemperatureVitals();
                                 }
                               },
@@ -155,7 +155,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      "Save",
+                                      'Save',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w700,
@@ -198,7 +198,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   width: 8,
                 ),
                 Text(
-                  "Enter your weight",
+                  'Enter your weight',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w500,
@@ -207,7 +207,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 ),
                 RichText(
                   text: TextSpan(
-                    text: unit == "lbs" ? " (lbs) " : " (Kg) ",
+                    text: unit == 'lbs' ? ' (lbs) ' : ' (Kg) ',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w500,
@@ -245,13 +245,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 context, _weightFocus, _systolicFocus);
                           },
                           inputFormatters: [
-                            new BlacklistingTextInputFormatter(
-                                new RegExp('[\\,|\\+|\\-]')),
+                            BlacklistingTextInputFormatter(
+                                RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
-                              hintText: unit == "lbs"
-                                  ? "(100 to 200)"
-                                  : "(50 to 100)",
+                              hintText: unit == 'lbs'
+                                  ? '(100 to 200)'
+                                  : '(50 to 100)',
                               hintStyle: TextStyle(
                                 fontSize: 12,
                               ),
@@ -290,7 +290,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     width: 8,
                   ),
                   Text(
-                    "Enter your blood pressure",
+                    'Enter your blood pressure',
                     style: TextStyle(
                         color: primaryColor,
                         fontWeight: FontWeight.w500,
@@ -307,7 +307,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      "Systolic (mmHg)",
+                      'Systolic (mmHg)',
                       style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.w500,
@@ -321,7 +321,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      "Diastolic (mmHg)",
+                      'Diastolic (mmHg)',
                       style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.w500,
@@ -350,8 +350,8 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         label: 'Systolic',
                         child: TextFormField(
                             inputFormatters: [
-                              new BlacklistingTextInputFormatter(
-                                  new RegExp('[\\,|\\+|\\-]')),
+                              BlacklistingTextInputFormatter(
+                                  RegExp('[\\,|\\+|\\-]')),
                             ],
                             controller: _systolicController,
                             focusNode: _systolicFocus,
@@ -363,7 +363,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                   context, _systolicFocus, _diastolicFocus);
                             },
                             decoration: InputDecoration(
-                                hintText: "(80 to 120)",
+                                hintText: '(80 to 120)',
                                 hintStyle: TextStyle(
                                   fontSize: 12,
                                 ),
@@ -393,8 +393,8 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                             maxLines: 1,
                             textInputAction: TextInputAction.next,
                             inputFormatters: [
-                              new BlacklistingTextInputFormatter(
-                                  new RegExp('[\\,|\\+|\\-]')),
+                              BlacklistingTextInputFormatter(
+                                  RegExp('[\\,|\\+|\\-]')),
                             ],
                             keyboardType: TextInputType.number,
                             onFieldSubmitted: (term) {
@@ -402,7 +402,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                   context, _diastolicFocus, _bloodGlucoseFocus);
                             },
                             decoration: InputDecoration(
-                                hintText: "(60 to 80)",
+                                hintText: '(60 to 80)',
                                 hintStyle: TextStyle(
                                   fontSize: 12,
                                 ),
@@ -541,7 +541,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   width: 8,
                 ),
                 Text(
-                  "Enter your blood glucose",
+                  'Enter your blood glucose',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w500,
@@ -588,11 +588,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 _bloodOxygenSaturationFocus);
                           },
                           inputFormatters: [
-                            new BlacklistingTextInputFormatter(
-                                new RegExp('[\\,|\\+|\\-]')),
+                            BlacklistingTextInputFormatter(
+                                RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
-                              hintText: "(100 to 125)",
+                              hintText: '(100 to 125)',
                               hintStyle: TextStyle(
                                 fontSize: 12,
                               ),
@@ -631,7 +631,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   width: 8,
                 ),
                 Text(
-                  "Enter your blood oxygen saturation",
+                  'Enter your blood oxygen saturation',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w500,
@@ -678,11 +678,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 _bloodOxygenSaturationFocus, _pulseRateFocus);
                           },
                           inputFormatters: [
-                            new BlacklistingTextInputFormatter(
-                                new RegExp('[\\,|\\+|\\-]')),
+                            BlacklistingTextInputFormatter(
+                                RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
-                              hintText: "(92 to 100)",
+                              hintText: '(92 to 100)',
                               hintStyle: TextStyle(
                                 fontSize: 12,
                               ),
@@ -721,7 +721,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   width: 8,
                 ),
                 Text(
-                  "Enter your pulse rate",
+                  'Enter your pulse rate',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w500,
@@ -768,11 +768,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 context, _pulseRateFocus, _bodyTempratureFocus);
                           },
                           inputFormatters: [
-                            new BlacklistingTextInputFormatter(
-                                new RegExp('[\\,|\\+|\\-]')),
+                            BlacklistingTextInputFormatter(
+                                RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
-                              hintText: "(65 to 95)",
+                              hintText: '(65 to 95)',
                               hintStyle: TextStyle(fontSize: 12),
                               contentPadding: EdgeInsets.all(0),
                               border: InputBorder.none,
@@ -808,7 +808,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   width: 10,
                 ),
                 Text(
-                  "Enter your body temperature",
+                  'Enter your body temperature',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w500,
@@ -852,11 +852,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {},
                           inputFormatters: [
-                            new BlacklistingTextInputFormatter(
-                                new RegExp('[\\,|\\+|\\-]')),
+                            BlacklistingTextInputFormatter(
+                                RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
-                              hintText: "(95 to 100)",
+                              hintText: '(95 to 100)',
                               hintStyle: TextStyle(
                                 fontSize: 12,
                               ),
@@ -888,10 +888,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (unit == 'lbs') {
         entertedWeight = entertedWeight / 2.20462;
       }
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['Weight'] = entertedWeight.toString();
 
-      BaseResponse baseResponse = await model.addMyVitals('weight', map);
+      final BaseResponse baseResponse = await model.addMyVitals('weight', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
@@ -905,11 +905,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   addBPVitals() async {
     try {
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['SystolicBloodPressure'] = _systolicController.text.toString();
       map['DiastolicBloodPressure'] = _diastolicController.text.toString();
 
-      BaseResponse baseResponse =
+      final BaseResponse baseResponse =
           await model.addMyVitals('blood-pressure', map);
 
       if (baseResponse.status == 'success') {
@@ -924,10 +924,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   addBloodGlucoseVitals() async {
     try {
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['BloodGlucose'] = _bloodGlucosecontroller.text.toString();
 
-      BaseResponse baseResponse = await model.addMyVitals('blood-sugar', map);
+      final BaseResponse baseResponse =
+          await model.addMyVitals('blood-sugar', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
@@ -941,11 +942,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   addBloodOxygenSaturationVitals() async {
     try {
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['BloodOxygenSaturation'] =
           _bloodOxygenSaturationController.text.toString();
 
-      BaseResponse baseResponse =
+      final BaseResponse baseResponse =
           await model.addMyVitals('blood-oxygen-saturation', map);
 
       if (baseResponse.status == 'success') {
@@ -960,10 +961,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   addPulseVitals() async {
     try {
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['Pulse'] = _pulseRateController.text.toString();
 
-      BaseResponse baseResponse = await model.addMyVitals('pulse', map);
+      final BaseResponse baseResponse = await model.addMyVitals('pulse', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
@@ -977,10 +978,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   addTemperatureVitals() async {
     try {
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['Temperature'] = _bodyTempratureController.text.toString();
 
-      BaseResponse baseResponse = await model.addMyVitals('temperature', map);
+      final BaseResponse baseResponse =
+          await model.addMyVitals('temperature', map);
 
       if (baseResponse.status == 'success') {
         //showToast('Record added successfully');
@@ -999,7 +1001,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     if (toastDisplay) {
       _scrollController.animateTo(0.0,
           duration: Duration(seconds: 2), curve: Curves.ease);
-      showToast("Record Updated Successfully", context);
+      showToast('Record Updated Successfully', context);
       toastDisplay = false;
     }
 

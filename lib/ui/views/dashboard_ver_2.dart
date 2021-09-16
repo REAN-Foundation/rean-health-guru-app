@@ -31,8 +31,8 @@ class DashBoardVer2View extends StatefulWidget {
 
 class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   var model = DashboardSummaryModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   Color widgetBackgroundColor = primaryColor;
   Color widgetBorderColor = primaryColor;
   Color iconColor = Colors.white;
@@ -41,7 +41,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
       colors: [primaryLightColor, colorF6F6FF]);
-  var dateFormat = DateFormat("yyyy-MM-dd");
+  var dateFormat = DateFormat('yyyy-MM-dd');
   int completedTaskCount = 0;
   int incompleteTaskCount = 0;
   int completedMedicationCount = 0;
@@ -54,16 +54,16 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   Temperature temperature;
   String unit = 'Kg';
   String topicId;
-  String topicName = "";
-  String briefInformation = "";
+  String topicName = '';
+  String briefInformation = '';
   var emergencyDetailsTextControler = TextEditingController();
-  List<MedConsumptions> currentMedicationList = new List<MedConsumptions>();
+  List<MedConsumptions> currentMedicationList = <MedConsumptions>[];
   DashboardTile emergencyDashboardTile;
 
   loadSharedPrefs() async {
     try {
       emergencyDashboardTile =
-          DashboardTile.fromJson(await _sharedPrefUtils.read("emergency"));
+          DashboardTile.fromJson(await _sharedPrefUtils.read('emergency'));
       //debugPrint('Emergency Dashboard Tile ==> ${emergencyDashboardTile.date}');
       setState(() {});
     } on FetchDataException catch (e) {
@@ -92,7 +92,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     // TODO: implement initState
     debugPrint('Country Local ==> ${getCurrentLocale()}');
     // TODO: implement initState
-    if (getCurrentLocale() == "US") {
+    if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
     super.initState();
@@ -100,9 +100,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
 
   getTaskPlanSummary() async {
     try {
-      TaskSummaryResponse taskSummaryResponse =
+      final TaskSummaryResponse taskSummaryResponse =
           await model.getTaskPlanSummary();
-      debugPrint("Task Summary ==> ${taskSummaryResponse.toJson()}");
+      debugPrint('Task Summary ==> ${taskSummaryResponse.toJson()}');
       if (taskSummaryResponse.status == 'success') {
         completedTaskCount =
             taskSummaryResponse.data.summary.completedTaskCount;
@@ -116,15 +116,15 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
   getMedicationSummary() async {
     try {
-      TaskSummaryResponse taskSummaryResponse = await model
-          .getMedicationSummary(dateFormat.format(new DateTime.now()));
-      debugPrint("Medication Summary ==> ${taskSummaryResponse.toJson()}");
+      final TaskSummaryResponse taskSummaryResponse =
+          await model.getMedicationSummary(dateFormat.format(DateTime.now()));
+      debugPrint('Medication Summary ==> ${taskSummaryResponse.toJson()}');
       if (taskSummaryResponse.status == 'success') {
         completedMedicationCount = taskSummaryResponse.data.summary.taken +
             taskSummaryResponse.data.summary.missed;
@@ -139,15 +139,15 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
   getLatestBiometrics() async {
     try {
-      TaskSummaryResponse taskSummaryResponse =
+      final TaskSummaryResponse taskSummaryResponse =
           await model.getLatestBiometrics();
-      debugPrint("Vitals Summary ==> ${taskSummaryResponse.toJson()}");
+      debugPrint('Vitals Summary ==> ${taskSummaryResponse.toJson()}');
       if (taskSummaryResponse.status == 'success') {
         pulse = taskSummaryResponse.data.summary.pulse;
         bloodPressure = taskSummaryResponse.data.summary.bloodPressure;
@@ -164,7 +164,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
@@ -184,7 +184,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 howAreYouFeelingToday(),
-                incompleteMedicationCount > 0 ? myMedication() : Container(),
+                if (incompleteMedicationCount > 0)
+                  myMedication()
+                else
+                  Container(),
                 myBiometrics(),
                 energency(),
                 knowledgeTree(),
@@ -205,19 +208,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
       child: Container(
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: widgetBackgroundColor),
-            borderRadius: new BorderRadius.only(
+            borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
         child: Column(
           children: <Widget>[
             Container(
               height: 48,
               width: MediaQuery.of(context).size.width,
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   color: widgetBackgroundColor,
-                  borderRadius: new BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(3.0),
                       topRight: Radius.circular(3.0))),
               child: Row(
@@ -342,10 +345,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       child: Container(
         height: 200,
         width: MediaQuery.of(context).size.width,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: widgetBackgroundColor,
             border: Border.all(color: widgetBorderColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -428,7 +431,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     ),
                     InkWell(
                       onTap: () {
-                        showToast("Coming Soon...", context);
+                        showToast('Coming Soon...', context);
                       },
                       child: Container(
                         width: 100,
@@ -467,7 +470,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   children: [
                     InkWell(
                       onTap: () {
-                        showToast("Coming Soon...", context);
+                        showToast('Coming Soon...', context);
                       },
                       child: Container(
                         width: 100,
@@ -497,7 +500,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     ),
                     InkWell(
                       onTap: () {
-                        showToast("Coming Soon...", context);
+                        showToast('Coming Soon...', context);
                       },
                       child: Container(
                         width: 100,
@@ -527,7 +530,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     ),
                     InkWell(
                       onTap: () {
-                        showToast("Coming Soon...", context);
+                        showToast('Coming Soon...', context);
                       },
                       child: Container(
                         width: 100,
@@ -573,10 +576,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
         child: Container(
           height: 80,
           width: MediaQuery.of(context).size.width,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               color: widgetBackgroundColor,
               border: Border.all(color: widgetBorderColor),
-              borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+              borderRadius: BorderRadius.all(Radius.circular(8.0))),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -625,8 +628,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     height: 24,
                                     child: CircularProgressIndicator(
                                       valueColor:
-                                          new AlwaysStoppedAnimation<Color>(
-                                              iconColor),
+                                      AlwaysStoppedAnimation<Color>(
+                                          iconColor),
                                     ))
                                 : Semantics(
                                     label: 'pendingTask',
@@ -675,8 +678,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     height: 24,
                                     child: CircularProgressIndicator(
                                       valueColor:
-                                          new AlwaysStoppedAnimation<Color>(
-                                              iconColor),
+                                      AlwaysStoppedAnimation<Color>(
+                                          iconColor),
                                     ))
                                 : Semantics(
                                     label: 'completedTask',
@@ -718,19 +721,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
       child: Container(
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: widgetBackgroundColor),
-            borderRadius: new BorderRadius.only(
+            borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
         child: Column(
           children: <Widget>[
             Container(
               height: 48,
               width: MediaQuery.of(context).size.width,
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   color: widgetBackgroundColor,
-                  borderRadius: new BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(3.0),
                       topRight: Radius.circular(3.0))),
               child: Row(
@@ -842,19 +845,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
       child: Container(
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: widgetBackgroundColor),
-            borderRadius: new BorderRadius.only(
+            borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
         child: Column(
           children: <Widget>[
             Container(
               height: 48,
               width: MediaQuery.of(context).size.width,
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   color: widgetBackgroundColor,
-                  borderRadius: new BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(3.0),
                       topRight: Radius.circular(3.0))),
               child: Row(
@@ -916,45 +919,48 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     ),
                   ),*/
 
-                  discription != ''
-                      ? Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(discription,
-                                  style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: 'Montserrat')),
+                  if (discription != '')
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(discription,
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Montserrat')),
                               Semantics(
                                 label: 'edit_emergency_text',
                                 child: IconButton(
                                   icon: Icon(
                                     Icons.edit,
-                                    size: 24,
-                                    color: primaryColor,
-                                  ),
-                                  onPressed: () {
-                                    _emergencyDetailDialog(true);
-                                  },
-                                ),
+                                size: 24,
+                                color: primaryColor,
                               ),
-                            ],
+                              onPressed: () {
+                                _emergencyDetailDialog(true);
+                              },
+                            ),
                           ),
-                        )
-                      : Semantics(
-                          label: 'emergency_yes',
-                          child: InkWell(
-                            onTap: () {
-                              _emergencyDetailDialog(false);
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  FontAwesomeIcons.ambulance,
+                        ],
+                      ),
+                    )
+                  else
+                    Semantics(
+                      label: 'emergency_yes',
+                      child: InkWell(
+                        onTap: () {
+                          _emergencyDetailDialog(false);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.ambulance,
                                   color: Colors.deepOrange,
                                   size: 36,
                                 ),
@@ -986,10 +992,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       child: Container(
         height: 80,
         width: MediaQuery.of(context).size.width,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: widgetBackgroundColor,
             border: Border.all(color: widgetBorderColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -1028,11 +1034,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       Container(
                         height: 32,
                         width: 32,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                             color: Colors.orange,
                             border: Border.all(color: Colors.white),
                             borderRadius:
-                                new BorderRadius.all(Radius.circular(16.0))),
+                                BorderRadius.all(Radius.circular(16.0))),
                         child: Center(
                           child: Text(
                             '1',
@@ -1067,11 +1073,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       Container(
                         height: 32,
                         width: 32,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                             color: Colors.green,
                             border: Border.all(color: Colors.white),
                             borderRadius:
-                                new BorderRadius.all(Radius.circular(16.0))),
+                                BorderRadius.all(Radius.circular(16.0))),
                         child: Center(
                           child: Text(
                             '3',
@@ -1109,18 +1115,18 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
       child: Container(
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: widgetBackgroundColor),
-            borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+            borderRadius: BorderRadius.all(Radius.circular(4.0))),
         child: Column(
           children: <Widget>[
             Container(
               height: 48,
               width: MediaQuery.of(context).size.width,
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   color: widgetBackgroundColor,
-                  borderRadius: new BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(4.0),
                       topRight: Radius.circular(4.0))),
               child: Row(
@@ -1166,7 +1172,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                             fontSize: 14),
                         children: <TextSpan>[
                           TextSpan(
-                              text: " " + briefInformation.toString(),
+                              text: ' ' + briefInformation.toString(),
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -1188,19 +1194,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
       child: Container(
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: widgetBackgroundColor),
-            borderRadius: new BorderRadius.only(
+            borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
         child: Column(
           children: <Widget>[
             Container(
               height: 48,
               width: MediaQuery.of(context).size.width,
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   color: widgetBackgroundColor,
-                  borderRadius: new BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(3.0),
                       topRight: Radius.circular(3.0))),
               child: Row(
@@ -1262,11 +1268,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               padding: EdgeInsets.all(8),
                               height: 56,
                               width: 56,
-                              decoration: new BoxDecoration(
+                              decoration: BoxDecoration(
                                   color: Colors.deepPurple,
                                   border: Border.all(color: Colors.deepPurple),
-                                  borderRadius: new BorderRadius.all(
-                                      Radius.circular(12.0))),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12.0))),
                               child: ImageIcon(
                                 AssetImage('res/images/ic_body_weight.png'),
                                 size: 32,
@@ -1302,11 +1308,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               padding: EdgeInsets.all(8),
                               height: 56,
                               width: 56,
-                              decoration: new BoxDecoration(
+                              decoration: BoxDecoration(
                                   color: Colors.deepPurple,
                                   border: Border.all(color: Colors.deepPurple),
-                                  borderRadius: new BorderRadius.all(
-                                      Radius.circular(12.0))),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12.0))),
                               child: ImageIcon(
                                 AssetImage('res/images/ic_blood_presure.png'),
                                 size: 32,
@@ -1342,11 +1348,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               padding: EdgeInsets.all(12),
                               height: 56,
                               width: 56,
-                              decoration: new BoxDecoration(
+                              decoration: BoxDecoration(
                                   color: Colors.deepPurple,
                                   border: Border.all(color: Colors.deepPurple),
-                                  borderRadius: new BorderRadius.all(
-                                      Radius.circular(12.0))),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12.0))),
                               child: ImageIcon(
                                 AssetImage('res/images/ic_blood_glucose.png'),
                                 size: 32,
@@ -1380,11 +1386,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               padding: EdgeInsets.only(right: 12),
                               height: 56,
                               width: 56,
-                              decoration: new BoxDecoration(
+                              decoration: BoxDecoration(
                                   color: Colors.deepPurple,
                                   border: Border.all(color: Colors.deepPurple),
-                                  borderRadius: new BorderRadius.all(
-                                      Radius.circular(12.0))),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12.0))),
                               child: ImageIcon(
                                 AssetImage('res/images/ic_pulse.png'),
                                 size: 32,
@@ -1427,7 +1433,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
           width: MediaQuery.of(context).size.width,
           child: Semantics(
             label: 'updateEmergencyText',
-            child: new TextField(
+            child: TextField(
               controller: emergencyDetailsTextControler,
               autofocus: true,
               style: TextStyle(
@@ -1435,7 +1441,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   fontStyle: FontStyle.normal,
                   fontSize: 16.0,
                   color: Colors.black),
-              decoration: new InputDecoration(
+              decoration: InputDecoration(
                   labelStyle: TextStyle(fontSize: 16),
                   labelText: 'Enter emergency details',
                   hintText: ''),
@@ -1443,13 +1449,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
           ),
         ),
         actions: <Widget>[
-          new FlatButton(
+          FlatButton(
               child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context, rootNavigator: true).pop();
                 emergencyDetailsTextControler.clear();
               }),
-          new FlatButton(
+          FlatButton(
               child: const Text('Submit'),
               onPressed: () {
                 if (emergencyDetailsTextControler.text.isEmpty) {
@@ -1467,12 +1473,12 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
 
   getTodaysKnowledgeTopic() async {
     try {
-      KnowledgeTopicResponse knowledgeTopicResponse =
+      final KnowledgeTopicResponse knowledgeTopicResponse =
           await model.getTodaysKnowledgeTopic();
       debugPrint(
-          "Today Knowledge Topic ==> ${knowledgeTopicResponse.toJson()}");
+          'Today Knowledge Topic ==> ${knowledgeTopicResponse.toJson()}');
       if (knowledgeTopicResponse.status == 'success') {
-        KnowledgeTopic topic =
+        final KnowledgeTopic topic =
             knowledgeTopicResponse.data.knowledgeTopic.elementAt(0);
         topicId = topic.id;
         topicName = topic.topicName;
@@ -1484,7 +1490,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -1492,17 +1498,18 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
 
   addMedicalEmergencyEvent(String emergencyBreif) async {
     try {
-      var map = new Map<String, String>();
-      map["PatientUserId"] = patientUserId;
-      map["Details"] = emergencyBreif;
-      map["DateOfEmergency"] = dateFormat.format(new DateTime.now());
+      final map = <String, String>{};
+      map['PatientUserId'] = patientUserId;
+      map['Details'] = emergencyBreif;
+      map['DateOfEmergency'] = dateFormat.format(DateTime.now());
 
-      BaseResponse baseResponse = await model.addMedicalEmergencyEvent(map);
-      debugPrint("Base Response ==> ${baseResponse.toJson()}");
+      final BaseResponse baseResponse =
+          await model.addMedicalEmergencyEvent(map);
+      debugPrint('Base Response ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         _sharedPrefUtils.save(
             'emergency',
-            DashboardTile(new DateTime.now(), 'emergency', emergencyBreif)
+            DashboardTile(DateTime.now(), 'emergency', emergencyBreif)
                 .toJson());
         showToast('Emergency details saved successfully', context);
         loadSharedPrefs();
@@ -1513,7 +1520,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -1522,13 +1529,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   getMyMedications() async {
     try {
       currentMedicationList.clear();
-      GetMyMedicationsResponse getMyMedicationsResponse =
-          await model.getMyMedications(dateFormat.format(new DateTime.now()));
-      debugPrint("Medication ==> ${getMyMedicationsResponse.toJson()}");
+      final GetMyMedicationsResponse getMyMedicationsResponse =
+          await model.getMyMedications(dateFormat.format(DateTime.now()));
+      debugPrint('Medication ==> ${getMyMedicationsResponse.toJson()}');
       if (getMyMedicationsResponse.status == 'success') {
         debugPrint(
-            "Medication Length ==> ${getMyMedicationsResponse.data.medConsumptions.length}");
-        if (getMyMedicationsResponse.data.medConsumptions.length != 0) {
+            'Medication Length ==> ${getMyMedicationsResponse.data.medConsumptions.length}');
+        if (getMyMedicationsResponse.data.medConsumptions.isNotEmpty) {
           currentMedicationList
               .addAll(getMyMedicationsResponse.data.medConsumptions);
         }
@@ -1538,7 +1545,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -1547,8 +1554,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   markAllMedicationAsTaken() async {
     try {
       print(currentMedicationList.length);
-      var medicationIds = new List<String>();
-      for (var item in currentMedicationList) {
+      final medicationIds = <String>[];
+      for (final item in currentMedicationList) {
         //print(item.timeScheduleEnd.toString() +'  '+ DateTime.now().toString() +'  '+DateTime.now().isAfter(item.timeScheduleEnd).toString());
         if (DateTime.now().isAfter(item.timeScheduleStart)) {
           medicationIds.add(item.id);
@@ -1556,12 +1563,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
         }
       }
 
-      if (medicationIds.length > 0) {
-        var body = new Map<String, dynamic>();
-        body["ids"] = medicationIds;
+      if (medicationIds.isNotEmpty) {
+        final body = <String, dynamic>{};
+        body['ids'] = medicationIds;
 
-        BaseResponse baseResponse = await model.markAllMedicationsAsTaken(body);
-        debugPrint("Medication ==> ${baseResponse.toJson()}");
+        final BaseResponse baseResponse =
+            await model.markAllMedicationsAsTaken(body);
+        debugPrint('Medication ==> ${baseResponse.toJson()}');
         if (baseResponse.status == 'success') {
           //progressDialog.hide();
           showToast(baseResponse.message, context);
@@ -1576,7 +1584,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       //progressDialog.hide();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -1584,15 +1592,16 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
 
   recordHowAreYouFeeling(int feeling) async {
     try {
-      var body = new Map<String, dynamic>();
+      final body = <String, dynamic>{};
       body['PatientUserId'] = patientUserId;
       body['Feeling'] = feeling;
-      body['RecordDate'] = dateFormat.format(new DateTime.now());
+      body['RecordDate'] = dateFormat.format(DateTime.now());
       body['Comments'] = '';
       body['SymptomAssessmentId'];
 
-      BaseResponse baseResponse = await model.recordHowAreYouFeeling(body);
-      debugPrint("Medication ==> ${baseResponse.toJson()}");
+      final BaseResponse baseResponse =
+          await model.recordHowAreYouFeeling(body);
+      debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         //progressDialog.hide();
         //showToast(baseResponse.message, context);
@@ -1612,7 +1621,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       //progressDialog.hide();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -1620,11 +1629,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
 
   getSymptomAssesmentTemplete() async {
     try {
-      SearchSymptomAssesmentTempleteResponse
+      final SearchSymptomAssesmentTempleteResponse
           searchSymptomAssesmentTempleteResponse =
           await model.searchSymptomAssesmentTemplete('heart');
       debugPrint(
-          "Search Symptom Assesment Templete Response ==> ${searchSymptomAssesmentTempleteResponse.toJson()}");
+          'Search Symptom Assesment Templete Response ==> ${searchSymptomAssesmentTempleteResponse.toJson()}');
       if (searchSymptomAssesmentTempleteResponse.status == 'success') {
         Navigator.pushNamed(context, RoutePaths.Symptoms,
             arguments: searchSymptomAssesmentTempleteResponse
@@ -1638,7 +1647,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }

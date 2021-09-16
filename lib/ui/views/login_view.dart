@@ -27,12 +27,12 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final TextEditingController _mobileNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  var _mobileNumberFocus = FocusNode();
-  var _passwordFocus = FocusNode();
+  final _mobileNumberFocus = FocusNode();
+  final _passwordFocus = FocusNode();
   String mobileNumber = '';
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  String _fcmToken = "";
+  String _fcmToken = '';
   String countryCode = '';
 
   @override
@@ -71,9 +71,10 @@ class _LoginViewState extends State<LoginView> {
                             SizedBox(height: 50),
                             _emailPasswordWidget(),
                             SizedBox(height: 20),
-                            model.busy
-                                ? CircularProgressIndicator()
-                                : _submitButton(model),
+                            if (model.busy)
+                              CircularProgressIndicator()
+                            else
+                              _submitButton(model),
                             /*Container(
                             padding: EdgeInsets.symmetric(vertical: 10),
                             alignment: Alignment.centerRight,
@@ -277,7 +278,7 @@ class _LoginViewState extends State<LoginView> {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 autoValidate: true,
                 decoration: InputDecoration(
-                    counterText: "",
+                    counterText: '',
                     hintText: 'mobile_number',
                     hintStyle: TextStyle(color: Colors.transparent),
                     border: InputBorder.none,
@@ -304,23 +305,23 @@ class _LoginViewState extends State<LoginView> {
       label: 'loginButton',
       child: InkWell(
         onTap: () async {
-          debugPrint('mobile = ${mobileNumber}');
+          debugPrint('mobile = $mobileNumber');
           debugPrint('Password = ${_passwordController.text}');
 
           if (mobileNumber.length != 10) {
-            showToast("Please enter valid mobile number", context);
+            showToast('Please enter valid mobile number', context);
           } else if (_passwordController.text.toString() == '') {
-            showToast("Please enter password", context);
+            showToast('Please enter password', context);
           } else {
-            var map = new Map<String, String>();
-            map["PhoneNumber"] = mobileNumber;
-            map["Password"] = _passwordController.text;
-            map["Email"] = null;
+            final map = <String, String>{};
+            map['PhoneNumber'] = mobileNumber;
+            map['Password'] = _passwordController.text;
+            map['Email'] = null;
             try {
-              UserData loginSuccess = await model.login(map);
+              final UserData loginSuccess = await model.login(map);
 
               if (loginSuccess.status == 'success') {
-                _sharedPrefUtils.save("user", loginSuccess.toJson());
+                _sharedPrefUtils.save('user', loginSuccess.toJson());
                 //_sharedPrefUtils.saveBoolean("login1.2", true);
                 getPatientDetails(model, loginSuccess.data.accessToken,
                     loginSuccess.data.user.userId);
@@ -371,21 +372,21 @@ class _LoginViewState extends State<LoginView> {
     try {
       //ApiProvider apiProvider = new ApiProvider();
 
-      ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+      final ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
-      var map = new Map<String, String>();
-      map["Content-Type"] = "application/json";
-      map["authorization"] = "Bearer " + auth;
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth;
 
-      var response = await apiProvider.get('/patient/' + userId, header: map);
+      final response = await apiProvider.get('/patient/' + userId, header: map);
 
-      PatientApiDetails doctorListApiResponse =
+      final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
         _sharedPrefUtils.save(
-            "patientDetails", doctorListApiResponse.data.patient.toJson());
-        _sharedPrefUtils.saveBoolean("login1.2", true);
+            'patientDetails', doctorListApiResponse.data.patient.toJson());
+        _sharedPrefUtils.saveBoolean('login1.2', true);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);
@@ -554,8 +555,8 @@ class _LoginViewState extends State<LoginView> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryMobileNoField("Mobile Number"),
-        _entryField("Password", isPassword: true),
+        _entryMobileNoField('Mobile Number'),
+        _entryField('Password', isPassword: true),
       ],
     );
   }
@@ -580,10 +581,10 @@ class _LoginViewState extends State<LoginView> {
   void firebase() {
     _fcm.getToken().then((String token) async {
       assert(token != null);
-      print("Push Messaging token: $token");
+      print('Push Messaging token: $token');
       debugPrint(token);
       _fcmToken = token;
-      _sharedPrefUtils.save("fcmToken", token);
+      _sharedPrefUtils.save('fcmToken', token);
     });
 
 /*    _fcm.configure(

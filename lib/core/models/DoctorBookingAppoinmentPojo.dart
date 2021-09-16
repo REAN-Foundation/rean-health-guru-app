@@ -6,7 +6,7 @@ import 'package:paitent/core/models/labsListApiResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 
 class DoctorBookingAppoinmentPojo {
-  String whichFlow = "";
+  String whichFlow = '';
   Labs labs;
   Doctors doctors;
   String selectedDate;
@@ -15,5 +15,5 @@ class DoctorBookingAppoinmentPojo {
   Patient patient;
   UserData userData;
   String patientNote;
-  String attachmentPath = "";
+  String attachmentPath = '';
 }

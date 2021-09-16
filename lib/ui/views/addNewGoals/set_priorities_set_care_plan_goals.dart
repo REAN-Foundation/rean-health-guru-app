@@ -18,11 +18,11 @@ class SetPrioritiesGoalsForCarePlanView extends StatefulWidget {
 class _SetPrioritiesGoalsForCarePlanViewState
     extends State<SetPrioritiesGoalsForCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String selectedPrimaryGoal = "";
-  String selectedSecondaryGoal = "";
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  String selectedPrimaryGoal = '';
+  String selectedSecondaryGoal = '';
   List<DropdownMenuItem<String>> _carePlanMenuItems;
-  String selectedCarePlan = "";
+  String selectedCarePlan = '';
   GetGoalPriorities _getGoalPriorities;
   ProgressDialog progressDialog;
 
@@ -39,7 +39,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
           startCarePlanResponseGlob.data.carePlan.id.toString());
 
       if (_getGoalPriorities.status == 'success') {
-        debugPrint("AHA Care Plan ==> ${_getGoalPriorities.toJson()}");
+        debugPrint('AHA Care Plan ==> ${_getGoalPriorities.toJson()}');
 
         _carePlanMenuItems =
             buildDropDownMenuItemsForCarePlan(_getGoalPriorities.data.goals);
@@ -55,7 +55,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
 
   List<DropdownMenuItem<String>> buildDropDownMenuItemsForCarePlan(
       List<String> list) {
-    List<DropdownMenuItem<String>> items = List();
+    final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < list.length; i++) {
       items.add(DropdownMenuItem(
         child: Text(list.elementAt(i)),
@@ -67,7 +67,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -84,7 +84,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -140,7 +140,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
                     width: 0, color: primaryColor, style: BorderStyle.solid)),
             child: Center(
               child: Text(
-                "1",
+                '1',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 32,
@@ -154,7 +154,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
             height: 16,
           ),
           Text(
-            "Set Priorities",
+            'Set Priorities',
             style: TextStyle(
                 color: primaryColor, fontSize: 20, fontWeight: FontWeight.w700),
           ),
@@ -174,7 +174,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Select primary and secondary priority focus areas based on your conditions. This will help you in identifying focussed goals and selecting corresponding relevant actions to achieve those goals.",
+            'Select primary and secondary priority focus areas based on your conditions. This will help you in identifying focussed goals and selecting corresponding relevant actions to achieve those goals.',
             style: TextStyle(
                 color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
           ),
@@ -190,7 +190,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
             height: 32,
           ),
           Text(
-            "Primary",
+            'Primary',
             style: TextStyle(
                 color: primaryColor, fontSize: 16, fontWeight: FontWeight.w700),
           ),
@@ -206,8 +206,8 @@ class _SetPrioritiesGoalsForCarePlanViewState
                 color: colorF6F6FF),
             child: DropdownButton<String>(
               isExpanded: true,
-              hint: new Text(
-                "Select Primary Goal",
+              hint: Text(
+                'Select Primary Goal',
                 style: TextStyle(
                     color: textBlack,
                     fontSize: 14,
@@ -219,14 +219,14 @@ class _SetPrioritiesGoalsForCarePlanViewState
                   selectedPrimaryGoal = value;
                 });
               },
-              value: selectedPrimaryGoal == "" ? null : selectedPrimaryGoal,
+              value: selectedPrimaryGoal == '' ? null : selectedPrimaryGoal,
             ),
           ),
           const SizedBox(
             height: 32,
           ),
           Text(
-            "Secondary",
+            'Secondary',
             style: TextStyle(
                 color: primaryColor, fontSize: 16, fontWeight: FontWeight.w700),
           ),
@@ -242,8 +242,8 @@ class _SetPrioritiesGoalsForCarePlanViewState
                 color: colorF6F6FF),
             child: DropdownButton<String>(
               isExpanded: true,
-              hint: new Text(
-                "Select Secondary Goal",
+              hint: Text(
+                'Select Secondary Goal',
                 style: TextStyle(
                     color: textBlack,
                     fontSize: 14,
@@ -255,7 +255,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
                   selectedSecondaryGoal = value;
                 });
               },
-              value: selectedSecondaryGoal == "" ? null : selectedSecondaryGoal,
+              value: selectedSecondaryGoal == '' ? null : selectedSecondaryGoal,
             ),
           )
         ],
@@ -271,7 +271,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
         : InkWell(
             onTap: () {
               if (selectedPrimaryGoal == selectedSecondaryGoal) {
-                showToast("Please select different secondary goal", context);
+                showToast('Please select different secondary goal', context);
               } else {
                 setPriorityGoal();
               }
@@ -319,14 +319,14 @@ class _SetPrioritiesGoalsForCarePlanViewState
   setPriorityGoal() async {
     try {
       progressDialog.show();
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['Primary'] = selectedPrimaryGoal;
       map['Secondary'] = selectedSecondaryGoal;
 
-      var body = new Map<String, dynamic>();
+      final body = <String, dynamic>{};
       body['Priorities'] = map;
 
-      BaseResponse baseResponse = await model.setGoalsPriority(
+      final BaseResponse baseResponse = await model.setGoalsPriority(
           startCarePlanResponseGlob.data.carePlan.id.toString(), body);
 
       if (baseResponse.status == 'success') {

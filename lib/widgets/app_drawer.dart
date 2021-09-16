@@ -17,30 +17,31 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  var _sharedPrefUtils = new SharedPrefUtils();
-  String name = "";
-  String mobileNumber = "";
+  final _sharedPrefUtils = SharedPrefUtils();
+  String name = '';
+  String mobileNumber = '';
   PackageInfo _packageInfo = PackageInfo(
     appName: '',
     packageName: '',
     version: '',
     buildNumber: '',
   );
-  String profileImage = "";
+  String profileImage = '';
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
   String _baseUrl = '';
 
   loadSharedPrefs() async {
     try {
-      UserData user = UserData.fromJson(await _sharedPrefUtils.read("user"));
-      Patient patient =
-          Patient.fromJson(await _sharedPrefUtils.read("patientDetails"));
+      final UserData user =
+          UserData.fromJson(await _sharedPrefUtils.read('user'));
+      final Patient patient =
+          Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       //debugPrint(user.toJson().toString());
       setState(() {
         name = patient.firstName + ' ' + patient.lastName;
 
         mobileNumber = patient.phoneNumber;
-        profileImage = patient.imageURL == null ? "" : patient.imageURL;
+        profileImage = patient.imageURL ?? '';
       });
       _baseUrl = apiProvider.getBaseUrl();
     } catch (Excepetion) {
@@ -58,7 +59,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
   Future<void> _initPackageInfo() async {
     final PackageInfo info = await PackageInfo.fromPlatform();
-    if (this.mounted) {
+    if (mounted) {
       setState(() {
         _packageInfo = info;
       });
@@ -89,7 +90,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        "My Profile",
+                        'My Profile',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w700),
                       ),
@@ -110,7 +111,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        "My Vitals",
+                        'My Vitals',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w700),
                       ),
@@ -147,7 +148,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        "My Medical Profile",
+                        'My Medical Profile',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w700),
                       ),
@@ -168,7 +169,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        "My Medications",
+                        'My Medications',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w700),
                       ),
@@ -189,7 +190,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        "My Activity",
+                        'My Activity',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w700),
                       ),
@@ -210,7 +211,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        "My Nutrition",
+                        'My Nutrition',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w700),
                       ),
@@ -239,7 +240,7 @@ class _AppDrawerState extends State<AppDrawer> {
                           width: 40,
                         ),
                         Text(
-                          "My Care Plan",
+                          'My Care Plan',
                           style: TextStyle(
                               color: primaryColor, fontWeight: FontWeight.w700),
                         ),
@@ -339,7 +340,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        "About REAN",
+                        'About REAN',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w700),
                       ),
@@ -360,7 +361,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        "Contact Us",
+                        'Contact Us',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w700),
                       ),
@@ -386,7 +387,7 @@ class _AppDrawerState extends State<AppDrawer> {
                           width: 40,
                         ),
                         Text(
-                          "Logout",
+                          'Logout',
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.w700),
                         ),
@@ -405,12 +406,12 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        "Version " +
+                        'Version ' +
                             (_baseUrl.contains('dev')
-                                ? "Dev_"
+                                ? 'Dev_'
                                 : _baseUrl.contains('uat')
-                                    ? "Alpha_"
-                                    : "") +
+                                    ? 'Alpha_'
+                                    : '') +
                             _packageInfo.version,
                         style: TextStyle(
                             fontSize: 12,
@@ -452,7 +453,7 @@ class _AppDrawerState extends State<AppDrawer> {
       builder: (context) => AlertDialog(
         content: ListTile(
           title: Text(
-            "Logout",
+            'Logout',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.normal,
@@ -474,8 +475,8 @@ class _AppDrawerState extends State<AppDrawer> {
             child: Text('Yes'),
             onPressed: () {
               startCarePlanResponseGlob = null;
-              _sharedPrefUtils.save("CarePlan", null);
-              _sharedPrefUtils.saveBoolean("login", null);
+              _sharedPrefUtils.save('CarePlan', null);
+              _sharedPrefUtils.saveBoolean('login', null);
               _sharedPrefUtils.clearAll();
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (context) {
@@ -522,17 +523,16 @@ class _AppDrawerState extends State<AppDrawer> {
                 Container(
                   width: 120.0,
                   height: 120.0,
-                  decoration: new BoxDecoration(
+                  decoration: BoxDecoration(
                     color: const Color(0xff7c94b6),
-                    image: new DecorationImage(
-                      image: profileImage == ""
+                    image: DecorationImage(
+                      image: profileImage == ''
                           ? AssetImage('res/images/profile_placeholder.png')
-                          : new CachedNetworkImageProvider(profileImage),
+                          : CachedNetworkImageProvider(profileImage),
                       fit: BoxFit.cover,
                     ),
-                    borderRadius:
-                        new BorderRadius.all(new Radius.circular(50.0)),
-                    border: new Border.all(
+                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                    border: Border.all(
                       color: Colors.deepPurple,
                       width: 2.0,
                     ),

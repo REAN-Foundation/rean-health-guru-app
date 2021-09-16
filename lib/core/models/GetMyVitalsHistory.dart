@@ -8,13 +8,13 @@ class GetMyVitalsHistory {
   GetMyVitalsHistory.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -29,14 +29,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     biometrics = json['biometrics'] != null
-        ? new Biometrics.fromJson(json['biometrics'])
+        ? Biometrics.fromJson(json['biometrics'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.biometrics != null) {
-      data['biometrics'] = this.biometrics.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (biometrics != null) {
+      data['biometrics'] = biometrics.toJson();
     }
     return data;
   }
@@ -53,19 +53,19 @@ class Biometrics {
     patientUserId = json['PatientUserId'];
     visitId = json['VisitId'];
     if (json['Records'] != null) {
-      records = new List<Records>();
+      records = <Records>[];
       json['Records'].forEach((v) {
-        records.add(new Records.fromJson(v));
+        records.add(Records.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['PatientUserId'] = this.patientUserId;
-    data['VisitId'] = this.visitId;
-    if (this.records != null) {
-      data['Records'] = this.records.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['PatientUserId'] = patientUserId;
+    data['VisitId'] = visitId;
+    if (records != null) {
+      data['Records'] = records.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -106,16 +106,16 @@ class Records {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['RecordDate'] = this.recordDate;
-    data['Weight'] = this.weight;
-    data['BloodGlucose'] = this.bloodGlucose;
-    data['SystolicBloodPressure'] = this.systolicBloodPressure;
-    data['DiastolicBloodPressure'] = this.diastolicBloodPressure;
-    data['BloodOxygenSaturation'] = this.bloodOxygenSaturation;
-    data['Pulse'] = this.pulse;
-    data['Temperature'] = this.temperature;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['RecordDate'] = recordDate;
+    data['Weight'] = weight;
+    data['BloodGlucose'] = bloodGlucose;
+    data['SystolicBloodPressure'] = systolicBloodPressure;
+    data['DiastolicBloodPressure'] = diastolicBloodPressure;
+    data['BloodOxygenSaturation'] = bloodOxygenSaturation;
+    data['Pulse'] = pulse;
+    data['Temperature'] = temperature;
     return data;
   }
 }

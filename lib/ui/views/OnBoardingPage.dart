@@ -38,7 +38,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     const bodyStyle = TextStyle(
         fontSize: 18.0, fontWeight: FontWeight.w500, color: primaryColor);
 
-    const pageDecoration = const PageDecoration(
+    const pageDecoration = PageDecoration(
       titleTextStyle: TextStyle(
           fontSize: 22.0, fontWeight: FontWeight.w700, color: primaryColor),
       bodyTextStyle: bodyStyle,
@@ -72,20 +72,20 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       ),*/
       pages: [
         PageViewModel(
-          title: "Medications",
-          body: "Include medication reminders in your daily tasks.",
+          title: 'Medications',
+          body: 'Include medication reminders in your daily tasks.',
           image: _buildImage('walkthrough_img_1.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Vitals",
-          body: "Keep a close watch on your vitals.",
+          title: 'Vitals',
+          body: 'Keep a close watch on your vitals.',
           image: _buildImage('walkthrough_img_2.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Medical Records",
-          body: "Have all your documents safe in one place.",
+          title: 'Medical Records',
+          body: 'Have all your documents safe in one place.',
           image: _buildImage('walkthrough_img_3.png'),
           decoration: pageDecoration,
         ),

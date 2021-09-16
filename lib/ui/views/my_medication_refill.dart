@@ -11,7 +11,7 @@ class MyMedicationRefillView extends StatefulWidget {
 
 class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
   var model = PatientMedicationViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -54,19 +54,19 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
         children: <Widget>[
           Container(
             height: 160,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: primaryLightColor),
-                borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+                borderRadius: BorderRadius.all(Radius.circular(4.0))),
             child: Column(
               children: <Widget>[
                 Expanded(
                   flex: 3,
                   child: MergeSemantics(
                     child: Container(
-                      decoration: new BoxDecoration(
+                      decoration: BoxDecoration(
                           color: colorF6F6FF,
-                          borderRadius: new BorderRadius.only(
+                          borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(4.0),
                               topRight: Radius.circular(4.0))),
                       child: Row(
@@ -86,7 +86,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                               SizedBox(
                                 width: 4,
                               ),
-                              Text("Vitamin B-12",
+                              Text('Vitamin B-12',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -97,7 +97,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                           ),
                           Row(
                             children: [
-                              Text("Due in 7 days",
+                              Text('Due in 7 days',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -129,7 +129,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("Prescription #MED-32434244",
+                                Text('Prescription #MED-32434244',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -137,7 +137,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                                       fontWeight: FontWeight.w200,
                                       color: primaryColor,
                                     )),
-                                Text("90 Tablets",
+                                Text('90 Tablets',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -150,7 +150,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("Last fulfilled by ",
+                                Text('Last fulfilled by ',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -158,7 +158,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                                       fontWeight: FontWeight.w200,
                                       color: primaryColor,
                                     )),
-                                Text("MedHealth Pharmacies",
+                                Text('MedHealth Pharmacies',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -171,7 +171,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("Refills left",
+                                Text('Refills left',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -179,7 +179,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                                       fontWeight: FontWeight.w200,
                                       color: primaryColor,
                                     )),
-                                Text("2",
+                                Text('2',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -199,9 +199,9 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                   child: Semantics(
                     excludeSemantics: true,
                     child: Container(
-                      decoration: new BoxDecoration(
+                      decoration: BoxDecoration(
                           color: colorF6F6FF,
-                          borderRadius: new BorderRadius.only(
+                          borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(4.0),
                               topRight: Radius.circular(4.0))),
                       child: Row(
@@ -213,7 +213,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                               SizedBox(
                                 width: 8,
                               ),
-                              Text("Reorder?",
+                              Text('Reorder?',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(

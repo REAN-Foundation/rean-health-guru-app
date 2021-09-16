@@ -23,9 +23,9 @@ class ChallengeCarePlanView extends StatefulWidget {
 
 class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var _textController = new TextEditingController();
+  final _textController = TextEditingController();
 
   @override
   void initState() {
@@ -57,7 +57,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -173,15 +173,15 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
           // Add This
           child: MaterialButton(
             minWidth: 200,
-            child: new Text(!widget.task.finished ? 'Save' : 'Done',
-                style: new TextStyle(
+            child: Text(!widget.task.finished ? 'Save' : 'Done',
+                style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
             onPressed: () {
               if (!widget.task.finished) {
-                if (_textController.text == "") {
-                  showToast("Please enter challenge text", context);
+                if (_textController.text == '') {
+                  showToast('Please enter challenge text', context);
                 } else {
                   completeChallengeTaskOfAHACarePlan(widget.task);
                 }
@@ -197,10 +197,10 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
 
   completeChallengeTaskOfAHACarePlan(Task task) async {
     try {
-      var map = new Map<String, String>();
-      map["ChallengeNotes"] = _textController.text;
+      final map = <String, String>{};
+      map['ChallengeNotes'] = _textController.text;
 
-      StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
+      final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.completeChallengeTask(
               task.details.carePlanId.toString(), task.details.id, map);
 
@@ -211,7 +211,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
           return HomeView(1);
         }), (Route<dynamic> route) => false);
         debugPrint(
-            "AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}");
+            'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
         showToast(_startTaskOfAHACarePlanResponse.message, context);
       }

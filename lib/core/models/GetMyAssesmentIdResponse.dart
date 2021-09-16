@@ -8,13 +8,13 @@ class GetMyAssesmentIdResponse {
   GetMyAssesmentIdResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -29,14 +29,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     assessment = json['assessment'] != null
-        ? new Assessment.fromJson(json['assessment'])
+        ? Assessment.fromJson(json['assessment'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.assessment != null) {
-      data['assessment'] = this.assessment.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (assessment != null) {
+      data['assessment'] = assessment.toJson();
     }
     return data;
   }
@@ -76,13 +76,13 @@ class Assessment {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['PatientUserId'] = this.patientUserId;
-    data['Title'] = this.title;
-    data['AssessmentTemplateId'] = this.assessmentTemplateId;
-    data['AssessmentDate'] = this.assessmentDate;
-    data['OverallStatus'] = this.overallStatus;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['PatientUserId'] = patientUserId;
+    data['Title'] = title;
+    data['AssessmentTemplateId'] = assessmentTemplateId;
+    data['AssessmentDate'] = assessmentDate;
+    data['OverallStatus'] = overallStatus;
     /*if (this.symptomsRecorded != null) {
       data['SymptomsRecorded'] =
           this.symptomsRecorded.map((v) => v.toJson()).toList();

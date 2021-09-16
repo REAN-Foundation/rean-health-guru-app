@@ -20,13 +20,13 @@ class DeterminActionPlansForCarePlanView extends StatefulWidget {
 class _DeterminActionPlansForCarePlanViewState
     extends State<DeterminActionPlansForCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _textEditingController = TextEditingController();
-  var _textEditingFocus = FocusNode();
+  final _textEditingFocus = FocusNode();
   int id = 0;
   String radioButtonItem = 'ONE';
   GetActionOfGoalPlan getActionOfGoalPlan;
-  List<int> action = new List<int>();
+  List<int> action = <int>[];
   ProgressDialog progressDialog;
 
   @override
@@ -42,7 +42,7 @@ class _DeterminActionPlansForCarePlanViewState
           startCarePlanResponseGlob.data.carePlan.id.toString());
 
       if (getActionOfGoalPlan.status == 'success') {
-        debugPrint("AHA Care Plan ==> ${getActionOfGoalPlan.toJson()}");
+        debugPrint('AHA Care Plan ==> ${getActionOfGoalPlan.toJson()}');
       } else {
         showToast(getActionOfGoalPlan.message, context);
       }
@@ -55,7 +55,7 @@ class _DeterminActionPlansForCarePlanViewState
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -72,7 +72,7 @@ class _DeterminActionPlansForCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -133,34 +133,35 @@ class _DeterminActionPlansForCarePlanViewState
             height: 16,
           ),
           Text(
-            "Select your action for goal plan",
+            'Select your action for goal plan',
             style: TextStyle(
                 color: primaryColor, fontSize: 16, fontWeight: FontWeight.w700),
           ),
           const SizedBox(
             height: 16,
           ),
-          model.busy
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Expanded(
-                  child: ListView.builder(
-                      //physics: const NeverScrollableScrollPhysics(),
-                      itemCount: getActionOfGoalPlan.data.goals.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return new CheckboxListTile(
-                            value: getActionOfGoalPlan.data.goals
-                                .elementAt(index)
-                                .isChecked,
-                            title: new Text(getActionOfGoalPlan.data.goals
-                                .elementAt(index)
-                                .assetName),
-                            controlAffinity: ListTileControlAffinity.leading,
-                            onChanged: (bool val) {
-                              itemChange(val, index);
-                            });
-                      }),
+          if (model.busy)
+            Center(
+              child: CircularProgressIndicator(),
+            )
+          else
+            Expanded(
+              child: ListView.builder(
+                  //physics: const NeverScrollableScrollPhysics(),
+                  itemCount: getActionOfGoalPlan.data.goals.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CheckboxListTile(
+                        value: getActionOfGoalPlan.data.goals
+                            .elementAt(index)
+                            .isChecked,
+                        title: Text(getActionOfGoalPlan.data.goals
+                            .elementAt(index)
+                            .assetName),
+                        controlAffinity: ListTileControlAffinity.leading,
+                        onChanged: (bool val) {
+                          itemChange(val, index);
+                        });
+                  }),
                 ),
         ],
       ),
@@ -190,7 +191,7 @@ class _DeterminActionPlansForCarePlanViewState
                     width: 0, color: primaryColor, style: BorderStyle.solid)),
             child: Center(
               child: Text(
-                "3",
+                '3',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 32,
@@ -204,7 +205,7 @@ class _DeterminActionPlansForCarePlanViewState
             height: 16,
           ),
           Text(
-            "Determine Your Action Plan",
+            'Determine Your Action Plan',
             style: TextStyle(
                 color: primaryColor, fontSize: 18, fontWeight: FontWeight.w700),
           ),
@@ -265,10 +266,10 @@ class _DeterminActionPlansForCarePlanViewState
   setGoals() async {
     try {
       progressDialog.show();
-      var body = new Map<String, dynamic>();
+      final body = <String, dynamic>{};
       body['Actions'] = action;
 
-      BaseResponse baseResponse = await model.addGoalsTask(
+      final BaseResponse baseResponse = await model.addGoalsTask(
           startCarePlanResponseGlob.data.carePlan.id.toString(),
           'goal-actions',
           body);
@@ -380,7 +381,7 @@ class _DeterminActionPlansForCarePlanViewState
                       ),
                       child: Center(
                         child: Text(
-                          "Close",
+                          'Close',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -398,7 +399,7 @@ class _DeterminActionPlansForCarePlanViewState
   completeMessageTaskOfAHACarePlan() async {
     try {
       progressDialog.show();
-      StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
+      final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.stopTaskOfAHACarePlan(
               startCarePlanResponseGlob.data.carePlan.id.toString(),
               getTask().details.id);
@@ -412,7 +413,7 @@ class _DeterminActionPlansForCarePlanViewState
           return HomeView(1);
         }), (Route<dynamic> route) => false);
         debugPrint(
-            "AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}");
+            'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
         progressDialog.hide();
         showToast(_startTaskOfAHACarePlanResponse.message, context);

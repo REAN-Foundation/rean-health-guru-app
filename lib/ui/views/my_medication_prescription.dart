@@ -13,7 +13,7 @@ class MyMedicationPrescrptionView extends StatefulWidget {
 class _MyMedicationPrescrptionViewState
     extends State<MyMedicationPrescrptionView> {
   var model = PatientMedicationViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class _MyMedicationPrescrptionViewState
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(index == 0 ? "Current" : "Past",
+            Text(index == 0 ? 'Current' : 'Past',
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -65,18 +65,18 @@ class _MyMedicationPrescrptionViewState
             ),
             Container(
               height: 100,
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: primaryLightColor),
-                  borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+                  borderRadius: BorderRadius.all(Radius.circular(4.0))),
               child: Column(
                 children: <Widget>[
                   Expanded(
                     flex: 5,
                     child: Container(
-                      decoration: new BoxDecoration(
+                      decoration: BoxDecoration(
                           color: colorF6F6FF,
-                          borderRadius: new BorderRadius.only(
+                          borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(4.0),
                               topRight: Radius.circular(4.0))),
                       child: Padding(
@@ -89,7 +89,7 @@ class _MyMedicationPrescrptionViewState
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("#MED-32434244",
+                                Text('#MED-32434244',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -97,7 +97,7 @@ class _MyMedicationPrescrptionViewState
                                       fontWeight: FontWeight.w200,
                                       color: textBlack,
                                     )),
-                                Text("August 2, 2020",
+                                Text('August 2, 2020',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -148,7 +148,7 @@ class _MyMedicationPrescrptionViewState
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text("MedHealth Pharmacies",
+                                  Text('MedHealth Pharmacies',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(

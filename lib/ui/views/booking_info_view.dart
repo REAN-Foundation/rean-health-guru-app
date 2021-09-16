@@ -40,43 +40,43 @@ class BookingInfoView extends StatefulWidget {
 }
 
 class _BookingInfoViewState extends State<BookingInfoView> {
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
-  String name = "";
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  String name = '';
   var value;
-  List<TimeSlot> timeSlot = new List();
-  String selectedGender = "Male";
+  List<TimeSlot> timeSlot = [];
+  String selectedGender = 'Male';
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _mobileNumberController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   String mobileNumber;
-  var _firstNameFocus = FocusNode();
-  var _lastNameFocus = FocusNode();
-  var _mobileNumberFocus = FocusNode();
-  var _noteFocus = FocusNode();
-  var _emailFocus = FocusNode();
+  final _firstNameFocus = FocusNode();
+  final _lastNameFocus = FocusNode();
+  final _mobileNumberFocus = FocusNode();
+  final _noteFocus = FocusNode();
+  final _emailFocus = FocusNode();
   UserData user;
   Doctors doctorDetails;
   DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;
-  var dateFormat = DateFormat("dd MMM, yyyy");
-  var dateFormatFull = DateFormat("yyyy-MM-dd");
-  var timeFormat = DateFormat("hh:mm a");
-  String attachmentPath = "";
-  String dob = "";
+  var dateFormat = DateFormat('dd MMM, yyyy');
+  var dateFormatFull = DateFormat('yyyy-MM-dd');
+  var timeFormat = DateFormat('hh:mm a');
+  String attachmentPath = '';
+  String dob = '';
   ProgressDialog progressDialog;
-  var patientId = "";
+  var patientId = '';
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
   Labs labDetails;
 
   _BookingInfoViewState(@required this.bookingAppoinmentsDetails);
 
-  String auth = "";
-  var model = new BookAppoinmentViewModel();
+  String auth = '';
+  var model = BookAppoinmentViewModel();
 
   loadSharedPrefs() async {
     try {
-      user = UserData.fromJson(await _sharedPrefUtils.read("user"));
+      user = UserData.fromJson(await _sharedPrefUtils.read('user'));
       patientId = user.data.user.userId.toString();
       auth = user.data.accessToken;
 
@@ -119,13 +119,13 @@ class _BookingInfoViewState extends State<BookingInfoView> {
 
   @override
   Widget build(BuildContext context) {
-    if (bookingAppoinmentsDetails.whichFlow == "Lab") {
+    if (bookingAppoinmentsDetails.whichFlow == 'Lab') {
       labDetails = bookingAppoinmentsDetails.labs;
     } else {
       doctorDetails = bookingAppoinmentsDetails.doctors;
     }
 
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
 
     //loadSharedPrefs();
     //UserData data = UserData.fromJson(_sharedPrefUtils.read("user"));
@@ -146,7 +146,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
           ),
           //drawer: AppDrawer(),
           body: Container(
@@ -158,24 +158,26 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                   SizedBox(
                     height: 16,
                   ),
-                  bookingAppoinmentsDetails.whichFlow == "Lab"
-                      ? Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: LabTileView(labDetails),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: DoctorTileView(doctorDetails),
-                        ),
+                  if (bookingAppoinmentsDetails.whichFlow == 'Lab')
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: LabTileView(labDetails),
+                    )
+                  else
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: DoctorTileView(doctorDetails),
+                    ),
                   _makeDateAndTimeTile(),
                   //_bookAppoinmentFor(),
                   _textFeildWidget(),
                   SizedBox(
                     height: 16,
                   ),
-                  model.busy
-                      ? Center(child: CircularProgressIndicator())
-                      : _continueButton(),
+                  if (model.busy)
+                    Center(child: CircularProgressIndicator())
+                  else
+                    _continueButton(),
                   SizedBox(
                     height: 24,
                   ),
@@ -203,22 +205,22 @@ class _BookingInfoViewState extends State<BookingInfoView> {
           // Add This
           child: MaterialButton(
             minWidth: 200,
-            child: new Text('Continue',
-                style: new TextStyle(
+            child: Text('Continue',
+                style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
             onPressed: () {
               if (_firstNameController.text == '') {
-                showToast("Please enter first name", context);
+                showToast('Please enter first name', context);
               } else if (_lastNameController.text == '') {
-                showToast("Please enter last name", context);
+                showToast('Please enter last name', context);
               } else if (_mobileNumberController.text.toString().length != 10) {
-                showToast("Please enter valid mobile number", context);
+                showToast('Please enter valid mobile number', context);
               } else if (selectedGender == '') {
-                showToast("Please select gender", context);
+                showToast('Please select gender', context);
               } else if (dob == '') {
-                showToast("Please select Date of Birth", context);
+                showToast('Please select Date of Birth', context);
               }
               /*else if(validateEmail(_emailController.text)) {
                 showToast("Please enter valid email");
@@ -244,28 +246,28 @@ class _BookingInfoViewState extends State<BookingInfoView> {
   bookADoctorAppoinmentSlot() async {
     try {
       model.setBusy(true);
-      var map = new Map<String, String>();
-      map["patientUserId"] = patientId;
-      map["date"] = dateFormatFull
+      final map = <String, String>{};
+      map['patientUserId'] = patientId;
+      map['date'] = dateFormatFull
           .format(DateTime.parse(bookingAppoinmentsDetails.selectedDate));
-      map["startTime"] = bookingAppoinmentsDetails.slotStart;
-      map["endTime"] = bookingAppoinmentsDetails.slotEnd;
+      map['startTime'] = bookingAppoinmentsDetails.slotStart;
+      map['endTime'] = bookingAppoinmentsDetails.slotEnd;
 
-      DoctorAppoinmentBookedSuccessfully bookAAppoinmentForDoctor =
+      final DoctorAppoinmentBookedSuccessfully bookAAppoinmentForDoctor =
           await model.bookAAppoinmentForDoctor(
               doctorDetails.userId.toString(), map, 'Bearer ' + auth);
 
       if (bookAAppoinmentForDoctor.status == 'success') {
         //Navigator.pushNamed(context, RoutePaths.Booking_Appoinment_Confirmation_View);
         showToast(bookAAppoinmentForDoctor.message, context);
-        debugPrint("Clicked On Proceed");
+        debugPrint('Clicked On Proceed');
       } else {
         showToast(bookAAppoinmentForDoctor.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -478,7 +480,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Gender",
+            'Gender',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           SizedBox(
@@ -526,10 +528,10 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      bookingAppoinmentsDetails.patient.gender == "M" ||
-                              bookingAppoinmentsDetails.patient.gender == "Male"
-                          ? "Male"
-                          : "Female",
+                      bookingAppoinmentsDetails.patient.gender == 'M' ||
+                              bookingAppoinmentsDetails.patient.gender == 'Male'
+                          ? 'Male'
+                          : 'Female',
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 16,
@@ -553,7 +555,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Book a appoinment for",
+            'Book a appoinment for',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           SizedBox(
@@ -575,9 +577,9 @@ class _BookingInfoViewState extends State<BookingInfoView> {
               onToggle: (index) {
                 print('switched to: $index');
                 if (index == 0) {
-                  selectedGender = "Male";
+                  selectedGender = 'Male';
                 } else {
-                  selectedGender = "Female";
+                  selectedGender = 'Female';
                 }
               })
         ],
@@ -590,13 +592,13 @@ class _BookingInfoViewState extends State<BookingInfoView> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: <Widget>[
-          _entryFirstNameField("First Name"),
-          _entryLastNameField("Last Name"),
-          _entryMobileNoField("Mobile Number"),
+          _entryFirstNameField('First Name'),
+          _entryLastNameField('Last Name'),
+          _entryMobileNoField('Mobile Number'),
           _genderWidget(),
-          _dateOfBirthField("Date Of Birth"),
+          _dateOfBirthField('Date Of Birth'),
           _entryEmailField(),
-          _entryNoteField("Note"),
+          _entryNoteField('Note'),
           _addAttachment(),
         ],
       ),
@@ -646,7 +648,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                     SizedBox(
                         height: 32,
                         width: 32,
-                        child: new Image.asset('res/images/ic_calender.png')),
+                        child: Image.asset('res/images/ic_calender.png')),
                   ],
                 ),
               ),
@@ -850,7 +852,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16.0, 0, 0, 0),
                     child: Text(
-                      "+91",
+                      '+91',
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         fontSize: 16,
@@ -875,7 +877,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                         },
                         maxLines: 1,
                         decoration: InputDecoration(
-                            counterText: "",
+                            counterText: '',
                             border: InputBorder.none,
                             fillColor: Colors.white,
                             filled: true)),
@@ -970,13 +972,13 @@ class _BookingInfoViewState extends State<BookingInfoView> {
     String result;
     try {
       result = await FlutterDocumentPicker.openDocument();
-      debugPrint('File Result ==> ${result}');
+      debugPrint('File Result ==> $result');
 
       if (result != '') {
-        File file = File(result);
+        final File file = File(result);
         debugPrint(result);
-        String fileName = file.path.split('/').last;
-        print("File Name ==> ${fileName}");
+        final String fileName = file.path.split('/').last;
+        print('File Name ==> $fileName');
         uploadProfilePicture(file);
       } else {
         showToast('Please select document', context);
@@ -991,29 +993,29 @@ class _BookingInfoViewState extends State<BookingInfoView> {
   uploadProfilePicture(File file) async {
     try {
       progressDialog.show();
-      var map = new Map<String, String>();
-      map["enc"] = "multipart/form-data";
-      map["Authorization"] = 'Bearer ' + auth;
+      final map = <String, String>{};
+      map['enc'] = 'multipart/form-data';
+      map['Authorization'] = 'Bearer ' + auth;
 
-      String _baseUrl = apiProvider.getBaseUrl();
+      final String _baseUrl = apiProvider.getBaseUrl();
 
-      var postUri = Uri.parse(_baseUrl + "/resources/upload/");
-      var request = new http.MultipartRequest("POST", postUri);
+      final postUri = Uri.parse(_baseUrl + '/resources/upload/');
+      final request = http.MultipartRequest('POST', postUri);
       request.headers.addAll(map);
       request.files.add(http.MultipartFile(
           'name', file.readAsBytes().asStream(), file.lengthSync(),
           filename: file.path.split('/').last));
-      request.fields['isPublicprofile'] = "true";
+      request.fields['isPublicprofile'] = 'true';
 
       request.send().then((response) async {
         if (response.statusCode == 200) {
           progressDialog.hide();
-          print("Uploaded!");
+          print('Uploaded!');
           final respStr = await response.stream.bytesToString();
-          debugPrint("Uploded " + respStr);
-          UploadImageResponse uploadResponse =
+          debugPrint('Uploded ' + respStr);
+          final UploadImageResponse uploadResponse =
               UploadImageResponse.fromJson(json.decode(respStr));
-          if (uploadResponse.status == "success") {
+          if (uploadResponse.status == 'success') {
             progressDialog.hide();
             attachmentPath = uploadResponse.data.details.elementAt(0).url;
             listFiles.add(attachmentPath);
@@ -1025,19 +1027,19 @@ class _BookingInfoViewState extends State<BookingInfoView> {
           }
         } else {
           progressDialog.hide();
-          print("Upload Faild !");
+          print('Upload Faild !');
         }
       }); // debugPrint("3");
 
     } catch (CustomException) {
       progressDialog.hide();
-      debugPrint("4");
+      debugPrint('4');
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
-  var listFiles = new List<String>();
+  var listFiles = <String>[];
 
   Widget _addAttachment() {
     return Column(
@@ -1053,7 +1055,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
             child: Row(
               children: <Widget>[
                 Text(
-                  "Attachment",
+                  'Attachment',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
                 SizedBox(
@@ -1066,7 +1068,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                     image: AssetImage('res/images/ic_attachment.png'),
                   ),
                 ),
-                (listFiles.length != 0
+                (listFiles.isNotEmpty
                     ? Container(
                         height: 40,
                         width: 40,
@@ -1093,13 +1095,14 @@ class _BookingInfoViewState extends State<BookingInfoView> {
   }*/
 
   bool validateEmail(String value) {
-    Pattern pattern =
+    const Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
-    if (regex.hasMatch(value))
+    final RegExp regex = RegExp(pattern);
+    if (regex.hasMatch(value)) {
       return false;
-    else
+    } else {
       return true;
+    }
   }
 }
 //right_arrow

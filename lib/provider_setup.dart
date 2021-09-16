@@ -23,7 +23,5 @@ List<SingleChildWidget> dependentServices = [
 List<SingleChildWidget> uiConsumableProviders = [
   StreamProvider<UserData>(
     create: (context) =>
-        Provider.of<AuthenticationService>(context, listen: false).user,
-    initialData: UserData.fromJson(new Map()),
-  )
+        Provider.of<AuthenticationService>(context, listen: false).user)
 ];

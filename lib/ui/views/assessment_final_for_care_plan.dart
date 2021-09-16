@@ -15,16 +15,16 @@ class AssessmentFinalCarePlanView extends StatefulWidget {
 class _AssessmentFinalCarePlanViewState
     extends State<AssessmentFinalCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var _textController = new TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _textController = TextEditingController();
 
   final TextEditingController _systolicController = TextEditingController();
   final TextEditingController _diastolicController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
 
-  var _systolicFocus = FocusNode();
-  var _diastolicFocus = FocusNode();
-  var _weightFocus = FocusNode();
+  final _systolicFocus = FocusNode();
+  final _diastolicFocus = FocusNode();
+  final _weightFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class _AssessmentFinalCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -88,7 +88,7 @@ class _AssessmentFinalCarePlanViewState
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                "Please enter your\nblood pressure and weight",
+                'Please enter your\nblood pressure and weight',
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w700,
@@ -109,11 +109,11 @@ class _AssessmentFinalCarePlanViewState
                             padding: const EdgeInsets.all(16.0),
                             height: 180,
                             width: MediaQuery.of(context).size.width,
-                            decoration: new BoxDecoration(
+                            decoration: BoxDecoration(
                                 color: colorF6F6FF,
                                 border: Border.all(color: primaryLightColor),
                                 borderRadius:
-                                    new BorderRadius.all(Radius.circular(8.0))),
+                                    BorderRadius.all(Radius.circular(8.0))),
                             child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -134,7 +134,7 @@ class _AssessmentFinalCarePlanViewState
                                                 fontSize: 16),
                                             children: <TextSpan>[
                                               TextSpan(
-                                                  text: "  mm Hg     ",
+                                                  text: '  mm Hg     ',
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
@@ -193,7 +193,7 @@ class _AssessmentFinalCarePlanViewState
                                                 fontSize: 16),
                                             children: <TextSpan>[
                                               TextSpan(
-                                                  text: "  mm Hg  ",
+                                                  text: '  mm Hg  ',
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
@@ -246,11 +246,11 @@ class _AssessmentFinalCarePlanViewState
                             padding: const EdgeInsets.all(16.0),
                             height: 100,
                             width: MediaQuery.of(context).size.width,
-                            decoration: new BoxDecoration(
+                            decoration: BoxDecoration(
                                 color: colorF6F6FF,
                                 border: Border.all(color: primaryLightColor),
                                 borderRadius:
-                                    new BorderRadius.all(Radius.circular(8.0))),
+                                    BorderRadius.all(Radius.circular(8.0))),
                             child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -271,7 +271,7 @@ class _AssessmentFinalCarePlanViewState
                                                 fontSize: 16),
                                             children: <TextSpan>[
                                               TextSpan(
-                                                  text: "  Kg               ",
+                                                  text: '  Kg               ',
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
@@ -337,7 +337,7 @@ class _AssessmentFinalCarePlanViewState
                                 ),
                                 child: Center(
                                   child: Text(
-                                    "Done",
+                                    'Done',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.w700,
@@ -442,7 +442,7 @@ class _AssessmentFinalCarePlanViewState
                       ),
                       child: Center(
                         child: Text(
-                          "Close",
+                          'Close',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,

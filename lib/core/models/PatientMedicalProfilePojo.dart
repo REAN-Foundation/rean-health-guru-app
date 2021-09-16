@@ -8,13 +8,13 @@ class PatientMedicalProfilePojo {
   PatientMedicalProfilePojo.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -29,14 +29,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     medicalProfiles = json['medicalProfiles'] != null
-        ? new MedicalProfiles.fromJson(json['medicalProfiles'])
+        ? MedicalProfiles.fromJson(json['medicalProfiles'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.medicalProfiles != null) {
-      data['medicalProfiles'] = this.medicalProfiles.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (medicalProfiles != null) {
+      data['medicalProfiles'] = medicalProfiles.toJson();
     }
     return data;
   }
@@ -45,12 +45,12 @@ class Data {
 class MedicalProfiles {
   String id;
   String patientUserId;
-  String updatedBy = "";
-  String majorAilment = "";
-  String comorbidities = "";
+  String updatedBy = '';
+  String majorAilment = '';
+  String comorbidities = '';
   String gender;
   String birthDate;
-  String bloodGroup = "";
+  String bloodGroup = '';
   bool isDiabetic;
   bool hasHeartAilment;
   bool isVegetarian;
@@ -58,17 +58,17 @@ class MedicalProfiles {
   bool sedentaryLifestyle;
   bool isSmoker;
   int smokingSeverity;
-  String smokingSince = "";
+  String smokingSince = '';
   bool isDrinker;
   int drinkingSeverity;
-  String drinkingSince = "";
-  String ethnicity = "";
-  String nationality = "";
-  String occupation = "";
-  String maritalStatus = "";
-  String surgicalHistory = "";
-  String obstetricHistory = "";
-  String otherInformation = "";
+  String drinkingSince = '';
+  String ethnicity = '';
+  String nationality = '';
+  String occupation = '';
+  String maritalStatus = '';
+  String surgicalHistory = '';
+  String obstetricHistory = '';
+  String otherInformation = '';
   String createdAt;
   String updatedAt;
 
@@ -134,35 +134,35 @@ class MedicalProfiles {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['PatientUserId'] = this.patientUserId;
-    data['UpdatedBy'] = this.updatedBy;
-    data['MajorAilment'] = this.majorAilment;
-    data['Comorbidities'] = this.comorbidities;
-    data['Gender'] = this.gender;
-    data['BirthDate'] = this.birthDate;
-    data['BloodGroup'] = this.bloodGroup;
-    data['IsDiabetic'] = this.isDiabetic;
-    data['HasHeartAilment'] = this.hasHeartAilment;
-    data['IsVegetarian'] = this.isVegetarian;
-    data['IsVegan'] = this.isVegan;
-    data['SedentaryLifestyle'] = this.sedentaryLifestyle;
-    data['IsSmoker'] = this.isSmoker;
-    data['SmokingSeverity'] = this.smokingSeverity;
-    data['SmokingSince'] = this.smokingSince;
-    data['IsDrinker'] = this.isDrinker;
-    data['DrinkingSeverity'] = this.drinkingSeverity;
-    data['DrinkingSince'] = this.drinkingSince;
-    data['Ethnicity'] = this.ethnicity;
-    data['Nationality'] = this.nationality;
-    data['Occupation'] = this.occupation;
-    data['MaritalStatus'] = this.maritalStatus;
-    data['SurgicalHistory'] = this.surgicalHistory;
-    data['ObstetricHistory'] = this.obstetricHistory;
-    data['OtherInformation'] = this.otherInformation;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['PatientUserId'] = patientUserId;
+    data['UpdatedBy'] = updatedBy;
+    data['MajorAilment'] = majorAilment;
+    data['Comorbidities'] = comorbidities;
+    data['Gender'] = gender;
+    data['BirthDate'] = birthDate;
+    data['BloodGroup'] = bloodGroup;
+    data['IsDiabetic'] = isDiabetic;
+    data['HasHeartAilment'] = hasHeartAilment;
+    data['IsVegetarian'] = isVegetarian;
+    data['IsVegan'] = isVegan;
+    data['SedentaryLifestyle'] = sedentaryLifestyle;
+    data['IsSmoker'] = isSmoker;
+    data['SmokingSeverity'] = smokingSeverity;
+    data['SmokingSince'] = smokingSince;
+    data['IsDrinker'] = isDrinker;
+    data['DrinkingSeverity'] = drinkingSeverity;
+    data['DrinkingSince'] = drinkingSince;
+    data['Ethnicity'] = ethnicity;
+    data['Nationality'] = nationality;
+    data['Occupation'] = occupation;
+    data['MaritalStatus'] = maritalStatus;
+    data['SurgicalHistory'] = surgicalHistory;
+    data['ObstetricHistory'] = obstetricHistory;
+    data['OtherInformation'] = otherInformation;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

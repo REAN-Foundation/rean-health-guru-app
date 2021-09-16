@@ -8,13 +8,13 @@ class GetCarePlanMyResponse {
   GetCarePlanMyResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -29,17 +29,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['carePlans'] != null) {
-      carePlans = new List<CarePlans>();
+      carePlans = <CarePlans>[];
       json['carePlans'].forEach((v) {
-        carePlans.add(new CarePlans.fromJson(v));
+        carePlans.add(CarePlans.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.carePlans != null) {
-      data['carePlans'] = this.carePlans.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (carePlans != null) {
+      data['carePlans'] = carePlans.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -101,23 +101,23 @@ class CarePlans {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['PatientUserId'] = this.patientUserId;
-    data['DisplayId'] = this.displayId;
-    data['AllyMRN'] = this.allyMRN;
-    data['CarePlanName'] = this.carePlanName;
-    data['CarePlanCode'] = this.carePlanCode;
-    data['EnrollmentBeginDate'] = this.enrollmentBeginDate;
-    data['EnrollmentEndDate'] = this.enrollmentEndDate;
-    data['DurationInWeeks'] = this.durationInWeeks;
-    data['EndEnrollmentAfterDays'] = this.endEnrollmentAfterDays;
-    data['IsStopped'] = this.isStopped;
-    data['StoppedDate'] = this.stoppedDate;
-    data['EnrolledOn'] = this.enrolledOn;
-    data['IsActive'] = this.isActive;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['PatientUserId'] = patientUserId;
+    data['DisplayId'] = displayId;
+    data['AllyMRN'] = allyMRN;
+    data['CarePlanName'] = carePlanName;
+    data['CarePlanCode'] = carePlanCode;
+    data['EnrollmentBeginDate'] = enrollmentBeginDate;
+    data['EnrollmentEndDate'] = enrollmentEndDate;
+    data['DurationInWeeks'] = durationInWeeks;
+    data['EndEnrollmentAfterDays'] = endEnrollmentAfterDays;
+    data['IsStopped'] = isStopped;
+    data['StoppedDate'] = stoppedDate;
+    data['EnrolledOn'] = enrolledOn;
+    data['IsActive'] = isActive;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

@@ -18,16 +18,16 @@ class MyTodaysMedicationView extends StatefulWidget {
 
 class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   var model = PatientMedicationViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   //var dateFormatStandard = DateFormat("MMMM dd, yyyy");
-  var dateFormatStandard = DateFormat("yyyy-MM-dd");
-  var timeFormat = DateFormat("hh:mm a");
-  List<MedConsumptions> currentMedicationList = new List<MedConsumptions>();
-  List<MedConsumptions> morningMedicationList = new List<MedConsumptions>();
-  List<MedConsumptions> afternoonMedicationList = new List<MedConsumptions>();
-  List<MedConsumptions> eveningMedicationList = new List<MedConsumptions>();
-  List<MedConsumptions> nightMedicationList = new List<MedConsumptions>();
+  var dateFormatStandard = DateFormat('yyyy-MM-dd');
+  var timeFormat = DateFormat('hh:mm a');
+  List<MedConsumptions> currentMedicationList = <MedConsumptions>[];
+  List<MedConsumptions> morningMedicationList = <MedConsumptions>[];
+  List<MedConsumptions> afternoonMedicationList = <MedConsumptions>[];
+  List<MedConsumptions> eveningMedicationList = <MedConsumptions>[];
+  List<MedConsumptions> nightMedicationList = <MedConsumptions>[];
   ProgressDialog progressDialog;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
@@ -41,13 +41,13 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   getMyMedications() async {
     try {
       currentMedicationList.clear();
-      GetMyMedicationsResponse getMyMedicationsResponse = await model
-          .getMyMedications(dateFormatStandard.format(new DateTime.now()));
-      debugPrint("Medication ==> ${getMyMedicationsResponse.toJson()}");
+      final GetMyMedicationsResponse getMyMedicationsResponse = await model
+          .getMyMedications(dateFormatStandard.format(DateTime.now()));
+      debugPrint('Medication ==> ${getMyMedicationsResponse.toJson()}');
       if (getMyMedicationsResponse.status == 'success') {
         debugPrint(
-            "Medication Length ==> ${getMyMedicationsResponse.data.medConsumptions.length}");
-        if (getMyMedicationsResponse.data.medConsumptions.length != 0) {
+            'Medication Length ==> ${getMyMedicationsResponse.data.medConsumptions.length}');
+        if (getMyMedicationsResponse.data.medConsumptions.isNotEmpty) {
           currentMedicationList
               .addAll(getMyMedicationsResponse.data.medConsumptions);
           formatMedicationSectionWise(
@@ -59,7 +59,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -95,7 +95,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     // TODO: implement build
     return BaseWidget<PatientMedicationViewModel>(
       model: model,
@@ -111,46 +111,48 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
                     child: CircularProgressIndicator(),
                   ),
                 )
-              : (currentMedicationList.length == 0
+              : (currentMedicationList.isEmpty
                   ? noMedicationFound()
                   : SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          morningMedicationList.length != 0
-                              ? medicationTimeWiseSection(
-                                  'Morning',
-                                  'res/images/ic_sunrise.png',
-                                  morningMedicationList)
-                              : Container(),
+                          if (morningMedicationList.isNotEmpty)
+                            medicationTimeWiseSection(
+                                'Morning',
+                                'res/images/ic_sunrise.png',
+                                morningMedicationList)
+                          else
+                            Container(),
                           const SizedBox(
                             height: 0,
                           ),
-                          afternoonMedicationList.length != 0
-                              ? medicationTimeWiseSection(
-                                  'Afternoon',
-                                  'res/images/ic_sun.png',
-                                  afternoonMedicationList)
-                              : Container(),
+                          if (afternoonMedicationList.isNotEmpty)
+                            medicationTimeWiseSection(
+                                'Afternoon',
+                                'res/images/ic_sun.png',
+                                afternoonMedicationList)
+                          else
+                            Container(),
                           const SizedBox(
                             height: 0,
                           ),
-                          eveningMedicationList.length != 0
-                              ? medicationTimeWiseSection(
-                                  'Evening',
-                                  'res/images/ic_sunset.png',
-                                  eveningMedicationList)
-                              : Container(),
+                          if (eveningMedicationList.isNotEmpty)
+                            medicationTimeWiseSection(
+                                'Evening',
+                                'res/images/ic_sunset.png',
+                                eveningMedicationList)
+                          else
+                            Container(),
                           const SizedBox(
                             height: 0,
                           ),
-                          nightMedicationList.length != 0
-                              ? medicationTimeWiseSection(
-                                  'Night',
-                                  'res/images/ic_night.png',
-                                  nightMedicationList)
-                              : Container(),
+                          if (nightMedicationList.isNotEmpty)
+                            medicationTimeWiseSection('Night',
+                                'res/images/ic_night.png', nightMedicationList)
+                          else
+                            Container(),
                           SizedBox(
                             height: 48,
                           )
@@ -171,7 +173,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
           Container(
             height: 32,
             width: MediaQuery.of(context).size.width,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
               color: primaryColor,
               /*borderRadius: BorderRadius.only(
                   topRight: Radius.circular(8.0),
@@ -206,10 +208,10 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   }
 
   Widget noMedicationFound() {
-    debugPrint("No Medication");
+    debugPrint('No Medication');
     return Container(
       child: Center(
-        child: Text("No medication for today",
+        child: Text('No medication for today',
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
@@ -239,13 +241,13 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
 
   Widget _makeMedicineSwipeCard(
       BuildContext context, int index, List<MedConsumptions> medications) {
-    MedConsumptions medication = medications.elementAt(index);
+    final MedConsumptions medication = medications.elementAt(index);
 
     return Dismissible(
       key: Key(medication.drugName),
       child: InkWell(
           onTap: () {
-            print("${medication.drugName} clicked");
+            print('${medication.drugName} clicked');
           },
           child: ListTile(
             /*leading:SizedBox( height: 40, width: 16, child: CachedNetworkImage(
@@ -340,7 +342,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               color: Colors.white,
             ),
             Text(
-              " Taken",
+              ' Taken',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -372,7 +374,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               color: Colors.white,
             ),
             Text(
-              " Not Taken",
+              ' Not Taken',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -388,7 +390,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
 
   Widget _makeMedicineCard(
       BuildContext context, int index, List<MedConsumptions> medications) {
-    MedConsumptions medication = medications.elementAt(index);
+    final MedConsumptions medication = medications.elementAt(index);
     return Container(
         //padding: const EdgeInsets.only(bottom: 16.0),
         child: Row(
@@ -440,7 +442,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
                             child: Container(
                               width: 48,
                               height: 24,
-                              decoration: new BoxDecoration(
+                              decoration: BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(8.0),
                                     topLeft: Radius.circular(8.0)),
@@ -462,7 +464,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
                             child: Container(
                               width: 48,
                               height: 24,
-                              decoration: new BoxDecoration(
+                              decoration: BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                     bottomRight: Radius.circular(8.0),
                                     topRight: Radius.circular(8.0)),
@@ -484,9 +486,9 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   markMedicationsAsTaken(String consumptionId) async {
     try {
       progressDialog.show();
-      BaseResponse baseResponse =
+      final BaseResponse baseResponse =
           await model.markMedicationsAsTaken(consumptionId);
-      debugPrint("Medication ==> ${baseResponse.toJson()}");
+      debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         progressDialog.hide();
         //getMyMedications();
@@ -498,7 +500,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
       progressDialog.hide();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -507,9 +509,9 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   markMedicationsAsMissed(String consumptionId) async {
     try {
       progressDialog.show();
-      BaseResponse baseResponse =
+      final BaseResponse baseResponse =
           await model.markMedicationsAsMissed(consumptionId);
-      debugPrint("Medication ==> ${baseResponse.toJson()}");
+      debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         progressDialog.hide();
         //getMyMedications();
@@ -521,7 +523,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
       progressDialog.hide();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }

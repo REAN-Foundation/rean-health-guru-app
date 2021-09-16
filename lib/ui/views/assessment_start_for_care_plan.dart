@@ -10,7 +10,7 @@ class AssessmentStartCarePlanView extends StatefulWidget {
   Assessmment assesment;
 
   AssessmentStartCarePlanView(Assessmment assesmentC) {
-    this.assesment = assesmentC;
+    assesment = assesmentC;
   }
 
   @override
@@ -21,8 +21,8 @@ class AssessmentStartCarePlanView extends StatefulWidget {
 class _AssessmentStartCarePlanViewState
     extends State<AssessmentStartCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var _textController = new TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _textController = TextEditingController();
 
   // Default Radio Button Selected Item When App Starts.
   String radioButtonItem = 'ONE';
@@ -48,7 +48,7 @@ class _AssessmentStartCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -155,7 +155,7 @@ class _AssessmentStartCarePlanViewState
                       ),
                       child: Center(
                         child: Text(
-                          "Yes",
+                          'Yes',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -188,7 +188,7 @@ class _AssessmentStartCarePlanViewState
                       ),
                       child: Center(
                         child: Text(
-                          "No",
+                          'No',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -251,7 +251,7 @@ class _AssessmentStartCarePlanViewState
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              "How much water do you drink during the day?",
+              'How much water do you drink during the day?',
               style: TextStyle(
                   color: primaryColor,
                   fontWeight: FontWeight.w500,
@@ -278,7 +278,7 @@ class _AssessmentStartCarePlanViewState
               ),
               Text(
                 '3 to 5 litres',
-                style: new TextStyle(fontSize: 17.0),
+                style: TextStyle(fontSize: 17.0),
               ),
               SizedBox(
                 width: 40,
@@ -301,7 +301,7 @@ class _AssessmentStartCarePlanViewState
               ),
               Text(
                 'less than 3 litres',
-                style: new TextStyle(fontSize: 17.0),
+                style: TextStyle(fontSize: 17.0),
               ),
               SizedBox(
                 width: 40,
@@ -324,7 +324,7 @@ class _AssessmentStartCarePlanViewState
               ),
               Text(
                 '5 litres or more',
-                style: new TextStyle(fontSize: 17.0),
+                style: TextStyle(fontSize: 17.0),
               ),
               SizedBox(
                 width: 40,
@@ -414,7 +414,7 @@ class _AssessmentStartCarePlanViewState
                       ),
                       child: Center(
                         child: Text(
-                          "Close",
+                          'Close',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,

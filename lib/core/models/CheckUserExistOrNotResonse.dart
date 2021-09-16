@@ -11,14 +11,14 @@ class CheckUserExistOrNotResonse {
     status = json['status'];
     message = json['message'];
     error = json['error'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    data['error'] = this.error;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
+    data['error'] = error;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -32,14 +32,13 @@ class Data {
   Data({this.exists});
 
   Data.fromJson(Map<String, dynamic> json) {
-    exists =
-        json['exists'] != null ? new Exists.fromJson(json['exists']) : null;
+    exists = json['exists'] != null ? Exists.fromJson(json['exists']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.exists != null) {
-      data['exists'] = this.exists.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (exists != null) {
+      data['exists'] = exists.toJson();
     }
     return data;
   }
@@ -57,9 +56,9 @@ class Exists {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['result'] = this.result;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['result'] = result;
+    data['message'] = message;
     return data;
   }
 }

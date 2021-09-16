@@ -12,13 +12,13 @@ class DoctorDetailsResponse {
   DoctorDetailsResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -33,14 +33,13 @@ class Data {
   Data({this.doctor});
 
   Data.fromJson(Map<String, dynamic> json) {
-    doctor =
-        json['doctor'] != null ? new Doctors.fromJson(json['doctor']) : null;
+    doctor = json['doctor'] != null ? Doctors.fromJson(json['doctor']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.doctor != null) {
-      data['doctor'] = this.doctor.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (doctor != null) {
+      data['doctor'] = doctor.toJson();
     }
     return data;
   }

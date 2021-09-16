@@ -30,15 +30,15 @@ class NutritionResponseStore {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['totalTodayCal'] = this.totalTodayCal;
-    data['totalBreakfastCal'] = this.totalBreakfastCal;
-    data['totalLunchCal'] = this.totalLunchCal;
-    data['totalDinnerCal'] = this.totalDinnerCal;
-    data['totalMorningSnackCal'] = this.totalMorningSnackCal;
-    data['totalAfernoonSnackCal'] = this.totalAfernoonSnackCal;
-    data['totalEveningSncakCal'] = this.totalEveningSncakCal;
-    data['date'] = this.date;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['totalTodayCal'] = totalTodayCal;
+    data['totalBreakfastCal'] = totalBreakfastCal;
+    data['totalLunchCal'] = totalLunchCal;
+    data['totalDinnerCal'] = totalDinnerCal;
+    data['totalMorningSnackCal'] = totalMorningSnackCal;
+    data['totalAfernoonSnackCal'] = totalAfernoonSnackCal;
+    data['totalEveningSncakCal'] = totalEveningSncakCal;
+    data['date'] = date;
     return data;
   }
 }

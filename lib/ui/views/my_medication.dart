@@ -17,7 +17,7 @@ class MyMedicationView extends StatefulWidget {
 
 class _MyMedicationViewState extends State<MyMedicationView> {
   var model = PatientMedicationViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   var _currentIndex = 0;
 
@@ -58,7 +58,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(

@@ -27,18 +27,19 @@ class _LabDetailsViewState extends State<LabDetailsView> {
   LocationData _locationData;
   List<Address> addresses;
   Address first;*/
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
-  String name = "";
-  int _currentNav = 0;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var _searchController = new TextEditingController();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  String name = '';
+  final int _currentNav = 0;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _searchController = TextEditingController();
   Labs labDetails;
 
   _LabDetailsViewState(@required this.labDetails);
 
   loadSharedPrefs() async {
     try {
-      UserData user = UserData.fromJson(await _sharedPrefUtils.read("user"));
+      final UserData user =
+          UserData.fromJson(await _sharedPrefUtils.read('user'));
       //debugPrint(user.toJson().toString());
       setState(() {
         name = user.data.user.firstName;
@@ -108,7 +109,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                     color: primaryColor,
                     fontWeight: FontWeight.w700),
               ),
-              iconTheme: new IconThemeData(color: Colors.black),
+              iconTheme: IconThemeData(color: Colors.black),
             ),
           ),
           body: Container(
@@ -129,7 +130,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                             height: 16,
                           ),
                           Text(
-                            "About",
+                            'About',
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16,
@@ -188,7 +189,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                   SizedBox(height: 16,),*/
 
                           Text(
-                            "Address",
+                            'Address',
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16,
@@ -206,7 +207,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                             height: 16,
                           ),
                           Text(
-                            "Contact No.",
+                            'Contact No.',
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16,
@@ -223,7 +224,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                                   color: textBlack),
                               linkStyle: TextStyle(color: Colors.blue),
                               onPhoneTap: (link) async {
-                                String url = 'tel://' + link;
+                                final String url = 'tel://' + link;
                                 if (await canLaunch(url)) {
                                   await launch(url);
                                 } else {
@@ -234,7 +235,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                             height: 16,
                           ),
                           Text(
-                            "Working Hours",
+                            'Working Hours',
                             style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 16,
@@ -261,7 +262,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                                         .elementAt(i)
                                         .substring(0, 3)
                                         .toUpperCase() +
-                                    " : ",
+                                    ' : ',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     color: textBlack,
@@ -326,8 +327,8 @@ class _LabDetailsViewState extends State<LabDetailsView> {
           // Add This
           child: MaterialButton(
             minWidth: 200,
-            child: new Text('Book A Visit',
-                style: new TextStyle(
+            child: Text('Book A Visit',
+                style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
@@ -335,7 +336,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
               Navigator.pushNamed(
                   context, RoutePaths.Select_Date_And_Time_Lab_Book_Appoinment,
                   arguments: labDetails);
-              debugPrint("Clicked On Proceed");
+              debugPrint('Clicked On Proceed');
             },
           ),
         ),

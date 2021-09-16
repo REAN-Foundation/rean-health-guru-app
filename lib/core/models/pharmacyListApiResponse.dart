@@ -11,13 +11,13 @@ class PharmacyListApiResponse {
   PharmacyListApiResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -32,17 +32,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['pharmacies'] != null) {
-      pharmacies = new List<Pharmacies>();
+      pharmacies = <Pharmacies>[];
       json['pharmacies'].forEach((v) {
-        pharmacies.add(new Pharmacies.fromJson(v));
+        pharmacies.add(Pharmacies.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.pharmacies != null) {
-      data['pharmacies'] = this.pharmacies.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (pharmacies != null) {
+      data['pharmacies'] = pharmacies.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -95,20 +95,20 @@ class Pharmacies {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['UserId'] = this.userId;
-    data['PharmacyRoleId'] = this.pharmacyRoleId;
-    data['FirstName'] = this.firstName;
-    data['LastName'] = this.lastName;
-    data['Gender'] = this.gender;
-    data['BirthDate'] = this.birthDate;
-    data['ImageURL'] = this.imageURL;
-    data['Locality'] = this.locality;
-    data['Address'] = this.address;
-    data['LocationCoords_Longitude'] = this.locationCoordsLongitude;
-    data['LocationCoords_Lattitude'] = this.locationCoordsLattitude;
-    data['PharmacyName'] = this.pharmacyName;
-    data['OperationalSince'] = this.operationalSince;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['UserId'] = userId;
+    data['PharmacyRoleId'] = pharmacyRoleId;
+    data['FirstName'] = firstName;
+    data['LastName'] = lastName;
+    data['Gender'] = gender;
+    data['BirthDate'] = birthDate;
+    data['ImageURL'] = imageURL;
+    data['Locality'] = locality;
+    data['Address'] = address;
+    data['LocationCoords_Longitude'] = locationCoordsLongitude;
+    data['LocationCoords_Lattitude'] = locationCoordsLattitude;
+    data['PharmacyName'] = pharmacyName;
+    data['OperationalSince'] = operationalSince;
     return data;
   }
 }

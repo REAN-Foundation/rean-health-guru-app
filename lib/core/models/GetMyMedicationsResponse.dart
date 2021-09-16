@@ -11,13 +11,13 @@ class GetMyMedicationsResponse {
   GetMyMedicationsResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -32,18 +32,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['medConsumptions'] != null) {
-      medConsumptions = new List<MedConsumptions>();
+      medConsumptions = <MedConsumptions>[];
       json['medConsumptions'].forEach((v) {
-        medConsumptions.add(new MedConsumptions.fromJson(v));
+        medConsumptions.add(MedConsumptions.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.medConsumptions != null) {
-      data['medConsumptions'] =
-          this.medConsumptions.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (medConsumptions != null) {
+      data['medConsumptions'] = medConsumptions.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -109,24 +108,24 @@ class MedConsumptions {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['PatientUserId'] = this.patientUserId;
-    data['MedicationId'] = this.medicationId;
-    data['DrugOrderId'] = this.drugOrderId;
-    data['DrugName'] = this.drugName;
-    data['Details'] = this.details;
-    data['TimeScheduleStart'] = this.timeScheduleStart.toIso8601String();
-    data['TimeScheduleEnd'] = this.timeScheduleEnd.toIso8601String();
-    data['TakenAt'] = this.takenAt;
-    data['IsTaken'] = this.isTaken;
-    data['IsMissed'] = this.isMissed;
-    data['IsCancelled'] = this.isCancelled;
-    data['CancelledOn'] = this.cancelledOn;
-    data['Note'] = this.note;
-    data['Status'] = this.status;
-    data['DateCreated'] = this.dateCreated;
-    data['DateUpdated'] = this.dateUpdated;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['PatientUserId'] = patientUserId;
+    data['MedicationId'] = medicationId;
+    data['DrugOrderId'] = drugOrderId;
+    data['DrugName'] = drugName;
+    data['Details'] = details;
+    data['TimeScheduleStart'] = timeScheduleStart.toIso8601String();
+    data['TimeScheduleEnd'] = timeScheduleEnd.toIso8601String();
+    data['TakenAt'] = takenAt;
+    data['IsTaken'] = isTaken;
+    data['IsMissed'] = isMissed;
+    data['IsCancelled'] = isCancelled;
+    data['CancelledOn'] = cancelledOn;
+    data['Note'] = note;
+    data['Status'] = status;
+    data['DateCreated'] = dateCreated;
+    data['DateUpdated'] = dateUpdated;
     return data;
   }
 }

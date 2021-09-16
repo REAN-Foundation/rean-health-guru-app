@@ -14,11 +14,11 @@ class BotViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post('/v1/appsupport/receive',
+    final response = await apiProvider.post('/v1/appsupport/receive',
         header: map, body: body);
 
     setBusy(false);

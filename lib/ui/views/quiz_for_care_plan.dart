@@ -11,8 +11,8 @@ class QuizForCarePlanView extends StatefulWidget {
 
 class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var _textController = new TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _textController = TextEditingController();
 
   // Default Radio Button Selected Item When App Starts.
   String radioButtonItem = 'ONE';
@@ -38,7 +38,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -94,7 +94,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
                 label: 'quiz first question',
                 readOnly: true,
                 child: Text(
-                  "Do you still feel Angina pain?",
+                  'Do you still feel Angina pain?',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w500,
@@ -122,7 +122,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
                       ),
                       child: Center(
                         child: Text(
-                          "Yes",
+                          'Yes',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -149,7 +149,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
                       ),
                       child: Center(
                         child: Text(
-                          "No",
+                          'No',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -218,7 +218,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                "How much water do you drink during the day?",
+                'How much water do you drink during the day?',
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w500,
@@ -248,7 +248,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
                 ),
                 Text(
                   '3 to 5 litres',
-                  style: new TextStyle(fontSize: 17.0),
+                  style: TextStyle(fontSize: 17.0),
                 ),
                 SizedBox(
                   width: 40,
@@ -274,7 +274,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
                 ),
                 Text(
                   'less than 3 litres',
-                  style: new TextStyle(fontSize: 17.0),
+                  style: TextStyle(fontSize: 17.0),
                 ),
                 SizedBox(
                   width: 40,
@@ -300,7 +300,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
                 ),
                 Text(
                   '5 litres or more',
-                  style: new TextStyle(fontSize: 17.0),
+                  style: TextStyle(fontSize: 17.0),
                 ),
                 SizedBox(
                   width: 40,

@@ -8,13 +8,13 @@ class KnowledgeTopicResponse {
   KnowledgeTopicResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -29,18 +29,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['knowledge_topic'] != null) {
-      knowledgeTopic = new List<KnowledgeTopic>();
+      knowledgeTopic = <KnowledgeTopic>[];
       json['knowledge_topic'].forEach((v) {
-        knowledgeTopic.add(new KnowledgeTopic.fromJson(v));
+        knowledgeTopic.add(KnowledgeTopic.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.knowledgeTopic != null) {
-      data['knowledge_topic'] =
-          this.knowledgeTopic.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (knowledgeTopic != null) {
+      data['knowledge_topic'] = knowledgeTopic.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -60,10 +59,10 @@ class KnowledgeTopic {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['TopicName'] = this.topicName;
-    data['BriefInformation'] = this.briefInformation;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['TopicName'] = topicName;
+    data['BriefInformation'] = briefInformation;
     return data;
   }
 }

@@ -27,29 +27,29 @@ class AddBMIDetailDialog extends StatefulWidget {
   }
 
   @override
-  _MyDialogState createState() => new _MyDialogState();
+  _MyDialogState createState() => _MyDialogState();
 }
 
 class _MyDialogState extends State<AddBMIDetailDialog> {
   var model = PatientCarePlanViewModel();
-  var doctorSearchList = new List<Doctors>();
+  var doctorSearchList = <Doctors>[];
 
   String unit = 'Kg';
 
-  var _weightController = new TextEditingController();
-  var _heightController = new TextEditingController();
-  var _weightFocus = FocusNode();
-  var _heightFocus = FocusNode();
+  final _weightController = TextEditingController();
+  final _heightController = TextEditingController();
+  final _weightFocus = FocusNode();
+  final _heightFocus = FocusNode();
 
   @override
   void initState() {
     // TODO: implement initState
-    if (getCurrentLocale() == "US") {
+    if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
 
     if (widget._height != 0.0) {
-      if (getCurrentLocale() == "US") {
+      if (getCurrentLocale() == 'US') {
         widget._height = Conversion.cmToFeet(widget._height);
       }
 
@@ -91,7 +91,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
           Row(
             children: [
               Text(
-                "Enter your weight",
+                'Enter your weight',
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w500,
@@ -100,7 +100,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
               ),
               RichText(
                 text: TextSpan(
-                  text: unit == "lbs" ? " (lbs) " : " (Kg) ",
+                  text: unit == 'lbs' ? ' (lbs) ' : ' (Kg) ',
                   style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w500,
@@ -139,12 +139,12 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                               context, _weightFocus, _heightFocus);
                         },
                         inputFormatters: [
-                          new BlacklistingTextInputFormatter(
-                              new RegExp('[\\,|\\+|\\-]')),
+                          BlacklistingTextInputFormatter(
+                              RegExp('[\\,|\\+|\\-]')),
                         ],
                         decoration: InputDecoration(
                             hintText:
-                                unit == "lbs" ? "(100 to 200)" : "(50 to 100)",
+                                unit == 'lbs' ? '(100 to 200)' : '(50 to 100)',
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),
@@ -163,7 +163,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
           Row(
             children: [
               Text(
-                "Enter your height",
+                'Enter your height',
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w500,
@@ -172,7 +172,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
               ),
               RichText(
                 text: TextSpan(
-                  text: getCurrentLocale() == "US" ? " (Foot) " : " (Cm) ",
+                  text: getCurrentLocale() == 'US' ? ' (Foot) ' : ' (Cm) ',
                   style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w500,
@@ -208,12 +208,12 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                             TextInputType.numberWithOptions(decimal: true),
                         onFieldSubmitted: (term) {},
                         inputFormatters: [
-                          new BlacklistingTextInputFormatter(
-                              new RegExp('[\\,|\\+|\\-]')),
+                          BlacklistingTextInputFormatter(
+                              RegExp('[\\,|\\+|\\-]')),
                         ],
                         decoration: InputDecoration(
                             hintText:
-                                getCurrentLocale() == "US" ? "(Foot)" : "(Cm)",
+                                getCurrentLocale() == 'US' ? '(Foot)' : '(Cm)',
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),
@@ -250,7 +250,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
               unit == 'lbs'
                   ? double.parse(_weightController.text) / 2.20462
                   : double.parse(_weightController.text),
-              getCurrentLocale() == "US"
+              getCurrentLocale() == 'US'
                   ? Conversion.FeetToCm(double.parse(_heightController.text))
                   : double.parse(_heightController.text));
         },
@@ -258,7 +258,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
             borderRadius: BorderRadius.all(Radius.circular(24.0))),
         child: Text(
           '      Add       ',
-          semanticsLabel: "Add",
+          semanticsLabel: 'Add',
           style: TextStyle(
               color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),

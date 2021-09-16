@@ -19,23 +19,23 @@ class AddWeightGoalsForCarePlanView extends StatefulWidget {
 class _AddWeightGoalsForCarePlanViewState
     extends State<AddWeightGoalsForCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String selectedGoal = "";
+  String selectedGoal = '';
 
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _waistController = TextEditingController();
 
-  var _weightFocus = FocusNode();
-  var _wastFocus = FocusNode();
-  String dob = "";
-  String unformatedDOB = "";
-  var dateFormat = DateFormat("dd MMM, yyyy");
+  final _weightFocus = FocusNode();
+  final _wastFocus = FocusNode();
+  String dob = '';
+  String unformatedDOB = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
   ProgressDialog progressDialog;
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -52,7 +52,7 @@ class _AddWeightGoalsForCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -93,7 +93,7 @@ class _AddWeightGoalsForCarePlanViewState
             height: 16,
           ),
           Text(
-            "Weight loss may help lower your blood pressure and improve both cholesterol and blood sugar. The tips and tools in this website can help you lose 5 to 10 pounds. Your waist circumference also helps determine whether you need to lose weight — all you need is an ordinary measuring tape.",
+            'Weight loss may help lower your blood pressure and improve both cholesterol and blood sugar. The tips and tools in this website can help you lose 5 to 10 pounds. Your waist circumference also helps determine whether you need to lose weight — all you need is an ordinary measuring tape.',
             style: TextStyle(
                 color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
           ),
@@ -144,7 +144,7 @@ class _AddWeightGoalsForCarePlanViewState
                           fontSize: 14),
                       children: <TextSpan>[
                         TextSpan(
-                            text: "  Kg",
+                            text: '  Kg',
                             style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
@@ -260,7 +260,7 @@ class _AddWeightGoalsForCarePlanViewState
                           fontSize: 14),
                       children: <TextSpan>[
                         TextSpan(
-                            text: "          ",
+                            text: '          ',
                             style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
@@ -355,7 +355,7 @@ class _AddWeightGoalsForCarePlanViewState
                     ),
                     child: Center(
                       child: Text(
-                        "Save",
+                        'Save',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
@@ -380,7 +380,7 @@ class _AddWeightGoalsForCarePlanViewState
   setGoals() async {
     try {
       progressDialog.show();
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['TargetDate'] = dob;
       map['Weight_Target'] = _weightController.text;
       map['Weight_HealthyRangeStart'] = 68;
@@ -388,11 +388,11 @@ class _AddWeightGoalsForCarePlanViewState
       map['Weight_StartingValue'] = 102;
       map['MeasurementUnit'] = 'kg';
 
-      var body = new Map<String, dynamic>();
+      final body = <String, dynamic>{};
       body['Goal'] = map;
       body['GoalSettingTaskId'] = getTask().details.id;
 
-      BaseResponse baseResponse = await model.addGoalsTask(
+      final BaseResponse baseResponse = await model.addGoalsTask(
           startCarePlanResponseGlob.data.carePlan.id.toString(),
           'weight-goal',
           body);
@@ -421,20 +421,20 @@ class _AddWeightGoalsForCarePlanViewState
 
   navigateToScreen() {
     debugPrint('Set Goals Plan Stack ==> ${goalPlanScreenStack.length}');
-    if (goalPlanScreenStack.length == 0) {
+    if (goalPlanScreenStack.isEmpty) {
       Navigator.pushReplacementNamed(
           context, RoutePaths.Determine_Action_For_Care_Plan);
-    } else if (goalPlanScreenStack.elementAt(0) == "Blood Pressure") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Blood Pressure') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_BLOOD_PRESURE_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Blood Sugar") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Blood Sugar') {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_GLUCOSE_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Weight") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Weight') {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_WEIGHT_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Physical Activity") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Physical Activity') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Quit Smoking") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Quit Smoking') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_QUIT_SMOKING_GOALS);
     }

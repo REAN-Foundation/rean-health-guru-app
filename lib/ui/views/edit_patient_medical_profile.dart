@@ -15,7 +15,7 @@ class EditPatientMedicalProfileView extends StatefulWidget {
   MedicalProfiles medicalProfiles;
 
   EditPatientMedicalProfileView(@required MedicalProfiles mProfiles) {
-    this.medicalProfiles = mProfiles;
+    medicalProfiles = mProfiles;
   }
 
   @override
@@ -50,12 +50,12 @@ class _EditPatientMedicalProfileViewState
 
   GroupItem _selected;
 
-  var _majorComplaintFocus = FocusNode();
-  var _bloodGroupFocus = FocusNode();
-  var _ocupationFocus = FocusNode();
-  var _nationalityFocus = FocusNode();
-  var _surgicalHistoryFocus = FocusNode();
-  var _obstetricHistoryFocus = FocusNode();
+  final _majorComplaintFocus = FocusNode();
+  final _bloodGroupFocus = FocusNode();
+  final _ocupationFocus = FocusNode();
+  final _nationalityFocus = FocusNode();
+  final _surgicalHistoryFocus = FocusNode();
+  final _obstetricHistoryFocus = FocusNode();
 
   var isDiabetic;
   var hasHeartAilment;
@@ -136,7 +136,7 @@ class _EditPatientMedicalProfileViewState
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     // TODO: implement build
     return BaseWidget<PatientObservationsViewModel>(
         model: model,
@@ -151,7 +151,7 @@ class _EditPatientMedicalProfileViewState
                       color: primaryColor,
                       fontWeight: FontWeight.w700),
                 ),
-                iconTheme: new IconThemeData(color: Colors.black),
+                iconTheme: IconThemeData(color: Colors.black),
               ),
               body: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -164,26 +164,26 @@ class _EditPatientMedicalProfileViewState
                         width: 24,
                       ),
                       _sizedBoxHeight(),
-                      _textFeilds("Major Complaint", _majorComplaintController,
+                      _textFeilds('Major Complaint', _majorComplaintController,
                           _majorComplaintFocus, _bloodGroupFocus),
                       _sizedBoxHeight(),
-                      _textFeilds("Blood Group", _bloodGroupController,
+                      _textFeilds('Blood Group', _bloodGroupController,
                           _bloodGroupFocus, _ocupationFocus),
                       _sizedBoxHeight(),
-                      _textFeilds("Occupation", _ocupationController,
+                      _textFeilds('Occupation', _ocupationController,
                           _ocupationFocus, _nationalityFocus),
                       _sizedBoxHeight(),
-                      _textFeilds("Nationality", _nationalityController,
+                      _textFeilds('Nationality', _nationalityController,
                           _nationalityFocus, _surgicalHistoryFocus),
                       _sizedBoxHeight(),
                       _textFeilds(
-                          "Surgical history",
+                          'Surgical history',
                           _surgicalHistoryController,
                           _surgicalHistoryFocus,
                           _obstetricHistoryFocus),
                       _sizedBoxHeight(),
                       _textFeilds(
-                          "Obstetric history",
+                          'Obstetric history',
                           _obstetricHistoryController,
                           _obstetricHistoryFocus,
                           _obstetricHistoryFocus),
@@ -358,7 +358,7 @@ class _EditPatientMedicalProfileViewState
       onFieldSubmitted: (term) {
         focusNode != _obstetricHistoryFocus
             ? _fieldFocusChange(context, focusNode, nextFocusNode)
-            : "";
+            : '';
       },
       decoration: InputDecoration(
         labelText: hint,
@@ -379,29 +379,29 @@ class _EditPatientMedicalProfileViewState
   _updatePatientMedicalProfile() async {
     try {
       progressDialog.show();
-      Map<String, dynamic> data = new Map<String, dynamic>();
+      final Map<String, dynamic> data = <String, dynamic>{};
       data['MajorAilment'] = _majorComplaintController.text;
       data['Comorbidities'] = '';
       data['BloodGroup'] = _bloodGroupController.text;
-      data['IsDiabetic'] = this.isDiabetic == 'Yes';
-      data['HasHeartAilment'] = this.hasHeartAilment == 'Yes';
-      data['IsVegetarian'] = this.isVegetarian == 'Yes';
-      data['IsVegan'] = this.isVegan == 'Yes';
-      data['SedentaryLifestyle'] = this.sedentaryLifestyle == 'Yes';
-      data['IsSmoker'] = this.isSmoker == 'Yes';
+      data['IsDiabetic'] = isDiabetic == 'Yes';
+      data['HasHeartAilment'] = hasHeartAilment == 'Yes';
+      data['IsVegetarian'] = isVegetarian == 'Yes';
+      data['IsVegan'] = isVegan == 'Yes';
+      data['SedentaryLifestyle'] = sedentaryLifestyle == 'Yes';
+      data['IsSmoker'] = isSmoker == 'Yes';
       data['SmokingSeverity'] = 1;
       data['SmokingSince'] = null;
-      data['IsDrinker'] = this.isDrinker == 'Yes';
+      data['IsDrinker'] = isDrinker == 'Yes';
       data['DrinkingSeverity'] = 1;
       data['DrinkingSince'] = null;
       data['Ethnicity'] = null;
-      data['Nationality'] = this._nationalityController.text;
-      data['Occupation'] = this._ocupationController.text;
-      data['MaritalStatus'] = this.maritalStatus;
-      data['SurgicalHistory'] = this._surgicalHistoryController.text;
-      data['ObstetricHistory'] = this._obstetricHistoryController.text;
+      data['Nationality'] = _nationalityController.text;
+      data['Occupation'] = _ocupationController.text;
+      data['MaritalStatus'] = maritalStatus;
+      data['SurgicalHistory'] = _surgicalHistoryController.text;
+      data['ObstetricHistory'] = _obstetricHistoryController.text;
 
-      BaseResponse baseResponse = await model.updatePatientMedicalProfile(
+      final BaseResponse baseResponse = await model.updatePatientMedicalProfile(
           widget.medicalProfiles.id, data);
 
       if (baseResponse.status == 'success') {
@@ -414,7 +414,7 @@ class _EditPatientMedicalProfileViewState
       }
     } catch (CustomException) {
       progressDialog.hide();
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }

@@ -21,19 +21,19 @@ class ViewMyAppointment extends StatefulWidget {
 class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
   bool isUpCompletedSelected = true;
   var model = BookAppoinmentViewModel();
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   String auth;
-  List<Appointments> appointments = new List<Appointments>();
-  var dateFormat = DateFormat("dd MMM, yyyy");
-  var dateFormatFull = DateFormat("yyyy-MM-dd");
-  var timeFormat = DateFormat("hh:mm a");
-  String pathPDF = "";
+  List<Appointments> appointments = <Appointments>[];
+  var dateFormat = DateFormat('dd MMM, yyyy');
+  var dateFormatFull = DateFormat('yyyy-MM-dd');
+  var timeFormat = DateFormat('hh:mm a');
+  String pathPDF = '';
   bool isUpCommingSelected = true;
   UserData user;
 
   loadSharedPrefs() async {
     try {
-      user = UserData.fromJson(await _sharedPrefUtils.read("user"));
+      user = UserData.fromJson(await _sharedPrefUtils.read('user'));
       //debugPrint(user.toJson().toString());
       auth = user.data.accessToken;
       _getMyAppointments(auth);
@@ -73,7 +73,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      "Appointments ",
+                      'Appointments ',
                       style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.w700,
@@ -94,7 +94,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                             },
                             child: Center(
                               child: Text(
-                                "Upcoming",
+                                'Upcoming',
                                 style: TextStyle(
                                     color: isUpCommingSelected
                                         ? primaryColor
@@ -116,7 +116,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                             },
                             child: Center(
                               child: Text(
-                                "Completed",
+                                'Completed',
                                 style: TextStyle(
                                     color: isUpCommingSelected
                                         ? textBlack
@@ -137,7 +137,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                           padding: const EdgeInsets.all(16.0),
                           child: model.busy
                               ? Center(child: CircularProgressIndicator())
-                              : appointments.length == 0
+                              : appointments.isEmpty
                                   ? noAppointmentFound()
                                   : listWidget())),
                 ],
@@ -164,7 +164,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
 
   Widget noAppointmentFound() {
     return Center(
-      child: Text("No appointment found",
+      child: Text('No appointment found',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -174,7 +174,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
   }
 
   Widget _makeUpcommingAppointmentCard(BuildContext context, int index) {
-    Appointments appointment = appointments.elementAt(index);
+    final Appointments appointment = appointments.elementAt(index);
 
     bool isDateVisible = true;
 
@@ -218,10 +218,10 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
           ),
           Container(
             height: 108,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: primaryLightColor),
-                borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Stack(children: <Widget>[
@@ -304,7 +304,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                   child: SizedBox(
                       height: 20,
                       width: 20,
-                      child: new Image.asset(
+                      child: Image.asset(
                           'res/images/ic_appoinment_confirmed.png')),
                 ),
               ]),
@@ -316,7 +316,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
   }
 
   Widget _makeCompletedAppointmentCard(BuildContext context, int index) {
-    Appointments appointment = appointments.elementAt(index);
+    final Appointments appointment = appointments.elementAt(index);
     return InkWell(
       onTap: () {},
       child: Column(
@@ -333,10 +333,10 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
           ),
           Container(
             height: 120,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: primaryLightColor),
-                borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
             child: Column(
               children: <Widget>[
                 Expanded(
@@ -422,7 +422,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                           child: SizedBox(
                                               height: 32,
                                               width: 32,
-                                              child: new Image.asset(
+                                              child: Image.asset(
                                                   'res/images/ic_pharmacy_report.png')))),
                                   Visibility(
                                       child: InkWell(
@@ -436,7 +436,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                           child: SizedBox(
                                               height: 32,
                                               width: 32,
-                                              child: new Image.asset(
+                                              child: Image.asset(
                                                   'res/images/ic_lab_report.png'))))
                                 ],
                               ),
@@ -450,11 +450,10 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                 Expanded(
                   flex: 2,
                   child: Container(
-                    decoration: new BoxDecoration(
+                    decoration: BoxDecoration(
                         color: colorF6F6FF,
                         border: Border.all(color: primaryLightColor),
-                        borderRadius:
-                            new BorderRadius.all(Radius.circular(8.0))),
+                        borderRadius: BorderRadius.all(Radius.circular(8.0))),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
@@ -492,25 +491,24 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
 
   Future<File> createFileOfPdfUrl() async {
     //final url = "http://africau.edu/images/default/sample.pdf";
-    final url = "https://www.lalpathlabs.com/SampleReports/Z614.pdf";
-    final filename = url.substring(url.lastIndexOf("/") + 1);
-    var request = await HttpClient().getUrl(Uri.parse(url));
-    var response = await request.close();
-    var bytes = await consolidateHttpClientResponseBytes(response);
-    String dir = (await getApplicationDocumentsDirectory()).path;
-    File file = new File('$dir/$filename');
+    const url = 'https://www.lalpathlabs.com/SampleReports/Z614.pdf';
+    final filename = url.substring(url.lastIndexOf('/') + 1);
+    final request = await HttpClient().getUrl(Uri.parse(url));
+    final response = await request.close();
+    final bytes = await consolidateHttpClientResponseBytes(response);
+    final String dir = (await getApplicationDocumentsDirectory()).path;
+    final File file = File('$dir/$filename');
     await file.writeAsBytes(bytes);
     return file;
   }
 
   _getMyAppointments(String auth) async {
     try {
-      MyAppointmentApiResponse bookingAppoinmentForDoctor =
+      final MyAppointmentApiResponse bookingAppoinmentForDoctor =
           await model.getMyAppoinmentByDateList(
               'Bearer ' + auth,
               dateFormatFull.format(DateTime.now()),
-              dateFormatFull
-                  .format(DateTime.now().add(new Duration(days: 90))));
+              dateFormatFull.format(DateTime.now().add(Duration(days: 90))));
 
       if (bookingAppoinmentForDoctor.status == 'success') {
         appointments.clear();
@@ -520,7 +518,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
       } else {}
     } catch (CustomException) {
       model.setBusy(false);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -530,12 +528,12 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
     try {
       //cancelled, completed, confirmed
       appointments.clear();
-      MyAppointmentApiResponse bookingAppoinmentForDoctor =
+      final MyAppointmentApiResponse bookingAppoinmentForDoctor =
           await model.getMyAppoinmentByDateLisAndStatus(
               'Bearer ' + auth,
-              "completed",
+              'completed',
               dateFormatFull
-                  .format(DateTime.now().subtract(new Duration(days: 90))),
+                  .format(DateTime.now().subtract(Duration(days: 90))),
               dateFormatFull.format(DateTime.now()));
 
       if (bookingAppoinmentForDoctor.status == 'success') {
@@ -546,7 +544,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
       } else {}
     } catch (CustomException) {
       model.setBusy(false);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }

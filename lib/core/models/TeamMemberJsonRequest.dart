@@ -15,16 +15,16 @@ class TeamMemberJsonRequest {
     isEmergencyContact = json['IsEmergencyContact'];
     teamMemberType = json['TeamMemberType'];
     details =
-        json['Details'] != null ? new Details.fromJson(json['Details']) : null;
+        json['Details'] != null ? Details.fromJson(json['Details']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['CarePlanId'] = this.carePlanId;
-    data['IsEmergencyContact'] = this.isEmergencyContact;
-    data['TeamMemberType'] = this.teamMemberType;
-    if (this.details != null) {
-      data['Details'] = this.details.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['CarePlanId'] = carePlanId;
+    data['IsEmergencyContact'] = isEmergencyContact;
+    data['TeamMemberType'] = teamMemberType;
+    if (details != null) {
+      data['Details'] = details.toJson();
     }
     return data;
   }
@@ -56,13 +56,13 @@ class Details {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['UserId'] = this.userId;
-    data['FirstName'] = this.firstName;
-    data['LastName'] = this.lastName;
-    data['Prefix'] = this.prefix;
-    data['PhoneNumber'] = this.phoneNumber;
-    data['Gender'] = this.gender;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['UserId'] = userId;
+    data['FirstName'] = firstName;
+    data['LastName'] = lastName;
+    data['Prefix'] = prefix;
+    data['PhoneNumber'] = phoneNumber;
+    data['Gender'] = gender;
     return data;
   }
 }

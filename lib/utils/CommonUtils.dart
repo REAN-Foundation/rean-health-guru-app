@@ -5,7 +5,7 @@ import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 
 StartCarePlanResponse startCarePlanResponseGlob;
-List<String> goalPlanScreenStack = new List<String>();
+List<String> goalPlanScreenStack = <String>[];
 /*StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponseGlobe;
 
 void setStartTaskOfAHACarePlanResponse(StartTaskOfAHACarePlanResponse response) {
@@ -20,8 +20,8 @@ bool _isLogin = false;
 String _baseUrl = '';
 Task _task;
 String countryCodeGlobe = '';
-var dummyNumberList = new List<String>();
-String _currentLocale = "";
+var dummyNumberList = <String>[];
+String _currentLocale = '';
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');
@@ -108,9 +108,9 @@ void showToast(String msg, BuildContext context) {
 setImage(String url) {
   CachedNetworkImage(
     imageUrl:
-        "https://lh3.googleusercontent.com/a-/AOh14GhzcCR4O6GwUKtpzxuls_PRvD7mgvcuCrse5l4O1w=s88-c-k-c0x00ffffff-no-rj-mo",
-    placeholder: (context, url) => new CircularProgressIndicator(),
-    errorWidget: (context, url, error) => new Icon(Icons.error),
+        'https://lh3.googleusercontent.com/a-/AOh14GhzcCR4O6GwUKtpzxuls_PRvD7mgvcuCrse5l4O1w=s88-c-k-c0x00ffffff-no-rj-mo',
+    placeholder: (context, url) => CircularProgressIndicator(),
+    errorWidget: (context, url, error) => Icon(Icons.error),
   );
 }
 
@@ -120,22 +120,22 @@ circularImage() {
     backgroundColor: primaryColor,
     child: CircleAvatar(
         radius: 48,
-        backgroundImage: "profileImage" == ""
+        backgroundImage: 'profileImage' == ''
             ? AssetImage('res/images/profile_placeholder.png')
-            : setImage("profileImage")),
+            : setImage('profileImage')),
   );
 }
 
 String calculateAge(DateTime birthDate) {
-  DateTime currentDate = DateTime.now();
+  final DateTime currentDate = DateTime.now();
   int age = currentDate.year - birthDate.year;
-  int month1 = currentDate.month;
-  int month2 = birthDate.month;
+  final int month1 = currentDate.month;
+  final int month2 = birthDate.month;
   if (month2 > month1) {
     age--;
   } else if (month1 == month2) {
-    int day1 = currentDate.day;
-    int day2 = birthDate.day;
+    final int day1 = currentDate.day;
+    final int day2 = birthDate.day;
     if (day2 > day1) {
       age--;
     }

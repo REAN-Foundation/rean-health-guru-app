@@ -10,14 +10,14 @@ class CheckConflictResponse {
     status = json['status'];
     message = json['message'];
     error = json['error'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    data['error'] = this.error;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
+    data['error'] = error;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -31,14 +31,13 @@ class Data {
   Data({this.result});
 
   Data.fromJson(Map<String, dynamic> json) {
-    result =
-        json['result'] != null ? new Result.fromJson(json['result']) : null;
+    result = json['result'] != null ? Result.fromJson(json['result']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.result != null) {
-      data['result'] = this.result.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (result != null) {
+      data['result'] = result.toJson();
     }
     return data;
   }
@@ -56,9 +55,9 @@ class Result {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['CanBook'] = this.canBook;
-    data['ConflictingAppointment'] = this.conflictingAppointment;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['CanBook'] = canBook;
+    data['ConflictingAppointment'] = conflictingAppointment;
     return data;
   }
 }

@@ -8,7 +8,7 @@ class CoachMarkUtilites {
   TargetFocus getTargetFocus(GlobalKey key, String sequence, String heading,
       String description, CoachMarkContentPosition coachMarkContentPosition) {
     debugPrint('Target Sequence ==> ${'Target ' + sequence}');
-    debugPrint('Coach Mark Content Position ==> ${coachMarkContentPosition}');
+    debugPrint('Coach Mark Content Position ==> $coachMarkContentPosition');
     return TargetFocus(
       identify: 'Target ' + sequence,
       keyTarget: key,
@@ -56,7 +56,7 @@ class CoachMarkUtilites {
       targets: targets,
       colorShadow: Colors.black,
       alignSkip: Alignment.topRight,
-      textSkip: "SKIP",
+      textSkip: 'SKIP',
       paddingFocus: 10,
       opacityShadow: 0.8,
       onFinish: () {

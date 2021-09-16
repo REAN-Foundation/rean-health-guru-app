@@ -19,7 +19,7 @@ class AddQuitSmokingGoalsForCarePlanView extends StatefulWidget {
 class _AddQuitSmokingGoalsForCarePlanViewState
     extends State<AddQuitSmokingGoalsForCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Default Radio Button Selected Item When App Starts.
   String radioButtonItem = 'Tobacco Free Till';
@@ -27,21 +27,21 @@ class _AddQuitSmokingGoalsForCarePlanViewState
   // Group Value for Radio Button.
   int id = 1;
 
-  String selectedGoal = "";
+  String selectedGoal = '';
 
   final TextEditingController _systolicController = TextEditingController();
   final TextEditingController _diastolicController = TextEditingController();
 
-  var _systolicFocus = FocusNode();
-  var _diastolicFocus = FocusNode();
-  String dob = "";
-  String unformatedDOB = "";
-  var dateFormat = DateFormat("dd MMM, yyyy");
+  final _systolicFocus = FocusNode();
+  final _diastolicFocus = FocusNode();
+  String dob = '';
+  String unformatedDOB = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
   ProgressDialog progressDialog;
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -58,7 +58,7 @@ class _AddQuitSmokingGoalsForCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -99,7 +99,7 @@ class _AddQuitSmokingGoalsForCarePlanViewState
             height: 16,
           ),
           Text(
-            "Smoking is the leading preventable cause of death and disability in the United States. Cigarette smoking results in a much higher risk of dying of coronary heart disease. Smoking robs the heart of oxygen-rich blood and increases the effects of other risk factors, including blood pressure, blood cholesterol levels and physical inactivity.",
+            'Smoking is the leading preventable cause of death and disability in the United States. Cigarette smoking results in a much higher risk of dying of coronary heart disease. Smoking robs the heart of oxygen-rich blood and increases the effects of other risk factors, including blood pressure, blood cholesterol levels and physical inactivity.',
             style: TextStyle(
                 color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
           ),
@@ -150,7 +150,7 @@ class _AddQuitSmokingGoalsForCarePlanViewState
               ),
               Text(
                 'Forever',
-                style: new TextStyle(fontSize: 14.0),
+                style: TextStyle(fontSize: 14.0),
               ),
               SizedBox(
                 width: 40,
@@ -173,7 +173,7 @@ class _AddQuitSmokingGoalsForCarePlanViewState
               ),
               Text(
                 'Tobacco Free Till',
-                style: new TextStyle(fontSize: 14.0),
+                style: TextStyle(fontSize: 14.0),
               ),
               SizedBox(
                 width: 8,
@@ -247,7 +247,7 @@ class _AddQuitSmokingGoalsForCarePlanViewState
               ),
               Text(
                 'I Don\'t Smoke',
-                style: new TextStyle(fontSize: 14.0),
+                style: TextStyle(fontSize: 14.0),
               ),
               SizedBox(
                 width: 40,
@@ -280,7 +280,7 @@ class _AddQuitSmokingGoalsForCarePlanViewState
                     ),
                     child: Center(
                       child: Text(
-                        "Save",
+                        'Save',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
@@ -305,16 +305,16 @@ class _AddQuitSmokingGoalsForCarePlanViewState
   setGoals() async {
     try {
       progressDialog.show();
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['TobaccoFreeTargetDate'] = dob;
       map['StopSmokingForever'] = radioButtonItem == 'Forever';
       map['NonSmoker'] = radioButtonItem == 'I Don\'t Smoke';
 
-      var body = new Map<String, dynamic>();
+      final body = <String, dynamic>{};
       body['Goal'] = map;
       body['GoalSettingTaskId'] = 'e73575f5-cd5d-4177-9af8-ae1565a576a8';
 
-      BaseResponse baseResponse = await model.addGoalsTask(
+      final BaseResponse baseResponse = await model.addGoalsTask(
           startCarePlanResponseGlob.data.carePlan.id.toString(),
           'physical-activity-goal',
           body);
@@ -343,20 +343,20 @@ class _AddQuitSmokingGoalsForCarePlanViewState
 
   navigateToScreen() {
     debugPrint('Set Goals Plan Stack ==> ${goalPlanScreenStack.length}');
-    if (goalPlanScreenStack.length == 0) {
+    if (goalPlanScreenStack.isEmpty) {
       Navigator.pushReplacementNamed(
           context, RoutePaths.Determine_Action_For_Care_Plan);
-    } else if (goalPlanScreenStack.elementAt(0) == "Blood Pressure") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Blood Pressure') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_BLOOD_PRESURE_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Blood Sugar") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Blood Sugar') {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_GLUCOSE_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Weight") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Weight') {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_WEIGHT_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Physical Activity") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Physical Activity') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Quit Smoking") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Quit Smoking') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_QUIT_SMOKING_GOALS);
     }

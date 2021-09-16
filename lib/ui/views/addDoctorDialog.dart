@@ -17,12 +17,12 @@ class AddDoctorDialog extends StatefulWidget {
   }
 
   @override
-  _MyDialogState createState() => new _MyDialogState();
+  _MyDialogState createState() => _MyDialogState();
 }
 
 class _MyDialogState extends State<AddDoctorDialog> {
   var model = PatientCarePlanViewModel();
-  var doctorSearchList = new List<Doctors>();
+  var doctorSearchList = <Doctors>[];
 
   @override
   void initState() {
@@ -32,11 +32,11 @@ class _MyDialogState extends State<AddDoctorDialog> {
 
   getDoctorListByLocality() async {
     try {
-      DoctorListApiResponse doctorListApiResponse =
+      final DoctorListApiResponse doctorListApiResponse =
           await model.getDoctorList('Bearer ' + auth);
 
       if (doctorListApiResponse.status == 'success') {
-        if (doctorListApiResponse.data.doctors.length != 0) {
+        if (doctorListApiResponse.data.doctors.isNotEmpty) {
           setState(() {
             doctorSearchList.addAll(doctorListApiResponse.data.doctors);
           });
@@ -108,7 +108,7 @@ class _MyDialogState extends State<AddDoctorDialog> {
   }
 
   Widget _makeDoctorListCard(BuildContext context, int index) {
-    Doctors doctorDetails = doctorSearchList.elementAt(index);
+    final Doctors doctorDetails = doctorSearchList.elementAt(index);
     debugPrint(doctorDetails.specialities);
     return InkWell(
       onTap: () {
@@ -117,10 +117,10 @@ class _MyDialogState extends State<AddDoctorDialog> {
       child: MergeSemantics(
         child: Container(
           height: 60,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               color: Colors.white,
               border: Border.all(color: primaryLightColor, width: 1),
-              borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+              borderRadius: BorderRadius.all(Radius.circular(8.0))),
           child: Column(
             children: <Widget>[
               Expanded(
@@ -144,12 +144,11 @@ class _MyDialogState extends State<AddDoctorDialog> {
                               child: CircleAvatar(
                                   radius: 38,
                                   backgroundImage: doctorDetails.imageURL ==
-                                              "" ||
+                                              '' ||
                                           doctorDetails.imageURL == null
                                       ? AssetImage(
                                           'res/images/profile_placeholder.png')
-                                      : new NetworkImage(
-                                          doctorDetails.imageURL)),
+                                      : NetworkImage(doctorDetails.imageURL)),
                             ),
                           ),
                         ),
@@ -183,9 +182,8 @@ class _MyDialogState extends State<AddDoctorDialog> {
                               child: Row(
                                 children: [
                                   Text(
-                                      doctorDetails.specialities == null
-                                          ? doctorDetails.qualification
-                                          : doctorDetails.specialities,
+                                      doctorDetails.specialities ??
+                                          doctorDetails.qualification,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(

@@ -16,24 +16,22 @@ Future<void> main() async {
   enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool login = prefs.getBool("login1.2");
-  if (login == null) {
-    login = false;
-  }
-  debugPrint('Main >> Login Session: ${login}');
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool login = prefs.getBool('login1.2');
+  login ??= false;
+  debugPrint('Main >> Login Session: $login');
 
   runApp(MyApp(login));
 }
 
 class MyApp extends StatelessWidget {
   bool isLogin;
-  String _baseUrl = '';
+  final String _baseUrl = '';
 
-  MyApp(@required isLogin) {
+  MyApp(@required bool isLogin) {
     this.isLogin = isLogin;
     GetIt.instance.registerSingleton<ApiProvider>(ApiProvider(_baseUrl));
-    debugPrint('MyApp Constructor >> Login Session: ${isLogin}');
+    debugPrint('MyApp Constructor >> Login Session: $isLogin');
   }
 
   @override
@@ -43,8 +41,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('MyApp >> Login Session: ${isLogin}');
-    debugPrint('ApiProvider >> Base URL: ${_baseUrl}');
+    debugPrint('MyApp >> Login Session: $isLogin');
+    debugPrint('ApiProvider >> Base URL: $_baseUrl');
     // Set portrait orientation
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitDown,
@@ -64,14 +62,14 @@ class MyApp extends StatelessWidget {
         home: SplashScreen(
           seconds: 3,
           navigateAfterSeconds: AfterSplashScreen(isLogin),
-          title: new Text('REAN Care',
+          title: Text('REAN Care',
               style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.w700,
                   color: Colors.white)),
-          image: new Image.asset('res/images/app_logo_tranparent.png'),
+          image: Image.asset('res/images/app_logo_tranparent.png'),
           backgroundColor: Colors.deepPurple,
-          styleTextUnderTheLoader: new TextStyle(),
+          styleTextUnderTheLoader: TextStyle(),
           photoSize: 100.0,
           loaderColor: Colors.transparent,
           baseUrl: _baseUrl,
@@ -82,7 +80,7 @@ class MyApp extends StatelessWidget {
   }
 
   void loadSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    isLogin = prefs.getBool("login");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    isLogin = prefs.getBool('login');
   }
 }

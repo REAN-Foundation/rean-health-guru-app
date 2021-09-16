@@ -17,12 +17,10 @@ import 'networking/ChatApiProvider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await dotenv.load(fileName: "res/.env");
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool login = prefs.getBool("login1.2");
-  if (login == null) {
-    login = false;
-  }
+  await dotenv.load(fileName: 'res/.env');
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool login = prefs.getBool('login1.2');
+  login ??= false;
   runApp(MyApp(login));
 }
 
@@ -31,7 +29,7 @@ class MyApp extends StatelessWidget {
   String _baseUrl;
   String _botBaseUrl;
 
-  MyApp(@required isLogin) {
+  MyApp(@required bool isLogin) {
     debugPrint('Print from .env ==> ${dotenv.env['PROD_BASE_URL']}');
     debugPrint('Print from .env ==> ${dotenv.env['DEV_BOT_BASE_URL']}');
     _baseUrl = dotenv.env['PROD_BASE_URL'];
@@ -42,7 +40,7 @@ class MyApp extends StatelessWidget {
     GetIt.instance.registerSingleton<ApiProvider>(ApiProvider(_baseUrl));
     GetIt.instance
         .registerSingleton<ChatApiProvider>(ChatApiProvider(_botBaseUrl));
-    debugPrint('MyApp Constructor >> Login Session: ${isLogin}');
+    debugPrint('MyApp Constructor >> Login Session: $isLogin');
   }
 
   @override
@@ -52,8 +50,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('MyApp >> Login Session: ${isLogin}');
-    debugPrint('ApiProvider >> Base URL: ${_baseUrl}');
+    debugPrint('MyApp >> Login Session: $isLogin');
+    debugPrint('ApiProvider >> Base URL: $_baseUrl');
     // Set portrait orientation
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitDown,
@@ -86,7 +84,7 @@ class MyApp extends StatelessWidget {
   }
 
   void loadSharedPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    isLogin = prefs.getBool("login");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    isLogin = prefs.getBool('login');
   }
 }

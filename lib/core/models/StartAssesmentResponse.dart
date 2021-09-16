@@ -11,13 +11,13 @@ class StartAssesmentResponse {
   StartAssesmentResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -33,14 +33,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     assessmment = json['assessmment'] != null
-        ? new Assessmment.fromJson(json['assessmment'])
+        ? Assessmment.fromJson(json['assessmment'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.assessmment != null) {
-      data['assessmment'] = this.assessmment.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (assessmment != null) {
+      data['assessmment'] = assessmment.toJson();
     }
     return data;
   }
@@ -75,27 +75,25 @@ class Assessmment {
     assessmentTitle = json['AssessmentTitle'];
     assessmentDate = json['AssessmentDate'];
     carePlanId = json['CarePlanId'];
-    question = json['Question'] != null
-        ? new Question.fromJson(json['Question'])
-        : null;
+    question = json['Question'] != null ? Question.fromJson(json['Question']) : null;
     isBiometric = json['IsBiometric'];
     biometricName = json['BiometricName'];
     biometricMeasureUnit = json['BiometricMeasureUnit'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['QnAId'] = this.qnAId;
-    data['TaskId'] = this.taskId;
-    data['AssessmentTitle'] = this.assessmentTitle;
-    data['AssessmentDate'] = this.assessmentDate;
-    data['CarePlanId'] = this.carePlanId;
-    if (this.question != null) {
-      data['Question'] = this.question.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['QnAId'] = qnAId;
+    data['TaskId'] = taskId;
+    data['AssessmentTitle'] = assessmentTitle;
+    data['AssessmentDate'] = assessmentDate;
+    data['CarePlanId'] = carePlanId;
+    if (question != null) {
+      data['Question'] = question.toJson();
     }
-    data['IsBiometric'] = this.isBiometric;
-    data['BiometricName'] = this.biometricName;
-    data['BiometricMeasureUnit'] = this.biometricMeasureUnit;
+    data['IsBiometric'] = isBiometric;
+    data['BiometricName'] = biometricName;
+    data['BiometricMeasureUnit'] = biometricMeasureUnit;
     return data;
   }
 }
@@ -124,12 +122,12 @@ class Question {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Index'] = this.index;
-    data['IsLastQuestion'] = this.isLastQuestion;
-    data['QuestionText'] = this.questionText;
-    data['QuestionType'] = this.questionType;
-    data['AnswerOptions'] = this.answerOptions;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Index'] = index;
+    data['IsLastQuestion'] = isLastQuestion;
+    data['QuestionText'] = questionText;
+    data['QuestionType'] = questionType;
+    data['AnswerOptions'] = answerOptions;
     return data;
   }
 }

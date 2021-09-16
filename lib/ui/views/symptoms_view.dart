@@ -16,7 +16,7 @@ class SymptomsView extends StatefulWidget {
   String assessmmentId = '';
 
   SymptomsView(String id) {
-    this.assessmmentId = id;
+    assessmmentId = id;
   }
 
   @override
@@ -25,11 +25,11 @@ class SymptomsView extends StatefulWidget {
 
 class _SymptomsViewState extends State<SymptomsView> {
   var model = DashboardSummaryModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   AssessmentTemplate assessmentTemplate;
 
   //List symptomList = new List<SymptomsPojo>();
-  var dateFormat = DateFormat("yyyy-MM-dd");
+  var dateFormat = DateFormat('yyyy-MM-dd');
   String myAssesssmentId = '';
 
   @override
@@ -73,7 +73,7 @@ class _SymptomsViewState extends State<SymptomsView> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -153,7 +153,7 @@ class _SymptomsViewState extends State<SymptomsView> {
       alignment: Alignment.center,
       child: RaisedButton.icon(
         onPressed: () async {
-          showToast("Symptoms recorded successfully", context);
+          showToast('Symptoms recorded successfully', context);
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
             return HomeView(0);
@@ -221,7 +221,7 @@ class _SymptomsViewState extends State<SymptomsView> {
               color: Colors.white,
             ),
             Text(
-              " Better",
+              ' Better',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -247,7 +247,7 @@ class _SymptomsViewState extends State<SymptomsView> {
               color: Colors.white,
             ),
             Text(
-              " Worse",
+              ' Worse',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -265,14 +265,14 @@ class _SymptomsViewState extends State<SymptomsView> {
   }
 
   Widget _createSymptomsListUI(BuildContext context, int index) {
-    TemplateSymptomTypes symptomTypes =
+    final TemplateSymptomTypes symptomTypes =
         assessmentTemplate.templateSymptomTypes.elementAt(index);
 
     return Dismissible(
       key: Key(symptomTypes.symptom),
       child: InkWell(
           onTap: () {
-            print("${symptomTypes.symptom} clicked");
+            print('${symptomTypes.symptom} clicked');
           },
           child: ListTile(
             leading: SizedBox(
@@ -345,10 +345,11 @@ class _SymptomsViewState extends State<SymptomsView> {
 
   getAssesmentTemplateById() async {
     try {
-      GetAssesmentTemplateByIdResponse searchSymptomAssesmentTempleteResponse =
+      final GetAssesmentTemplateByIdResponse
+          searchSymptomAssesmentTempleteResponse =
           await model.getAssesmentTemplateById(widget.assessmmentId);
       debugPrint(
-          "Get Assesment Template By Id Response ==> ${searchSymptomAssesmentTempleteResponse.toJson()}");
+          'Get Assesment Template By Id Response ==> ${searchSymptomAssesmentTempleteResponse.toJson()}');
       if (searchSymptomAssesmentTempleteResponse.status == 'success') {
         assessmentTemplate =
             searchSymptomAssesmentTempleteResponse.data.assessmentTemplate;
@@ -361,7 +362,7 @@ class _SymptomsViewState extends State<SymptomsView> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -369,14 +370,15 @@ class _SymptomsViewState extends State<SymptomsView> {
 
   getMyAssesmentId() async {
     try {
-      var body = new Map<String, dynamic>();
+      final body = <String, dynamic>{};
       body['PatientUserId'] = patientUserId;
       body['AssessmentTemplateId'] = widget.assessmmentId;
-      body['AssessmentDate'] = dateFormat.format(new DateTime.now());
+      body['AssessmentDate'] = dateFormat.format(DateTime.now());
       body['Title'] = assessmentTemplate.id;
 
-      GetMyAssesmentIdResponse response = await model.getMyAssesmentId(body);
-      debugPrint("Get My Assesment Id Response ==> ${response.toJson()}");
+      final GetMyAssesmentIdResponse response =
+          await model.getMyAssesmentId(body);
+      debugPrint('Get My Assesment Id Response ==> ${response.toJson()}');
       if (response.status == 'success') {
         myAssesssmentId = response.data.assessment.id;
         setState(() {});
@@ -387,13 +389,13 @@ class _SymptomsViewState extends State<SymptomsView> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
   addPatientSymptomsInAssesment(String symptomTypeId, bool isPresent) async {
     try {
-      var body = new Map<String, dynamic>();
+      final body = <String, dynamic>{};
       body['PatientUserId'] = patientUserId;
       body['AssessmentId'] = myAssesssmentId;
       body['SymptomTypeId'] = symptomTypeId;
@@ -403,8 +405,9 @@ class _SymptomsViewState extends State<SymptomsView> {
       body['Interpretation'] = 1;
       body['Comments'] = '';
 
-      BaseResponse response = await model.addPatientSymptomsInAssesment(body);
-      debugPrint("Get My Assesment Id Response ==> ${response.toJson()}");
+      final BaseResponse response =
+          await model.addPatientSymptomsInAssesment(body);
+      debugPrint('Get My Assesment Id Response ==> ${response.toJson()}');
       if (response.status == 'success') {
         setState(() {});
       } else {
@@ -413,7 +416,7 @@ class _SymptomsViewState extends State<SymptomsView> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 }

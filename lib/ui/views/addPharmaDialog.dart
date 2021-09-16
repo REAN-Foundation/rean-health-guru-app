@@ -17,12 +17,12 @@ class AddPharmaDialog extends StatefulWidget {
   }
 
   @override
-  _MyDialogState createState() => new _MyDialogState();
+  _MyDialogState createState() => _MyDialogState();
 }
 
 class _MyDialogState extends State<AddPharmaDialog> {
   var model = PatientCarePlanViewModel();
-  var parmacySearchList = new List<Pharmacies>();
+  var parmacySearchList = <Pharmacies>[];
 
   @override
   void initState() {
@@ -32,11 +32,11 @@ class _MyDialogState extends State<AddPharmaDialog> {
 
   getLabListByLocality() async {
     try {
-      PharmacyListApiResponse listApiResponse = await model
-          .getPhrmacyListByLocality("18.526301", "73.834522", 'Bearer ' + auth);
+      final PharmacyListApiResponse listApiResponse = await model
+          .getPhrmacyListByLocality('18.526301', '73.834522', 'Bearer ' + auth);
 
       if (listApiResponse.status == 'success') {
-        if (listApiResponse.data.pharmacies.length != 0) {
+        if (listApiResponse.data.pharmacies.isNotEmpty) {
           parmacySearchList.addAll(listApiResponse.data.pharmacies);
         }
       } else {
@@ -101,7 +101,7 @@ class _MyDialogState extends State<AddPharmaDialog> {
     return Center(
       child: Semantics(
           readOnly: true,
-          child: Text("No Pharmacy found in your Locality",
+          child: Text('No Pharmacy found in your Locality',
               style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
@@ -124,17 +124,17 @@ class _MyDialogState extends State<AddPharmaDialog> {
   }
 
   Widget _makePharmacyListCard(BuildContext context, int index) {
-    Pharmacies pharmaciesDetails = parmacySearchList.elementAt(index);
+    final Pharmacies pharmaciesDetails = parmacySearchList.elementAt(index);
     return InkWell(
       onTap: () {
         widget._submitButtonListner(pharmaciesDetails);
       },
       child: Container(
         height: 80,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Color(0XFFF5F8FA),
             border: Border.all(color: Color(0XFFF5F8FA)),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Column(
           children: <Widget>[
             Expanded(

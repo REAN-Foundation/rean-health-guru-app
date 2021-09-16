@@ -22,19 +22,19 @@ class AddNutritionDetailsDialog extends StatefulWidget {
   }
 
   @override
-  _MyDialogState createState() => new _MyDialogState();
+  _MyDialogState createState() => _MyDialogState();
 }
 
 class _MyDialogState extends State<AddNutritionDetailsDialog> {
   var model = PatientCarePlanViewModel();
-  var doctorSearchList = new List<Doctors>();
+  var doctorSearchList = <Doctors>[];
 
   String unit = 'cal';
 
-  var _nutritionNameController = new TextEditingController();
-  var _consumedCaloriesController = new TextEditingController();
-  var _nutritionNameFocus = FocusNode();
-  var __consumedCaloriesFocus = FocusNode();
+  final _nutritionNameController = TextEditingController();
+  final _consumedCaloriesController = TextEditingController();
+  final _nutritionNameFocus = FocusNode();
+  final __consumedCaloriesFocus = FocusNode();
 
   @override
   void initState() {
@@ -61,7 +61,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
           Row(
             children: [
               Text(
-                "Enter Name",
+                'Enter Name',
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w500,
@@ -70,7 +70,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
               ),
               RichText(
                 text: TextSpan(
-                  text: "",
+                  text: '',
                   style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w500,
@@ -108,11 +108,11 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                               __consumedCaloriesFocus);
                         },
                         inputFormatters: [
-                          new BlacklistingTextInputFormatter(
-                              new RegExp('[\\,|\\+|\\-]')),
+                          BlacklistingTextInputFormatter(
+                              RegExp('[\\,|\\+|\\-]')),
                         ],
                         decoration: InputDecoration(
-                            hintText: "ex. Banana",
+                            hintText: 'ex. Banana',
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),
@@ -131,7 +131,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
           Row(
             children: [
               Text(
-                "Calories",
+                'Calories',
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w500,
@@ -140,7 +140,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
               ),
               RichText(
                 text: TextSpan(
-                  text: " (cal)",
+                  text: ' (cal)',
                   style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w500,
@@ -176,11 +176,11 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                             TextInputType.numberWithOptions(decimal: true),
                         onFieldSubmitted: (term) {},
                         inputFormatters: [
-                          new BlacklistingTextInputFormatter(
-                              new RegExp('[\\,|\\+|\\-]')),
+                          BlacklistingTextInputFormatter(
+                              RegExp('[\\,|\\+|\\-]')),
                         ],
                         decoration: InputDecoration(
-                            hintText: "100",
+                            hintText: '100',
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),

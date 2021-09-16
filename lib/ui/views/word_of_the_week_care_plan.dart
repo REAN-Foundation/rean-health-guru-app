@@ -24,9 +24,9 @@ class WordOfTheWeekCarePlanView extends StatefulWidget {
 
 class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var _textController = new TextEditingController();
+  final _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -82,7 +82,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
       ),
       child: Center(
         child: Text(
-          "Flip the card to understand\nthe word!",
+          'Flip the card to understand\nthe word!',
           style: TextStyle(
               color: primaryColor, fontWeight: FontWeight.w700, fontSize: 18),
           textAlign: TextAlign.center,
@@ -107,10 +107,10 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                 padding: const EdgeInsets.all(16.0),
                 height: 360,
                 width: MediaQuery.of(context).size.width - 100,
-                decoration: new BoxDecoration(
+                decoration: BoxDecoration(
                     color: primaryLightColor,
                     border: Border.all(color: primaryLightColor),
-                    borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,7 +123,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                           fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
-                    new Image.asset(
+                    Image.asset(
                       'res/images/ic_refresh_blue_circle.png',
                       fit: BoxFit.cover,
                     )
@@ -134,10 +134,10 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                 padding: const EdgeInsets.all(16.0),
                 height: 360,
                 width: MediaQuery.of(context).size.width - 100,
-                decoration: new BoxDecoration(
+                decoration: BoxDecoration(
                     color: primaryLightColor,
                     border: Border.all(color: primaryLightColor),
-                    borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -310,7 +310,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
 
   completeMessageTaskOfAHACarePlan(Task task) async {
     try {
-      StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
+      final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.completeMessageTaskOfAHACarePlan(
               startCarePlanResponseGlob.data.carePlan.id.toString(),
               task.details.id);
@@ -322,7 +322,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
           return HomeView(1);
         }), (Route<dynamic> route) => false);
         debugPrint(
-            "AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}");
+            'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
         showToast(_startTaskOfAHACarePlanResponse.message, context);
       }

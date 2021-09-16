@@ -40,18 +40,18 @@ class AssesmentTaskNavigatorView extends StatefulWidget {
 class _AssesmentTaskNavigatorViewState
     extends State<AssesmentTaskNavigatorView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isLastQuestion = false;
 
   StartAssesmentResponse _startAssesmentResponse;
   Assessmment assessmment;
   ProgressDialog progressDialog;
-  var dateFormat = DateFormat("yyyy-MM-dd");
-  var timeFormat = DateFormat("HH:mm:ss");
+  var dateFormat = DateFormat('yyyy-MM-dd');
+  var timeFormat = DateFormat('HH:mm:ss');
 
   @override
   void initState() {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     startAssesmentResponse();
     debugPrint(widget.task.details.carePlanId.toString());
     // TODO: implement initState
@@ -60,7 +60,7 @@ class _AssesmentTaskNavigatorViewState
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     // TODO: implement build
     return BaseWidget<PatientCarePlanViewModel>(
         model: model,
@@ -78,7 +78,7 @@ class _AssesmentTaskNavigatorViewState
                         color: primaryColor,
                         fontWeight: FontWeight.w700),
                   ),
-                  iconTheme: new IconThemeData(color: Colors.black),
+                  iconTheme: IconThemeData(color: Colors.black),
                   actions: <Widget>[
                     /*IconButton(
                 icon: Icon(
@@ -101,7 +101,7 @@ class _AssesmentTaskNavigatorViewState
     try {
       debugPrint('Assesment 1');
       progressDialog.show();
-      var map = new Map<String, String>();
+      final map = <String, String>{};
 
       _startAssesmentResponse = await model.startAssesmentResponse(
           widget.task.details.carePlanId.toString(), widget.task.details.id);
@@ -110,8 +110,8 @@ class _AssesmentTaskNavigatorViewState
         progressDialog.hide();
         navigateScreen(_startAssesmentResponse.data.assessmment);
         debugPrint(
-            "AHA Assesment Care Plan Task ==> ${_startAssesmentResponse.toJson()}");
-        this.assessmment = _startAssesmentResponse.data.assessmment;
+            'AHA Assesment Care Plan Task ==> ${_startAssesmentResponse.toJson()}');
+        assessmment = _startAssesmentResponse.data.assessmment;
       } else {
         Navigator.pop(context);
         progressDialog.hide();
@@ -132,19 +132,19 @@ class _AssesmentTaskNavigatorViewState
       assignmentTask(assessmment);
     } else {
       switch (assessmment.question.questionType) {
-        case "menuQuestion":
+        case 'menuQuestion':
           menuQuestion(assessmment);
           break;
-        case "yesNoQuestion":
+        case 'yesNoQuestion':
           yesNoQuestion(assessmment);
           break;
-        case "okStatement":
+        case 'okStatement':
           showMaterialModalBottomSheet(
               isDismissible: false,
               context: context,
               builder: (context) => _positiveFeedBack(assessmment));
           break;
-        case "statement":
+        case 'statement':
           showMaterialModalBottomSheet(
               isDismissible: false,
               context: context,
@@ -155,7 +155,7 @@ class _AssesmentTaskNavigatorViewState
   }
 
   void assignmentTask(Assessmment assessmment) async {
-    var id = await Navigator.push(
+    final id = await Navigator.push(
       context,
       CupertinoPageRoute(
           fullscreenDialog: true,
@@ -163,20 +163,20 @@ class _AssesmentTaskNavigatorViewState
     );
     if (id == null) {
       Navigator.pop(context);
-      showToast("Please complete assessment from start", context);
+      showToast('Please complete assessment from start', context);
     } else {
       assesmentNextQuestion(id, assessmment);
     }
   }
 
   void menuQuestion(Assessmment assessmment) async {
-    var id = await Navigator.push(
+    final id = await Navigator.push(
       context,
       CupertinoPageRoute(
           fullscreenDialog: true,
           builder: (context) => AssessmentQuestionCarePlanView(assessmment)),
     );
-    debugPrint("Question Index ==> ${id}");
+    debugPrint('Question Index ==> $id');
     /*if(this.assessmment.question.isLastQuestion){
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
@@ -185,7 +185,7 @@ class _AssesmentTaskNavigatorViewState
     }else {*/
     if (id == null) {
       Navigator.pop(context);
-      showToast("Please complete assessment from start", context);
+      showToast('Please complete assessment from start', context);
     } else {
       nextQuestion(id);
     }
@@ -193,13 +193,13 @@ class _AssesmentTaskNavigatorViewState
   }
 
   void yesNoQuestion(Assessmment assessmment) async {
-    var id = await Navigator.push(
+    final id = await Navigator.push(
       context,
       CupertinoPageRoute(
           fullscreenDialog: true,
           builder: (context) => AssessmentStartCarePlanView(assessmment)),
     );
-    debugPrint("Question Index ==> ${id}");
+    debugPrint('Question Index ==> $id');
     /*if(this.assessmment.question.isLastQuestion){
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
@@ -208,7 +208,7 @@ class _AssesmentTaskNavigatorViewState
     }else {*/
     if (id == null) {
       Navigator.pop(context);
-      showToast("Please complete assessment from start", context);
+      showToast('Please complete assessment from start', context);
     } else {
       nextQuestion(id);
     }
@@ -217,16 +217,16 @@ class _AssesmentTaskNavigatorViewState
 
   assesmentNextQuestion(var value, Assessmment assessmment) async {
     try {
-      progressDialog = new ProgressDialog(context);
+      progressDialog = ProgressDialog(context);
       progressDialog.show();
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['BiometricValue'] = value;
-      map['MeasuredOn'] = dateFormat.format(new DateTime.now().toUtc()) +
+      map['MeasuredOn'] = dateFormat.format(DateTime.now().toUtc()) +
           'T' +
-          timeFormat.format(new DateTime.now().toUtc()) +
+          timeFormat.format(DateTime.now().toUtc()) +
           '.000Z';
 
-      AnswerAssesmentResponse _answerAssesmentResponse =
+      final AnswerAssesmentResponse _answerAssesmentResponse =
           await model.addBiometricAssignmentTask(
               startCarePlanResponseGlob.data.carePlan.id.toString(),
               assessmment.taskId,
@@ -252,7 +252,7 @@ class _AssesmentTaskNavigatorViewState
         }
 
         debugPrint(
-            "AHA Start Care Plan ==> ${_answerAssesmentResponse.toJson()}");
+            'AHA Start Care Plan ==> ${_answerAssesmentResponse.toJson()}');
         assessmment = _answerAssesmentResponse.data.assessmment;
       } else {
         progressDialog.hide();
@@ -268,15 +268,15 @@ class _AssesmentTaskNavigatorViewState
 
   nextQuestion(int index) async {
     try {
-      progressDialog = new ProgressDialog(context);
+      progressDialog = ProgressDialog(context);
       progressDialog.show();
-      var map = new Map<String, dynamic>();
-      var answerIndices = new List<int>();
+      final map = <String, dynamic>{};
+      final answerIndices = <int>[];
       answerIndices.add(index);
       map['AnswerIndices'] = answerIndices;
-      map['AnswerText'] = "";
+      map['AnswerText'] = '';
 
-      AnswerAssesmentResponse _answerAssesmentResponse =
+      final AnswerAssesmentResponse _answerAssesmentResponse =
           await model.answerAssesmentResponse(
               widget.task.details.carePlanId.toString(),
               widget.task.details.id,
@@ -301,7 +301,7 @@ class _AssesmentTaskNavigatorViewState
             _answerAssesmentResponse.data.assessmment.question.isLastQuestion;
 
         debugPrint(
-            "AHA Start Care Plan ==> ${_answerAssesmentResponse.toJson()}");
+            'AHA Start Care Plan ==> ${_answerAssesmentResponse.toJson()}');
         assessmment = _answerAssesmentResponse.data.assessmment;
       } else {
         progressDialog.hide();
@@ -318,7 +318,7 @@ class _AssesmentTaskNavigatorViewState
   completeMessageTaskOfAHACarePlan(Task task) async {
     try {
       progressDialog.show();
-      StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
+      final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.stopTaskOfAHACarePlan(
               startCarePlanResponseGlob.data.carePlan.id.toString(),
               task.details.id);
@@ -331,7 +331,7 @@ class _AssesmentTaskNavigatorViewState
           return HomeView(1);
         }), (Route<dynamic> route) => false);
         debugPrint(
-            "AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}");
+            'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
         progressDialog.hide();
         showToast(_startTaskOfAHACarePlanResponse.message, context);
@@ -399,7 +399,7 @@ class _AssesmentTaskNavigatorViewState
               padding: const EdgeInsets.all(16.0),
               child: InkWell(
                 onTap: () {
-                  if (assessmment.question.questionType == "statement") {
+                  if (assessmment.question.questionType == 'statement') {
                     completeMessageTaskOfAHACarePlan(widget.task);
                     /*Navigator.pushAndRemoveUntil(context,
                         MaterialPageRoute(builder: (context) {
@@ -424,7 +424,7 @@ class _AssesmentTaskNavigatorViewState
                     ),
                     child: Center(
                       child: Text(
-                        "Ok",
+                        'Ok',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,

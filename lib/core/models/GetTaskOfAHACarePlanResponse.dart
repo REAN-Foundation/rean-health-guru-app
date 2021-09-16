@@ -8,13 +8,13 @@ class GetTaskOfAHACarePlanResponse {
   GetTaskOfAHACarePlanResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -29,17 +29,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['tasks'] != null) {
-      tasks = new List<Task>();
+      tasks = <Task>[];
       json['tasks'].forEach((v) {
-        tasks.add(new Task.fromJson(v));
+        tasks.add(Task.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.tasks != null) {
-      data['tasks'] = this.tasks.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (tasks != null) {
+      data['tasks'] = tasks.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -98,28 +98,28 @@ class Task {
     taskIsSuccess = json['TaskIsSuccess'];
     cancelled = json['Cancelled'];
     details =
-        json['Details'] != null ? new Details.fromJson(json['Details']) : null;
+        json['Details'] != null ? Details.fromJson(json['Details']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['PatientUserId'] = this.patientUserId;
-    data['DisplayId'] = this.displayId;
-    data['Name'] = this.name;
-    data['CategoryId'] = this.categoryId;
-    data['CategoryName'] = this.categoryName;
-    data['Type'] = this.type;
-    data['ScheduledStartTime'] = this.scheduledStartTime.toIso8601String();
-    data['ScheduledEndTime'] = this.scheduledEndTime.toIso8601String();
-    data['Started'] = this.started;
-    data['StartedAt'] = this.startedAt;
-    data['Finished'] = this.finished;
-    data['FinishedAt'] = this.finishedAt;
-    data['TaskIsSuccess'] = this.taskIsSuccess;
-    data['Cancelled'] = this.cancelled;
-    if (this.details != null) {
-      data['Details'] = this.details.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['PatientUserId'] = patientUserId;
+    data['DisplayId'] = displayId;
+    data['Name'] = name;
+    data['CategoryId'] = categoryId;
+    data['CategoryName'] = categoryName;
+    data['Type'] = type;
+    data['ScheduledStartTime'] = scheduledStartTime.toIso8601String();
+    data['ScheduledEndTime'] = scheduledEndTime.toIso8601String();
+    data['Started'] = started;
+    data['StartedAt'] = startedAt;
+    data['Finished'] = finished;
+    data['FinishedAt'] = finishedAt;
+    data['TaskIsSuccess'] = taskIsSuccess;
+    data['Cancelled'] = cancelled;
+    if (details != null) {
+      data['Details'] = details.toJson();
     }
     return data;
   }
@@ -277,62 +277,62 @@ class Details {
     businessNodeName = json['business_node_name'];
     businessUserName = json['business_user_name'];
     concreteTask = json['ConcreteTask'] != null
-        ? new ConcreteTask.fromJson(json['ConcreteTask'])
+        ? ConcreteTask.fromJson(json['ConcreteTask'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['PatientUserId'] = this.patientUserId;
-    data['CarePlanId'] = this.carePlanId;
-    data['Type'] = this.type;
-    data['IsEducationalTask'] = this.isEducationalTask;
-    data['MainTitle'] = this.mainTitle;
-    data['SubTitle'] = this.subTitle;
-    data['Description'] = this.description;
-    data['Language'] = this.language;
-    data['TaskDate'] = this.taskDate;
-    data['WeekNumber'] = this.weekNumber;
-    data['WeekDayNumber'] = this.weekDayNumber;
-    data['SessionNumber'] = this.sessionNumber;
-    data['ScheduledStartTime'] = this.scheduledStartTime;
-    data['ScheduledEndTime'] = this.scheduledEndTime;
-    data['Started'] = this.started;
-    data['StartedAt'] = this.startedAt;
-    data['Finished'] = this.finished;
-    data['FinishedAt'] = this.finishedAt;
-    data['Action'] = this.action;
-    data['Category'] = this.category;
-    data['BloodGlucose'] = this.bloodGlucose;
-    data['BloodPressure_Systolic'] = this.bloodPressureSystolic;
-    data['BloodPressure_Diastolic'] = this.bloodPressureDiastolic;
-    data['Weight'] = this.weight;
-    data['Text'] = this.text;
-    data['AssetName'] = this.assetName;
-    data['ChallengeText'] = this.challengeText;
-    data['ChallengeNotes'] = this.challengeNotes;
-    data['MedicationId'] = this.medicationId;
-    data['DrugOrderId'] = this.drugOrderId;
-    data['DrugName'] = this.drugName;
-    data['Details'] = this.details;
-    data['TimeScheduleStart'] = this.timeScheduleStart;
-    data['TimeScheduleEnd'] = this.timeScheduleEnd;
-    data['TakenAt'] = this.takenAt;
-    data['IsTaken'] = this.isTaken;
-    data['IsMissed'] = this.isMissed;
-    data['IsCancelled'] = this.isCancelled;
-    data['CancelledOn'] = this.cancelledOn;
-    data['Note'] = this.note;
-    data['Status'] = this.status;
-    data['DateCreated'] = this.dateCreated;
-    data['DateUpdated'] = this.dateUpdated;
-    data['Url'] = this.url;
-    data['AdditionalInfo'] = this.additionalInfo;
-    data['business_node_name'] = this.businessNodeName;
-    data['business_user_name'] = this.businessUserName;
-    if (this.concreteTask != null) {
-      data['ConcreteTask'] = this.concreteTask.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['PatientUserId'] = patientUserId;
+    data['CarePlanId'] = carePlanId;
+    data['Type'] = type;
+    data['IsEducationalTask'] = isEducationalTask;
+    data['MainTitle'] = mainTitle;
+    data['SubTitle'] = subTitle;
+    data['Description'] = description;
+    data['Language'] = language;
+    data['TaskDate'] = taskDate;
+    data['WeekNumber'] = weekNumber;
+    data['WeekDayNumber'] = weekDayNumber;
+    data['SessionNumber'] = sessionNumber;
+    data['ScheduledStartTime'] = scheduledStartTime;
+    data['ScheduledEndTime'] = scheduledEndTime;
+    data['Started'] = started;
+    data['StartedAt'] = startedAt;
+    data['Finished'] = finished;
+    data['FinishedAt'] = finishedAt;
+    data['Action'] = action;
+    data['Category'] = category;
+    data['BloodGlucose'] = bloodGlucose;
+    data['BloodPressure_Systolic'] = bloodPressureSystolic;
+    data['BloodPressure_Diastolic'] = bloodPressureDiastolic;
+    data['Weight'] = weight;
+    data['Text'] = text;
+    data['AssetName'] = assetName;
+    data['ChallengeText'] = challengeText;
+    data['ChallengeNotes'] = challengeNotes;
+    data['MedicationId'] = medicationId;
+    data['DrugOrderId'] = drugOrderId;
+    data['DrugName'] = drugName;
+    data['Details'] = details;
+    data['TimeScheduleStart'] = timeScheduleStart;
+    data['TimeScheduleEnd'] = timeScheduleEnd;
+    data['TakenAt'] = takenAt;
+    data['IsTaken'] = isTaken;
+    data['IsMissed'] = isMissed;
+    data['IsCancelled'] = isCancelled;
+    data['CancelledOn'] = cancelledOn;
+    data['Note'] = note;
+    data['Status'] = status;
+    data['DateCreated'] = dateCreated;
+    data['DateUpdated'] = dateUpdated;
+    data['Url'] = url;
+    data['AdditionalInfo'] = additionalInfo;
+    data['business_node_name'] = businessNodeName;
+    data['business_user_name'] = businessUserName;
+    if (concreteTask != null) {
+      data['ConcreteTask'] = concreteTask.toJson();
     }
     return data;
   }
@@ -397,24 +397,24 @@ class ConcreteTask {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['PatientUserId'] = this.patientUserId;
-    data['TaskId'] = this.taskId;
-    data['TaskType'] = this.taskType;
-    data['CarePlanId'] = this.carePlanId;
-    data['AllyMRN'] = this.allyMRN;
-    data['SessionId'] = this.sessionId;
-    data['AssetID'] = this.assetID;
-    data['AssetName'] = this.assetName;
-    data['Text'] = this.text;
-    data['MediaUrl'] = this.mediaUrl;
-    data['Word'] = this.word;
-    data['Meaning'] = this.meaning;
-    data['Category'] = this.category;
-    data['Language'] = this.language;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['PatientUserId'] = patientUserId;
+    data['TaskId'] = taskId;
+    data['TaskType'] = taskType;
+    data['CarePlanId'] = carePlanId;
+    data['AllyMRN'] = allyMRN;
+    data['SessionId'] = sessionId;
+    data['AssetID'] = assetID;
+    data['AssetName'] = assetName;
+    data['Text'] = text;
+    data['MediaUrl'] = mediaUrl;
+    data['Word'] = word;
+    data['Meaning'] = meaning;
+    data['Category'] = category;
+    data['Language'] = language;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

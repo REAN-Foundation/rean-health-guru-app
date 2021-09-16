@@ -24,7 +24,7 @@ class DashBoardVer1View extends StatefulWidget {
 
 class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
   var model = DashboardSummaryModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Color widgetBackgroundColor = primaryColor;
   Color widgetBorderColor = primaryColor;
   Color iconColor = Colors.white;
@@ -33,7 +33,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
       colors: [primaryLightColor, colorF6F6FF]);
-  var dateFormat = DateFormat("yyyy-MM-dd");
+  var dateFormat = DateFormat('yyyy-MM-dd');
   int completedTaskCount = 0;
   int incompleteTaskCount = 0;
   int completedMedicationCount = 0;
@@ -46,8 +46,8 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
   Temperature temperature;
   String unit = 'Kg';
   String topicId;
-  String topicName = "";
-  String briefInformation = "";
+  String topicName = '';
+  String briefInformation = '';
 
   @override
   void initState() {
@@ -64,7 +64,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
     // TODO: implement initState
     debugPrint('Country Local ==> ${getCurrentLocale()}');
     // TODO: implement initState
-    if (getCurrentLocale() == "US") {
+    if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
     super.initState();
@@ -72,9 +72,9 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
 
   getTaskPlanSummary() async {
     try {
-      TaskSummaryResponse taskSummaryResponse =
+      final TaskSummaryResponse taskSummaryResponse =
           await model.getTaskPlanSummary();
-      debugPrint("Task Summary ==> ${taskSummaryResponse.toJson()}");
+      debugPrint('Task Summary ==> ${taskSummaryResponse.toJson()}');
       if (taskSummaryResponse.status == 'success') {
         completedTaskCount =
             taskSummaryResponse.data.summary.completedTaskCount;
@@ -88,15 +88,15 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
   getMedicationSummary() async {
     try {
-      TaskSummaryResponse taskSummaryResponse = await model
-          .getMedicationSummary(dateFormat.format(new DateTime.now()));
-      debugPrint("Medication Summary ==> ${taskSummaryResponse.toJson()}");
+      final TaskSummaryResponse taskSummaryResponse =
+          await model.getMedicationSummary(dateFormat.format(DateTime.now()));
+      debugPrint('Medication Summary ==> ${taskSummaryResponse.toJson()}');
       if (taskSummaryResponse.status == 'success') {
         completedMedicationCount = taskSummaryResponse.data.summary.taken;
         incompleteMedicationCount = taskSummaryResponse.data.summary.missed +
@@ -111,15 +111,15 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
   getLatestBiometrics() async {
     try {
-      TaskSummaryResponse taskSummaryResponse =
+      final TaskSummaryResponse taskSummaryResponse =
           await model.getLatestBiometrics();
-      debugPrint("Vitals Summary ==> ${taskSummaryResponse.toJson()}");
+      debugPrint('Vitals Summary ==> ${taskSummaryResponse.toJson()}');
       if (taskSummaryResponse.status == 'success') {
         pulse = taskSummaryResponse.data.summary.pulse;
         bloodPressure = taskSummaryResponse.data.summary.bloodPressure;
@@ -136,18 +136,18 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
   getTodaysKnowledgeTopic() async {
     try {
-      KnowledgeTopicResponse knowledgeTopicResponse =
+      final KnowledgeTopicResponse knowledgeTopicResponse =
           await model.getTodaysKnowledgeTopic();
       debugPrint(
-          "Today Knowledge Topic ==> ${knowledgeTopicResponse.toJson()}");
+          'Today Knowledge Topic ==> ${knowledgeTopicResponse.toJson()}');
       if (knowledgeTopicResponse.status == 'success') {
-        KnowledgeTopic topic =
+        final KnowledgeTopic topic =
             knowledgeTopicResponse.data.knowledgeTopic.elementAt(0);
         topicId = topic.id;
         topicName = topic.topicName;
@@ -159,7 +159,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
@@ -201,10 +201,10 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
       child: Container(
         height: 200,
         width: MediaQuery.of(context).size.width,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: widgetBackgroundColor,
             border: Border.all(color: widgetBorderColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -287,7 +287,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                     ),
                     InkWell(
                       onTap: () {
-                        showToast("Coming Soon...", context);
+                        showToast('Coming Soon...', context);
                       },
                       child: Container(
                         width: 100,
@@ -326,7 +326,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                   children: [
                     InkWell(
                       onTap: () {
-                        showToast("Coming Soon...", context);
+                        showToast('Coming Soon...', context);
                       },
                       child: Container(
                         width: 100,
@@ -356,7 +356,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                     ),
                     InkWell(
                       onTap: () {
-                        showToast("Coming Soon...", context);
+                        showToast('Coming Soon...', context);
                       },
                       child: Container(
                         width: 100,
@@ -386,7 +386,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                     ),
                     InkWell(
                       onTap: () {
-                        showToast("Coming Soon...", context);
+                        showToast('Coming Soon...', context);
                       },
                       child: Container(
                         width: 100,
@@ -432,10 +432,10 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
         child: Container(
           height: 80,
           width: MediaQuery.of(context).size.width,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               color: widgetBackgroundColor,
               border: Border.all(color: widgetBorderColor),
-              borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+              borderRadius: BorderRadius.all(Radius.circular(8.0))),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -484,8 +484,8 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                     height: 24,
                                     child: CircularProgressIndicator(
                                       valueColor:
-                                          new AlwaysStoppedAnimation<Color>(
-                                              iconColor),
+                                      AlwaysStoppedAnimation<Color>(
+                                          iconColor),
                                     ))
                                 : Text(
                                     incompleteTaskCount.toString(),
@@ -531,8 +531,8 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                     height: 24,
                                     child: CircularProgressIndicator(
                                       valueColor:
-                                          new AlwaysStoppedAnimation<Color>(
-                                              iconColor),
+                                      AlwaysStoppedAnimation<Color>(
+                                          iconColor),
                                     ))
                                 : Text(
                                     completedTaskCount.toString(),
@@ -580,10 +580,10 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
         child: Container(
           height: 80,
           width: MediaQuery.of(context).size.width,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               color: widgetBackgroundColor,
               border: Border.all(color: widgetBorderColor),
-              borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+              borderRadius: BorderRadius.all(Radius.circular(8.0))),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -632,8 +632,8 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                     height: 28,
                                     child: CircularProgressIndicator(
                                       valueColor:
-                                          new AlwaysStoppedAnimation<Color>(
-                                              iconColor),
+                                      AlwaysStoppedAnimation<Color>(
+                                          iconColor),
                                     ))
                                 : Text(
                                     incompleteMedicationCount.toString(),
@@ -709,10 +709,10 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
       child: Container(
         height: 80,
         width: MediaQuery.of(context).size.width,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: widgetBackgroundColor,
             border: Border.all(color: widgetBorderColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -751,11 +751,11 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                       Container(
                         height: 32,
                         width: 32,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                             color: Colors.orange,
                             border: Border.all(color: Colors.white),
                             borderRadius:
-                                new BorderRadius.all(Radius.circular(16.0))),
+                                BorderRadius.all(Radius.circular(16.0))),
                         child: Center(
                           child: Text(
                             '1',
@@ -790,11 +790,11 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                       Container(
                         height: 32,
                         width: 32,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                             color: Colors.green,
                             border: Border.all(color: Colors.white),
                             borderRadius:
-                                new BorderRadius.all(Radius.circular(16.0))),
+                                BorderRadius.all(Radius.circular(16.0))),
                         child: Center(
                           child: Text(
                             '3',
@@ -832,18 +832,18 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
       child: Container(
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: widgetBackgroundColor),
-            borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+            borderRadius: BorderRadius.all(Radius.circular(4.0))),
         child: Column(
           children: <Widget>[
             Container(
               height: 48,
               width: MediaQuery.of(context).size.width,
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   color: widgetBackgroundColor,
-                  borderRadius: new BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(4.0),
                       topRight: Radius.circular(4.0))),
               child: Row(
@@ -888,7 +888,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                             fontSize: 14),
                         children: <TextSpan>[
                           TextSpan(
-                              text: " " + briefInformation.toString(),
+                              text: ' ' + briefInformation.toString(),
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -909,10 +909,10 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
       child: Container(
         width: MediaQuery.of(context).size.width,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: widgetBackgroundColor,
             border: Border.all(color: widgetBorderColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -958,29 +958,27 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
               SizedBox(
                 height: 24,
               ),
-              model.busy
-                  ? SizedBox(
-                      width: 28,
-                      height: 28,
-                      child: CircularProgressIndicator(
-                        valueColor:
-                            new AlwaysStoppedAnimation<Color>(iconColor),
-                      ))
-                  : Column(
-                      children: [
-                        pulse != null
-                            ? Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      ImageIcon(
-                                        AssetImage('res/images/ic_pulse.png'),
-                                        size: 24,
-                                        color: iconColor,
+              if (model.busy)
+                SizedBox(
+                    width: 28,
+                    height: 28,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(iconColor),
+                    ))
+              else
+                Column(
+                  children: [
+                    if (pulse != null)
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ImageIcon(
+                                AssetImage('res/images/ic_pulse.png'),
+                                size: 24,
+                                color: iconColor,
                                       ),
                                       SizedBox(
                                         width: 12,
@@ -1028,31 +1026,29 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                               style: TextStyle(
                                                   color: textColor,
                                                   fontSize: 10,
-                                                  fontWeight: FontWeight.w200,
-                                                  fontFamily: 'Montserrat')),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 16,
-                                  ),
-                                ],
-                              )
-                            : Container(),
-                        bloodPressure != null
-                            ? Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      ImageIcon(
-                                        AssetImage(
-                                            'res/images/ic_blood_presure.png'),
-                                        size: 24,
+                                          fontWeight: FontWeight.w200,
+                                          fontFamily: 'Montserrat')),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                        ],
+                      )
+                    else
+                      Container(),
+                    if (bloodPressure != null)
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ImageIcon(
+                                AssetImage('res/images/ic_blood_presure.png'),
+                                size: 24,
                                         color: iconColor,
                                       ),
                                       SizedBox(
@@ -1108,31 +1104,29 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                               style: TextStyle(
                                                   color: textColor,
                                                   fontSize: 10,
-                                                  fontWeight: FontWeight.w200,
-                                                  fontFamily: 'Montserrat')),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 16,
-                                  ),
-                                ],
-                              )
-                            : Container(),
-                        bloodSugar != null
-                            ? Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      ImageIcon(
-                                        AssetImage(
-                                            'res/images/ic_blood_glucose.png'),
-                                        size: 24,
+                                          fontWeight: FontWeight.w200,
+                                          fontFamily: 'Montserrat')),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                        ],
+                      )
+                    else
+                      Container(),
+                    if (bloodSugar != null)
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ImageIcon(
+                                AssetImage('res/images/ic_blood_glucose.png'),
+                                size: 24,
                                         color: iconColor,
                                       ),
                                       SizedBox(
@@ -1183,29 +1177,29 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                               style: TextStyle(
                                                   color: textColor,
                                                   fontSize: 10,
-                                                  fontWeight: FontWeight.w200,
-                                                  fontFamily: 'Montserrat')),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 16,
-                                  ),
-                                ],
-                              )
-                            : Container(),
-                        weight != null
-                            ? Column(
+                                          fontWeight: FontWeight.w200,
+                                          fontFamily: 'Montserrat')),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                        ],
+                      )
+                    else
+                      Container(),
+                    weight != null
+                        ? Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      ImageIcon(
-                                        AssetImage(
+                                  ImageIcon(
+                                    AssetImage(
                                             'res/images/ic_body_weight.png'),
                                         size: 24,
                                         color: iconColor,
@@ -1226,14 +1220,13 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                         width: 140,
                                         child: RichText(
                                           text: TextSpan(
-                                            text: unit == "lbs"
-                                                ? (double.parse(weight.weight
-                                                                .toString()) *
-                                                            2.20462)
-                                                        .toStringAsFixed(1) +
-                                                    ' '
-                                                : weight.weight.toString() +
-                                                    ' ',
+                                            text: unit == 'lbs'
+                                            ? (double.parse(weight.weight
+                                                            .toString()) *
+                                                        2.20462)
+                                                    .toStringAsFixed(1) +
+                                                ' '
+                                            : weight.weight.toString() + ' ',
                                             style: TextStyle(
                                                 fontFamily: 'Montserrat',
                                                 fontWeight: FontWeight.w700,
@@ -1241,16 +1234,13 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                                 fontSize: 18),
                                             children: <TextSpan>[
                                               TextSpan(
-                                                  text: unit == "lbs"
-                                                      ? "lbs"
-                                                      : "Kg",
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: textColor,
-                                                      fontFamily:
-                                                          'Montserrat')),
+                                              text:
+                                                  unit == 'lbs' ? 'lbs' : 'Kg',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: textColor,
+                                                  fontFamily: 'Montserrat')),
                                             ],
                                           ),
                                         ),

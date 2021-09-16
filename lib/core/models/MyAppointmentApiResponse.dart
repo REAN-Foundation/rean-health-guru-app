@@ -11,13 +11,13 @@ class MyAppointmentApiResponse {
   MyAppointmentApiResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -32,17 +32,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['appointments'] != null) {
-      appointments = new List<Appointments>();
+      appointments = <Appointments>[];
       json['appointments'].forEach((v) {
-        appointments.add(new Appointments.fromJson(v));
+        appointments.add(Appointments.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.appointments != null) {
-      data['appointments'] = this.appointments.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (appointments != null) {
+      data['appointments'] = appointments.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -149,38 +149,38 @@ class Appointments {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['business_node_id'] = this.businessNodeId;
-    data['customer_id'] = this.customerId;
-    data['display_id'] = this.displayId;
-    data['business_user_id'] = this.businessUserId;
-    data['business_service_id'] = this.businessServiceId;
-    data['business_node_name'] = this.businessNodeName;
-    data['business_service_name'] = this.businessServiceName;
-    data['business_user_name'] = this.businessUserName;
-    data['customer_name'] = this.customerName;
-    data['date'] = this.date;
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
-    data['start_time_utc'] = this.startTimeUtc;
-    data['end_time_utc'] = this.endTimeUtc;
-    data['customer_dob'] = this.customerDOB;
-    data['customer_gender'] = this.customerGender;
-    data['type'] = this.type;
-    data['note'] = this.note;
-    data['status'] = this.status;
-    data['status_code'] = this.statusCode;
-    data['fees'] = this.fees;
-    data['tax'] = this.tax;
-    data['tip'] = this.tip;
-    data['discount'] = this.discount;
-    data['coupon_code'] = this.couponCode;
-    data['total'] = this.total;
-    data['is_paid'] = this.isPaid;
-    data['transaction_id'] = this.transactionId;
-    data['PatientUserId'] = this.patientUserId;
-    data['ProviderUserId'] = this.providerUserId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['business_node_id'] = businessNodeId;
+    data['customer_id'] = customerId;
+    data['display_id'] = displayId;
+    data['business_user_id'] = businessUserId;
+    data['business_service_id'] = businessServiceId;
+    data['business_node_name'] = businessNodeName;
+    data['business_service_name'] = businessServiceName;
+    data['business_user_name'] = businessUserName;
+    data['customer_name'] = customerName;
+    data['date'] = date;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    data['start_time_utc'] = startTimeUtc;
+    data['end_time_utc'] = endTimeUtc;
+    data['customer_dob'] = customerDOB;
+    data['customer_gender'] = customerGender;
+    data['type'] = type;
+    data['note'] = note;
+    data['status'] = status;
+    data['status_code'] = statusCode;
+    data['fees'] = fees;
+    data['tax'] = tax;
+    data['tip'] = tip;
+    data['discount'] = discount;
+    data['coupon_code'] = couponCode;
+    data['total'] = total;
+    data['is_paid'] = isPaid;
+    data['transaction_id'] = transactionId;
+    data['PatientUserId'] = patientUserId;
+    data['ProviderUserId'] = providerUserId;
     return data;
   }
 }

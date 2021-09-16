@@ -6,7 +6,7 @@ import 'package:paitent/core/services/authentication_service.dart';
 import '../base_model.dart';
 
 class LoginViewModel extends BaseModel {
-  AuthenticationService _authenticationService;
+  final AuthenticationService _authenticationService;
 
   LoginViewModel({
     @required AuthenticationService authenticationService,
@@ -14,7 +14,7 @@ class LoginViewModel extends BaseModel {
 
   Future<UserData> login(Map body) async {
     setBusy(true);
-    UserData response = await _authenticationService.login(body);
+    final UserData response = await _authenticationService.login(body);
     print(response.status.toString());
     setBusy(false);
     return response;
@@ -22,7 +22,7 @@ class LoginViewModel extends BaseModel {
 
   Future<BaseResponse> signUp(Map body) async {
     setBusy(true);
-    BaseResponse response = await _authenticationService.signUp(body);
+    final BaseResponse response = await _authenticationService.signUp(body);
     print(response.status.toString());
     setBusy(false);
     return response;
@@ -31,7 +31,7 @@ class LoginViewModel extends BaseModel {
   Future<BaseResponse> updateProfile(
       Map body, String userId, String auth) async {
     setBusy(true);
-    BaseResponse response =
+    final BaseResponse response =
         await _authenticationService.updateProfile(body, userId, auth);
     print(response.status.toString());
     setBusy(false);

@@ -28,17 +28,17 @@ class _SignUpViewState extends State<SignUpView> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
-  var dateFormat = DateFormat("dd-MM-yyyy");
+  var dateFormat = DateFormat('dd-MM-yyyy');
 
-  String mobileNumber = "";
+  String mobileNumber = '';
 
-  var _firstNameFocus = FocusNode();
-  var _lastNameFocus = FocusNode();
-  var _mobileNumberFocus = FocusNode();
-  var _passwordFocus = FocusNode();
-  var _emailFocus = FocusNode();
-  String selectedGender = "Male";
-  String selectedDate = "";
+  final _firstNameFocus = FocusNode();
+  final _lastNameFocus = FocusNode();
+  final _mobileNumberFocus = FocusNode();
+  final _passwordFocus = FocusNode();
+  final _emailFocus = FocusNode();
+  String selectedGender = 'Male';
+  String selectedDate = '';
   DateTime selectedDateObject;
   String countryCode = '';
 
@@ -74,9 +74,10 @@ class _SignUpViewState extends State<SignUpView> {
                             SizedBox(height: 50),
                             _textFeildWidget(),
                             SizedBox(height: 20),
-                            model.busy
-                                ? CircularProgressIndicator()
-                                : _submitButton(model),
+                            if (model.busy)
+                              CircularProgressIndicator()
+                            else
+                              _submitButton(model),
                             SizedBox(height: 20),
                           ],
                         ),
@@ -314,7 +315,7 @@ class _SignUpViewState extends State<SignUpView> {
                     SizedBox(
                         height: 24,
                         width: 24,
-                        child: new Image.asset('res/images/ic_calender.png')),
+                        child: Image.asset('res/images/ic_calender.png')),
                     const SizedBox(
                       width: 16,
                     ),
@@ -481,7 +482,7 @@ class _SignUpViewState extends State<SignUpView> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   autoValidate: true,
                   decoration: InputDecoration(
-                      counterText: "",
+                      counterText: '',
                       hintText: 'mobile_number',
                       hintStyle: TextStyle(color: Colors.transparent),
                       border: InputBorder.none,
@@ -561,37 +562,37 @@ class _SignUpViewState extends State<SignUpView> {
       child: GestureDetector(
         onTap: () async {
           if (_firstNameController.text == '') {
-            showToast("Please enter first name", context);
+            showToast('Please enter first name', context);
           } else if (_lastNameController.text == '') {
-            showToast("Please enter last name", context);
+            showToast('Please enter last name', context);
           } else if (validateEmail(_emailController.text)) {
-            showToast("Please enter valid email", context);
+            showToast('Please enter valid email', context);
           } else if (selectedGender == '') {
-            showToast("Please select gender", context);
+            showToast('Please select gender', context);
           } else if (selectedDate == '') {
-            showToast("Please select date of birth", context);
+            showToast('Please select date of birth', context);
           } else if (mobileNumber.length != 10) {
-            showToast("Please enter valid mobile number", context);
+            showToast('Please enter valid mobile number', context);
           } else if (_passwordController.text == '') {
-            showToast("Please enter password", context);
+            showToast('Please enter password', context);
           } else {
-            var map = new Map<String, String>();
-            map["FirstName"] = _firstNameController.text;
-            map["LastName"] = _lastNameController.text;
-            map["PhoneNumber"] = mobileNumber;
-            map["Password"] = _passwordController.text;
-            map["Email"] = _emailController.text;
-            map["Prefix"] = "   ";
-            map["Gender"] = selectedGender;
-            map["BirthDate"] = selectedDateObject.toIso8601String();
-            map["TimeZone"] = DateTime.now().timeZoneOffset.toString();
+            final map = <String, String>{};
+            map['FirstName'] = _firstNameController.text;
+            map['LastName'] = _lastNameController.text;
+            map['PhoneNumber'] = mobileNumber;
+            map['Password'] = _passwordController.text;
+            map['Email'] = _emailController.text;
+            map['Prefix'] = '   ';
+            map['Gender'] = selectedGender;
+            map['BirthDate'] = selectedDateObject.toIso8601String();
+            map['TimeZone'] = DateTime.now().timeZoneOffset.toString();
 
             try {
-              BaseResponse signUpSuccess = await model.signUp(map);
+              final BaseResponse signUpSuccess = await model.signUp(map);
 
               if (signUpSuccess.status == 'success') {
-                showAlert("Success",
-                    "Please login your account for doctor appointment booking");
+                showAlert('Success',
+                    'Please login your account for doctor appointment booking');
                 if (Navigator.canPop(context)) {
                   Navigator.pop(context);
                 }
@@ -784,7 +785,7 @@ class _SignUpViewState extends State<SignUpView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Gender",
+            'Gender',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           SizedBox(
@@ -807,9 +808,9 @@ class _SignUpViewState extends State<SignUpView> {
                   onToggle: (index) {
                     print('switched to: $index');
                     if (index == 0) {
-                      selectedGender = "Male";
+                      selectedGender = 'Male';
                     } else {
-                      selectedGender = "Female";
+                      selectedGender = 'Female';
                     }
                   }))
         ],
@@ -820,12 +821,12 @@ class _SignUpViewState extends State<SignUpView> {
   Widget _textFeildWidget() {
     return Column(
       children: <Widget>[
-        _entryFirstNameField("First Name"),
-        _entryLastNameField("Last Name"),
-        _entryEmailField("Email Id"),
+        _entryFirstNameField('First Name'),
+        _entryLastNameField('Last Name'),
+        _entryEmailField('Email Id'),
         _genderWidget(),
-        _dobField("Date of Birth"),
-        _entryMobileNoField("Mobile Number"),
+        _dobField('Date of Birth'),
+        _entryMobileNoField('Mobile Number'),
         //_entryPasswordField("Password", isPassword: true),
       ],
     );
@@ -848,12 +849,13 @@ class _SignUpViewState extends State<SignUpView> {
   }
 
   bool validateEmail(String value) {
-    Pattern pattern =
+    const Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
-    if (regex.hasMatch(value))
+    final RegExp regex = RegExp(pattern);
+    if (regex.hasMatch(value)) {
       return false;
-    else
+    } else {
       return true;
+    }
   }
 }

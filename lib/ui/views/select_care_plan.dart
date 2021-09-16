@@ -16,10 +16,10 @@ class SelectCarePlanView extends StatefulWidget {
 
 class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   GetAHACarePlansResponse _ahaCarePlansResponse;
   List<DropdownMenuItem<String>> _carePlanMenuItems;
-  String selectedCarePlan = "";
+  String selectedCarePlan = '';
   CarePlanTypes carePlanTypes;
 
   @override
@@ -39,7 +39,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       _ahaCarePlansResponse = await model.getAHACarePlans();
 
       if (_ahaCarePlansResponse.status == 'success') {
-        debugPrint("AHA Care Plan ==> ${_ahaCarePlansResponse.toJson()}");
+        debugPrint('AHA Care Plan ==> ${_ahaCarePlansResponse.toJson()}');
 
         _carePlanMenuItems = buildDropDownMenuItemsForCarePlan(
             _ahaCarePlansResponse.data.carePlanTypes);
@@ -55,7 +55,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   List<DropdownMenuItem<String>> buildDropDownMenuItemsForCarePlan(
       List<CarePlanTypes> list) {
-    List<DropdownMenuItem<String>> items = List();
+    final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < list.length; i++) {
       items.add(DropdownMenuItem(
         child: Text(list.elementAt(i).code),
@@ -68,8 +68,9 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   getCarePlanDetails() {
     for (int i = 0; i < _ahaCarePlansResponse.data.carePlanTypes.length; i++) {
       if (selectedCarePlan ==
-          _ahaCarePlansResponse.data.carePlanTypes.elementAt(i).code)
+          _ahaCarePlansResponse.data.carePlanTypes.elementAt(i).code) {
         carePlanTypes = _ahaCarePlansResponse.data.carePlanTypes.elementAt(i);
+      }
     }
   }
 
@@ -91,7 +92,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -123,9 +124,10 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             selectCarePlanDropDown(),
-                            selectedCarePlan == ""
-                                ? Container()
-                                : descriptionOfCarePlan(),
+                            if (selectedCarePlan == '')
+                              Container()
+                            else
+                              descriptionOfCarePlan(),
                             //eligibilityOfCarePlan(),
                             //recomandationForCarePlan(),
                           ],
@@ -149,7 +151,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       ),
       child: Center(
         child: Text(
-          "You do not have any registered care plan.",
+          'You do not have any registered care plan.',
           style: TextStyle(color: textBlack, fontWeight: FontWeight.w700),
         ),
       ),
@@ -165,7 +167,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Select Care Plan",
+            'Select Care Plan',
             style: TextStyle(
                 color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),
           ),
@@ -181,8 +183,8 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 color: colorF6F6FF),
             child: DropdownButton<String>(
               isExpanded: true,
-              hint: new Text(
-                "Select Care Plan",
+              hint: Text(
+                'Select Care Plan',
                 style: TextStyle(
                     color: textBlack,
                     fontSize: 14,
@@ -207,14 +209,14 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                   getCarePlanDetails();
                 });
               },
-              value: selectedCarePlan == "" ? null : selectedCarePlan,
+              value: selectedCarePlan == '' ? null : selectedCarePlan,
             ),
           ),
           const SizedBox(
             height: 4,
           ),
           Text(
-            selectedCarePlan == "" ? "" : carePlanTypes.name,
+            selectedCarePlan == '' ? '' : carePlanTypes.name,
             style: TextStyle(
                 color: textBlack, fontSize: 16, fontWeight: FontWeight.w300),
           ),
@@ -232,7 +234,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Description",
+            'Description',
             style: TextStyle(
                 color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),
           ),
@@ -274,7 +276,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Check Eligibility",
+            'Check Eligibility',
             style: TextStyle(
                 color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),
           ),
@@ -356,7 +358,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Get Doctor Recommendation",
+            'Get Doctor Recommendation',
             style: TextStyle(
                 color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),
           ),
@@ -383,7 +385,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 SizedBox(
                     height: 32,
                     width: 32,
-                    child: new Icon(
+                    child: Icon(
                       Icons.search,
                       size: 32,
                       color: Colors.deepPurple,
@@ -438,8 +440,8 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           children: [
             InkWell(
               onTap: () {
-                if (selectedCarePlan == "") {
-                  showToast("Please select care plan", context);
+                if (selectedCarePlan == '') {
+                  showToast('Please select care plan', context);
                 } else {
                   Navigator.pushNamed(context, RoutePaths.Start_Care_Plan,
                       arguments: selectedCarePlan);
@@ -471,10 +473,10 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   }
 
   void _urlLauncher(String url) async {
-    if (await canLaunch(url))
+    if (await canLaunch(url)) {
       await launch(url);
-    else
-      // can't launch url, there is some error
-      throw "Could not launch $url";
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

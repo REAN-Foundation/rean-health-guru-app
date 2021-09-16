@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
 class PDFScreen extends StatelessWidget {
-  String pathPDF = "";
+  String pathPDF = '';
 
   PDFScreen(this.pathPDF);
 
-  static GlobalKey _globalKey = GlobalKey();
+  static final GlobalKey _globalKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +40,9 @@ class PDFScreen extends StatelessWidget {
       /*  var url = 'https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg';
       var response = await get(url);
       final documentDirectory = (await getExternalStorageDirectory()).path;*/
-      File imgFile = new File(pathPDF);
+      final File imgFile = File(pathPDF);
       /*imgFile.writeAsBytesSync(response.bodyBytes);*/
-      List fileList = List<String>.empty(growable: true);
+      final List fileList = List<String>.empty(growable: true);
       fileList.add(imgFile);
       Share.shareFiles(fileList,
           subject: '',

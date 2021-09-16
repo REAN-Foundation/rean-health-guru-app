@@ -20,12 +20,12 @@ class PatientMedicationViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get('/medication/current/' + patientUserId,
-        header: map);
+    final response = await apiProvider
+        .get('/medication/current/' + patientUserId, header: map);
 
     setBusy(false);
     // Convert and return
@@ -36,11 +36,11 @@ class PatientMedicationViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/medication-consumption/schedule-for-day/' +
             patientUserId +
             '/' +
@@ -56,13 +56,13 @@ class PatientMedicationViewModel extends BaseModel {
     // Get user profile for id
     //setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var body = new Map<String, String>();
+    final body = <String, String>{};
 
-    var response = await apiProvider.put(
+    final response = await apiProvider.put(
         '/medication-consumption/mark-as-taken/' + consumptionId,
         header: map,
         body: body);
@@ -76,13 +76,13 @@ class PatientMedicationViewModel extends BaseModel {
     // Get user profile for id
     //setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var body = new Map<String, String>();
+    final body = <String, String>{};
 
-    var response = await apiProvider.put(
+    final response = await apiProvider.put(
         '/medication-consumption/mark-as-missed/' + consumptionId,
         header: map,
         body: body);
@@ -96,11 +96,11 @@ class PatientMedicationViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/medication-consumption/summary-for-calendar-months/' + patientUserId,
         header: map);
 
@@ -110,10 +110,10 @@ class PatientMedicationViewModel extends BaseModel {
   }
 
   Future<DrugsLibraryPojo> getDrugsByKeyword(String searchKeyword) async {
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
-    var response = await apiProvider.get('/types/drugs?name=' + searchKeyword,
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
+    final response = await apiProvider.get('/types/drugs?name=' + searchKeyword,
         header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
     print(response);
     // Convert and return
@@ -122,11 +122,11 @@ class PatientMedicationViewModel extends BaseModel {
 
   Future<BaseResponse> addMedicationforVisit(Map body) async {
     setBusy(true);
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post('/medication',
+    final response = await apiProvider.post('/medication',
         body: body, header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
 
     print(response);
@@ -136,10 +136,10 @@ class PatientMedicationViewModel extends BaseModel {
   }
 
   Future<BaseResponse> addDrugToLibrary(Map body) async {
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
-    var response =
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
+    final response =
         await apiProvider.post('/types/drugs', body: body, header: map);
     print(response);
     // Convert and return
@@ -148,11 +148,11 @@ class PatientMedicationViewModel extends BaseModel {
 
   Future<DrugOrderIdPojo> createDrugOrderIdForVisit(Map body) async {
     setBusy(true);
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post('/drug-order',
+    final response = await apiProvider.post('/drug-order',
         body: body, header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
 
     print(response);
@@ -162,10 +162,10 @@ class PatientMedicationViewModel extends BaseModel {
   }
 
   Future<GetMedicationStockImages> getMedicationStockImages() async {
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
-    var response = await apiProvider.get('/medication/stock-images',
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
+    final response = await apiProvider.get('/medication/stock-images',
         header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
     print(response);
     // Convert and return

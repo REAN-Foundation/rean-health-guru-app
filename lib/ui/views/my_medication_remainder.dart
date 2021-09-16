@@ -17,10 +17,10 @@ class MyMedicationRemainderView extends StatefulWidget {
 
 class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
   var model = PatientMedicationViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var dateFormatStandard = DateFormat("yyyy-MM-dd");
-  var timeFormat = DateFormat("hh:mm a");
-  List<MedConsumptions> medConsumptions = new List<MedConsumptions>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  var dateFormatStandard = DateFormat('yyyy-MM-dd');
+  var timeFormat = DateFormat('hh:mm a');
+  List<MedConsumptions> medConsumptions = <MedConsumptions>[];
   ProgressDialog progressDialog;
 
   @override
@@ -32,9 +32,9 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
 
   getMyMedications() async {
     try {
-      GetMyMedicationsResponse getMyMedicationsResponse = await model
-          .getMyMedications(dateFormatStandard.format(new DateTime.now()));
-      debugPrint("Medication ==> ${getMyMedicationsResponse.toJson()}");
+      final GetMyMedicationsResponse getMyMedicationsResponse = await model
+          .getMyMedications(dateFormatStandard.format(DateTime.now()));
+      debugPrint('Medication ==> ${getMyMedicationsResponse.toJson()}');
       if (getMyMedicationsResponse.status == 'success') {
         medConsumptions.clear();
         medConsumptions.addAll(getMyMedicationsResponse.data.medConsumptions);
@@ -44,7 +44,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -52,7 +52,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     // TODO: implement build
     return BaseWidget<PatientMedicationViewModel>(
       model: model,
@@ -68,7 +68,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
                         height: 32,
                         width: 32,
                         child: CircularProgressIndicator()))
-                : (medConsumptions.length == 0
+                : (medConsumptions.isEmpty
                     ? noMedicationFound()
                     : listWidget()),
           ),
@@ -79,7 +79,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
 
   Widget noMedicationFound() {
     return Center(
-      child: Text("No medication for today",
+      child: Text('No medication for today',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -102,21 +102,21 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
   }
 
   Widget _makeMedicineCard(BuildContext context, int index) {
-    MedConsumptions consumptions = medConsumptions.elementAt(index);
+    final MedConsumptions consumptions = medConsumptions.elementAt(index);
     return Container(
       height: 100,
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+          borderRadius: BorderRadius.all(Radius.circular(4.0))),
       child: Column(
         children: <Widget>[
           Expanded(
             flex: 3,
             child: Container(
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   color: colorF6F6FF,
-                  borderRadius: new BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(4.0),
                       topRight: Radius.circular(4.0))),
               child: Row(
@@ -151,7 +151,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
                   Row(
                     children: [
                       Text(
-                          "Today, " +
+                          'Today, ' +
                               timeFormat.format(consumptions.timeScheduleStart),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -183,15 +183,16 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          consumptions.note == null
-                              ? Container()
-                              : Text(consumptions.note,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w200,
-                                      color: textBlack)),
+                          if (consumptions.note == null)
+                            Container()
+                          else
+                            Text(consumptions.note,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w200,
+                                    color: textBlack)),
                           SizedBox(
                             height: 4,
                           ),
@@ -230,7 +231,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
                   if (!consumptions.isTaken) ...[
                     Visibility(
                       visible: !consumptions.timeScheduleStart
-                          .isAfter(new DateTime.now()),
+                          .isAfter(DateTime.now()),
                       child: Expanded(
                         flex: 2,
                         child: InkWell(
@@ -238,7 +239,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
                             markMedicationsAsTaken(consumptions.id);
                           },
                           child: Container(
-                            decoration: new BoxDecoration(
+                            decoration: BoxDecoration(
                               color: primaryColor,
                               borderRadius: BorderRadius.only(
                                   bottomRight: Radius.circular(4)),
@@ -271,13 +272,13 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
                   if (consumptions.isTaken) ...[
                     Visibility(
                       visible: !consumptions.timeScheduleStart
-                          .isAfter(new DateTime.now()),
+                          .isAfter(DateTime.now()),
                       child: Expanded(
                         flex: 2,
                         child: InkWell(
                           onTap: () {},
                           child: Container(
-                            decoration: new BoxDecoration(
+                            decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
                                   bottomRight: Radius.circular(4)),
@@ -334,9 +335,9 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
   markMedicationsAsTaken(String consumptionId) async {
     try {
       progressDialog.show();
-      BaseResponse baseResponse =
+      final BaseResponse baseResponse =
           await model.markMedicationsAsTaken(consumptionId);
-      debugPrint("Medication ==> ${baseResponse.toJson()}");
+      debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         progressDialog.hide();
         getMyMedications();
@@ -348,7 +349,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
       progressDialog.hide();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }

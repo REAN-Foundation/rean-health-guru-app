@@ -21,10 +21,10 @@ class MyCurrentMedicationView extends StatefulWidget {
 
 class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   var model = PatientMedicationViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var dateFormatStandard = DateFormat("MMMM dd, yyyy");
-  var timeFormat = DateFormat("hh:mm a");
-  List<Medications> currentMedicationList = new List<Medications>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  var dateFormatStandard = DateFormat('MMMM dd, yyyy');
+  var timeFormat = DateFormat('hh:mm a');
+  List<Medications> currentMedicationList = <Medications>[];
   ProgressDialog progressDialog;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
@@ -37,9 +37,9 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
 
   getMyMedications() async {
     try {
-      MyCurrentMedication currentMedication =
+      final MyCurrentMedication currentMedication =
           await model.getMyCurrentMedications();
-      debugPrint("Medication ==> ${currentMedication.toJson()}");
+      debugPrint('Medication ==> ${currentMedication.toJson()}');
       if (currentMedication.status == 'success') {
         currentMedicationList.clear();
         currentMedicationList.addAll(currentMedication.data.medications);
@@ -49,7 +49,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -57,7 +57,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     // TODO: implement build
     return BaseWidget<PatientMedicationViewModel>(
       model: model,
@@ -76,7 +76,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                             height: 32,
                             width: 32,
                             child: CircularProgressIndicator()))
-                    : (currentMedicationList.length == 0
+                    : (currentMedicationList.isEmpty
                         ? noMedicationFound()
                         : listWidget()),
               ),
@@ -84,10 +84,10 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
             floatingActionButton: Semantics(
               label: 'add_my_medication',
               container: true,
-              child: new FloatingActionButton(
+              child: FloatingActionButton(
                   elevation: 0.0,
                   tooltip: 'add_my_medication',
-                  child: new Icon(
+                  child: Icon(
                     Icons.add,
                     color: Colors.white,
                   ),
@@ -105,7 +105,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
 
   Widget noMedicationFound() {
     return Center(
-      child: Text("No medication added",
+      child: Text('No medication added',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -128,7 +128,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   }
 
   Widget _makeMedicineCard(BuildContext context, int index) {
-    Medications medication = currentMedicationList.elementAt(index);
+    final Medications medication = currentMedicationList.elementAt(index);
 
     return Card(
       semanticContainer: false,
@@ -136,10 +136,10 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       child: Container(
         padding: const EdgeInsets.only(
             left: 16.0, right: 16.0, top: 16.0, bottom: 16.0),
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: primaryColor, width: 0.8),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Row(
           children: [
             Expanded(
@@ -200,19 +200,20 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                 ],
               ),
             ),
-            medication.medicationImageResourceId != null
-                ? Expanded(
-                    flex: 1,
-                    child: Semantics(
-                      label: 'medication_image',
-                      child: CachedNetworkImage(
-                        imageUrl: apiProvider.getBaseUrl() +
-                            '/resources/download-public/' +
-                            medication.medicationImageResourceId,
-                      ),
-                    ),
-                  )
-                : Container(),
+            if (medication.medicationImageResourceId != null)
+              Expanded(
+                flex: 1,
+                child: Semantics(
+                  label: 'medication_image',
+                  child: CachedNetworkImage(
+                    imageUrl: apiProvider.getBaseUrl() +
+                        '/resources/download-public/' +
+                        medication.medicationImageResourceId,
+                  ),
+                ),
+              )
+            else
+              Container(),
           ],
         ),
       ),
@@ -416,9 +417,9 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   markMedicationsAsTaken(String consumptionId) async {
     try {
       progressDialog.show();
-      BaseResponse baseResponse =
+      final BaseResponse baseResponse =
           await model.markMedicationsAsTaken(consumptionId);
-      debugPrint("Medication ==> ${baseResponse.toJson()}");
+      debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         progressDialog.hide();
         getMyMedications();
@@ -430,7 +431,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       progressDialog.hide();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }

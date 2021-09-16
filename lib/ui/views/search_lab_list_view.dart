@@ -23,19 +23,20 @@ class _SearchLabListViewState extends State<SearchLabListView> {
   List<Address> addresses;
   Address first;*/
   bool _serviceEnabled;
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
-  String name = "";
-  int _currentNav = 0;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var _searchController = new TextEditingController();
-  String auth = "";
-  var model = new BookAppoinmentViewModel();
-  var labSearchList = new List<Labs>();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  String name = '';
+  final int _currentNav = 0;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _searchController = TextEditingController();
+  String auth = '';
+  var model = BookAppoinmentViewModel();
+  var labSearchList = <Labs>[];
   ProgressDialog progressDialog;
 
   loadSharedPrefs() async {
     try {
-      UserData user = UserData.fromJson(await _sharedPrefUtils.read("user"));
+      final UserData user =
+          UserData.fromJson(await _sharedPrefUtils.read('user'));
       //debugPrint(user.toJson().toString());
       auth = user.data.accessToken;
       getLabList();
@@ -50,11 +51,11 @@ class _SearchLabListViewState extends State<SearchLabListView> {
 
   getLabList() async {
     try {
-      LabsListApiResponse labsListApiResponse =
+      final LabsListApiResponse labsListApiResponse =
           await model.getLabsList('Bearer ' + auth);
 
       if (labsListApiResponse.status == 'success') {
-        if (labsListApiResponse.data.labs.length != 0) {
+        if (labsListApiResponse.data.labs.isNotEmpty) {
           labSearchList.clear();
           labSearchList.addAll(labsListApiResponse.data.labs);
         } else {
@@ -72,11 +73,11 @@ class _SearchLabListViewState extends State<SearchLabListView> {
 
   getLabListByName(String name) async {
     try {
-      LabsListApiResponse labsListApiResponse =
+      final LabsListApiResponse labsListApiResponse =
           await model.getLabsListByLocality(name, 'Bearer ' + auth);
 
       if (labsListApiResponse.status == 'success') {
-        if (labsListApiResponse.data.labs.length != 0) {
+        if (labsListApiResponse.data.labs.isNotEmpty) {
           labSearchList.clear();
           labSearchList.addAll(labsListApiResponse.data.labs);
         } else {
@@ -128,7 +129,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
   getLabDetails(String labUserId) async {
     try {
       progressDialog.show();
-      LabDetailsResponse doctorDetailsResponse =
+      final LabDetailsResponse doctorDetailsResponse =
           await model.getLabDetails('Bearer ' + auth, labUserId);
 
       if (doctorDetailsResponse.status == 'success') {
@@ -156,7 +157,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     return BaseWidget<BookAppoinmentViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -173,7 +174,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
           ),
           body: MergeSemantics(
             child: Padding(
@@ -183,11 +184,10 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                 children: <Widget>[
                   Container(
                     height: 40,
-                    decoration: new BoxDecoration(
+                    decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(color: primaryColor, width: 2),
-                        borderRadius:
-                            new BorderRadius.all(Radius.circular(8.0))),
+                        borderRadius: BorderRadius.all(Radius.circular(8.0))),
                     child: Row(
                       children: <Widget>[
                         Expanded(
@@ -201,7 +201,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                               onChanged: (text) {
                                 getLabListByName(text);
                               },
-                              decoration: new InputDecoration(
+                              decoration: InputDecoration(
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none,
@@ -209,7 +209,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                                   disabledBorder: InputBorder.none,
                                   contentPadding: EdgeInsets.only(
                                       left: 15, bottom: 11, top: 11, right: 0),
-                                  hintText: "Search labs by name")),
+                                  hintText: 'Search labs by name')),
                         ),
                         Container(
                           padding: const EdgeInsets.all(0.0),
@@ -222,7 +222,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                                 getLabList();
                               },
                               child: Icon(
-                                _searchController.text.length == 0
+                                _searchController.text.isEmpty
                                     ? Icons.search
                                     : Icons.clear,
                                 color: primaryColor,
@@ -238,7 +238,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                     height: 16,
                   ),
                   Text(
-                    "Near By",
+                    'Near By',
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
                   ),
                   SizedBox(
@@ -251,7 +251,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                                 height: 32,
                                 width: 32,
                                 child: CircularProgressIndicator()))
-                        : (labSearchList.length == 0
+                        : (labSearchList.isEmpty
                             ? noLabFound()
                             : labSearchResultListView()),
                   ),
@@ -266,7 +266,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
 
   Widget noLabFound() {
     return Center(
-      child: Text("No lab found in your locality",
+      child: Text('No lab found in your locality',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -289,14 +289,14 @@ class _SearchLabListViewState extends State<SearchLabListView> {
   }
 
   Widget _makeLabListCard(BuildContext context, int index) {
-    Labs labDetails = labSearchList.elementAt(index);
+    final Labs labDetails = labSearchList.elementAt(index);
     return MergeSemantics(
       child: Container(
         height: 100,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: primaryLightColor, width: 1),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Column(
           children: <Widget>[
             Expanded(
@@ -316,11 +316,11 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                             backgroundColor: primaryColor,
                             child: CircleAvatar(
                                 radius: 38,
-                                backgroundImage: (labDetails.imageURL == "") ||
+                                backgroundImage: (labDetails.imageURL == '') ||
                                         (labDetails.imageURL == null)
                                     ? AssetImage(
                                         'res/images/profile_placeholder.png')
-                                    : new NetworkImage(labDetails.imageURL)),
+                                    : NetworkImage(labDetails.imageURL)),
                           ),
                         ),
                       ),
@@ -378,10 +378,10 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                       child: Container(
                         height: 56,
                         width: 120,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                             color: primaryColor,
                             border: Border.all(color: primaryColor),
-                            borderRadius: new BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(8.0),
                               bottomRight: Radius.circular(8.0),
                             )),

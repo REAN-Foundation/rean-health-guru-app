@@ -45,38 +45,39 @@ class _HomeViewState extends State<HomeView> {
   LocationData _locationData;
   List<Address> addresses;
   Address first;*/
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
-  String name = "";
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  String name = '';
   int _currentNav = 0;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String pathPDF = "";
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  String pathPDF = '';
   var model = CommonConfigModel();
   GlobalKey drawerKey = GlobalKey();
   GlobalKey key = GlobalKey();
 
-  var _searchDoctorListView = SearchDoctorListView();
-  var _searchLabListView = SearchLabListView();
-  String profileImage = "";
+  final _searchDoctorListView = SearchDoctorListView();
+  final _searchLabListView = SearchLabListView();
+  String profileImage = '';
   String _lastSelected = 'TAB: 0';
 
-  GlobalKey _keyNavigation_drawer = new GlobalKey();
-  GlobalKey _keyMyTasks = new GlobalKey();
-  GlobalKey _keyUploadReports = new GlobalKey();
-  GlobalKey _keyViewAppointments = new GlobalKey();
-  GlobalKey _keyEmergencyContacts = new GlobalKey();
+  final GlobalKey _keyNavigation_drawer = GlobalKey();
+  final GlobalKey _keyMyTasks = GlobalKey();
+  final GlobalKey _keyUploadReports = GlobalKey();
+  final GlobalKey _keyViewAppointments = GlobalKey();
+  final GlobalKey _keyEmergencyContacts = GlobalKey();
   TutorialCoachMark tutorialCoachMark;
-  List<TargetFocus> targets = List();
-  CoachMarkUtilites coackMarkUtilites = new CoachMarkUtilites();
+  List<TargetFocus> targets = [];
+  CoachMarkUtilites coackMarkUtilites = CoachMarkUtilites();
 
   _HomeViewState(int screenPosition) {
-    this._currentNav = screenPosition;
+    _currentNav = screenPosition;
   }
 
   loadSharedPrefs() async {
     try {
-      UserData user = UserData.fromJson(await _sharedPrefUtils.read("user"));
-      Patient patient =
-          Patient.fromJson(await _sharedPrefUtils.read("patientDetails"));
+      final UserData user =
+          UserData.fromJson(await _sharedPrefUtils.read('user'));
+      final Patient patient =
+          Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       auth = user.data.accessToken;
       patientUserId = user.data.user.userId;
       patientGender = patient.gender;
@@ -86,14 +87,14 @@ class _HomeViewState extends State<HomeView> {
       setState(() {
         //debugPrint('Gender ==> ${patient.gender.toString()}');
         name = patient.firstName;
-        profileImage = patient.imageURL == null ? "" : patient.imageURL;
+        profileImage = patient.imageURL ?? '';
       });
 
       if (!user.data.user.verifiedPhoneNumber ||
           user.data.user.verifiedPhoneNumber == null) {
         startCarePlanResponseGlob = null;
-        _sharedPrefUtils.save("CarePlan", null);
-        _sharedPrefUtils.saveBoolean("login", null);
+        _sharedPrefUtils.save('CarePlan', null);
+        _sharedPrefUtils.saveBoolean('login', null);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return LoginWithOTPView();
@@ -112,10 +113,10 @@ class _HomeViewState extends State<HomeView> {
 
   getCarePlanSubscribe() async {
     try {
-      if (_sharedPrefUtils.read("CarePlan") == null) {
+      if (_sharedPrefUtils.read('CarePlan') == null) {
       } else {
         startCarePlanResponseGlob = StartCarePlanResponse.fromJson(
-            await _sharedPrefUtils.read("CarePlan"));
+            await _sharedPrefUtils.read('CarePlan'));
         //debugPrint("CarePlan ==> ${startCarePlanResponseGlob.data.carePlan.carePlanCode}");
       }
       Timer(Duration(seconds: 3), () {
@@ -138,12 +139,13 @@ class _HomeViewState extends State<HomeView> {
 
   getCarePlan() async {
     try {
-      StartCarePlanResponse startCarePlanResponse = await model.getCarePlan();
-      debugPrint("Registered Care Plan ==> ${startCarePlanResponse.toJson()}");
+      final StartCarePlanResponse startCarePlanResponse =
+          await model.getCarePlan();
+      debugPrint('Registered Care Plan ==> ${startCarePlanResponse.toJson()}');
       if (startCarePlanResponse.status == 'success') {
         if (startCarePlanResponse.data.carePlan != null) {
-          debugPrint("Care Plan");
-          _sharedPrefUtils.save("CarePlan", startCarePlanResponse.toJson());
+          debugPrint('Care Plan');
+          _sharedPrefUtils.save('CarePlan', startCarePlanResponse.toJson());
           startCarePlanResponseGlob = startCarePlanResponse;
         }
         //showToast(startCarePlanResponse.message);
@@ -153,7 +155,7 @@ class _HomeViewState extends State<HomeView> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -193,7 +195,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void _selectedTab(int index) {
-    print('Selected Tab ${index}');
+    print('Selected Tab $index');
     setState(() {
       _currentNav = index;
       _lastSelected = 'TAB: $index';
@@ -207,7 +209,7 @@ class _HomeViewState extends State<HomeView> {
     isCoachMarkDisplayed = await _sharedPrefUtils
         .readBoolean(StringConstant.Is_Home_View_Coach_Mark_Completed);
 
-    debugPrint('isCoachMarkDisplayed ==> ${isCoachMarkDisplayed}');
+    debugPrint('isCoachMarkDisplayed ==> $isCoachMarkDisplayed');
     if (!isCoachMarkDisplayed || isCoachMarkDisplayed == null) {
       Future.delayed(const Duration(seconds: 2), () => showTutorial());
       //showTutorial();
@@ -241,19 +243,18 @@ class _HomeViewState extends State<HomeView> {
   void showTutorial() {
     coackMarkUtilites.displayCoachMark(context, targets,
         onCoachMartkFinish: () {
-      _sharedPrefUtils.saveBoolean(
+          _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
-      debugPrint("Coach Mark Finish");
+      debugPrint('Coach Mark Finish');
     }, onCoachMartkSkip: () {
       _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
-      debugPrint("Coach Mark Skip");
+      debugPrint('Coach Mark Skip');
     }, onCoachMartkClickTarget: (target) {
-      debugPrint("Coach Mark target click");
+      debugPrint('Coach Mark target click');
     }, onCoachMartkClickOverlay: () {
-      debugPrint("Coach Mark overlay click");
-    })
-      ..show();
+      debugPrint('Coach Mark overlay click');
+    }).show();
   }
 
   void initTargets() async {
@@ -304,7 +305,7 @@ class _HomeViewState extends State<HomeView> {
       case 0:
         screen = DashBoardVer2View(
           positionToChangeNavigationBar: (int tabPosition) {
-            print('Tapped Tab ${tabPosition}');
+            print('Tapped Tab $tabPosition');
             _selectedTab(tabPosition);
           },
         );
@@ -354,12 +355,12 @@ class _HomeViewState extends State<HomeView> {
                   ],
                 ),
               ),
-              iconTheme: new IconThemeData(color: Colors.black),
+              iconTheme: IconThemeData(color: Colors.black),
               leading: InkWell(
                 onTap: () {
                   _scaffoldKey.currentState.openDrawer();
                 },
-                child: new Padding(
+                child: Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 8.0, 0.0, 8.0),
                   child:
                       /*CircleAvatar(
@@ -375,17 +376,16 @@ class _HomeViewState extends State<HomeView> {
                       key: _keyNavigation_drawer,
                       width: 60.0,
                       height: 60.0,
-                      decoration: new BoxDecoration(
+                      decoration: BoxDecoration(
                         color: const Color(0xff7c94b6),
-                        image: new DecorationImage(
-                          image: profileImage == ""
+                        image: DecorationImage(
+                          image: profileImage == ''
                               ? AssetImage('res/images/profile_placeholder.png')
-                              : new CachedNetworkImageProvider(profileImage),
+                              : CachedNetworkImageProvider(profileImage),
                           fit: BoxFit.cover,
                         ),
-                        borderRadius:
-                            new BorderRadius.all(new Radius.circular(50.0)),
-                        border: new Border.all(
+                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                        border: Border.all(
                           color: Colors.deepPurple,
                           width: 1.0,
                         ),
@@ -450,14 +450,14 @@ class _HomeViewState extends State<HomeView> {
                           child: SizedBox(
                               height: 24,
                               width: 24,
-                              child: new Image.asset(
+                              child: Image.asset(
                                   'res/images/ic_home_colored.png')),
                         )
                       : SizedBox(
                           height: 24,
                           width: 24,
-                          child: new Image.asset('res/images/ic_home.png')),
-                  title: Container(height: 10.0),
+                          child: Image.asset('res/images/ic_home.png')),
+                  label: '',
                 ),
                 BottomNavigationBarItem(
                   icon: _currentNav == 1
@@ -467,17 +467,17 @@ class _HomeViewState extends State<HomeView> {
                           child: SizedBox(
                               height: 24,
                               width: 24,
-                              child: new Image.asset(
+                              child: Image.asset(
                                   'res/images/ic_daily_tasks_colored.png')),
                         )
                       : SizedBox(
                           height: 24,
                           width: 24,
-                          child: new Image.asset(
+                          child: Image.asset(
                             'res/images/ic_daily_tasks.png',
                             key: _keyMyTasks,
                           )),
-                  title: Container(height: 10.0),
+                  label: '',
                 ),
                 BottomNavigationBarItem(
                   icon: _currentNav == 2
@@ -487,17 +487,17 @@ class _HomeViewState extends State<HomeView> {
                           child: SizedBox(
                               height: 28,
                               width: 28,
-                              child: new Image.asset(
+                              child: Image.asset(
                                   'res/images/ic_upload_files_colored.png')),
                         )
                       : SizedBox(
                           height: 28,
                           width: 28,
-                          child: new Image.asset(
+                          child: Image.asset(
                             'res/images/ic_upload_files.png',
                             key: _keyUploadReports,
                           )),
-                  title: Container(height: 10.0),
+                  label: '',
                 ),
                 /*BottomNavigationBarItem(
                   icon: _currentNav == 3
@@ -521,17 +521,17 @@ class _HomeViewState extends State<HomeView> {
                           child: SizedBox(
                               height: 24,
                               width: 24,
-                              child: new Image.asset(
+                              child: Image.asset(
                                   'res/images/ic_call_colered.png')),
                         )
                       : SizedBox(
                           height: 24,
                           width: 24,
-                          child: new Image.asset(
+                          child: Image.asset(
                             'res/images/ic_call.png',
                             key: _keyEmergencyContacts,
                           )),
-                  title: Container(height: 10.0),
+                  label: '',
                 ),
               ],
               onTap: (index) {

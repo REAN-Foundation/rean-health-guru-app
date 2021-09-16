@@ -12,10 +12,10 @@ class DashboardTile {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['date'] = this.date.toIso8601String();
-    data['tile'] = this.tile;
-    data['discription'] = this.discription;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['date'] = date.toIso8601String();
+    data['tile'] = tile;
+    data['discription'] = discription;
     return data;
   }
 }

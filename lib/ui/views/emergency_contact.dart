@@ -20,18 +20,18 @@ class EmergencyContactView extends StatefulWidget {
 
 class _EmergencyContactViewState extends State<EmergencyContactView> {
   var model = CommonConfigModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  ScrollController _scrollController =
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
 
-  var doctorTeam = new List<Contacts>();
-  var pharmaTeam = new List<Contacts>();
-  var socialWorkerTeam = new List<Contacts>();
-  var familyTeam = new List<Contacts>();
+  var doctorTeam = <Contacts>[];
+  var pharmaTeam = <Contacts>[];
+  var socialWorkerTeam = <Contacts>[];
+  var familyTeam = <Contacts>[];
 
   getEmergencyTeam() async {
     try {
-      EmergencyContactResponse emergencyContactResponse =
+      final EmergencyContactResponse emergencyContactResponse =
           await model.getEmergencyTeam();
 
       if (emergencyContactResponse.status == 'success') {
@@ -40,7 +40,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         socialWorkerTeam.clear();
         familyTeam.clear();
         debugPrint(
-            "Emergency Contact ==> ${emergencyContactResponse.toJson()}");
+            'Emergency Contact ==> ${emergencyContactResponse.toJson()}');
         _srotTeamMembers(emergencyContactResponse);
       } else {
         showToast(emergencyContactResponse.message, context);
@@ -53,14 +53,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   _srotTeamMembers(EmergencyContactResponse emergencyContactResponse) {
-    for (var teamMemeber in emergencyContactResponse.data.contacts) {
-      if (teamMemeber.roleName == "Doctor") {
+    for (final teamMemeber in emergencyContactResponse.data.contacts) {
+      if (teamMemeber.roleName == 'Doctor') {
         doctorTeam.add(teamMemeber);
-      } else if (teamMemeber.roleName == "Pharmacy") {
+      } else if (teamMemeber.roleName == 'Pharmacy') {
         pharmaTeam.add(teamMemeber);
-      } else if (teamMemeber.roleName == "HealthWorker") {
+      } else if (teamMemeber.roleName == 'HealthWorker') {
         socialWorkerTeam.add(teamMemeber);
-      } else if (teamMemeber.roleName == "FamilyMember") {
+      } else if (teamMemeber.roleName == 'FamilyMember') {
         familyTeam.add(teamMemeber);
       }
 
@@ -94,58 +94,61 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      "Emergency Contact ",
+                      'Emergency Contact ',
                       style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.w700,
                           fontSize: 16),
                     ),
                   ),
-                  sectionHeader("Doctor"),
-                  model.busy
-                      ? Container(
-                          height: 80,
-                          child: Center(
-                              child: SizedBox(
-                                  height: 32,
-                                  width: 32,
-                                  child: CircularProgressIndicator())),
-                        )
-                      : (doctorTeam.length == 0)
-                          ? noDoctorFound()
-                          : doctorSearchResultListView(),
+                  sectionHeader('Doctor'),
+                  if (model.busy)
+                    Container(
+                      height: 80,
+                      child: Center(
+                          child: SizedBox(
+                              height: 32,
+                              width: 32,
+                              child: CircularProgressIndicator())),
+                    )
+                  else
+                    (doctorTeam.isEmpty)
+                        ? noDoctorFound()
+                        : doctorSearchResultListView(),
                   const SizedBox(
                     height: 16,
                   ),
-                  sectionHeader("Nurses / Social Health Workers"),
-                  model.busy
-                      ? Container(
-                          height: 80,
-                          child: Center(
-                              child: SizedBox(
-                                  height: 32,
-                                  width: 32,
-                                  child: CircularProgressIndicator())),
-                        )
-                      : (socialWorkerTeam.length == 0)
-                          ? noNurseFound()
-                          : nurseSearchResultListView(),
+                  sectionHeader('Nurses / Social Health Workers'),
+                  if (model.busy)
+                    Container(
+                      height: 80,
+                      child: Center(
+                          child: SizedBox(
+                              height: 32,
+                              width: 32,
+                              child: CircularProgressIndicator())),
+                    )
+                  else
+                    (socialWorkerTeam.isEmpty)
+                        ? noNurseFound()
+                        : nurseSearchResultListView(),
                   const SizedBox(
                     height: 16,
                   ),
-                  sectionHeader("Family Members / Friends"),
-                  model.busy
-                      ? Container(
-                          height: 80,
-                          child: Center(
-                              child: SizedBox(
-                                  height: 32,
-                                  width: 32,
-                                  child: CircularProgressIndicator())),
-                        )
-                      : (familyTeam.length == 0)
-                          ? noFamilyMemberFound()
-                          : familyMemberSearchResultListView(),
+                  sectionHeader('Family Members / Friends'),
+                  if (model.busy)
+                    Container(
+                      height: 80,
+                      child: Center(
+                          child: SizedBox(
+                              height: 32,
+                              width: 32,
+                              child: CircularProgressIndicator())),
+                    )
+                  else
+                    (familyTeam.isEmpty)
+                        ? noFamilyMemberFound()
+                        : familyMemberSearchResultListView(),
                   const SizedBox(
                     height: 16,
                   ),
@@ -162,7 +165,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     return Column(
       children: [
         Container(
-            height: 30,
+            height: 40,
             decoration: BoxDecoration(
               color: colorF6F6FF,
               borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -212,12 +215,15 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                         }
                       },
                       child: Container(
-                        key: new Key(tittle),
+                        key: Key(tittle),
                         alignment: Alignment.centerRight,
-                        child: Icon(
-                          Icons.add_circle,
-                          color: primaryColor,
-                          size: 24,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.add_circle,
+                            color: primaryColor,
+                            size: 24,
+                          ),
                         ),
                       ),
                     ),
@@ -239,7 +245,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     return Container(
       height: 80,
       child: Center(
-        child: Text("No doctor found",
+        child: Text('No doctor found',
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
@@ -266,14 +272,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   Widget _makeDoctorListCard(BuildContext context, int index) {
-    Details details = doctorTeam.elementAt(index).details;
+    final Details details = doctorTeam.elementAt(index).details;
     return ExcludeSemantics(
       child: Container(
         height: 80,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: primaryLightColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Card(
@@ -354,10 +360,13 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                         },
                         child: Align(
                           alignment: Alignment.topRight,
-                          child: Icon(
-                            Icons.delete_forever,
-                            color: primaryColor,
-                            size: 24,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.delete_forever,
+                              color: primaryColor,
+                              size: 24,
+                            ),
                           ),
                         )))
               ],
@@ -372,7 +381,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     return Container(
       height: 80,
       child: Center(
-        child: Text("No pharmacy found",
+        child: Text('No pharmacy found',
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
@@ -402,10 +411,10 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   Widget _makePharmacyListCard(BuildContext context, int index) {
     return Container(
       height: 80,
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Card(
@@ -467,7 +476,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     return Container(
       height: 80,
       child: Center(
-        child: Text("No nurse / social health worker found",
+        child: Text('No nurse / social health worker found',
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
@@ -494,14 +503,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   Widget _makeNurseListCard(BuildContext context, int index) {
-    Details details = socialWorkerTeam.elementAt(index).details;
+    final Details details = socialWorkerTeam.elementAt(index).details;
     return ExcludeSemantics(
       child: Container(
         height: 80,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: primaryLightColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Card(
@@ -579,10 +588,13 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                         },
                         child: Align(
                           alignment: Alignment.topRight,
-                          child: Icon(
-                            Icons.delete_forever,
-                            color: primaryColor,
-                            size: 24,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.delete_forever,
+                              color: primaryColor,
+                              size: 24,
+                            ),
                           ),
                         )))
               ],
@@ -597,7 +609,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     return Container(
       height: 80,
       child: Center(
-        child: Text("No family member found",
+        child: Text('No family member found',
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
@@ -626,14 +638,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   Widget _makeFamilyMemberListCard(BuildContext context, int index) {
-    Details details = familyTeam.elementAt(index).details;
+    final Details details = familyTeam.elementAt(index).details;
     return ExcludeSemantics(
       child: Container(
         height: 80,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: primaryLightColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Card(
@@ -710,10 +722,13 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                         },
                         child: Align(
                           alignment: Alignment.topRight,
-                          child: Icon(
-                            Icons.delete_forever,
-                            color: primaryColor,
-                            size: 24,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.delete_forever,
+                              color: primaryColor,
+                              size: 24,
+                            ),
                           ),
                         )))
               ],
@@ -779,7 +794,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 child: AddDoctorDetailsDialog(submitButtonListner:
                     (String firstName, String lastName, String phoneNumber,
                         String gender) {
-                  debugPrint("Team Member ==> ${firstName}");
+                      debugPrint('Team Member ==> $firstName');
                   addTeamMembers(
                       firstName, lastName, phoneNumber, gender, '', 'Doctor');
                   Navigator.of(context, rootNavigator: true).pop();
@@ -800,21 +815,22 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       jsonRequest.isEmergencyContact = true;
       jsonRequest.details.userId = doctors.userId;*/
 
-      var data = new Map<String, dynamic>();
+      final data = <String, dynamic>{};
       data['UserId'] = doctors.userId;
-      data['FirstName'] = "";
-      data['LastName'] = "";
-      data['Prefix'] = "";
-      data['PhoneNumber'] = "";
-      data['Gender'] = "";
+      data['FirstName'] = '';
+      data['LastName'] = '';
+      data['Prefix'] = '';
+      data['PhoneNumber'] = '';
+      data['Gender'] = '';
 
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['Type'] = "Doctor";
+      map['Type'] = 'Doctor';
       map['Details'] = data;
 
-      BaseResponse addTeamMemberResponse = await model.addTeamMembers(map);
-      debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
+      final BaseResponse addTeamMemberResponse =
+          await model.addTeamMembers(map);
+      debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getEmergencyTeam();
         showToast(addTeamMemberResponse.message, context);
@@ -824,7 +840,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException);
+      debugPrint('Error ' + CustomException);
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -884,7 +900,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
               Expanded(
                 child: AddNurseDialog(submitButtonListner: (String firstName,
                     String lastName, String phoneNumber, String gender) {
-                  debugPrint("Team Member ==> ${firstName}");
+                  debugPrint('Team Member ==> $firstName');
                   addTeamMembers(firstName, lastName, phoneNumber, gender, '',
                       'HealthWorker');
                   Navigator.of(context, rootNavigator: true).pop();
@@ -950,7 +966,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 child: AddFamilyMemberDialog(submitButtonListner:
                     (String firstName, String lastName, String phoneNumber,
                         String gender, String relation) {
-                  debugPrint("Team Member ==> ${firstName}");
+                      debugPrint('Team Member ==> $firstName');
                   addTeamMembers(firstName, lastName, phoneNumber, gender,
                       relation, 'FamilyMember');
                   Navigator.of(context, rootNavigator: true).pop();
@@ -973,21 +989,22 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       jsonRequest.isEmergencyContact = true;*/
       //jsonRequest.details.userId = pharmacies.userId.toString();
 
-      var data = new Map<String, dynamic>();
+      final data = <String, dynamic>{};
       data['FirstName'] = firstName;
       data['LastName'] = lastName;
-      data['Prefix'] = " ";
+      data['Prefix'] = ' ';
       data['PhoneNumber'] = phoneNumber;
       data['Gender'] = gender;
       data['Relation'] = relation;
 
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
       map['Type'] = type;
       map['Details'] = data;
 
-      BaseResponse addTeamMemberResponse = await model.addTeamMembers(map);
-      debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
+      final BaseResponse addTeamMemberResponse =
+          await model.addTeamMembers(map);
+      debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getEmergencyTeam();
         showToast(addTeamMemberResponse.message, context);
@@ -998,7 +1015,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       model.setBusy(false);
       //progressDialog.hide();
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException);
+      debugPrint('Error ' + CustomException);
     } catch (Exception) {
       //progressDialog.hide();
       debugPrint(Exception.toString());
@@ -1011,7 +1028,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       builder: (context) => AlertDialog(
         content: ListTile(
           title: Text(
-            "Alert!",
+            'Alert!',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.normal,
@@ -1048,9 +1065,9 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   removeTeamMembers(String emergencyContactId) async {
     try {
       model.setBusy(true);
-      BaseResponse addTeamMemberResponse =
+      final BaseResponse addTeamMemberResponse =
           await model.removeTeamMembers(emergencyContactId);
-      debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
+      debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getEmergencyTeam();
         showToast(addTeamMemberResponse.message, context);
@@ -1061,7 +1078,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       model.setBusy(false);
       //progressDialog.hide();
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException);
+      debugPrint('Error ' + CustomException);
     } catch (Exception) {
       //progressDialog.hide();
       debugPrint(Exception.toString());

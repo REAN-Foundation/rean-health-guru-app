@@ -16,11 +16,11 @@ class TimeSlot {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
 
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['isSelected'] = this.isSelected;
+    data['id'] = id;
+    data['title'] = title;
+    data['isSelected'] = isSelected;
     return data;
   }
 }

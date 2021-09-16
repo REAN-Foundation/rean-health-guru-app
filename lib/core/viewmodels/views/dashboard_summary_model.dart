@@ -18,11 +18,11 @@ class DashboardSummaryModel extends BaseModel {
 
   Future<TaskSummaryResponse> getTaskPlanSummary() async {
     // Get user profile for id
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/patient-task/patient/' + patientUserId + '/summary-for-today',
         header: map);
     setBusy(false);
@@ -32,11 +32,11 @@ class DashboardSummaryModel extends BaseModel {
 
   Future<TaskSummaryResponse> getMedicationSummary(String date) async {
     // Get user profile for id
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/medication-consumption/summary-for-day/' + patientUserId + '/' + date,
         header: map);
     setBusy(false);
@@ -46,11 +46,11 @@ class DashboardSummaryModel extends BaseModel {
 
   Future<TaskSummaryResponse> getLatestBiometrics() async {
     // Get user profile for id
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/biometrics/' + patientUserId + '/latest-biometrics-summary',
         header: map);
     setBusy(false);
@@ -60,11 +60,11 @@ class DashboardSummaryModel extends BaseModel {
 
   Future<KnowledgeTopicResponse> getTodaysKnowledgeTopic() async {
     // Get user profile for id
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider
+    final response = await apiProvider
         .get('/patient-knowledge/today/' + patientUserId, header: map);
     setBusy(false);
     // Convert and return
@@ -73,11 +73,11 @@ class DashboardSummaryModel extends BaseModel {
 
   Future<BaseResponse> addMedicalEmergencyEvent(Map body) async {
     // Get user profile for id
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response =
+    final response =
         await apiProvider.post('/emergency-event/', header: map, body: body);
     setBusy(false);
     // Convert and return
@@ -88,11 +88,11 @@ class DashboardSummaryModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/medication-consumption/schedule-for-day/' +
             patientUserId +
             '/' +
@@ -108,11 +108,11 @@ class DashboardSummaryModel extends BaseModel {
     // Get user profile for id
     //setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.put(
+    final response = await apiProvider.put(
         '/medication-consumption/mark-list-as-taken/',
         header: map,
         body: body);
@@ -126,11 +126,11 @@ class DashboardSummaryModel extends BaseModel {
     // Get user profile for id
     //setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response =
+    final response =
         await apiProvider.post('/how-do-you-feel/', header: map, body: body);
 
     setBusy(false);
@@ -143,11 +143,11 @@ class DashboardSummaryModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/symptom-assessment-templates/search?title=' + keyword,
         header: map);
 
@@ -161,11 +161,11 @@ class DashboardSummaryModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider
+    final response = await apiProvider
         .get('/symptom-assessment-templates/' + assesmentId, header: map);
 
     setBusy(false);
@@ -177,11 +177,11 @@ class DashboardSummaryModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post('/symptom-assessments/',
+    final response = await apiProvider.post('/symptom-assessments/',
         header: map, body: body);
 
     setBusy(false);
@@ -193,11 +193,11 @@ class DashboardSummaryModel extends BaseModel {
     // Get user profile for id
     //setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response =
+    final response =
         await apiProvider.post('/symptoms/', header: map, body: body);
 
     //setBusy(false);

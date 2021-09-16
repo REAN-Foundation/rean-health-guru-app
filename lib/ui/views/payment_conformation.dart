@@ -14,7 +14,7 @@ class PaymentConfirmationView extends StatefulWidget {
 }
 
 class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
-  var _ammountController = new TextEditingController();
+  final _ammountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
           ),
           //drawer: AppDrawer(),
           body: Container(
@@ -85,15 +85,15 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
           // Add This
           child: MaterialButton(
             minWidth: 200,
-            child: new Text('Continue to Pay',
-                style: new TextStyle(
+            child: Text('Continue to Pay',
+                style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
             onPressed: () {
               Navigator.pushNamed(
                   context, RoutePaths.Booking_Appoinment_Done_View);
-              debugPrint("Clicked On Proceed");
+              debugPrint('Clicked On Proceed');
             },
           ),
         ),
@@ -111,8 +111,8 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
         onFieldSubmitted: (term) {
           //_fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
         },
-        decoration: new InputDecoration(
-            hintText: "Ammount",
+        decoration: InputDecoration(
+            hintText: 'Ammount',
             contentPadding: const EdgeInsets.only(left: 20, right: 20)),
         style: TextStyle(
             fontSize: 20, fontWeight: FontWeight.w600, color: primaryColor),
@@ -160,7 +160,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                         borderRadius: BorderRadius.all(Radius.circular(8))),
                     child: Center(
                       child: Text(
-                        "Debit/Credit\nCard",
+                        'Debit/Credit\nCard',
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 14, color: primaryColor),
                       ),
@@ -179,7 +179,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                         borderRadius: BorderRadius.all(Radius.circular(8))),
                     child: Center(
                       child: Text(
-                        "Paypal",
+                        'Paypal',
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 14, color: primaryColor),
                       ),
@@ -198,7 +198,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                         borderRadius: BorderRadius.all(Radius.circular(8))),
                     child: Center(
                       child: Text(
-                        "PayTm",
+                        'PayTm',
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 14, color: primaryColor),
                       ),
@@ -231,12 +231,12 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
             child: DropdownButton<String>(
               isExpanded: true,
               items: <String>['Card 1', 'Card 2', 'Card 3'].map((String value) {
-                return new DropdownMenuItem<String>(
+                return DropdownMenuItem<String>(
                   value: value,
-                  child: new Text(value),
+                  child: Text(value),
                 );
               }).toList(),
-              hint: new Text("Select Card"),
+              hint: Text('Select Card'),
               onChanged: (_) {},
             ),
           ),
@@ -244,7 +244,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
             height: 14,
           ),
           Text(
-            "Name of the cardholder",
+            'Name of the cardholder',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
           SizedBox(
@@ -278,7 +278,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
             height: 16,
           ),
           Text(
-            "Card Number",
+            'Card Number',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
           SizedBox(
@@ -328,7 +328,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Expiry Date",
+                        'Expiry Date',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 14),
                       ),
@@ -383,7 +383,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Security Code (CVV)",
+                        'Security Code (CVV)',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 14),
                       ),
@@ -415,8 +415,8 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                             //_fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
                           },
                           decoration: InputDecoration(
-                              counterText: "",
-                              hintText: "CVV",
+                              counterText: '',
+                              hintText: 'CVV',
                               border: InputBorder.none,
                               fillColor: Colors.white,
                               filled: true),

@@ -20,32 +20,32 @@ import 'package:paitent/utils/StringUtility.dart';
 
 class AddMyMedicationView extends StatefulWidget {
   @override
-  _AddMyMedicationViewState createState() => new _AddMyMedicationViewState();
+  _AddMyMedicationViewState createState() => _AddMyMedicationViewState();
 }
 
 class _AddMyMedicationViewState extends State<AddMyMedicationView> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var model = PatientMedicationViewModel();
-  var _instructionController = TextEditingController();
-  var _instructionFocus = FocusNode();
-  var _unitFocus = FocusNode();
-  var _sharedPrefUtils = new SharedPrefUtils();
+  final _instructionController = TextEditingController();
+  final _instructionFocus = FocusNode();
+  final _unitFocus = FocusNode();
+  final _sharedPrefUtils = SharedPrefUtils();
 
-  String _dosageUnit = "";
-  String _frequencyUnit = "";
-  String _durationUnit = "";
-  String startOn = "";
+  String _dosageUnit = '';
+  String _frequencyUnit = '';
+  final String _durationUnit = '';
+  String startOn = '';
 
-  var _unitController = TextEditingController();
-  var _durationController = TextEditingController();
-  var _typeAheadController = TextEditingController();
-  var _timeScheduledController = TextEditingController();
+  final _unitController = TextEditingController();
+  final _durationController = TextEditingController();
+  final _typeAheadController = TextEditingController();
+  final _timeScheduledController = TextEditingController();
   var _selectedDrug;
 
   bool searchForDrug = false;
-  List<Drugs> drugs = new List();
+  List<Drugs> drugs = [];
 
-  List<String> drugsList = new List();
+  List<String> drugsList = [];
   List<DropdownMenuItem<String>> _dosageUnitMenuItems;
   List<DropdownMenuItem<String>> _durationUnitMenuItems;
   List<DropdownMenuItem<String>> _frequencyUnitMenuItems;
@@ -56,7 +56,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   bool nightCheck = false;
 
   List<MedicationStockImages> medicationStockImagesList =
-      new List<MedicationStockImages>();
+      <MedicationStockImages>[];
 
   String medcationResourceId = '';
 
@@ -72,21 +72,21 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   loadSharedPrefs() async {
     try {
-      MedicationDosageUnitsPojo dosageUnitsPojo =
+      final MedicationDosageUnitsPojo dosageUnitsPojo =
           MedicationDosageUnitsPojo.fromJson(
-              await _sharedPrefUtils.read("MedicationDosageUnits"));
+              await _sharedPrefUtils.read('MedicationDosageUnits'));
       debugPrint(
-          "Dosage = ${dosageUnitsPojo.data.medicationDosageUnits.length.toString()}");
-      MedicationDurationUnitsPojo durationUnitsPojo =
+          'Dosage = ${dosageUnitsPojo.data.medicationDosageUnits.length.toString()}');
+      final MedicationDurationUnitsPojo durationUnitsPojo =
           MedicationDurationUnitsPojo.fromJson(
-              await _sharedPrefUtils.read("MedicationDurationUnits"));
+              await _sharedPrefUtils.read('MedicationDurationUnits'));
       debugPrint(
-          "Duration = ${durationUnitsPojo.data.medicationDurationUnits.length.toString()}");
-      MedicationFrequenciesPojo frequenciesPojo =
+          'Duration = ${durationUnitsPojo.data.medicationDurationUnits.length.toString()}');
+      final MedicationFrequenciesPojo frequenciesPojo =
           MedicationFrequenciesPojo.fromJson(
-              await _sharedPrefUtils.read("MedicationFrequencies"));
+              await _sharedPrefUtils.read('MedicationFrequencies'));
       debugPrint(
-          "Frequency = ${frequenciesPojo.data.frequencyUnits.length.toString()}");
+          'Frequency = ${frequenciesPojo.data.frequencyUnits.length.toString()}');
 
       setState(() {
         _frequencyUnitMenuItems = buildDropDownMenuItemsForFrequency(
@@ -107,7 +107,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   List<DropdownMenuItem<String>> buildDropDownMenuItemsForDosageUnit(
       List<MedicationDosageUnits> allergenCategories) {
-    List<DropdownMenuItem<String>> items = List();
+    final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < allergenCategories.length; i++) {
       items.add(DropdownMenuItem(
         child: Text(allergenCategories.elementAt(i).name),
@@ -119,7 +119,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   List<DropdownMenuItem<String>> buildDropDownMenuItemsForDurationUnit(
       List<MedicationDurationUnits> allergenCategories) {
-    List<DropdownMenuItem<String>> items = List();
+    final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < allergenCategories.length; i++) {
       items.add(DropdownMenuItem(
         child: Text(allergenCategories.elementAt(i).name),
@@ -131,7 +131,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   List<DropdownMenuItem<String>> buildDropDownMenuItemsForFrequency(
       List<String> allergenCategories) {
-    List<DropdownMenuItem<String>> items = List();
+    final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < allergenCategories.length; i++) {
       items.add(DropdownMenuItem(
         child: Text(allergenCategories.elementAt(i)),
@@ -165,7 +165,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       color: primaryColor,
                       fontWeight: FontWeight.w700),
                 ),
-                iconTheme: new IconThemeData(color: Colors.black),
+                iconTheme: IconThemeData(color: Colors.black),
                 actions: <Widget>[
                   /*IconButton(
                 icon: Icon(
@@ -203,11 +203,12 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 const SizedBox(
                   height: 16,
                 ),
-                _frequencyUnit == ""
-                    ? Container()
-                    : _frequencyUnit == "Daily"
-                        ? _drugTimeScheduledCheck()
-                        : Container(),
+                if (_frequencyUnit == '')
+                  Container()
+                else
+                  _frequencyUnit == 'Daily'
+                      ? _drugTimeScheduledCheck()
+                      : Container(),
                 _drugDuration(),
                 const SizedBox(
                   height: 16,
@@ -228,9 +229,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 const SizedBox(
                   height: 32,
                 ),
-                model.busy
-                    ? Center(child: CircularProgressIndicator())
-                    : _submitButton(context),
+                if (model.busy)
+                  Center(child: CircularProgressIndicator())
+                else
+                  _submitButton(context),
                 const SizedBox(
                   height: 32,
                 ),
@@ -256,9 +258,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         Container(
           padding: const EdgeInsets.only(left: 8, right: 8),
           height: 48,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               border: Border.all(color: primaryColor, width: 1),
-              borderRadius: new BorderRadius.all(
+              borderRadius: BorderRadius.all(
                 Radius.circular(4),
               ),
               color: Colors.white),
@@ -269,7 +271,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   label: 'drug_name',
                   child: TypeAheadFormField(
                     textFieldConfiguration: TextFieldConfiguration(
-                      controller: this._typeAheadController,
+                      controller: _typeAheadController,
                       onChanged: (text) {
                         debugPrint(text);
                         _getDrugsByName();
@@ -294,7 +296,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     },
                     onSuggestionSelected: (suggestion) {
                       debugPrint(suggestion);
-                      this._typeAheadController.text = suggestion;
+                      _typeAheadController.text = suggestion;
                     },
                     validator: (value) {
                       if (value.isEmpty) {
@@ -303,7 +305,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     },
                     onSaved: (value) {
                       debugPrint(value);
-                      this._selectedDrug = value;
+                      _selectedDrug = value;
                     },
                   ),
                 ),
@@ -334,7 +336,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 child: Center(
                   child: InkWell(
                     onTap: () {
-                      if (_typeAheadController.text.length != 0) {
+                      if (_typeAheadController.text.isNotEmpty) {
                         FocusScope.of(context).unfocus();
                         _addDrugConfirmDialog(context);
                       }
@@ -372,9 +374,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
             Container(
               width: 100,
               height: 48,
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   border: Border.all(color: primaryColor, width: 1),
-                  borderRadius: new BorderRadius.all(
+                  borderRadius: BorderRadius.all(
                     Radius.circular(4),
                   ),
                   color: Colors.white),
@@ -393,10 +395,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
-                      new BlacklistingTextInputFormatter(
-                          new RegExp('[\\,|\\+|\\-]')),
+                      BlacklistingTextInputFormatter(RegExp('[\\,|\\+|\\-]')),
                     ],
-                    decoration: new InputDecoration(
+                    decoration: InputDecoration(
                       hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 14,
@@ -426,9 +427,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   label: 'Select_Unit',
                   child: DropdownButton<String>(
                     isExpanded: true,
-                    value: _dosageUnit == "" ? null : _dosageUnit,
+                    value: _dosageUnit == '' ? null : _dosageUnit,
                     items: _dosageUnitMenuItems,
-                    hint: new Text("Select Unit"),
+                    hint: Text('Select Unit'),
                     onChanged: (data) {
                       _unitFocus.unfocus();
                       FocusScope.of(context).requestFocus(FocusNode());
@@ -474,9 +475,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   label: 'Frequency of medicine',
                   child: DropdownButton<String>(
                     isExpanded: true,
-                    value: _frequencyUnit == "" ? null : _frequencyUnit,
+                    value: _frequencyUnit == '' ? null : _frequencyUnit,
                     items: _frequencyUnitMenuItems,
-                    hint: new Text("Select Frequency"),
+                    hint: Text('Select Frequency'),
                     onChanged: (data) {
                       debugPrint(data);
                       setState(() {
@@ -537,9 +538,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 48,
-                decoration: new BoxDecoration(
+                decoration: BoxDecoration(
                     border: Border.all(color: primaryColor, width: 1),
-                    borderRadius: new BorderRadius.all(
+                    borderRadius: BorderRadius.all(
                       Radius.circular(4),
                     ),
                     color: Colors.white),
@@ -556,10 +557,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
-                        new BlacklistingTextInputFormatter(
-                            new RegExp('[\\,|\\+|\\-]')),
+                        BlacklistingTextInputFormatter(RegExp('[\\,|\\+|\\-]')),
                       ],
-                      decoration: new InputDecoration(
+                      decoration: InputDecoration(
                         hintStyle: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 14,
@@ -624,14 +624,14 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
           height: 8,
         ),
         Container(
-          child: medicationStockImagesList.length == 0
+          child: medicationStockImagesList.isEmpty
               ? Container()
               : GridView.builder(
                   itemCount: medicationStockImagesList.length,
-                  controller: new ScrollController(keepScrollOffset: false),
+                  controller: ScrollController(keepScrollOffset: false),
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 6,
                       mainAxisSpacing: 8,
                       crossAxisSpacing: 8,
@@ -644,7 +644,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   }
 
   _makeImageSlot(BuildContext context, int index) {
-    MedicationStockImages images = medicationStockImagesList.elementAt(index);
+    final MedicationStockImages images =
+        medicationStockImagesList.elementAt(index);
 
     Color selcetedColor = Colors.white;
     //debugPrint("isAvailable ${slot.isAvailable} isSelected ${slot.isSelected}, Time Slot ${slot.slotStart.substring(0,5)+" - "+slot.slotEnd.substring(0,5)}");
@@ -678,29 +679,30 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     imageUrl: images.urlPublic,
                   ),
                 )),
-                images.isSelected
-                    ? Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          width: 20,
-                          height: 20,
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            border: Border.all(
-                              color: Colors.green,
-                              width: 1.0,
-                            ),
-                            borderRadius:
-                                BorderRadius.only(topRight: Radius.circular(6)),
-                          ),
-                          child: Icon(
-                            Icons.check,
-                            size: 16,
-                            color: Colors.white,
-                          ),
+                if (images.isSelected)
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        border: Border.all(
+                          color: Colors.green,
+                          width: 1.0,
                         ),
-                      )
-                    : Container(),
+                        borderRadius:
+                            BorderRadius.only(topRight: Radius.circular(6)),
+                      ),
+                      child: Icon(
+                        Icons.check,
+                        size: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                else
+                  Container(),
               ],
             ),
           ),
@@ -772,8 +774,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                           SizedBox(
                               height: 32,
                               width: 32,
-                              child: new Image.asset(
-                                  'res/images/ic_calender.png')),
+                              child: Image.asset('res/images/ic_calender.png')),
                         ],
                       ),
                     ),
@@ -787,7 +788,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       print('change $date');
                     }, onConfirm: (date) {
                       setState(() {
-                        List<String> dateArra = date.toString().split(" ");
+                        final List<String> dateArra =
+                            date.toString().split(' ');
                         startOn = dateArra.elementAt(0);
                         debugPrint(startOn);
                       });
@@ -814,22 +816,22 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
             label: 'Save',
             child: RaisedButton(
               onPressed: () {
-                if (_typeAheadController.text == "") {
-                  showToast("Please select drug", context);
-                } else if (_unitController == "") {
-                  showToast("Please enter unit qty", context);
-                } else if (_dosageUnit == "") {
-                  showToast("Please Select dosage unit", context);
-                } else if (_frequencyUnit == "") {
-                  showToast("Please select frequency", context);
+                if (_typeAheadController.text == '') {
+                  showToast('Please select drug', context);
+                } else if (_unitController == '') {
+                  showToast('Please enter unit qty', context);
+                } else if (_dosageUnit == '') {
+                  showToast('Please Select dosage unit', context);
+                } else if (_frequencyUnit == '') {
+                  showToast('Please select frequency', context);
                 }
                 /* else if(_frequencyUnit ? "Daily" : ){
 
                 } */
-                else if (_durationController.text == "") {
-                  showToast("Please enter duration", context);
-                } else if (startOn == "") {
-                  showToast("Please select start date", context);
+                else if (_durationController.text == '') {
+                  showToast('Please enter duration', context);
+                } else if (startOn == '') {
+                  showToast('Please select start date', context);
                 }
                 /*else if (_durationController.text == "") {
                   showToast("Please enter comment");
@@ -892,7 +894,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Additional Comments",
+        Text('Additional Comments',
             style: TextStyle(
                 fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w700)),
         SizedBox(
@@ -905,9 +907,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
             Expanded(
               child: Container(
                 height: 80,
-                decoration: new BoxDecoration(
+                decoration: BoxDecoration(
                     border: Border.all(color: primaryColor, width: 1),
-                    borderRadius: new BorderRadius.all(
+                    borderRadius: BorderRadius.all(
                       Radius.circular(4),
                     ),
                     color: Colors.white),
@@ -922,7 +924,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         fontSize: 14,
                         color: primaryColor),
                     textInputAction: TextInputAction.done,
-                    decoration: new InputDecoration(
+                    decoration: InputDecoration(
                       hintStyle: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 14,
@@ -948,7 +950,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Time Scheduled",
+        Text('Time Scheduled',
             style: TextStyle(
                 fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w700)),
         SizedBox(
@@ -974,7 +976,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     }, //  <-- leading Checkbox
                   ),
                 ),
-                Text("Morning",
+                Text('Morning',
                     style: TextStyle(
                         fontSize: 14.0,
                         color: textBlack,
@@ -1000,7 +1002,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     }, //  <-- leading Checkbox
                   ),
                 ),
-                Text("Afternoon",
+                Text('Afternoon',
                     style: TextStyle(
                         fontSize: 14.0,
                         color: textBlack,
@@ -1026,7 +1028,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     }, //  <-- leading Checkbox
                   ),
                 ),
-                Text("Evening",
+                Text('Evening',
                     style: TextStyle(
                         fontSize: 14.0,
                         color: textBlack,
@@ -1052,7 +1054,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     }, //  <-- leading Checkbox
                   ),
                 ),
-                Text("Night",
+                Text('Night',
                     style: TextStyle(
                         fontSize: 14.0,
                         color: textBlack,
@@ -1073,16 +1075,16 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Time Scheduled",
+        Text('Time Scheduled',
             style: TextStyle(
                 fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w700)),
         SizedBox(
           height: 8,
         ),
         Container(
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               border: Border.all(color: primaryColor, width: 1),
-              borderRadius: new BorderRadius.all(
+              borderRadius: BorderRadius.all(
                 Radius.circular(4),
               ),
               color: Colors.white),
@@ -1093,7 +1095,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               style: TextStyle(
                   fontFamily: 'Montserrat', fontSize: 14, color: primaryColor),
               textInputAction: TextInputAction.done,
-              decoration: new InputDecoration(
+              decoration: InputDecoration(
                 hintStyle: TextStyle(
                     fontFamily: 'Montserrat',
                     fontSize: 14,
@@ -1112,7 +1114,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   }
 
   List<String> getDrugsSuggestions(String query) {
-    List<String> matches = List();
+    final List<String> matches = [];
     matches.addAll(drugsList);
     matches.retainWhere((s) => s.toLowerCase().contains(query.toLowerCase()));
     return matches;
@@ -1123,7 +1125,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       setState(() {
         searchForDrug = true;
       });
-      DrugsLibraryPojo baseResponse =
+      final DrugsLibraryPojo baseResponse =
           await model.getDrugsByKeyword(_typeAheadController.text);
 
       if (baseResponse.status == 'success') {
@@ -1139,13 +1141,13 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         setState(() {
           searchForDrug = false;
         });
-        showToast("Please try again", context);
+        showToast('Please try again', context);
       }
     } catch (CustomException) {
       setState(() {
         searchForDrug = false;
       });
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       searchForDrug = false;
       debugPrint(Exception.toString());
@@ -1161,30 +1163,30 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   _addPatientMedication(BuildContext context) async {
     try {
-      String timeShedule = "";
+      String timeShedule = '';
       int frequency = 0;
 
-      if (_frequencyUnit == "Daily") {
+      if (_frequencyUnit == 'Daily') {
         if (morningCheck) {
           frequency = frequency + 1;
-          timeShedule = "Morning,";
+          timeShedule = 'Morning,';
         }
         if (afternoonCheck) {
           frequency = frequency + 1;
-          timeShedule = timeShedule + " Afternoon,";
+          timeShedule = timeShedule + ' Afternoon,';
         }
         if (eveningCheck) {
           frequency = frequency + 1;
-          timeShedule = timeShedule + " Evening,";
+          timeShedule = timeShedule + ' Evening,';
         }
         if (nightCheck) {
           frequency = frequency + 1;
-          timeShedule = timeShedule + " Night";
+          timeShedule = timeShedule + ' Night';
         }
       } else {
         frequency = frequency + 1;
         //timeShedule = _timeScheduledController.text;
-        timeShedule = "Afternoon";
+        timeShedule = 'Afternoon';
       }
 
       String durationUnitValue = '';
@@ -1197,36 +1199,36 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         durationUnitValue = 'Weeks';
       }
 
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       //map["DrugOrderId"] = widget._visitInformation.drugOrderId;
-      map["PatientUserId"] = patientUserId;
+      map['PatientUserId'] = patientUserId;
       //map["DoctorUserId"] = doctorUserId;
       //map["VisitId"] = widget._visitInformation.visitInfo.id;
-      map["Drug"] = _typeAheadController.text;
-      map["Dose"] = int.parse(_unitController.text);
-      map["DosageUnit"] = _dosageUnit;
-      map["TimeSchedule"] = timeShedule;
-      map["Frequency"] = frequency == 0 ? int.parse(timeShedule) : frequency;
-      map["FrequencyUnit"] = _frequencyUnit;
-      map["Route"] = " ";
-      map["Duration"] = int.parse(_durationController.text);
-      map["DurationUnit"] = durationUnitValue;
-      map["StartDate"] = startOn;
-      map["RefillNeeded"] = false;
-      map["Instructions"] = _instructionController.text;
-      map["MedicationImageResourceId"] = medcationResourceId;
+      map['Drug'] = _typeAheadController.text;
+      map['Dose'] = int.parse(_unitController.text);
+      map['DosageUnit'] = _dosageUnit;
+      map['TimeSchedule'] = timeShedule;
+      map['Frequency'] = frequency == 0 ? int.parse(timeShedule) : frequency;
+      map['FrequencyUnit'] = _frequencyUnit;
+      map['Route'] = ' ';
+      map['Duration'] = int.parse(_durationController.text);
+      map['DurationUnit'] = durationUnitValue;
+      map['StartDate'] = startOn;
+      map['RefillNeeded'] = false;
+      map['Instructions'] = _instructionController.text;
+      map['MedicationImageResourceId'] = medcationResourceId;
 
-      BaseResponse baseResponse = await model.addMedicationforVisit(map);
+      final BaseResponse baseResponse = await model.addMedicationforVisit(map);
 
       if (baseResponse.status == 'success') {
         //widget._submitButtonListner();
         Navigator.of(context).pop();
         //_getPatientAllergies("4c47a191-9cb6-4377-b828-83eb9ab48d0a");
       } else {
-        showToast("Please try again", context);
+        showToast('Please try again', context);
       }
     } catch (CustomException) {
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -1234,20 +1236,21 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   _addPatientMedicationOrderId() async {
     try {
-      var map = new Map<String, String>();
+      final map = <String, String>{};
       //map["VisitId"] = widget._visitInformation.visitInfo.id;
       //map["DoctorUserId"] = doctorUserId;
-      map["PatientUserId"] = patientUserId;
+      map['PatientUserId'] = patientUserId;
 
-      DrugOrderIdPojo baseResponse = await model.createDrugOrderIdForVisit(map);
+      final DrugOrderIdPojo baseResponse =
+          await model.createDrugOrderIdForVisit(map);
 
       if (baseResponse.status == 'success') {
         //widget._visitInformation.drugOrderId = baseResponse.data.drugOrder.id;
       } else {
-        showToast("Please try again", context);
+        showToast('Please try again', context);
       }
     } catch (CustomException) {
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -1261,7 +1264,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         return AlertDialog(
           title: Text('Confirmation'),
           content: Text('Are you sure you want to add ' +
-              this._typeAheadController.text.toString() +
+              _typeAheadController.text.toString() +
               ' to drug library.'),
           actions: [
             FlatButton(
@@ -1286,19 +1289,19 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   _addDrugTolibrary() async {
     try {
       FocusScope.of(context).unfocus();
-      var map = new Map<String, String>();
-      map["DrugName"] = _typeAheadController.text;
+      final map = <String, String>{};
+      map['DrugName'] = _typeAheadController.text;
 
-      BaseResponse baseResponse = await model.addDrugToLibrary(map);
+      final BaseResponse baseResponse = await model.addDrugToLibrary(map);
 
       if (baseResponse.status == 'success') {
         FocusScope.of(context).unfocus();
         showToast(baseResponse.message, context);
       } else {
-        showToast("Please try again", context);
+        showToast('Please try again', context);
       }
     } catch (CustomException) {
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -1306,7 +1309,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   _getMedicaionStockImages() async {
     try {
-      GetMedicationStockImages getMedicationStockImages =
+      final GetMedicationStockImages getMedicationStockImages =
           await model.getMedicationStockImages();
       if (getMedicationStockImages.status == 'success') {
         medicationStockImagesList.clear();
@@ -1314,10 +1317,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
             .addAll(getMedicationStockImages.data.medicationStockImages);
         setState(() {});
       } else {
-        showToast("Please try again", context);
+        showToast('Please try again', context);
       }
     } catch (CustomException) {
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       searchForDrug = false;
       debugPrint(Exception.toString());

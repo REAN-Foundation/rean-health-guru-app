@@ -11,13 +11,13 @@ class UploadImageResponse {
   UploadImageResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -32,17 +32,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['details'] != null) {
-      details = new List<Details>();
+      details = <Details>[];
       json['details'].forEach((v) {
-        details.add(new Details.fromJson(v));
+        details.add(Details.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.details != null) {
-      data['details'] = this.details.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (details != null) {
+      data['details'] = details.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -66,12 +66,12 @@ class Details {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['FileName'] = this.fileName;
-    data['ResourceId'] = this.resourceId;
-    data['Url_Public'] = this.url;
-    data['MimeType'] = this.mimeType;
-    data['Size'] = this.size;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['FileName'] = fileName;
+    data['ResourceId'] = resourceId;
+    data['Url_Public'] = url;
+    data['MimeType'] = mimeType;
+    data['Size'] = size;
     return data;
   }
 }

@@ -5,7 +5,7 @@ import 'package:paitent/core/services/api.dart';
 import '../base_model.dart';
 
 class PostsModel extends BaseModel {
-  Api _api;
+  final Api _api;
 
   PostsModel({
     @required Api api,

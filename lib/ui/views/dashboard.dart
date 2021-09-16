@@ -14,9 +14,9 @@ class DashBoardView extends StatefulWidget {
 
 class _DashBoardViewState extends State<DashBoardView> {
   var model = BookAppoinmentViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  List quotes = new List<String>();
+  List quotes = <String>[];
 
   @override
   void initState() {
@@ -112,13 +112,13 @@ class _DashBoardViewState extends State<DashBoardView> {
             return Container(
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.symmetric(horizontal: 5.0),
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("res/images/bg_gray_hexa.jpg"),
+                    image: AssetImage('res/images/bg_gray_hexa.jpg'),
                     fit: BoxFit.cover,
                   ),
                   border: Border.all(color: primaryLightColor, width: 2),
-                  borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
@@ -164,13 +164,13 @@ class _DashBoardViewState extends State<DashBoardView> {
     return InkWell(
         onTap: () {
           Navigator.pushNamed(context, RoutePaths.My_Reports,
-              arguments: "Reports");
+              arguments: 'Reports');
         },
         child: Container(
           height: 40,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               border: Border.all(color: primaryColor),
-              borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+              borderRadius: BorderRadius.all(Radius.circular(8.0))),
           child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Row(
@@ -208,13 +208,13 @@ class _DashBoardViewState extends State<DashBoardView> {
     return InkWell(
         onTap: () {
           Navigator.pushNamed(context, RoutePaths.My_Reports,
-              arguments: "Prescriptions");
+              arguments: 'Prescriptions');
         },
         child: Container(
           height: 40,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               border: Border.all(color: primaryColor),
-              borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+              borderRadius: BorderRadius.all(Radius.circular(8.0))),
           child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Row(
@@ -257,13 +257,13 @@ class _DashBoardViewState extends State<DashBoardView> {
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         child: Container(
           height: 80,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: [primaryLightColor, colorF6F6FF]),
               border: Border.all(color: primaryLightColor),
-              borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+              borderRadius: BorderRadius.all(Radius.circular(8.0))),
           child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Row(
@@ -323,13 +323,13 @@ class _DashBoardViewState extends State<DashBoardView> {
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         child: Container(
           height: 80,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: [primaryLightColor, colorF6F6FF]),
               border: Border.all(color: primaryLightColor),
-              borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+              borderRadius: BorderRadius.all(Radius.circular(8.0))),
           child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Row(
@@ -384,19 +384,19 @@ class _DashBoardViewState extends State<DashBoardView> {
     return InkWell(
       onTap: () {
         //Navigator.pushNamed(context, RoutePaths.Doctor_Appoinment);
-        showToast("Coming Soon...", context);
+        showToast('Coming Soon...', context);
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         child: Container(
           height: 80,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: [primaryLightColor, colorF6F6FF]),
               border: Border.all(color: primaryLightColor),
-              borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+              borderRadius: BorderRadius.all(Radius.circular(8.0))),
           child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Row(
@@ -451,7 +451,7 @@ class _DashBoardViewState extends State<DashBoardView> {
     return InkWell(
       onTap: () {
         //Navigator.pushNamed(context, RoutePaths.Doctor_Appoinment);
-        showToast("Coming Soon...", context);
+        showToast('Coming Soon...', context);
       },
       child: Padding(
         padding: const EdgeInsets.only(
@@ -459,13 +459,13 @@ class _DashBoardViewState extends State<DashBoardView> {
         ),
         child: Container(
           height: 100,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: [primaryLightColor, colorF6F6FF]),
               border: Border.all(color: primaryLightColor),
-              borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+              borderRadius: BorderRadius.all(Radius.circular(8.0))),
           child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Column(
@@ -533,7 +533,7 @@ class _DashBoardViewState extends State<DashBoardView> {
     return InkWell(
       onTap: () {
         //Navigator.pushNamed(context, RoutePaths.Word_Of_The_Week_Care_Plan);
-        showToast("Coming Soon...", context);
+        showToast('Coming Soon...', context);
       },
       child: Padding(
         padding: const EdgeInsets.only(
@@ -541,13 +541,13 @@ class _DashBoardViewState extends State<DashBoardView> {
         ),
         child: Container(
           height: 100,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: [primaryLightColor, colorF6F6FF]),
               border: Border.all(color: primaryLightColor),
-              borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+              borderRadius: BorderRadius.all(Radius.circular(8.0))),
           child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Column(
@@ -669,7 +669,7 @@ class _DashBoardViewState extends State<DashBoardView> {
           ),
           InkWell(
             onTap: () {
-              showToast("Coming Soon...", context);
+              showToast('Coming Soon...', context);
               //Navigator.pushNamed(context, RoutePaths.Order_Medicine);
             },
             child: Column(
@@ -693,7 +693,7 @@ class _DashBoardViewState extends State<DashBoardView> {
           ),
           InkWell(
             onTap: () {
-              showToast("Coming Soon...", context);
+              showToast('Coming Soon...', context);
               //Navigator.pushNamed(context, RoutePaths.Order_Ambulance);
             },
             child: Column(

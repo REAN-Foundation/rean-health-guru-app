@@ -11,13 +11,13 @@ class LabsListApiResponse {
   LabsListApiResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -32,17 +32,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['labs'] != null) {
-      labs = new List<Labs>();
+      labs = <Labs>[];
       json['labs'].forEach((v) {
-        labs.add(new Labs.fromJson(v));
+        labs.add(Labs.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.labs != null) {
-      data['labs'] = this.labs.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (labs != null) {
+      data['labs'] = labs.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -122,38 +122,36 @@ class Labs {
     dateCreated = json['DateCreated'];
     dateUpdated = json['DateUpdated'];
     appointmentRelatedDetails = json['AppointmentRelatedDetails'] != null
-        ? new AppointmentRelatedDetails.fromJson(
-            json['AppointmentRelatedDetails'])
+        ? AppointmentRelatedDetails.fromJson(json['AppointmentRelatedDetails'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['UserId'] = this.userId;
-    data['RoleId'] = this.roleId;
-    data['FirstName'] = this.firstName;
-    data['LastName'] = this.lastName;
-    data['Prefix'] = this.prefix;
-    data['PhoneNumber'] = this.phoneNumber;
-    data['Email'] = this.email;
-    data['Gender'] = this.gender;
-    data['BirthDate'] = this.birthDate;
-    data['ImageURL'] = this.imageURL;
-    data['Locality'] = this.locality;
-    data['Address'] = this.address;
-    data['LocationCoords_Longitude'] = this.locationCoordsLongitude;
-    data['LocationCoords_Lattitude'] = this.locationCoordsLattitude;
-    data['EstablishmentName'] = this.establishmentName;
-    data['Specialities'] = this.specialities;
-    data['LabType'] = this.labType;
-    data['AboutUs'] = this.aboutUs;
-    data['OperationalSince'] = this.operationalSince;
-    data['AppointmentSlotDuration'] = this.appointmentSlotDuration;
-    data['DateCreated'] = this.dateCreated;
-    data['DateUpdated'] = this.dateUpdated;
-    if (this.appointmentRelatedDetails != null) {
-      data['AppointmentRelatedDetails'] =
-          this.appointmentRelatedDetails.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['UserId'] = userId;
+    data['RoleId'] = roleId;
+    data['FirstName'] = firstName;
+    data['LastName'] = lastName;
+    data['Prefix'] = prefix;
+    data['PhoneNumber'] = phoneNumber;
+    data['Email'] = email;
+    data['Gender'] = gender;
+    data['BirthDate'] = birthDate;
+    data['ImageURL'] = imageURL;
+    data['Locality'] = locality;
+    data['Address'] = address;
+    data['LocationCoords_Longitude'] = locationCoordsLongitude;
+    data['LocationCoords_Lattitude'] = locationCoordsLattitude;
+    data['EstablishmentName'] = establishmentName;
+    data['Specialities'] = specialities;
+    data['LabType'] = labType;
+    data['AboutUs'] = aboutUs;
+    data['OperationalSince'] = operationalSince;
+    data['AppointmentSlotDuration'] = appointmentSlotDuration;
+    data['DateCreated'] = dateCreated;
+    data['DateUpdated'] = dateUpdated;
+    if (appointmentRelatedDetails != null) {
+      data['AppointmentRelatedDetails'] = appointmentRelatedDetails.toJson();
     }
     return data;
   }
@@ -182,12 +180,12 @@ class AppointmentRelatedDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['UserId'] = this.userId;
-    data['NodeId'] = this.nodeId;
-    data['BusinessServiceId'] = this.businessServiceId;
-    data['OperationalTimeZone'] = this.operationalTimeZone;
-    data['WorkingHours'] = this.workingHours;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['UserId'] = userId;
+    data['NodeId'] = nodeId;
+    data['BusinessServiceId'] = businessServiceId;
+    data['OperationalTimeZone'] = operationalTimeZone;
+    data['WorkingHours'] = workingHours;
     return data;
   }
 }

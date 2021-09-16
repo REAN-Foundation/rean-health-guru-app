@@ -8,13 +8,13 @@ class MedicationDurationUnitsPojo {
   MedicationDurationUnitsPojo.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -29,18 +29,18 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['medicationDurationUnits'] != null) {
-      medicationDurationUnits = new List<MedicationDurationUnits>();
+      medicationDurationUnits = <MedicationDurationUnits>[];
       json['medicationDurationUnits'].forEach((v) {
-        medicationDurationUnits.add(new MedicationDurationUnits.fromJson(v));
+        medicationDurationUnits.add(MedicationDurationUnits.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.medicationDurationUnits != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (medicationDurationUnits != null) {
       data['medicationDurationUnits'] =
-          this.medicationDurationUnits.map((v) => v.toJson()).toList();
+          medicationDurationUnits.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -58,9 +58,9 @@ class MedicationDurationUnits {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Name'] = this.name;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Name'] = name;
+    data['id'] = id;
     return data;
   }
 }

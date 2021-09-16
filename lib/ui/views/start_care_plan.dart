@@ -12,7 +12,7 @@ import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
 
 class StartCarePlanView extends StatefulWidget {
-  String selectedCarePlan = "";
+  String selectedCarePlan = '';
 
   StartCarePlanView(@required this.selectedCarePlan);
 
@@ -22,13 +22,13 @@ class StartCarePlanView extends StatefulWidget {
 
 class _StartCarePlanViewState extends State<StartCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String dob = "";
-  String unformatedDOB = "";
-  var dateFormat = DateFormat("dd MMM, yyyy");
-  var dateFormatStandard = DateFormat("yyyy-MM-dd");
-  String startDate = "";
+  String dob = '';
+  String unformatedDOB = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
+  var dateFormatStandard = DateFormat('yyyy-MM-dd');
+  String startDate = '';
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                     color: primaryColor,
                     fontWeight: FontWeight.w700),
               ),
-              iconTheme: new IconThemeData(color: Colors.black),
+              iconTheme: IconThemeData(color: Colors.black),
               actions: <Widget>[
                 /*IconButton(
                   icon: Icon(
@@ -129,7 +129,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Select Start Date:",
+                            'Select Start Date:',
                             style: TextStyle(
                                 color: textBlack,
                                 fontSize: 16,
@@ -171,7 +171,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                                       SizedBox(
                                           height: 24,
                                           width: 24,
-                                          child: new Image.asset(
+                                          child: Image.asset(
                                               'res/images/ic_calender.png')),
                                     ],
                                   ),
@@ -211,9 +211,9 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                             : InkWell(
                                 onTap: () {
                                   //Navigator.pushNamed(context, RoutePaths.Setup_Doctor_For_Care_Plan);
-                                  if (startDate == "") {
+                                  if (startDate == '') {
                                     showToast(
-                                        "Please select start date", context);
+                                        'Please select start date', context);
                                   } else {
                                     startCarePlan();
                                   }
@@ -271,18 +271,18 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
 
   startCarePlan() async {
     try {
-      SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
+      final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
       model.setBusy(true);
-      var map = new Map<String, String>();
-      map["PatientUserId"] = patientUserId;
-      map["CarePlanCode"] = widget.selectedCarePlan;
-      map["StartDate"] = startDate;
+      final map = <String, String>{};
+      map['PatientUserId'] = patientUserId;
+      map['CarePlanCode'] = widget.selectedCarePlan;
+      map['StartDate'] = startDate;
 
-      StartCarePlanResponse startCarePlanResponse =
+      final StartCarePlanResponse startCarePlanResponse =
           await model.startCarePlan(map);
-      debugPrint("Registered Care Plan ==> ${startCarePlanResponse.toJson()}");
+      debugPrint('Registered Care Plan ==> ${startCarePlanResponse.toJson()}');
       if (startCarePlanResponse.status == 'success') {
-        _sharedPrefUtils.save("CarePlan", startCarePlanResponse.toJson());
+        _sharedPrefUtils.save('CarePlan', startCarePlanResponse.toJson());
         Navigator.pushNamed(context, RoutePaths.Setup_Doctor_For_Care_Plan);
         showToast(startCarePlanResponse.message, context);
       } else {
@@ -291,7 +291,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }

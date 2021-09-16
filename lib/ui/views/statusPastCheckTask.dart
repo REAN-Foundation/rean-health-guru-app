@@ -23,34 +23,32 @@ class StatusPastCheckTask extends StatefulWidget {
 
 class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
 
   final TextEditingController _Controller = TextEditingController();
-  List<CheckBoxModel> statusList = new List<CheckBoxModel>();
+  List<CheckBoxModel> statusList = <CheckBoxModel>[];
 
   ProgressDialog progressDialog;
 
-  var questionTextControler = new TextEditingController();
+  var questionTextControler = TextEditingController();
 
   @override
   void initState() {
-    statusList.add(new CheckBoxModel(
+    statusList.add(CheckBoxModel(
         'Have you seen your physician for a scheduled visit ?', false));
-    statusList.add(new CheckBoxModel(
+    statusList.add(CheckBoxModel(
         'Have you seen your physician for a unscheduled visit ?', false));
+    statusList.add(CheckBoxModel('Had a change in your medications ?', false));
+    statusList.add(CheckBoxModel('Had a new or worsening symptom ?', false));
     statusList
-        .add(new CheckBoxModel('Had a change in your medications ?', false));
+        .add(CheckBoxModel('Had you been given a new diagnosis ?', false));
     statusList
-        .add(new CheckBoxModel('Had a new or worsening symptom ?', false));
-    statusList
-        .add(new CheckBoxModel('Had you been given a new diagnosis ?', false));
-    statusList.add(
-        new CheckBoxModel('Required emergency medical attention ?', false));
-    statusList.add(new CheckBoxModel(
+        .add(CheckBoxModel('Required emergency medical attention ?', false));
+    statusList.add(CheckBoxModel(
         'Required hospitalization for heart related reason ?', false));
-    statusList.add(
-        new CheckBoxModel('Had a heart related surgicalprocedure ?', false));
+    statusList
+        .add(CheckBoxModel('Had a heart related surgicalprocedure ?', false));
 
     // TODO: implement initState
     super.initState();
@@ -58,7 +56,7 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
 
     // TODO: implement build
     return BaseWidget<PatientCarePlanViewModel>(
@@ -77,7 +75,7 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -104,9 +102,9 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: statusList.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return new CheckboxListTile(
+                          return CheckboxListTile(
                               value: statusList[index].isCheck,
-                              title: new Text(statusList[index].title),
+                              title: Text(statusList[index].title),
                               controlAffinity: ListTileControlAffinity.leading,
                               onChanged: (bool val) {
                                 itemChange(val, index);
@@ -178,17 +176,17 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
 
   Widget _makeQuestion6() {
     return Container(
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+          borderRadius: BorderRadius.all(Radius.circular(4.0))),
       child: Column(
         children: <Widget>[
           Container(
             height: 40,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius: new BorderRadius.only(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(4.0),
                     topRight: Radius.circular(4.0))),
             child: Padding(
@@ -262,7 +260,7 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
   updateWeeklyReflection() async {
     try {
       progressDialog.show();
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['ScheduledVisitToDoctor'] = statusList.elementAt(0).isCheck;
       map['UnscheduledVisitToDoctor'] = statusList.elementAt(1).isCheck;
       map['ChangeInMedications'] = statusList.elementAt(2).isCheck;
@@ -273,7 +271,7 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
       map['HeartRelatedSurgicalProcedure'] = statusList.elementAt(7).isCheck;
       map['AdditionalDetails'] = questionTextControler.text;
 
-      BaseResponse baseResponse = await model.updateWeeklyReflection(
+      final BaseResponse baseResponse = await model.updateWeeklyReflection(
           startCarePlanResponseGlob.data.carePlan.id.toString(),
           widget.task.details.id,
           map);

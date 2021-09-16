@@ -10,13 +10,13 @@ class AddTeamMemberResponse {
   AddTeamMemberResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -31,14 +31,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     teamMember = json['teamMember'] != null
-        ? new TeamMember.fromJson(json['teamMember'])
+        ? TeamMember.fromJson(json['teamMember'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.teamMember != null) {
-      data['teamMember'] = this.teamMember.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (teamMember != null) {
+      data['teamMember'] = teamMember.toJson();
     }
     return data;
   }
@@ -67,18 +67,18 @@ class TeamMember {
     role = json['Role'];
     roleName = json['RoleName'];
     details =
-        json['Details'] != null ? new Details.fromJson(json['Details']) : null;
+        json['Details'] != null ? Details.fromJson(json['Details']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['CarePlanId'] = this.carePlanId;
-    data['UserId'] = this.userId;
-    data['Role'] = this.role;
-    data['RoleName'] = this.roleName;
-    if (this.details != null) {
-      data['Details'] = this.details.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['CarePlanId'] = carePlanId;
+    data['UserId'] = userId;
+    data['Role'] = role;
+    data['RoleName'] = roleName;
+    if (details != null) {
+      data['Details'] = details.toJson();
     }
     return data;
   }

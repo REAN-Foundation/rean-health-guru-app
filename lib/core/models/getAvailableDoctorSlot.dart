@@ -11,13 +11,13 @@ class GetAvailableDoctorSlot {
   GetAvailableDoctorSlot.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -32,17 +32,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['slots_by_date'] != null) {
-      slotsByDate = new List<SlotsByDate>();
+      slotsByDate = <SlotsByDate>[];
       json['slots_by_date'].forEach((v) {
-        slotsByDate.add(new SlotsByDate.fromJson(v));
+        slotsByDate.add(SlotsByDate.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.slotsByDate != null) {
-      data['slots_by_date'] = this.slotsByDate.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (slotsByDate != null) {
+      data['slots_by_date'] = slotsByDate.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -71,22 +71,22 @@ class SlotsByDate {
     dayStartTime = json['day_start_time'];
     dayEndTime = json['day_end_time'];
     if (json['slots'] != null) {
-      slots = new List<Slots>();
+      slots = <Slots>[];
       json['slots'].forEach((v) {
-        slots.add(new Slots.fromJson(v));
+        slots.add(Slots.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['date'] = this.date;
-    data['week_day_id'] = this.weekDayId;
-    data['week_day'] = this.weekDay;
-    data['day_start_time'] = this.dayStartTime;
-    data['day_end_time'] = this.dayEndTime;
-    if (this.slots != null) {
-      data['slots'] = this.slots.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['date'] = date;
+    data['week_day_id'] = weekDayId;
+    data['week_day'] = weekDay;
+    data['day_start_time'] = dayStartTime;
+    data['day_end_time'] = dayEndTime;
+    if (slots != null) {
+      data['slots'] = slots.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -107,10 +107,10 @@ class Slots {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['slot_start'] = this.slotStart.toIso8601String();
-    data['slot_end'] = this.slotEnd.toIso8601String();
-    data['available'] = this.isAvailable;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['slot_start'] = slotStart.toIso8601String();
+    data['slot_end'] = slotEnd.toIso8601String();
+    data['available'] = isAvailable;
     return data;
   }
 }

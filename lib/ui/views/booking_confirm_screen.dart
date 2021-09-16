@@ -23,16 +23,16 @@ class BookingConfirmedView extends StatefulWidget {
 class _BookingConfirmedViewState extends State<BookingConfirmedView> {
   DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;
   Doctors doctorDetails;
-  var dateFormat = DateFormat("dd MMM, yyyy");
-  var dateFormatFull = DateFormat("yyyy-MM-dd");
-  var timeFormat = DateFormat("hh:mm a");
+  var dateFormat = DateFormat('dd MMM, yyyy');
+  var dateFormatFull = DateFormat('yyyy-MM-dd');
+  var timeFormat = DateFormat('hh:mm a');
   Labs labDetails;
 
   _BookingConfirmedViewState(@required this.bookingAppoinmentsDetails);
 
   @override
   Widget build(BuildContext context) {
-    if (bookingAppoinmentsDetails.whichFlow == "Lab") {
+    if (bookingAppoinmentsDetails.whichFlow == 'Lab') {
       labDetails = bookingAppoinmentsDetails.labs;
     } else {
       doctorDetails = bookingAppoinmentsDetails.doctors;
@@ -102,7 +102,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
                             Container(
                               height: 360,
                               child:
-                                  bookingAppoinmentsDetails.whichFlow == "Lab"
+                              bookingAppoinmentsDetails.whichFlow == 'Lab'
                                       ? _makeLabTile()
                                       : _makeDoctorTile(),
                             ),
@@ -144,9 +144,9 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
               backgroundColor: primaryColor,
               child: CircleAvatar(
                   radius: 38,
-                  backgroundImage: doctorDetails.imageURL == ""
+                  backgroundImage: doctorDetails.imageURL == ''
                       ? AssetImage('res/images/profile_placeholder.png')
-                      : new NetworkImage(doctorDetails.imageURL)),
+                      : NetworkImage(doctorDetails.imageURL)),
             ),
           ),
           SizedBox(
@@ -195,7 +195,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Contact No.: ",
+                'Contact No.: ',
                 style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w300,
@@ -212,7 +212,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
                       color: textBlack),
                   linkStyle: TextStyle(color: Colors.blue),
                   onPhoneTap: (link) async {
-                    String url = 'tel://' + link;
+                    final String url = 'tel://' + link;
                     if (await canLaunch(url)) {
                       await launch(url);
                     } else {
@@ -279,10 +279,10 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
               backgroundColor: primaryColor,
               child: CircleAvatar(
                   radius: 48,
-                  backgroundImage: (labDetails.imageURL == "") ||
+                  backgroundImage: (labDetails.imageURL == '') ||
                           (labDetails.imageURL == null)
                       ? AssetImage('res/images/profile_placeholder.png')
-                      : new NetworkImage(labDetails.imageURL)),
+                      : NetworkImage(labDetails.imageURL)),
             ),
           ),
           SizedBox(
@@ -331,7 +331,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Contact No.: ",
+                'Contact No.: ',
                 style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w300,
@@ -348,7 +348,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
                       color: textBlack),
                   linkStyle: TextStyle(color: Colors.blue),
                   onPhoneTap: (link) async {
-                    String url = 'tel://' + link;
+                    final String url = 'tel://' + link;
                     if (await canLaunch(url)) {
                       await launch(url);
                     } else {
@@ -478,8 +478,8 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
           // Add This
           child: MaterialButton(
             minWidth: 240,
-            child: new Text('Go to My Appointments',
-                style: new TextStyle(
+            child: Text('Go to My Appointments',
+                style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
@@ -490,7 +490,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
                   3,
                 );
               }), (Route<dynamic> route) => false);
-              debugPrint("Clicked On Proceed");
+              debugPrint('Clicked On Proceed');
             },
           ),
         ),
@@ -500,17 +500,17 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
 
   Future<bool> _onBackPressed() {
     return showDialog(
-          context: context,
-          builder: (context) => new AlertDialog(
-            title: new Text('Thank You For Booking'),
-            content: new Text('Your Appointment is Booked Successfully'),
+      context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Thank You For Booking'),
+            content: Text('Your Appointment is Booked Successfully'),
             actions: <Widget>[
-              new GestureDetector(
+              GestureDetector(
                 onTap: () => Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder: (context) {
                   return HomeView(4);
                 }), (Route<dynamic> route) => false),
-                child: Text("Ok"),
+                child: Text('Ok'),
               ),
             ],
           ),

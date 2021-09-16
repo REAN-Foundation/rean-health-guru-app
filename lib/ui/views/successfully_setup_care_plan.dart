@@ -19,13 +19,13 @@ class SuccessfullySetupCarePlanView extends StatefulWidget {
 class _SuccessfullySetupCarePlanViewState
     extends State<SuccessfullySetupCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String dob = "";
-  String unformatedDOB = "";
-  var dateFormat = DateFormat("dd MMM, yyyy");
+  String dob = '';
+  String unformatedDOB = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
 
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   StartCarePlanResponse startCarePlanResponse;
 
   /*loadSharedPrefrance() async {
@@ -64,7 +64,7 @@ class _SuccessfullySetupCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(

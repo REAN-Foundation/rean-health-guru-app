@@ -15,11 +15,11 @@ class PatientObservationsViewModel extends BaseModel {
   Future<PatientVitalsPojo> getPatientVitals(
       String auth1, String patientId) async {
     setBusy(true);
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get('/vitals?patientUserId=' + patientId,
+    final response = await apiProvider.get('/vitals?patientUserId=' + patientId,
         header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
 
     print(response);
@@ -31,11 +31,11 @@ class PatientObservationsViewModel extends BaseModel {
   Future<PatientMedicalProfilePojo> getPatientMedicalProfile(
       String auth1, String patientId) async {
     setBusy(true);
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/medical-profile?patientUserId=' + patientId,
         header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
 
@@ -48,12 +48,14 @@ class PatientObservationsViewModel extends BaseModel {
   Future<BaseResponse> updatePatientMedicalProfile(
       String patientProfileId, Map body) async {
     setBusy(true);
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.put('/medical-profile/' + patientProfileId,
-        header: map, body: body); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
+    final response = await apiProvider.put(
+        '/medical-profile/' + patientProfileId,
+        header: map,
+        body: body); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
 
     print(response);
     setBusy(false);

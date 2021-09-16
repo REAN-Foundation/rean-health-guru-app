@@ -19,35 +19,36 @@ var _scaffoldContext;
 class FAQChatScreen extends StatefulWidget {
   @override
   FAQChatScreenState createState() {
-    return new FAQChatScreenState();
+    return FAQChatScreenState();
   }
 }
 
 class FAQChatScreenState extends State<FAQChatScreen> {
-  var model = new BotViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  ScrollController _scrollController =
+  var model = BotViewModel();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
-  var _chatController = new TextEditingController();
-  var _chatFocus = new FocusNode();
-  var chatList = List<FAQChatModelPojo>();
+  final _chatController = TextEditingController();
+  final _chatFocus = FocusNode();
+  var chatList = <FAQChatModelPojo>[];
   var chatBoxWidth = 0.0;
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
-  String phoneNumber = "";
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  String phoneNumber = '';
 
   Timer timer;
 
   loadSharedPrefs() async {
     try {
-      UserData user = UserData.fromJson(await _sharedPrefUtils.read("user"));
+      final UserData user =
+          UserData.fromJson(await _sharedPrefUtils.read('user'));
       phoneNumber = user.data.user.phoneNumber;
 
       /* */
       setState(() {
         //debugPrint('Gender ==> ${patient.gender.toString()}');
       });
-      timer = new Timer.periodic(
-          new Duration(seconds: 30), (Timer t) => setState(() {}));
+      timer =
+          Timer.periodic(Duration(seconds: 30), (Timer t) => setState(() {}));
     } catch (Excepetion) {
       // do something
       debugPrint(Excepetion);
@@ -80,17 +81,17 @@ class FAQChatScreenState extends State<FAQChatScreen> {
               backgroundColor: Colors.white,
               appBar: AppBar(
                 backgroundColor: Colors.white,
-                brightness: Brightness.light,
-                title: Text(
-                  'FAQ',
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      color: primaryColor,
-                      fontWeight: FontWeight.w700),
-                ),
-                iconTheme: new IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  /*IconButton(
+            brightness: Brightness.light,
+            title: Text(
+              'FAQ',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700),
+            ),
+            iconTheme: IconThemeData(color: Colors.black),
+            actions: <Widget>[
+              /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -121,10 +122,10 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                             scrollDirection: Axis.vertical,
                             reverse: true,
                             child: Theme(
-                              data: new ThemeData(
-                                primaryColor: Colors.white,
-                                primaryColorDark: Colors.white,
-                              ),
+                              data: ThemeData(
+                            primaryColor: Colors.white,
+                            primaryColorDark: Colors.white,
+                          ),
                               child: TextFormField(
                                   controller: _chatController,
                                   focusNode: _chatFocus,
@@ -132,13 +133,13 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                                   maxLines: null,
                                   decoration: InputDecoration(
                                       isDense: true,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8.0),
-                                      ),
-                                      filled: true,
-                                      hintStyle: TextStyle(color: Colors.black38),
-                                      hintText: "Type in your question",
-                                      fillColor: Colors.white)),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  filled: true,
+                                  hintStyle: TextStyle(color: Colors.black38),
+                                  hintText: 'Type in your question',
+                                  fillColor: Colors.white)),
                             ),
                           ),
                         ),
@@ -152,10 +153,10 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                               size: 32,
                             ),
                             onPressed: () {
-                          if (!_chatController.text.isEmpty) {
+                              if (_chatController.text.isNotEmpty) {
                             sendMessageBotApi(_chatController.text);
-                            var chatMsg = new FAQChatModelPojo(
-                                _chatController.text, new DateTime.now(), 'ME');
+                            final chatMsg = FAQChatModelPojo(
+                                _chatController.text, DateTime.now(), 'ME');
                             _chatController.clear();
                             chatList.insert(0, chatMsg);
                             /* var chatMsgReceive = new FAQChatModelPojo(
@@ -201,7 +202,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
   }
 
   _createMsgContect(BuildContext context, int index) {
-    var chatMsg = chatList.elementAt(index);
+    final chatMsg = chatList.elementAt(index);
 
     return chatMsg.sender == 'ME'
         ? _myChatMsg(chatMsg)
@@ -217,9 +218,9 @@ class FAQChatScreenState extends State<FAQChatScreen> {
           padding: const EdgeInsets.only(
               left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
           constraints: BoxConstraints(maxWidth: chatBoxWidth, minWidth: 100),
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               color: primaryLightColor,
-              borderRadius: new BorderRadius.only(
+              borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16.0),
                   bottomLeft: Radius.circular(16.0),
                   topRight: Radius.circular(16.0))),
@@ -254,9 +255,9 @@ class FAQChatScreenState extends State<FAQChatScreen> {
           padding: const EdgeInsets.only(
               left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
           constraints: BoxConstraints(maxWidth: chatBoxWidth, minWidth: 100),
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               color: primaryColor,
-              borderRadius: new BorderRadius.only(
+              borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16.0),
                   bottomLeft: Radius.circular(0.0),
                   topRight: Radius.circular(16.0),
@@ -288,16 +289,16 @@ class FAQChatScreenState extends State<FAQChatScreen> {
 
   sendMessageBotApi(String msg) async {
     try {
-      var map = new Map<String, String>();
-      map["phoneNumber"] = phoneNumber;
-      map["type"] = 'text';
-      map["message"] = msg;
+      final map = <String, String>{};
+      map['phoneNumber'] = phoneNumber;
+      map['type'] = 'text';
+      map['message'] = msg;
 
-      ChatApiResponse baseResponse = await model.sendMsgApi(map);
-      debugPrint("Base Response ==> ${baseResponse.toJson()}");
+      final ChatApiResponse baseResponse = await model.sendMsgApi(map);
+      debugPrint('Base Response ==> ${baseResponse.toJson()}');
       if (baseResponse.success) {
-        var chatMsgReceive = new FAQChatModelPojo(
-            baseResponse.data.responseMessage, new DateTime.now(), 'BOT');
+        final chatMsgReceive = FAQChatModelPojo(
+            baseResponse.data.responseMessage, DateTime.now(), 'BOT');
         chatList.insert(0, chatMsgReceive);
 
         setState(() {
@@ -310,7 +311,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }

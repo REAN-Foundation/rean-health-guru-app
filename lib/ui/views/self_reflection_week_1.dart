@@ -22,23 +22,23 @@ class SelfReflactionWeek_1_View extends StatefulWidget {
 
 class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   ProgressDialog progressDialog;
-  String answer1 = "";
-  String answer7 = "";
+  String answer1 = '';
+  String answer7 = '';
 
-  var question2TextControler = new TextEditingController();
-  var question3TextControler = new TextEditingController();
-  var question4TextControler = new TextEditingController();
-  var question5TextControler = new TextEditingController();
-  var question6TextControler = new TextEditingController();
+  var question2TextControler = TextEditingController();
+  var question3TextControler = TextEditingController();
+  var question4TextControler = TextEditingController();
+  var question5TextControler = TextEditingController();
+  var question6TextControler = TextEditingController();
 
-  var focus2Node = new FocusNode();
-  var focus3Node = new FocusNode();
-  var focus4Node = new FocusNode();
-  var focus5Node = new FocusNode();
-  var focus6Node = new FocusNode();
+  var focus2Node = FocusNode();
+  var focus3Node = FocusNode();
+  var focus4Node = FocusNode();
+  var focus5Node = FocusNode();
+  var focus6Node = FocusNode();
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -64,7 +64,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -129,17 +129,17 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
 
   Widget _makeQuestion1() {
     return Container(
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+          borderRadius: BorderRadius.all(Radius.circular(4.0))),
       child: Column(
         children: <Widget>[
           Container(
             height: 40,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius: new BorderRadius.only(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(4.0),
                     topRight: Radius.circular(4.0))),
             child: Padding(
@@ -188,12 +188,12 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                                     ? Colors.deepPurple
                                     : colorF6F6FF)),
                         onPressed: () {
-                          answer1 = "Good";
+                          answer1 = 'Good';
                           setState(() {});
                         },
                         color: colorF6F6FF,
                         textColor: Colors.deepPurple,
-                        child: Text("Good", style: TextStyle(fontSize: 14)),
+                        child: Text('Good', style: TextStyle(fontSize: 14)),
                       ),
                     ),
                   ],
@@ -224,13 +224,13 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                                     ? Colors.deepPurple
                                     : colorF6F6FF)),
                         onPressed: () {
-                          answer1 = "Not so good";
+                          answer1 = 'Not so good';
                           setState(() {});
                         },
                         color: colorF6F6FF,
                         textColor: Colors.deepPurple,
                         child:
-                            Text("Not so good", style: TextStyle(fontSize: 14)),
+                            Text('Not so good', style: TextStyle(fontSize: 14)),
                       ),
                     ),
                   ],
@@ -245,17 +245,17 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
 
   Widget _makeQuestion2() {
     return Container(
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+          borderRadius: BorderRadius.all(Radius.circular(4.0))),
       child: Column(
         children: <Widget>[
           Container(
             height: 40,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius: new BorderRadius.only(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(4.0),
                     topRight: Radius.circular(4.0))),
             child: Padding(
@@ -306,17 +306,17 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
 
   Widget _makeQuestion3() {
     return Container(
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+          borderRadius: BorderRadius.all(Radius.circular(4.0))),
       child: Column(
         children: <Widget>[
           Container(
             height: 40,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius: new BorderRadius.only(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(4.0),
                     topRight: Radius.circular(4.0))),
             child: Padding(
@@ -367,17 +367,17 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
 
   Widget _makeQuestion4() {
     return Container(
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+          borderRadius: BorderRadius.all(Radius.circular(4.0))),
       child: Column(
         children: <Widget>[
           Container(
             height: 40,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius: new BorderRadius.only(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(4.0),
                     topRight: Radius.circular(4.0))),
             child: Padding(
@@ -428,17 +428,17 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
 
   Widget _makeQuestion5() {
     return Container(
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+          borderRadius: BorderRadius.all(Radius.circular(4.0))),
       child: Column(
         children: <Widget>[
           Container(
             height: 40,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius: new BorderRadius.only(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(4.0),
                     topRight: Radius.circular(4.0))),
             child: Padding(
@@ -489,17 +489,17 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
 
   Widget _makeQuestion6() {
     return Container(
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+          borderRadius: BorderRadius.all(Radius.circular(4.0))),
       child: Column(
         children: <Widget>[
           Container(
             height: 40,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius: new BorderRadius.only(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(4.0),
                     topRight: Radius.circular(4.0))),
             child: Padding(
@@ -550,17 +550,17 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
 
   Widget _makeQuestion7() {
     return Container(
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+          borderRadius: BorderRadius.all(Radius.circular(4.0))),
       child: Column(
         children: <Widget>[
           Container(
             height: 40,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius: new BorderRadius.only(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(4.0),
                     topRight: Radius.circular(4.0))),
             child: Padding(
@@ -605,12 +605,12 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                                     ? Colors.deepPurple
                                     : colorF6F6FF)),
                         onPressed: () {
-                          answer7 = "Yes";
+                          answer7 = 'Yes';
                           setState(() {});
                         },
                         color: colorF6F6FF,
                         textColor: Colors.deepPurple,
-                        child: Text("Yes", style: TextStyle(fontSize: 14)),
+                        child: Text('Yes', style: TextStyle(fontSize: 14)),
                       ),
                     ),
                     SizedBox(
@@ -626,12 +626,12 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                                     ? Colors.deepPurple
                                     : colorF6F6FF)),
                         onPressed: () {
-                          answer7 = "No";
+                          answer7 = 'No';
                           setState(() {});
                         },
                         color: colorF6F6FF,
                         textColor: Colors.deepPurple,
-                        child: Text("No", style: TextStyle(fontSize: 14)),
+                        child: Text('No', style: TextStyle(fontSize: 14)),
                       ),
                     ),
                   ],
@@ -646,17 +646,17 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
 
   Widget _nextWeetTask() {
     return Container(
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+          borderRadius: BorderRadius.all(Radius.circular(4.0))),
       child: Column(
         children: <Widget>[
           Container(
             height: 40,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: colorF6F6FF,
-                borderRadius: new BorderRadius.only(
+                borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(4.0),
                     topRight: Radius.circular(4.0))),
             child: Padding(
@@ -826,7 +826,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
   updateWeeklyReflection() async {
     try {
       progressDialog.show();
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['AreYouFeelingGood'] = answer1 == 'Good';
       map['HowIsYourProgress_Text'] = question2TextControler.text;
       map['WhatsWorkingForYou_Text'] = question3TextControler.text;
@@ -835,7 +835,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
       map['QuestionsAndConcerns_Text'] = question6TextControler.text;
       map['ReadyToProceedFurther'] = answer7 == 'Yes';
 
-      BaseResponse baseResponse = await model.statusCheck(
+      final BaseResponse baseResponse = await model.statusCheck(
           startCarePlanResponseGlob.data.carePlan.id.toString(),
           widget.task.details.id,
           map);

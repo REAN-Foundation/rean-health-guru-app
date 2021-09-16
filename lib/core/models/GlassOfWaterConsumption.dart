@@ -12,10 +12,10 @@ class GlassOfWaterConsumption {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['date'] = this.date.toIso8601String();
-    data['count'] = this.count;
-    data['discription'] = this.discription;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['date'] = date.toIso8601String();
+    data['count'] = count;
+    data['discription'] = discription;
     return data;
   }
 }

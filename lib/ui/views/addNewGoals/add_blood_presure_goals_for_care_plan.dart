@@ -19,23 +19,23 @@ class AddBloodPresureeGoalsForCarePlanView extends StatefulWidget {
 class _AddBloodPresureeGoalsForCarePlanViewState
     extends State<AddBloodPresureeGoalsForCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String selectedGoal = "";
+  String selectedGoal = '';
 
   final TextEditingController _systolicController = TextEditingController();
   final TextEditingController _diastolicController = TextEditingController();
 
-  var _systolicFocus = FocusNode();
-  var _diastolicFocus = FocusNode();
-  String dob = "";
-  String unformatedDOB = "";
-  var dateFormat = DateFormat("dd MMM, yyyy");
+  final _systolicFocus = FocusNode();
+  final _diastolicFocus = FocusNode();
+  String dob = '';
+  String unformatedDOB = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
   ProgressDialog progressDialog;
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -52,7 +52,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -93,7 +93,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
             height: 16,
           ),
           Text(
-            "Normal blood pressure is less than 120/80 mm Hg (systolic pressure is less than 120 AND diastolic pressure is less than 80). Elevated is systolic pressure from 120-129 OR diastolic pressure less than 80. High blood pressure is systolic pressure of 130 or higher OR diastolic pressure of 80 or higher.",
+            'Normal blood pressure is less than 120/80 mm Hg (systolic pressure is less than 120 AND diastolic pressure is less than 80). Elevated is systolic pressure from 120-129 OR diastolic pressure less than 80. High blood pressure is systolic pressure of 130 or higher OR diastolic pressure of 80 or higher.',
             style: TextStyle(
                 color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
           ),
@@ -142,7 +142,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: "  mm Hg     ",
+                          text: '  mm Hg     ',
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -194,7 +194,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: "  mm Hg  ",
+                          text: '  mm Hg  ',
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -248,7 +248,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: "          ",
+                          text: '          ',
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -346,7 +346,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
                     ),
                     child: Center(
                       child: Text(
-                        "Save",
+                        'Save',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
@@ -371,7 +371,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
   setGoals() async {
     try {
       progressDialog.show();
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['TargetDate'] = dob;
       map['Systolic_Target'] = _systolicController.text;
       map['Systolic_HealthyRangeStart'] = 100;
@@ -382,11 +382,11 @@ class _AddBloodPresureeGoalsForCarePlanViewState
       map['Diastolic_HealthyRangeEnd'] = 90;
       map['Diastolic_StartingValue'] = 85;
 
-      var body = new Map<String, dynamic>();
+      final body = <String, dynamic>{};
       body['Goal'] = map;
       body['GoalSettingTaskId'] = getTask().details.id;
 
-      BaseResponse baseResponse = await model.addGoalsTask(
+      final BaseResponse baseResponse = await model.addGoalsTask(
           startCarePlanResponseGlob.data.carePlan.id.toString(),
           'blood-pressure-goal',
           body);
@@ -415,20 +415,20 @@ class _AddBloodPresureeGoalsForCarePlanViewState
 
   navigateToScreen() {
     debugPrint('Set Goals Plan Stack ==> ${goalPlanScreenStack.length}');
-    if (goalPlanScreenStack.length == 0) {
+    if (goalPlanScreenStack.isEmpty) {
       Navigator.pushReplacementNamed(
           context, RoutePaths.Determine_Action_For_Care_Plan);
-    } else if (goalPlanScreenStack.elementAt(0) == "Blood Pressure") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Blood Pressure') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_BLOOD_PRESURE_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Blood Sugar") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Blood Sugar') {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_GLUCOSE_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Weight") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Weight') {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_WEIGHT_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Physical Activity") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Physical Activity') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Quit Smoking") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Quit Smoking') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_QUIT_SMOKING_GOALS);
     }

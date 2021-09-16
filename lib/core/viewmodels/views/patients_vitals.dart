@@ -15,11 +15,11 @@ class PatientVitalsViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post(
+    final response = await apiProvider.post(
         '/biometrics/' + patientUserId + '/' + path,
         header: map,
         body: body);
@@ -33,11 +33,11 @@ class PatientVitalsViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/biometrics/' + patientUserId + '/' + path + '/search',
         header: map);
 

@@ -26,20 +26,20 @@ class VideoMoreCarePlanView extends StatefulWidget {
 
 class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 //https://www.youtube.com/watch?v=s1pG7k_1nSw
-  String videourl = "https://www.youtube.com/watch?v=d8PzoTr95ik";
+  String videourl = 'https://www.youtube.com/watch?v=d8PzoTr95ik';
   String videoId;
   String textMsg1 =
-      "Welcome to the Connected Heart Health CarePlan. For the next 12 weeks you will be given daily activities designed to help you manage your condition.\n\nThese activities will include education, assessments, challenges, and communication. We will begin with some foundational information and developing your self CarePlan.";
+      'Welcome to the Connected Heart Health CarePlan. For the next 12 weeks you will be given daily activities designed to help you manage your condition.\n\nThese activities will include education, assessments, challenges, and communication. We will begin with some foundational information and developing your self CarePlan.';
   String textMsg2 =
       "Heart Failure is a chronic, progressive condition in which the heart muscle is unable to pump enough blood through the heart to meet the body's needs for blood and oxygen.\n\nHeart failure usually results in an enlarged heart.";
 
   YoutubePlayerController _controller;
 
-  String unformatedDOB = "";
-  var dateFormat = DateFormat("dd MMM, yyyy");
+  String unformatedDOB = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
 
   @override
   void initState() {
@@ -71,7 +71,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
             backgroundColor: Colors.white,
             brightness: Brightness.light,
             title: Text(
-              widget.assortedViewConfigs.header == ""
+              widget.assortedViewConfigs.header == ''
                   ? 'Learn More!'
                   : widget.assortedViewConfigs.header,
               style: TextStyle(
@@ -79,7 +79,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -106,9 +106,9 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
                       height: 16,
                     ),
                     Expanded(
-                      child: widget.assortedViewConfigs.toShow == "1"
+                      child: widget.assortedViewConfigs.toShow == '1'
                           ? iMageView()
-                          : widget.assortedViewConfigs.toShow == "2"
+                          : widget.assortedViewConfigs.toShow == '2'
                               ? audioView()
                               : videoView(),
                     ),
@@ -130,7 +130,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
       ),
       child: Center(
         child: Text(
-          "AHA Heart Failure Care Plan\nAHAHF",
+          'AHA Heart Failure Care Plan\nAHAHF',
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
           textAlign: TextAlign.center,
         ),
@@ -145,33 +145,33 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          assrotedUICount != 3
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        AssortedViewConfigs newAssortedViewConfigs =
-                            new AssortedViewConfigs();
-                        if (assrotedUICount == 1) {
-                          newAssortedViewConfigs.toShow = "1";
-                          newAssortedViewConfigs.testToshow = "1";
-                          newAssortedViewConfigs.isNextButtonVisible = true;
+          if (assrotedUICount != 3)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: () {
+                    final AssortedViewConfigs newAssortedViewConfigs =
+                        AssortedViewConfigs();
+                    if (assrotedUICount == 1) {
+                      newAssortedViewConfigs.toShow = '1';
+                      newAssortedViewConfigs.testToshow = '1';
+                      newAssortedViewConfigs.isNextButtonVisible = true;
 
-                          Navigator.pushNamed(
-                              context, RoutePaths.Learn_More_Care_Plan,
-                              arguments: newAssortedViewConfigs);
-                          assrotedUICount = 2;
-                        } else if (assrotedUICount == 2) {
-                          newAssortedViewConfigs.toShow = "1";
-                          newAssortedViewConfigs.testToshow = "2";
-                          newAssortedViewConfigs.isNextButtonVisible = false;
+                      Navigator.pushNamed(
+                          context, RoutePaths.Learn_More_Care_Plan,
+                          arguments: newAssortedViewConfigs);
+                      assrotedUICount = 2;
+                    } else if (assrotedUICount == 2) {
+                      newAssortedViewConfigs.toShow = '1';
+                      newAssortedViewConfigs.testToshow = '2';
+                      newAssortedViewConfigs.isNextButtonVisible = false;
 
-                          Navigator.pushNamed(
-                              context, RoutePaths.Learn_More_Care_Plan,
-                              arguments: newAssortedViewConfigs);
-                          assrotedUICount = 3;
-                        } else {
+                      Navigator.pushNamed(
+                          context, RoutePaths.Learn_More_Care_Plan,
+                          arguments: newAssortedViewConfigs);
+                      assrotedUICount = 3;
+                    } else {
                           Navigator.pushAndRemoveUntil(context,
                               MaterialPageRoute(builder: (context) {
                             return HomeView(1);
@@ -208,18 +208,19 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
                                     fontSize: 14),
                               ),
                               Icon(
-                                Icons.arrow_forward_ios,
-                                color: Colors.white,
-                                size: 16,
-                              ),
-                            ],
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                            size: 16,
                           ),
-                        ),
+                        ],
                       ),
                     ),
-                  ],
-                )
-              : Container(),
+                  ),
+                ),
+              ],
+            )
+          else
+            Container(),
           const SizedBox(
             height: 40,
           ),
@@ -366,8 +367,8 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
         children: [
           Container(
               padding: const EdgeInsets.all(16.0),
-              child: new Image.asset(
-                widget.assortedViewConfigs.testToshow == "1"
+              child: Image.asset(
+                widget.assortedViewConfigs.testToshow == '1'
                     ? 'res/images/care_plan_message.jpg'
                     : 'res/images/care_plan_info_graphic.jpg',
                 fit: BoxFit.cover,
@@ -409,7 +410,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
 
   completeMessageTaskOfAHACarePlan(Task task) async {
     try {
-      StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
+      final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.completeMessageTaskOfAHACarePlan(
               startCarePlanResponseGlob.data.carePlan.id.toString(), task.id);
 
@@ -420,7 +421,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
           return HomeView(1);
         }), (Route<dynamic> route) => false);
         debugPrint(
-            "AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}");
+            'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
         showToast(_startTaskOfAHACarePlanResponse.message, context);
       }

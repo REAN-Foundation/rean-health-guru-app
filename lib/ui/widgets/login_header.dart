@@ -28,7 +28,7 @@ class LoginHeader extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.all(60.0),
         child: Image(
-          image: new AssetImage("assets/images/doctor_logo.png"),
+          image: AssetImage('assets/images/doctor_logo.png'),
           height: 180,
           width: 180,
         ),
@@ -138,7 +138,7 @@ class LoginHeader extends StatelessWidget {
                     filled: true,
                     fillColor: Color(0xFFFFFFFF),
                     hintText: 'Enter your Password',
-                    counterText: "",
+                    counterText: '',
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       borderSide: BorderSide(color: Colors.white),

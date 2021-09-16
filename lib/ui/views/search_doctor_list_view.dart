@@ -23,19 +23,20 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
   List<Address> addresses;
   Address first;*/
   bool _serviceEnabled;
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
-  String name = "";
-  int _currentNav = 0;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var _searchController = new TextEditingController();
-  var model = new BookAppoinmentViewModel();
-  String auth = "";
-  var doctorSearchList = new List<Doctors>();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  String name = '';
+  final int _currentNav = 0;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _searchController = TextEditingController();
+  var model = BookAppoinmentViewModel();
+  String auth = '';
+  var doctorSearchList = <Doctors>[];
   ProgressDialog progressDialog;
 
   loadSharedPrefs() async {
     try {
-      UserData user = UserData.fromJson(await _sharedPrefUtils.read("user"));
+      final UserData user =
+          UserData.fromJson(await _sharedPrefUtils.read('user'));
       //debugPrint(user.toJson().toString());
       auth = user.data.accessToken;
       getDoctorList();
@@ -50,11 +51,11 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
 
   getDoctorList() async {
     try {
-      DoctorListApiResponse doctorListApiResponse =
+      final DoctorListApiResponse doctorListApiResponse =
           await model.getDoctorList('Bearer ' + auth);
 
       if (doctorListApiResponse.status == 'success') {
-        if (doctorListApiResponse.data.doctors.length != 0) {
+        if (doctorListApiResponse.data.doctors.isNotEmpty) {
           doctorSearchList.clear();
           doctorSearchList.addAll(doctorListApiResponse.data.doctors);
         } else {
@@ -72,11 +73,11 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
 
   getDoctorListByName(String name) async {
     try {
-      DoctorListApiResponse doctorListApiResponse =
+      final DoctorListApiResponse doctorListApiResponse =
           await model.getDoctorListByLocality(name, 'Bearer ' + auth);
 
       if (doctorListApiResponse.status == 'success') {
-        if (doctorListApiResponse.data.doctors.length != 0) {
+        if (doctorListApiResponse.data.doctors.isNotEmpty) {
           doctorSearchList.clear();
           doctorSearchList.addAll(doctorListApiResponse.data.doctors);
         } else {
@@ -95,7 +96,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
   getDoctorDetails(String doctorUserId) async {
     try {
       progressDialog.show();
-      DoctorDetailsResponse doctorDetailsResponse =
+      final DoctorDetailsResponse doctorDetailsResponse =
           await model.getDoctorDetails('Bearer ' + auth, doctorUserId);
 
       if (doctorDetailsResponse.status == 'success') {
@@ -156,7 +157,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     return BaseWidget<BookAppoinmentViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -173,7 +174,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
           ),
           body: Padding(
             padding: EdgeInsets.all(16.0),
@@ -183,10 +184,10 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                 children: <Widget>[
                   Container(
                     height: 40,
-                    decoration: new BoxDecoration(
+                    decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(color: primaryColor, width: 2),
-                        borderRadius: new BorderRadius.all(
+                        borderRadius: BorderRadius.all(
                           Radius.circular(8.0),
                         )),
                     child: Row(
@@ -202,7 +203,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                               onChanged: (text) {
                                 getDoctorListByName(text);
                               },
-                              decoration: new InputDecoration(
+                              decoration: InputDecoration(
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none,
@@ -210,7 +211,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                                   disabledBorder: InputBorder.none,
                                   contentPadding: EdgeInsets.only(
                                       left: 15, bottom: 11, top: 11, right: 0),
-                                  hintText: "Search doctor by name")),
+                                  hintText: 'Search doctor by name')),
                         ),
                         Container(
                           padding: const EdgeInsets.all(0.0),
@@ -223,7 +224,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                                 getDoctorList();
                               },
                               child: Icon(
-                                _searchController.text.length == 0
+                                _searchController.text.isEmpty
                                     ? Icons.search
                                     : Icons.clear,
                                 color: primaryColor,
@@ -239,7 +240,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                     height: 16,
                   ),
                   Text(
-                    "Near By",
+                    'Near By',
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
@@ -255,7 +256,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                                 height: 32,
                                 width: 32,
                                 child: CircularProgressIndicator()))
-                        : (doctorSearchList.length == 0
+                        : (doctorSearchList.isEmpty
                             ? noDoctorFound()
                             : doctorSearchResultListView()),
                   ),
@@ -270,7 +271,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
 
   Widget noDoctorFound() {
     return Center(
-      child: Text("No doctor found in your locality",
+      child: Text('No doctor found in your locality',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -293,15 +294,15 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
   }
 
   Widget _makeDoctorListCard(BuildContext context, int index) {
-    Doctors doctorDetails = doctorSearchList.elementAt(index);
+    final Doctors doctorDetails = doctorSearchList.elementAt(index);
     debugPrint(doctorDetails.specialities);
     return MergeSemantics(
       child: Container(
         height: 100,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: primaryLightColor, width: 1),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Column(
           children: <Widget>[
             Expanded(
@@ -317,15 +318,15 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                         flex: 1,
                         child: Center(
                             child: CircleAvatar(
-                          radius: 40,
+                              radius: 40,
                           backgroundColor: primaryColor,
                           child: CircleAvatar(
                               radius: 38,
-                              backgroundImage: doctorDetails.imageURL == "" ||
+                              backgroundImage: doctorDetails.imageURL == '' ||
                                       doctorDetails.imageURL == null
                                   ? AssetImage(
                                       'res/images/profile_placeholder.png')
-                                  : new NetworkImage(doctorDetails.imageURL)),
+                                  : NetworkImage(doctorDetails.imageURL)),
                         )),
                       ),
                       SizedBox(
@@ -352,9 +353,8 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                             Row(
                               children: [
                                 Text(
-                                    doctorDetails.specialities == null
-                                        ? doctorDetails.qualification
-                                        : doctorDetails.specialities,
+                                    doctorDetails.specialities ??
+                                        doctorDetails.qualification,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -433,7 +433,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                         getDoctorDetails(doctorDetails.userId);
                       },
                       shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.only(
+                          borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(8.0),
                               bottomRight: Radius.circular(
                                   8.0))) /*InkWell(

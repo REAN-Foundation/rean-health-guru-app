@@ -20,7 +20,7 @@ class BiomatricAssignmentTask extends StatefulWidget {
 
 class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
 
   final TextEditingController _Controller = TextEditingController();
@@ -29,7 +29,7 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
 
     // TODO: implement build
     return BaseWidget<PatientCarePlanViewModel>(
@@ -48,7 +48,7 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -103,7 +103,7 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
                     children: [
                       InkWell(
                         onTap: () {
-                          if (!_Controller.text.isEmpty) {
+                          if (_Controller.text.isNotEmpty) {
                             Navigator.pop(context, _Controller.text);
                           } else {
                             showToast('Please enter measures', context);
@@ -124,7 +124,7 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
                             ),
                             child: Center(
                               child: Text(
-                                "Save",
+                                'Save',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w700,

@@ -31,11 +31,11 @@ class PatientCarePlanViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get('/aha/care-plan/types', header: map);
+    final response = await apiProvider.get('/aha/care-plan/types', header: map);
 
     setBusy(false);
     // Convert and return
@@ -47,11 +47,11 @@ class PatientCarePlanViewModel extends BaseModel {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post('/aha/care-plan/enroll',
+    final response = await apiProvider.post('/aha/care-plan/enroll',
         body: body, header: map);
     setBusy(false);
     // Convert and return
@@ -63,11 +63,11 @@ class PatientCarePlanViewModel extends BaseModel {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post('/aha/care-plan/add-team-member',
+    final response = await apiProvider.post('/aha/care-plan/add-team-member',
         body: body, header: map);
     setBusy(false);
     // Convert and return
@@ -75,11 +75,11 @@ class PatientCarePlanViewModel extends BaseModel {
   }
 
   Future<BaseResponse> removeTeamMembers(String emergencyContactId) async {
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.delete(
+    final response = await apiProvider.delete(
         '/aha/care-plan/team-member/' + emergencyContactId,
         header: map);
     setBusy(false);
@@ -91,11 +91,11 @@ class PatientCarePlanViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response = await apiProvider.get('/doctor', header: map);
+    final response = await apiProvider.get('/doctor', header: map);
 
     print(response);
     setBusy(false);
@@ -108,11 +108,11 @@ class PatientCarePlanViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = auth;
 
-    var response = await apiProvider
+    final response = await apiProvider
         .get('/pharmacy?long=' + long + '&lat=' + lat, header: map);
 
     print(response);
@@ -125,11 +125,11 @@ class PatientCarePlanViewModel extends BaseModel {
       String ahaCarePlanId) async {
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider
+    final response = await apiProvider
         .get('/aha/care-plan/summary/' + ahaCarePlanId, header: map);
 
     setBusy(false);
@@ -140,11 +140,11 @@ class PatientCarePlanViewModel extends BaseModel {
   Future<GetCarePlanMyResponse> getMyAHACarePlan() async {
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider
+    final response = await apiProvider
         .get('/aha/care-plan/patient/' + patientUserId, header: map);
 
     setBusy(false);
@@ -155,11 +155,11 @@ class PatientCarePlanViewModel extends BaseModel {
   Future<TeamCarePlanReesponse> getAHACarePlanTeam(String ahaCarePlanId) async {
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider
+    final response = await apiProvider
         .get('/aha/care-plan/' + ahaCarePlanId + '/list-members', header: map);
 
     setBusy(false);
@@ -171,14 +171,14 @@ class PatientCarePlanViewModel extends BaseModel {
       String ahaCarePlanId, String state) async {
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    String query = state == '' ? '' : '?state=' + state;
+    final String query = state == '' ? '' : '?state=' + state;
 
     //var response = await apiProvider.get('/aha/care-plan/'+ahaCarePlanId+'/fetch-daily-tasks', header: map);
-    var response = await apiProvider
+    final response = await apiProvider
         .get('/aha/care-plan/' + ahaCarePlanId + '/tasks' + query, header: map);
 
     setBusy(false);
@@ -189,14 +189,14 @@ class PatientCarePlanViewModel extends BaseModel {
   Future<GetTaskOfAHACarePlanResponse> getTaskOfPaitent(String state) async {
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    String query = state == '' ? '' : '?state=' + state;
+    final String query = state == '' ? '' : '?state=' + state;
 
     //var response = await apiProvider.get('/aha/care-plan/'+ahaCarePlanId+'/fetch-daily-tasks', header: map);
-    var response = await apiProvider
+    final response = await apiProvider
         .get('/patient-task/patient/' + patientUserId + query, header: map);
 
     setBusy(false);
@@ -208,13 +208,13 @@ class PatientCarePlanViewModel extends BaseModel {
       String ahaCarePlanId, String taskId) async {
     //setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var body = new Map<String, String>();
+    final body = <String, String>{};
 
-    var response = await apiProvider.post(
+    final response = await apiProvider.post(
         '/aha/care-plan/' + ahaCarePlanId + '/start-task/' + taskId,
         body: body,
         header: map);
@@ -228,13 +228,13 @@ class PatientCarePlanViewModel extends BaseModel {
       String ahaCarePlanId, String taskId) async {
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var body = new Map<String, String>();
+    final body = <String, String>{};
 
-    var response = await apiProvider.post(
+    final response = await apiProvider.post(
         '/aha/care-plan/' + ahaCarePlanId + '/finish-task/' + taskId,
         body: body,
         header: map);
@@ -248,13 +248,13 @@ class PatientCarePlanViewModel extends BaseModel {
       String ahaCarePlanId, String taskId) async {
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var body = new Map<String, String>();
+    final body = <String, String>{};
 
-    var response = await apiProvider.post(
+    final response = await apiProvider.post(
         '/aha/care-plan/' +
             ahaCarePlanId +
             '/message-task/' +
@@ -272,11 +272,11 @@ class PatientCarePlanViewModel extends BaseModel {
       String ahaCarePlanId, String taskId, Map body) async {
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post(
+    final response = await apiProvider.post(
         '/aha/care-plan/' +
             ahaCarePlanId +
             '/challenge-task/' +
@@ -294,13 +294,13 @@ class PatientCarePlanViewModel extends BaseModel {
       String ahaCarePlanId, String taskId) async {
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var body = new Map<String, String>();
+    final body = <String, String>{};
 
-    var response = await apiProvider.post(
+    final response = await apiProvider.post(
         '/aha/care-plan/' +
             ahaCarePlanId +
             '/assessment-task/' +
@@ -318,11 +318,11 @@ class PatientCarePlanViewModel extends BaseModel {
       String ahaCarePlanId, String taskId, String qNaId, Map body) async {
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post(
+    final response = await apiProvider.post(
         '/aha/care-plan/' +
             ahaCarePlanId +
             '/assessment-task/' +
@@ -343,11 +343,11 @@ class PatientCarePlanViewModel extends BaseModel {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post(
+    final response = await apiProvider.post(
         '/aha/care-plan/' +
             ahaCarePlanId +
             '/biometrics-task/' +
@@ -364,11 +364,11 @@ class PatientCarePlanViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider
+    final response = await apiProvider
         .get('/aha/care-plan/' + planId + '/goal-priority-types', header: map);
 
     print(response);
@@ -382,11 +382,11 @@ class PatientCarePlanViewModel extends BaseModel {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post(
+    final response = await apiProvider.post(
         '/aha/care-plan/' + planId + '/goal-priorities',
         body: body,
         header: map);
@@ -399,11 +399,11 @@ class PatientCarePlanViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/aha/care-plan/' + planCode + '/behavioral-goal-types',
         header: map);
 
@@ -417,11 +417,11 @@ class PatientCarePlanViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/aha/care-plan/' + planCode + '/biometric-goal-types',
         header: map);
 
@@ -437,11 +437,11 @@ class PatientCarePlanViewModel extends BaseModel {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post(
+    final response = await apiProvider.post(
         '/aha/care-plan/' + planId + '/' + goalTasks,
         body: body,
         header: map);
@@ -454,11 +454,11 @@ class PatientCarePlanViewModel extends BaseModel {
     // Get user profile for id
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider
+    final response = await apiProvider
         .get('/aha/care-plan/' + planId + '/plan-action-types', header: map);
 
     print(response);
@@ -473,11 +473,11 @@ class PatientCarePlanViewModel extends BaseModel {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post(
+    final response = await apiProvider.post(
         '/aha/care-plan/' +
             planId +
             '/weekly-patient-reflections-task/' +
@@ -499,11 +499,11 @@ class PatientCarePlanViewModel extends BaseModel {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post(
+    final response = await apiProvider.post(
         '/aha/care-plan/' +
             ahaCarePlanId +
             '/assessment-task/' +
@@ -524,11 +524,11 @@ class PatientCarePlanViewModel extends BaseModel {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.post(
+    final response = await apiProvider.post(
         '/aha/care-plan/' +
             planId +
             '/status-checks-task/' +
@@ -545,13 +545,13 @@ class PatientCarePlanViewModel extends BaseModel {
     // Get user profile for id
     //setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var body = new Map<String, String>();
+    final body = <String, String>{};
 
-    var response = await apiProvider.put(
+    final response = await apiProvider.put(
         '/medication-consumption/mark-as-taken/' + consumptionId,
         header: map,
         body: body);

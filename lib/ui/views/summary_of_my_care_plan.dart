@@ -15,9 +15,9 @@ class SummaryOfMyCarePlanView extends StatefulWidget {
 
 class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   GetCarePlanSummaryResponse _getCarePlanSummaryResponse;
-  var dateFormat = DateFormat("MMMM, dd yyyy");
+  var dateFormat = DateFormat('MMMM, dd yyyy');
   int currentWeek = 0;
 
   getAHACarePlanSummary() async {
@@ -26,7 +26,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
           startCarePlanResponseGlob.data.carePlan.id.toString());
 
       if (_getCarePlanSummaryResponse.status == 'success') {
-        debugPrint("AHA Care Plan ==> ${_getCarePlanSummaryResponse.toJson()}");
+        debugPrint('AHA Care Plan ==> ${_getCarePlanSummaryResponse.toJson()}');
         currentWeek =
             _getCarePlanSummaryResponse.data.carePlanSummary.currentWeek;
       } else {
@@ -117,12 +117,13 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                               ),
                               Stack(
                                 children: <Widget>[
-                                  _getCarePlanSummaryResponse
-                                              .data.carePlanSummary.currentWeek
-                                              .toString() ==
-                                          "-1"
-                                      ? Container()
-                                      : currentWeekCount(),
+                                  if (_getCarePlanSummaryResponse
+                                          .data.carePlanSummary.currentWeek
+                                          .toString() ==
+                                      '-1')
+                                    Container()
+                                  else
+                                    currentWeekCount(),
                                   _buildCarePlanView(),
                                 ],
                               ),
@@ -167,7 +168,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
             height: 8,
           ),
           Text(
-            "Week",
+            'Week',
             style: TextStyle(
                 color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w500),
           ),
@@ -190,7 +191,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
               ),
               Expanded(
                 flex: 2,
-                child: (Container(
+                child: Container(
                     height: 40,
                     decoration: BoxDecoration(
                       color: currentWeek == 12
@@ -210,7 +211,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           label: 'text color change after 3 month',
                           readOnly: true,
                           child: Text(
-                            "12",
+                            '12',
                             style: TextStyle(
                                 color: currentWeek == 12
                                     ? primaryLightColor
@@ -225,7 +226,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           width: 8,
                         )
                       ],
-                    ))),
+                    )),
               )
             ],
           ),
@@ -239,7 +240,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
               ),
               Expanded(
                 flex: 3,
-                child: (Container(
+                child: Container(
                     height: 40,
                     decoration: BoxDecoration(
                       color: currentWeek == 11
@@ -259,7 +260,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           label: 'text color change afetr 11 week',
                           readOnly: true,
                           child: Text(
-                            "11",
+                            '11',
                             style: TextStyle(
                                 color: currentWeek == 11
                                     ? primaryLightColor
@@ -274,7 +275,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           width: 8,
                         )
                       ],
-                    ))),
+                    )),
               )
             ],
           ),
@@ -288,7 +289,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
               ),
               Expanded(
                 flex: 4,
-                child: (Container(
+                child: Container(
                     height: 40,
                     decoration: BoxDecoration(
                       color: currentWeek == 10
@@ -305,7 +306,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "10",
+                          '10',
                           style: TextStyle(
                               color: currentWeek == 10
                                   ? primaryLightColor
@@ -319,7 +320,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           width: 8,
                         )
                       ],
-                    ))),
+                    )),
               )
             ],
           ),
@@ -333,7 +334,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
               ),
               Expanded(
                 flex: 5,
-                child: (Container(
+                child: Container(
                     height: 40,
                     decoration: BoxDecoration(
                       color: currentWeek == 9
@@ -350,7 +351,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "9",
+                          '9',
                           style: TextStyle(
                               color: currentWeek == 9
                                   ? primaryLightColor
@@ -364,7 +365,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           width: 8,
                         )
                       ],
-                    ))),
+                    )),
               )
             ],
           ),
@@ -378,7 +379,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
               ),
               Expanded(
                 flex: 6,
-                child: (Container(
+                child: Container(
                     height: 40,
                     decoration: BoxDecoration(
                       color: currentWeek == 8
@@ -395,7 +396,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "8",
+                          '8',
                           style: TextStyle(
                               color: currentWeek == 8
                                   ? primaryLightColor
@@ -409,7 +410,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           width: 8,
                         )
                       ],
-                    ))),
+                    )),
               )
             ],
           ),
@@ -423,7 +424,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
               ),
               Expanded(
                 flex: 7,
-                child: (Container(
+                child: Container(
                     height: 40,
                     decoration: BoxDecoration(
                       color: currentWeek == 7
@@ -440,7 +441,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "7",
+                          '7',
                           style: TextStyle(
                               color: currentWeek == 7
                                   ? primaryLightColor
@@ -454,7 +455,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           width: 8,
                         )
                       ],
-                    ))),
+                    )),
               )
             ],
           ),
@@ -468,7 +469,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
               ),
               Expanded(
                 flex: 8,
-                child: (Container(
+                child: Container(
                     height: 40,
                     decoration: BoxDecoration(
                       color: currentWeek == 6
@@ -485,7 +486,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "6",
+                          '6',
                           style: TextStyle(
                               color: currentWeek == 6
                                   ? primaryLightColor
@@ -499,7 +500,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           width: 8,
                         )
                       ],
-                    ))),
+                    )),
               )
             ],
           ),
@@ -513,7 +514,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
               ),
               Expanded(
                 flex: 9,
-                child: (Container(
+                child: Container(
                     height: 40,
                     decoration: BoxDecoration(
                       color: currentWeek == 5
@@ -530,7 +531,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "5",
+                          '5',
                           style: TextStyle(
                               color: currentWeek == 5
                                   ? primaryLightColor
@@ -544,7 +545,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           width: 8,
                         )
                       ],
-                    ))),
+                    )),
               )
             ],
           ),
@@ -558,7 +559,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
               ),
               Expanded(
                 flex: 10,
-                child: (Container(
+                child: Container(
                     height: 40,
                     decoration: BoxDecoration(
                       color: currentWeek == 4
@@ -575,7 +576,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "4",
+                          '4',
                           style: TextStyle(
                               color: currentWeek == 4
                                   ? primaryLightColor
@@ -589,7 +590,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           width: 8,
                         )
                       ],
-                    ))),
+                    )),
               )
             ],
           ),
@@ -603,7 +604,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
               ),
               Expanded(
                 flex: 11,
-                child: (Container(
+                child: Container(
                     height: 40,
                     decoration: BoxDecoration(
                       color: currentWeek == 3
@@ -620,7 +621,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "3",
+                          '3',
                           style: TextStyle(
                               color: currentWeek == 3
                                   ? primaryLightColor
@@ -634,7 +635,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           width: 8,
                         )
                       ],
-                    ))),
+                    )),
               )
             ],
           ),
@@ -648,7 +649,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
               ),
               Expanded(
                 flex: 12,
-                child: (Container(
+                child: Container(
                     height: 40,
                     decoration: BoxDecoration(
                       color: currentWeek == 2
@@ -665,7 +666,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "2",
+                          '2',
                           style: TextStyle(
                               color: currentWeek == 2
                                   ? primaryLightColor
@@ -679,7 +680,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           width: 8,
                         )
                       ],
-                    ))),
+                    )),
               )
             ],
           ),
@@ -693,7 +694,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
               ),
               Expanded(
                 flex: 13,
-                child: (Container(
+                child: Container(
                     height: 40,
                     decoration: BoxDecoration(
                       color: currentWeek == 1
@@ -724,7 +725,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           ),
                         ),
                         Text(
-                          "1",
+                          '1',
                           style: TextStyle(
                               color: currentWeek == 1
                                   ? primaryLightColor
@@ -738,7 +739,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           width: 8,
                         )
                       ],
-                    ))),
+                    )),
               )
             ],
           ),

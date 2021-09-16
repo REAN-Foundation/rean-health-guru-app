@@ -21,9 +21,9 @@ class SetUpPharmacyForCarePlanView extends StatefulWidget {
 class _SetUpPharmacyForCarePlanViewState
     extends State<SetUpPharmacyForCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var _searchController = new TextEditingController();
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _searchController = TextEditingController();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   StartCarePlanResponse startCarePlanResponse;
 
   //var parmacySearchList = new List<Pharmacies>();
@@ -31,9 +31,9 @@ class _SetUpPharmacyForCarePlanViewState
   loadSharedPrefrance() async {
     try {
       startCarePlanResponse = StartCarePlanResponse.fromJson(
-          await _sharedPrefUtils.read("CarePlan"));
+          await _sharedPrefUtils.read('CarePlan'));
       debugPrint(
-          "AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}");
+          'AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}');
     } catch (Excepetion) {
       // do something
       debugPrint(Excepetion);
@@ -68,7 +68,7 @@ class _SetUpPharmacyForCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -157,7 +157,7 @@ class _SetUpPharmacyForCarePlanViewState
                               width: 32,
                               child: CircularProgressIndicator()))
                           :*/
-                              (parmacySearchListGlobe.length == 0)
+                          (parmacySearchListGlobe.isEmpty)
                                   ? noDoctorFound()
                                   : doctorSearchResultListView()) //,
                     ],
@@ -167,20 +167,21 @@ class _SetUpPharmacyForCarePlanViewState
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  model.busy
-                      ? Container()
-                      : InkWell(
-                          onTap: () {
-                            /*parmacySearchListGlobe.clear();
+                  if (model.busy)
+                    Container()
+                  else
+                    InkWell(
+                      onTap: () {
+                        /*parmacySearchListGlobe.clear();
                       parmacySearchListGlobe.addAll(parmacySearchListGlobe);*/
-                            Navigator.pushNamed(
-                                context, RoutePaths.Setup_Nurse_For_Care_Plan);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Container(
-                              height: 40,
-                              width: 160,
+                        Navigator.pushNamed(
+                            context, RoutePaths.Setup_Nurse_For_Care_Plan);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                          height: 40,
+                          width: 160,
                               padding: EdgeInsets.symmetric(
                                 horizontal: 16.0,
                               ),
@@ -251,7 +252,7 @@ class _SetUpPharmacyForCarePlanViewState
       ),
       child: Center(
         child: Text(
-          "Add Pharmacies",
+          'Add Pharmacies',
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
         ),
       ),
@@ -260,7 +261,7 @@ class _SetUpPharmacyForCarePlanViewState
 
   Widget noDoctorFound() {
     return Center(
-      child: Text("No pharmacy added",
+      child: Text('No pharmacy added',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -283,22 +284,23 @@ class _SetUpPharmacyForCarePlanViewState
   }
 
   Widget _makeDoctorListCard(BuildContext context, int index) {
-    Pharmacies pharmaciesDetails = parmacySearchListGlobe.elementAt(index);
+    final Pharmacies pharmaciesDetails =
+        parmacySearchListGlobe.elementAt(index);
     return Container(
       height: 80,
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Stack(children: <Widget>[
           Container(
             height: 80,
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: Color(0XFFF5F8FA),
                 border: Border.all(color: Color(0XFFF5F8FA)),
-                borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
             child: Column(
               children: <Widget>[
                 Expanded(
@@ -517,8 +519,8 @@ class _SetUpPharmacyForCarePlanViewState
               Expanded(
                 child: AddPharmaDialog(
                     submitButtonListner: (Pharmacies pharmacies) {
-                  addTeamMembers(pharmacies);
-                  debugPrint("Call back Received ==> ${pharmacies.firstName}");
+                      addTeamMembers(pharmacies);
+                  debugPrint('Call back Received ==> ${pharmacies.firstName}');
                   Navigator.of(context, rootNavigator: true).pop();
                 }),
               )
@@ -537,23 +539,23 @@ class _SetUpPharmacyForCarePlanViewState
       jsonRequest.isEmergencyContact = true;*/
       //jsonRequest.details.userId = pharmacies.userId.toString();
 
-      var data = new Map<String, dynamic>();
+      final data = <String, dynamic>{};
       data['UserId'] = pharmacies.userId.toString();
-      data['FirstName'] = "";
-      data['LastName'] = "";
-      data['Prefix'] = "";
-      data['PhoneNumber'] = "";
-      data['Gender'] = "";
+      data['FirstName'] = '';
+      data['LastName'] = '';
+      data['Prefix'] = '';
+      data['PhoneNumber'] = '';
+      data['Gender'] = '';
 
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['CarePlanId'] = startCarePlanResponse.data.carePlan.id.toString();
       map['IsEmergencyContact'] = true;
-      map['TeamMemberType'] = "Pharmacy";
+      map['TeamMemberType'] = 'Pharmacy';
       map['Details'] = data;
 
-      AddTeamMemberResponse addTeamMemberResponse =
+      final AddTeamMemberResponse addTeamMemberResponse =
           await model.addTeamMembers(map);
-      debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
+      debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         setState(() {
           parmacySearchListGlobe.add(pharmacies);
@@ -565,7 +567,7 @@ class _SetUpPharmacyForCarePlanViewState
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException);
+      debugPrint('Error ' + CustomException);
     } catch (Exception) {
       debugPrint(Exception.toString());
     }

@@ -24,11 +24,11 @@ class ViewMyDailyActivity extends StatefulWidget {
 
 class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
   var model = PatientHealthMarkerViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   List<HealthDataPoint> _healthDataList = [];
   AppState _state = AppState.DATA_NOT_FETCHED;
-  var dateFormat = DateFormat("yyyy-MM-dd");
+  var dateFormat = DateFormat('yyyy-MM-dd');
 
   int steps = 0;
   double weight = 0;
@@ -60,7 +60,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
   }
 
   loadWaterConsuption() async {
-    var waterConsuption = await _sharedPrefUtils.read("waterConsumption");
+    final waterConsuption = await _sharedPrefUtils.read('waterConsumption');
 
     if (waterConsuption != null) {
       glassOfWaterConsumption =
@@ -96,10 +96,10 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
     /*startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     endDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 59);*/
 
-    HealthFactory health = HealthFactory();
+    final HealthFactory health = HealthFactory();
 
     /// Define the types to get.
-    List<HealthDataType> types = [
+    final List<HealthDataType> types = [
       HealthDataType.STEPS,
       HealthDataType.WEIGHT,
       HealthDataType.HEIGHT,
@@ -111,20 +111,20 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
     setState(() => _state = AppState.FETCHING_DATA);
 
     /// You MUST request access to the data types before reading them
-    bool accessWasGranted = await health.requestAuthorization(types);
+    final bool accessWasGranted = await health.requestAuthorization(types);
 
     int steps = 0;
     //this.steps = 0;
     if (accessWasGranted) {
       try {
         /// Fetch new data
-        List<HealthDataPoint> healthData =
+        final List<HealthDataPoint> healthData =
             await health.getHealthDataFromTypes(startDate, endDate, types);
 
         /// Save all the new data points
         _healthDataList.addAll(healthData);
       } catch (e) {
-        print("Caught exception in getHealthDataFromTypes: $e");
+        print('Caught exception in getHealthDataFromTypes: $e');
       }
 
       /// Filter out duplicates
@@ -132,7 +132,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
 
       /// Print the results
       _healthDataList.forEach((x) {
-        print("Data point:  $x");
+        print('Data point:  $x');
         steps += x.value.round();
       });
 
@@ -146,7 +146,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
             _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
       });
     } else {
-      print("Authorization not granted");
+      print('Authorization not granted');
       setState(() => _state = AppState.DATA_NOT_FETCHED);
     }
   }
@@ -237,7 +237,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
   calculateSteps() {
     clearAllRecords();
     for (int i = 0; i < _healthDataList.length; i++) {
-      HealthDataPoint p = _healthDataList[i];
+      final HealthDataPoint p = _healthDataList[i];
       if (p.typeString == 'STEPS') {
         steps = steps + p.value.toInt();
       } else if (p.typeString == 'WEIGHT') {
@@ -262,19 +262,19 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
 
     totalCalories = totalActiveCalories + totalBasalCalories;
 
-    debugPrint('STEPS : ${steps}');
-    debugPrint('ACTIVE_ENERGY_BURNED : ${totalActiveCalories}');
-    debugPrint('BASAL_ENERGY_BURNED : ${totalBasalCalories}');
-    debugPrint('CALORIES_BURNED : ${totalBasalCalories}');
-    debugPrint('WEIGHT : ${weight}');
-    debugPrint('Height : ${height}');
+    debugPrint('STEPS : $steps');
+    debugPrint('ACTIVE_ENERGY_BURNED : $totalActiveCalories');
+    debugPrint('BASAL_ENERGY_BURNED : $totalBasalCalories');
+    debugPrint('CALORIES_BURNED : $totalBasalCalories');
+    debugPrint('WEIGHT : $weight');
+    debugPrint('Height : $height');
     //recordMySteps();
     //recordMyCalories();
   }
 
   calculetBMI() {
-    double heightInMeters = height / 100;
-    double heightInMetersSquare = heightInMeters * heightInMeters;
+    final double heightInMeters = height / 100;
+    final double heightInMetersSquare = heightInMeters * heightInMeters;
 
     bmiValue = weight / heightInMetersSquare;
 
@@ -337,7 +337,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                     color: primaryColor,
                     fontWeight: FontWeight.w700),
               ),
-              iconTheme: new IconThemeData(color: Colors.black),
+              iconTheme: IconThemeData(color: Colors.black),
               actions: <Widget>[
                 /*IconButton(
                 icon: Icon(
@@ -370,7 +370,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
     if (stepPercent > 1.0) {
       stepPercent = 1.0;
     }
-    debugPrint('Step % : ${stepPercent}');
+    debugPrint('Step % : $stepPercent');
     return Align(
       alignment: Alignment.center,
       child: CircularPercentIndicator(
@@ -392,7 +392,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
             Text(
               steps.toString(),
               semanticsLabel: steps.toString(),
-              style: new TextStyle(
+              style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20.0,
                   color: Colors.deepPurple),
@@ -404,10 +404,10 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
             SizedBox(
               height: 16,
             ),
-            new Text(
-              "Steps",
-              semanticsLabel: "Steps",
-              style: new TextStyle(
+            Text(
+              'Steps',
+              semanticsLabel: 'Steps',
+              style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18.0,
                   color: Colors.deepPurple),
@@ -447,9 +447,9 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   width: 8,
                 ),
                 Text(
-                  "Calories",
-                  semanticsLabel: "Calories",
-                  style: new TextStyle(
+                  'Calories',
+                  semanticsLabel: 'Calories',
+                  style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 18.0,
                       color: colorOrange),
@@ -466,7 +466,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                 Text(
                   totalCalories.toStringAsFixed(0),
                   semanticsLabel: totalCalories.toStringAsFixed(0),
-                  style: new TextStyle(
+                  style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 28.0,
                       color: primaryColor),
@@ -475,8 +475,8 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   width: 8,
                 ),
                 Text(
-                  "Cal",
-                  style: new TextStyle(fontSize: 14.0, color: Colors.black87),
+                  'Cal',
+                  style: TextStyle(fontSize: 14.0, color: Colors.black87),
                 ),
               ],
             ),
@@ -513,9 +513,9 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   width: 8,
                 ),
                 Text(
-                  "Heart Rate",
-                  semanticsLabel: "Heart Rate",
-                  style: new TextStyle(
+                  'Heart Rate',
+                  semanticsLabel: 'Heart Rate',
+                  style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18.0,
                       color: primaryColor),
@@ -530,9 +530,9 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
               crossAxisAlignment: CrossAxisAlignment.baseline,
               children: [
                 Text(
-                  "72",
-                  semanticsLabel: "72",
-                  style: new TextStyle(
+                  '72',
+                  semanticsLabel: '72',
+                  style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 28.0,
                       color: primaryColor),
@@ -541,8 +541,8 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   width: 4,
                 ),
                 Text(
-                  "bmp",
-                  style: new TextStyle(fontSize: 14.0, color: Colors.black87),
+                  'bmp',
+                  style: TextStyle(fontSize: 14.0, color: Colors.black87),
                 ),
               ],
             ),
@@ -590,9 +590,9 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       width: 8,
                     ),
                     Text(
-                      "BMI",
-                      semanticsLabel: "BMI",
-                      style: new TextStyle(
+                      'BMI',
+                      semanticsLabel: 'BMI',
+                      style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 18.0,
                           color: colorGreen),
@@ -611,7 +611,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       Icons.edit_rounded,
                       size: 32,
                       color: Colors.black87,
-                      semanticLabel: "Edit BMI",
+                      semanticLabel: 'Edit BMI',
                     ))
               ],
             ),
@@ -633,7 +633,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       semanticsLabel: bmiValue == 0.0
                           ? 'Edit yout height & weight for BMI'
                           : bmiValue.toStringAsFixed(2),
-                      style: new TextStyle(
+                      style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: bmiValue == 0.0 ? 14 : 28.0,
                           color: primaryColor),
@@ -642,16 +642,15 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       width: 4,
                     ),
                     Text(
-                      bmiValue == 0.0 ? '' : "Kg / m sq",
-                      style:
-                      new TextStyle(fontSize: 14.0, color: Colors.black87),
+                      bmiValue == 0.0 ? '' : 'Kg / m sq',
+                      style: TextStyle(fontSize: 14.0, color: Colors.black87),
                     ),
                   ],
                 ),
                 Text(
                   bmiResult,
                   semanticsLabel: bmiResult,
-                  style: new TextStyle(
+                  style: TextStyle(
                       fontSize: 16.0,
                       color: bmiResultColor,
                       fontWeight: FontWeight.w700),
@@ -661,32 +660,31 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
             SizedBox(
               height: 8,
             ),
-            bmiValue != 0.0
-                ? Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          flex: bmiLeftSideValue, child: Container()),
-                      Expanded(
-                          flex: 2,
+            if (bmiValue != 0.0)
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(flex: bmiLeftSideValue, child: Container()),
+                        Expanded(
+                            flex: 2,
                           child: ImageIcon(
-                              AssetImage('res/images/triangle.png'))),
-                      Expanded(
-                          flex: bmiRightSideValue, child: Container())
-                    ],
+                                AssetImage('res/images/triangle.png'))),
+                        Expanded(flex: bmiRightSideValue, child: Container())
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Image.asset('res/images/bmi_scale.png')),
-              ],
-            )
-                : Container(),
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Image.asset('res/images/bmi_scale.png')),
+                ],
+              )
+            else
+              Container(),
           ],
         ),
       ),
@@ -722,9 +720,9 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       width: 8,
                     ),
                     Text(
-                      "Water",
-                      semanticsLabel: "Water",
-                      style: new TextStyle(
+                      'Water',
+                      semanticsLabel: 'Water',
+                      style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 18.0,
                           color: colorLightBlue),
@@ -741,7 +739,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                     Text(
                       waterGlass.toString(),
                       semanticsLabel: waterGlass.toString(),
-                      style: new TextStyle(
+                      style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 28.0,
                           color: primaryColor),
@@ -750,10 +748,9 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       width: 4,
                     ),
                     Text(
-                      "glasses",
-                      semanticsLabel: "glasses",
-                      style:
-                      new TextStyle(fontSize: 14.0, color: Colors.black87),
+                      'glasses',
+                      semanticsLabel: 'glasses',
+                      style: TextStyle(fontSize: 14.0, color: Colors.black87),
                     ),
                   ],
                 ),
@@ -778,7 +775,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                         Icons.add_circle,
                         color: colorLightBlue,
                         size: 40,
-                        semanticLabel: "Add water glass",
+                        semanticLabel: 'Add water glass',
                       )),
                 ],
               ),
@@ -818,9 +815,9 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       width: 8,
                     ),
                     Text(
-                      "Sleep",
-                      semanticsLabel: "Sleep",
-                      style: new TextStyle(
+                      'Sleep',
+                      semanticsLabel: 'Sleep',
+                      style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 18.0,
                           color: primaryColor),
@@ -835,8 +832,8 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   children: [
                     Text(
-                      "6",
-                      style: new TextStyle(
+                      '6',
+                      style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 28.0,
                           color: primaryColor),
@@ -845,16 +842,15 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       width: 4,
                     ),
                     Text(
-                      "hrs",
-                      style:
-                      new TextStyle(fontSize: 14.0, color: Colors.black87),
+                      'hrs',
+                      style: TextStyle(fontSize: 14.0, color: Colors.black87),
                     ),
                     SizedBox(
                       width: 8,
                     ),
                     Text(
-                      "32",
-                      style: new TextStyle(
+                      '32',
+                      style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 28.0,
                           color: primaryColor),
@@ -863,9 +859,8 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       width: 4,
                     ),
                     Text(
-                      "min",
-                      style:
-                      new TextStyle(fontSize: 14.0, color: Colors.black87),
+                      'min',
+                      style: TextStyle(fontSize: 14.0, color: Colors.black87),
                     ),
                   ],
                 ),
@@ -887,9 +882,9 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                     width: 8,
                   ),
                   Text(
-                    "You didn’t have\nenough sleep.\nIts better to sleep\n7-9 hours every day",
+                    'You didn’t have\nenough sleep.\nIts better to sleep\n7-9 hours every day',
                     textAlign: TextAlign.justify,
-                    style: new TextStyle(fontSize: 12.0, color: Colors.black87),
+                    style: TextStyle(fontSize: 12.0, color: Colors.black87),
                   ),
                 ],
               ),
@@ -929,7 +924,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
                         'Biometrics',
-                        semanticsLabel: "Biometrics",
+                        semanticsLabel: 'Biometrics',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.bold,
@@ -940,7 +935,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                     ),
                   ),
                   Semantics(
-                    label: "Close",
+                    label: 'Close',
                     child: IconButton(
                       alignment: Alignment.topRight,
                       icon: Icon(
@@ -963,7 +958,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                     this.height = height;
                     this.weight = weight;
                     calculetBMI();
-                    debugPrint('Height : ${height}  Weight: ${weight}');
+                    debugPrint('Height : $height  Weight: $weight');
                     Navigator.of(context, rootNavigator: true).pop();
                   },
                   height: height,
@@ -977,13 +972,13 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
 
   recordMyCalories() async {
     try {
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
       map['ActiveCalories'] = totalActiveCalories;
       map['BasalCalories'] = totalBasalCalories;
-      map['RecordDate'] = dateFormat.format(new DateTime.now());
+      map['RecordDate'] = dateFormat.format(DateTime.now());
 
-      BaseResponse baseResponse = await model.recordMyCalories(map);
+      final BaseResponse baseResponse = await model.recordMyCalories(map);
       if (baseResponse.status == 'success') {
       } else {}
     } catch (e) {
@@ -995,13 +990,13 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
 
   recordMySteps() async {
     try {
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
       map['Steps'] = steps;
       map['DistanceCovered_Km'] = 0;
-      map['RecordDate'] = dateFormat.format(new DateTime.now());
+      map['RecordDate'] = dateFormat.format(DateTime.now());
 
-      BaseResponse baseResponse = await model.recordMySteps(map);
+      final BaseResponse baseResponse = await model.recordMySteps(map);
       if (baseResponse.status == 'success') {
       } else {}
     } catch (e) {
@@ -1018,12 +1013,12 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
       _sharedPrefUtils.save('waterConsumption',
           GlassOfWaterConsumption(startDate, waterGlass, '').toJson());
 
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
       map['WaterConsumed'] = waterGlass;
-      map['RecordDate'] = dateFormat.format(new DateTime.now());
+      map['RecordDate'] = dateFormat.format(DateTime.now());
 
-      BaseResponse baseResponse = await model.recordMyWaterCount(map);
+      final BaseResponse baseResponse = await model.recordMyWaterCount(map);
       if (baseResponse.status == 'success') {
       } else {}
     } catch (e) {

@@ -25,27 +25,27 @@ class LearnMoreCarePlanView extends StatefulWidget {
 
 class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 //https://www.youtube.com/watch?v=s1pG7k_1nSw
-  String videourl = "https://www.youtube.com/watch?v=d8PzoTr95ik";
-  ScrollController _scrollController =
+  String videourl = 'https://www.youtube.com/watch?v=d8PzoTr95ik';
+  final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
   String textMsg1 =
-      "Welcome to the Connected Heart Health CarePlan. For the next 12 weeks you will be given daily activities designed to help you manage your condition.\n\nThese activities will include education, assessments, challenges, and communication. We will begin with some foundational information and developing your self CarePlan.";
+      'Welcome to the Connected Heart Health CarePlan. For the next 12 weeks you will be given daily activities designed to help you manage your condition.\n\nThese activities will include education, assessments, challenges, and communication. We will begin with some foundational information and developing your self CarePlan.';
   String textMsg2 =
       "Heart Failure is a chronic, progressive condition in which the heart muscle is unable to pump enough blood through the heart to meet the body's needs for blood and oxygen.\n\nHeart failure usually results in an enlarged heart.";
 
-  YoutubePlayerController _controller = YoutubePlayerController(
-    initialVideoId: "d8PzoTr95ik",
+  final YoutubePlayerController _controller = YoutubePlayerController(
+    initialVideoId: 'd8PzoTr95ik',
     flags: YoutubePlayerFlags(
       autoPlay: false,
       mute: false,
     ),
   );
 
-  String unformatedDOB = "";
-  var dateFormat = DateFormat("dd MMM, yyyy");
+  String unformatedDOB = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
 
   @override
   void initState() {
@@ -66,7 +66,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
             backgroundColor: Colors.white,
             brightness: Brightness.light,
             title: Text(
-              widget.assortedViewConfigs.header == ""
+              widget.assortedViewConfigs.header == ''
                   ? 'Learn More!'
                   : widget.assortedViewConfigs.header,
               style: TextStyle(
@@ -74,7 +74,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -96,9 +96,9 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
                 height: 16,
               ),
               Expanded(
-                child: widget.assortedViewConfigs.toShow == "1"
+                child: widget.assortedViewConfigs.toShow == '1'
                     ? iMageView()
-                    : widget.assortedViewConfigs.toShow == "2"
+                    : widget.assortedViewConfigs.toShow == '2'
                         ? audioView()
                         : videoView(),
               ),
@@ -119,7 +119,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
       ),
       child: Center(
         child: Text(
-          "AHA Heart Failure Care Plan\nAHAHF",
+          'AHA Heart Failure Care Plan\nAHAHF',
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
           textAlign: TextAlign.center,
         ),
@@ -200,20 +200,21 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              model.busy
-                  ? CircularProgressIndicator()
-                  : InkWell(
-                      onTap: () {
-                        /*assrotedUICount = 0;
+              if (model.busy)
+                CircularProgressIndicator()
+              else
+                InkWell(
+                  onTap: () {
+                    /*assrotedUICount = 0;
                     Navigator.pushAndRemoveUntil(context,
                         MaterialPageRoute(builder: (context) {
                           return HomeView( 0 );
                         }), (Route<dynamic> route) => false);*/
-                        if (widget.assortedViewConfigs.task.finished) {
-                          Navigator.pop(context);
-                        } else {
-                          completeMessageTaskOfAHACarePlan(
-                              widget.assortedViewConfigs.task);
+                    if (widget.assortedViewConfigs.task.finished) {
+                      Navigator.pop(context);
+                    } else {
+                      completeMessageTaskOfAHACarePlan(
+                          widget.assortedViewConfigs.task);
                         }
                       },
                       child: Padding(
@@ -332,10 +333,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                widget.assortedViewConfigs.task.details.concreteTask.text !=
-                        null
-                    ? widget.assortedViewConfigs.task.details.concreteTask.text
-                    : '',
+                widget.assortedViewConfigs.task.details.concreteTask.text ?? '',
                 style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
               ),
             ),
@@ -363,7 +361,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
                     'Infographics',
                 child: Container(
                     padding: const EdgeInsets.all(16.0),
-                    child: new Image.network(
+                    child: Image.network(
                       widget.assortedViewConfigs.task.details.url,
                       fit: BoxFit.cover,
                     )),
@@ -407,7 +405,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
 
   completeMessageTaskOfAHACarePlan(Task task) async {
     try {
-      StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
+      final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.completeMessageTaskOfAHACarePlan(
               startCarePlanResponseGlob.data.carePlan.id.toString(),
               task.details.id);
@@ -419,7 +417,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
           return HomeView(1);
         }), (Route<dynamic> route) => false);
         debugPrint(
-            "AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}");
+            'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
         showToast(_startTaskOfAHACarePlanResponse.message, context);
       }

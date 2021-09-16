@@ -13,14 +13,14 @@ class PatientApiDetails {
     status = json['status'];
     message = json['message'];
     error = json['error'];
-    data = json['data'] != String ? new Data.fromJson(json['data']) : String;
+    data = json['data'] != String ? Data.fromJson(json['data']) : String;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    data['error'] = this.error;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
+    data['error'] = error;
     if (this.data != String) {
       data['data'] = this.data.toJson();
     }
@@ -34,15 +34,13 @@ class Data {
   Data({this.patient});
 
   Data.fromJson(Map<String, dynamic> json) {
-    patient = json['patient'] != String
-        ? new Patient.fromJson(json['patient'])
-        : String;
+    patient = json['patient'] != String ? Patient.fromJson(json['patient']) : String;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.patient != String) {
-      data['patient'] = this.patient.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (patient != String) {
+      data['patient'] = patient.toJson();
     }
     return data;
   }
@@ -130,33 +128,32 @@ class Patient {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['UserId'] = this.userId;
-    data['RoleId'] = this.roleId;
-    data['DisplayId'] = this.displayId;
-    data['MedicalProfileId'] = this.medicalProfileId;
-    data['FirstName'] = this.firstName;
-    data['LastName'] = this.lastName;
-    data['Prefix'] = this.prefix;
-    data['PhoneNumber'] = this.phoneNumber;
-    data['Email'] = this.email;
-    data['Gender'] = this.gender;
-    data['BirthDate'] = this.birthDate != null
-        ? this.birthDate.toIso8601String()
-        : this.birthDate;
-    data['ImageURL'] = this.imageURL;
-    data['Locality'] = this.locality;
-    data['Address'] = this.address;
-    data['LocationCoords_Longitude'] = this.locationCoordsLongitude;
-    data['LocationCoords_Lattitude'] = this.locationCoordsLattitude;
-    data['InsuranceProvider'] = this.insuranceProvider;
-    data['InsurancePolicyCode'] = this.insurancePolicyCode;
-    data['EmergencyContactName'] = this.emergencyContactName;
-    data['EmergencyContactRelation'] = this.emergencyContactRelation;
-    data['EmergencyContactNumber'] = this.emergencyContactNumber;
-    data['InAppUser'] = this.inAppUser;
-    data['DateCreated'] = this.dateCreated;
-    data['DateUpdated'] = this.dateUpdated;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['UserId'] = userId;
+    data['RoleId'] = roleId;
+    data['DisplayId'] = displayId;
+    data['MedicalProfileId'] = medicalProfileId;
+    data['FirstName'] = firstName;
+    data['LastName'] = lastName;
+    data['Prefix'] = prefix;
+    data['PhoneNumber'] = phoneNumber;
+    data['Email'] = email;
+    data['Gender'] = gender;
+    data['BirthDate'] =
+        birthDate != null ? birthDate.toIso8601String() : birthDate;
+    data['ImageURL'] = imageURL;
+    data['Locality'] = locality;
+    data['Address'] = address;
+    data['LocationCoords_Longitude'] = locationCoordsLongitude;
+    data['LocationCoords_Lattitude'] = locationCoordsLattitude;
+    data['InsuranceProvider'] = insuranceProvider;
+    data['InsurancePolicyCode'] = insurancePolicyCode;
+    data['EmergencyContactName'] = emergencyContactName;
+    data['EmergencyContactRelation'] = emergencyContactRelation;
+    data['EmergencyContactNumber'] = emergencyContactNumber;
+    data['InAppUser'] = inAppUser;
+    data['DateCreated'] = dateCreated;
+    data['DateUpdated'] = dateUpdated;
     return data;
   }
 }
@@ -171,8 +168,8 @@ class AppointmentRelatedDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['UserId'] = this.userId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['UserId'] = userId;
     return data;
   }
 }

@@ -25,12 +25,12 @@ class BiometricPulseVitalsView extends StatefulWidget {
 
 class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
   var model = PatientVitalsViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
 
-  var _controller = new TextEditingController();
-  List<Records> records = new List<Records>();
-  var dateFormatStandard = DateFormat("MMM dd, yyyy");
+  final _controller = TextEditingController();
+  List<Records> records = <Records>[];
+  var dateFormatStandard = DateFormat('MMM dd, yyyy');
   ProgressDialog progressDialog;
 
   @override
@@ -42,7 +42,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
@@ -61,7 +61,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                         color: primaryColor,
                         fontWeight: FontWeight.w700),
                   ),
-                  iconTheme: new IconThemeData(color: Colors.black),
+                  iconTheme: IconThemeData(color: Colors.black),
                   actions: <Widget>[
                     /*IconButton(
                 icon: Icon(
@@ -92,7 +92,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                         const SizedBox(
                           height: 16,
                         ),
-                        records.length == 0 ? Container() : graph(),
+                        if (records.isEmpty) Container() else graph(),
                         //allGoal(),
                         const SizedBox(
                           height: 16,
@@ -111,7 +111,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                     const SizedBox(
                       height: 16,
                     ),
-                    records.length == 0 ? Container() : graph(),
+                    if (records.isEmpty) Container() else graph(),
                   ],
                 ),
               ),
@@ -130,7 +130,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
             height: 16,
           ),
           Text(
-            "Enter your pulse rate:",
+            'Enter your pulse rate:',
             style: TextStyle(
                 color: primaryColor, fontWeight: FontWeight.w500, fontSize: 16),
             textAlign: TextAlign.center,
@@ -156,11 +156,10 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (term) {},
                       inputFormatters: [
-                        new BlacklistingTextInputFormatter(
-                            new RegExp('[\\,|\\+|\\-]')),
+                        BlacklistingTextInputFormatter(RegExp('[\\,|\\+|\\-]')),
                       ],
                       decoration: InputDecoration(
-                          hintText: "(65 to 95)",
+                          hintText: '(65 to 95)',
                           contentPadding: EdgeInsets.all(0),
                           border: InputBorder.none,
                           fillColor: Colors.white,
@@ -177,7 +176,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: "    bpm    ",
+                          text: '    bpm    ',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
@@ -214,7 +213,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   ),
                   child: Center(
                     child: Text(
-                      "Save",
+                      'Save',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
@@ -240,7 +239,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : (records.length == 0
+          : (records.isEmpty
               ? noHistoryFound()
               : Column(
                   children: [
@@ -251,7 +250,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Date",
+                            'Date',
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -260,7 +259,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            "Pulse Rate",
+                            'Pulse Rate',
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -302,7 +301,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
 
   Widget noHistoryFound() {
     return Center(
-      child: Text("No vital history found",
+      child: Text('No vital history found',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -312,7 +311,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
   }
 
   Widget _makeWeightList(BuildContext context, int index) {
-    Records record = records.elementAt(index);
+    final Records record = records.elementAt(index);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -325,7 +324,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
           overflow: TextOverflow.ellipsis,
         ),
         Text(
-          record.pulse.toString() + " bpm",
+          record.pulse.toString() + ' bpm',
           style: TextStyle(
               color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
           maxLines: 1,
@@ -343,13 +342,13 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                     colors: [primaryLightColor, colorF6F6FF]),
                 border: Border.all(color: primaryLightColor),
-                borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
             padding: const EdgeInsets.all(16),
             height: 200,
             child: Center(
@@ -372,7 +371,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
   }
 
   List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
-    List<TimeSeriesSales> data = new List<TimeSeriesSales>();
+    final List<TimeSeriesSales> data = <TimeSeriesSales>[];
     /*[
       new TimeSeriesSales(new DateTime(2017, 9, 19), 5),
       new TimeSeriesSales(new DateTime(2017, 9, 26), 25),
@@ -381,13 +380,12 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
     ];*/
 
     for (int i = 0; i < records.length; i++) {
-      data.add(new TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
           double.parse(records.elementAt(i).pulse.toString())));
     }
 
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'vitals',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
@@ -423,7 +421,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                     width: 8,
                   ),
                   Text(
-                    "Your progress with goals",
+                    'Your progress with goals',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
@@ -442,7 +440,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Initial",
+                  'Initial',
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
@@ -451,7 +449,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  "85",
+                  '85',
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
@@ -469,7 +467,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Target",
+                  'Target',
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
@@ -478,7 +476,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  "65",
+                  '65',
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
@@ -496,7 +494,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Latest",
+                  'Latest',
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
@@ -505,7 +503,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  "74",
+                  '74',
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
@@ -547,10 +545,10 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
   addvitals() async {
     try {
       progressDialog.show();
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['Pulse'] = _controller.text.toString();
 
-      BaseResponse baseResponse = await model.addMyVitals('pulse', map);
+      final BaseResponse baseResponse = await model.addMyVitals('pulse', map);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
@@ -570,7 +568,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
 
   getVitalsHistory() async {
     try {
-      GetMyVitalsHistory getMyVitalsHistory =
+      final GetMyVitalsHistory getMyVitalsHistory =
           await model.getMyVitalsHistory('pulse');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();

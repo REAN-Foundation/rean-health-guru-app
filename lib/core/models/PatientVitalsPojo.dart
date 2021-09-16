@@ -11,13 +11,13 @@ class PatientVitalsPojo {
   PatientVitalsPojo.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -32,17 +32,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['vitals'] != null) {
-      vitals = new List<Vitals>();
+      vitals = <Vitals>[];
       json['vitals'].forEach((v) {
-        vitals.add(new Vitals.fromJson(v));
+        vitals.add(Vitals.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.vitals != null) {
-      data['vitals'] = this.vitals.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (vitals != null) {
+      data['vitals'] = vitals.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -89,18 +89,18 @@ class Vitals {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['VisitId'] = this.visitId;
-    data['PatientUserId'] = this.patientUserId;
-    data['DoctorUserId'] = this.doctorUserId;
-    data['Weight'] = this.weight;
-    data['Height'] = this.height;
-    data['Temperature'] = this.temperature;
-    data['Pulse'] = this.pulse;
-    data['SystolicBloodPressure'] = this.systolicBloodPressure;
-    data['DiastolicBloodPressure'] = this.diastolicBloodPressure;
-    data['BloodOxygenSaturation'] = this.bloodOxygenSaturation;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['VisitId'] = visitId;
+    data['PatientUserId'] = patientUserId;
+    data['DoctorUserId'] = doctorUserId;
+    data['Weight'] = weight;
+    data['Height'] = height;
+    data['Temperature'] = temperature;
+    data['Pulse'] = pulse;
+    data['SystolicBloodPressure'] = systolicBloodPressure;
+    data['DiastolicBloodPressure'] = diastolicBloodPressure;
+    data['BloodOxygenSaturation'] = bloodOxygenSaturation;
     return data;
   }
 }

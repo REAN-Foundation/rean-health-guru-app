@@ -20,12 +20,12 @@ class BiometricBodyTemperatureVitalsView extends StatefulWidget {
 class _BiometricBodyTemperatureVitalsViewState
     extends State<BiometricBodyTemperatureVitalsView> {
   var model = PatientVitalsViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
 
-  var _controller = new TextEditingController();
-  List<Records> records = new List<Records>();
-  var dateFormatStandard = DateFormat("MMM dd, yyyy");
+  final _controller = TextEditingController();
+  List<Records> records = <Records>[];
+  var dateFormatStandard = DateFormat('MMM dd, yyyy');
   ProgressDialog progressDialog;
 
   @override
@@ -37,7 +37,7 @@ class _BiometricBodyTemperatureVitalsViewState
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
@@ -52,7 +52,7 @@ class _BiometricBodyTemperatureVitalsViewState
                 const SizedBox(
                   height: 16,
                 ),
-                records.length == 0 ? Container() : graph(),
+                if (records.isEmpty) Container() else graph(),
               ],
             ),
           ),
@@ -72,7 +72,7 @@ class _BiometricBodyTemperatureVitalsViewState
             height: 16,
           ),
           Text(
-            "Enter your Body Temperature:",
+            'Enter your Body Temperature:',
             style: TextStyle(
                 color: primaryColor, fontWeight: FontWeight.w500, fontSize: 16),
             textAlign: TextAlign.center,
@@ -98,11 +98,10 @@ class _BiometricBodyTemperatureVitalsViewState
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (term) {},
                       inputFormatters: [
-                        new BlacklistingTextInputFormatter(
-                            new RegExp('[\\,|\\+|\\-]')),
+                        BlacklistingTextInputFormatter(RegExp('[\\,|\\+|\\-]')),
                       ],
                       decoration: InputDecoration(
-                          hintText: "(95 to 100)",
+                          hintText: '(95 to 100)',
                           contentPadding: EdgeInsets.all(0),
                           border: InputBorder.none,
                           fillColor: Colors.white,
@@ -119,7 +118,7 @@ class _BiometricBodyTemperatureVitalsViewState
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: "    °F    ",
+                          text: '    °F    ',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
@@ -156,7 +155,7 @@ class _BiometricBodyTemperatureVitalsViewState
                   ),
                   child: Center(
                     child: Text(
-                      "Save",
+                      'Save',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
@@ -182,7 +181,7 @@ class _BiometricBodyTemperatureVitalsViewState
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : (records.length == 0
+          : (records.isEmpty
               ? noHistoryFound()
               : Column(
                   children: [
@@ -193,7 +192,7 @@ class _BiometricBodyTemperatureVitalsViewState
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Date",
+                            'Date',
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -202,7 +201,7 @@ class _BiometricBodyTemperatureVitalsViewState
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            "Temperature",
+                            'Temperature',
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -244,7 +243,7 @@ class _BiometricBodyTemperatureVitalsViewState
 
   Widget noHistoryFound() {
     return Center(
-      child: Text("No vital history found",
+      child: Text('No vital history found',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -254,7 +253,7 @@ class _BiometricBodyTemperatureVitalsViewState
   }
 
   Widget _makeWeightList(BuildContext context, int index) {
-    Records record = records.elementAt(index);
+    final Records record = records.elementAt(index);
     return Semantics(
       label: 'making list of body temperature',
       readOnly: true,
@@ -270,7 +269,7 @@ class _BiometricBodyTemperatureVitalsViewState
             overflow: TextOverflow.ellipsis,
           ),
           Text(
-            record.temperature.toString() + " °F",
+            record.temperature.toString() + ' °F',
             style: TextStyle(
                 color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
             maxLines: 1,
@@ -292,13 +291,13 @@ class _BiometricBodyTemperatureVitalsViewState
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                       colors: [primaryLightColor, colorF6F6FF]),
                   border: Border.all(color: primaryLightColor),
-                  borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
               padding: const EdgeInsets.all(16),
               height: 200,
               child: Center(
@@ -324,7 +323,7 @@ class _BiometricBodyTemperatureVitalsViewState
   }
 
   List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
-    List<TimeSeriesSales> data = new List<TimeSeriesSales>();
+    final List<TimeSeriesSales> data = <TimeSeriesSales>[];
     /*[
       new TimeSeriesSales(new DateTime(2017, 9, 19), 5),
       new TimeSeriesSales(new DateTime(2017, 9, 26), 25),
@@ -333,13 +332,12 @@ class _BiometricBodyTemperatureVitalsViewState
     ];*/
 
     for (int i = 0; i < records.length; i++) {
-      data.add(new TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
           double.parse(records.elementAt(i).temperature.toString())));
     }
 
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'vitals',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
@@ -374,7 +372,7 @@ class _BiometricBodyTemperatureVitalsViewState
                   width: 8,
                 ),
                 Text(
-                  "Your progress with goals",
+                  'Your progress with goals',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
@@ -393,7 +391,7 @@ class _BiometricBodyTemperatureVitalsViewState
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Initial",
+                'Initial',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -402,7 +400,7 @@ class _BiometricBodyTemperatureVitalsViewState
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                "85",
+                '85',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -420,7 +418,7 @@ class _BiometricBodyTemperatureVitalsViewState
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Target",
+                'Target',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -429,7 +427,7 @@ class _BiometricBodyTemperatureVitalsViewState
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                "65",
+                '65',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -447,7 +445,7 @@ class _BiometricBodyTemperatureVitalsViewState
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Latest",
+                'Latest',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -456,7 +454,7 @@ class _BiometricBodyTemperatureVitalsViewState
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                "74",
+                '74',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -497,10 +495,11 @@ class _BiometricBodyTemperatureVitalsViewState
   addvitals() async {
     try {
       progressDialog.show();
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['Temperature'] = _controller.text.toString();
 
-      BaseResponse baseResponse = await model.addMyVitals('temperature', map);
+      final BaseResponse baseResponse =
+          await model.addMyVitals('temperature', map);
 
       if (baseResponse.status == 'success') {
         showToast(baseResponse.message, context);
@@ -520,7 +519,7 @@ class _BiometricBodyTemperatureVitalsViewState
 
   getVitalsHistory() async {
     try {
-      GetMyVitalsHistory getMyVitalsHistory =
+      final GetMyVitalsHistory getMyVitalsHistory =
           await model.getMyVitalsHistory('temperature');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();

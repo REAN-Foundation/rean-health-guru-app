@@ -8,13 +8,13 @@ class DrugOrderIdPojo {
   DrugOrderIdPojo.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -29,14 +29,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     drugOrder = json['drugOrder'] != null
-        ? new DrugOrder.fromJson(json['drugOrder'])
+        ? DrugOrder.fromJson(json['drugOrder'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.drugOrder != null) {
-      data['drugOrder'] = this.drugOrder.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (drugOrder != null) {
+      data['drugOrder'] = drugOrder.toJson();
     }
     return data;
   }
@@ -80,17 +80,17 @@ class DrugOrder {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['PatientUserId'] = this.patientUserId;
-    data['DoctorUserId'] = this.doctorUserId;
-    data['DisplayId'] = this.displayId;
-    data['VisitId'] = this.visitId;
-    data['SuggestedPharmacyId'] = this.suggestedPharmacyId;
-    data['CurrentState'] = this.currentState;
-    data['ReferencedOrderId'] = this.referencedOrderId;
-    data['updated_at'] = this.updatedAt;
-    data['created_at'] = this.createdAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['PatientUserId'] = patientUserId;
+    data['DoctorUserId'] = doctorUserId;
+    data['DisplayId'] = displayId;
+    data['VisitId'] = visitId;
+    data['SuggestedPharmacyId'] = suggestedPharmacyId;
+    data['CurrentState'] = currentState;
+    data['ReferencedOrderId'] = referencedOrderId;
+    data['updated_at'] = updatedAt;
+    data['created_at'] = createdAt;
     return data;
   }
 }

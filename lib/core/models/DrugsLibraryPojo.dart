@@ -8,13 +8,13 @@ class DrugsLibraryPojo {
   DrugsLibraryPojo.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -29,17 +29,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['drugs'] != null) {
-      drugs = new List<Drugs>();
+      drugs = <Drugs>[];
       json['drugs'].forEach((v) {
-        drugs.add(new Drugs.fromJson(v));
+        drugs.add(Drugs.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.drugs != null) {
-      data['drugs'] = this.drugs.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (drugs != null) {
+      data['drugs'] = drugs.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -57,9 +57,9 @@ class Drugs {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['DrugName'] = this.name;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['DrugName'] = name;
+    data['id'] = id;
     return data;
   }
 }

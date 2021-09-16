@@ -30,13 +30,13 @@ class LoginWithOTPView extends StatefulWidget {
 class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   final TextEditingController _mobileNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  var _mobileNumberFocus = FocusNode();
-  var _passwordFocus = FocusNode();
+  final _mobileNumberFocus = FocusNode();
+  final _passwordFocus = FocusNode();
   String mobileNumber = '';
   String countryCode = '';
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  String _fcmToken = "";
+  String _fcmToken = '';
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
   @override
@@ -95,11 +95,12 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                                 readOnly: true,
                                 child: SizedBox(height: 100)),
                             //_emailPasswordWidget(),
-                            _textFeild("Mobile Number"),
+                            _textFeild('Mobile Number'),
                             SizedBox(height: 40),
-                            model.busy
-                                ? CircularProgressIndicator()
-                                : _getOTPButton(model),
+                            if (model.busy)
+                              CircularProgressIndicator()
+                            else
+                              _getOTPButton(model),
                             /* model.busy
                               ? CircularProgressIndicator()
                               :_submitButton(model),*/
@@ -172,9 +173,9 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
             child: Container(
                 height: 50,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: new BoxDecoration(
+                decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: new BorderRadius.all(Radius.circular(12.0))),
+                    borderRadius: BorderRadius.all(Radius.circular(12.0))),
                 child: IntlPhoneField(
                   /*decoration: InputDecoration(
                     labelText: 'Phone Number',
@@ -185,7 +186,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   autoValidate: true,
                   decoration: InputDecoration(
-                      counterText: "",
+                      counterText: '',
                       hintText: 'mobile_number',
                       hintStyle: TextStyle(color: Colors.transparent),
                       border: InputBorder.none,
@@ -217,7 +218,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         width: 160,
         height: 40,
         child: ElevatedButton(
-          child: Text("Get OTP", style: TextStyle(fontSize: 14)),
+          child: Text('Get OTP', style: TextStyle(fontSize: 14)),
           style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
               backgroundColor:
@@ -249,12 +250,12 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   checkUserExistsOrNot(LoginViewModel model) async {
     try {
-      debugPrint('Mobile = ${mobileNumber}');
+      debugPrint('Mobile = $mobileNumber');
 
-      var response =
+      final response =
           await apiProvider.get('/user/exists?phone=' + mobileNumber);
 
-      CheckUserExistOrNotResonse checkUserExistOrNotResonse =
+      final CheckUserExistOrNotResonse checkUserExistOrNotResonse =
           CheckUserExistOrNotResonse.fromJson(response);
 
       if (checkUserExistOrNotResonse.status == 'success') {
@@ -278,19 +279,20 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   generateOTPForExistingUser(LoginViewModel model) async {
     try {
-      var map = new Map<String, String>();
-      map["Content-Type"] = "application/json";
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
 
-      debugPrint('Mobile = ${mobileNumber}');
+      debugPrint('Mobile = $mobileNumber');
 
-      var body = new Map<String, dynamic>();
-      body["PhoneNumber"] = countryCode + '-' + mobileNumber;
-      body["Purpose"] = 'Login';
+      final body = <String, dynamic>{};
+      body['PhoneNumber'] = countryCode + '-' + mobileNumber;
+      body['Purpose'] = 'Login';
 
-      var response =
+      final response =
           await apiProvider.post('/user/generate-otp', header: map, body: body);
 
-      BaseResponse doctorListApiResponse = BaseResponse.fromJson(response);
+      final BaseResponse doctorListApiResponse =
+          BaseResponse.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
         showToast(
@@ -313,25 +315,25 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   generateOTP(LoginViewModel model) async {
     try {
-      var map = new Map<String, String>();
-      map["Content-Type"] = "application/json";
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
 
-      debugPrint('Mobile = ${mobileNumber}');
+      debugPrint('Mobile = $mobileNumber');
 
-      var body = new Map<String, dynamic>();
-      body["PhoneNumber"] = countryCode + '-' + mobileNumber;
-      body["GenerateLoginOTP"] = true;
+      final body = <String, dynamic>{};
+      body['PhoneNumber'] = countryCode + '-' + mobileNumber;
+      body['GenerateLoginOTP'] = true;
 
-      var response =
+      final response =
           await apiProvider.post('/patient', header: map, body: body);
 
-      PatientApiDetails doctorListApiResponse =
+      final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
       if (doctorListApiResponse.status == 'success') {
         showToast(
             'OTP has been successfully sent on your mobile number', context);
         _sharedPrefUtils.save(
-            "patientDetails", doctorListApiResponse.data.patient.toJson());
+            'patientDetails', doctorListApiResponse.data.patient.toJson());
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,
             arguments: mobileNumber);
         model.setBusy(false);
@@ -352,23 +354,23 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     try {
       //ApiProvider apiProvider = new ApiProvider();
 
-      ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+      final ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
-      var map = new Map<String, String>();
-      map["Content-Type"] = "application/json";
-      map["authorization"] = "Bearer " + auth;
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth;
 
-      var response = await apiProvider.get('/patient/' + userId, header: map);
+      final response = await apiProvider.get('/patient/' + userId, header: map);
 
-      PatientApiDetails doctorListApiResponse =
+      final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
         showToast(
             'OTP has been successfully sent on your mobile number', context);
         _sharedPrefUtils.save(
-            "patientDetails", doctorListApiResponse.data.patient.toJson());
-        _sharedPrefUtils.saveBoolean("login1.2", true);
+            'patientDetails', doctorListApiResponse.data.patient.toJson());
+        _sharedPrefUtils.saveBoolean('login1.2', true);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);
@@ -518,7 +520,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
           text: TextSpan(
               text: 'REAN',
               style: GoogleFonts.portLligatSans(
-                textStyle: Theme.of(context).textTheme.display1,
+                textStyle: Theme.of(context).textTheme.headline4,
                 fontSize: 30,
                 fontWeight: FontWeight.w700,
                 color: primaryColor,
@@ -570,10 +572,10 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   void firebase() {
     _fcm.getToken().then((String token) async {
       assert(token != null);
-      print("Push Messaging token: $token");
+      print('Push Messaging token: $token');
       debugPrint(token);
       _fcmToken = token;
-      _sharedPrefUtils.save("fcmToken", token);
+      _sharedPrefUtils.save('fcmToken', token);
     });
 
 /*    _fcm.configure(

@@ -20,7 +20,7 @@ class SharedPrefUtils {
 
   Future<double> readDouble(String key) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getDouble(key) == null ? 0.0 : prefs.getDouble(key);
+    return prefs.getDouble(key) ?? 0.0;
   }
 
   save(String key, value) async {
@@ -35,7 +35,7 @@ class SharedPrefUtils {
 
   Future<bool> readBoolean(String key) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(key) == null ? false : prefs.getBool(key);
+    return prefs.getBool(key) ?? false;
   }
 
   remove(String key) async {

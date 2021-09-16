@@ -39,9 +39,9 @@ class _DoctorTileViewState extends State<DoctorTileView> {
                     backgroundColor: primaryColor,
                     child: CircleAvatar(
                         radius: 38,
-                        backgroundImage: doctorDetails.imageURL == ""
+                        backgroundImage: doctorDetails.imageURL == ''
                             ? AssetImage('res/images/profile_placeholder.png')
-                            : new NetworkImage(doctorDetails.imageURL)),
+                            : NetworkImage(doctorDetails.imageURL)),
                   ),
                 )),
               ),

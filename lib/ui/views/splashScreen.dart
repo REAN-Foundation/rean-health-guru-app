@@ -24,7 +24,7 @@ class SplashScreen extends StatefulWidget {
   final Gradient gradientBackground;
   final String baseUrl;
 
-  PackageInfo _packageInfo = PackageInfo(
+  final PackageInfo _packageInfo = PackageInfo(
     appName: '',
     packageName: '',
     version: '',
@@ -42,7 +42,7 @@ class SplashScreen extends StatefulWidget {
       this.styleTextUnderTheLoader = const TextStyle(
           fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
       this.image,
-      this.loadingText = const Text(""),
+      this.loadingText = const Text(''),
       this.imageBackground,
       this.gradientBackground,
       this.baseUrl});
@@ -62,13 +62,13 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _initPackageInfo() async {
     String currentLocale;
     final PackageInfo info = await PackageInfo.fromPlatform();
-    if (this.mounted) {
+    if (mounted) {
       setState(() {
         _packageInfo = info;
       });
     }
 
-    Locale locale = await Devicelocale.currentAsLocale;
+    final Locale locale = await Devicelocale.currentAsLocale;
     setCurrentLocale(locale.countryCode);
 
     debugPrint('Country Local ==> ${locale.countryCode}');
@@ -108,9 +108,9 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: primaryColor,
-      body: new InkWell(
+      body: InkWell(
         onTap: widget.onClick,
-        child: new Stack(
+        child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
             /*Positioned(
@@ -121,13 +121,13 @@ class _SplashScreenState extends State<SplashScreen> {
                     .width * .4,
                 child: BezierContainer()),*/
             MergeSemantics(
-              child: new Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  new Expanded(
+                  Expanded(
                     flex: 2,
-                    child: new Container(
-                        child: new Column(
+                    child: Container(
+                        child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         Container(
@@ -142,7 +142,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           child: Semantics(
                             label: 'REAN care app logo',
                             image: true,
-                            child: new Image.asset(
+                            child: Image.asset(
                                 'res/images/app_logo_tranparent.png'),
                           ),
                         ),
@@ -171,8 +171,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         CircularProgressIndicator(
-                          valueColor: new AlwaysStoppedAnimation<Color>(
-                              widget.loaderColor),
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(widget.loaderColor),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
@@ -181,13 +181,13 @@ class _SplashScreenState extends State<SplashScreen> {
                         Semantics(
                           label: 'display version',
                           readOnly: true,
-                          child: new Text(
-                              "Version " +
+                          child: Text(
+                              'Version ' +
                                   (widget.baseUrl.contains('dev')
-                                      ? "Dev_"
+                                      ? 'Dev_'
                                       : widget.baseUrl.contains('uat')
-                                          ? "Alpha_"
-                                          : "") +
+                                          ? 'Alpha_'
+                                          : '') +
                                   _packageInfo.version,
                               style: TextStyle(
                                   fontSize: 16,

@@ -19,19 +19,20 @@ class SupportView extends StatefulWidget {
 
 class _SupportViewState extends State<SupportView> {
   //var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String msg = "We are here to help you so please get in touch.";
-  String phone = "+2025397323";
-  String email = "support@reanfoundation.org";
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
-  String name = " ";
-  String userPhone = " ";
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  String msg = 'We are here to help you so please get in touch.';
+  String phone = '+2025397323';
+  String email = 'support@reanfoundation.org';
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  String name = ' ';
+  String userPhone = ' ';
 
   loadSharedPrefs() async {
     try {
-      UserData user = UserData.fromJson(await _sharedPrefUtils.read("user"));
-      Patient patient =
-          Patient.fromJson(await _sharedPrefUtils.read("patientDetails"));
+      final UserData user =
+          UserData.fromJson(await _sharedPrefUtils.read('user'));
+      final Patient patient =
+          Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       auth = user.data.accessToken;
       patientUserId = user.data.user.userId;
       //debugPrint(user.toJson().toString());
@@ -118,7 +119,8 @@ class _SupportViewState extends State<SupportView> {
                                           button: true,
                                           child: InkWell(
                                             onTap: () async {
-                                              String url = 'tel://' + phone;
+                                              final String url =
+                                                  'tel://' + phone;
                                               if (await canLaunch(url)) {
                                                 await launch(url);
                                               } else {
@@ -182,7 +184,7 @@ class _SupportViewState extends State<SupportView> {
                                                 }
                                             );*/
 
-                                              var link = 'mailto:' +
+                                              final link = 'mailto:' +
                                                   email +
                                                   '?subject=Regarding%20REAN%20HealthGuru%20App&body=Hey Team,%20\n\n' +
                                                   name +
@@ -210,7 +212,7 @@ class _SupportViewState extends State<SupportView> {
                                                     });
                                                 await launch(_emailLaunchUri
                                                     .toString()
-                                                    .replaceAll("+", "%20"));
+                                                    .replaceAll('+', '%20'));
 
                                                 debugPrint(
                                                     'Could not launch ${link.toString()}');

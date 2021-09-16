@@ -14,9 +14,9 @@ class WeekMyCarePlanView extends StatefulWidget {
 
 class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
   var model = PatientMedicationViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var _currentIndex = 0;
+  final _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -104,10 +104,10 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
     return Container(
         height: 160,
         width: MediaQuery.of(context).size.width,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: primaryLightColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,10 +115,10 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
             Container(
               height: 30,
               width: MediaQuery.of(context).size.width,
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   color: colorF6F6FF,
                   border: Border.all(color: primaryLightColor),
-                  borderRadius: new BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0))),
               child: Padding(
@@ -128,7 +128,7 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Mood Indicator",
+                      'Mood Indicator',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 12,
@@ -137,7 +137,7 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      "How do I feel?",
+                      'How do I feel?',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 10,
@@ -157,11 +157,12 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
     return InkWell(
       onTap: () {
         assrotedUICount = 3;
-        AssortedViewConfigs newAssortedViewConfigs = new AssortedViewConfigs();
-        newAssortedViewConfigs.toShow = "1";
-        newAssortedViewConfigs.testToshow = "2";
+        final AssortedViewConfigs newAssortedViewConfigs =
+            AssortedViewConfigs();
+        newAssortedViewConfigs.toShow = '1';
+        newAssortedViewConfigs.testToshow = '2';
         newAssortedViewConfigs.isNextButtonVisible = false;
-        newAssortedViewConfigs.header = "Message Today";
+        newAssortedViewConfigs.header = 'Message Today';
 
         Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
             arguments: newAssortedViewConfigs);
@@ -169,10 +170,10 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
       child: Container(
         height: 40,
         width: MediaQuery.of(context).size.width,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: colorF6F6FF,
             border: Border.all(color: primaryLightColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Row(
@@ -188,7 +189,7 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
                 width: 8,
               ),
               Text(
-                "Message Today",
+                'Message Today',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 12,
@@ -210,10 +211,10 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
       },
       child: Container(
         height: 40,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: colorF6F6FF,
             border: Border.all(color: primaryLightColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Row(
@@ -229,7 +230,7 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
                 width: 8,
               ),
               Text(
-                "Challenge",
+                'Challenge',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 12,
@@ -252,10 +253,10 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
       child: Container(
         height: 40,
         width: MediaQuery.of(context).size.width,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: colorF6F6FF,
             border: Border.all(color: primaryLightColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Row(
@@ -271,7 +272,7 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
                 width: 8,
               ),
               Text(
-                "Mindful Moment",
+                'Mindful Moment',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 12,
@@ -307,10 +308,10 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
       },
       child: Container(
         height: 40,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: colorF6F6FF,
             border: Border.all(color: primaryLightColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Row(
@@ -326,7 +327,7 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
                 width: 8,
               ),
               Text(
-                "Word for the week!",
+                'Word for the week!',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 12,
@@ -345,11 +346,12 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
     return InkWell(
       onTap: () {
         assrotedUICount = 3;
-        AssortedViewConfigs newAssortedViewConfigs = new AssortedViewConfigs();
-        newAssortedViewConfigs.toShow = "0";
-        newAssortedViewConfigs.testToshow = "1";
+        final AssortedViewConfigs newAssortedViewConfigs =
+            AssortedViewConfigs();
+        newAssortedViewConfigs.toShow = '0';
+        newAssortedViewConfigs.testToshow = '1';
         newAssortedViewConfigs.isNextButtonVisible = false;
-        newAssortedViewConfigs.header = "Checking Your Heart Failure";
+        newAssortedViewConfigs.header = 'Checking Your Heart Failure';
 
         Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
             arguments: newAssortedViewConfigs);
@@ -357,10 +359,10 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
       child: Container(
         height: 40,
         width: MediaQuery.of(context).size.width,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: colorF6F6FF,
             border: Border.all(color: primaryLightColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Row(
@@ -376,7 +378,7 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
                 width: 8,
               ),
               Text(
-                "Checking Your Heart Failure",
+                'Checking Your Heart Failure',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 12,

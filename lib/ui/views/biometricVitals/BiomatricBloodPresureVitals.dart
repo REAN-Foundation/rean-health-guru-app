@@ -26,15 +26,15 @@ class BiometricBloodPresureVitalsView extends StatefulWidget {
 class _BiometricBloodPresureVitalsViewState
     extends State<BiometricBloodPresureVitalsView> {
   var model = PatientVitalsViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
 
   final TextEditingController _systolicController = TextEditingController();
   final TextEditingController _diastolicController = TextEditingController();
-  List<Records> records = new List<Records>();
-  var dateFormatStandard = DateFormat("MMM dd, yyyy");
-  var _systolicFocus = FocusNode();
-  var _diastolicFocus = FocusNode();
+  List<Records> records = <Records>[];
+  var dateFormatStandard = DateFormat('MMM dd, yyyy');
+  final _systolicFocus = FocusNode();
+  final _diastolicFocus = FocusNode();
 
   ProgressDialog progressDialog;
 
@@ -47,7 +47,7 @@ class _BiometricBloodPresureVitalsViewState
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
@@ -66,7 +66,7 @@ class _BiometricBloodPresureVitalsViewState
                         color: primaryColor,
                         fontWeight: FontWeight.w700),
                   ),
-                  iconTheme: new IconThemeData(color: Colors.black),
+                  iconTheme: IconThemeData(color: Colors.black),
                   actions: <Widget>[
                     /*IconButton(
                 icon: Icon(
@@ -94,11 +94,11 @@ class _BiometricBloodPresureVitalsViewState
                         const SizedBox(
                           height: 16,
                         ),
-                        records.length == 0 ? Container() : _systolicgraph(),
+                        if (records.isEmpty) Container() else _systolicgraph(),
                         const SizedBox(
                           height: 16,
                         ),
-                        records.length == 0 ? Container() : _diastolicgraph(),
+                        if (records.isEmpty) Container() else _diastolicgraph(),
                         //allGoal(),
                         const SizedBox(
                           height: 16,
@@ -119,11 +119,11 @@ class _BiometricBloodPresureVitalsViewState
                     const SizedBox(
                       height: 16,
                     ),
-                    records.length == 0 ? Container() : _systolicgraph(),
+                    if (records.isEmpty) Container() else _systolicgraph(),
                     const SizedBox(
                       height: 16,
                     ),
-                    records.length == 0 ? Container() : _diastolicgraph(),
+                    if (records.isEmpty) Container() else _diastolicgraph(),
                     //allGoal(),
                     //const SizedBox(height: 16,),
                   ],
@@ -145,7 +145,7 @@ class _BiometricBloodPresureVitalsViewState
                 height: 16,
               ),
               Text(
-                "Enter your blood pressure:",
+                'Enter your blood pressure:',
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w500,
@@ -169,7 +169,7 @@ class _BiometricBloodPresureVitalsViewState
                             fontSize: 14),
                         children: <TextSpan>[
                           TextSpan(
-                              text: "  mm Hg     ",
+                              text: '  mm Hg     ',
                               style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,
@@ -190,8 +190,8 @@ class _BiometricBloodPresureVitalsViewState
                         readOnly: true,
                         child: TextFormField(
                             inputFormatters: [
-                              new BlacklistingTextInputFormatter(
-                                  new RegExp('[\\,|\\+|\\-]')),
+                              BlacklistingTextInputFormatter(
+                                  RegExp('[\\,|\\+|\\-]')),
                             ],
                             controller: _systolicController,
                             focusNode: _systolicFocus,
@@ -203,7 +203,7 @@ class _BiometricBloodPresureVitalsViewState
                                   context, _systolicFocus, _diastolicFocus);
                             },
                             decoration: InputDecoration(
-                                hintText: "(80 to 120)",
+                                hintText: '(80 to 120)',
                                 contentPadding: EdgeInsets.all(0),
                                 border: InputBorder.none,
                                 fillColor: Colors.white,
@@ -230,7 +230,7 @@ class _BiometricBloodPresureVitalsViewState
                             fontSize: 14),
                         children: <TextSpan>[
                           TextSpan(
-                              text: "  mm Hg  ",
+                              text: '  mm Hg  ',
                               style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,
@@ -252,8 +252,8 @@ class _BiometricBloodPresureVitalsViewState
                           maxLines: 1,
                           textInputAction: TextInputAction.done,
                           inputFormatters: [
-                            new BlacklistingTextInputFormatter(
-                                new RegExp('[\\,|\\+|\\-]')),
+                            BlacklistingTextInputFormatter(
+                                RegExp('[\\,|\\+|\\-]')),
                           ],
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {
@@ -263,7 +263,7 @@ class _BiometricBloodPresureVitalsViewState
                               _weightFocus);*/
                           },
                           decoration: InputDecoration(
-                              hintText: "(60 to 80)",
+                              hintText: '(60 to 80)',
                               contentPadding: EdgeInsets.all(0),
                               border: InputBorder.none,
                               fillColor: Colors.white,
@@ -304,7 +304,7 @@ class _BiometricBloodPresureVitalsViewState
                         ),
                         child: Center(
                           child: Text(
-                            "Save",
+                            'Save',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
@@ -332,7 +332,7 @@ class _BiometricBloodPresureVitalsViewState
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : (records.length == 0
+            : (records.isEmpty
                 ? noHistoryFound()
                 : Column(
                     children: [
@@ -346,7 +346,7 @@ class _BiometricBloodPresureVitalsViewState
                               flex: 1,
                               child: Center(
                                 child: Text(
-                                  "Date",
+                                  'Date',
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 14,
@@ -360,7 +360,7 @@ class _BiometricBloodPresureVitalsViewState
                               flex: 1,
                               child: Center(
                                 child: Text(
-                                  "Systolic",
+                                  'Systolic',
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 14,
@@ -374,7 +374,7 @@ class _BiometricBloodPresureVitalsViewState
                               flex: 1,
                               child: Center(
                                 child: Text(
-                                  "Diastolic ",
+                                  'Diastolic ',
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 14,
@@ -419,7 +419,7 @@ class _BiometricBloodPresureVitalsViewState
 
   Widget noHistoryFound() {
     return Center(
-      child: Text("No vital history found",
+      child: Text('No vital history found',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -429,7 +429,7 @@ class _BiometricBloodPresureVitalsViewState
   }
 
   Widget _makeWeightList(BuildContext context, int index) {
-    Records record = records.elementAt(index);
+    final Records record = records.elementAt(index);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
@@ -489,13 +489,13 @@ class _BiometricBloodPresureVitalsViewState
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                     colors: [primaryLightColor, colorF6F6FF]),
                 border: Border.all(color: primaryLightColor),
-                borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
             padding: const EdgeInsets.all(16),
             height: 200,
             child: Center(
@@ -518,7 +518,7 @@ class _BiometricBloodPresureVitalsViewState
   }
 
   List<charts.Series<TimeSeriesSales, DateTime>> _createSampleDatasystolic() {
-    List<TimeSeriesSales> data = new List<TimeSeriesSales>();
+    final List<TimeSeriesSales> data = <TimeSeriesSales>[];
     /*[
       new TimeSeriesSales(new DateTime(2017, 9, 19), 5),
       new TimeSeriesSales(new DateTime(2017, 9, 26), 25),
@@ -527,13 +527,12 @@ class _BiometricBloodPresureVitalsViewState
     ];*/
 
     for (int i = 0; i < records.length; i++) {
-      data.add(new TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
           double.parse(records.elementAt(i).systolicBloodPressure.toString())));
     }
 
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'vitals',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
@@ -551,13 +550,13 @@ class _BiometricBloodPresureVitalsViewState
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                     colors: [primaryLightColor, colorF6F6FF]),
                 border: Border.all(color: primaryLightColor),
-                borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
             padding: const EdgeInsets.all(16),
             height: 200,
             child: Center(
@@ -580,7 +579,7 @@ class _BiometricBloodPresureVitalsViewState
   }
 
   List<charts.Series<TimeSeriesSales, DateTime>> _createSampleDataDiastolic() {
-    List<TimeSeriesSales> data = new List<TimeSeriesSales>();
+    final List<TimeSeriesSales> data = <TimeSeriesSales>[];
     /*[
       new TimeSeriesSales(new DateTime(2017, 9, 19), 5),
       new TimeSeriesSales(new DateTime(2017, 9, 26), 25),
@@ -589,14 +588,14 @@ class _BiometricBloodPresureVitalsViewState
     ];*/
 
     for (int i = 0; i < records.length; i++) {
-      data.add(new TimeSeriesSales(
+      data.add(TimeSeriesSales(
           DateTime.parse(records.elementAt(i).recordDate),
           double.parse(
               records.elementAt(i).diastolicBloodPressure.toString())));
     }
 
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'vitals',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
@@ -643,7 +642,7 @@ class _BiometricBloodPresureVitalsViewState
                 Expanded(
                   flex: 1,
                   child: Text(
-                    "",
+                    '',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
@@ -656,7 +655,7 @@ class _BiometricBloodPresureVitalsViewState
                   flex: 1,
                   child: Center(
                     child: Text(
-                      "Systolic",
+                      'Systolic',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
@@ -670,7 +669,7 @@ class _BiometricBloodPresureVitalsViewState
                   flex: 1,
                   child: Center(
                     child: Text(
-                      "Diastolic ",
+                      'Diastolic ',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
@@ -692,7 +691,7 @@ class _BiometricBloodPresureVitalsViewState
                 Expanded(
                   flex: 1,
                   child: Text(
-                    "Initial",
+                    'Initial',
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
@@ -705,7 +704,7 @@ class _BiometricBloodPresureVitalsViewState
                   flex: 1,
                   child: Center(
                     child: Text(
-                      "160",
+                      '160',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
@@ -719,7 +718,7 @@ class _BiometricBloodPresureVitalsViewState
                   flex: 1,
                   child: Center(
                     child: Text(
-                      "100",
+                      '100',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
@@ -744,7 +743,7 @@ class _BiometricBloodPresureVitalsViewState
                 Expanded(
                   flex: 1,
                   child: Text(
-                    "Target",
+                    'Target',
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
@@ -757,7 +756,7 @@ class _BiometricBloodPresureVitalsViewState
                   flex: 1,
                   child: Center(
                     child: Text(
-                      "130",
+                      '130',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
@@ -771,7 +770,7 @@ class _BiometricBloodPresureVitalsViewState
                   flex: 1,
                   child: Center(
                     child: Text(
-                      "80",
+                      '80',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
@@ -796,7 +795,7 @@ class _BiometricBloodPresureVitalsViewState
                 Expanded(
                   flex: 1,
                   child: Text(
-                    "Latest",
+                    'Latest',
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
@@ -809,7 +808,7 @@ class _BiometricBloodPresureVitalsViewState
                   flex: 1,
                   child: Center(
                     child: Text(
-                      "140",
+                      '140',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
@@ -823,7 +822,7 @@ class _BiometricBloodPresureVitalsViewState
                   flex: 1,
                   child: Center(
                     child: Text(
-                      "90",
+                      '90',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
@@ -846,7 +845,7 @@ class _BiometricBloodPresureVitalsViewState
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Systolic",
+                  'Systolic',
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 16,
@@ -881,7 +880,7 @@ class _BiometricBloodPresureVitalsViewState
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "Diastolic",
+                  'Diastolic',
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 16,
@@ -926,11 +925,11 @@ class _BiometricBloodPresureVitalsViewState
   addvitals() async {
     try {
       progressDialog.show();
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['SystolicBloodPressure'] = _systolicController.text.toString();
       map['DiastolicBloodPressure'] = _diastolicController.text.toString();
 
-      BaseResponse baseResponse =
+      final BaseResponse baseResponse =
           await model.addMyVitals('blood-pressure', map);
 
       if (baseResponse.status == 'success') {
@@ -951,7 +950,7 @@ class _BiometricBloodPresureVitalsViewState
 
   getVitalsHistory() async {
     try {
-      GetMyVitalsHistory getMyVitalsHistory =
+      final GetMyVitalsHistory getMyVitalsHistory =
           await model.getMyVitalsHistory('blood-pressure');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();

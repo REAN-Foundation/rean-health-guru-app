@@ -13,14 +13,14 @@ class UserData {
     status = json['status'];
     message = json['message'];
     error = json['error'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    data['error'] = this.error;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
+    data['error'] = error;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -36,14 +36,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     accessToken = json['accessToken'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['accessToken'] = this.accessToken;
-    if (this.user != null) {
-      data['user'] = this.user.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['accessToken'] = accessToken;
+    if (user != null) {
+      data['user'] = user.toJson();
     }
     return data;
   }
@@ -90,18 +90,18 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['UserId'] = this.userId;
-    data['RoleId'] = this.roleId;
-    data['FirstName'] = this.firstName;
-    data['LastName'] = this.lastName;
-    data['PhoneNumber'] = this.phoneNumber;
-    data['Email'] = this.email;
-    data['UserName'] = this.userName;
-    data['VerifiedPhoneNumber'] = this.verifiedPhoneNumber;
-    data['BasicProfileComplete'] = this.basicProfileComplete;
-    data['DateCreated'] = this.dateCreated;
-    data['DateUpdated'] = this.dateUpdated;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['UserId'] = userId;
+    data['RoleId'] = roleId;
+    data['FirstName'] = firstName;
+    data['LastName'] = lastName;
+    data['PhoneNumber'] = phoneNumber;
+    data['Email'] = email;
+    data['UserName'] = userName;
+    data['VerifiedPhoneNumber'] = verifiedPhoneNumber;
+    data['BasicProfileComplete'] = basicProfileComplete;
+    data['DateCreated'] = dateCreated;
+    data['DateUpdated'] = dateUpdated;
     return data;
   }
 }

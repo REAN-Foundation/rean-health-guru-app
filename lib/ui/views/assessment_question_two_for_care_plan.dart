@@ -16,8 +16,8 @@ class AssessmentQuestionTwoCarePlanView extends StatefulWidget {
 class _AssessmentQuestionTwoCarePlanViewState
     extends State<AssessmentQuestionTwoCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var _textController = new TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _textController = TextEditingController();
 
   // Default Radio Button Selected Item When App Starts.
   String radioButtonItem = 'ONE';
@@ -43,7 +43,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -88,7 +88,7 @@ class _AssessmentQuestionTwoCarePlanViewState
               padding: const EdgeInsets.all(16.0),
               child: Center(
                 child: Text(
-                  "Are these symptoms new\nor worsening?",
+                  'Are these symptoms new\nor worsening?',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w700,
@@ -126,7 +126,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                       ),
                       child: Center(
                         child: Text(
-                          "Yes",
+                          'Yes',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -160,7 +160,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                       ),
                       child: Center(
                         child: Text(
-                          "No",
+                          'No',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
@@ -248,7 +248,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                     ),
                     child: Center(
                       child: Text(
-                        "Next",
+                        'Next',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
@@ -335,7 +335,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                     ),
                     child: Center(
                       child: Text(
-                        "Next",
+                        'Next',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,

@@ -8,13 +8,13 @@ class GetCarePlanSummaryResponse {
   GetCarePlanSummaryResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -29,14 +29,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     carePlanSummary = json['carePlanSummary'] != null
-        ? new CarePlanSummary.fromJson(json['carePlanSummary'])
+        ? CarePlanSummary.fromJson(json['carePlanSummary'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.carePlanSummary != null) {
-      data['carePlanSummary'] = this.carePlanSummary.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (carePlanSummary != null) {
+      data['carePlanSummary'] = carePlanSummary.toJson();
     }
     return data;
   }
@@ -83,18 +83,18 @@ class CarePlanSummary {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['PatientUserId'] = this.patientUserId;
-    data['CarePlanDisplayId'] = this.carePlanDisplayId;
-    data['CarePlanName'] = this.carePlanName;
-    data['CarePlanCode'] = this.carePlanCode;
-    data['DurationInWeeks'] = this.durationInWeeks;
-    data['CarePlanStartDate'] = this.carePlanStartDate.toIso8601String();
-    data['CarePlanEndDate'] = this.carePlanEndDate.toIso8601String();
-    data['EnrolledOn'] = this.enrolledOn;
-    data['CurrentWeek'] = this.currentWeek;
-    data['DayOfCurrentWeek'] = this.dayOfCurrentWeek;
-    data['CarePlanStatus'] = this.carePlanStatus;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['PatientUserId'] = patientUserId;
+    data['CarePlanDisplayId'] = carePlanDisplayId;
+    data['CarePlanName'] = carePlanName;
+    data['CarePlanCode'] = carePlanCode;
+    data['DurationInWeeks'] = durationInWeeks;
+    data['CarePlanStartDate'] = carePlanStartDate.toIso8601String();
+    data['CarePlanEndDate'] = carePlanEndDate.toIso8601String();
+    data['EnrolledOn'] = enrolledOn;
+    data['CurrentWeek'] = currentWeek;
+    data['DayOfCurrentWeek'] = dayOfCurrentWeek;
+    data['CarePlanStatus'] = carePlanStatus;
     return data;
   }
 }

@@ -8,13 +8,13 @@ class GetMedicationStockImages {
   GetMedicationStockImages.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
@@ -29,18 +29,18 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['medicationStockImages'] != null) {
-      medicationStockImages = new List<MedicationStockImages>();
+      medicationStockImages = <MedicationStockImages>[];
       json['medicationStockImages'].forEach((v) {
-        medicationStockImages.add(new MedicationStockImages.fromJson(v));
+        medicationStockImages.add(MedicationStockImages.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.medicationStockImages != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (medicationStockImages != null) {
       data['medicationStockImages'] =
-          this.medicationStockImages.map((v) => v.toJson()).toList();
+          medicationStockImages.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -76,14 +76,14 @@ class MedicationStockImages {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['Code'] = this.code;
-    data['FileName'] = this.fileName;
-    data['ResourceId'] = this.resourceId;
-    data['Url_Public'] = this.urlPublic;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['Code'] = code;
+    data['FileName'] = fileName;
+    data['ResourceId'] = resourceId;
+    data['Url_Public'] = urlPublic;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

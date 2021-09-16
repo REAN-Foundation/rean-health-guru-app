@@ -12,7 +12,7 @@ class BiometricVitalsView extends StatefulWidget {
 
 class _BiometricVitalsViewState extends State<BiometricVitalsView> {
   var model = PatientVitalsViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -68,10 +68,10 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                         child: Container(
                           height: 56,
                           width: MediaQuery.of(context).size.width,
-                          decoration: new BoxDecoration(
+                          decoration: BoxDecoration(
                               color: colorF6F6FF,
                               border: Border.all(color: primaryLightColor),
-                              borderRadius: new BorderRadius.only(
+                              borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(8.0),
                                   topRight: Radius.circular(8.0))),
                           child: Padding(
@@ -82,7 +82,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Weight",
+                                  'Weight',
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 14,
@@ -119,10 +119,10 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                           child: Container(
                             height: 56,
                             width: MediaQuery.of(context).size.width,
-                            decoration: new BoxDecoration(
+                            decoration: BoxDecoration(
                                 color: colorF6F6FF,
                                 border: Border.all(color: primaryLightColor),
-                                borderRadius: new BorderRadius.only(
+                                borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(8.0),
                                     topRight: Radius.circular(8.0))),
                             child: Padding(
@@ -134,7 +134,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Blood Pressure",
+                                    'Blood Pressure',
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 14,
@@ -173,10 +173,10 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                           child: Container(
                             height: 56,
                             width: MediaQuery.of(context).size.width,
-                            decoration: new BoxDecoration(
+                            decoration: BoxDecoration(
                                 color: colorF6F6FF,
                                 border: Border.all(color: primaryLightColor),
-                                borderRadius: new BorderRadius.only(
+                                borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(8.0),
                                     topRight: Radius.circular(8.0))),
                             child: Padding(
@@ -188,7 +188,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Blood Glucose",
+                                    'Blood Glucose',
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 14,
@@ -227,10 +227,10 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                           child: Container(
                             height: 56,
                             width: MediaQuery.of(context).size.width,
-                            decoration: new BoxDecoration(
+                            decoration: BoxDecoration(
                                 color: colorF6F6FF,
                                 border: Border.all(color: primaryLightColor),
-                                borderRadius: new BorderRadius.only(
+                                borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(8.0),
                                     topRight: Radius.circular(8.0))),
                             child: Padding(
@@ -242,7 +242,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Blood Oxygen Saturation",
+                                    'Blood Oxygen Saturation',
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 14,
@@ -278,10 +278,10 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                           child: Container(
                             height: 56,
                             width: MediaQuery.of(context).size.width,
-                            decoration: new BoxDecoration(
+                            decoration: BoxDecoration(
                                 color: colorF6F6FF,
                                 border: Border.all(color: primaryLightColor),
-                                borderRadius: new BorderRadius.only(
+                                borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(8.0),
                                     topRight: Radius.circular(8.0))),
                             child: Padding(
@@ -293,7 +293,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Resting Pulse Rate",
+                                    'Resting Pulse Rate',
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 14,
@@ -332,10 +332,10 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                           child: Container(
                             height: 56,
                             width: MediaQuery.of(context).size.width,
-                            decoration: new BoxDecoration(
+                            decoration: BoxDecoration(
                                 color: colorF6F6FF,
                                 border: Border.all(color: primaryLightColor),
-                                borderRadius: new BorderRadius.only(
+                                borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(8.0),
                                     topRight: Radius.circular(8.0))),
                             child: Padding(
@@ -347,7 +347,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Body Temperature",
+                                    'Body Temperature',
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 14,

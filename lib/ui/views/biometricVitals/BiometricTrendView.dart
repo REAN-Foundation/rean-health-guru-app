@@ -18,9 +18,9 @@ class BiometricTrendView extends StatefulWidget {
 
 class _BiometricTrendViewState extends State<BiometricTrendView> {
   var model = PatientVitalsViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var _currentIndex = 0;
+  final _currentIndex = 0;
 
   Widget loadProgress() {
     return Center(
@@ -96,7 +96,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   width: 8,
                 ),
                 Text(
-                  "Weight",
+                  'Weight',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w700,
@@ -135,7 +135,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                     width: 8,
                   ),
                   Text(
-                    "Blood Pressure",
+                    'Blood Pressure',
                     style: TextStyle(
                         color: primaryColor,
                         fontWeight: FontWeight.w700,
@@ -173,7 +173,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   width: 8,
                 ),
                 Text(
-                  "Blood Glucose",
+                  'Blood Glucose',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w700,
@@ -212,7 +212,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   width: 8,
                 ),
                 Text(
-                  "Blood Oxygen Saturation",
+                  'Blood Oxygen Saturation',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w700,
@@ -251,7 +251,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   width: 8,
                 ),
                 Text(
-                  "Pulse Rate",
+                  'Pulse Rate',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w700,
@@ -290,7 +290,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   width: 8,
                 ),
                 Text(
-                  "Body Temperature",
+                  'Body Temperature',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w700,

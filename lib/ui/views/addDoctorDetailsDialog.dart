@@ -25,7 +25,7 @@ class AddDoctorDetailsDialog extends StatefulWidget {
   }
 
   @override
-  _MyDialogState createState() => new _MyDialogState();
+  _MyDialogState createState() => _MyDialogState();
 }
 
 class _MyDialogState extends State<AddDoctorDetailsDialog> {
@@ -35,13 +35,13 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
   final TextEditingController _mobileNumberController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
-  var _firstNameFocus = FocusNode();
-  var _lastNameFocus = FocusNode();
-  var _mobileNumberFocus = FocusNode();
-  var _descriptionFocus = FocusNode();
-  String profileImage = "";
-  String profileImagePath = "";
-  String selectedGender = "Male";
+  final _firstNameFocus = FocusNode();
+  final _lastNameFocus = FocusNode();
+  final _mobileNumberFocus = FocusNode();
+  final _descriptionFocus = FocusNode();
+  String profileImage = '';
+  String profileImagePath = '';
+  String selectedGender = 'Male';
   String mobileNumber = '';
   String countryCode = '';
 
@@ -84,7 +84,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   //_profileIcon(),
-                  _entryFirstNameField("First Name"),
+                  _entryFirstNameField('First Name'),
                   _entryLastNameField('Last Name'),
                   _entryMobileNoField('Phone'),
                   _genderWidget(),
@@ -108,14 +108,14 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
       onTap: () {},
       child: RaisedButton(
         onPressed: () {
-          if (_firstNameController.text == "") {
-            showToast("Enter first name", context);
-          } else if (_lastNameController.text == "") {
-            showToast("Enter last name", context);
-          } else if (mobileNumber == "" || mobileNumber.length != 10) {
-            showToast("Enter mobile number", context);
-          } else if (selectedGender == "") {
-            showToast("Select gender", context);
+          if (_firstNameController.text == '') {
+            showToast('Enter first name', context);
+          } else if (_lastNameController.text == '') {
+            showToast('Enter last name', context);
+          } else if (mobileNumber == '' || mobileNumber.length != 10) {
+            showToast('Enter mobile number', context);
+          } else if (selectedGender == '') {
+            showToast('Select gender', context);
           } else {
             widget._submitButtonListner(_firstNameController.text,
                 _lastNameController.text, mobileNumber, selectedGender);
@@ -154,9 +154,9 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                     backgroundColor: primaryLightColor,
                     child: CircleAvatar(
                         radius: 48,
-                        backgroundImage: profileImage == ""
+                        backgroundImage: profileImage == ''
                             ? AssetImage('res/images/profile_placeholder.png')
-                            : new NetworkImage(profileImage)),
+                            : NetworkImage(profileImage)),
                   ),
                   Align(
                     alignment: Alignment.topRight,
@@ -167,8 +167,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                         child: SizedBox(
                             height: 32,
                             width: 32,
-                            child:
-                                new Image.asset('res/images/ic_camera.png'))),
+                            child: Image.asset('res/images/ic_camera.png'))),
                   )
                 ],
               ),
@@ -276,7 +275,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
             ExcludeSemantics(
               excluding: true,
               child: Text(
-                "Gender",
+                'Gender',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
@@ -299,9 +298,9 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                 onToggle: (index) {
                   print('switched to: $index');
                   if (index == 0) {
-                    selectedGender = "Male";
+                    selectedGender = 'Male';
                   } else {
-                    selectedGender = "Female";
+                    selectedGender = 'Female';
                   }
                 })
           ],
@@ -420,7 +419,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   autoValidate: true,
                   decoration: InputDecoration(
-                      counterText: "",
+                      counterText: '',
                       hintText: 'mobile_number',
                       hintStyle: TextStyle(color: Colors.transparent),
                       border: InputBorder.none,
@@ -532,26 +531,26 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
 
   uploadProfilePicture(String filePath) async {
     try {
-      var map = new Map<String, String>();
-      map["enc"] = "multipart/form-data";
-      map["Authorization"] = 'Bearer ' + auth;
+      final map = <String, String>{};
+      map['enc'] = 'multipart/form-data';
+      map['Authorization'] = 'Bearer ' + auth;
 
-      var postUri =
-          Uri.parse("https://hca-bff-dev.services.tikme.app/resources/upload/");
-      var request = new http.MultipartRequest("POST", postUri);
+      final postUri =
+          Uri.parse('https://hca-bff-dev.services.tikme.app/resources/upload/');
+      final request = http.MultipartRequest('POST', postUri);
       request.headers.addAll(map);
-      request.files.add(new http.MultipartFile.fromBytes(
+      request.files.add(http.MultipartFile.fromBytes(
           'name', await File.fromUri(Uri.parse(filePath)).readAsBytes()));
       //request.fields['isPublicprofile'] = "true";
 
       request.send().then((response) async {
         if (response.statusCode == 200) {
-          print("Uploaded!");
+          print('Uploaded!');
           final respStr = await response.stream.bytesToString();
-          debugPrint("Uploded " + respStr);
-          UploadImageResponse uploadResponse =
+          debugPrint('Uploded ' + respStr);
+          final UploadImageResponse uploadResponse =
               UploadImageResponse.fromJson(json.decode(respStr));
-          if (uploadResponse.status == "success") {
+          if (uploadResponse.status == 'success') {
             profileImagePath = uploadResponse.data.details.elementAt(0).url;
             profileImage = uploadResponse.data.details.elementAt(0).url;
             showToast(uploadResponse.message, context);
@@ -559,14 +558,14 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
             showToast('Opps, something wents wrong!', context);
           }
         } else {
-          print("Upload Faild !");
+          print('Upload Faild !');
         }
       }); // debugPrint("3");
 
     } catch (CustomException) {
-      debugPrint("4");
+      debugPrint('4');
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 }

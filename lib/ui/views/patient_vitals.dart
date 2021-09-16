@@ -16,23 +16,23 @@ class PatientVitalsView extends StatefulWidget {
 class _PatientVitalsViewState extends State<PatientVitalsView> {
   var model = PatientObservationsViewModel();
 
-  var _heightController = TextEditingController();
-  var _weightController = TextEditingController();
-  var _pulseController = TextEditingController();
-  var _bodyOxygenController = TextEditingController();
-  var _systolicBPController = TextEditingController();
-  var _diastolicBPController = TextEditingController();
-  var _bodyTempController = TextEditingController();
-  var _heightFocus = FocusNode();
-  var _weightFocus = FocusNode();
-  var _pulseFocus = FocusNode();
-  var _bodyOxygenFocus = FocusNode();
-  var _systolicBPFocus = FocusNode();
-  var _diastolicBPFocus = FocusNode();
-  var _bodyTempFocus = FocusNode();
-  var dateFormatForHeader = DateFormat("dd MMM yyyy");
+  final _heightController = TextEditingController();
+  final _weightController = TextEditingController();
+  final _pulseController = TextEditingController();
+  final _bodyOxygenController = TextEditingController();
+  final _systolicBPController = TextEditingController();
+  final _diastolicBPController = TextEditingController();
+  final _bodyTempController = TextEditingController();
+  final _heightFocus = FocusNode();
+  final _weightFocus = FocusNode();
+  final _pulseFocus = FocusNode();
+  final _bodyOxygenFocus = FocusNode();
+  final _systolicBPFocus = FocusNode();
+  final _diastolicBPFocus = FocusNode();
+  final _bodyTempFocus = FocusNode();
+  var dateFormatForHeader = DateFormat('dd MMM yyyy');
 
-  List<Vitals> vitals = new List();
+  List<Vitals> vitals = [];
 
   @override
   void initState() {
@@ -58,7 +58,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                       color: primaryColor,
                       fontWeight: FontWeight.w600),
                 ),
-                iconTheme: new IconThemeData(color: Colors.black),
+                iconTheme: IconThemeData(color: Colors.black),
               ),
               body: Padding(
                   padding: const EdgeInsets.all(24.0),
@@ -68,7 +68,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                               height: 32,
                               width: 32,
                               child: CircularProgressIndicator()))
-                      : vitals.length == 0
+                      : vitals.isEmpty
                           ? _noVitalsFound()
                           : _makeVitalsColumn()),
               /*floatingActionButton: new FloatingActionButton(
@@ -89,7 +89,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
 
   Widget _noVitalsFound() {
     return Center(
-      child: Text("No Vitals added yet.",
+      child: Text('No Vitals added yet.',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -99,7 +99,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
   }
 
   Widget _makeVitalsColumn() {
-    Vitals vital = vitals.elementAt(0);
+    final Vitals vital = vitals.elementAt(0);
     return MergeSemantics(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -357,10 +357,10 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
       onTap: () {},
       child: Container(
         height: 68,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: primaryLightColor,
             border: Border.all(color: primaryLightColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -486,14 +486,14 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                             children: [
                               Expanded(
                                 flex: 1,
-                                child: _entryHeightField("Height (Cm)"),
+                                child: _entryHeightField('Height (Cm)'),
                               ),
                               SizedBox(
                                 width: 16,
                               ),
                               Expanded(
                                 flex: 1,
-                                child: _entryWeightField("Weight (Kg)"),
+                                child: _entryWeightField('Weight (Kg)'),
                               ),
                             ],
                           ),
@@ -504,7 +504,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                             children: [
                               Expanded(
                                 flex: 1,
-                                child: _entryPulseField("Pulse (bpm)"),
+                                child: _entryPulseField('Pulse (bpm)'),
                               ),
                               SizedBox(
                                 width: 16,
@@ -512,7 +512,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                               Expanded(
                                 flex: 1,
                                 child: _entryBodyOxygenField(
-                                    "Blood Oxygen Saturation (%)"),
+                                    'Blood Oxygen Saturation (%)'),
                               ),
                             ],
                           ),
@@ -524,7 +524,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                               Expanded(
                                 flex: 1,
                                 child: _entrySystolicBPField(
-                                    "Systolic Blood Pressure (mm of Hg)"),
+                                    'Systolic Blood Pressure (mm of Hg)'),
                               ),
                               SizedBox(
                                 width: 16,
@@ -532,7 +532,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                               Expanded(
                                 flex: 1,
                                 child: _entryDiastolicBPField(
-                                    "Diastolic Blood Pressure (mm of Hg)"),
+                                    'Diastolic Blood Pressure (mm of Hg)'),
                               ),
                             ],
                           ),
@@ -544,7 +544,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                               Expanded(
                                 flex: 1,
                                 child:
-                                    _entryBodyTempField("Temperature (\u2109)"),
+                                    _entryBodyTempField('Temperature (\u2109)'),
                               ),
                               SizedBox(
                                 width: 16,
@@ -633,7 +633,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
 
   _fieldFocusChange(
       BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    debugPrint("Click 2");
+    debugPrint('Click 2');
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
   }
@@ -659,7 +659,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.next,
               onFieldSubmitted: (term) {
-                debugPrint("Click 1");
+                debugPrint('Click 1');
                 _fieldFocusChange(context, _heightFocus, _weightFocus);
               },
               decoration: InputDecoration(
@@ -877,7 +877,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
 
   _getPatientVitals() async {
     try {
-      PatientVitalsPojo patientVitalsPojo =
+      final PatientVitalsPojo patientVitalsPojo =
           await model.getPatientVitals('Bearer ' + auth, patientUserId);
 
       if (patientVitalsPojo.status == 'success') {
@@ -887,7 +887,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
         });
       } else {}
     } catch (CustomException) {
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }

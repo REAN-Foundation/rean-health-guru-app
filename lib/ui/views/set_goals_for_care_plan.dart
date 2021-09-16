@@ -13,7 +13,7 @@ class SetGoalPlanCarePlanView extends StatefulWidget {
 
 class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -75,7 +75,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                           ),
                           child: Center(
                             child: Text(
-                              "Done",
+                              'Done',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
@@ -138,10 +138,10 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
     return Container(
         height: 140,
         width: MediaQuery.of(context).size.width,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: primaryLightColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,10 +149,10 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
             Container(
               height: 40,
               width: MediaQuery.of(context).size.width,
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   color: colorF6F6FF,
                   border: Border.all(color: primaryLightColor),
-                  borderRadius: new BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0))),
               child: Padding(
@@ -163,7 +163,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                   children: [
                     Expanded(
                       child: Text(
-                        "Cholesterol",
+                        'Cholesterol',
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 14,
@@ -177,7 +177,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "December 25, 2020",
+                          'December 25, 2020',
                           style: TextStyle(
                               color: primaryColor,
                               fontSize: 12,
@@ -217,7 +217,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "LDL",
+                    'LDL',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -226,7 +226,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "<   100 mg/dL",
+                    '<   100 mg/dL',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -244,7 +244,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "HDL",
+                    'HDL',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -253,7 +253,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    ">   45 mg/dL",
+                    '>   45 mg/dL',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -271,7 +271,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Total",
+                    'Total',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -280,7 +280,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "<   170 mg/dL",
+                    '<   170 mg/dL',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -298,7 +298,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Triglycerides",
+                    'Triglycerides',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -307,7 +307,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    ">   150 mg/dL",
+                    '>   150 mg/dL',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -326,10 +326,10 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
     return Container(
         height: 100,
         width: MediaQuery.of(context).size.width,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: primaryLightColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -337,10 +337,10 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
             Container(
               height: 40,
               width: MediaQuery.of(context).size.width,
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   color: colorF6F6FF,
                   border: Border.all(color: primaryLightColor),
-                  borderRadius: new BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0))),
               child: Padding(
@@ -351,7 +351,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                   children: [
                     Expanded(
                       child: Text(
-                        "Physical Activity",
+                        'Physical Activity',
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 14,
@@ -365,7 +365,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "December 25, 2020",
+                          'December 25, 2020',
                           style: TextStyle(
                               color: primaryColor,
                               fontSize: 12,
@@ -407,7 +407,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                   Container(
                     width: 120,
                     child: Text(
-                      "Yoga",
+                      'Yoga',
                       style: TextStyle(
                           color: textBlack,
                           fontSize: 14,
@@ -417,7 +417,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     ),
                   ),
                   Text(
-                    "30 min",
+                    '30 min',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -426,7 +426,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "6:00 PM",
+                    '6:00 PM',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -435,7 +435,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "Daily",
+                    'Daily',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -455,7 +455,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                   Container(
                     width: 120,
                     child: Text(
-                      "Brisk walking",
+                      'Brisk walking',
                       style: TextStyle(
                           color: textBlack,
                           fontSize: 14,
@@ -465,7 +465,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     ),
                   ),
                   Text(
-                    "20 min",
+                    '20 min',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -474,7 +474,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "6:30 PM",
+                    '6:30 PM',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -483,7 +483,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "Daily",
+                    'Daily',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -502,10 +502,10 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
     return Container(
         height: 80,
         width: MediaQuery.of(context).size.width,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: primaryLightColor),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -513,10 +513,10 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
             Container(
               height: 40,
               width: MediaQuery.of(context).size.width,
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                   color: colorF6F6FF,
                   border: Border.all(color: primaryLightColor),
-                  borderRadius: new BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0))),
               child: Padding(
@@ -527,7 +527,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                   children: [
                     Expanded(
                       child: Text(
-                        "Weight / BMI",
+                        'Weight / BMI',
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 14,
@@ -541,7 +541,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "December 25, 2020",
+                          'December 25, 2020',
                           style: TextStyle(
                               color: primaryColor,
                               fontSize: 12,
@@ -581,7 +581,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Weight",
+                    'Weight',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
@@ -590,7 +590,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "82 Kg  BMI 27.5",
+                    '82 Kg  BMI 27.5',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,

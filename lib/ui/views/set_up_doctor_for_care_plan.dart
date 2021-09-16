@@ -22,19 +22,19 @@ class SetUpDoctorForCarePlanView extends StatefulWidget {
 class _SetUpDoctorForCarePlanViewState
     extends State<SetUpDoctorForCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var _searchController = new TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _searchController = TextEditingController();
 
   //var doctorSearchList = new List<Doctors>();
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   StartCarePlanResponse startCarePlanResponse;
 
   loadSharedPrefrance() async {
     try {
       startCarePlanResponse = StartCarePlanResponse.fromJson(
-          await _sharedPrefUtils.read("CarePlan"));
+          await _sharedPrefUtils.read('CarePlan'));
       debugPrint(
-          "AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}");
+          'AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}');
     } catch (Excepetion) {
       // do something
       debugPrint(Excepetion);
@@ -70,7 +70,7 @@ class _SetUpDoctorForCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -159,7 +159,7 @@ class _SetUpDoctorForCarePlanViewState
                               width: 32,
                               child: CircularProgressIndicator()))
                           : */
-                              (doctorSearchListGlobe.length == 0)
+                          (doctorSearchListGlobe.isEmpty)
                                   ? noDoctorFound()
                                   : doctorSearchResultListView()) //,
                     ],
@@ -169,20 +169,21 @@ class _SetUpDoctorForCarePlanViewState
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  model.busy
-                      ? Container()
-                      : InkWell(
-                          onTap: () {
-                            /*doctorSearchListGlobe.clear();
+                  if (model.busy)
+                    Container()
+                  else
+                    InkWell(
+                      onTap: () {
+                        /*doctorSearchListGlobe.clear();
                       doctorSearchListGlobe.addAll(doctorSearchListGlobe);*/
-                            Navigator.pushNamed(context,
-                                RoutePaths.Setup_Pharmacies_For_Care_Plan);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Container(
-                              height: 40,
-                              width: 160,
+                        Navigator.pushNamed(
+                            context, RoutePaths.Setup_Pharmacies_For_Care_Plan);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                          height: 40,
+                          width: 160,
                               padding: EdgeInsets.symmetric(
                                 horizontal: 16.0,
                               ),
@@ -253,7 +254,7 @@ class _SetUpDoctorForCarePlanViewState
       ),
       child: Center(
         child: Text(
-          "Add Doctors",
+          'Add Doctors',
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
         ),
       ),
@@ -262,7 +263,7 @@ class _SetUpDoctorForCarePlanViewState
 
   Widget noDoctorFound() {
     return Center(
-      child: Text("No doctor found in your locality",
+      child: Text('No doctor found in your locality',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -285,13 +286,13 @@ class _SetUpDoctorForCarePlanViewState
   }
 
   Widget _makeDoctorListCard(BuildContext context, int index) {
-    Doctors doctorDetails = doctorSearchListGlobe.elementAt(index);
+    final Doctors doctorDetails = doctorSearchListGlobe.elementAt(index);
     return Container(
       height: 80,
-      decoration: new BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
-          borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Stack(children: <Widget>[
@@ -310,10 +311,10 @@ class _SetUpDoctorForCarePlanViewState
                       backgroundColor: primaryColor,
                       child: CircleAvatar(
                           radius: 38,
-                          backgroundImage: doctorDetails.imageURL == "" ||
+                          backgroundImage: doctorDetails.imageURL == '' ||
                                   doctorDetails.imageURL == null
                               ? AssetImage('res/images/profile_placeholder.png')
-                              : new NetworkImage(doctorDetails.imageURL)),
+                              : NetworkImage(doctorDetails.imageURL)),
                     ),
                   ),
                 ),
@@ -341,9 +342,8 @@ class _SetUpDoctorForCarePlanViewState
                       Row(
                         children: [
                           Text(
-                              doctorDetails.specialities == null
-                                  ? doctorDetails.qualification
-                                  : doctorDetails.specialities,
+                              doctorDetails.specialities ??
+                                  doctorDetails.qualification,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -536,7 +536,7 @@ class _SetUpDoctorForCarePlanViewState
               Expanded(
                 child: AddDoctorDialog(submitButtonListner: (Doctors doctors) {
                   addTeamMembers(doctors);
-                  debugPrint("Call back Received ==> ${doctors.firstName}");
+                  debugPrint('Call back Received ==> ${doctors.firstName}');
                   Navigator.of(context, rootNavigator: true).pop();
                 }),
               )
@@ -555,28 +555,28 @@ class _SetUpDoctorForCarePlanViewState
       jsonRequest.isEmergencyContact = true;
       jsonRequest.details.userId = doctors.userId;*/
 
-      var data = new Map<String, dynamic>();
+      final data = <String, dynamic>{};
       data['UserId'] = doctors.userId;
-      data['FirstName'] = "";
-      data['LastName'] = "";
-      data['Prefix'] = "";
-      data['PhoneNumber'] = "";
-      data['Gender'] = "";
+      data['FirstName'] = '';
+      data['LastName'] = '';
+      data['Prefix'] = '';
+      data['PhoneNumber'] = '';
+      data['Gender'] = '';
 
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['CarePlanId'] = startCarePlanResponse.data.carePlan.id.toString();
       map['IsEmergencyContact'] = true;
-      map['TeamMemberType'] = "Doctor";
+      map['TeamMemberType'] = 'Doctor';
       map['Details'] = data;
 
-      AddTeamMemberResponse addTeamMemberResponse =
+      final AddTeamMemberResponse addTeamMemberResponse =
           await model.addTeamMembers(map);
-      debugPrint("Team Member Response ==> ${addTeamMemberResponse.toJson()}");
+      debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         setState(() {
           doctorSearchListGlobe.add(doctors);
         });
-        debugPrint("Docotr List Size ==> ${doctorSearchListGlobe.length}");
+        debugPrint('Docotr List Size ==> ${doctorSearchListGlobe.length}');
         showToast(addTeamMemberResponse.message, context);
       } else {
         showToast(addTeamMemberResponse.message, context);
@@ -584,7 +584,7 @@ class _SetUpDoctorForCarePlanViewState
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException);
+      debugPrint('Error ' + CustomException);
     } catch (Exception) {
       debugPrint(Exception.toString());
     }

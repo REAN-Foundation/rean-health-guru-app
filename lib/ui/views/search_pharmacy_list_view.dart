@@ -20,18 +20,19 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
   List<Address> addresses;
   Address first;*/
   bool _serviceEnabled;
-  SharedPrefUtils _sharedPrefUtils = new SharedPrefUtils();
-  String name = "";
-  int _currentNav = 0;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var _searchController = new TextEditingController();
-  String auth = "";
-  var model = new BookAppoinmentViewModel();
-  var parmacySearchList = new List<Pharmacies>();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  String name = '';
+  final int _currentNav = 0;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _searchController = TextEditingController();
+  String auth = '';
+  var model = BookAppoinmentViewModel();
+  var parmacySearchList = <Pharmacies>[];
 
   loadSharedPrefs() async {
     try {
-      UserData user = UserData.fromJson(await _sharedPrefUtils.read("user"));
+      final UserData user =
+          UserData.fromJson(await _sharedPrefUtils.read('user'));
       //debugPrint(user.toJson().toString());
       auth = user.data.accessToken;
       getLabListByLocality();
@@ -46,11 +47,11 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
 
   getLabListByLocality() async {
     try {
-      PharmacyListApiResponse listApiResponse = await model
-          .getPhrmacyListByLocality("18.526301", "73.834522", 'Bearer ' + auth);
+      final PharmacyListApiResponse listApiResponse = await model
+          .getPhrmacyListByLocality('18.526301', '73.834522', 'Bearer ' + auth);
 
       if (listApiResponse.status == 'success') {
-        if (listApiResponse.data.pharmacies.length != 0) {
+        if (listApiResponse.data.pharmacies.isNotEmpty) {
           parmacySearchList.addAll(listApiResponse.data.pharmacies);
         }
       } else {
@@ -133,11 +134,10 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
                 children: <Widget>[
                   Container(
                     height: 40,
-                    decoration: new BoxDecoration(
+                    decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(color: Color(0XFFA6ABB3)),
-                        borderRadius:
-                            new BorderRadius.all(Radius.circular(8.0))),
+                        borderRadius: BorderRadius.all(Radius.circular(8.0))),
                     child: Row(
                       children: <Widget>[
                         Expanded(
@@ -146,7 +146,7 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
                               maxLines: 1,
                               enabled: true,
                               textInputAction: TextInputAction.done,
-                              decoration: new InputDecoration(
+                              decoration: InputDecoration(
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none,
@@ -154,7 +154,7 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
                                   disabledBorder: InputBorder.none,
                                   contentPadding: EdgeInsets.only(
                                       left: 15, bottom: 11, top: 11, right: 15),
-                                  hintText: "Search Pharmacy")),
+                                  hintText: 'Search Pharmacy')),
                         ),
                         Container(
                           padding: const EdgeInsets.all(0.0),
@@ -178,7 +178,7 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
                     height: 16,
                   ),
                   Text(
-                    "Near By",
+                    'Near By',
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
                   ),
                   SizedBox(
@@ -191,7 +191,7 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
                                 height: 32,
                                 width: 32,
                                 child: CircularProgressIndicator()))
-                        : (parmacySearchList.length == 0
+                        : (parmacySearchList.isEmpty
                             ? noPharmacyFound()
                             : phamacySearchResultListView()),
                   ),
@@ -206,7 +206,7 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
 
   Widget noPharmacyFound() {
     return Center(
-      child: Text("No Pharmacy found in your Locality",
+      child: Text('No Pharmacy found in your Locality',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -229,14 +229,14 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
   }
 
   Widget _makePharmacyListCard(BuildContext context, int index) {
-    Pharmacies pharmaciesDetails = parmacySearchList.elementAt(index);
+    final Pharmacies pharmaciesDetails = parmacySearchList.elementAt(index);
     return MergeSemantics(
       child: Container(
         height: 100,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
             color: Color(0XFFF5F8FA),
             border: Border.all(color: Color(0XFFF5F8FA)),
-            borderRadius: new BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Column(
           children: <Widget>[
             Expanded(
@@ -308,10 +308,10 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
                       child: Container(
                         height: 48,
                         width: 60,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                             color: Color(0XFF00CFB4),
                             border: Border.all(color: Color(0XFF00CFB4)),
-                            borderRadius: new BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(8.0),
                               bottomRight: Radius.circular(8.0),
                             )),

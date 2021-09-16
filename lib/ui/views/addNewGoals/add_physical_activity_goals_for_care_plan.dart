@@ -19,26 +19,26 @@ class AddPhysicalActivityGoalsForCarePlanView extends StatefulWidget {
 class _AddPhysicalActivityGoalsForCarePlanViewState
     extends State<AddPhysicalActivityGoalsForCarePlanView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String selectedGoal = "";
-  String durationGoal = "";
-  String frequencyGoal = "Daily";
+  String selectedGoal = '';
+  String durationGoal = '';
+  String frequencyGoal = 'Daily';
 
   final TextEditingController _durationController = TextEditingController();
   final TextEditingController _frequncyController = TextEditingController();
 
-  var _durationFocus = FocusNode();
-  var _frequencyFocus = FocusNode();
+  final _durationFocus = FocusNode();
+  final _frequencyFocus = FocusNode();
 
-  String dob = "";
-  String unformatedDOB = "";
-  var dateFormat = DateFormat("dd MMM, yyyy");
+  String dob = '';
+  String unformatedDOB = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
   ProgressDialog progressDialog;
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -55,7 +55,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -97,7 +97,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
             height: 16,
           ),
           Text(
-            "Physical activity is important. Just 150 minutes of moderate-intensity aerobic exercise a week is enough to lower both cholesterol and high blood pressure. And there are lots of options: brisk walking, swimming, bicycling or even a dance class can fit the bill.",
+            'Physical activity is important. Just 150 minutes of moderate-intensity aerobic exercise a week is enough to lower both cholesterol and high blood pressure. And there are lots of options: brisk walking, swimming, bicycling or even a dance class can fit the bill.',
             style: TextStyle(
                 color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
           ),
@@ -148,7 +148,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                           fontSize: 14),
                       children: <TextSpan>[
                         TextSpan(
-                            text: "",
+                            text: '',
                             style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
@@ -168,8 +168,8 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                       color: colorF6F6FF),
                   child: DropdownButton<String>(
                     isExpanded: true,
-                    hint: new Text(
-                      "Select Activity",
+                    hint: Text(
+                      'Select Activity',
                       style: TextStyle(
                           color: textBlack,
                           fontSize: 14,
@@ -177,9 +177,9 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                     ),
                     items: [
                       DropdownMenuItem(
-                        value: "Yoga",
+                        value: 'Yoga',
                         child: Text(
-                          "Yoga",
+                          'Yoga',
                           style: TextStyle(
                               color: textBlack,
                               fontSize: 14,
@@ -187,9 +187,9 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                         ),
                       ),
                       DropdownMenuItem(
-                        value: "Brisk walking",
+                        value: 'Brisk walking',
                         child: Text(
-                          "Brisk walking",
+                          'Brisk walking',
                           style: TextStyle(
                               color: textBlack,
                               fontSize: 14,
@@ -202,7 +202,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                         selectedGoal = value;
                       });
                     },
-                    value: selectedGoal == "" ? null : selectedGoal,
+                    value: selectedGoal == '' ? null : selectedGoal,
                   ),
                 ),
               )
@@ -227,7 +227,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                           fontSize: 14),
                       children: <TextSpan>[
                         TextSpan(
-                            text: " ",
+                            text: ' ',
                             style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
@@ -273,8 +273,8 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                     color: colorF6F6FF),
                 child: DropdownButton<String>(
                   isExpanded: true,
-                  hint: new Text(
-                    "Duration",
+                  hint: Text(
+                    'Duration',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 12,
@@ -282,9 +282,9 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                   ),
                   items: [
                     DropdownMenuItem(
-                      value: "Minutes",
+                      value: 'Minutes',
                       child: Text(
-                        "Minutes",
+                        'Minutes',
                         style: TextStyle(
                             color: textBlack,
                             fontSize: 14,
@@ -292,9 +292,9 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                       ),
                     ),
                     DropdownMenuItem(
-                      value: "Hours",
+                      value: 'Hours',
                       child: Text(
-                        "Hours",
+                        'Hours',
                         style: TextStyle(
                             color: textBlack,
                             fontSize: 14,
@@ -307,7 +307,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                       durationGoal = value;
                     });
                   },
-                  value: durationGoal == "" ? null : durationGoal,
+                  value: durationGoal == '' ? null : durationGoal,
                 ),
               ),
             ],
@@ -331,7 +331,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                           fontSize: 14),
                       children: <TextSpan>[
                         TextSpan(
-                            text: "",
+                            text: '',
                             style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
@@ -379,8 +379,8 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                     color: colorF6F6FF),
                 child: DropdownButton<String>(
                   isExpanded: true,
-                  hint: new Text(
-                    "Daily",
+                  hint: Text(
+                    'Daily',
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 12,
@@ -388,9 +388,9 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                   ),
                   items: [
                     DropdownMenuItem(
-                      value: "Daily",
+                      value: 'Daily',
                       child: Text(
-                        "Daily",
+                        'Daily',
                         style: TextStyle(
                             color: textBlack,
                             fontSize: 14,
@@ -398,9 +398,9 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                       ),
                     ),
                     DropdownMenuItem(
-                      value: "Weekly",
+                      value: 'Weekly',
                       child: Text(
-                        "Weekly",
+                        'Weekly',
                         style: TextStyle(
                             color: textBlack,
                             fontSize: 14,
@@ -413,7 +413,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                       frequencyGoal = value;
                     });
                   },
-                  value: frequencyGoal == "" ? null : frequencyGoal,
+                  value: frequencyGoal == '' ? null : frequencyGoal,
                 ),
               ),
             ],
@@ -437,7 +437,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                           fontSize: 14),
                       children: <TextSpan>[
                         TextSpan(
-                            text: "          ",
+                            text: '          ',
                             style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
@@ -526,7 +526,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                     ),
                     child: Center(
                       child: Text(
-                        "Save",
+                        'Save',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
@@ -551,7 +551,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
   setGoals() async {
     try {
       progressDialog.show();
-      var map = new Map<String, dynamic>();
+      final map = <String, dynamic>{};
       map['TargetDate'] = dob;
       map['ActivityTargetValue'] = _durationController.text;
       map['ActivityUnit'] = durationGoal;
@@ -560,11 +560,11 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
       map['Frequency'] = _frequncyController.text;
       map['FrequencyUnit'] = frequencyGoal;
 
-      var body = new Map<String, dynamic>();
+      final body = <String, dynamic>{};
       body['Goal'] = map;
       body['GoalSettingTaskId'] = getTask().details.id;
 
-      BaseResponse baseResponse = await model.addGoalsTask(
+      final BaseResponse baseResponse = await model.addGoalsTask(
           startCarePlanResponseGlob.data.carePlan.id.toString(),
           'physical-activity-goal',
           body);
@@ -593,20 +593,20 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
 
   navigateToScreen() {
     debugPrint('Set Goals Plan Stack ==> ${goalPlanScreenStack.length}');
-    if (goalPlanScreenStack.length == 0) {
+    if (goalPlanScreenStack.isEmpty) {
       Navigator.pushReplacementNamed(
           context, RoutePaths.Determine_Action_For_Care_Plan);
-    } else if (goalPlanScreenStack.elementAt(0) == "Blood Pressure") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Blood Pressure') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_BLOOD_PRESURE_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Blood Sugar") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Blood Sugar') {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_GLUCOSE_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Weight") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Weight') {
       Navigator.pushReplacementNamed(context, RoutePaths.ADD_WEIGHT_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Physical Activity") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Physical Activity') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_PHYSICAL_ACTIVITY_GOALS);
-    } else if (goalPlanScreenStack.elementAt(0) == "Quit Smoking") {
+    } else if (goalPlanScreenStack.elementAt(0) == 'Quit Smoking') {
       Navigator.pushReplacementNamed(
           context, RoutePaths.ADD_QUIT_SMOKING_GOALS);
     }

@@ -2,14 +2,14 @@ import 'package:paitent/core/models/AddTeamMemberResponse.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/models/pharmacyListApiResponse.dart';
 
-String auth = "";
-String patientUserId = "";
-String patientGender = "";
+String auth = '';
+String patientUserId = '';
+String patientGender = '';
 int assrotedUICount = 1;
-var doctorSearchListGlobe = new List<Doctors>();
-var parmacySearchListGlobe = new List<Pharmacies>();
-var nurseMemberListGlobe = new List<TeamMember>();
-var familyMemberListGlobe = new List<TeamMember>();
+var doctorSearchListGlobe = <Doctors>[];
+var parmacySearchListGlobe = <Pharmacies>[];
+var nurseMemberListGlobe = <TeamMember>[];
+var familyMemberListGlobe = <TeamMember>[];
 
 /*
 void showToast(String msg) {

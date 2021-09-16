@@ -20,11 +20,11 @@ class CommonConfigModel extends BaseModel {
   Future<StartCarePlanResponse> getCarePlan() async {
     // Get user profile for id
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider
+    final response = await apiProvider
         .get('/aha/care-plan/patient/' + patientUserId, header: map);
     setBusy(false);
     // Convert and return
@@ -34,11 +34,11 @@ class CommonConfigModel extends BaseModel {
   Future<GetAllRecordResponse> getAllRecords() async {
     // Get user profile for id
     setBusy(true);
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider
+    final response = await apiProvider
         .get('/patient/' + patientUserId + '/document', header: map);
     setBusy(false);
     // Convert and return
@@ -48,11 +48,11 @@ class CommonConfigModel extends BaseModel {
   Future<BaseResponse> renameOfDocument(String documentId, Map body) async {
     // Get user profile for id
     setBusy(true);
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.put(
+    final response = await apiProvider.put(
         '/patient/' + patientUserId + '/document/rename/' + documentId,
         header: map,
         body: body);
@@ -64,11 +64,11 @@ class CommonConfigModel extends BaseModel {
   Future<BaseResponse> deleteDocument(String documentId) async {
     // Get user profile for id
     setBusy(true);
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.delete(
+    final response = await apiProvider.delete(
         '/patient/' + patientUserId + '/document/' + documentId,
         header: map);
     setBusy(false);
@@ -79,11 +79,11 @@ class CommonConfigModel extends BaseModel {
   Future<GetSharablePublicLink> getDocumentPublicLink(String documentId) async {
     // Get user profile for id
     //setBusy(true);
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider.get(
+    final response = await apiProvider.get(
         '/patient/' +
             patientUserId +
             '/share-document/' +
@@ -98,11 +98,11 @@ class CommonConfigModel extends BaseModel {
   Future<EmergencyContactResponse> getEmergencyTeam() async {
     setBusy(true);
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider
+    final response = await apiProvider
         .get('/emergency-contact/list/' + patientUserId, header: map);
 
     setBusy(false);
@@ -115,11 +115,11 @@ class CommonConfigModel extends BaseModel {
 
     debugPrint(json.encode(body).toString());
 
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response =
+    final response =
         await apiProvider.post('/emergency-contact', body: body, header: map);
     setBusy(false);
     // Convert and return
@@ -127,11 +127,11 @@ class CommonConfigModel extends BaseModel {
   }
 
   Future<BaseResponse> removeTeamMembers(String emergencyContactId) async {
-    var map = new Map<String, String>();
-    map["Content-Type"] = "application/json";
-    map["authorization"] = 'Bearer ' + auth;
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
 
-    var response = await apiProvider
+    final response = await apiProvider
         .delete('/emergency-contact/' + emergencyContactId, header: map);
     setBusy(false);
     // Convert and return

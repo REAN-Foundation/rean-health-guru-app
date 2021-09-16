@@ -48,35 +48,35 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _bloodGroupController = TextEditingController();
-  String profileImagePath = "";
-  ImagePicker _picker = new ImagePicker();
-  String mobileNumber = "";
+  String profileImagePath = '';
+  final ImagePicker _picker = ImagePicker();
+  String mobileNumber = '';
 
   //ApiProvider apiProvider = new ApiProvider();
 
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
-  var _firstNameFocus = FocusNode();
-  var _lastNameFocus = FocusNode();
-  var _mobileNumberFocus = FocusNode();
-  var _emergencyMobileNumberFocus = FocusNode();
-  var _emailFocus = FocusNode();
-  var _bloodGroupFocus = FocusNode();
-  var _cityFocus = FocusNode();
-  var _addressFocus = FocusNode();
-  var _sharedPrefUtils = new SharedPrefUtils();
-  String selectedGender = "";
-  String dob = "";
-  String unformatedDOB = "";
-  String userId = "";
-  String auth = "";
+  final _firstNameFocus = FocusNode();
+  final _lastNameFocus = FocusNode();
+  final _mobileNumberFocus = FocusNode();
+  final _emergencyMobileNumberFocus = FocusNode();
+  final _emailFocus = FocusNode();
+  final _bloodGroupFocus = FocusNode();
+  final _cityFocus = FocusNode();
+  final _addressFocus = FocusNode();
+  final _sharedPrefUtils = SharedPrefUtils();
+  String selectedGender = '';
+  String dob = '';
+  String unformatedDOB = '';
+  String userId = '';
+  String auth = '';
   ProgressDialog progressDialog;
-  String fullName = "";
-  var dateFormat = DateFormat("dd MMM, yyyy");
+  String fullName = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
   Patient patient;
 
   //String profileImage = "";
-  String emergencymobileNumber = "";
+  String emergencymobileNumber = '';
   bool isEditable = false;
 
   String countryCode = '';
@@ -91,8 +91,9 @@ class _EditProfileState extends State<EditProfile> {
 
   loadSharedPrefs() async {
     try {
-      UserData user = UserData.fromJson(await _sharedPrefUtils.read("user"));
-      patient = Patient.fromJson(await _sharedPrefUtils.read("patientDetails"));
+      final UserData user =
+          UserData.fromJson(await _sharedPrefUtils.read('user'));
+      patient = Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       debugPrint(user.toJson().toString());
 
       dob = dateFormat.format(patient.birthDate);
@@ -100,7 +101,7 @@ class _EditProfileState extends State<EditProfile> {
       userId = user.data.user.userId.toString();
       auth = user.data.accessToken;
 
-      fullName = patient.firstName + " " + patient.lastName;
+      fullName = patient.firstName + ' ' + patient.lastName;
       mobileNumber = patient.phoneNumber;
 
       _firstNameController.text = patient.firstName;
@@ -138,10 +139,10 @@ class _EditProfileState extends State<EditProfile> {
       _emailController.text = patient.email;
       _emergencyMobileNumberController.text = patient.emergencyContactNumber;
 
-      _cityController.text = patient.locality != null ? patient.locality : "";
-      _addressController.text = patient.address != null ? patient.address : "";
+      _cityController.text = patient.locality ?? '';
+      _addressController.text = patient.address ?? '';
 
-      profileImagePath = patient.imageURL == null ? "" : patient.imageURL;
+      profileImagePath = patient.imageURL ?? '';
 
       setState(() {
         debugPrint(patientGender);
@@ -155,7 +156,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
     final height = MediaQuery.of(context).size.height;
     return BaseWidget<LoginViewModel>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
@@ -167,7 +168,7 @@ class _EditProfileState extends State<EditProfile> {
         child: WillPopScope(
           onWillPop: () async {
             if (isEditable) {
-              var result = await _onBackPressed();
+              final result = await _onBackPressed();
               return result;
             } else {
               Navigator.of(context).pop();
@@ -185,7 +186,7 @@ class _EditProfileState extends State<EditProfile> {
                     color: primaryColor,
                     fontWeight: FontWeight.w700),
               ),
-              iconTheme: new IconThemeData(color: Colors.black),
+              iconTheme: IconThemeData(color: Colors.black),
             ),
             body: Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -235,10 +236,10 @@ class _EditProfileState extends State<EditProfile> {
 
   Future<bool> _onBackPressed() {
     return showDialog(
-          context: context,
-          builder: (context) => new AlertDialog(
-            title: new Text('Alert!'),
-            content: new Text('Are you sure you want to discard the changes?'),
+      context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Alert!'),
+            content: Text('Are you sure you want to discard the changes?'),
             actions: <Widget>[
               FlatButton(
                 child: Text('Yes'),
@@ -263,7 +264,7 @@ class _EditProfileState extends State<EditProfile> {
     );*/
 
     //With parameters:
-    FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
+    final FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
       allowedMimeTypes: ['image/*'],
       invalidFileNameSymbols: ['/'],
     );
@@ -276,10 +277,10 @@ class _EditProfileState extends State<EditProfile> {
       result = await FlutterDocumentPicker.openDocument(params: params);
 
       if (result != '') {
-        File file = File(result);
+        final File file = File(result);
         debugPrint(result);
-        String fileName = file.path.split('/').last;
-        print("File Name ==> ${fileName}");
+        final String fileName = file.path.split('/').last;
+        print('File Name ==> $fileName');
         //file.renameSync(pFile.name);
         uploadProfilePicture(file);
       } else {
@@ -309,27 +310,27 @@ class _EditProfileState extends State<EditProfile> {
 
   uploadProfilePicture(File file) async {
     try {
-      String _baseUrl = apiProvider.getBaseUrl();
-      var map = new Map<String, String>();
-      map["enc"] = "multipart/form-data";
-      map["Authorization"] = 'Bearer ' + auth;
+      final String _baseUrl = apiProvider.getBaseUrl();
+      final map = <String, String>{};
+      map['enc'] = 'multipart/form-data';
+      map['Authorization'] = 'Bearer ' + auth;
 
-      var postUri = Uri.parse(_baseUrl + "/resources/upload/");
-      var request = new http.MultipartRequest("POST", postUri);
+      final postUri = Uri.parse(_baseUrl + '/resources/upload/');
+      final request = http.MultipartRequest('POST', postUri);
       request.headers.addAll(map);
       request.files.add(http.MultipartFile(
           'name', file.readAsBytes().asStream(), file.lengthSync(),
           filename: file.path.split('/').last));
-      request.fields['isPublicResource'] = "true";
+      request.fields['isPublicResource'] = 'true';
 
       request.send().then((response) async {
         if (response.statusCode == 200) {
-          print("Uploaded!");
+          print('Uploaded!');
           final respStr = await response.stream.bytesToString();
-          debugPrint("Uploded " + respStr);
-          UploadImageResponse uploadResponse =
+          debugPrint('Uploded ' + respStr);
+          final UploadImageResponse uploadResponse =
               UploadImageResponse.fromJson(json.decode(respStr));
-          if (uploadResponse.status == "success") {
+          if (uploadResponse.status == 'success') {
             profileImagePath = uploadResponse.data.details.elementAt(0).url;
             //profileImage = uploadResponse.data.details.elementAt(0).url;
             showToast(uploadResponse.message, context);
@@ -341,19 +342,19 @@ class _EditProfileState extends State<EditProfile> {
             showToast('Opps, something wents wrong!', context);
           }
         } else {
-          print("Upload Faild !");
+          print('Upload Faild !');
         }
       }); // debugPrint("3");
 
     } catch (CustomException) {
-      debugPrint("4");
+      debugPrint('4');
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
   Widget _profileIcon() {
-    debugPrint('Profile Pic ==> ${profileImagePath}');
+    debugPrint('Profile Pic ==> $profileImagePath');
     return Container(
       height: 200,
       child: Column(
@@ -377,17 +378,16 @@ class _EditProfileState extends State<EditProfile> {
                 Container(
                   width: 120.0,
                   height: 120.0,
-                  decoration: new BoxDecoration(
+                  decoration: BoxDecoration(
                     color: const Color(0xff7c94b6),
-                    image: new DecorationImage(
-                      image: profileImagePath == ""
+                    image: DecorationImage(
+                      image: profileImagePath == ''
                           ? AssetImage('res/images/profile_placeholder.png')
-                          : new NetworkImage(profileImagePath),
+                          : NetworkImage(profileImagePath),
                       fit: BoxFit.cover,
                     ),
-                    borderRadius:
-                        new BorderRadius.all(new Radius.circular(50.0)),
-                    border: new Border.all(
+                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                    border: Border.all(
                       color: Colors.deepPurple,
                       width: 2.0,
                     ),
@@ -413,8 +413,7 @@ class _EditProfileState extends State<EditProfile> {
                         child: SizedBox(
                             height: 32,
                             width: 32,
-                            child:
-                                new Image.asset('res/images/ic_camera.png'))),
+                            child: Image.asset('res/images/ic_camera.png'))),
                   ),
                 )
               ],
@@ -874,7 +873,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                   maxLines: 1,
                   decoration: InputDecoration(
-                      counterText: "",
+                      counterText: '',
                       border: InputBorder.none,
                       filled: false)),
             ),
@@ -1060,7 +1059,7 @@ class _EditProfileState extends State<EditProfile> {
                 enabled: isEditable,
                 focusNode: _emergencyMobileNumberFocus,
                 decoration: InputDecoration(
-                    counterText: "",
+                    counterText: '',
                     hintText: 'mobile_number',
                     hintStyle: TextStyle(color: Colors.transparent),
                     border: InputBorder.none,
@@ -1184,11 +1183,11 @@ class _EditProfileState extends State<EditProfile> {
           clipBehavior: Clip.antiAlias,
           // Add This
           child: Semantics(
-            label: "saveProfile",
+            label: 'saveProfile',
             child: MaterialButton(
                 minWidth: 200,
-                child: new Text('Save',
-                    style: new TextStyle(
+                child: Text('Save',
+                    style: TextStyle(
                         fontSize: 14.0,
                         color: Colors.white,
                         fontWeight: FontWeight.w700)),
@@ -1197,21 +1196,21 @@ class _EditProfileState extends State<EditProfile> {
                     showToast('Please enter email', context);
                   } else {
                     progressDialog.show();
-                    var map = new Map<String, String>();
-                    map["Gender"] = selectedGender;
-                    map["BirthDate"] = unformatedDOB;
-                    map["Locality"] = _cityController.text;
-                    map["Address"] = _addressController.text;
-                    map["ImageURL"] =
-                        profileImagePath == "" ? null : profileImagePath;
-                    map["EmergencyContactNumber"] =
+                    final map = <String, String>{};
+                    map['Gender'] = selectedGender;
+                    map['BirthDate'] = unformatedDOB;
+                    map['Locality'] = _cityController.text;
+                    map['Address'] = _addressController.text;
+                    map['ImageURL'] =
+                        profileImagePath == '' ? null : profileImagePath;
+                    map['EmergencyContactNumber'] =
                         _emergencyMobileNumberController.text;
-                    map["Email"] = _emailController.text;
-                    map["LocationCoords_Longitude"] = null;
-                    map["LocationCoords_Lattitude"] = null;
+                    map['Email'] = _emailController.text;
+                    map['LocationCoords_Longitude'] = null;
+                    map['LocationCoords_Lattitude'] = null;
 
                     try {
-                      BaseResponse updateProfileSuccess = await model
+                      final BaseResponse updateProfileSuccess = await model
                           .updateProfile(map, userId, 'Bearer ' + auth);
 
                       if (updateProfileSuccess.status == 'success') {
@@ -1248,18 +1247,18 @@ class _EditProfileState extends State<EditProfile> {
 
       ApiProvider apiProvider = GetIt.instance<ApiProvider>();*/
 
-      var map = new Map<String, String>();
-      map["Content-Type"] = "application/json";
-      map["authorization"] = "Bearer " + auth;
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth;
 
-      var response = await apiProvider.get('/patient/' + userId, header: map);
+      final response = await apiProvider.get('/patient/' + userId, header: map);
 
-      PatientApiDetails doctorListApiResponse =
+      final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
         await _sharedPrefUtils.save(
-            "patientDetails", doctorListApiResponse.data.patient.toJson());
+            'patientDetails', doctorListApiResponse.data.patient.toJson());
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);
@@ -1496,7 +1495,7 @@ class _EditProfileState extends State<EditProfile> {
   }*/
 
   Widget _genderWidget() {
-    debugPrint("Gender: ${selectedGender}");
+    debugPrint('Gender: $selectedGender');
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -1504,7 +1503,7 @@ class _EditProfileState extends State<EditProfile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Gender",
+            'Gender',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           SizedBox(
@@ -1528,9 +1527,9 @@ class _EditProfileState extends State<EditProfile> {
                   onToggle: (index) {
                     print('switched to: $index');
                     if (index == 0) {
-                      selectedGender = "Male";
+                      selectedGender = 'Male';
                     } else {
-                      selectedGender = "Female";
+                      selectedGender = 'Female';
                     }
                   }))
         ],
@@ -1581,7 +1580,7 @@ class _EditProfileState extends State<EditProfile> {
                     SizedBox(
                         height: 32,
                         width: 32,
-                        child: new ImageIcon(
+                        child: ImageIcon(
                             AssetImage('res/images/ic_calender.png'),
                             color: Colors.black12)),
                   ],
@@ -1612,16 +1611,16 @@ class _EditProfileState extends State<EditProfile> {
   Widget _textFeildWidget() {
     return Column(
       children: <Widget>[
-        _entryFirstNameField("First Name"),
-        _entryLastNameField("Last Name"),
-        _entryMobileNoField("Mobile Number"),
-        _dateOfBirthField("Date Of Birth"),
+        _entryFirstNameField('First Name'),
+        _entryLastNameField('Last Name'),
+        _entryMobileNoField('Mobile Number'),
+        _dateOfBirthField('Date Of Birth'),
         _genderWidget(),
         _entryEmailField('Email*'),
         //_entryBloodGroupField("Blood Group"),
-        _entryEmergencyMobileNoField("Emergency Contact Number"),
-        _entryAddressField("Address"),
-        _entryLocalityField("City"),
+        _entryEmergencyMobileNoField('Emergency Contact Number'),
+        _entryAddressField('Address'),
+        _entryLocalityField('City'),
       ],
     );
   }
@@ -1647,9 +1646,9 @@ class _EditProfileState extends State<EditProfile> {
       height: 160,
       color: Colors.transparent,
       child: Container(
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: new BorderRadius.only(
+          borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
         ),
         child: Row(
@@ -1671,11 +1670,10 @@ class _EditProfileState extends State<EditProfile> {
                       Container(
                         height: 60,
                         width: 60,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                           color: primaryLightColor,
-                          borderRadius:
-                              new BorderRadius.all(new Radius.circular(50.0)),
-                          border: new Border.all(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          border: Border.all(
                             color: Colors.deepPurple,
                             width: 1.0,
                           ),
@@ -1715,11 +1713,10 @@ class _EditProfileState extends State<EditProfile> {
                       Container(
                         height: 60,
                         width: 60,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                           color: primaryLightColor,
-                          borderRadius:
-                              new BorderRadius.all(new Radius.circular(50.0)),
-                          border: new Border.all(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          border: Border.all(
                             color: Colors.deepPurple,
                             width: 1.0,
                           ),
@@ -1759,11 +1756,11 @@ class _EditProfileState extends State<EditProfile> {
                         Container(
                           height: 60,
                           width: 60,
-                          decoration: new BoxDecoration(
+                          decoration: BoxDecoration(
                             color: primaryLightColor,
                             borderRadius:
-                                new BorderRadius.all(new Radius.circular(50.0)),
-                            border: new Border.all(
+                                BorderRadius.all(Radius.circular(50.0)),
+                            border: Border.all(
                               color: Colors.deepPurple,
                               width: 1.0,
                             ),
@@ -1801,13 +1798,13 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   openCamera() async {
-    var picture = await _picker.getImage(
+    final picture = await _picker.getImage(
       source: ImageSource.camera,
     );
-    File file = File(picture.path);
+    final File file = File(picture.path);
     debugPrint(picture.path);
-    String fileName = file.path.split('/').last;
-    print("File Name ==> ${fileName}");
+    final String fileName = file.path.split('/').last;
+    print('File Name ==> $fileName');
     uploadProfilePicture(file);
   }
 }

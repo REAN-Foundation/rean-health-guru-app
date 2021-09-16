@@ -84,14 +84,14 @@ class Routers {
           builder: (_) => SplashScreen(
             seconds: 3,
             navigateAfterSeconds: AfterSplashScreen(getSessionFlag()),
-            title: new Text('REAN HealthGuru\n\nDev-Build',
+            title: Text('REAN HealthGuru\n\nDev-Build',
                 style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.w700,
                     color: Colors.white)),
-            image: new Image.asset('res/images/app_logo_tranparent.png'),
+            image: Image.asset('res/images/app_logo_tranparent.png'),
             backgroundColor: Colors.deepPurple,
-            styleTextUnderTheLoader: new TextStyle(),
+            styleTextUnderTheLoader: TextStyle(),
             photoSize: 100.0,
             loaderColor: Colors.transparent,
             baseUrl: getBaseUrl(),
@@ -291,7 +291,7 @@ class Routers {
       case RoutePaths.Order_Ambulance:
         return MaterialPageRoute(builder: (_) => ;*/
       case RoutePaths.Post:
-        var post = settings.arguments as Post;
+        final post = settings.arguments as Post;
         return MaterialPageRoute(builder: (_) => PostView(post: post));
       default:
         return MaterialPageRoute(

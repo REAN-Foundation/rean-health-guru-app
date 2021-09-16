@@ -32,16 +32,16 @@ class MyReportsView extends StatefulWidget {
 
 class _MyReportsViewState extends State<MyReportsView> {
   var model = CommonConfigModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   ProgressDialog progressDialog;
-  String attachmentPath = "";
-  List<Documents> documents = new List<Documents>();
-  var dateFormat = DateFormat("dd MMM, yyyy");
+  String attachmentPath = '';
+  List<Documents> documents = <Documents>[];
+  var dateFormat = DateFormat('dd MMM, yyyy');
   var renameControler = TextEditingController();
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
-  ScrollController _scrollController =
+  final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
-  ImagePicker _picker = new ImagePicker();
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -59,11 +59,12 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   getAllRecords() async {
     try {
-      GetAllRecordResponse allRecordResponse = await model.getAllRecords();
-      debugPrint("Records ==> ${allRecordResponse.toJson()}");
+      final GetAllRecordResponse allRecordResponse =
+          await model.getAllRecords();
+      debugPrint('Records ==> ${allRecordResponse.toJson()}');
       if (allRecordResponse.status == 'success') {
         documents.clear();
-        if (allRecordResponse.data.documents.length > 0) {
+        if (allRecordResponse.data.documents.isNotEmpty) {
           documents.clear();
           documents.addAll(allRecordResponse.data.documents);
         }
@@ -74,7 +75,7 @@ class _MyReportsViewState extends State<MyReportsView> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -85,9 +86,9 @@ class _MyReportsViewState extends State<MyReportsView> {
       if (!imageView) {
         progressDialog.show();
       }
-      GetSharablePublicLink getSharablePublicLink =
+      final GetSharablePublicLink getSharablePublicLink =
           await model.getDocumentPublicLink(document.id);
-      debugPrint("Records ==> ${getSharablePublicLink.toJson()}");
+      debugPrint('Records ==> ${getSharablePublicLink.toJson()}');
       if (getSharablePublicLink.status == 'success') {
         progressDialog.hide();
         if (imageView) {
@@ -109,7 +110,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       progressDialog.hide();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       progressDialog.hide();
       debugPrint(Exception.toString());
@@ -118,12 +119,12 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   renameDocument(String documentId, String newName) async {
     try {
-      var body = new Map<String, String>();
+      final body = <String, String>{};
       body['NewName'] = newName;
 
-      BaseResponse baseResponse =
+      final BaseResponse baseResponse =
           await model.renameOfDocument(documentId, body);
-      debugPrint("Records ==> ${baseResponse.toJson()}");
+      debugPrint('Records ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         getAllRecords();
         showToast('Document renamed successfully.', context);
@@ -133,7 +134,7 @@ class _MyReportsViewState extends State<MyReportsView> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -141,8 +142,8 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   deleteDocument(String documentId) async {
     try {
-      BaseResponse baseResponse = await model.deleteDocument(documentId);
-      debugPrint("Records ==> ${baseResponse.toJson()}");
+      final BaseResponse baseResponse = await model.deleteDocument(documentId);
+      debugPrint('Records ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         getAllRecords();
         showToast(baseResponse.message, context);
@@ -152,7 +153,7 @@ class _MyReportsViewState extends State<MyReportsView> {
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     } catch (Exception) {
       debugPrint(Exception.toString());
     }
@@ -160,7 +161,7 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = new ProgressDialog(context);
+    progressDialog = ProgressDialog(context);
 
     // TODO: implement build
     return BaseWidget<CommonConfigModel>(
@@ -205,7 +206,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                 uploadWidget(),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text("Records",
+                  child: Text('Records',
                       style: TextStyle(
                           fontSize: 16,
                           color: primaryColor,
@@ -220,7 +221,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                       padding: const EdgeInsets.all(16.0),
                       child: model.busy
                           ? Center(child: CircularProgressIndicator())
-                          : documents.length == 0
+                          : documents.isEmpty
                               ? noRecordsFound()
                               : listWidget()),
                 ),
@@ -234,7 +235,7 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   Widget noRecordsFound() {
     return Center(
-      child: Text("No records found",
+      child: Text('No records found',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -306,7 +307,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   Widget _myReports(BuildContext context, int index) {
-    Documents document = documents.elementAt(index);
+    final Documents document = documents.elementAt(index);
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       child: InkWell(
@@ -339,10 +340,10 @@ class _MyReportsViewState extends State<MyReportsView> {
         child: Container(
           height: 100,
           padding: const EdgeInsets.all(8.0),
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
               color: colorF6F6FF,
               border: Border.all(color: primaryLightColor),
-              borderRadius: new BorderRadius.all(Radius.circular(4.0))),
+              borderRadius: BorderRadius.all(Radius.circular(4.0))),
           child: Stack(
             children: [
               Column(
@@ -529,20 +530,20 @@ class _MyReportsViewState extends State<MyReportsView> {
     //final url = "http://africau.edu/images/default/sample.pdf";
     //final url = "https://www.lalpathlabs.com/SampleReports/Z614.pdf";
     //final filename = url.substring(url.lastIndexOf("/") + 1);
-    var map = new Map<String, String>();
+    final map = <String, String>{};
     //map["enc"] = "multipart/form-data";
-    map["Authorization"] = 'Bearer ' + auth;
+    map['Authorization'] = 'Bearer ' + auth;
 
-    var request = await HttpClient().getUrl(Uri.parse(url));
-    request.headers.add("Authorization", 'Bearer ' + auth);
-    var response = await request.close();
+    final request = await HttpClient().getUrl(Uri.parse(url));
+    request.headers.add('Authorization', 'Bearer ' + auth);
+    final response = await request.close();
 
     debugPrint('Base Url ==> PUT ${request.uri}');
     debugPrint('Headers ==> ${request.headers.toString()}');
 
-    var bytes = await consolidateHttpClientResponseBytes(response);
-    String dir = (await getApplicationDocumentsDirectory()).path;
-    File file = new File('$dir/$fileName');
+    final bytes = await consolidateHttpClientResponseBytes(response);
+    final String dir = (await getApplicationDocumentsDirectory()).path;
+    final File file = File('$dir/$fileName');
     await file.writeAsBytes(bytes);
     return file;
   }
@@ -551,13 +552,13 @@ class _MyReportsViewState extends State<MyReportsView> {
     String result;
     try {
       result = await FlutterDocumentPicker.openDocument();
-      debugPrint('File Result ==> ${result}');
+      debugPrint('File Result ==> $result');
 
       if (result != '') {
-        File file = File(result);
+        final File file = File(result);
         debugPrint(result);
-        String fileName = file.path.split('/').last;
-        print("File Name ==> ${fileName}");
+        final String fileName = file.path.split('/').last;
+        print('File Name ==> $fileName');
         uploadProfilePicture(file, type);
       } else {
         showToast('Please select document', context);
@@ -605,8 +606,8 @@ class _MyReportsViewState extends State<MyReportsView> {
                   return ListTile(
                     title: Text(documentType[index]),
                     onTap: () {
-                      debugPrint("Document Type ==> ${documentType[index]}");
-                      String documentTypeCode = "";
+                      debugPrint('Document Type ==> ${documentType[index]}');
+                      String documentTypeCode = '';
                       switch (index) {
                         case 0:
                           documentTypeCode = 'PATIENT_MED_PRESCRIPTIONS';
@@ -635,15 +636,15 @@ class _MyReportsViewState extends State<MyReportsView> {
   uploadProfilePicture(File file, String type) async {
     progressDialog.show();
     try {
-      var map = new Map<String, String>();
-      map["enc"] = "multipart/form-data";
-      map["Authorization"] = 'Bearer ' + auth;
+      final map = <String, String>{};
+      map['enc'] = 'multipart/form-data';
+      map['Authorization'] = 'Bearer ' + auth;
 
-      String _baseUrl = apiProvider.getBaseUrl();
+      final String _baseUrl = apiProvider.getBaseUrl();
 
-      var postUri = Uri.parse(
-          _baseUrl + "/patient/" + patientUserId + "/upload-document");
-      var request = new http.MultipartRequest("POST", postUri);
+      final postUri = Uri.parse(
+          _baseUrl + '/patient/' + patientUserId + '/upload-document');
+      final request = http.MultipartRequest('POST', postUri);
       request.headers.addAll(map);
       request.files.add(http.MultipartFile(
           'name', file.readAsBytes().asStream(), file.lengthSync(),
@@ -654,12 +655,12 @@ class _MyReportsViewState extends State<MyReportsView> {
       request.send().then((response) async {
         if (response.statusCode == 200) {
           progressDialog.hide();
-          print("Uploaded!");
+          print('Uploaded!');
           final respStr = await response.stream.bytesToString();
-          debugPrint("Uploded " + respStr);
-          GetAllRecordResponse uploadResponse =
+          debugPrint('Uploded ' + respStr);
+          final GetAllRecordResponse uploadResponse =
               GetAllRecordResponse.fromJson(json.decode(respStr));
-          if (uploadResponse.status == "success") {
+          if (uploadResponse.status == 'success') {
             getAllRecords();
             showToast(uploadResponse.message, context);
           } else {
@@ -668,14 +669,14 @@ class _MyReportsViewState extends State<MyReportsView> {
         } else {
           progressDialog.hide();
           showToast('Opps, something wents wrong!', context);
-          print("Upload Faild !");
+          print('Upload Faild !');
         }
       }); // debugPrint("3");
 
     } catch (CustomException) {
       progressDialog.hide();
       showToast(CustomException.toString(), context);
-      debugPrint("Error " + CustomException.toString());
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
@@ -685,7 +686,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       builder: (context) => AlertDialog(
         content: ListTile(
           title: Text(
-            "Alert!",
+            'Alert!',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.normal,
@@ -732,7 +733,7 @@ class _MyReportsViewState extends State<MyReportsView> {
           width: MediaQuery.of(context).size.width,
           child: Semantics(
             label: 'renameText',
-            child: new TextField(
+            child: TextField(
               controller: renameControler,
               autofocus: true,
               style: TextStyle(
@@ -740,18 +741,18 @@ class _MyReportsViewState extends State<MyReportsView> {
                   fontStyle: FontStyle.normal,
                   fontSize: 14.0,
                   color: Colors.black),
-              decoration: new InputDecoration(
+              decoration: InputDecoration(
                   labelText: 'Enter new file name', hintText: ''),
             ),
           ),
         ),
         actions: <Widget>[
-          new FlatButton(
+          FlatButton(
               child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context, rootNavigator: true).pop();
               }),
-          new FlatButton(
+          FlatButton(
               child: const Text('Ok'),
               onPressed: () {
                 if (document.fileName == renameControler.text) {
@@ -772,9 +773,9 @@ class _MyReportsViewState extends State<MyReportsView> {
       height: 160,
       color: Colors.transparent,
       child: Container(
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: new BorderRadius.only(
+          borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
         ),
         child: Row(
@@ -796,11 +797,10 @@ class _MyReportsViewState extends State<MyReportsView> {
                       Container(
                         height: 60,
                         width: 60,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                           color: primaryLightColor,
-                          borderRadius:
-                              new BorderRadius.all(new Radius.circular(50.0)),
-                          border: new Border.all(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          border: Border.all(
                             color: Colors.deepPurple,
                             width: 1.0,
                           ),
@@ -840,11 +840,10 @@ class _MyReportsViewState extends State<MyReportsView> {
                       Container(
                         height: 60,
                         width: 60,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                           color: primaryLightColor,
-                          borderRadius:
-                              new BorderRadius.all(new Radius.circular(50.0)),
-                          border: new Border.all(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          border: Border.all(
                             color: Colors.deepPurple,
                             width: 1.0,
                           ),
@@ -910,8 +909,8 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   openGallery() async {
-    String type = await _askForDocsType();
-    debugPrint('File Type ${type}');
+    final String type = await _askForDocsType();
+    debugPrint('File Type $type');
     if (type != null) {
       getFile(type);
     } else {
@@ -920,16 +919,16 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   openCamera() async {
-    String type = await _askForDocsType();
-    debugPrint('File Type ${type}');
+    final String type = await _askForDocsType();
+    debugPrint('File Type $type');
 
-    var picture = await _picker.getImage(
+    final picture = await _picker.getImage(
       source: ImageSource.camera,
     );
-    File file = File(picture.path);
+    final File file = File(picture.path);
     debugPrint(picture.path);
-    String fileName = file.path.split('/').last;
-    print("File Name ==> ${fileName}");
+    final String fileName = file.path.split('/').last;
+    print('File Name ==> $fileName');
     uploadProfilePicture(file, type);
   }
 }

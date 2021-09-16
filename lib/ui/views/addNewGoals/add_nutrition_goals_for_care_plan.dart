@@ -14,16 +14,16 @@ class AddNutritionGoalsForCarePlanView extends StatefulWidget {
 class _AddNutritionGoalsForCarePlanViewState
     extends State<AddNutritionGoalsForCarePlanView> {
   var model = PatientMedicationViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String selectedGoal = "";
+  String selectedGoal = '';
 
   final TextEditingController _goalController = TextEditingController();
 
-  var _goalFocus = FocusNode();
-  String dob = "";
-  String unformatedDOB = "";
-  var dateFormat = DateFormat("dd MMM, yyyy");
+  final _goalFocus = FocusNode();
+  String dob = '';
+  String unformatedDOB = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
 
   bool switch1 = false;
   bool switch2 = false;
@@ -47,7 +47,7 @@ class _AddNutritionGoalsForCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w700),
             ),
-            iconTheme: new IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -88,7 +88,7 @@ class _AddNutritionGoalsForCarePlanViewState
             height: 16,
           ),
           Text(
-            "Eating healthy doesn’t have to mean dieting or giving up all the foods you love. Learn how to ditch the junk, give your body the nutrient-dense fuel it needs, and love every minute of it!",
+            'Eating healthy doesn’t have to mean dieting or giving up all the foods you love. Learn how to ditch the junk, give your body the nutrient-dense fuel it needs, and love every minute of it!',
             style: TextStyle(
                 color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
           ),
@@ -137,7 +137,7 @@ class _AddNutritionGoalsForCarePlanViewState
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: "",
+                          text: '',
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -176,7 +176,7 @@ class _AddNutritionGoalsForCarePlanViewState
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: "",
+                          text: '',
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -215,7 +215,7 @@ class _AddNutritionGoalsForCarePlanViewState
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: "",
+                          text: '',
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -247,7 +247,7 @@ class _AddNutritionGoalsForCarePlanViewState
                     fontSize: 14),
                 children: <TextSpan>[
                   TextSpan(
-                      text: "  ",
+                      text: '  ',
                       style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
@@ -291,7 +291,7 @@ class _AddNutritionGoalsForCarePlanViewState
                     fontSize: 12),
                 children: <TextSpan>[
                   TextSpan(
-                      text: "  ",
+                      text: '  ',
                       style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
@@ -325,7 +325,7 @@ class _AddNutritionGoalsForCarePlanViewState
                     ),
                     child: Center(
                       child: Text(
-                        "Save",
+                        'Save',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,

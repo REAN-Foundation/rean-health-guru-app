@@ -4,29 +4,29 @@ import 'package:flutter/painting.dart';
 class ClipPainter extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    var height = size.height;
-    var width = size.width;
-    var path = new Path();
+    final height = size.height;
+    final width = size.width;
+    final path = Path();
 
     path.lineTo(0, size.height);
     path.lineTo(size.width, height);
     path.lineTo(size.width, 0);
 
     /// [Top Left corner]
-    var secondControlPoint = Offset(0, 0);
-    var secondEndPoint = Offset(width * .2, height * .3);
+    final secondControlPoint = Offset(0, 0);
+    final secondEndPoint = Offset(width * .2, height * .3);
     path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
         secondEndPoint.dx, secondEndPoint.dy);
 
     /// [Left Middle]
-    var fifthControlPoint = Offset(width * .3, height * .5);
-    var fiftEndPoint = Offset(width * .23, height * .6);
+    final fifthControlPoint = Offset(width * .3, height * .5);
+    final fiftEndPoint = Offset(width * .23, height * .6);
     path.quadraticBezierTo(fifthControlPoint.dx, fifthControlPoint.dy,
         fiftEndPoint.dx, fiftEndPoint.dy);
 
     /// [Bottom Left corner]
-    var thirdControlPoint = Offset(0, height);
-    var thirdEndPoint = Offset(width, height);
+    final thirdControlPoint = Offset(0, height);
+    final thirdEndPoint = Offset(width, height);
     path.quadraticBezierTo(thirdControlPoint.dx, thirdControlPoint.dy,
         thirdEndPoint.dx, thirdEndPoint.dy);
 

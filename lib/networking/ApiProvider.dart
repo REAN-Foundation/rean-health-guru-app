@@ -8,10 +8,10 @@ import 'package:http/http.dart' as http;
 import 'CustomException.dart';
 
 class ApiProvider {
-  String _baseUrl = "";
+  String _baseUrl = '';
 
   ApiProvider(String baseUrl) {
-    this._baseUrl = baseUrl;
+    _baseUrl = baseUrl;
   }
 
   Future<dynamic> get(String url, {Map header}) async {
@@ -103,12 +103,12 @@ class ApiProvider {
       case 403:
       //case 404:
       case 500:
-        var responseJson = json.decode(response.body.toString());
+      final responseJson = json.decode(response.body.toString());
         print(responseJson);
         return responseJson;
 
       default:
-        var code = response.statusCode.toString();
+        final code = response.statusCode.toString();
         print('Status_Code ${code.toString()}');
         throw FetchDataException('Opps! Something wents wrong.');
 
@@ -150,15 +150,15 @@ class ApiProvider {
 
   multipart(String url, {String filePath, Map header}) async {
     debugPrint('Base Url ==> POST ${_baseUrl + url}');
-    debugPrint('Request File Path ==> ${filePath}');
+    debugPrint('Request File Path ==> $filePath');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
 
     var responseJson;
     try {
-      var postUri = Uri.parse(_baseUrl + url);
-      var request = new http.MultipartRequest("POST", postUri);
+      final postUri = Uri.parse(_baseUrl + url);
+      final request = http.MultipartRequest('POST', postUri);
       request.headers.addAll(header);
-      request.files.add(new http.MultipartFile.fromBytes(
+      request.files.add(http.MultipartFile.fromBytes(
           'name', await File.fromUri(Uri.parse(filePath)).readAsBytes()));
 
       request
@@ -173,7 +173,7 @@ class ApiProvider {
 
             if (response.statusCode == 200) {
               final respStr = await response.stream.bytesToString();
-              debugPrint("Uploded " + respStr);
+              debugPrint('Uploded ' + respStr);
               responseJson = respStr;
             }
 
@@ -192,7 +192,6 @@ class ApiProvider {
           })
           .catchError((err) => print('error : ' + err.toString()))
           .whenComplete(() {});
-      ;
     } on SocketException {
       throw FetchDataException('No Internet connection');
     } on TimeoutException catch (_) {

@@ -23,7 +23,7 @@ class AboutREANCareView extends StatefulWidget {
 
 class _AboutREANCareViewState extends State<AboutREANCareView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String textMsg1 =
       "REAN HealthGuru provides a platform for your healthcare needs, helping you manage your and your family's health and well-being in a simple, comfortable, and economical manner.";
   PackageInfo _packageInfo = PackageInfo(
@@ -32,9 +32,9 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
     version: '',
     buildNumber: '',
   );
-  String profileImage = "";
+  String profileImage = '';
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
-  String _baseUrl = '';
+  final String _baseUrl = '';
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
 
   Future<void> _initPackageInfo() async {
     final PackageInfo info = await PackageInfo.fromPlatform();
-    if (this.mounted) {
+    if (mounted) {
       setState(() {
         _packageInfo = info;
       });
@@ -94,7 +94,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                         color: primaryColor,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(12))),
-                                    child: new Image.asset(
+                                    child: Image.asset(
                                         'res/images/app_logo_tranparent.png'),
                                   ),
                                   SizedBox(
@@ -144,7 +144,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                           InkWell(
                                             onTap: () async {
                                               //_launchURL('https://www.reanfoundation.org/');
-                                              String url =
+                                              const String url =
                                                   'https://www.reanfoundation.org/';
                                               if (await canLaunch(url)) {
                                                 await launch(url);
@@ -295,7 +295,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
 
   completeMessageTaskOfAHACarePlan(Task task) async {
     try {
-      StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
+      final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.completeMessageTaskOfAHACarePlan(
               startCarePlanResponseGlob.data.carePlan.id.toString(),
               task.details.id);
@@ -307,7 +307,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
           return HomeView(1);
         }), (Route<dynamic> route) => false);
         debugPrint(
-            "AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}");
+            'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
         showToast(_startTaskOfAHACarePlanResponse.message, context);
       }

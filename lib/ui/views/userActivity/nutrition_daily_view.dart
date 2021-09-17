@@ -39,7 +39,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
       setUpData();
     } catch (e) {
       saveData();
-      print('error caught: $e');
+      debugPrint('error caught: $e');
     }
   }
 

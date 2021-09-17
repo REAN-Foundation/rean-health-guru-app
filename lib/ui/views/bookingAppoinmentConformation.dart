@@ -60,20 +60,20 @@ class _BookingAppoinmentConfirmationViewViewState
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
-    print("payment has succedded");
+    debugPrint("payment has succedded");
     _bookADoctorAppoinmentSlot();
     _razorpay.clear();
     // Do something when payment succeeds
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    print("payment has error");
+    debugPrint("payment has error");
     // Do something when payment fails
     _razorpay.clear();
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    print("payment has externalWallet");
+    debugPrint("payment has externalWallet");
 
     _razorpay.clear();
     // Do something when an external wallet is selected
@@ -785,7 +785,7 @@ class _BookingAppoinmentConfirmationViewViewState
     try {
       //_razorpay.open(options);
     } catch (e) {
-      print('errror occured here is ......................./:$e');
+      debugPrint('errror occured here is ......................./:$e');
     }
   }
 }

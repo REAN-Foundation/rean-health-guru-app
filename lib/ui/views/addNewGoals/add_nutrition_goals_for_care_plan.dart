@@ -151,7 +151,7 @@ class _AddNutritionGoalsForCarePlanViewState
                 onChanged: (value) {
                   setState(() {
                     switch1 = value;
-                    print(switch1);
+                    debugPrint(switch1.toString());
                   });
                 },
                 activeTrackColor: primaryLightColor,
@@ -190,7 +190,7 @@ class _AddNutritionGoalsForCarePlanViewState
                 onChanged: (value) {
                   setState(() {
                     switch2 = value;
-                    print(switch2);
+                    debugPrint(switch2.toString());
                   });
                 },
                 activeTrackColor: primaryLightColor,
@@ -229,7 +229,7 @@ class _AddNutritionGoalsForCarePlanViewState
                 onChanged: (value) {
                   setState(() {
                     switch3 = value;
-                    print(switch3);
+                    debugPrint(switch3.toString());
                   });
                 },
                 activeTrackColor: primaryLightColor,

@@ -195,7 +195,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   initialCountryCode: getCurrentLocale(),
                   onChanged: (phone) {
                     debugPrint(phone.countryCode);
-                    print(phone.number);
+                    debugPrint(phone.number);
                     mobileNumber = phone.number;
                     countryCode = phone.countryCode;
                     /*if(mobileNumber.length == 10){
@@ -270,7 +270,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         setState(() {});
       }
     } on FetchDataException catch (e) {
-      print('error caught: $e');
+      debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});
       showToast(e.toString(), context);
@@ -306,7 +306,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         setState(() {});
       }
     } on FetchDataException catch (e) {
-      print('error caught: $e');
+      debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});
       showToast(e.toString(), context);
@@ -343,7 +343,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         setState(() {});
       }
     } on FetchDataException catch (e) {
-      print('error caught: $e');
+      debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});
       showToast(e.toString(), context);
@@ -556,10 +556,10 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     try {
       final result = await InternetAddress.lookup('tikme.co');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('connected');
+        debugPrint('connected');
       }
     } on SocketException catch (_) {
-      print('not connected');
+      debugPrint('not connected');
     }
   }
 
@@ -572,7 +572,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   void firebase() {
     _fcm.getToken().then((String token) async {
       assert(token != null);
-      print('Push Messaging token: $token');
+      debugPrint('Push Messaging token: $token');
       debugPrint(token);
       _fcmToken = token;
       _sharedPrefUtils.save('fcmToken', token);
@@ -580,7 +580,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
 /*    _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
+        debugPrint("onMessage: $message");
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -598,7 +598,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         );
       },
       onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
+        debugPrint("onLaunch: $message");
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -616,7 +616,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         );
       },
       onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
+        debugPrint("onResume: $message");
         showDialog(
           context: context,
           builder: (context) => AlertDialog(

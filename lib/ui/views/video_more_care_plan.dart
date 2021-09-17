@@ -47,7 +47,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
     if (widget.assortedViewConfigs.task.type == 'Video') {
       videoId = YoutubePlayer.convertUrlToId(
           widget.assortedViewConfigs.task.details.url);
-      print(videoId);
+      debugPrint(videoId);
       _controller = YoutubePlayerController(
         initialVideoId: videoId, //"d8PzoTr95ik",
         flags: YoutubePlayerFlags(

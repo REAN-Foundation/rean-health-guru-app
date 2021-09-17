@@ -149,7 +149,7 @@ class _EditProfileState extends State<EditProfile> {
         selectedGender = patientGender;
       });
     } on FetchDataException catch (e) {
-      print('error caught: $e');
+      debugPrint('error caught: $e');
       showToast(e.toString(), context);
     }
   }
@@ -280,7 +280,7 @@ class _EditProfileState extends State<EditProfile> {
         final File file = File(result);
         debugPrint(result);
         final String fileName = file.path.split('/').last;
-        print('File Name ==> $fileName');
+        debugPrint('File Name ==> $fileName');
         //file.renameSync(pFile.name);
         uploadProfilePicture(file);
       } else {
@@ -288,7 +288,7 @@ class _EditProfileState extends State<EditProfile> {
       }
     } catch (e) {
       showToast('Please select document', context);
-      print(e);
+      debugPrint(e);
       result = 'Error: $e';
     }
   }
@@ -325,7 +325,7 @@ class _EditProfileState extends State<EditProfile> {
 
       request.send().then((response) async {
         if (response.statusCode == 200) {
-          print('Uploaded!');
+          debugPrint('Uploaded!');
           final respStr = await response.stream.bytesToString();
           debugPrint('Uploded ' + respStr);
           final UploadImageResponse uploadResponse =
@@ -342,7 +342,7 @@ class _EditProfileState extends State<EditProfile> {
             showToast('Opps, something wents wrong!', context);
           }
         } else {
-          print('Upload Faild !');
+          debugPrint('Upload Faild !');
         }
       }); // debugPrint("3");
 
@@ -900,7 +900,7 @@ class _EditProfileState extends State<EditProfile> {
                 initialCountryCode: details.alpha2Code,
                 onChanged: (phone) {
                   debugPrint(phone.countryCode);
-                  print(phone.number);
+                  debugPrint(phone.number);
                   mobileNumber = phone.number;
                   countryCode = phone.countryCode;
                   */ /*if(mobileNumber.length == 10){
@@ -1074,7 +1074,7 @@ class _EditProfileState extends State<EditProfile> {
                 },
                 onChanged: (phone) {
                   debugPrint(phone.countryCode);
-                  print(phone.number);
+                  debugPrint(phone.number);
                   mobileNumber = phone.number;
                   countryCode = phone.countryCode;
                   /*if(mobileNumber.length == 10){
@@ -1490,7 +1490,7 @@ class _EditProfileState extends State<EditProfile> {
         icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
         activeColors: [Colors.blue, Colors.pink],
         onToggle: (index) {
-          print('switched to: $index');
+          debugPrint('switched to: $index');
         });
   }*/
 
@@ -1525,7 +1525,7 @@ class _EditProfileState extends State<EditProfile> {
                     [Colors.pink]
                   ],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                     if (index == 0) {
                       selectedGender = 'Male';
                     } else {
@@ -1593,13 +1593,13 @@ class _EditProfileState extends State<EditProfile> {
                   minTime: DateTime(1940, 1, 1),
                   maxTime: DateTime.now().subtract(Duration(days: 1)),
                   onChanged: (date) {
-                print('change $date');
+                    debugPrint('change $date');
               }, onConfirm: (date) {
-                unformatedDOB = date.toIso8601String();
+                    unformatedDOB = date.toIso8601String();
                 setState(() {
                   dob = dateFormat.format(date);
                 });
-                print('confirm $date');
+                debugPrint('confirm $date');
               }, currentTime: DateTime.now(), locale: LocaleType.en);
             },
           ),
@@ -1804,7 +1804,7 @@ class _EditProfileState extends State<EditProfile> {
     final File file = File(picture.path);
     debugPrint(picture.path);
     final String fileName = file.path.split('/').last;
-    print('File Name ==> $fileName');
+    debugPrint('File Name ==> $fileName');
     uploadProfilePicture(file);
   }
 }

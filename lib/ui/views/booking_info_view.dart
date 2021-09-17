@@ -500,7 +500,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                 icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
                 activeColors: [Colors.blue, Colors.pink],
                 onToggle: (index) {
-                  print('switched to: $index');
+                  debugPrint('switched to: $index');
                   if(index == 0){
                     selectedGender = "Male";
                   }else{
@@ -575,7 +575,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                 [Colors.pink]
               ],
               onToggle: (index) {
-                print('switched to: $index');
+                debugPrint('switched to: $index');
                 if (index == 0) {
                   selectedGender = 'Male';
                 } else {
@@ -657,12 +657,12 @@ class _BookingInfoViewState extends State<BookingInfoView> {
               /* DatePicker.showDatePicker(context,
                   showTitleActions: true,
                   maxTime: DateTime.now().subtract(Duration(days: 1)), onChanged: (date) {
-                    print('change $date');
+                    debugPrint('change $date');
                   }, onConfirm: (date) {
                     setState(() {
                       dob = dateFormat.format(date);
                     });
-                    print('confirm $date');
+                    debugPrint('confirm $date');
                   }, currentTime: DateTime.now(), locale: LocaleType.en);*/
             },
           ),
@@ -978,14 +978,14 @@ class _BookingInfoViewState extends State<BookingInfoView> {
         final File file = File(result);
         debugPrint(result);
         final String fileName = file.path.split('/').last;
-        print('File Name ==> $fileName');
+        debugPrint('File Name ==> $fileName');
         uploadProfilePicture(file);
       } else {
         showToast('Please select document', context);
       }
     } catch (e) {
       showToast('Please select document', context);
-      print(e);
+      debugPrint(e);
       result = 'Error: $e';
     }
   }
@@ -1010,7 +1010,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
       request.send().then((response) async {
         if (response.statusCode == 200) {
           progressDialog.hide();
-          print('Uploaded!');
+          debugPrint('Uploaded!');
           final respStr = await response.stream.bytesToString();
           debugPrint('Uploded ' + respStr);
           final UploadImageResponse uploadResponse =
@@ -1027,7 +1027,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
           }
         } else {
           progressDialog.hide();
-          print('Upload Faild !');
+          debugPrint('Upload Faild !');
         }
       }); // debugPrint("3");
 
@@ -1091,7 +1091,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
      formdata.add("photos", new UploadFileInfo(_image, path.basename(_image.path)));
      dio.post(uploadURL, data: formdata, options:
     Options(method: 'POST',responseType: ResponseType.PLAIN // or ResponseType.JSON
-     )).then((response) => print(response)).catchError((error) => print(error));
+     )).then((response) => debugPrint(response)).catchError((error) => debugPrint(error));
   }*/
 
   bool validateEmail(String value) {

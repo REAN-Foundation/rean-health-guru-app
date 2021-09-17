@@ -272,7 +272,7 @@ class _SymptomsViewState extends State<SymptomsView> {
       key: Key(symptomTypes.symptom),
       child: InkWell(
           onTap: () {
-            print('${symptomTypes.symptom} clicked');
+            debugPrint('${symptomTypes.symptom} clicked');
           },
           child: ListTile(
             leading: SizedBox(

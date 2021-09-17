@@ -124,7 +124,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
         /// Save all the new data points
         _healthDataList.addAll(healthData);
       } catch (e) {
-        print('Caught exception in getHealthDataFromTypes: $e');
+        debugPrint('Caught exception in getHealthDataFromTypes: $e');
       }
 
       /// Filter out duplicates
@@ -132,11 +132,11 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
 
       /// Print the results
       _healthDataList.forEach((x) {
-        print('Data point:  $x');
+        debugPrint('Data point:  $x');
         steps += x.value.round();
       });
 
-      //print("Steps: $steps");
+      //debugPrint("Steps: $steps");
 
       //this.steps = steps;
 
@@ -146,7 +146,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
             _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
       });
     } else {
-      print('Authorization not granted');
+      debugPrint('Authorization not granted');
       setState(() => _state = AppState.DATA_NOT_FETCHED);
     }
   }

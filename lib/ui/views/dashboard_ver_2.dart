@@ -67,7 +67,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       //debugPrint('Emergency Dashboard Tile ==> ${emergencyDashboardTile.date}');
       setState(() {});
     } on FetchDataException catch (e) {
-      print('error caught: $e');
+      debugPrint('error caught: $e');
     }
     /*catch (Excepetion) {
       // do something
@@ -1553,13 +1553,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
 
   markAllMedicationAsTaken() async {
     try {
-      print(currentMedicationList.length);
+      debugPrint(currentMedicationList.length.toString());
       final medicationIds = <String>[];
       for (final item in currentMedicationList) {
-        //print(item.timeScheduleEnd.toString() +'  '+ DateTime.now().toString() +'  '+DateTime.now().isAfter(item.timeScheduleEnd).toString());
+        //debugPrint(item.timeScheduleEnd.toString() +'  '+ DateTime.now().toString() +'  '+DateTime.now().isAfter(item.timeScheduleEnd).toString());
         if (DateTime.now().isAfter(item.timeScheduleStart)) {
           medicationIds.add(item.id);
-          print(item.id);
+          debugPrint(item.id);
         }
       }
 

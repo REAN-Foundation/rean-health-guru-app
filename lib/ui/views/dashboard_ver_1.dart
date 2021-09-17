@@ -1190,19 +1190,17 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                       )
                     else
                       Container(),
-                    weight != null
-                        ? Column(
+                    if (weight != null)
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  ImageIcon(
-                                    AssetImage(
-                                            'res/images/ic_body_weight.png'),
-                                        size: 24,
-                                        color: iconColor,
+                              ImageIcon(
+                                AssetImage('res/images/ic_body_weight.png'),
+                                size: 24,
+                                color: iconColor,
                                       ),
                                       SizedBox(
                                         width: 12,
@@ -1255,20 +1253,21 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                               style: TextStyle(
                                                   color: textColor,
                                                   fontSize: 10,
-                                                  fontWeight: FontWeight.w200,
-                                                  fontFamily: 'Montserrat')),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 16,
-                                  ),
-                                ],
-                              )
-                            : Container(),
+                                          fontWeight: FontWeight.w200,
+                                          fontFamily: 'Montserrat')),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                        ],
+                      )
+                    else
+                      Container(),
 
-                        /*Align(
+                    /*Align(
                     alignment: Alignment.centerRight,
                     child: InkWell(
                       onTap: (){

@@ -184,16 +184,16 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                                   minTime: DateTime.now()
                                       .subtract(Duration(days: 0)),
                                   onChanged: (date) {
-                                print('change $date');
+                                debugPrint('change $date');
                               }, onConfirm: (date) {
-                                unformatedDOB = date.toIso8601String();
+                                    unformatedDOB = date.toIso8601String();
                                 setState(() {
                                   dob = dateFormat.format(date);
                                   startDate = dateFormatStandard.format(date) +
                                       'T00:00:00.000Z';
                                 });
-                                print('confirm $date');
-                                print('confirm formated $startDate');
+                                debugPrint('confirm $date');
+                                debugPrint('confirm formated $startDate');
                               },
                                   currentTime: DateTime.now(),
                                   locale: LocaleType.en);

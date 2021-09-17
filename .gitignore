@@ -43,6 +43,7 @@ ios/output/
 # Exclude Firebase config files
 android/app/src/**/*.json
 android/app/src/*.json
+android/app/*.json
 ios/config/**/*.plist
 ios/config/*.plist
 

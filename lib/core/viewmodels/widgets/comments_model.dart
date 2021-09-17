@@ -21,7 +21,7 @@ class CommentsModel extends BaseModel {
 
   @override
   void dispose() {
-    print('I have been disposed!!');
+    debugPrint('I have been disposed!!');
     super.dispose();
   }
 }

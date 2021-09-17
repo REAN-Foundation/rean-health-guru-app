@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 
@@ -22,7 +23,7 @@ class AuthenticationService {
   Future<UserData> login(Map body) async {
     final UserData fetchedUser = await _api.loginPatient(body);
 
-    print(fetchedUser.status.toString());
+    debugPrint(fetchedUser.status.toString());
     //UserData hasUser = fetchedUser != null;
     if (fetchedUser.status == 'success') {
       _userController.add(fetchedUser);
@@ -34,7 +35,7 @@ class AuthenticationService {
   Future<BaseResponse> signUp(Map body) async {
     final BaseResponse fetchedUser = await _api.signUpPatient(body);
 
-    print(fetchedUser.status.toString());
+    debugPrint(fetchedUser.status.toString());
     //UserData hasUser = fetchedUser != null;
     if (fetchedUser.status == 'success') {
       _baseResponseController.add(fetchedUser);
@@ -48,7 +49,7 @@ class AuthenticationService {
     final BaseResponse fetchedUser =
         await _api.updateProfilePatient(body, userId, auth);
 
-    print(fetchedUser.status.toString());
+    debugPrint(fetchedUser.status.toString());
     //UserData hasUser = fetchedUser != null;
     if (fetchedUser.status == 'success') {
       _updateProfileBaseResponseController.add(fetchedUser);

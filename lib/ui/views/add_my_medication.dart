@@ -97,7 +97,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
             durationUnitsPojo.data.medicationDurationUnits);
       });
     } on FetchDataException catch (e) {
-      print('error caught: $e');
+      debugPrint('error caught: $e');
     }
     /*catch (Excepetion) {
       // do something
@@ -785,15 +785,15 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         showTitleActions: true,
                         minTime: DateTime.now().subtract(Duration(days: 1)),
                         onChanged: (date) {
-                      print('change $date');
+                          debugPrint('change $date');
                     }, onConfirm: (date) {
-                      setState(() {
+                          setState(() {
                         final List<String> dateArra =
                             date.toString().split(' ');
                         startOn = dateArra.elementAt(0);
                         debugPrint(startOn);
                       });
-                      print('confirm $date');
+                      debugPrint('confirm $date');
                     }, currentTime: DateTime.now(), locale: LocaleType.en);
                   },
                 ),

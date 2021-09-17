@@ -558,14 +558,14 @@ class _MyReportsViewState extends State<MyReportsView> {
         final File file = File(result);
         debugPrint(result);
         final String fileName = file.path.split('/').last;
-        print('File Name ==> $fileName');
+        debugPrint('File Name ==> $fileName');
         uploadProfilePicture(file, type);
       } else {
         showToast('Please select document', context);
       }
     } catch (e) {
       showToast('Please select document', context);
-      print(e);
+      debugPrint(e);
       result = 'Error: $e';
     }
   }
@@ -655,7 +655,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       request.send().then((response) async {
         if (response.statusCode == 200) {
           progressDialog.hide();
-          print('Uploaded!');
+          debugPrint('Uploaded!');
           final respStr = await response.stream.bytesToString();
           debugPrint('Uploded ' + respStr);
           final GetAllRecordResponse uploadResponse =
@@ -669,7 +669,7 @@ class _MyReportsViewState extends State<MyReportsView> {
         } else {
           progressDialog.hide();
           showToast('Opps, something wents wrong!', context);
-          print('Upload Faild !');
+          debugPrint('Upload Faild !');
         }
       }); // debugPrint("3");
 
@@ -928,14 +928,14 @@ class _MyReportsViewState extends State<MyReportsView> {
     final File file = File(picture.path);
     debugPrint(picture.path);
     final String fileName = file.path.split('/').last;
-    print('File Name ==> $fileName');
+    debugPrint('File Name ==> $fileName');
     uploadProfilePicture(file, type);
   }
 }
 
 /*setTimerForProgress(){
     Timer timerM =  new Timer.periodic(new Duration(seconds: 6), (time) {
-      print('Something');
+      debugPrint('Something');
       setState(() {
         uploadFileProcess = false;
       });

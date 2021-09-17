@@ -287,7 +287,7 @@ class _LoginViewState extends State<LoginView> {
                 initialCountryCode: getCurrentLocale(),
                 onChanged: (phone) {
                   debugPrint(phone.countryCode);
-                  print(phone.number);
+                  debugPrint(phone.number);
                   mobileNumber = phone.number;
                   countryCode = phone.countryCode;
                   /*if(mobileNumber.length == 10){
@@ -565,10 +565,10 @@ class _LoginViewState extends State<LoginView> {
     try {
       final result = await InternetAddress.lookup('tikme.co');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('connected');
+        debugPrint('connected');
       }
     } on SocketException catch (_) {
-      print('not connected');
+      debugPrint('not connected');
     }
   }
 
@@ -581,7 +581,7 @@ class _LoginViewState extends State<LoginView> {
   void firebase() {
     _fcm.getToken().then((String token) async {
       assert(token != null);
-      print('Push Messaging token: $token');
+      debugPrint('Push Messaging token: $token');
       debugPrint(token);
       _fcmToken = token;
       _sharedPrefUtils.save('fcmToken', token);
@@ -589,7 +589,7 @@ class _LoginViewState extends State<LoginView> {
 
 /*    _fcm.configure(
       onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
+        debugPrint("onMessage: $message");
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -607,7 +607,7 @@ class _LoginViewState extends State<LoginView> {
         );
       },
       onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
+        debugPrint("onLaunch: $message");
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -625,7 +625,7 @@ class _LoginViewState extends State<LoginView> {
         );
       },
       onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
+        debugPrint("onResume: $message");
         showDialog(
           context: context,
           builder: (context) => AlertDialog(

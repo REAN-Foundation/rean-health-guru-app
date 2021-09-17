@@ -247,7 +247,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
       key: Key(medication.drugName),
       child: InkWell(
           onTap: () {
-            print('${medication.drugName} clicked');
+            debugPrint('${medication.drugName} clicked');
           },
           child: ListTile(
             /*leading:SizedBox( height: 40, width: 16, child: CachedNetworkImage(

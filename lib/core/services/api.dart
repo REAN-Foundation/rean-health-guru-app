@@ -30,7 +30,7 @@ class Api {
     final response =
         await apiProvider.post('/user/login', body: body, header: map);
 
-    print(response);
+    debugPrint(response);
 
     // Convert and return
     return UserData.fromJson(response);
@@ -47,7 +47,7 @@ class Api {
     final response =
         await apiProvider.post('/patient', body: body, header: map);
 
-    print(response);
+    debugPrint(response);
 
     // Convert and return
     return PatientApiDetails.fromJson(response);
@@ -64,7 +64,7 @@ class Api {
     final response =
         await apiProvider.post('/user/validate-otp', body: body, header: map);
 
-    print(response);
+    debugPrint(response);
 
     // Convert and return
     return PatientApiDetails.fromJson(response);
@@ -81,7 +81,7 @@ class Api {
     final response =
         await apiProvider.post('/Patient', body: body, header: map);
 
-    print(response);
+    debugPrint(response);
 
     // Convert and return
     return BaseResponse.fromJson(response);
@@ -98,7 +98,7 @@ class Api {
     final response =
         await apiProvider.put('/patient/' + userId, body: body, header: map);
 
-    print(response);
+    debugPrint(response);
 
     // Convert and return
     return BaseResponse.fromJson(response);

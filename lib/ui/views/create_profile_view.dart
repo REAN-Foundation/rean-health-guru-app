@@ -238,7 +238,7 @@ class _CreateProfileState extends State<CreateProfile> {
         final File file = File(result);
         debugPrint(result);
         final String fileName = file.path.split('/').last;
-        print('File Name ==> $fileName');
+        debugPrint('File Name ==> $fileName');
         //file.renameSync(pFile.name);
         uploadProfilePicture(file);
       } else {
@@ -246,7 +246,7 @@ class _CreateProfileState extends State<CreateProfile> {
       }
     } catch (e) {
       showToast('Please select document', context);
-      print(e);
+      debugPrint(e);
       result = 'Error: $e';
     }
   }
@@ -283,7 +283,7 @@ class _CreateProfileState extends State<CreateProfile> {
 
       request.send().then((response) async {
         if (response.statusCode == 200) {
-          print('Uploaded!');
+          debugPrint('Uploaded!');
           final respStr = await response.stream.bytesToString();
           debugPrint('Uploded ' + respStr);
           final UploadImageResponse uploadResponse =
@@ -300,7 +300,7 @@ class _CreateProfileState extends State<CreateProfile> {
             showToast('Opps, something wents wrong!', context);
           }
         } else {
-          print('Upload Faild !');
+          debugPrint('Upload Faild !');
         }
       }); // debugPrint("3");
 
@@ -1074,7 +1074,7 @@ class _CreateProfileState extends State<CreateProfile> {
         icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
         activeColors: [Colors.blue, Colors.pink],
         onToggle: (index) {
-          print('switched to: $index');
+          debugPrint('switched to: $index');
         });
   }*/
 
@@ -1107,7 +1107,7 @@ class _CreateProfileState extends State<CreateProfile> {
                 [Colors.pink]
               ],
               onToggle: (index) {
-                print('switched to: $index');
+                debugPrint('switched to: $index');
                 if (index == 0) {
                   selectedGender = 'Male';
                 } else {
@@ -1174,13 +1174,13 @@ class _CreateProfileState extends State<CreateProfile> {
                   minTime: DateTime(1940, 1, 1),
                   maxTime: DateTime.now().subtract(Duration(days: 1)),
                   onChanged: (date) {
-                print('change $date');
+                    debugPrint('change $date');
               }, onConfirm: (date) {
-                unformatedDOB = date.toIso8601String();
+                    unformatedDOB = date.toIso8601String();
                 setState(() {
                   dob = dateFormat.format(date);
                 });
-                print('confirm $date');
+                debugPrint('confirm $date');
               }, currentTime: DateTime.now(), locale: LocaleType.en);
             },
           ),
@@ -1385,7 +1385,7 @@ class _CreateProfileState extends State<CreateProfile> {
     final File file = File(picture.path);
     debugPrint(picture.path);
     final String fileName = file.path.split('/').last;
-    print('File Name ==> $fileName');
+    debugPrint('File Name ==> $fileName');
     uploadProfilePicture(file);
   }
 }

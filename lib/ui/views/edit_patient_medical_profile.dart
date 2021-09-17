@@ -197,7 +197,7 @@ class _EditPatientMedicalProfileViewState
                         items: maritalStatusItems,
                         selected: showSelectedItemForMarried(maritalStatus),
                         onSelected: (item) {
-                          print(item.title);
+                          debugPrint(item.title);
                           maritalStatus = item.title;
                         },
                       ),
@@ -210,7 +210,7 @@ class _EditPatientMedicalProfileViewState
                         items: radioItems,
                         selected: showSelectedItemForYesOrNo(isDiabetic),
                         onSelected: (item) {
-                          print(item.title);
+                          debugPrint(item.title);
                           isDiabetic = item.title;
                         },
                       ),
@@ -223,7 +223,7 @@ class _EditPatientMedicalProfileViewState
                         items: radioItems,
                         selected: showSelectedItemForYesOrNo(hasHeartAilment),
                         onSelected: (item) {
-                          print(item.title);
+                          debugPrint(item.title);
                           hasHeartAilment = item.title;
                         },
                       ),
@@ -235,7 +235,7 @@ class _EditPatientMedicalProfileViewState
                 RadioGroup(
                   items: radioItems,
                   onSelected: (item) {
-                    print(item.title);
+                    debugPrint(item.title);
                   },
                 ),*/
                       Text('Is vegetarian?',
@@ -247,7 +247,7 @@ class _EditPatientMedicalProfileViewState
                         items: radioItems,
                         selected: showSelectedItemForYesOrNo(isVegetarian),
                         onSelected: (item) {
-                          print(item.title);
+                          debugPrint(item.title);
                           isVegetarian = item.title;
                         },
                       ),
@@ -260,7 +260,7 @@ class _EditPatientMedicalProfileViewState
                         items: radioItems,
                         selected: showSelectedItemForYesOrNo(isVegan),
                         onSelected: (item) {
-                          print(item.title);
+                          debugPrint(item.title);
                           isVegan = item.title;
                         },
                       ),
@@ -273,7 +273,7 @@ class _EditPatientMedicalProfileViewState
                         items: radioItems,
                         selected: showSelectedItemForYesOrNo(isSmoker),
                         onSelected: (item) {
-                          print(item.title);
+                          debugPrint(item.title);
                           isSmoker = item.title;
                         },
                       ),
@@ -286,7 +286,7 @@ class _EditPatientMedicalProfileViewState
                         items: radioItems,
                         selected: showSelectedItemForYesOrNo(isDrinker),
                         onSelected: (item) {
-                          print(item.title);
+                          debugPrint(item.title);
                           isDrinker = item.title;
                         },
                       ),
@@ -299,7 +299,7 @@ class _EditPatientMedicalProfileViewState
                 RadioGroup(
                   items: radioItems,
                   onSelected: (item) {
-                    print(item.title);
+                    debugPrint(item.title);
                   },
                 ),*/
                       SizedBox(

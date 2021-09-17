@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/networking/ApiProvider.dart';
@@ -69,7 +70,7 @@ class PatientHealthMarkerViewModel extends BaseModel {
     final response =
         await apiProvider.post('/nutrition/generic', header: map, body: body);
 
-    print(response);
+    debugPrint(response);
 
     setBusy(false);
     // Convert and return

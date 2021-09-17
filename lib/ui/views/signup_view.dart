@@ -286,7 +286,7 @@ class _SignUpViewState extends State<SignUpView> {
                     minTime: DateTime(1940, 1, 1),
                     maxTime: DateTime.now(),
                     onChanged: (date) {}, onConfirm: (date) {
-                  print('confirm $date');
+                  debugPrint('confirm $date');
                   selectedDateObject = date.toUtc();
                   selectedDate = dateFormat.format(date);
                   _fieldFocusChange(
@@ -491,7 +491,7 @@ class _SignUpViewState extends State<SignUpView> {
                   initialCountryCode: getCurrentLocale(),
                   onChanged: (phone) {
                     debugPrint(phone.countryCode);
-                    print(phone.number);
+                    debugPrint(phone.number);
                     mobileNumber = phone.number;
                     countryCode = phone.countryCode;
                     /*if(mobileNumber.length == 10){
@@ -806,7 +806,7 @@ class _SignUpViewState extends State<SignUpView> {
                     [Colors.pink]
                   ],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                     if (index == 0) {
                       selectedGender = 'Male';
                     } else {

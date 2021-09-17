@@ -195,7 +195,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void _selectedTab(int index) {
-    print('Selected Tab $index');
+    debugPrint('Selected Tab $index');
     setState(() {
       _currentNav = index;
       _lastSelected = 'TAB: $index';
@@ -226,16 +226,16 @@ class _HomeViewState extends State<HomeView> {
       paddingFocus: 10,
       opacityShadow: 0.8,
       onFinish: () {
-        print("finish");
+        debugPrint("finish");
       },
       onClickTarget: (target) {
-        print('onClickTarget: $target');
+        debugPrint('onClickTarget: $target');
       },
       onSkip: () {
-        print("skip");
+        debugPrint("skip");
       },
       onClickOverlay: (target) {
-        print('onClickOverlay: $target');
+        debugPrint('onClickOverlay: $target');
       },
     )..show();
   }*/
@@ -305,7 +305,7 @@ class _HomeViewState extends State<HomeView> {
       case 0:
         screen = DashBoardVer2View(
           positionToChangeNavigationBar: (int tabPosition) {
-            print('Tapped Tab $tabPosition');
+            debugPrint('Tapped Tab $tabPosition');
             _selectedTab(tabPosition);
           },
         );

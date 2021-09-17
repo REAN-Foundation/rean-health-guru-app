@@ -15,7 +15,7 @@ class LoginViewModel extends BaseModel {
   Future<UserData> login(Map body) async {
     setBusy(true);
     final UserData response = await _authenticationService.login(body);
-    print(response.status.toString());
+    debugPrint(response.status.toString());
     setBusy(false);
     return response;
   }
@@ -23,7 +23,7 @@ class LoginViewModel extends BaseModel {
   Future<BaseResponse> signUp(Map body) async {
     setBusy(true);
     final BaseResponse response = await _authenticationService.signUp(body);
-    print(response.status.toString());
+    debugPrint(response.status.toString());
     setBusy(false);
     return response;
   }
@@ -33,7 +33,7 @@ class LoginViewModel extends BaseModel {
     setBusy(true);
     final BaseResponse response =
         await _authenticationService.updateProfile(body, userId, auth);
-    print(response.status.toString());
+    debugPrint(response.status.toString());
     setBusy(false);
     return response;
   }

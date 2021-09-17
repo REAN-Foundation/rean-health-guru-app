@@ -173,7 +173,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                   [Colors.pink]
                 ],
                 onToggle: (index) {
-                  print('switched to: $index');
+                  debugPrint('switched to: $index');
                   if (index == 0) {
                     selectedGender = 'Male';
                   } else {
@@ -431,7 +431,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                   initialCountryCode: getCurrentLocale(),
                   onChanged: (phone) {
                     debugPrint(phone.countryCode);
-                    print(phone.number);
+                    debugPrint(phone.number);
                     mobileNumber = phone.number;
                     countryCode = phone.countryCode;
                     /*if(mobileNumber.length == 10){
@@ -550,7 +550,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
 
       request.send().then((response) async {
         if (response.statusCode == 200) {
-          print('Uploaded!');
+          debugPrint('Uploaded!');
           final respStr = await response.stream.bytesToString();
           debugPrint('Uploded ' + respStr);
           final UploadImageResponse uploadResponse =
@@ -563,7 +563,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
             showToast('Opps, something wents wrong!', context);
           }
         } else {
-          print('Upload Faild !');
+          debugPrint('Upload Faild !');
         }
       }); // debugPrint("3");
 

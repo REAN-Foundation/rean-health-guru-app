@@ -49,7 +49,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
     createFileOfPdfUrl().then((f) {
       setState(() {
         pathPDF = f.path;
-        print(pathPDF);
+        debugPrint(pathPDF);
       });
     });
     model.setBusy(true);

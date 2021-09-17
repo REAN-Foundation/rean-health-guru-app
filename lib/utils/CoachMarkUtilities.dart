@@ -61,19 +61,19 @@ class CoachMarkUtilites {
       opacityShadow: 0.8,
       onFinish: () {
         onCoachMartkFinish();
-        //print("finish");
+        //debugPrint("finish");
       },
       onClickTarget: (target) {
         onCoachMartkClickTarget(target);
-        //print('onClickTarget: $target');
+        //debugPrint('onClickTarget: $target');
       },
       onSkip: () {
         onCoachMartkSkip();
-        //print("skip");
+        //debugPrint("skip");
       },
       onClickOverlay: (target) {
         onCoachMartkClickOverlay(target);
-        //print('onClickOverlay: $target');
+        //debugPrint('onClickOverlay: $target');
       },
     );
   }

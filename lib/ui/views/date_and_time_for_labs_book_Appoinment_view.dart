@@ -99,7 +99,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
               getAvailableDoctorSlot.data.slotsByDate.elementAt(0).slots);
 
           for (int i = 0; i < timeSlot.length; i++) {
-            print(DateFormat.jm()
+            debugPrint(DateFormat.jm()
                 .format(timeSlot.elementAt(i).slotStart.toLocal()));
             if (DateFormat.jm()
                 .format(timeSlot.elementAt(i).slotStart.toLocal())
@@ -109,7 +109,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
               timeSlotPm.add(timeSlot.elementAt(i));
             }
           }
-          print('Am ${timeSlotAm.length}  PM ${timeSlotPm.length}');
+          debugPrint('Am ${timeSlotAm.length}  PM ${timeSlotPm.length}');
         }
       } else {
         showToast(getAvailableDoctorSlot.message, context);
@@ -415,7 +415,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
   }
 
   Widget _makeTimeSlotGridView() {
-    print('$isAmSelected');
+    debugPrint('$isAmSelected');
     if (isAmSelected) {
       timeSlots.clear();
       timeSlots.addAll(timeSlotAm);
@@ -525,7 +525,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
       if (i == index && timeSlots.elementAt(i).isAvailable) {
         debugPrint('index click true');
         timeSlots.elementAt(i).isSelected = true;
-        print(
+        debugPrint(
             'UTC ${timeSlots.elementAt(i).slotStart.toUtc().toIso8601String()}');
         startTime = timeSlots.elementAt(i).slotStart.toUtc().toIso8601String();
         endTime = timeSlots.elementAt(i).slotEnd.toUtc().toIso8601String();
@@ -578,7 +578,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
                 selectedDate: DateTime.now(),
                 firstDate: DateTime.now(),
                 onChanged: (val) {
-                  print(val);
+                  debugPrint(val.toString());
                   Navigator.pop(context);
                 },
               ),

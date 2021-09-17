@@ -104,12 +104,12 @@ class ApiProvider {
       //case 404:
       case 500:
       final responseJson = json.decode(response.body.toString());
-        print(responseJson);
+        debugPrint(responseJson);
         return responseJson;
 
       default:
         final code = response.statusCode.toString();
-        print('Status_Code ${code.toString()}');
+        debugPrint('Status_Code ${code.toString()}');
         throw FetchDataException('Opps! Something wents wrong.');
 
 //      case 400:
@@ -177,20 +177,20 @@ class ApiProvider {
               responseJson = respStr;
             }
 
-            /*http.Response.fromStream(response)
+        /*http.Response.fromStream(response)
             .then((response) {
 
           if (response.statusCode == 200)
           {
-            print("Uploaded! ");
-            print('response.body '+response.body);
+            debugPrint("Uploaded! ");
+            debugPrint('response.body '+response.body);
           }
 
           return response.body;
 
         });*/
           })
-          .catchError((err) => print('error : ' + err.toString()))
+          .catchError((err) => debugPrint('error : ' + err.toString()))
           .whenComplete(() {});
     } on SocketException {
       throw FetchDataException('No Internet connection');

@@ -51,7 +51,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       }
     } on FetchDataException catch (e) {
       tasks.clear();
-      print('error caught: $e');
+      debugPrint('error caught: $e');
       model.setBusy(false);
       showToast(e.toString(), context);
     }
@@ -837,7 +837,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       }
     } on FetchDataException catch (e) {
       tasks.clear();
-      print('error caught: $e');
+      debugPrint('error caught: $e');
       model.setBusy(false);
       showToast(e.toString(), context);
     } catch (CustomException) {

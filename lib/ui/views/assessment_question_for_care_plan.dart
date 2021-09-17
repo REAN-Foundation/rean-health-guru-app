@@ -45,7 +45,7 @@ class _AssessmentQuestionCarePlanViewState
     });
 
     // Printing all selected items on Terminal screen.
-    print(holder_1);
+    debugPrint(holder_1.toString());
     // Here you will get all your selected Checkbox items.
 
     // Clear array after use.

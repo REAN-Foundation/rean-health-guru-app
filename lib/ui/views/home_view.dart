@@ -11,8 +11,6 @@ import 'package:paitent/core/viewmodels/views/common_config_model.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/emergency_contact.dart';
 import 'package:paitent/ui/views/myReportsUpload.dart';
-import 'package:paitent/ui/views/search_doctor_list_view.dart';
-import 'package:paitent/ui/views/search_lab_list_view.dart';
 import 'package:paitent/utils/CoachMarkUtilities.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/GetAllConfigrations.dart';
@@ -26,7 +24,7 @@ import 'base_widget.dart';
 import 'care_plan_task.dart';
 import 'dashboard_ver_2.dart';
 import 'login_with_otp_view.dart';
-
+//ignore: must_be_immutable
 class HomeView extends StatefulWidget {
   int screenPosition = 0;
 
@@ -54,15 +52,11 @@ class _HomeViewState extends State<HomeView> {
   GlobalKey drawerKey = GlobalKey();
   GlobalKey key = GlobalKey();
 
-  final _searchDoctorListView = SearchDoctorListView();
-  final _searchLabListView = SearchLabListView();
   String profileImage = '';
-  String _lastSelected = 'TAB: 0';
 
   final GlobalKey _keyNavigation_drawer = GlobalKey();
   final GlobalKey _keyMyTasks = GlobalKey();
   final GlobalKey _keyUploadReports = GlobalKey();
-  final GlobalKey _keyViewAppointments = GlobalKey();
   final GlobalKey _keyEmergencyContacts = GlobalKey();
   TutorialCoachMark tutorialCoachMark;
   List<TargetFocus> targets = [];
@@ -156,12 +150,10 @@ class _HomeViewState extends State<HomeView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
-  void getLocation() async {
+  void getLocation() {
     /*_serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
@@ -187,7 +179,7 @@ class _HomeViewState extends State<HomeView> {
     });*/
   }
 
-  void findOutCityFromGeoCord(double lat, double long) async {
+  void findOutCityFromGeoCord(double lat, double long) {
     /*final coordinates = new Coordinates(lat, long);
     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     first = addresses.first;
@@ -198,11 +190,10 @@ class _HomeViewState extends State<HomeView> {
     debugPrint('Selected Tab $index');
     setState(() {
       _currentNav = index;
-      _lastSelected = 'TAB: $index';
     });
   }
 
-  void _layout(_) async {
+  _layout(_) async {
     Future.delayed(Duration(milliseconds: 1000));
     bool isCoachMarkDisplayed = false;
 
@@ -257,7 +248,7 @@ class _HomeViewState extends State<HomeView> {
     }).show();
   }
 
-  void initTargets() async {
+  void initTargets() {
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyNavigation_drawer,
         (targets.length + 1).toString(),

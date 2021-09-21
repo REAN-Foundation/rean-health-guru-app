@@ -5,10 +5,10 @@ import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 
+// ignore: must_be_immutable
 class AddNutritionDetailsDialog extends StatefulWidget {
   Function _submitButtonListner;
   String _nutritionName;
-  double _caloriesConsumed;
 
   //AllergiesDialog(@required this._allergiesCategoryMenuItems,@required this._allergiesSeveretyMenuItems, @required Function this.submitButtonListner, this.patientId);
 
@@ -38,12 +38,11 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BaseWidget<PatientCarePlanViewModel>(
         model: model,
         builder: (context, model, child) => Container(
@@ -108,7 +107,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                               __consumedCaloriesFocus);
                         },
                         inputFormatters: [
-                          BlacklistingTextInputFormatter(
+                          FilteringTextInputFormatter.deny(
                               RegExp('[\\,|\\+|\\-]')),
                         ],
                         decoration: InputDecoration(
@@ -176,7 +175,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                             TextInputType.numberWithOptions(decimal: true),
                         onFieldSubmitted: (term) {},
                         inputFormatters: [
-                          BlacklistingTextInputFormatter(
+                          FilteringTextInputFormatter.deny(
                               RegExp('[\\,|\\+|\\-]')),
                         ],
                         decoration: InputDecoration(
@@ -211,22 +210,26 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
   Widget _submitButton() {
     return Align(
       alignment: Alignment.center,
-      child: RaisedButton(
+      child: ElevatedButton(
         onPressed: () {
           widget._submitButtonListner(
               _nutritionNameController.text.toString(),
               double.parse(_consumedCaloriesController.text),
               widget._nutritionName);
         },
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(24.0))),
+        style: ButtonStyle(
+            foregroundColor:
+                MaterialStateProperty.all<Color>(primaryLightColor),
+            backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                    side: BorderSide(color: primaryColor)))),
         child: Text(
           '      Add       ',
           style: TextStyle(
               color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),
-        textColor: Colors.white,
-        color: primaryColor,
       ),
     );
   }

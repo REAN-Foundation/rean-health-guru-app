@@ -15,10 +15,11 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'home_view.dart';
 
+// ignore: must_be_immutable
 class VideoMoreCarePlanView extends StatefulWidget {
   AssortedViewConfigs assortedViewConfigs;
 
-  VideoMoreCarePlanView(@required this.assortedViewConfigs);
+  VideoMoreCarePlanView(this.assortedViewConfigs);
 
   @override
   _VideoMoreCarePlanViewState createState() => _VideoMoreCarePlanViewState();
@@ -43,7 +44,6 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     if (widget.assortedViewConfigs.task.type == 'Video') {
       videoId = YoutubePlayer.convertUrlToId(
           widget.assortedViewConfigs.task.details.url);

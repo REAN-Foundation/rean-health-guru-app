@@ -1,6 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
-
-@JsonSerializable(nullable: true)
 class PharmacyListApiResponse {
   String status;
   String message;

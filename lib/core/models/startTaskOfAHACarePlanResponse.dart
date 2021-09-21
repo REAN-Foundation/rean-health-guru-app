@@ -1,8 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
 
 import 'GetTaskOfAHACarePlanResponse.dart';
 
-@JsonSerializable(nullable: true)
 class StartTaskOfAHACarePlanResponse {
   String status;
   String message;
@@ -27,7 +25,6 @@ class StartTaskOfAHACarePlanResponse {
   }
 }
 
-@JsonSerializable(nullable: true)
 class Data {
   Task task;
 

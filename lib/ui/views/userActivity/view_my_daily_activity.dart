@@ -113,7 +113,6 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
     /// You MUST request access to the data types before reading them
     final bool accessWasGranted = await health.requestAuthorization(types);
 
-    int steps = 0;
     //this.steps = 0;
     if (accessWasGranted) {
       try {
@@ -202,9 +201,6 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
     );
   }
 
-  Widget _contentNoData() {
-    return Text('No Data to show');
-  }
 
   Widget _contentNotFetched() {
     return Text(''); //Press the download button to fetch data
@@ -320,7 +316,6 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BaseWidget<PatientHealthMarkerViewModel>(
       model: model,
       builder: (context, model, child) => Container(

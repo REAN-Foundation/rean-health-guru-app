@@ -2,8 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_driver/driver_extension.dart';
-import 'package:get_it/get_it.dart';
-import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/provider_setup.dart';
 import 'package:paitent/ui/router.dart';
 import 'package:paitent/ui/views/AfterSplashScreen.dart';
@@ -23,27 +21,18 @@ Future<void> main() async {
 
   runApp(MyApp(login));
 }
-
+//ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   bool isLogin;
-  final String _baseUrl = '';
 
-  MyApp(@required bool isLogin) {
+  MyApp(bool isLogin) {
     this.isLogin = isLogin;
-    GetIt.instance.registerSingleton<ApiProvider>(ApiProvider(_baseUrl));
     debugPrint('MyApp Constructor >> Login Session: $isLogin');
-  }
-
-  @override
-  void initState() {
-    //loadSharedPrefs();
   }
 
   @override
   Widget build(BuildContext context) {
     debugPrint('MyApp >> Login Session: $isLogin');
-    debugPrint('ApiProvider >> Base URL: $_baseUrl');
-    // Set portrait orientation
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
@@ -72,14 +61,14 @@ class MyApp extends StatelessWidget {
           styleTextUnderTheLoader: TextStyle(),
           photoSize: 100.0,
           loaderColor: Colors.transparent,
-          baseUrl: _baseUrl,
+          baseUrl: '',
         ),
         onGenerateRoute: Routers.generateRoute,
       ),
     );
   }
 
-  void loadSharedPrefs() async {
+  loadSharedPrefs() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     isLogin = prefs.getBool('login');
   }

@@ -1,5 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
-@JsonSerializable(nullable: true)
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/models/labsListApiResponse.dart';

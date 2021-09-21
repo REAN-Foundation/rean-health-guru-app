@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/DrugOrderIdPojo.dart';
 import 'package:paitent/core/models/DrugsLibraryPojo.dart';
 import 'package:paitent/core/models/GetMedicationStockImages.dart';
 import 'package:paitent/core/models/MedicationDosageUnitsPojo.dart';
@@ -33,21 +32,17 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   String _dosageUnit = '';
   String _frequencyUnit = '';
-  final String _durationUnit = '';
   String startOn = '';
 
   final _unitController = TextEditingController();
   final _durationController = TextEditingController();
   final _typeAheadController = TextEditingController();
-  final _timeScheduledController = TextEditingController();
-  var _selectedDrug;
 
   bool searchForDrug = false;
   List<Drugs> drugs = [];
 
   List<String> drugsList = [];
   List<DropdownMenuItem<String>> _dosageUnitMenuItems;
-  List<DropdownMenuItem<String>> _durationUnitMenuItems;
   List<DropdownMenuItem<String>> _frequencyUnitMenuItems;
 
   bool morningCheck = false;
@@ -62,12 +57,12 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     loadSharedPrefs();
     _getMedicaionStockImages();
     /*if (widget._visitInformation.drugOrderId == "") {
       _addPatientMedicationOrderId();
     }*/
+    super.initState();
   }
 
   loadSharedPrefs() async {
@@ -93,8 +88,6 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
             frequenciesPojo.data.frequencyUnits);
         _dosageUnitMenuItems = buildDropDownMenuItemsForDosageUnit(
             dosageUnitsPojo.data.medicationDosageUnits);
-        _durationUnitMenuItems = buildDropDownMenuItemsForDurationUnit(
-            durationUnitsPojo.data.medicationDurationUnits);
       });
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -143,7 +136,6 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BaseWidget<PatientMedicationViewModel>(
         model: model,
         builder: (context, model, child) => Container(
@@ -301,11 +293,12 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Please select a drug';
+                      } else {
+                        return '';
                       }
                     },
                     onSaved: (value) {
                       debugPrint(value);
-                      _selectedDrug = value;
                     },
                   ),
                 ),
@@ -395,7 +388,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
                     inputFormatters: [
-                      BlacklistingTextInputFormatter(RegExp('[\\,|\\+|\\-]')),
+                      FilteringTextInputFormatter.deny(RegExp('[\\,|\\+|\\-]')),
                     ],
                     decoration: InputDecoration(
                       hintStyle: TextStyle(
@@ -557,7 +550,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
-                        BlacklistingTextInputFormatter(RegExp('[\\,|\\+|\\-]')),
+                        FilteringTextInputFormatter.deny(
+                            RegExp('[\\,|\\+|\\-]')),
                       ],
                       decoration: InputDecoration(
                         hintStyle: TextStyle(
@@ -814,7 +808,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
           height: 40,
           child: Semantics(
             label: 'Save',
-            child: RaisedButton(
+            child:
+                /*RaisedButton(
               onPressed: () {
                 if (_typeAheadController.text == '') {
                   showToast('Please select drug', context);
@@ -825,17 +820,17 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 } else if (_frequencyUnit == '') {
                   showToast('Please select frequency', context);
                 }
-                /* else if(_frequencyUnit ? "Daily" : ){
+                */ /* else if(_frequencyUnit ? "Daily" : ){
 
-                } */
+                } */ /*
                 else if (_durationController.text == '') {
                   showToast('Please enter duration', context);
                 } else if (startOn == '') {
                   showToast('Please select start date', context);
                 }
-                /*else if (_durationController.text == "") {
+                */ /*else if (_durationController.text == "") {
                   showToast("Please enter comment");
-                } */
+                } */ /*
                 else {
                   _addPatientMedication(context);
                 }
@@ -851,7 +846,38 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               ),
               textColor: Colors.white,
               color: primaryColor,
-            ),
+            )*/
+                ElevatedButton(
+                    child: Text("Save",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w700)),
+                    style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(primaryLightColor),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(primaryColor),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                    side: BorderSide(color: primaryColor)))),
+                    onPressed: () {
+                      if (_typeAheadController.text == '') {
+                        showToast('Please select drug', context);
+                      } else if (_unitController == '') {
+                        showToast('Please enter unit qty', context);
+                      } else if (_dosageUnit == '') {
+                        showToast('Please Select dosage unit', context);
+                      } else if (_frequencyUnit == '') {
+                        showToast('Please select frequency', context);
+                      } else if (_durationController.text == '') {
+                        showToast('Please enter duration', context);
+                      } else if (startOn == '') {
+                        showToast('Please select start date', context);
+                      } else {
+                        _addPatientMedication(context);
+                      }
+                    }),
           ),
         ),
       ],
@@ -882,12 +908,6 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       ),
     );
   }*/
-
-  _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    currentFocus.unfocus();
-    FocusScope.of(context).requestFocus(nextFocus);
-  }
 
   Widget _entryInstructionField() {
     return Column(
@@ -1070,48 +1090,6 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     );
   }
 
-  Widget _drugTimeScheduledTextFeild() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Time Scheduled',
-            style: TextStyle(
-                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w700)),
-        SizedBox(
-          height: 8,
-        ),
-        Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: primaryColor, width: 1),
-              borderRadius: BorderRadius.all(
-                Radius.circular(4),
-              ),
-              color: Colors.white),
-          child: TextFormField(
-              controller: _timeScheduledController,
-              maxLines: 1,
-              enabled: true,
-              style: TextStyle(
-                  fontFamily: 'Montserrat', fontSize: 14, color: primaryColor),
-              textInputAction: TextInputAction.done,
-              decoration: InputDecoration(
-                hintStyle: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 14,
-                    color: primaryColor),
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                disabledBorder: InputBorder.none,
-                contentPadding:
-                    EdgeInsets.only(left: 15, bottom: 14, top: 11, right: 0),
-              )),
-        ),
-      ],
-    );
-  }
 
   List<String> getDrugsSuggestions(String query) {
     final List<String> matches = [];
@@ -1148,9 +1126,6 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         searchForDrug = false;
       });
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      searchForDrug = false;
-      debugPrint(Exception.toString());
     }
   }
 
@@ -1229,30 +1204,6 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       }
     } catch (CustomException) {
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
-    }
-  }
-
-  _addPatientMedicationOrderId() async {
-    try {
-      final map = <String, String>{};
-      //map["VisitId"] = widget._visitInformation.visitInfo.id;
-      //map["DoctorUserId"] = doctorUserId;
-      map['PatientUserId'] = patientUserId;
-
-      final DrugOrderIdPojo baseResponse =
-          await model.createDrugOrderIdForVisit(map);
-
-      if (baseResponse.status == 'success') {
-        //widget._visitInformation.drugOrderId = baseResponse.data.drugOrder.id;
-      } else {
-        showToast('Please try again', context);
-      }
-    } catch (CustomException) {
-      debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -1267,13 +1218,13 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               _typeAheadController.text.toString() +
               ' to drug library.'),
           actions: [
-            FlatButton(
+            TextButton(
               child: const Text('No'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
+            TextButton(
               child: const Text('Yes'),
               onPressed: () {
                 _addDrugTolibrary();
@@ -1302,8 +1253,6 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       }
     } catch (CustomException) {
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -1321,9 +1270,6 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       }
     } catch (CustomException) {
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      searchForDrug = false;
-      debugPrint(Exception.toString());
     }
   }
 }

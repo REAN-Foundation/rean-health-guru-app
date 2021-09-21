@@ -24,8 +24,6 @@ class _AddWeightGoalsForCarePlanViewState
   String selectedGoal = '';
 
   final TextEditingController _weightController = TextEditingController();
-  final TextEditingController _waistController = TextEditingController();
-
   final _weightFocus = FocusNode();
   final _wastFocus = FocusNode();
   String dob = '';

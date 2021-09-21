@@ -21,7 +21,6 @@ class SetUpNurseForCarePlanView extends StatefulWidget {
 class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _searchController = TextEditingController();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   StartCarePlanResponse startCarePlanResponse;
 
@@ -43,7 +42,6 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
   @override
   void initState() {
     loadSharedPrefrance();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -519,9 +517,6 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
       //progressDialog.hide();
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException);
-    } catch (Exception) {
-      //progressDialog.hide();
-      debugPrint(Exception.toString());
     }
   }
 }

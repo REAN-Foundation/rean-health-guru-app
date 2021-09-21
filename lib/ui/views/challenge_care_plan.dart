@@ -9,11 +9,11 @@ import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
 
 import 'home_view.dart';
-
+//ignore: must_be_immutable
 class ChallengeCarePlanView extends StatefulWidget {
   Task task;
 
-  ChallengeCarePlanView(@required Task task) {
+  ChallengeCarePlanView(Task task) {
     this.task = task;
   }
 
@@ -29,7 +29,6 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     if (widget.task.details.challengeNotes != null) {
       _textController.text = widget.task.details.challengeNotes.toString();
       _textController.selection = TextSelection.fromPosition(

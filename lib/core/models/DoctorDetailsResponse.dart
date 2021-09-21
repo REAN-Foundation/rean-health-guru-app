@@ -1,7 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 
-@JsonSerializable(nullable: true)
 class DoctorDetailsResponse {
   String status;
   String message;
@@ -26,7 +24,6 @@ class DoctorDetailsResponse {
   }
 }
 
-@JsonSerializable(nullable: true)
 class Data {
   Doctors doctor;
 

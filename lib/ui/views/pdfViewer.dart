@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
-
+//ignore: must_be_immutable
 class PDFScreen extends StatelessWidget {
   String pathPDF = '';
 
@@ -34,7 +34,7 @@ class PDFScreen extends StatelessWidget {
         ;
   }
 
-  Future<Null> urlFileShare() async {
+  urlFileShare() async {
     final RenderBox box = _globalKey.currentContext.findRenderObject();
     if (Platform.isAndroid) {
       /*  var url = 'https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg';

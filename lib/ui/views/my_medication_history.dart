@@ -37,21 +37,17 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
   @override
   void initState() {
     getMyMedicationSummary();
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BaseWidget<PatientMedicationViewModel>(
       model: model,
       builder: (context, model, child) => Container(

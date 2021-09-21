@@ -20,7 +20,6 @@ class BiometricBodyTemperatureVitalsView extends StatefulWidget {
 class _BiometricBodyTemperatureVitalsViewState
     extends State<BiometricBodyTemperatureVitalsView> {
   var model = PatientVitalsViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
 
   final _controller = TextEditingController();
@@ -31,14 +30,12 @@ class _BiometricBodyTemperatureVitalsViewState
   @override
   void initState() {
     getVitalsHistory();
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-    // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -98,7 +95,8 @@ class _BiometricBodyTemperatureVitalsViewState
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (term) {},
                       inputFormatters: [
-                        BlacklistingTextInputFormatter(RegExp('[\\,|\\+|\\-]')),
+                        FilteringTextInputFormatter.deny(
+                            RegExp('[\\,|\\+|\\-]')),
                       ],
                       decoration: InputDecoration(
                           hintText: '(95 to 100)',

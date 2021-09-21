@@ -10,11 +10,11 @@ import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
-
+//ignore: must_be_immutable
 class StartCarePlanView extends StatefulWidget {
   String selectedCarePlan = '';
 
-  StartCarePlanView(@required this.selectedCarePlan);
+  StartCarePlanView(this.selectedCarePlan);
 
   @override
   _StartCarePlanViewState createState() => _StartCarePlanViewState();
@@ -292,8 +292,6 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 }

@@ -46,7 +46,6 @@ class _MyReportsViewState extends State<MyReportsView> {
   @override
   void initState() {
     getAllRecords();
-    // TODO: implement initState
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         _scrollController.jumpTo(50.0);
@@ -76,8 +75,6 @@ class _MyReportsViewState extends State<MyReportsView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -111,9 +108,6 @@ class _MyReportsViewState extends State<MyReportsView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      progressDialog.hide();
-      debugPrint(Exception.toString());
     }
   }
 
@@ -135,8 +129,6 @@ class _MyReportsViewState extends State<MyReportsView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -154,16 +146,12 @@ class _MyReportsViewState extends State<MyReportsView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-
-    // TODO: implement build
     return BaseWidget<CommonConfigModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -248,7 +236,7 @@ class _MyReportsViewState extends State<MyReportsView> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        RaisedButton.icon(
+        ElevatedButton.icon(
           onPressed: () async {
             /*String type = await _askForDocsType();
             debugPrint('File Type ${type}');
@@ -280,10 +268,14 @@ class _MyReportsViewState extends State<MyReportsView> {
                 color: Colors.white,
                 fontWeight: FontWeight.w700),
           ),
-          color: primaryColor,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
-              side: BorderSide(color: primaryColor)),
+          style: ButtonStyle(
+              foregroundColor:
+                  MaterialStateProperty.all<Color>(primaryLightColor),
+              backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                      side: BorderSide(color: primaryColor)))),
         ),
       ],
     );
@@ -507,7 +499,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   ],
   )*/
 
-  Future<Null> urlFileShare(String shareLink) async {
+  urlFileShare(String shareLink) async {
     final RenderBox box = _scaffoldKey.currentContext.findRenderObject();
     if (Platform.isAndroid) {
       /*  var url = 'https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg';
@@ -704,11 +696,11 @@ class _MyReportsViewState extends State<MyReportsView> {
           ),
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text('No'),
             onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
           ),
-          FlatButton(
+          TextButton(
             child: Text('Yes'),
             onPressed: () {
               deleteDocument(document.id);
@@ -747,12 +739,12 @@ class _MyReportsViewState extends State<MyReportsView> {
           ),
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
               child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context, rootNavigator: true).pop();
               }),
-          FlatButton(
+          TextButton(
               child: const Text('Ok'),
               onPressed: () {
                 if (document.fileName == renameControler.text) {
@@ -922,7 +914,7 @@ class _MyReportsViewState extends State<MyReportsView> {
     final String type = await _askForDocsType();
     debugPrint('File Type $type');
 
-    final picture = await _picker.getImage(
+    final picture = await _picker.pickImage(
       source: ImageSource.camera,
     );
     final File file = File(picture.path);

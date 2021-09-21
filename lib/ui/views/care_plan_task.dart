@@ -23,7 +23,6 @@ class CarePlanTasksView extends StatefulWidget {
 class _CarePlanTasksViewState extends State<CarePlanTasksView>
     with WidgetsBindingObserver {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var dateFormat = DateFormat('MMM, dd - hh:mm a');
   GetTaskOfAHACarePlanResponse _carePlanTaskResponse;
   List<Task> tasks = <Task>[];
@@ -83,7 +82,6 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     WidgetsBinding.instance.addObserver(this);
     progressDialog = ProgressDialog(context);
     //debugPrint("startCarePlanResponseGlob ==> ${startCarePlanResponseGlob}");
-    // TODO: implement initState
     triggerApiCall();
     super.initState();
   }
@@ -101,7 +99,6 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -711,8 +708,6 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 

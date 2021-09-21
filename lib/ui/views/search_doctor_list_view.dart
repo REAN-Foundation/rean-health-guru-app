@@ -21,11 +21,10 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
   PermissionStatus _permissionGranted;
   LocationData _locationData;
   List<Address> addresses;
-  Address first;*/
-  bool _serviceEnabled;
+  Address first;
+  bool _serviceEnabled;*/
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   String name = '';
-  final int _currentNav = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _searchController = TextEditingController();
   var model = BookAppoinmentViewModel();
@@ -114,7 +113,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
     }
   }
 
-  void getLocation() async {
+  getLocation() async {
     /*_serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
@@ -140,7 +139,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
     });*/
   }
 
-  void findOutCityFromGeoCord(double lat, double long) async {
+  findOutCityFromGeoCord(double lat, double long) async {
     /*final coordinates = new Coordinates(lat, long);
     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     first = addresses.first;
@@ -417,7 +416,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                   ),
                   Semantics(
                     label: 'Book_' + doctorDetails.firstName + ' ',
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       child: Text(
                         'Book Now',
                         maxLines: 1,
@@ -428,15 +427,21 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w700),
                       ),
-                      color: primaryColor,
                       onPressed: () {
                         getDoctorDetails(doctorDetails.userId);
                       },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(8.0),
-                              bottomRight: Radius.circular(
-                                  8.0))) /*InkWell(
+                      style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.all<Color>(
+                              primaryLightColor),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(primaryColor),
+                          shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                  side: BorderSide(
+                                      color:
+                                          primaryColor)))), /*InkWell(
                       onTap: () {
                         */ /*Navigator.pushNamed(context, RoutePaths.Doctor_Details_View,
                             arguments: doctorDetails);*/ /*
@@ -467,7 +472,6 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                         ),
                       ),
                     )*/
-                      ,
                     ),
                   ),
                 ],

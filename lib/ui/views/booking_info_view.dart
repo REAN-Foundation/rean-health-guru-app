@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -25,14 +24,13 @@ import 'package:paitent/ui/views/labTileWidget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 import 'base_widget.dart';
-
+//ignore: must_be_immutable
 class BookingInfoView extends StatefulWidget {
   DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;
 
-  BookingInfoView(@required this.bookingAppoinmentsDetails);
+  BookingInfoView(this.bookingAppoinmentsDetails);
 
   @override
   _BookingInfoViewState createState() =>
@@ -69,7 +67,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
   Labs labDetails;
 
-  _BookingInfoViewState(@required this.bookingAppoinmentsDetails);
+  _BookingInfoViewState(this.bookingAppoinmentsDetails);
 
   String auth = '';
   var model = BookAppoinmentViewModel();
@@ -112,7 +110,6 @@ class _BookingInfoViewState extends State<BookingInfoView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadSharedPrefs();
   }
@@ -268,153 +265,9 @@ class _BookingInfoViewState extends State<BookingInfoView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
-  Widget _makeDoctorListCard() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: 60,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      child: Image(
-                        image: AssetImage('res/images/profile_placeholder.png'),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  flex: 5,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                          'Dr.' +
-                              doctorDetails.firstName +
-                              ' ' +
-                              doctorDetails.lastName,
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Montserrat',
-                              color: primaryColor)),
-                      Text(
-                          doctorDetails.specialities +
-                              ', ' +
-                              doctorDetails.qualification,
-                          style: TextStyle(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w100,
-                              color: textBlack,
-                              fontFamily: 'Montserrat')),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                width: 55,
-              ),
-              RichText(
-                text: TextSpan(
-                  text: '    Consultation Fee :',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: textBlack,
-                      fontSize: 14,
-                      fontFamily: 'Montserrat'),
-                  children: <TextSpan>[
-                    TextSpan(
-                        text: ' ₹' + doctorDetails.consultationFee.toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: primaryColor,
-                            fontSize: 14,
-                            fontFamily: 'Montserrat')),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _makeLabListCard() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: 60,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      child: Image(
-                        image: AssetImage('res/images/profile_placeholder.png'),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  flex: 5,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(labDetails.firstName + ' ' + labDetails.lastName,
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Montserrat',
-                              color: primaryColor)),
-                      Text(labDetails.locality,
-                          style: TextStyle(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w100,
-                              color: textBlack,
-                              fontFamily: 'Montserrat')),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _makeDateAndTimeTile() {
     return Container(
@@ -542,46 +395,6 @@ class _BookingInfoViewState extends State<BookingInfoView> {
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _bookAppoinmentFor() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            'Book a appoinment for',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          ToggleSwitch(
-              minWidth: 120.0,
-              cornerRadius: 20,
-              initialLabelIndex: 0,
-              totalSwitches: 2,
-              activeBgColor: [Colors.green],
-              inactiveBgColor: Colors.grey,
-              labels: ['Male', 'Female'],
-              icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
-              activeBgColors: [
-                [Colors.blue],
-                [Colors.pink]
-              ],
-              onToggle: (index) {
-                debugPrint('switched to: $index');
-                if (index == 0) {
-                  selectedGender = 'Male';
-                } else {
-                  selectedGender = 'Female';
-                }
-              })
         ],
       ),
     );

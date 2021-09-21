@@ -37,13 +37,11 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
   @override
   void initState() {
     _getPatientVitals();
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BaseWidget<PatientObservationsViewModel>(
         model: model,
         builder: (context, model, child) => Scaffold(
@@ -352,81 +350,6 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
     );
   }
 
-  _makeAllergriesCard(BuildContext context, int index) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        height: 68,
-        decoration: BoxDecoration(
-            color: primaryLightColor,
-            border: Border.all(color: primaryLightColor),
-            borderRadius: BorderRadius.all(Radius.circular(8.0))),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                width: 16,
-              ),
-              Expanded(
-                flex: 3,
-                child: Text('Dust allergy',
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        color: textBlack,
-                        fontWeight: FontWeight.w600)),
-              ),
-              SizedBox(
-                width: 8,
-              ),
-              Expanded(
-                flex: 3,
-                child: Text('Moderate',
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        color: textBlack,
-                        fontWeight: FontWeight.w600)),
-              ),
-              SizedBox(
-                width: 8,
-              ),
-              Expanded(
-                flex: 5,
-                child: Text('Runny nose. Since childhood',
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        color: textBlack,
-                        fontWeight: FontWeight.w600)),
-              ),
-              SizedBox(
-                width: 8,
-              ),
-              Expanded(
-                flex: 1,
-                child: Icon(
-                  Icons.edit,
-                  color: primaryColor,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _addOrEditVitalsDialog(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 0.0,
-      backgroundColor: colorF6F6FF,
-      child: addOrEditVitalsDialog(context),
-    );
-  }
-
   addOrEditVitalsDialog(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8.0),
@@ -584,13 +507,18 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
   }
 
   Widget _submitButton(BuildContext context) {
-    return RaisedButton.icon(
+    return ElevatedButton.icon(
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
         //_addPatientVital(context);
       },
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(24.0))),
+      style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.all<Color>(primaryLightColor),
+          backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                  side: BorderSide(color: primaryColor)))),
       label: Text(
         'Submit',
         style: TextStyle(
@@ -600,9 +528,6 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
         Icons.done,
         color: Colors.white,
       ),
-      textColor: Colors.white,
-      splashColor: Colors.red,
-      color: primaryColor,
     );
   }
 
@@ -888,8 +813,6 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
       } else {}
     } catch (CustomException) {
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 

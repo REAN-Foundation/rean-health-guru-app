@@ -9,7 +9,7 @@ import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/TimeAgo.dart';
-
+//ignore: must_be_immutable
 class DashBoardVer1View extends StatefulWidget {
   Function positionToChangeNavigationBar;
 
@@ -61,9 +61,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
         getTodaysKnowledgeTopic();
       },
     );
-    // TODO: implement initState
     debugPrint('Country Local ==> ${getCurrentLocale()}');
-    // TODO: implement initState
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
@@ -165,8 +163,6 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
     return BaseWidget<DashboardSummaryModel>(
       model: model,
       builder: (context, model, child) => Container(

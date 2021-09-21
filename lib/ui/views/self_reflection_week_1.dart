@@ -7,11 +7,11 @@ import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-
+//ignore: must_be_immutable
 class SelfReflactionWeek_1_View extends StatefulWidget {
   Task task;
 
-  SelfReflactionWeek_1_View(@required Task task) {
+  SelfReflactionWeek_1_View(Task task) {
     this.task = task;
   }
 
@@ -180,19 +180,21 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                     ),
                     SizedBox(
                       width: 150,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(
-                                color: answer1 == 'Good'
-                                    ? Colors.deepPurple
-                                    : colorF6F6FF)),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                                primaryLightColor),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(primaryColor),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                    side: BorderSide(color: primaryColor)))),
                         onPressed: () {
                           answer1 = 'Good';
                           setState(() {});
                         },
-                        color: colorF6F6FF,
-                        textColor: Colors.deepPurple,
                         child: Text('Good', style: TextStyle(fontSize: 14)),
                       ),
                     ),
@@ -216,19 +218,21 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                     ),
                     SizedBox(
                       width: 150,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(
-                                color: answer1 == 'Not so good'
-                                    ? Colors.deepPurple
-                                    : colorF6F6FF)),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                                primaryLightColor),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(primaryColor),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                    side: BorderSide(color: primaryColor)))),
                         onPressed: () {
                           answer1 = 'Not so good';
                           setState(() {});
                         },
-                        color: colorF6F6FF,
-                        textColor: Colors.deepPurple,
                         child:
                             Text('Not so good', style: TextStyle(fontSize: 14)),
                       ),
@@ -597,19 +601,21 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                   children: [
                     SizedBox(
                       width: 80,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(
-                                color: answer7 == 'Yes'
-                                    ? Colors.deepPurple
-                                    : colorF6F6FF)),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                                primaryLightColor),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(primaryColor),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                    side: BorderSide(color: primaryColor)))),
                         onPressed: () {
                           answer7 = 'Yes';
                           setState(() {});
                         },
-                        color: colorF6F6FF,
-                        textColor: Colors.deepPurple,
                         child: Text('Yes', style: TextStyle(fontSize: 14)),
                       ),
                     ),
@@ -618,19 +624,21 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                     ),
                     SizedBox(
                       width: 80,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            side: BorderSide(
-                                color: answer7 == 'No'
-                                    ? Colors.deepPurple
-                                    : colorF6F6FF)),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                                primaryLightColor),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(primaryColor),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                    side: BorderSide(color: primaryColor)))),
                         onPressed: () {
                           answer7 = 'No';
                           setState(() {});
                         },
-                        color: colorF6F6FF,
-                        textColor: Colors.deepPurple,
                         child: Text('No', style: TextStyle(fontSize: 14)),
                       ),
                     ),

@@ -23,7 +23,6 @@ class _SetUpDoctorForCarePlanViewState
     extends State<SetUpDoctorForCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _searchController = TextEditingController();
 
   //var doctorSearchList = new List<Doctors>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
@@ -44,7 +43,6 @@ class _SetUpDoctorForCarePlanViewState
   @override
   void initState() {
     loadSharedPrefrance();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -585,8 +583,6 @@ class _SetUpDoctorForCarePlanViewState
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException);
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 }

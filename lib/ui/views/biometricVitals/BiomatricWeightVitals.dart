@@ -10,7 +10,7 @@ import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SimpleTimeSeriesChart.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-
+//ignore: must_be_immutable
 class BiometricWeightVitalsView extends StatefulWidget {
   bool allUIViewsVisible = false;
 
@@ -37,7 +37,6 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   void initState() {
     getVitalsHistory();
     debugPrint('Country Local ==> ${getCurrentLocale()}');
-    // TODO: implement initState
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
@@ -47,7 +46,6 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-    // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -165,7 +163,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (term) {},
                       inputFormatters: [
-                        BlacklistingTextInputFormatter(RegExp('[\\,|\\+|\\-]')),
+                        FilteringTextInputFormatter.deny(
+                            RegExp('[\\,|\\+|\\-]')),
                       ],
                       decoration: InputDecoration(
                           hintText:

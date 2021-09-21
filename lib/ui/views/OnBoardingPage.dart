@@ -15,19 +15,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     Navigator.popAndPushNamed(context, RoutePaths.Login);
   }
 
-  Widget _buildFullscrenImage() {
-    return Semantics(
-      label: 'splash screen',
-      image: true,
-      child: Image.asset(
-        'assets/fullscreen.jpg',
-        fit: BoxFit.cover,
-        height: double.infinity,
-        width: double.infinity,
-        alignment: Alignment.center,
-      ),
-    );
-  }
 
   Widget _buildImage(String assetName, [double width = 350]) {
     return Image.asset('res/images/$assetName', width: width);

@@ -5,12 +5,12 @@ import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-
+//ignore: must_be_immutable
 class BiomatricAssignmentTask extends StatefulWidget {
   Assessmment assessmment;
 
-  BiomatricAssignmentTask(@required Assessmment assessmment) {
-    this.assessmment = assessmment;
+  BiomatricAssignmentTask(Assessmment assessmment) {
+    assessmment = assessmment;
   }
 
   @override
@@ -21,7 +21,6 @@ class BiomatricAssignmentTask extends StatefulWidget {
 class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final ScrollController _scrollController = ScrollController();
 
   final TextEditingController _Controller = TextEditingController();
 
@@ -30,8 +29,6 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-
-    // TODO: implement build
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(

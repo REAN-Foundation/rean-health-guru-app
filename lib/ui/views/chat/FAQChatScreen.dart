@@ -13,8 +13,6 @@ import 'package:paitent/utils/TimeAgo.dart';
 
 import '../base_widget.dart';
 
-var currentUserEmail;
-var _scaffoldContext;
 
 class FAQChatScreen extends StatefulWidget {
   @override
@@ -58,21 +56,18 @@ class FAQChatScreenState extends State<FAQChatScreen> {
   @override
   void dispose() {
     timer.cancel();
-    // TODO: implement dispose
     super.dispose();
   }
 
   @override
   void initState() {
     loadSharedPrefs();
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     chatBoxWidth = MediaQuery.of(context).size.width - 100;
-    // TODO: implement build
     return BaseWidget<BotViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -312,8 +307,6 @@ class FAQChatScreenState extends State<FAQChatScreen> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 }

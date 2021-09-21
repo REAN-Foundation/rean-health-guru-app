@@ -20,7 +20,6 @@ class _DashBoardViewState extends State<DashBoardView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     quotes.add(
         'It is health that is the real wealth, and not pieces of gold and silver.\n- Mahatma Gandhi');
@@ -31,8 +30,6 @@ class _DashBoardViewState extends State<DashBoardView> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
     return BaseWidget<BookAppoinmentViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -611,112 +608,4 @@ class _DashBoardViewState extends State<DashBoardView> {
     );
   }
 
-  Widget _buildTabDesign() {
-    return Container(
-      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-      decoration: BoxDecoration(
-        color: primaryColor,
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, RoutePaths.Doctor_Appoinment);
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ImageIcon(
-                  AssetImage('res/images/ic_doctor_colored.png'),
-                  size: 24,
-                  color: Colors.white,
-                ),
-                /*  SizedBox(height: 4,),
-                Text(
-                  'Reminders',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10),
-                ),*/
-              ],
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, RoutePaths.Lab_Appoinment);
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ImageIcon(
-                  AssetImage('res/images/ic_lab_colored.png'),
-                  size: 24,
-                  color: Colors.white,
-                ),
-                /* SizedBox(height: 4,),
-                Text(
-                  'History',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10),
-                ),*/
-              ],
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              showToast('Coming Soon...', context);
-              //Navigator.pushNamed(context, RoutePaths.Order_Medicine);
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ImageIcon(
-                  AssetImage('res/images/ic_pharmacy_colored.png'),
-                  size: 24,
-                  color: Colors.white,
-                ),
-                /*SizedBox(height: 4,),
-                Text(
-                  'Prescriptions',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10),
-                ),*/
-              ],
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              showToast('Coming Soon...', context);
-              //Navigator.pushNamed(context, RoutePaths.Order_Ambulance);
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ImageIcon(
-                  AssetImage('res/images/ic_ambulance.png'),
-                  size: 24,
-                  color: Colors.white,
-                ),
-                /*  SizedBox(height: 4,),
-                Text(
-                  'Refills',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10),
-                ),*/
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

@@ -34,7 +34,6 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   @override
   void initState() {
     getMyMedications();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -60,8 +59,6 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -96,7 +93,6 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-    // TODO: implement build
     return BaseWidget<PatientMedicationViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -285,7 +281,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
                   content: Text(
                       "Are you sure you want to delete ${itemsList[index]}?"),
                   actions: <Widget>[
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         "Cancel",
                         style: TextStyle(color: Colors.black),
@@ -294,7 +290,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
                         Navigator.of(context).pop();
                       },
                     ),
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         "Delete",
                         style: TextStyle(color: Colors.red),
@@ -324,7 +320,6 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               nightMedicationList.removeAt(index);
             }
           });
-          // TODO: Navigate to edit page;
         }
       },
     );
@@ -388,101 +383,6 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     );
   }
 
-  Widget _makeMedicineCard(
-      BuildContext context, int index, List<MedConsumptions> medications) {
-    final MedConsumptions medication = medications.elementAt(index);
-    return Container(
-        //padding: const EdgeInsets.only(bottom: 16.0),
-        child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        //Image.asset('res/images/ic_sunrise.png', width: 50, height: 50,),
-        /*CachedNetworkImage(
-          imageUrl: apiProvider.getBaseUrl() +
-              '/resources/download-public/cd914b28-a036-441c-8aca-8542db4219d1',
-          width: 32,
-          height: 32,
-        ),*/
-        SizedBox(width: 8),
-        Expanded(
-          child: Text(medication.drugName,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'Montserrat')),
-        ),
-        Align(
-            alignment: Alignment.centerRight,
-            child: medication.isTaken
-                ? Container(
-                    child: Icon(
-                      Icons.done_all,
-                      size: 32,
-                      color: Colors.green,
-                    ),
-                  )
-                : medication.isMissed
-                    ? Container(
-                        child: Icon(
-                          Icons.error_outline,
-                          size: 32,
-                          color: Colors.red,
-                        ),
-                      )
-                    : Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              //after click
-                              markMedicationsAsMissed(medication.id);
-                            },
-                            child: Container(
-                              width: 48,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(8.0),
-                                    topLeft: Radius.circular(8.0)),
-                                color: primaryColor,
-                              ),
-                              child: Icon(
-                                Icons.close,
-                                size: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 2),
-                          InkWell(
-                            onTap: () {
-                              //after click
-                              markMedicationsAsTaken(medication.id);
-                            },
-                            child: Container(
-                              width: 48,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(8.0),
-                                    topRight: Radius.circular(8.0)),
-                                color: Colors.green,
-                              ),
-                              child: Icon(
-                                Icons.check,
-                                size: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ))
-      ],
-    ));
-  }
-
   markMedicationsAsTaken(String consumptionId) async {
     try {
       progressDialog.show();
@@ -501,8 +401,6 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -524,8 +422,6 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 }

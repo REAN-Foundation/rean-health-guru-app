@@ -6,7 +6,6 @@ import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/SharedPrefUtils.dart';
 
 import 'home_view.dart';
 
@@ -25,7 +24,6 @@ class _SuccessfullySetupCarePlanViewState
   String unformatedDOB = '';
   var dateFormat = DateFormat('dd MMM, yyyy');
 
-  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   StartCarePlanResponse startCarePlanResponse;
 
   /*loadSharedPrefrance() async {
@@ -42,7 +40,6 @@ class _SuccessfullySetupCarePlanViewState
   void initState() {
     //loadSharedPrefrance();
     startCarePlanResponse = startCarePlanResponseGlob;
-    // TODO: implement initState
     super.initState();
   }
 

@@ -1,6 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
-
-@JsonSerializable(nullable: true)
 class DoctorListApiResponse {
   String status;
   String message;
@@ -48,7 +45,6 @@ class Data {
   }
 }
 
-@JsonSerializable(nullable: true)
 class Doctors {
   String userId;
   String doctorRoleId;

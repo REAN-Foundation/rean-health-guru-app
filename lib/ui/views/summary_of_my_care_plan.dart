@@ -42,7 +42,6 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
   @override
   void initState() {
     getAHACarePlanSummary();
-    // TODO: implement initState
     super.initState();
   }
 

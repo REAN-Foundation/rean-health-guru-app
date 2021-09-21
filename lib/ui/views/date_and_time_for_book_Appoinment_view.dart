@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:multiselect_formfield/multiselect_formfield.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/CheckConflictResponse.dart';
 import 'package:paitent/core/models/DoctorBookingAppoinmentPojo.dart';
@@ -11,7 +10,6 @@ import 'package:paitent/core/models/getAvailableDoctorSlot.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/ui/shared/text_styles.dart';
 import 'package:paitent/ui/views/doctorTileWidget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
@@ -19,11 +17,11 @@ import 'package:paitent/utils/StringUtility.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import 'base_widget.dart';
-
+//ignore: must_be_immutable
 class DateAndTimeForBookAppoinmentView extends StatefulWidget {
   Doctors doctorDetails;
 
-  DateAndTimeForBookAppoinmentView(@required this.doctorDetails);
+  DateAndTimeForBookAppoinmentView(this.doctorDetails);
 
   @override
   _DateAndTimeForBookAppoinmentViewState createState() =>
@@ -38,9 +36,6 @@ class _DateAndTimeForBookAppoinmentViewState
   List<Slots> timeSlot = [];
   List<Slots> timeSlotAm = [];
   List<Slots> timeSlotPm = [];
-  List _myActivities;
-  String _myActivitiesResult;
-
   DateTime selectedMonth;
   DateTime userSelectedDate;
   bool isAmSelected = true;
@@ -51,7 +46,7 @@ class _DateAndTimeForBookAppoinmentViewState
   String startTime = '';
   String endTime = '';
 
-  _DateAndTimeForBookAppoinmentViewState(@required this.doctorDetails);
+  _DateAndTimeForBookAppoinmentViewState(this.doctorDetails);
 
   var dateFormat = DateFormat('yyyy-MM-dd');
   var timeFormat = DateFormat('hh:mm a');
@@ -118,22 +113,17 @@ class _DateAndTimeForBookAppoinmentViewState
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     selectedMonth = DateTime(DateTime.now().year, DateTime.now().month);
     debugPrint(selectedMonth.toIso8601String());
     //prepareData();
     _dateAndTimeCalculation();
-    _myActivities = [];
-    _myActivitiesResult = '';
     loadSharedPrefs();
   }
 
@@ -379,39 +369,6 @@ class _DateAndTimeForBookAppoinmentViewState
     );
   }
 
-  Widget _addMultiSelectService() {
-    return MultiSelectFormField(
-      autovalidate: false,
-      validator: (value) {
-        if (value == null || value.length == 0) {
-          return 'Please select one or more options';
-        }
-        return '';
-      },
-      dataSource: [
-        {
-          'display': 'General CheckUp',
-          'value': 'Climbing',
-        },
-        {
-          'display': 'Sonography',
-          'value': 'Sonography',
-        },
-      ],
-      textField: 'display',
-      valueField: 'value',
-      okButtonLabel: 'OK',
-      cancelButtonLabel: 'CANCEL',
-      // required: true,
-      //hintText: 'Please choose one or more',
-      onSaved: (value) {
-        if (value == null) return;
-        setState(() {
-          _myActivities = value;
-        });
-      },
-    );
-  }
 
   Widget _makeTimeSlotGridView() {
     debugPrint('$isAmSelected');
@@ -502,35 +459,6 @@ class _DateAndTimeForBookAppoinmentViewState
     setState(() {});
   }
 
-  Widget _makeHeaderDivider(String text) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 30,
-      color: Color(0xFFE8E7E7),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(
-            width: 16,
-          ),
-          Text(text, style: subHeaderStyle),
-          /* Expanded(
-            child: TextFormField(
-              //validator: value.isEmpty ? 'this field is required' : null,
-              readOnly: true,
-              style: TextStyle(fontSize: 13.0),
-              decoration: InputDecoration(
-                  hintStyle: TextStyle(fontSize: 13.0),
-                  hintText: 'Pick Month',
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                  suffixIcon: Icon(Icons.calendar_today)),
-              onTap: () => handleReadOnlyInputClick(context),
-            ),
-          )*/
-        ],
-      ),
-    );
-  }
 
   void handleReadOnlyInputClick(context) {
     debugPrint('In');
@@ -550,94 +478,6 @@ class _DateAndTimeForBookAppoinmentViewState
             ));
   }
 
-  Widget _makeDoctorListCard() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: 60,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      child: Image(
-                        image: AssetImage('res/images/profile_placeholder.png'),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  flex: 5,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                          'Dr.' +
-                              doctorDetails.firstName +
-                              ' ' +
-                              doctorDetails.lastName,
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Montserrat',
-                              color: primaryColor)),
-                      Text(
-                          doctorDetails.specialities +
-                              ', ' +
-                              doctorDetails.qualification,
-                          style: TextStyle(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w100,
-                              color: textBlack,
-                              fontFamily: 'Montserrat')),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                width: 55,
-              ),
-              RichText(
-                text: TextSpan(
-                  text: '    Consultation Fee :',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: textBlack,
-                      fontSize: 14,
-                      fontFamily: 'Montserrat'),
-                  children: <TextSpan>[
-                    TextSpan(
-                        text: ' ₹' + doctorDetails.consultationFee.toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: primaryColor,
-                            fontSize: 14,
-                            fontFamily: 'Montserrat')),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
 
   var dateNtimeStrip = <DateStripDate>[];
 
@@ -826,9 +666,6 @@ class _DateAndTimeForBookAppoinmentViewState
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      progressDialog.hide();
-      debugPrint(Exception.toString());
     }
   }
 

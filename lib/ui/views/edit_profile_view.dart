@@ -6,7 +6,6 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -47,7 +46,6 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _bloodGroupController = TextEditingController();
   String profileImagePath = '';
   final ImagePicker _picker = ImagePicker();
   String mobileNumber = '';
@@ -61,7 +59,6 @@ class _EditProfileState extends State<EditProfile> {
   final _mobileNumberFocus = FocusNode();
   final _emergencyMobileNumberFocus = FocusNode();
   final _emailFocus = FocusNode();
-  final _bloodGroupFocus = FocusNode();
   final _cityFocus = FocusNode();
   final _addressFocus = FocusNode();
   final _sharedPrefUtils = SharedPrefUtils();
@@ -157,7 +154,6 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-    final height = MediaQuery.of(context).size.height;
     return BaseWidget<LoginViewModel>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       child: LoginHeader(
@@ -172,6 +168,7 @@ class _EditProfileState extends State<EditProfile> {
               return result;
             } else {
               Navigator.of(context).pop();
+              return true;
             }
           },
           child: Scaffold(
@@ -241,13 +238,13 @@ class _EditProfileState extends State<EditProfile> {
             title: Text('Alert!'),
             content: Text('Are you sure you want to discard the changes?'),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text('Yes'),
                 onPressed: () {
                   Navigator.of(context).pop(true);
                 },
               ),
-              FlatButton(
+              TextButton(
                 child: Text('No'),
                 onPressed: () => Navigator.of(context).pop(false),
               ),
@@ -437,31 +434,6 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Widget _backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(
-                Icons.keyboard_arrow_left,
-                color: Colors.black,
-                size: 32,
-              ),
-            ),
-            Text('Back',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _entryFirstNameField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -499,58 +471,6 @@ class _EditProfileState extends State<EditProfile> {
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (term) {
                   _fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
-                },
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _entryBloodGroupField(String title, {bool isPassword = false}) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: Colors.black87),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              border: Border.all(
-                color: Colors.black26,
-                width: 1.0,
-              ),
-            ),
-            child: TextFormField(
-                textCapitalization: TextCapitalization.sentences,
-                obscureText: isPassword,
-                controller: _bloodGroupController,
-                focusNode: _bloodGroupFocus,
-                keyboardType: TextInputType.name,
-                enabled: true,
-                style: TextStyle(
-                  color: Colors.black26,
-                ),
-                maxLines: 1,
-                textInputAction: TextInputAction.next,
-                onFieldSubmitted: (term) {
-                  _fieldFocusChange(
-                      context, _bloodGroupFocus, _emergencyMobileNumberFocus);
                 },
                 decoration: InputDecoration(
                     border: InputBorder.none,
@@ -1340,144 +1260,6 @@ class _EditProfileState extends State<EditProfile> {
     );
   }*/
 
-  Widget _divider() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: <Widget>[
-          SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          Text('or'),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _facebookButton() {
-    return Container(
-      height: 50,
-      margin: EdgeInsets.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xff1959a9),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    topLeft: Radius.circular(5)),
-              ),
-              alignment: Alignment.center,
-              child: Text('f',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w400)),
-            ),
-          ),
-          Expanded(
-            flex: 5,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xff2872ba),
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(5),
-                    topRight: Radius.circular(5)),
-              ),
-              alignment: Alignment.center,
-              child: Text('Log in with Facebook',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400)),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _createAccountLabel() {
-    return InkWell(
-      onTap: () {
-        /*Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUpPage()));*/
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20),
-        padding: EdgeInsets.all(15),
-        alignment: Alignment.bottomCenter,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Don\'t have an account ?',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Text(
-              'Register',
-              style: TextStyle(
-                  color: Color(0xfff79c4f),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _title() {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'H',
-          style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.headline1,
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-            color: Color(0xffe46b10),
-          ),
-          children: [
-            TextSpan(
-              text: 'ealth',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'Care',
-              style: TextStyle(color: Color(0xffe46b10), fontSize: 30),
-            ),
-          ]),
-    );
-  }
-
   /* Widget _genderWidget(){
     return ToggleSwitch(
         minWidth: 90.0,
@@ -1798,7 +1580,7 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   openCamera() async {
-    final picture = await _picker.getImage(
+    final picture = await _picker.pickImage(
       source: ImageSource.camera,
     );
     final File file = File(picture.path);

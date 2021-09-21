@@ -15,11 +15,11 @@ import 'package:paitent/utils/CommonUtils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'base_widget.dart';
-
+//ignore: must_be_immutable
 class BookingAppoinmentConfirmationView extends StatefulWidget {
   DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;
 
-  BookingAppoinmentConfirmationView(@required this.bookingAppoinmentsDetails);
+  BookingAppoinmentConfirmationView(this.bookingAppoinmentsDetails);
 
   @override
   _BookingAppoinmentConfirmationViewViewState createState() =>
@@ -35,8 +35,7 @@ class _BookingAppoinmentConfirmationViewViewState
   UserData userData;
   Labs labDetails;
 
-  _BookingAppoinmentConfirmationViewViewState(
-      @required this.bookingAppoinmentsDetails);
+  _BookingAppoinmentConfirmationViewViewState(this.bookingAppoinmentsDetails);
 
   var dateFormat = DateFormat('dd MMM, yyyy');
   var dateFormatFull = DateFormat('yyyy-MM-dd');
@@ -47,7 +46,6 @@ class _BookingAppoinmentConfirmationViewViewState
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     //payData();
   }
@@ -89,7 +87,6 @@ class _BookingAppoinmentConfirmationViewViewState
     debugPrint(bookingAppoinmentsDetails.userData.data.user.userId);
     patientDetails = bookingAppoinmentsDetails.patient;
     userData = bookingAppoinmentsDetails.userData;
-    // TODO: implement build
     return BaseWidget<BookAppoinmentViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -728,38 +725,6 @@ class _BookingAppoinmentConfirmationViewViewState
       debugPrint('Error ' + CustomException.toString());
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-    } catch (Exception) {
-      debugPrint(Exception.toString());
-    }
-  }
-
-  _bookADoctorAppoinmentSlot() async {
-    try {
-      model.setBusy(true);
-      final map = <String, String>{};
-      map['PatientUserId'] = userData.data.user.userId;
-      map['Date'] = dateFormatFull
-          .format(DateTime.parse(bookingAppoinmentsDetails.selectedDate));
-      map['StartTime'] = bookingAppoinmentsDetails.slotStart;
-      map['EndTime'] = bookingAppoinmentsDetails.slotEnd;
-
-      final DoctorAppoinmentBookedSuccessfully bookAAppoinmentForDoctor =
-          await model.bookAAppoinmentForDoctor(doctorDetails.userId.toString(),
-              map, 'Bearer ' + userData.data.accessToken);
-
-      if (bookAAppoinmentForDoctor.status == 'success') {
-        Navigator.pushNamed(context, RoutePaths.Booking_Appoinment_Done_View,
-            arguments: bookingAppoinmentsDetails);
-        showToast(bookAAppoinmentForDoctor.message, context);
-      } else {
-        showToast(bookAAppoinmentForDoctor.message, context);
-      }
-    } catch (CustomException) {
-      model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 

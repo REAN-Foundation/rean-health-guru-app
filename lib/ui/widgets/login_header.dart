@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
+//ignore: must_be_immutable
 class LoginHeader extends StatelessWidget {
   final TextEditingController mobileNumberController;
   final TextEditingController passwordController;
-  final FocusNode _mobileNumberFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   final String validationMessage;
 
@@ -158,11 +157,6 @@ class LoginHeader extends StatelessWidget {
     ]);
   }
 
-  _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    currentFocus.unfocus();
-    FocusScope.of(context).requestFocus(nextFocus);
-  }
 }
 
 /*

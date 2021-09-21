@@ -1,6 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
-
-@JsonSerializable(nullable: true)
 class StartAssesmentResponse {
   String status;
   String message;
@@ -25,7 +22,6 @@ class StartAssesmentResponse {
   }
 }
 
-@JsonSerializable(nullable: true)
 class Data {
   Assessmment assessmment;
 
@@ -46,7 +42,6 @@ class Data {
   }
 }
 
-@JsonSerializable(nullable: true)
 class Assessmment {
   String qnAId;
   String taskId;
@@ -98,7 +93,6 @@ class Assessmment {
   }
 }
 
-@JsonSerializable(nullable: true)
 class Question {
   int index;
   bool isLastQuestion;

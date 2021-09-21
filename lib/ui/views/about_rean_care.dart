@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:package_info/package_info.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/startTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
@@ -23,32 +22,23 @@ class AboutREANCareView extends StatefulWidget {
 
 class _AboutREANCareViewState extends State<AboutREANCareView> {
   var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String textMsg1 =
       "REAN HealthGuru provides a platform for your healthcare needs, helping you manage your and your family's health and well-being in a simple, comfortable, and economical manner.";
-  PackageInfo _packageInfo = PackageInfo(
-    appName: '',
-    packageName: '',
-    version: '',
-    buildNumber: '',
-  );
   String profileImage = '';
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
-  final String _baseUrl = '';
 
   @override
   void initState() {
     _initPackageInfo();
     //completeMessageTaskOfAHACarePlan(widget.assortedViewConfigs.task);
-    // TODO: implement initState
     super.initState();
   }
 
   Future<void> _initPackageInfo() async {
-    final PackageInfo info = await PackageInfo.fromPlatform();
+    //final PackageInfo info = await PackageInfo.fromPlatform();
     if (mounted) {
       setState(() {
-        _packageInfo = info;
+        //_packageInfo = info;
       });
     }
   }
@@ -284,14 +274,6 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
     );
   }
 
-  _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      showToast('Could not launch $url', context);
-      //throw 'Could not launch $url';
-    }
-  }
 
   completeMessageTaskOfAHACarePlan(Task task) async {
     try {

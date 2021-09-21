@@ -57,7 +57,7 @@ class CarePlans {
   int durationInWeeks;
   int endEnrollmentAfterDays;
   bool isStopped;
-  Null stoppedDate;
+  String stoppedDate;
   String enrolledOn;
   bool isActive;
   String createdAt;

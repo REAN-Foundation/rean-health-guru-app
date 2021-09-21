@@ -71,7 +71,6 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   @override
   void initState() {
     getEmergencyTeam();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -841,8 +840,6 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException);
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -1016,9 +1013,6 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       //progressDialog.hide();
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException);
-    } catch (Exception) {
-      //progressDialog.hide();
-      debugPrint(Exception.toString());
     }
   }
 
@@ -1046,14 +1040,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
           ),
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text('Yes'),
             onPressed: () {
               removeTeamMembers(contact.id);
               Navigator.of(context, rootNavigator: true).pop();
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text('No'),
             onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
           ),
@@ -1079,9 +1073,6 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       //progressDialog.hide();
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException);
-    } catch (Exception) {
-      //progressDialog.hide();
-      debugPrint(Exception.toString());
     }
   }
 }

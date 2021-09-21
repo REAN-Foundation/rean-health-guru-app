@@ -7,6 +7,7 @@ import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/Conversion.dart';
 
+// ignore: must_be_immutable
 class AddBMIDetailDialog extends StatefulWidget {
   Function _submitButtonListner;
   double _height;
@@ -43,7 +44,6 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
 
   @override
   void initState() {
-    // TODO: implement initState
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
@@ -69,11 +69,11 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
         TextPosition(offset: _weightController.text.length),
       );
     }
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BaseWidget<PatientCarePlanViewModel>(
         model: model,
         builder: (context, model, child) => Container(
@@ -139,7 +139,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                               context, _weightFocus, _heightFocus);
                         },
                         inputFormatters: [
-                          BlacklistingTextInputFormatter(
+                          FilteringTextInputFormatter.deny(
                               RegExp('[\\,|\\+|\\-]')),
                         ],
                         decoration: InputDecoration(
@@ -208,7 +208,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                             TextInputType.numberWithOptions(decimal: true),
                         onFieldSubmitted: (term) {},
                         inputFormatters: [
-                          BlacklistingTextInputFormatter(
+                          FilteringTextInputFormatter.deny(
                               RegExp('[\\,|\\+|\\-]')),
                         ],
                         decoration: InputDecoration(
@@ -244,7 +244,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
   Widget _submitButton() {
     return Align(
       alignment: Alignment.center,
-      child: RaisedButton(
+      child: ElevatedButton(
         onPressed: () {
           widget._submitButtonListner(
               unit == 'lbs'
@@ -254,16 +254,20 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                   ? Conversion.FeetToCm(double.parse(_heightController.text))
                   : double.parse(_heightController.text));
         },
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(24.0))),
+        style: ButtonStyle(
+            foregroundColor:
+                MaterialStateProperty.all<Color>(primaryLightColor),
+            backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                    side: BorderSide(color: primaryColor)))),
         child: Text(
           '      Add       ',
           semanticsLabel: 'Add',
           style: TextStyle(
               color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),
-        textColor: Colors.white,
-        color: primaryColor,
       ),
     );
   }

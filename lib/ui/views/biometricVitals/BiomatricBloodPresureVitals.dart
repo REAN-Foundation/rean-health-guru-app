@@ -10,7 +10,7 @@ import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SimpleTimeSeriesChart.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-
+//ignore: must_be_immutable
 class BiometricBloodPresureVitalsView extends StatefulWidget {
   bool allUIViewsVisible = false;
 
@@ -41,14 +41,12 @@ class _BiometricBloodPresureVitalsViewState
   @override
   void initState() {
     getVitalsHistory();
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-    // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -190,7 +188,7 @@ class _BiometricBloodPresureVitalsViewState
                         readOnly: true,
                         child: TextFormField(
                             inputFormatters: [
-                              BlacklistingTextInputFormatter(
+                              FilteringTextInputFormatter.deny(
                                   RegExp('[\\,|\\+|\\-]')),
                             ],
                             controller: _systolicController,
@@ -252,7 +250,7 @@ class _BiometricBloodPresureVitalsViewState
                           maxLines: 1,
                           textInputAction: TextInputAction.done,
                           inputFormatters: [
-                            BlacklistingTextInputFormatter(
+                            FilteringTextInputFormatter.deny(
                                 RegExp('[\\,|\\+|\\-]')),
                           ],
                           keyboardType: TextInputType.number,

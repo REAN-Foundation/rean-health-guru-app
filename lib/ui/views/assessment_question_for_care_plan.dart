@@ -4,7 +4,7 @@ import 'package:paitent/core/models/StartAssesmentResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-
+//ignore: must_be_immutable
 class AssessmentQuestionCarePlanView extends StatefulWidget {
   Assessmment assesment;
 
@@ -21,7 +21,6 @@ class _AssessmentQuestionCarePlanViewState
     extends State<AssessmentQuestionCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _textController = TextEditingController();
 
   // Default Radio Button Selected Item When App Questions.
   var answers = <Answer>[];
@@ -62,7 +61,6 @@ class _AssessmentQuestionCarePlanViewState
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     processAnswer();
   }

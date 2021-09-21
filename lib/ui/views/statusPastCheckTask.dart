@@ -9,10 +9,11 @@ import 'package:progress_dialog/progress_dialog.dart';
 
 import 'addNewGoals/select_goal_set_care_plan_goals.dart';
 
+// ignore: must_be_immutable
 class StatusPastCheckTask extends StatefulWidget {
   Task task;
 
-  StatusPastCheckTask(@required Task task) {
+  StatusPastCheckTask(Task task) {
     this.task = task;
   }
 
@@ -24,9 +25,6 @@ class StatusPastCheckTask extends StatefulWidget {
 class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final ScrollController _scrollController = ScrollController();
-
-  final TextEditingController _Controller = TextEditingController();
   List<CheckBoxModel> statusList = <CheckBoxModel>[];
 
   ProgressDialog progressDialog;
@@ -49,16 +47,12 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
         'Required hospitalization for heart related reason ?', false));
     statusList
         .add(CheckBoxModel('Had a heart related surgicalprocedure ?', false));
-
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-
-    // TODO: implement build
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(

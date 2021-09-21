@@ -31,7 +31,6 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   @override
   void initState() {
     getMyMedications();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -50,15 +49,12 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-    // TODO: implement build
     return BaseWidget<PatientMedicationViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -432,8 +428,6 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 }

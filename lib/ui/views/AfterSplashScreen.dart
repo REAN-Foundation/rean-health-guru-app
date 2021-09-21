@@ -4,16 +4,16 @@ import 'package:provider/provider.dart';
 
 import '../../provider_setup.dart';
 import '../router.dart';
-
+//ignore: must_be_immutable
 class AfterSplashScreen extends StatefulWidget {
   bool isLogin;
 
-  AfterSplashScreen(@required this.isLogin);
+  AfterSplashScreen(this.isLogin);
 
   @override
   _AfterSplashScreenViewState createState() => _AfterSplashScreenViewState();
 }
-
+//ignore: must_be_immutable
 class _AfterSplashScreenViewState extends State<AfterSplashScreen> {
   @override
   Widget build(BuildContext context) {

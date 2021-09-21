@@ -52,35 +52,4 @@ class GetAllConfigrations {
     _sharedPrefUtils.save('MedicationDurationUnits', response);
     // Convert and return
   }
-
-  _getAllLabSamples() async {
-    final map = <String, String>{};
-    map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
-    final response =
-        await apiProvider.get('/types/pathology-samples', header: map);
-    debugPrint(response);
-    _sharedPrefUtils.save('LabSamples', response);
-    // Convert and return
-  }
-
-  _getAllSymptoms() async {
-    final map = <String, String>{};
-    map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
-    final response = await apiProvider.get('/types/symptoms', header: map);
-    debugPrint(response);
-    _sharedPrefUtils.save('Symptoms', response);
-    // Convert and return
-  }
-
-  _getAllDygnoses() async {
-    final map = <String, String>{};
-    map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
-    final response = await apiProvider.get('/types/ailments', header: map);
-    debugPrint(response);
-    _sharedPrefUtils.save('Dygnoses', response);
-    // Convert and return
-  }
 }

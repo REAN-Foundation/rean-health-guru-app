@@ -48,9 +48,9 @@ class Data {
 class Medications {
   String id;
   String patientUserId;
-  Null doctorUserId;
-  Null visitId;
-  Null drugOrderId;
+  String doctorUserId;
+  String visitId;
+  String drugOrderId;
   String drug;
   int dose;
   String dosageUnit;

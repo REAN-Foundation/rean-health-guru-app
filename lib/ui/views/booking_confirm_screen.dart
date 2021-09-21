@@ -9,11 +9,11 @@ import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/ui/views/home_view.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+//ignore: must_be_immutable
 class BookingConfirmedView extends StatefulWidget {
   DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;
 
-  BookingConfirmedView(@required this.bookingAppoinmentsDetails);
+  BookingConfirmedView(this.bookingAppoinmentsDetails);
 
   @override
   _BookingConfirmedViewState createState() =>
@@ -28,7 +28,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
   var timeFormat = DateFormat('hh:mm a');
   Labs labDetails;
 
-  _BookingConfirmedViewState(@required this.bookingAppoinmentsDetails);
+  _BookingConfirmedViewState(this.bookingAppoinmentsDetails);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,6 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
     } else {
       doctorDetails = bookingAppoinmentsDetails.doctors;
     }
-    // TODO: implement build
     return BaseWidget<AppoinmentViewModel>(
         model: AppoinmentViewModel(),
         builder: (context, model, child) => Container(

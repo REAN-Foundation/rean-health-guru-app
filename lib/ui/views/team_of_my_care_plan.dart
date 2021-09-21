@@ -71,7 +71,6 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   @override
   void initState() {
     getAHACarePlanSummary();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -844,8 +843,6 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException);
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -950,8 +947,6 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException);
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -1119,9 +1114,6 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       //progressDialog.hide();
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException);
-    } catch (Exception) {
-      //progressDialog.hide();
-      debugPrint(Exception.toString());
     }
   }
 
@@ -1149,14 +1141,14 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
           ),
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text('Yes'),
             onPressed: () {
               removeTeamMembers(team.id);
               Navigator.of(context, rootNavigator: true).pop();
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text('No'),
             onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
           ),
@@ -1182,9 +1174,6 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       //progressDialog.hide();
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException);
-    } catch (Exception) {
-      //progressDialog.hide();
-      debugPrint(Exception.toString());
     }
   }
 }

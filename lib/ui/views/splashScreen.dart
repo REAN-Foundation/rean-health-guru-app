@@ -3,7 +3,6 @@ import 'dart:core';
 
 import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info/package_info.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
@@ -24,12 +23,6 @@ class SplashScreen extends StatefulWidget {
   final Gradient gradientBackground;
   final String baseUrl;
 
-  final PackageInfo _packageInfo = PackageInfo(
-    appName: '',
-    packageName: '',
-    version: '',
-    buildNumber: '',
-  );
 
   SplashScreen(
       {this.loaderColor,
@@ -60,7 +53,6 @@ class _SplashScreenState extends State<SplashScreen> {
   );
 
   Future<void> _initPackageInfo() async {
-    String currentLocale;
     final PackageInfo info = await PackageInfo.fromPlatform();
     if (mounted) {
       setState(() {
@@ -104,7 +96,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: primaryColor,
@@ -243,40 +234,4 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }*/
-
-  Widget _title() {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'REAN',
-          style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.headline1,
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-            color: primaryColor,
-          ),
-          children: [
-            TextSpan(
-              text: ' ',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'H',
-              style: TextStyle(color: primaryColor, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'ealth',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'G',
-              style: TextStyle(color: primaryColor, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'uru',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-          ]),
-    );
-  }
 }

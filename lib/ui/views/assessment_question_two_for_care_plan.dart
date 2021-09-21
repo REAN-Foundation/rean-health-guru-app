@@ -17,7 +17,6 @@ class _AssessmentQuestionTwoCarePlanViewState
     extends State<AssessmentQuestionTwoCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _textController = TextEditingController();
 
   // Default Radio Button Selected Item When App Starts.
   String radioButtonItem = 'ONE';

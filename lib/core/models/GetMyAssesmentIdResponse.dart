@@ -48,7 +48,7 @@ class Assessment {
   String title;
   String assessmentTemplateId;
   String assessmentDate;
-  Null overallStatus;
+  String overallStatus;
   List<String> symptomsRecorded;
 
   Assessment(

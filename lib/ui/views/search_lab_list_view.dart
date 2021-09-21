@@ -21,11 +21,10 @@ class _SearchLabListViewState extends State<SearchLabListView> {
   PermissionStatus _permissionGranted;
   LocationData _locationData;
   List<Address> addresses;
-  Address first;*/
-  bool _serviceEnabled;
+  Address first;
+  bool _serviceEnabled;*/
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   String name = '';
-  final int _currentNav = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _searchController = TextEditingController();
   String auth = '';
@@ -93,7 +92,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
     }
   }
 
-  void getLocation() async {
+  getLocation() async {
     /*_serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
@@ -119,7 +118,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
     });*/
   }
 
-  void findOutCityFromGeoCord(double lat, double long) async {
+  findOutCityFromGeoCord(double lat, double long) async {
     /*final coordinates = new Coordinates(lat, long);
     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     first = addresses.first;

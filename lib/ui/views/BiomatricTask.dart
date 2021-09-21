@@ -9,11 +9,11 @@ import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/ui/views/home_view.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-
+//ignore: must_be_immutable
 class BiomatricTask extends StatefulWidget {
   Task task;
 
-  BiomatricTask(@required Task task) {
+  BiomatricTask(Task task) {
     this.task = task;
   }
 
@@ -24,7 +24,6 @@ class BiomatricTask extends StatefulWidget {
 class _BiomatricTaskViewState extends State<BiomatricTask> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final ScrollController _scrollController = ScrollController();
   var dateFormat = DateFormat('yyyy-MM-dd');
   var timeFormat = DateFormat('hh:mm:ss');
 
@@ -44,7 +43,6 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
 
   @override
   void initState() {
-    // TODO: implement initState
     if (widget.task.details.bloodPressureSystolic != null) {
       _systolicController.text =
           widget.task.details.bloodPressureSystolic.toString();
@@ -74,7 +72,6 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
     }
 
     debugPrint('Country Local ==> ${getCurrentLocale()}');
-    // TODO: implement initState
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
@@ -85,8 +82,6 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-
-    // TODO: implement build
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -225,7 +220,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                               context, _systolicFocus, _diastolicFocus);
                         },
                         inputFormatters: [
-                          BlacklistingTextInputFormatter(
+                          FilteringTextInputFormatter.deny(
                               RegExp('[\\,|\\+|\\-]')),
                         ],
                         decoration: InputDecoration(
@@ -288,7 +283,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                             _weightFocus);*/
                         },
                         inputFormatters: [
-                          BlacklistingTextInputFormatter(
+                          FilteringTextInputFormatter.deny(
                               RegExp('[\\,|\\+|\\-]')),
                         ],
                         decoration: InputDecoration(
@@ -408,7 +403,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {},
                           inputFormatters: [
-                            BlacklistingTextInputFormatter(
+                            FilteringTextInputFormatter.deny(
                                 RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
@@ -537,7 +532,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                   keyboardType: TextInputType.number,
                   onFieldSubmitted: (term) {},
                   inputFormatters: [
-                    BlacklistingTextInputFormatter(RegExp('[\\,|\\+|\\-]')),
+                    FilteringTextInputFormatter.deny(RegExp('[\\,|\\+|\\-]')),
                   ],
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(0),

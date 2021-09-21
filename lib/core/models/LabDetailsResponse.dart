@@ -1,7 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:paitent/core/models/labsListApiResponse.dart';
 
-@JsonSerializable(nullable: true)
 class LabDetailsResponse {
   String status;
   String message;

@@ -6,11 +6,9 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/UploadImageResponse.dart';
@@ -37,14 +35,6 @@ class CreateProfile extends StatefulWidget {
 class _CreateProfileState extends State<CreateProfile> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _mobileNumberController = TextEditingController();
-  final TextEditingController _emergencyMobileNumberController =
-      TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _cityController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _bloodGroupController = TextEditingController();
   String profileImagePath = '';
   final ImagePicker _picker = ImagePicker();
   String mobileNumber = '';
@@ -55,12 +45,6 @@ class _CreateProfileState extends State<CreateProfile> {
 
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
-  final _mobileNumberFocus = FocusNode();
-  final _emergencyMobileNumberFocus = FocusNode();
-  final _emailFocus = FocusNode();
-  final _bloodGroupFocus = FocusNode();
-  final _cityFocus = FocusNode();
-  final _addressFocus = FocusNode();
   final _sharedPrefUtils = SharedPrefUtils();
   String selectedGender = 'Male';
   String dob = '';
@@ -149,7 +133,6 @@ class _CreateProfileState extends State<CreateProfile> {
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-    final height = MediaQuery.of(context).size.height;
     return BaseWidget<LoginViewModel>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       builder: (context, model, child) => Container(
@@ -192,28 +175,6 @@ class _CreateProfileState extends State<CreateProfile> {
     );
   }
 
-  Future<bool> _onBackPressed() {
-    return showDialog(
-      context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Alert!'),
-            content: Text('Are you sure you want to discard the changes?'),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Yes'),
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-              ),
-              FlatButton(
-                child: Text('No'),
-                onPressed: () => Navigator.of(context).pop(false),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }
 
   Future getFile() async {
     /*FilePickerResult result = await FilePicker.platform.pickFiles(
@@ -311,114 +272,6 @@ class _CreateProfileState extends State<CreateProfile> {
     }
   }
 
-  Widget _profileIcon() {
-    debugPrint('Profile Pic ==> $profileImagePath');
-    return Container(
-      height: 200,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            height: 88,
-            width: 88,
-            child: Stack(
-              children: <Widget>[
-                /*CircleAvatar(
-                  radius: 48,
-                  backgroundColor: primaryLightColor,
-                  child: CircleAvatar(
-                      radius: 48,
-                      backgroundImage: profileImagePath == ""
-                          ? AssetImage('res/images/profile_placeholder.png')
-                          : new NetworkImage(profileImagePath)),
-                ),*/
-                Container(
-                  width: 120.0,
-                  height: 120.0,
-                  decoration: BoxDecoration(
-                    color: const Color(0xff7c94b6),
-                    image: DecorationImage(
-                      image: profileImagePath == ''
-                          ? AssetImage('res/images/profile_placeholder.png')
-                          : NetworkImage(profileImagePath),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                    border: Border.all(
-                      color: Colors.deepPurple,
-                      width: 2.0,
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Visibility(
-                    visible: isEditable,
-                    child: InkWell(
-                        onTap: () {
-                          showMaterialModalBottomSheet(
-                              isDismissible: true,
-                              backgroundColor: Colors.transparent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(25.0)),
-                              ),
-                              context: context,
-                              builder: (context) => _uploadImageSelector());
-                          //getFile();
-                        },
-                        child: SizedBox(
-                            height: 32,
-                            width: 32,
-                            child: Image.asset('res/images/ic_camera.png'))),
-                  ),
-                )
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Text(fullName,
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: primaryColor)),
-          Text(mobileNumber,
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: primaryColor)),
-        ],
-      ),
-    );
-  }
-
-  Widget _backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(
-                Icons.keyboard_arrow_left,
-                color: Colors.black,
-                size: 32,
-              ),
-            ),
-            Text('Back',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))
-          ],
-        ),
-      ),
-    );
-  }
 
   Widget _entryFirstNameField(String title, {bool isPassword = false}) {
     return Container(
@@ -453,58 +306,6 @@ class _CreateProfileState extends State<CreateProfile> {
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (term) {
                   _fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
-                },
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _entryBloodGroupField(String title, {bool isPassword = false}) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: Colors.black87),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              border: Border.all(
-                color: Colors.black26,
-                width: 1.0,
-              ),
-            ),
-            child: TextFormField(
-                textCapitalization: TextCapitalization.sentences,
-                obscureText: isPassword,
-                controller: _bloodGroupController,
-                focusNode: _bloodGroupFocus,
-                keyboardType: TextInputType.name,
-                enabled: true,
-                style: TextStyle(
-                  color: Colors.black26,
-                ),
-                maxLines: 1,
-                textInputAction: TextInputAction.next,
-                onFieldSubmitted: (term) {
-                  _fieldFocusChange(
-                      context, _bloodGroupFocus, _emergencyMobileNumberFocus);
                 },
                 decoration: InputDecoration(
                     border: InputBorder.none,
@@ -561,148 +362,6 @@ class _CreateProfileState extends State<CreateProfile> {
     );
   }
 
-  Widget _entryLocalityField(String title, {bool isPassword = false}) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: Colors.black87),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              border: Border.all(
-                color: Color(0XFF909CAC),
-                width: 1.0,
-              ),
-            ),
-            child: TextFormField(
-                textCapitalization: TextCapitalization.sentences,
-                obscureText: isPassword,
-                controller: _cityController,
-                focusNode: _cityFocus,
-                keyboardType: TextInputType.streetAddress,
-                maxLines: 1,
-                enabled: isEditable,
-                textInputAction: TextInputAction.done,
-                onFieldSubmitted: (term) {
-                  //_fieldFocusChange(context, _cityFocus, _addressFocus);
-                },
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _entryAddressField(String title, {bool isPassword = false}) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: Colors.black87),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              border: Border.all(
-                color: Color(0XFF909CAC),
-                width: 1.0,
-              ),
-            ),
-            child: TextFormField(
-                textCapitalization: TextCapitalization.sentences,
-                obscureText: isPassword,
-                controller: _addressController,
-                focusNode: _addressFocus,
-                keyboardType: TextInputType.streetAddress,
-                maxLines: 1,
-                enabled: isEditable,
-                textInputAction: TextInputAction.next,
-                onFieldSubmitted: (term) {
-                  _fieldFocusChange(context, _addressFocus, _cityFocus);
-                },
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _entryEmailField(String title) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: Colors.black87),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              border: Border.all(
-                color: Color(0XFF909CAC),
-                width: 1.0,
-              ),
-            ),
-            child: TextFormField(
-                controller: _emailController,
-                focusNode: _emailFocus,
-                keyboardType: TextInputType.emailAddress,
-                maxLines: 1,
-                textInputAction: TextInputAction.next,
-                onFieldSubmitted: (term) {
-                  _fieldFocusChange(
-                      context, _emailFocus, _emergencyMobileNumberFocus);
-                },
-                enabled: isEditable,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
-          )
-        ],
-      ),
-    );
-  }
 
   /*Widget _entryMobileNoField(String title) {
     return Container(
@@ -924,143 +583,7 @@ class _CreateProfileState extends State<CreateProfile> {
     );
   }*/
 
-  Widget _divider() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: <Widget>[
-          SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          Text('or'),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-        ],
-      ),
-    );
-  }
 
-  Widget _facebookButton() {
-    return Container(
-      height: 50,
-      margin: EdgeInsets.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xff1959a9),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    topLeft: Radius.circular(5)),
-              ),
-              alignment: Alignment.center,
-              child: Text('f',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w400)),
-            ),
-          ),
-          Expanded(
-            flex: 5,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xff2872ba),
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(5),
-                    topRight: Radius.circular(5)),
-              ),
-              alignment: Alignment.center,
-              child: Text('Log in with Facebook',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400)),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _createAccountLabel() {
-    return InkWell(
-      onTap: () {
-        /*Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUpPage()));*/
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20),
-        padding: EdgeInsets.all(15),
-        alignment: Alignment.bottomCenter,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Don\'t have an account ?',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Text(
-              'Register',
-              style: TextStyle(
-                  color: Color(0xfff79c4f),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _title() {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'H',
-          style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.headline1,
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-            color: Color(0xffe46b10),
-          ),
-          children: [
-            TextSpan(
-              text: 'ealth',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'Care',
-              style: TextStyle(color: Color(0xffe46b10), fontSize: 30),
-            ),
-          ]),
-    );
-  }
 
   /* Widget _genderWidget(){
     return ToggleSwitch(
@@ -1222,164 +745,13 @@ class _CreateProfileState extends State<CreateProfile> {
     );
   }
 
-  Widget _uploadImageSelector() {
-    return Container(
-      height: 160,
-      color: Colors.transparent,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Semantics(
-              label: 'Camera',
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                  openCamera();
-                },
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          color: primaryLightColor,
-                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                          border: Border.all(
-                            color: Colors.deepPurple,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.camera_alt,
-                            color: Colors.deepPurple,
-                            size: 24,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        'Camera\n   ',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Semantics(
-              label: 'Gallery',
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                  openGallery();
-                },
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          color: primaryLightColor,
-                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                          border: Border.all(
-                            color: Colors.deepPurple,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.image,
-                            color: Colors.deepPurple,
-                            size: 24,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        'Gallery\n   ',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            if (profileImagePath != '') ...[
-              Semantics(
-                label: 'removeProfileImage',
-                child: InkWell(
-                  onTap: () {
-                    profileImagePath = '';
-                  },
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: primaryLightColor,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(50.0)),
-                            border: Border.all(
-                              color: Colors.deepPurple,
-                              width: 1.0,
-                            ),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.close,
-                              color: Colors.deepPurple,
-                              size: 24,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          'Remove\nPhoto',
-                          style: TextStyle(fontSize: 12),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
 
   openGallery() async {
     getFile();
   }
 
   openCamera() async {
-    final picture = await _picker.getImage(
+    final picture = await _picker.pickImage(
       source: ImageSource.camera,
     );
     final File file = File(picture.path);

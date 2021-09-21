@@ -10,11 +10,11 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'base_widget.dart';
 import 'doctorTileWidget.dart';
-
+//ignore: must_be_immutable
 class DoctorDetailsView extends StatefulWidget {
   Doctors doctorDetails;
 
-  DoctorDetailsView(@required this.doctorDetails);
+  DoctorDetailsView(this.doctorDetails);
 
   @override
   _DoctorDetailsViewState createState() =>
@@ -30,12 +30,10 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
   Address first;*/
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   String name = '';
-  final int _currentNav = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _searchController = TextEditingController();
   Doctors doctorDetails;
 
-  _DoctorDetailsViewState(@required this.doctorDetails);
+  _DoctorDetailsViewState(this.doctorDetails);
 
   loadSharedPrefs() async {
     try {
@@ -51,7 +49,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
     }
   }
 
-  void getLocation() async {
+  void getLocation() {
     /*_serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
@@ -77,7 +75,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
     });*/
   }
 
-  void findOutCityFromGeoCord(double lat, double long) async {
+  void findOutCityFromGeoCord(double lat, double long) {
     /*final coordinates = new Coordinates(lat, long);
     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     first = addresses.first;

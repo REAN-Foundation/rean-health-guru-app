@@ -27,17 +27,16 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final TextEditingController _mobileNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final _mobileNumberFocus = FocusNode();
   final _passwordFocus = FocusNode();
   String mobileNumber = '';
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  String _fcmToken = '';
   String countryCode = '';
+
+  //String _fcmToken;
 
   @override
   void initState() {
-    // TODO: implement initState
     firebase();
     super.initState();
   }
@@ -97,26 +96,6 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  Widget _backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
-            ),
-            Text('Back',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
-          ],
-        ),
-      ),
-    );
-  }
 
   Widget _entryField(String title, {bool isPassword = false}) {
     return Container(
@@ -403,86 +382,6 @@ class _LoginViewState extends State<LoginView> {
     }
   }
 
-  Widget _divider() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: <Widget>[
-          SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          Text('or'),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Divider(
-                thickness: 1,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _facebookButton() {
-    return Container(
-      height: 50,
-      margin: EdgeInsets.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xff1959a9),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    topLeft: Radius.circular(5)),
-              ),
-              alignment: Alignment.center,
-              child: Text('f',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w400)),
-            ),
-          ),
-          Expanded(
-            flex: 5,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Color(0xff2872ba),
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(5),
-                    topRight: Radius.circular(5)),
-              ),
-              alignment: Alignment.center,
-              child: Text('Log in with Facebook',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400)),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   _clearFeilds() {
     _mobileNumberController.clear();
@@ -561,7 +460,7 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  void checkItenetConnection() async {
+  checkItenetConnection() async {
     try {
       final result = await InternetAddress.lookup('tikme.co');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -572,18 +471,12 @@ class _LoginViewState extends State<LoginView> {
     }
   }
 
-  _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    currentFocus.unfocus();
-    FocusScope.of(context).requestFocus(nextFocus);
-  }
-
   void firebase() {
     _fcm.getToken().then((String token) async {
       assert(token != null);
       debugPrint('Push Messaging token: $token');
       debugPrint(token);
-      _fcmToken = token;
+      //_fcmToken = token;
       _sharedPrefUtils.save('fcmToken', token);
     });
 
@@ -598,7 +491,7 @@ class _LoginViewState extends State<LoginView> {
               subtitle: Text(message['notification']['body']),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text('Ok'),
                 onPressed: () => Navigator.of(context).pop(),
               ),
@@ -616,7 +509,7 @@ class _LoginViewState extends State<LoginView> {
               subtitle: Text(message['notification']['body']),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text('Ok'),
                 onPressed: () => Navigator.of(context).pop(),
               ),
@@ -634,7 +527,7 @@ class _LoginViewState extends State<LoginView> {
               subtitle: Text(message['notification']['body']),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text('Ok'),
                 onPressed: () => Navigator.of(context).pop(),
               ),

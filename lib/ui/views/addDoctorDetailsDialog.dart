@@ -13,7 +13,7 @@ import 'package:paitent/utils/StringUtility.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import 'base_widget.dart';
-
+//ignore: must_be_immutable
 class AddDoctorDetailsDialog extends StatefulWidget {
   Function _submitButtonListner;
 
@@ -32,13 +32,10 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
   var model = PatientCarePlanViewModel();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _mobileNumberController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
 
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _mobileNumberFocus = FocusNode();
-  final _descriptionFocus = FocusNode();
   String profileImage = '';
   String profileImagePath = '';
   String selectedGender = 'Male';
@@ -46,13 +43,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
   String countryCode = '';
 
   @override
-  void initState() {
-    // TODO: implement initState
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BaseWidget<PatientCarePlanViewModel>(
         model: model,
         builder: (context, model, child) => Container(
@@ -106,7 +97,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
       label: 'save doctor contacts button',
       button: true,
       onTap: () {},
-      child: RaisedButton(
+      child: ElevatedButton(
         onPressed: () {
           if (_firstNameController.text == '') {
             showToast('Enter first name', context);
@@ -121,59 +112,19 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                 _lastNameController.text, mobileNumber, selectedGender);
           }
         },
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(24.0))),
         child: Text(
           '      Add       ',
           style: TextStyle(
               color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),
-        textColor: Colors.white,
-        color: primaryColor,
-      ),
-    );
-  }
-
-  Widget _profileIcon() {
-    return Container(
-      height: 100,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            height: 88,
-            width: 88,
-            child: Semantics(
-              label: 'profile image of doctor',
-              readOnly: true,
-              child: Stack(
-                children: <Widget>[
-                  CircleAvatar(
-                    radius: 48,
-                    backgroundColor: primaryLightColor,
-                    child: CircleAvatar(
-                        radius: 48,
-                        backgroundImage: profileImage == ''
-                            ? AssetImage('res/images/profile_placeholder.png')
-                            : NetworkImage(profileImage)),
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: InkWell(
-                        onTap: () {
-                          //getImage();
-                        },
-                        child: SizedBox(
-                            height: 32,
-                            width: 32,
-                            child: Image.asset('res/images/ic_camera.png'))),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ],
+        style: ButtonStyle(
+            foregroundColor:
+                MaterialStateProperty.all<Color>(primaryLightColor),
+            backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                    side: BorderSide(color: primaryColor)))),
       ),
     );
   }
@@ -468,42 +419,6 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                 ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _entryDecriptionNameField(String title, {bool isPassword = false}) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(color: primaryColor, width: 1),
-                color: Colors.white),
-            child: TextFormField(
-                obscureText: isPassword,
-                controller: _descriptionController,
-                focusNode: _descriptionFocus,
-                maxLines: 1,
-                textInputAction: TextInputAction.done,
-                onFieldSubmitted: (term) {},
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
-          )
-        ],
       ),
     );
   }

@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:paitent/core/models/StartAssesmentResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-
+//ignore: must_be_immutable
 class AssessmentStartCarePlanView extends StatefulWidget {
   Assessmment assesment;
 
@@ -22,7 +21,6 @@ class _AssessmentStartCarePlanViewState
     extends State<AssessmentStartCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _textController = TextEditingController();
 
   // Default Radio Button Selected Item When App Starts.
   String radioButtonItem = 'ONE';
@@ -205,37 +203,6 @@ class _AssessmentStartCarePlanViewState
     );
   }
 
-  Widget _entryField() {
-    return Container(
-      margin: EdgeInsets.all(16.0),
-      height: 100,
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          border: Border.all(
-            color: Colors.black54,
-            width: 1.0,
-          ),
-        ),
-        child: TextFormField(
-            obscureText: false,
-            controller: _textController,
-            keyboardType: TextInputType.multiline,
-            style: TextStyle(
-              color: Colors.black54,
-            ),
-            onFieldSubmitted: (term) {},
-            decoration: InputDecoration(
-                hintText: 'Describe it here...',
-                border: InputBorder.none,
-                fillColor: Colors.white,
-                filled: true)),
-      ),
-    );
-  }
-
   Widget quizQuestionTwo() {
     return Container(
       height: 260,
@@ -336,96 +303,4 @@ class _AssessmentStartCarePlanViewState
     );
   }
 
-  Widget _dialog(BuildContext context) {
-    return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-        //child: addOrEditAllergiesDialog(context),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                color: colorF6F6FF,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        'Great!',
-                        style: TextStyle(
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
-                            color: primaryColor,
-                            fontSize: 16.0),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 24,
-              ),
-              Icon(
-                FontAwesomeIcons.solidThumbsUp,
-                size: 48,
-                color: primaryColor,
-              ),
-              SizedBox(
-                height: 24,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'Let\'s keep it that way !',
-                  style: TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.bold,
-                      color: primaryColor,
-                      fontSize: 16.0),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context, rootNavigator: true).pop();
-                  },
-                  child: Container(
-                      height: 40,
-                      width: 120,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24.0),
-                        border: Border.all(color: primaryColor, width: 1),
-                        color: Colors.deepPurple,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Close',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12),
-                          textAlign: TextAlign.center,
-                        ),
-                      )),
-                ),
-              ),
-            ],
-          ),
-        ));
-  }
 }

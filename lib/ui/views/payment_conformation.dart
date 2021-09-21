@@ -19,8 +19,6 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
   @override
   Widget build(BuildContext context) {
     _ammountController.text = '300';
-
-    // TODO: implement build
     return BaseWidget<AppoinmentViewModel>(
       model: AppoinmentViewModel(),
       builder: (context, model, child) => Container(
@@ -404,7 +402,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                         ),
                         child: TextFormField(
                           inputFormatters: [
-                            WhitelistingTextInputFormatter.digitsOnly,
+                            FilteringTextInputFormatter.digitsOnly,
                           ],
                           maxLength: 3,
                           maxLines: 1,

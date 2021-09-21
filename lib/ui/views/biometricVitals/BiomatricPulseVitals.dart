@@ -10,7 +10,7 @@ import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SimpleTimeSeriesChart.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-
+//ignore: must_be_immutable
 class BiometricPulseVitalsView extends StatefulWidget {
   bool allUIViewsVisible = false;
 
@@ -36,14 +36,12 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
   @override
   void initState() {
     getVitalsHistory();
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-    // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -156,7 +154,8 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                       keyboardType: TextInputType.number,
                       onFieldSubmitted: (term) {},
                       inputFormatters: [
-                        BlacklistingTextInputFormatter(RegExp('[\\,|\\+|\\-]')),
+                        FilteringTextInputFormatter.deny(
+                            RegExp('[\\,|\\+|\\-]')),
                       ],
                       decoration: InputDecoration(
                           hintText: '(65 to 95)',

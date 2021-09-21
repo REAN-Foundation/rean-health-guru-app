@@ -59,7 +59,6 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BaseWidget<BookAppoinmentViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -519,8 +518,6 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
     } catch (CustomException) {
       model.setBusy(false);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -545,8 +542,6 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
     } catch (CustomException) {
       model.setBusy(false);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 }

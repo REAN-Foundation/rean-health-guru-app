@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:package_info/package_info.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
-import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/login_with_otp_view.dart';
@@ -32,8 +31,6 @@ class _AppDrawerState extends State<AppDrawer> {
 
   loadSharedPrefs() async {
     try {
-      final UserData user =
-          UserData.fromJson(await _sharedPrefUtils.read('user'));
       final Patient patient =
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       //debugPrint(user.toJson().toString());
@@ -53,7 +50,6 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   void initState() {
     _initPackageInfo();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -471,7 +467,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text('Yes'),
             onPressed: () {
               startCarePlanResponseGlob = null;
@@ -484,7 +480,7 @@ class _AppDrawerState extends State<AppDrawer> {
               }), (Route<dynamic> route) => false);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text('No'),
             onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
           ),
@@ -567,21 +563,6 @@ class _AppDrawerState extends State<AppDrawer> {
         ],
       ),
       // )
-    );
-  }
-
-  Widget _createDrawerItem(
-      {IconData icon, String text, GestureTapCallback onTap}) {
-    return ListTile(
-      title: Row(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(left: 8.0),
-            child: Text(text),
-          )
-        ],
-      ),
-      onTap: onTap,
     );
   }
 }

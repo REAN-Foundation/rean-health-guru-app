@@ -16,7 +16,6 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
   var model = PatientMedicationViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {

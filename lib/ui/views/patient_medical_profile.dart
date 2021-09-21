@@ -37,14 +37,12 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _getPatientMedicalProfile();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BaseWidget<PatientObservationsViewModel>(
         model: model,
         builder: (context, model, child) => MergeSemantics(
@@ -571,20 +569,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
       } else {}
     } catch (CustomException) {
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
-  }
-
-  Widget _medicalProfileDialog(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 0.0,
-      backgroundColor: Colors.transparent,
-      child: medicalProfileDialog(context),
-    );
   }
 
   medicalProfileDialog(BuildContext context) {

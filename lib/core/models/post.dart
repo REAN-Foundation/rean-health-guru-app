@@ -1,6 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
-
-@JsonSerializable(nullable: true)
 class Post {
   int userId;
   int id;

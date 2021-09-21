@@ -19,7 +19,6 @@ class SupportView extends StatefulWidget {
 
 class _SupportViewState extends State<SupportView> {
   //var model = PatientCarePlanViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String msg = 'We are here to help you so please get in touch.';
   String phone = '+2025397323';
   String email = 'support@reanfoundation.org';
@@ -50,7 +49,6 @@ class _SupportViewState extends State<SupportView> {
   @override
   void initState() {
     //completeMessageTaskOfAHACarePlan(widget.assortedViewConfigs.task);
-    // TODO: implement initState
     loadSharedPrefs();
     super.initState();
   }
@@ -307,15 +305,6 @@ class _SupportViewState extends State<SupportView> {
         ),
       ),
     );
-  }
-
-  _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      showToast('Could not launch $url', context);
-      //throw 'Could not launch $url';
-    }
   }
 
 /*completeMessageTaskOfAHACarePlan(Task task) async {

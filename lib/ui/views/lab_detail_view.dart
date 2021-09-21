@@ -10,11 +10,11 @@ import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'base_widget.dart';
-
+//ignore: must_be_immutable
 class LabDetailsView extends StatefulWidget {
   Labs labdetails;
 
-  LabDetailsView(@required this.labdetails);
+  LabDetailsView(this.labdetails);
 
   @override
   _LabDetailsViewState createState() => _LabDetailsViewState(labdetails);
@@ -29,12 +29,10 @@ class _LabDetailsViewState extends State<LabDetailsView> {
   Address first;*/
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   String name = '';
-  final int _currentNav = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _searchController = TextEditingController();
   Labs labDetails;
 
-  _LabDetailsViewState(@required this.labDetails);
+  _LabDetailsViewState(this.labDetails);
 
   loadSharedPrefs() async {
     try {
@@ -50,7 +48,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
     }
   }
 
-  void getLocation() async {
+  void getLocation() {
     /* _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
@@ -76,7 +74,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
     });*/
   }
 
-  void findOutCityFromGeoCord(double lat, double long) async {
+  void findOutCityFromGeoCord(double lat, double long) {
     /*final coordinates = new Coordinates(lat, long);
     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     first = addresses.first;

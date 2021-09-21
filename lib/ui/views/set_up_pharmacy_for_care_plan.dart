@@ -22,7 +22,6 @@ class _SetUpPharmacyForCarePlanViewState
     extends State<SetUpPharmacyForCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _searchController = TextEditingController();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   StartCarePlanResponse startCarePlanResponse;
 
@@ -43,7 +42,6 @@ class _SetUpPharmacyForCarePlanViewState
   @override
   void initState() {
     loadSharedPrefrance();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -568,8 +566,6 @@ class _SetUpPharmacyForCarePlanViewState
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException);
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 }

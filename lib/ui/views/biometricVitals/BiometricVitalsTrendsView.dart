@@ -30,7 +30,6 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
         break;
     }
 
-    // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
       builder: (context, model, child) => Container(

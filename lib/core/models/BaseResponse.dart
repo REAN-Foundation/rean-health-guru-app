@@ -1,6 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
-
-@JsonSerializable(nullable: true)
 class BaseResponse {
   String status;
   String message;

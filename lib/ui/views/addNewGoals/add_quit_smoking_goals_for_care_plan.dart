@@ -28,12 +28,6 @@ class _AddQuitSmokingGoalsForCarePlanViewState
   int id = 1;
 
   String selectedGoal = '';
-
-  final TextEditingController _systolicController = TextEditingController();
-  final TextEditingController _diastolicController = TextEditingController();
-
-  final _systolicFocus = FocusNode();
-  final _diastolicFocus = FocusNode();
   String dob = '';
   String unformatedDOB = '';
   var dateFormat = DateFormat('dd MMM, yyyy');
@@ -294,12 +288,6 @@ class _AddQuitSmokingGoalsForCarePlanViewState
         ],
       ),
     );
-  }
-
-  _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    currentFocus.unfocus();
-    FocusScope.of(context).requestFocus(nextFocus);
   }
 
   setGoals() async {

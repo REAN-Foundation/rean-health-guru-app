@@ -19,26 +19,23 @@ import 'package:paitent/ui/widgets/bezierContainer.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:provider/provider.dart';
-
+//ignore: must_be_immutable
 class OTPScreenView extends StatefulWidget {
   String mobileNumber = '';
 
-  OTPScreenView(@required this.mobileNumber);
+  OTPScreenView(this.mobileNumber);
 
   @override
   _OTPScreenViewState createState() => _OTPScreenViewState();
 }
 
 class _OTPScreenViewState extends State<OTPScreenView> {
-  final TextEditingController _mobileNumberController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final _mobileNumberFocus = FocusNode();
-  final _passwordFocus = FocusNode();
   String mobileNumber = '';
   String otp = '';
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  String _fcmToken = '';
+
+  //String _fcmToken = '';
   bool loginOTP = false;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
@@ -46,7 +43,6 @@ class _OTPScreenViewState extends State<OTPScreenView> {
   void initState() {
     mobileNumber = widget.mobileNumber;
     debugPrint('Mobile ==> ${widget.mobileNumber}');
-    // TODO: implement initState
     firebase();
     super.initState();
   }
@@ -128,27 +124,6 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                   ],
                 ),
               ))),
-    );
-  }
-
-  Widget _backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
-            ),
-            Text('Back',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
-          ],
-        ),
-      ),
     );
   }
 
@@ -407,13 +382,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
     }
   }
 
-  _clearFeilds() {
-    _mobileNumberController.clear();
-    _passwordController.clear();
-    setState(() {});
-  }
-
-  void checkItenetConnection() async {
+  checkItenetConnection() async {
     try {
       final result = await InternetAddress.lookup('tikme.co');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -424,18 +393,12 @@ class _OTPScreenViewState extends State<OTPScreenView> {
     }
   }
 
-  _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    currentFocus.unfocus();
-    FocusScope.of(context).requestFocus(nextFocus);
-  }
-
   void firebase() {
     _fcm.getToken().then((String token) async {
       assert(token != null);
       debugPrint('Push Messaging token: $token');
       debugPrint(token);
-      _fcmToken = token;
+      //_fcmToken = token;
       _sharedPrefUtils.save('fcmToken', token);
     });
 
@@ -450,7 +413,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
               subtitle: Text(message['notification']['body']),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text('Ok'),
                 onPressed: () => Navigator.of(context).pop(),
               ),
@@ -468,7 +431,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
               subtitle: Text(message['notification']['body']),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text('Ok'),
                 onPressed: () => Navigator.of(context).pop(),
               ),
@@ -486,7 +449,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
               subtitle: Text(message['notification']['body']),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text('Ok'),
                 onPressed: () => Navigator.of(context).pop(),
               ),

@@ -13,11 +13,11 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'home_view.dart';
-
+//ignore: must_be_immutable
 class LearnMoreCarePlanView extends StatefulWidget {
   AssortedViewConfigs assortedViewConfigs;
 
-  LearnMoreCarePlanView(@required this.assortedViewConfigs);
+  LearnMoreCarePlanView(this.assortedViewConfigs);
 
   @override
   _LearnMoreCarePlanViewState createState() => _LearnMoreCarePlanViewState();
@@ -50,7 +50,6 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
   @override
   void initState() {
     //completeMessageTaskOfAHACarePlan(widget.assortedViewConfigs.task);
-    // TODO: implement initState
     super.initState();
   }
 

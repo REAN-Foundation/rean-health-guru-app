@@ -16,7 +16,6 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
       builder: (context, model, child) => Container(

@@ -24,10 +24,8 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
   String selectedGoal = '';
 
   final TextEditingController _fastingController = TextEditingController();
-  final TextEditingController _ppController = TextEditingController();
 
   final _fastingFocus = FocusNode();
-  final _ppFocus = FocusNode();
   String dob = '';
   String unformatedDOB = '';
   var dateFormat = DateFormat('dd MMM, yyyy');
@@ -347,12 +345,6 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
         ],
       ),
     );
-  }
-
-  _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    currentFocus.unfocus();
-    FocusScope.of(context).requestFocus(nextFocus);
   }
 
   setGoals() async {

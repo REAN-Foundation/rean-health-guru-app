@@ -16,7 +16,7 @@ import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
-
+//ignore: must_be_immutable
 class DashBoardVer2View extends StatefulWidget {
   Function positionToChangeNavigationBar;
 
@@ -89,9 +89,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
         //getLatestBiometrics();
       },
     );
-    // TODO: implement initState
     debugPrint('Country Local ==> ${getCurrentLocale()}');
-    // TODO: implement initState
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
@@ -170,8 +168,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
     return BaseWidget<DashboardSummaryModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -1449,13 +1445,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
           ),
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
               child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context, rootNavigator: true).pop();
                 emergencyDetailsTextControler.clear();
               }),
-          FlatButton(
+          TextButton(
               child: const Text('Submit'),
               onPressed: () {
                 if (emergencyDetailsTextControler.text.isEmpty) {
@@ -1491,8 +1487,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -1521,8 +1515,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -1546,8 +1538,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -1585,8 +1575,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -1597,7 +1585,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       body['Feeling'] = feeling;
       body['RecordDate'] = dateFormat.format(DateTime.now());
       body['Comments'] = '';
-      body['SymptomAssessmentId'];
+      body['SymptomAssessmentId'] = '';
 
       final BaseResponse baseResponse =
           await model.recordHowAreYouFeeling(body);
@@ -1622,8 +1610,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 
@@ -1648,8 +1634,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 }

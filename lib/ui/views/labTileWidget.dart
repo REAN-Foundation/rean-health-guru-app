@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:paitent/core/models/labsListApiResponse.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
-
+//ignore: must_be_immutable
 class LabTileView extends StatefulWidget {
   Labs labdetails;
 
-  LabTileView(@required this.labdetails);
+  LabTileView(this.labdetails);
 
   @override
   _LabTileViewState createState() => _LabTileViewState(labdetails);
@@ -14,11 +14,10 @@ class LabTileView extends StatefulWidget {
 class _LabTileViewState extends State<LabTileView> {
   Labs labdetails;
 
-  _LabTileViewState(@required this.labdetails);
+  _LabTileViewState(this.labdetails);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       //height: 60,
       child: Row(

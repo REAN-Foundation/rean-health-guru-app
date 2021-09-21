@@ -7,7 +7,6 @@ import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SelectCarePlanView extends StatefulWidget {
   @override
@@ -470,13 +469,5 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             ),
           ],
         ));
-  }
-
-  void _urlLauncher(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 }

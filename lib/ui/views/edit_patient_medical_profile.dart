@@ -10,11 +10,11 @@ import 'package:paitent/utils/CommonUtils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import 'base_widget.dart';
-
+//ignore: must_be_immutable
 class EditPatientMedicalProfileView extends StatefulWidget {
   MedicalProfiles medicalProfiles;
 
-  EditPatientMedicalProfileView(@required MedicalProfiles mProfiles) {
+  EditPatientMedicalProfileView(MedicalProfiles mProfiles) {
     medicalProfiles = mProfiles;
   }
 
@@ -48,8 +48,6 @@ class _EditPatientMedicalProfileViewState
 
   ProgressDialog progressDialog;
 
-  GroupItem _selected;
-
   final _majorComplaintFocus = FocusNode();
   final _bloodGroupFocus = FocusNode();
   final _ocupationFocus = FocusNode();
@@ -68,7 +66,6 @@ class _EditPatientMedicalProfileViewState
 
   @override
   void initState() {
-    // TODO: implement initState
     setData();
     super.initState();
   }
@@ -124,6 +121,7 @@ class _EditPatientMedicalProfileViewState
         return maritalStatusItems[i];
       }
     }
+    return maritalStatusItems[0];
   }
 
   GroupItem showSelectedItemForYesOrNo(String text) {
@@ -132,12 +130,12 @@ class _EditPatientMedicalProfileViewState
         return radioItems[i];
       }
     }
+    return radioItems[0];
   }
 
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-    // TODO: implement build
     return BaseWidget<PatientObservationsViewModel>(
         model: model,
         builder: (context, model, child) => Scaffold(
@@ -312,13 +310,24 @@ class _EditPatientMedicalProfileViewState
                           SizedBox(
                             width: 150,
                             height: 40,
-                            child: RaisedButton(
+                            child: ElevatedButton(
                               onPressed: () {
                                 _updatePatientMedicalProfile();
                               },
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(24.0))),
+                              style: ButtonStyle(
+                                  foregroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          primaryLightColor),
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          primaryColor),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(24),
+                                          side: BorderSide(
+                                              color: primaryColor)))),
                               child: Text(
                                 'Submit',
                                 style: TextStyle(
@@ -326,9 +335,6 @@ class _EditPatientMedicalProfileViewState
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold),
                               ),
-                              textColor: Colors.white,
-                              splashColor: Colors.red,
-                              color: primaryColor,
                             ),
                           ),
                         ],
@@ -358,7 +364,7 @@ class _EditPatientMedicalProfileViewState
       onFieldSubmitted: (term) {
         focusNode != _obstetricHistoryFocus
             ? _fieldFocusChange(context, focusNode, nextFocusNode)
-            : '';
+            : '  ';
       },
       decoration: InputDecoration(
         labelText: hint,
@@ -415,8 +421,6 @@ class _EditPatientMedicalProfileViewState
     } catch (CustomException) {
       progressDialog.hide();
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 

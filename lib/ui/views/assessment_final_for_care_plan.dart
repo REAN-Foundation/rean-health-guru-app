@@ -16,7 +16,6 @@ class _AssessmentFinalCarePlanViewState
     extends State<AssessmentFinalCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _textController = TextEditingController();
 
   final TextEditingController _systolicController = TextEditingController();
   final TextEditingController _diastolicController = TextEditingController();

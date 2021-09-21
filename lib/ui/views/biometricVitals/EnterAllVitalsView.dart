@@ -41,7 +41,6 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
   @override
   void initState() {
     debugPrint('Country Local ==> ${getCurrentLocale()}');
-    // TODO: implement initState
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
@@ -51,7 +50,6 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-    // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -245,7 +243,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 context, _weightFocus, _systolicFocus);
                           },
                           inputFormatters: [
-                            BlacklistingTextInputFormatter(
+                            FilteringTextInputFormatter.deny(
                                 RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
@@ -350,7 +348,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         label: 'Systolic',
                         child: TextFormField(
                             inputFormatters: [
-                              BlacklistingTextInputFormatter(
+                              FilteringTextInputFormatter.deny(
                                   RegExp('[\\,|\\+|\\-]')),
                             ],
                             controller: _systolicController,
@@ -393,7 +391,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                             maxLines: 1,
                             textInputAction: TextInputAction.next,
                             inputFormatters: [
-                              BlacklistingTextInputFormatter(
+                              FilteringTextInputFormatter.deny(
                                   RegExp('[\\,|\\+|\\-]')),
                             ],
                             keyboardType: TextInputType.number,
@@ -471,7 +469,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           textInputAction:
                           TextInputAction.next,
                           inputFormatters: [
-                            new BlacklistingTextInputFormatter(new RegExp('[\\,|\\+|\\-]')),
+                            new FilteringTextInputFormatter.deny(new RegExp('[\\,|\\+|\\-]')),
                           ],
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {
@@ -588,7 +586,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 _bloodOxygenSaturationFocus);
                           },
                           inputFormatters: [
-                            BlacklistingTextInputFormatter(
+                            FilteringTextInputFormatter.deny(
                                 RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
@@ -678,7 +676,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 _bloodOxygenSaturationFocus, _pulseRateFocus);
                           },
                           inputFormatters: [
-                            BlacklistingTextInputFormatter(
+                            FilteringTextInputFormatter.deny(
                                 RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
@@ -768,7 +766,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 context, _pulseRateFocus, _bodyTempratureFocus);
                           },
                           inputFormatters: [
-                            BlacklistingTextInputFormatter(
+                            FilteringTextInputFormatter.deny(
                                 RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(
@@ -852,7 +850,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {},
                           inputFormatters: [
-                            BlacklistingTextInputFormatter(
+                            FilteringTextInputFormatter.deny(
                                 RegExp('[\\,|\\+|\\-]')),
                           ],
                           decoration: InputDecoration(

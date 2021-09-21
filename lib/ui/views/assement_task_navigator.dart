@@ -18,7 +18,7 @@ import 'package:paitent/utils/StringUtility.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import 'home_view.dart';
-
+//ignore: must_be_immutable
 class AssesmentTaskNavigatorView extends StatefulWidget {
   /* StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse;
 
@@ -28,7 +28,7 @@ class AssesmentTaskNavigatorView extends StatefulWidget {
 
   Task task;
 
-  AssesmentTaskNavigatorView(@required Task task) {
+  AssesmentTaskNavigatorView(Task task) {
     this.task = task;
   }
 
@@ -54,14 +54,12 @@ class _AssesmentTaskNavigatorViewState
     progressDialog = ProgressDialog(context);
     startAssesmentResponse();
     debugPrint(widget.task.details.carePlanId.toString());
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
-    // TODO: implement build
     return BaseWidget<PatientCarePlanViewModel>(
         model: model,
         builder: (context, model, child) => Container(
@@ -101,7 +99,6 @@ class _AssesmentTaskNavigatorViewState
     try {
       debugPrint('Assesment 1');
       progressDialog.show();
-      final map = <String, String>{};
 
       _startAssesmentResponse = await model.startAssesmentResponse(
           widget.task.details.carePlanId.toString(), widget.task.details.id);
@@ -154,7 +151,7 @@ class _AssesmentTaskNavigatorViewState
     }
   }
 
-  void assignmentTask(Assessmment assessmment) async {
+  assignmentTask(Assessmment assessmment) async {
     final id = await Navigator.push(
       context,
       CupertinoPageRoute(
@@ -169,7 +166,7 @@ class _AssesmentTaskNavigatorViewState
     }
   }
 
-  void menuQuestion(Assessmment assessmment) async {
+  menuQuestion(Assessmment assessmment) async {
     final id = await Navigator.push(
       context,
       CupertinoPageRoute(
@@ -192,7 +189,7 @@ class _AssesmentTaskNavigatorViewState
     //}
   }
 
-  void yesNoQuestion(Assessmment assessmment) async {
+  yesNoQuestion(Assessmment assessmment) async {
     final id = await Navigator.push(
       context,
       CupertinoPageRoute(

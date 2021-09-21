@@ -12,10 +12,11 @@ import 'package:paitent/utils/StringUtility.dart';
 
 import 'home_view.dart';
 
+// ignore: must_be_immutable
 class WordOfTheWeekCarePlanView extends StatefulWidget {
   AssortedViewConfigs assortedViewConfigs;
 
-  WordOfTheWeekCarePlanView(@required this.assortedViewConfigs);
+  WordOfTheWeekCarePlanView(this.assortedViewConfigs);
 
   @override
   _WordOfTheWeekCarePlanViewState createState() =>
@@ -25,8 +26,6 @@ class WordOfTheWeekCarePlanView extends StatefulWidget {
 class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -171,13 +170,21 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                 SizedBox(
                   width: 150,
                   height: 40,
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       completeMessageTaskOfAHACarePlan(
                           widget.assortedViewConfigs.task);
                     },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(24.0))),
+                    style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(primaryLightColor),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(primaryColor),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24),
+                                    side: BorderSide(color: primaryColor)))),
                     child: Text(
                       'Done',
                       style: TextStyle(
@@ -185,9 +192,6 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                           fontSize: 16,
                           fontWeight: FontWeight.bold),
                     ),
-                    textColor: Colors.white,
-                    splashColor: primaryLightColor,
-                    color: primaryColor,
                   ),
                 ),
               ],

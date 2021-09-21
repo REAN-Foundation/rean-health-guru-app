@@ -5,7 +5,7 @@ import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
-
+//ignore: must_be_immutable
 class AddPharmaDialog extends StatefulWidget {
   Function _submitButtonListner;
 
@@ -26,8 +26,8 @@ class _MyDialogState extends State<AddPharmaDialog> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getLabListByLocality();
+    super.initState();
   }
 
   getLabListByLocality() async {
@@ -51,7 +51,6 @@ class _MyDialogState extends State<AddPharmaDialog> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BaseWidget<PatientCarePlanViewModel>(
         model: model,
         builder: (context, model, child) => Container(
@@ -199,23 +198,4 @@ class _MyDialogState extends State<AddPharmaDialog> {
     );
   }
 
-  Widget _submitButton(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: 'save medicines button',
-      onTap: () {},
-      child: RaisedButton(
-        onPressed: () {},
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(24.0))),
-        child: Text(
-          '      Add       ',
-          style: TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        textColor: Colors.white,
-        color: primaryColor,
-      ),
-    );
-  }
 }

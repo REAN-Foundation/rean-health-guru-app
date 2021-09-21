@@ -76,13 +76,11 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
   @override
   void initState() {
     loadSharedPref();
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BaseWidget<PatientHealthMarkerViewModel>(
       model: model,
       builder: (context, model, child) => Container(

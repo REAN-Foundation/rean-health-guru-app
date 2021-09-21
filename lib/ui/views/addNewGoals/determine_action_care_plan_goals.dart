@@ -21,8 +21,6 @@ class _DeterminActionPlansForCarePlanViewState
     extends State<DeterminActionPlansForCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final TextEditingController _textEditingController = TextEditingController();
-  final _textEditingFocus = FocusNode();
   int id = 0;
   String radioButtonItem = 'ONE';
   GetActionOfGoalPlan getActionOfGoalPlan;

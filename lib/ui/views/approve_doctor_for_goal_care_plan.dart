@@ -16,7 +16,6 @@ class _ApproveDoctorForCarePlanViewState
     extends State<ApproveDoctorForGoalCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

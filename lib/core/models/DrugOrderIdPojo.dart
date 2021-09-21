@@ -50,7 +50,7 @@ class DrugOrder {
   String visitId;
   String suggestedPharmacyId;
   int currentState;
-  Null referencedOrderId;
+  String referencedOrderId;
   String updatedAt;
   String createdAt;
 

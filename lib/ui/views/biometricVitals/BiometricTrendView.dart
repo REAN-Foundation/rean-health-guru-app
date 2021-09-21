@@ -20,7 +20,6 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
   var model = PatientVitalsViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final _currentIndex = 0;
 
   Widget loadProgress() {
     return Center(
@@ -30,7 +29,6 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
       builder: (context, model, child) => Container(

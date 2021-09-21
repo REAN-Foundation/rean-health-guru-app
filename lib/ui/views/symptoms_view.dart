@@ -12,6 +12,7 @@ import 'package:paitent/utils/StringUtility.dart';
 
 import 'base_widget.dart';
 
+// ignore: must_be_immutable
 class SymptomsView extends StatefulWidget {
   String assessmmentId = '';
 
@@ -36,7 +37,6 @@ class _SymptomsViewState extends State<SymptomsView> {
   void initState() {
     //prepareSymptomsList();
     getAssesmentTemplateById();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -151,7 +151,7 @@ class _SymptomsViewState extends State<SymptomsView> {
   Widget doneButon() {
     return Align(
       alignment: Alignment.center,
-      child: RaisedButton.icon(
+      child: ElevatedButton.icon(
         onPressed: () async {
           showToast('Symptoms recorded successfully', context);
           Navigator.pushAndRemoveUntil(context,
@@ -175,10 +175,14 @@ class _SymptomsViewState extends State<SymptomsView> {
                 fontWeight: FontWeight.w700),
           ),
         ),
-        color: primaryColor,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-            side: BorderSide(color: primaryColor)),
+        style: ButtonStyle(
+            foregroundColor:
+                MaterialStateProperty.all<Color>(primaryLightColor),
+            backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                    side: BorderSide(color: primaryColor)))),
       ),
     );
   }
@@ -306,7 +310,7 @@ class _SymptomsViewState extends State<SymptomsView> {
                   content: Text(
                       "Are you sure you want to delete ${itemsList[index]}?"),
                   actions: <Widget>[
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         "Cancel",
                         style: TextStyle(color: Colors.black),
@@ -315,7 +319,7 @@ class _SymptomsViewState extends State<SymptomsView> {
                         Navigator.of(context).pop();
                       },
                     ),
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         "Delete",
                         style: TextStyle(color: Colors.red),
@@ -337,7 +341,6 @@ class _SymptomsViewState extends State<SymptomsView> {
           setState(() {
             assessmentTemplate.templateSymptomTypes.removeAt(index);
           });
-          // TODO: Navigate to edit page;
         }
       },
     );
@@ -363,8 +366,6 @@ class _SymptomsViewState extends State<SymptomsView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    } catch (Exception) {
-      debugPrint(Exception.toString());
     }
   }
 

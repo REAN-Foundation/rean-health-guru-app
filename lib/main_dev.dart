@@ -23,13 +23,13 @@ Future<void> main() async {
   login ??= false;
   runApp(MyApp(login));
 }
-
+//ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   bool isLogin;
   String _baseUrl;
   String _botBaseUrl;
 
-  MyApp(@required bool isLogin) {
+  MyApp(bool isLogin) {
     debugPrint('Print from .env ==> ${dotenv.env['DEV_BASE_URL']}');
     debugPrint('Print from .env ==> ${dotenv.env['DEV_BOT_BASE_URL']}');
     _baseUrl = dotenv.env['DEV_BASE_URL'];
@@ -43,10 +43,6 @@ class MyApp extends StatelessWidget {
     debugPrint('MyApp Constructor >> Login Session: $isLogin');
   }
 
-  @override
-  void initState() {
-    //loadSharedPrefs();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +80,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  void loadSharedPrefs() async {
+  loadSharedPrefs() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     isLogin = prefs.getBool('login');
   }

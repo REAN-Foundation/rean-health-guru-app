@@ -6,7 +6,7 @@ import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:share/share.dart';
-
+//ignore: must_be_immutable
 class ImageViewer extends StatelessWidget {
   static final GlobalKey _globalKey = GlobalKey();
   String path = '';
@@ -51,7 +51,7 @@ class ImageViewer extends StatelessWidget {
     );
   }
 
-  Future<Null> urlFileShare() async {
+  urlFileShare() async {
     final RenderBox box = _globalKey.currentContext.findRenderObject();
     if (Platform.isAndroid) {
       /*  var url = 'https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg';

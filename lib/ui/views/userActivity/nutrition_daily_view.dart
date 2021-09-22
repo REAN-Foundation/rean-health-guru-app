@@ -410,8 +410,8 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          'Morning Snack',
-                          semanticsLabel: 'Morning Snack',
+                          'Snacks',
+                          semanticsLabel: 'Snacks',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 16.0,
@@ -457,7 +457,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                       context: context,
                                       builder: (_) {
                                         return _addCaloriesConsumedDialog(
-                                            context, 'morningSnacks');
+                                            context, 'snacks');
                                       });
                                 },
                                 child: Icon(
@@ -476,144 +476,151 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                     SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Afternoon Snack',
-                          semanticsLabel: 'Afternoon Snack',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.0,
-                              color: Colors.grey),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              totalAfernoonSnackCal.toStringAsFixed(0),
-                              semanticsLabel: '',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18.0,
-                                  color: Colors.grey),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              'cals',
-                              semanticsLabel: 'cals',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.0,
-                                  color: Colors.grey),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Container(
-                              height: 30,
-                              width: 2,
-                              color: Colors.grey,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            InkWell(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return _addCaloriesConsumedDialog(
-                                            context, 'afternoonSnacks');
-                                      });
-                                },
-                                child: Icon(
-                                  Icons.add_circle,
-                                  color: primaryColor,
-                                  size: 32,
-                                ))
-                          ],
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.grey,
-                      thickness: 2,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Evening Snack',
-                          semanticsLabel: 'Evening Snack',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.0,
-                              color: Colors.grey),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              totalEveningSncakCal.toStringAsFixed(0),
-                              semanticsLabel: '',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18.0,
-                                  color: Colors.grey),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              'cals',
-                              semanticsLabel: 'cals',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.0,
-                                  color: Colors.grey),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Container(
-                              height: 30,
-                              width: 2,
-                              color: Colors.grey,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            InkWell(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return _addCaloriesConsumedDialog(
-                                            context, 'eveningSnacks');
-                                      });
-                                },
-                                child: Icon(
-                                  Icons.add_circle,
-                                  color: primaryColor,
-                                  size: 32,
-                                ))
-                          ],
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.grey,
-                      thickness: 2,
+                    Visibility(
+                      visible: false,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                'Afternoon Snack',
+                                semanticsLabel: 'Afternoon Snack',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16.0,
+                                    color: Colors.grey),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    totalAfernoonSnackCal.toStringAsFixed(0),
+                                    semanticsLabel: '',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18.0,
+                                        color: Colors.grey),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    'cals',
+                                    semanticsLabel: 'cals',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.0,
+                                        color: Colors.grey),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Container(
+                                    height: 30,
+                                    width: 2,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  InkWell(
+                                      onTap: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) {
+                                              return _addCaloriesConsumedDialog(
+                                                  context, 'afternoonSnacks');
+                                            });
+                                      },
+                                      child: Icon(
+                                        Icons.add_circle,
+                                        color: primaryColor,
+                                        size: 32,
+                                      ))
+                                ],
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.grey,
+                            thickness: 2,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                'Evening Snack',
+                                semanticsLabel: 'Evening Snack',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16.0,
+                                    color: Colors.grey),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    totalEveningSncakCal.toStringAsFixed(0),
+                                    semanticsLabel: '',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18.0,
+                                        color: Colors.grey),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    'cals',
+                                    semanticsLabel: 'cals',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.0,
+                                        color: Colors.grey),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Container(
+                                    height: 30,
+                                    width: 2,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  InkWell(
+                                      onTap: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) {
+                                              return _addCaloriesConsumedDialog(
+                                                  context, 'eveningSnacks');
+                                            });
+                                      },
+                                      child: Icon(
+                                        Icons.add_circle,
+                                        color: primaryColor,
+                                        size: 32,
+                                      ))
+                                ],
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.grey,
+                            thickness: 2,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -699,7 +706,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
       totalLunchCal = totalLunchCal + caloriesConsumed;
     } else if (type == 'dinner') {
       totalDinnerCal = totalDinnerCal + caloriesConsumed;
-    } else if (type == 'morningSnacks') {
+    } else if (type == 'snacks') {
       totalMorningSnackCal = totalMorningSnackCal + caloriesConsumed;
     } else if (type == 'afternoonSnacks') {
       totalAfernoonSnackCal = totalAfernoonSnackCal + caloriesConsumed;
@@ -742,10 +749,10 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
           await model.recordMyCaloriesConsumed(map);
       if (baseResponse.status == 'success') {
       } else {}
-    } catch (e) {
+    } catch (CustomException) {
       model.setBusy(false);
-      showToast(e.toString(), context);
-      debugPrint('Error ==> ' + e.toString());
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ==> ' + CustomException.toString());
     }
   }
 }

@@ -456,7 +456,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.baseline,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
                   totalCalories.toStringAsFixed(0),

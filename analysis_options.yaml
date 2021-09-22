@@ -44,6 +44,7 @@ analyzer:
     - "bin/cache/**"
     # Ignore protoc generated files
     - "dev/conductor/lib/proto/*"
+    - "flutter/dev/*"
 
 linter:
   rules:

@@ -83,9 +83,9 @@ dependencies:
   get: ^4.3.8
 
 dev_dependencies:
-  test: any
-  flutter_test:
-    sdk: flutter
+  #test: any
+  #flutter_test:
+  #  sdk: flutter
   flutter_driver:
     sdk: flutter
   flutter_lints: ^1.0.4

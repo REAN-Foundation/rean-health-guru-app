@@ -35,20 +35,20 @@ jobs:
           GITHUB_PULL_BASE_SHA: ${{ github.event.pull_request.base.sha }}
           GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
 
-  CodeScan-GitHubSuperLinter:
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout Code
-      - name: Checkout Code
-        uses: actions/checkout@v2.3.4
-        with:
-          fetch-depth: 0
+  # CodeScan-GitHubSuperLinter:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # Checkout Code
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v2.3.4
+  #       with:
+  #         fetch-depth: 0
 
-      - name: GitHub SuperLinter Scan
-        uses: github/super-linter@v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_DART: true
+  #     - name: GitHub SuperLinter Scan
+  #       uses: github/super-linter@v4
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         VALIDATE_DART: true
 
   CodeScan-FlutterAnalyze:
     runs-on: ubuntu-latest

@@ -44,7 +44,7 @@ analyzer:
     - "bin/cache/**"
     # Ignore protoc generated files
     - "dev/conductor/lib/proto/*"
-    - "dev/benchmarks/macrobenchmarks/test/*"
+    - "dev/benchmarks/macrobenchmarks/*"
 
 linter:
   rules:

@@ -62,6 +62,12 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
 
+      - name: Create env
+        env:
+          FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
+        run: |
+          echo $FLUTTER_DOTENV > ./res/.env
+
       - name: Run Flutter Analyze
         run: |
           # flutter pub add --dev flutter_lints

@@ -44,7 +44,11 @@ analyzer:
     - "bin/cache/**"
     # Ignore protoc generated files
     - "dev/conductor/lib/proto/*"
-    - "dev/**"
+    - flutter/**
+    # - flutter/dev/benchmarks/complex_layout/**.dart
+    # - flutter/dev/devicelab/bin/**.dart
+    # - "flutter_localizations/lib/**.dart"
+    # - "integration_test/test/**.dart"
 
 linter:
   rules:

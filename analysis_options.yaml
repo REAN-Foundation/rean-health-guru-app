@@ -44,7 +44,7 @@ analyzer:
     - "bin/cache/**"
     # Ignore protoc generated files
     - "dev/conductor/lib/proto/*"
-    - /home/runner/work/REAN-HEALTH-GURU-APP/REAN-HEALTH-GURU-APP/flutter/*
+    - flutter/**
     # - flutter/dev/benchmarks/complex_layout/**.dart
     # - flutter/dev/devicelab/bin/**.dart
     # - "flutter_localizations/lib/**.dart"

@@ -44,9 +44,9 @@ analyzer:
     - "bin/cache/**"
     # Ignore protoc generated files
     - "dev/conductor/lib/proto/*"
-    - flutter/dev/benchmarks/macrobenchmarks/**
-    - flutter/dev/benchmarks/complex_layout/**
-    - flutter/dev/devicelab/bin/**
+    - flutter/dev/benchmarks/macrobenchmarks/**.dart
+    - flutter/dev/benchmarks/complex_layout/**.dart
+    - flutter/dev/devicelab/bin/**.dart
     # - "flutter_localizations/lib/**.dart"
     # - "integration_test/test/**.dart"
 

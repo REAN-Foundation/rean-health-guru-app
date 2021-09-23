@@ -63,201 +63,196 @@ class _SupportViewState extends State<SupportView> {
               backgroundColor: colorF6F6FF,
               body: Container(
                 height: height,
-                child: MergeSemantics(
-                  child: Stack(
-                    children: <Widget>[
-                      Positioned(
-                          top: -height * .15,
-                          right: -MediaQuery.of(context).size.width * .4,
-                          child: BezierContainer()),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              flex: 6,
-                              child: ExcludeSemantics(
-                                child: Column(
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                        top: -height * .15,
+                        right: -MediaQuery.of(context).size.width * .4,
+                        child: BezierContainer()),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            flex: 6,
+                            child: ExcludeSemantics(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Lottie.asset(
+                                      'res/lottiefiles/support_us.json',
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 32.0),
+                                    child: Text(msg,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 20,
+                                            color: primaryColor)),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                              flex: 4,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Lottie.asset(
-                                        'res/lottiefiles/support_us.json',
+                                    Expanded(
+                                      flex: 1,
+                                      child: Semantics(
+                                        label: 'tap to dial number',
+                                        button: true,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            final String url = 'tel://' + phone;
+                                            if (await canLaunch(url)) {
+                                              await launch(url);
+                                            } else {
+                                              showToast('Unable to dial number',
+                                                  context);
+                                              debugPrint(
+                                                  'Could not launch $url');
+                                              throw 'Could not launch $url';
+                                            }
+                                          },
+                                          child: Card(
+                                            semanticContainer: true,
+                                            elevation: 8.0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
+                                            ),
+                                            color: colorF6F6FF,
+                                            shadowColor: colorF6F6FF,
+                                            child: Container(
+                                              height: 160,
+                                              child: Column(
+                                                children: [
+                                                  Lottie.asset(
+                                                    'res/lottiefiles/call.json',
+                                                    height: 120,
+                                                  ),
+                                                  Text('Call us',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontSize: 16,
+                                                          color: primaryColor)),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 32.0),
-                                      child: Text(msg,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 20,
-                                              color: primaryColor)),
-                                    )
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Semantics(
+                                        label:
+                                            'on tap prepare an email for contact to rean',
+                                        button: true,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            /* final Uri _emailLaunchUri = Uri(
+                                              scheme: 'mailto',
+                                              path: email,
+                                              queryParameters: {
+                                                'subject': 'REAN%2BCare%2Bapp%2Bquery',
+                                                'body': 'Hey Team, \n'+name+' wants to get in touch\nContact Number: '+userPhone,
+                                              }
+                                          );*/
+
+                                            final link = 'mailto:' +
+                                                email +
+                                                '?subject=Regarding%20REAN%20HealthGuru%20App&body=Hey Team,%20\n\n' +
+                                                name +
+                                                '%20wants%20to%20get%20in%20touch%20with%20you.\n\nContact%20Number:%20' +
+                                                userPhone +
+                                                '\n\n';
+                                            if (await canLaunch(
+                                                link.toString())) {
+                                              await launch(link.toString());
+                                            } else {
+                                              final Uri _emailLaunchUri = Uri(
+                                                  scheme: 'mailto',
+                                                  path: email,
+                                                  queryParameters: {
+                                                    'subject':
+                                                        'REAN HealthGuru app query',
+                                                    'body': ''
+                                                            '' +
+                                                        name +
+                                                        ' wants to get in touch with you. ---- '
+                                                            'Contact Number:' +
+                                                        userPhone +
+                                                        ''
+                                                            '',
+                                                  });
+                                              await launch(_emailLaunchUri
+                                                  .toString()
+                                                  .replaceAll('+', '%20'));
+
+                                              debugPrint(
+                                                  'Could not launch ${link.toString()}');
+                                              throw 'Could not launch ${link.toString()}';
+                                            }
+                                          },
+                                          child: Card(
+                                            semanticContainer: true,
+                                            elevation: 8.0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
+                                            ),
+                                            color: colorF6F6FF,
+                                            shadowColor: colorF6F6FF,
+                                            child: Container(
+                                              height: 160,
+                                              child: Column(
+                                                children: [
+                                                  Lottie.asset(
+                                                    'res/lottiefiles/mail.json',
+                                                    height: 120,
+                                                  ),
+                                                  Text('E mail us',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontSize: 16,
+                                                          color: primaryColor)),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              ),
-                            ),
-                            Expanded(
-                                flex: 4,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: Semantics(
-                                          label: 'tap to dial number',
-                                          button: true,
-                                          child: InkWell(
-                                            onTap: () async {
-                                              final String url =
-                                                  'tel://' + phone;
-                                              if (await canLaunch(url)) {
-                                                await launch(url);
-                                              } else {
-                                                showToast(
-                                                    'Unable to dial number',
-                                                    context);
-                                                debugPrint(
-                                                    'Could not launch $url');
-                                                throw 'Could not launch $url';
-                                              }
-                                            },
-                                            child: Card(
-                                              elevation: 8.0,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(12.0),
-                                              ),
-                                              color: colorF6F6FF,
-                                              shadowColor: colorF6F6FF,
-                                              child: Container(
-                                                height: 160,
-                                                child: Column(
-                                                  children: [
-                                                    Lottie.asset(
-                                                      'res/lottiefiles/call.json',
-                                                      height: 120,
-                                                    ),
-                                                    Text('Call us',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            fontSize: 16,
-                                                            color:
-                                                                primaryColor)),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Semantics(
-                                          label:
-                                              'on tap prepare an email for contact to rean',
-                                          button: true,
-                                          child: InkWell(
-                                            onTap: () async {
-                                              /* final Uri _emailLaunchUri = Uri(
-                                                scheme: 'mailto',
-                                                path: email,
-                                                queryParameters: {
-                                                  'subject': 'REAN%2BCare%2Bapp%2Bquery',
-                                                  'body': 'Hey Team, \n'+name+' wants to get in touch\nContact Number: '+userPhone,
-                                                }
-                                            );*/
-
-                                              final link = 'mailto:' +
-                                                  email +
-                                                  '?subject=Regarding%20REAN%20HealthGuru%20App&body=Hey Team,%20\n\n' +
-                                                  name +
-                                                  '%20wants%20to%20get%20in%20touch%20with%20you.\n\nContact%20Number:%20' +
-                                                  userPhone +
-                                                  '\n\n';
-                                              if (await canLaunch(
-                                                  link.toString())) {
-                                                await launch(link.toString());
-                                              } else {
-                                                final Uri _emailLaunchUri = Uri(
-                                                    scheme: 'mailto',
-                                                    path: email,
-                                                    queryParameters: {
-                                                      'subject':
-                                                          'REAN HealthGuru app query',
-                                                      'body': ''
-                                                              '' +
-                                                          name +
-                                                          ' wants to get in touch with you. ---- '
-                                                              'Contact Number:' +
-                                                          userPhone +
-                                                          ''
-                                                              '',
-                                                    });
-                                                await launch(_emailLaunchUri
-                                                    .toString()
-                                                    .replaceAll('+', '%20'));
-
-                                                debugPrint(
-                                                    'Could not launch ${link.toString()}');
-                                                throw 'Could not launch ${link.toString()}';
-                                              }
-                                            },
-                                            child: Card(
-                                              elevation: 8.0,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(12.0),
-                                              ),
-                                              color: colorF6F6FF,
-                                              shadowColor: colorF6F6FF,
-                                              child: Container(
-                                                height: 160,
-                                                child: Column(
-                                                  children: [
-                                                    Lottie.asset(
-                                                      'res/lottiefiles/mail.json',
-                                                      height: 120,
-                                                    ),
-                                                    Text('E mail us',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            fontSize: 16,
-                                                            color:
-                                                                primaryColor)),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ))
-                          ],
-                        ),
+                              ))
+                        ],
                       ),
-                      Positioned(top: 40, left: 0, child: _backButton()),
-                    ],
-                  ),
+                    ),
+                    Positioned(top: 40, left: 0, child: _backButton()),
+                  ],
                 ),
               ))),
     );

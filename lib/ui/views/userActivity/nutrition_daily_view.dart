@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/NutritionResponseStore.dart';
 import 'package:paitent/core/viewmodels/views/patients_health_marker.dart';
+import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
@@ -748,11 +749,17 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
       final BaseResponse baseResponse =
           await model.recordMyCaloriesConsumed(map);
       if (baseResponse.status == 'success') {
+        showToast(baseResponse.message, context);
       } else {}
-    } catch (CustomException) {
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+    /*catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ==> ' + CustomException.toString());
-    }
+    }*/
   }
 }

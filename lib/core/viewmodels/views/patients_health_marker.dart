@@ -70,7 +70,7 @@ class PatientHealthMarkerViewModel extends BaseModel {
     final response =
         await apiProvider.post('/nutrition/generic', header: map, body: body);
 
-    debugPrint(response);
+    debugPrint(response.toString());
 
     setBusy(false);
     // Convert and return

@@ -57,7 +57,7 @@ class BookAppoinmentViewModel extends BaseModel {
     final response =
         await apiProvider.get('/doctor?&name=' + searchKeyword, header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return DoctorListApiResponse.fromJson(response);
@@ -73,7 +73,7 @@ class BookAppoinmentViewModel extends BaseModel {
 
     final response = await apiProvider.get('/doctor', header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return DoctorListApiResponse.fromJson(response);
@@ -91,7 +91,7 @@ class BookAppoinmentViewModel extends BaseModel {
     final response =
         await apiProvider.get('/doctor/' + doctorUserId, header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     //setBusy(false);
     // Convert and return
     return DoctorDetailsResponse.fromJson(response);
@@ -108,7 +108,7 @@ class BookAppoinmentViewModel extends BaseModel {
 
     final response = await apiProvider.get('/lab/' + labUserId, header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     //setBusy(false);
     // Convert and return
     return LabDetailsResponse.fromJson(response);
@@ -126,7 +126,7 @@ class BookAppoinmentViewModel extends BaseModel {
     final response =
         await apiProvider.get('/lab?&name=' + searchKeyword, header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return LabsListApiResponse.fromJson(response);
@@ -144,7 +144,7 @@ class BookAppoinmentViewModel extends BaseModel {
     final response =
         await apiProvider.get('/lab?long=' + long + '&lat=' + lat, header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return LabsListApiResponse.fromJson(response);
@@ -160,7 +160,7 @@ class BookAppoinmentViewModel extends BaseModel {
 
     final response = await apiProvider.get('/lab', header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return LabsListApiResponse.fromJson(response);
@@ -178,7 +178,7 @@ class BookAppoinmentViewModel extends BaseModel {
     final response = await apiProvider
         .get('/pharmacy?long=' + long + '&lat=' + lat, header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return PharmacyListApiResponse.fromJson(response);
@@ -202,7 +202,7 @@ class BookAppoinmentViewModel extends BaseModel {
             endDate,
         header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return GetAvailableDoctorSlot.fromJson(response);
@@ -226,7 +226,7 @@ class BookAppoinmentViewModel extends BaseModel {
             endDate,
         header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return GetAvailableDoctorSlot.fromJson(response);
@@ -245,7 +245,7 @@ class BookAppoinmentViewModel extends BaseModel {
         header: map,
         body: body);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return CheckConflictResponse.fromJson(response);
@@ -264,7 +264,7 @@ class BookAppoinmentViewModel extends BaseModel {
     final response = await apiProvider
         .post('/appointment/book/doctor/' + doctorId, body: body, header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return DoctorAppoinmentBookedSuccessfully.fromJson(response);
@@ -283,7 +283,7 @@ class BookAppoinmentViewModel extends BaseModel {
     final response = await apiProvider.post('/appointment/book/lab/' + labId,
         body: body, header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return DoctorAppoinmentBookedSuccessfully.fromJson(response);
@@ -297,7 +297,7 @@ class BookAppoinmentViewModel extends BaseModel {
 
     final response = await apiProvider.get('/appointment/for-me/', header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return MyAppointmentApiResponse.fromJson(response);
@@ -318,7 +318,7 @@ class BookAppoinmentViewModel extends BaseModel {
             '&time_zone=+0530',
         header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return MyAppointmentApiResponse.fromJson(response);
@@ -341,7 +341,7 @@ class BookAppoinmentViewModel extends BaseModel {
             '&time_zone=+0530',
         header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return MyAppointmentApiResponse.fromJson(response);

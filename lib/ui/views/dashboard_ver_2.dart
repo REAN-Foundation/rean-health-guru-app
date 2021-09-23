@@ -1251,158 +1251,174 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context,
-                            RoutePaths.Biometric_Weight_Vitals_Care_Plan);
-                      },
-                      child: Container(
-                        height: 96,
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              height: 56,
-                              width: 56,
-                              decoration: BoxDecoration(
-                                  color: Colors.deepPurple,
-                                  border: Border.all(color: Colors.deepPurple),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12.0))),
-                              child: ImageIcon(
-                                AssetImage('res/images/ic_body_weight.png'),
-                                size: 32,
-                                color: iconColor,
+                    Semantics(
+                      label: 'Weight',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context,
+                              RoutePaths.Biometric_Weight_Vitals_Care_Plan);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: Colors.deepPurple,
+                                    border:
+                                        Border.all(color: Colors.deepPurple),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_body_weight.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text('Weight',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Montserrat')),
-                          ],
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Weight',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context,
-                            RoutePaths
-                                .Biometric_Blood_Presure_Vitals_Care_Plan);
-                      },
-                      child: Container(
-                        height: 96,
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(8),
-                              height: 56,
-                              width: 56,
-                              decoration: BoxDecoration(
-                                  color: Colors.deepPurple,
-                                  border: Border.all(color: Colors.deepPurple),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12.0))),
-                              child: ImageIcon(
-                                AssetImage('res/images/ic_blood_presure.png'),
-                                size: 32,
-                                color: iconColor,
+                    Semantics(
+                      label: "Blood Pressure",
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context,
+                              RoutePaths
+                                  .Biometric_Blood_Presure_Vitals_Care_Plan);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: Colors.deepPurple,
+                                    border:
+                                        Border.all(color: Colors.deepPurple),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_blood_presure.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text('Blood\nPressure',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Montserrat')),
-                          ],
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Blood\nPressure',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context,
-                            RoutePaths
-                                .Biometric_Blood_Glucose_Vitals_Care_Plan);
-                      },
-                      child: Container(
-                        height: 96,
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(12),
-                              height: 56,
-                              width: 56,
-                              decoration: BoxDecoration(
-                                  color: Colors.deepPurple,
-                                  border: Border.all(color: Colors.deepPurple),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12.0))),
-                              child: ImageIcon(
-                                AssetImage('res/images/ic_blood_glucose.png'),
-                                size: 32,
-                                color: iconColor,
+                    Semantics(
+                      label: 'Blood Glucose',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context,
+                              RoutePaths
+                                  .Biometric_Blood_Glucose_Vitals_Care_Plan);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(12),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: Colors.deepPurple,
+                                    border:
+                                        Border.all(color: Colors.deepPurple),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_blood_glucose.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text('Blood\nGlucose',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Montserrat')),
-                          ],
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Blood\nGlucose',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context,
-                            RoutePaths.Biometric_Pulse_Vitals_Care_Plan);
-                      },
-                      child: Container(
-                        height: 96,
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.only(right: 12),
-                              height: 56,
-                              width: 56,
-                              decoration: BoxDecoration(
-                                  color: Colors.deepPurple,
-                                  border: Border.all(color: Colors.deepPurple),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12.0))),
-                              child: ImageIcon(
-                                AssetImage('res/images/ic_pulse.png'),
-                                size: 32,
-                                color: iconColor,
+                    Semantics(
+                      label: 'Pulse',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context,
+                              RoutePaths.Biometric_Pulse_Vitals_Care_Plan);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(right: 12),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: Colors.deepPurple,
+                                    border:
+                                        Border.all(color: Colors.deepPurple),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_pulse.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text('Pulse',
-                                style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Montserrat')),
-                          ],
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Pulse',
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
                         ),
                       ),
                     ),

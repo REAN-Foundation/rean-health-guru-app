@@ -38,7 +38,7 @@ class PatientObservationsViewModel extends BaseModel {
         '/medical-profile?patientUserId=' + patientId,
         header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return PatientMedicalProfilePojo.fromJson(response);
@@ -55,7 +55,7 @@ class PatientObservationsViewModel extends BaseModel {
         header: map,
         body: body); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);

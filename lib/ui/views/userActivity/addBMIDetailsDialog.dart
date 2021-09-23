@@ -246,13 +246,19 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
       alignment: Alignment.center,
       child: ElevatedButton(
         onPressed: () {
-          widget._submitButtonListner(
-              unit == 'lbs'
-                  ? double.parse(_weightController.text) / 2.20462
-                  : double.parse(_weightController.text),
-              getCurrentLocale() == 'US'
-                  ? Conversion.FeetToCm(double.parse(_heightController.text))
-                  : double.parse(_heightController.text));
+          if (_weightController.text.isEmpty) {
+            showToast("Please enter weight", context);
+          } else if (_heightController.text.isEmpty) {
+            showToast("Please enter height", context);
+          } else {
+            widget._submitButtonListner(
+                unit == 'lbs'
+                    ? double.parse(_weightController.text) / 2.20462
+                    : double.parse(_weightController.text),
+                getCurrentLocale() == 'US'
+                    ? Conversion.FeetToCm(double.parse(_heightController.text))
+                    : double.parse(_heightController.text));
+          }
         },
         style: ButtonStyle(
             foregroundColor:

@@ -97,7 +97,7 @@ class PatientCarePlanViewModel extends BaseModel {
 
     final response = await apiProvider.get('/doctor', header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return DoctorListApiResponse.fromJson(response);
@@ -115,7 +115,7 @@ class PatientCarePlanViewModel extends BaseModel {
     final response = await apiProvider
         .get('/pharmacy?long=' + long + '&lat=' + lat, header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return PharmacyListApiResponse.fromJson(response);
@@ -371,7 +371,7 @@ class PatientCarePlanViewModel extends BaseModel {
     final response = await apiProvider
         .get('/aha/care-plan/' + planId + '/goal-priority-types', header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return GetGoalPriorities.fromJson(response);
@@ -407,7 +407,7 @@ class PatientCarePlanViewModel extends BaseModel {
         '/aha/care-plan/' + planCode + '/behavioral-goal-types',
         header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return GetGoalPriorities.fromJson(response);
@@ -425,7 +425,7 @@ class PatientCarePlanViewModel extends BaseModel {
         '/aha/care-plan/' + planCode + '/biometric-goal-types',
         header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return GetGoalPriorities.fromJson(response);
@@ -461,7 +461,7 @@ class PatientCarePlanViewModel extends BaseModel {
     final response = await apiProvider
         .get('/aha/care-plan/' + planId + '/plan-action-types', header: map);
 
-    debugPrint(response);
+    debugPrint(response.toString());
     setBusy(false);
     // Convert and return
     return GetActionOfGoalPlan.fromJson(response);

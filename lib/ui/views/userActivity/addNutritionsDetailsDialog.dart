@@ -4,6 +4,7 @@ import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
+import 'package:paitent/utils/CommonUtils.dart';
 
 // ignore: must_be_immutable
 class AddNutritionDetailsDialog extends StatefulWidget {
@@ -212,10 +213,16 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
       alignment: Alignment.center,
       child: ElevatedButton(
         onPressed: () {
-          widget._submitButtonListner(
-              _nutritionNameController.text.toString(),
-              double.parse(_consumedCaloriesController.text),
-              widget._nutritionName);
+          if (_nutritionNameController.text.isEmpty) {
+            showToast("Please enter item name", context);
+          } else if (_consumedCaloriesController.text.isEmpty) {
+            showToast("Please enter calories", context);
+          } else {
+            widget._submitButtonListner(
+                _nutritionNameController.text.toString(),
+                double.parse(_consumedCaloriesController.text),
+                widget._nutritionName);
+          }
         },
         style: ButtonStyle(
             foregroundColor:

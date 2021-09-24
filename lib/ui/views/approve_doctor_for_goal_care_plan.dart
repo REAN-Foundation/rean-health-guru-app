@@ -97,7 +97,7 @@ class _ApproveDoctorForCarePlanViewState
                                   borderRadius: BorderRadius.circular(24.0),
                                   border:
                                       Border.all(color: primaryColor, width: 1),
-                                  color: Colors.deepPurple,
+                                  color: primaryColor,
                                 ),
                                 child: Semantics(
                                   readOnly: true,

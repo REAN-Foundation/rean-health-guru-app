@@ -148,7 +148,7 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(24.0),
                   border: Border.all(color: primaryColor, width: 1),
-                  color: Colors.deepPurple,
+                  color: primaryColor,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

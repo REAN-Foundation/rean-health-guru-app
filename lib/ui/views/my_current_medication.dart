@@ -106,7 +106,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
               fontWeight: FontWeight.w400,
               fontSize: 14,
               fontFamily: 'Montserrat',
-              color: Colors.deepPurple)),
+              color: primaryColor)),
     );
   }
 
@@ -240,7 +240,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   Row(
                     children: [
                       SizedBox(width: 8,),
-                      ImageIcon(AssetImage('res/images/ic_drug_purpul.png'), size: 16, color: Colors.deepPurple,),
+                      ImageIcon(AssetImage('res/images/ic_drug_purpul.png'), size: 16, color: primaryColor,),
                       SizedBox(width: 4,),
                       Container(
                         width: MediaQuery.of(context).size.width - 200,

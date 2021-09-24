@@ -249,7 +249,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
                 fontFamily: 'Montserrat',
-                color: Colors.deepPurple)),
+                color: primaryColor)),
       ),
     );
   }
@@ -480,7 +480,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
                 fontFamily: 'Montserrat',
-                color: Colors.deepPurple)),
+                color: primaryColor)),
       ),
     );
   }
@@ -613,7 +613,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
                 fontFamily: 'Montserrat',
-                color: Colors.deepPurple)),
+                color: primaryColor)),
       ),
     );
   }

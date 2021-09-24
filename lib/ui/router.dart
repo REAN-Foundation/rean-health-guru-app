@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/post.dart';
+import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/AfterSplashScreen.dart';
 import 'package:paitent/ui/views/BiomatricTask.dart';
 import 'package:paitent/ui/views/OnBoardingPage.dart';
@@ -90,7 +91,7 @@ class Routers {
                     fontWeight: FontWeight.w700,
                     color: Colors.white)),
             image: Image.asset('res/images/app_logo_tranparent.png'),
-            backgroundColor: Colors.deepPurple,
+            backgroundColor: primaryColor,
             styleTextUnderTheLoader: TextStyle(),
             photoSize: 100.0,
             loaderColor: Colors.transparent,

@@ -377,7 +377,7 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(50.0)),
                         border: Border.all(
-                          color: Colors.deepPurple,
+                          color: primaryColor,
                           width: 1.0,
                         ),
                       ),

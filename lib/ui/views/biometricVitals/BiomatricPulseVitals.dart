@@ -208,7 +208,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24.0),
                     border: Border.all(color: primaryColor, width: 1),
-                    color: Colors.deepPurple,
+                    color: primaryColor,
                   ),
                   child: Center(
                     child: Text(
@@ -305,7 +305,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
               fontWeight: FontWeight.w400,
               fontSize: 14,
               fontFamily: 'Montserrat',
-              color: Colors.deepPurple)),
+              color: primaryColor)),
     );
   }
 

@@ -170,7 +170,7 @@ class _MyMedicationPrescrptionViewState
                                 Icon(
                                   Icons.arrow_forward_ios,
                                   size: 16,
-                                  color: Colors.deepPurple,
+                                  color: primaryColor,
                                 ),
                               ],
                             ),

@@ -196,7 +196,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       color: currentWeek == 12
                           ? Colors.green
                           : currentWeek > 12
-                              ? Colors.deepPurple
+                              ? primaryColor
                               : primaryLightColor,
                       borderRadius:
                           BorderRadius.only(topLeft: Radius.circular(8)),
@@ -245,7 +245,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       color: currentWeek == 11
                           ? Colors.green
                           : currentWeek > 11
-                              ? Colors.deepPurple
+                              ? primaryColor
                               : primaryLightColor,
                       borderRadius:
                           BorderRadius.only(topLeft: Radius.circular(8)),
@@ -294,7 +294,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       color: currentWeek == 10
                           ? Colors.green
                           : currentWeek > 10
-                              ? Colors.deepPurple
+                              ? primaryColor
                               : primaryLightColor,
                       borderRadius:
                           BorderRadius.only(topLeft: Radius.circular(8)),
@@ -339,7 +339,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       color: currentWeek == 9
                           ? Colors.green
                           : currentWeek > 9
-                              ? Colors.deepPurple
+                              ? primaryColor
                               : primaryLightColor,
                       borderRadius:
                           BorderRadius.only(topLeft: Radius.circular(8)),
@@ -384,7 +384,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       color: currentWeek == 8
                           ? Colors.green
                           : currentWeek > 8
-                              ? Colors.deepPurple
+                              ? primaryColor
                               : primaryLightColor,
                       borderRadius:
                           BorderRadius.only(topLeft: Radius.circular(8)),
@@ -429,7 +429,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       color: currentWeek == 7
                           ? Colors.green
                           : currentWeek > 7
-                              ? Colors.deepPurple
+                              ? primaryColor
                               : primaryLightColor,
                       borderRadius:
                           BorderRadius.only(topLeft: Radius.circular(8)),
@@ -474,7 +474,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       color: currentWeek == 6
                           ? Colors.green
                           : currentWeek > 6
-                              ? Colors.deepPurple
+                              ? primaryColor
                               : primaryLightColor,
                       borderRadius:
                           BorderRadius.only(topLeft: Radius.circular(8)),
@@ -519,7 +519,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       color: currentWeek == 5
                           ? Colors.green
                           : currentWeek > 5
-                              ? Colors.deepPurple
+                              ? primaryColor
                               : primaryLightColor,
                       borderRadius:
                           BorderRadius.only(topLeft: Radius.circular(8)),
@@ -564,7 +564,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       color: currentWeek == 4
                           ? Colors.green
                           : currentWeek > 4
-                              ? Colors.deepPurple
+                              ? primaryColor
                               : primaryLightColor,
                       borderRadius:
                           BorderRadius.only(topLeft: Radius.circular(8)),
@@ -609,7 +609,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       color: currentWeek == 3
                           ? Colors.green
                           : currentWeek > 3
-                              ? Colors.deepPurple
+                              ? primaryColor
                               : primaryLightColor,
                       borderRadius:
                           BorderRadius.only(topLeft: Radius.circular(8)),
@@ -654,7 +654,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       color: currentWeek == 2
                           ? Colors.green
                           : currentWeek > 2
-                              ? Colors.deepPurple
+                              ? primaryColor
                               : primaryLightColor,
                       borderRadius:
                           BorderRadius.only(topLeft: Radius.circular(8)),
@@ -699,7 +699,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                       color: currentWeek == 1
                           ? Colors.green
                           : currentWeek > 1
-                              ? Colors.deepPurple
+                              ? primaryColor
                               : primaryLightColor,
                       borderRadius:
                           BorderRadius.only(topLeft: Radius.circular(8)),

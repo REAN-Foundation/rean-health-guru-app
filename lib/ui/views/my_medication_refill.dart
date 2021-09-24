@@ -80,7 +80,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                               ImageIcon(
                                 AssetImage('res/images/ic_drug_purpul.png'),
                                 size: 16,
-                                color: Colors.deepPurple,
+                                color: primaryColor,
                               ),
                               SizedBox(
                                 width: 4,
@@ -226,7 +226,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                               Icon(
                                 Icons.arrow_forward_ios,
                                 size: 16,
-                                color: Colors.deepPurple,
+                                color: primaryColor,
                               ),
                               SizedBox(
                                 width: 8,

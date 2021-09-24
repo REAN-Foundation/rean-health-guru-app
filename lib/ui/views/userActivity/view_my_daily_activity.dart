@@ -379,7 +379,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
             ImageIcon(
               AssetImage('res/images/ic_steps_count.png'),
               size: 32,
-              color: Colors.deepPurple,
+              color: primaryColor,
             ),
             SizedBox(
               height: 8,
@@ -390,7 +390,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20.0,
-                  color: Colors.deepPurple),
+                  color: primaryColor),
             ),
           ],
         ),
@@ -405,12 +405,12 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18.0,
-                  color: Colors.deepPurple),
+                  color: primaryColor),
             ),
           ],
         ),
         circularStrokeCap: CircularStrokeCap.round,
-        progressColor: Colors.deepPurple,
+        progressColor: primaryColor,
       ),
     );
   }
@@ -502,7 +502,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                 ImageIcon(
                   AssetImage('res/images/ic_activity_heart_rate.png'),
                   size: 24,
-                  color: Colors.deepPurple,
+                  color: primaryColor,
                 ),
                 SizedBox(
                   width: 8,
@@ -804,7 +804,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                     ImageIcon(
                       AssetImage('res/images/ic_sleep_moon.png'),
                       size: 24,
-                      color: Colors.deepPurple,
+                      color: primaryColor,
                     ),
                     SizedBox(
                       width: 8,

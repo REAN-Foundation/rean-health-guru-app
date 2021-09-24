@@ -212,7 +212,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
                 fontFamily: 'Montserrat',
-                color: Colors.deepPurple)),
+                color: primaryColor)),
       ),
     );
   }

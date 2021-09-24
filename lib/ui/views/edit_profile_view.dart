@@ -214,7 +214,7 @@ class _EditProfileState extends State<EditProfile> {
               child: Semantics(
                 label: 'edit_profile',
                 child: FloatingActionButton(
-                  backgroundColor: Colors.deepPurple,
+                  backgroundColor: primaryColor,
                   foregroundColor: Colors.white,
                   mini: false,
                   onPressed: () {
@@ -385,7 +385,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(50.0)),
                     border: Border.all(
-                      color: Colors.deepPurple,
+                      color: primaryColor,
                       width: 2.0,
                     ),
                   ),
@@ -1456,14 +1456,14 @@ class _EditProfileState extends State<EditProfile> {
                           color: primaryLightColor,
                           borderRadius: BorderRadius.all(Radius.circular(50.0)),
                           border: Border.all(
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
                           child: Icon(
                             Icons.camera_alt,
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             size: 24,
                           ),
                         ),
@@ -1499,14 +1499,14 @@ class _EditProfileState extends State<EditProfile> {
                           color: primaryLightColor,
                           borderRadius: BorderRadius.all(Radius.circular(50.0)),
                           border: Border.all(
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
                           child: Icon(
                             Icons.image,
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             size: 24,
                           ),
                         ),
@@ -1543,14 +1543,14 @@ class _EditProfileState extends State<EditProfile> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(50.0)),
                             border: Border.all(
-                              color: Colors.deepPurple,
+                              color: primaryColor,
                               width: 1.0,
                             ),
                           ),
                           child: Center(
                             child: Icon(
                               Icons.close,
-                              color: Colors.deepPurple,
+                              color: primaryColor,
                               size: 24,
                             ),
                           ),

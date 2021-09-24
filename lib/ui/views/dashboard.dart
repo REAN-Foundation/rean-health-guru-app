@@ -177,7 +177,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                     child: ImageIcon(
                       AssetImage('res/images/ic_my_reports.png'),
                       size: 24,
-                      color: Colors.deepPurple,
+                      color: primaryColor,
                     ),
                   ),
                   SizedBox(
@@ -221,7 +221,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                     child: ImageIcon(
                       AssetImage('res/images/ic_pharmacy_report.png'),
                       size: 24,
-                      color: Colors.deepPurple,
+                      color: primaryColor,
                     ),
                   ),
                   SizedBox(
@@ -270,7 +270,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                     child: ImageIcon(
                       AssetImage('res/images/ic_doctor_colored.png'),
                       size: 48,
-                      color: Colors.deepPurple,
+                      color: primaryColor,
                     ),
                   ),
                   SizedBox(
@@ -336,7 +336,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                     child: ImageIcon(
                       AssetImage('res/images/ic_lab_colored.png'),
                       size: 40,
-                      color: Colors.deepPurple,
+                      color: primaryColor,
                     ),
                   ),
                   SizedBox(
@@ -403,7 +403,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                     child: ImageIcon(
                       AssetImage('res/images/ic_pharmacy_colored.png'),
                       size: 40,
-                      color: Colors.deepPurple,
+                      color: primaryColor,
                     ),
                   ),
                   SizedBox(
@@ -479,7 +479,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                       ImageIcon(
                         AssetImage('res/images/ic_nurse.png'),
                         size: 40,
-                        color: Colors.deepPurple,
+                        color: primaryColor,
                       ),
                       SizedBox(
                         width: 8,
@@ -561,7 +561,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                       ImageIcon(
                         AssetImage('res/images/ic_ambulance.png'),
                         size: 40,
-                        color: Colors.deepPurple,
+                        color: primaryColor,
                       ),
                       SizedBox(
                         width: 8,

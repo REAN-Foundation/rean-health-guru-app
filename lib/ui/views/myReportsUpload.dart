@@ -228,7 +228,7 @@ class _MyReportsViewState extends State<MyReportsView> {
               fontWeight: FontWeight.w400,
               fontSize: 14,
               fontFamily: 'Montserrat',
-              color: Colors.deepPurple)),
+              color: primaryColor)),
     );
   }
 
@@ -406,7 +406,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                       Container(
                         height: 12,
                         width: 1,
-                        color: Colors.deepPurple,
+                        color: primaryColor,
                       ),
                       Semantics(
                         child: InkWell(
@@ -438,7 +438,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                       Container(
                         height: 12,
                         width: 1,
-                        color: Colors.deepPurple,
+                        color: primaryColor,
                       ),
                       Semantics(
                         child: InkWell(
@@ -793,14 +793,14 @@ class _MyReportsViewState extends State<MyReportsView> {
                           color: primaryLightColor,
                           borderRadius: BorderRadius.all(Radius.circular(50.0)),
                           border: Border.all(
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
                           child: Icon(
                             Icons.camera_alt,
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             size: 24,
                           ),
                         ),
@@ -836,14 +836,14 @@ class _MyReportsViewState extends State<MyReportsView> {
                           color: primaryLightColor,
                           borderRadius: BorderRadius.all(Radius.circular(50.0)),
                           border: Border.all(
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
                           child: Icon(
                             Icons.image,
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             size: 24,
                           ),
                         ),
@@ -879,12 +879,12 @@ class _MyReportsViewState extends State<MyReportsView> {
                           borderRadius:
                           new BorderRadius.all(new Radius.circular(50.0)),
                           border: new Border.all(
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
-                          child: Icon(Icons.close, color: Colors.deepPurple, size: 24,),
+                          child: Icon(Icons.close, color: primaryColor, size: 24,),
                         ),
                       ),
                       SizedBox(height: 8,),

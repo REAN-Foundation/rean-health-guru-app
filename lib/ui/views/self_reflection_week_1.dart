@@ -173,7 +173,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                     ImageIcon(
                       AssetImage('res/images/ic_smile.png'),
                       size: 48,
-                      color: Colors.deepPurple,
+                      color: primaryColor,
                     ),
                     SizedBox(
                       height: 8,
@@ -211,7 +211,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                     ImageIcon(
                       AssetImage('res/images/ic_sad.png'),
                       size: 48,
-                      color: Colors.deepPurple,
+                      color: primaryColor,
                     ),
                     SizedBox(
                       height: 8,
@@ -700,7 +700,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                             padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 0),
                             child: Icon(
                               Icons.brightness_1,
-                              color: Colors.deepPurple,
+                              color: primaryColor,
                               size: 8,
                             ),
                           ),
@@ -712,7 +712,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                           'You will learn why \'Heart Failure Management\' is important.',
                           style: TextStyle(
                               fontStyle: FontStyle.normal,
-                              color: Colors.deepPurple,
+                              color: primaryColor,
                               fontSize: 14.0),
                           maxLines: 2,
                           textAlign: TextAlign.left,
@@ -732,7 +732,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                             padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 0),
                             child: Icon(
                               Icons.brightness_1,
-                              color: Colors.deepPurple,
+                              color: primaryColor,
                               size: 8,
                             ),
                           ),
@@ -744,7 +744,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                           'Learn about the risks of heart failure.',
                           style: TextStyle(
                               fontStyle: FontStyle.normal,
-                              color: Colors.deepPurple,
+                              color: primaryColor,
                               fontSize: 14.0),
                           maxLines: 2,
                           textAlign: TextAlign.left,
@@ -764,7 +764,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                             padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 0),
                             child: Icon(
                               Icons.brightness_1,
-                              color: Colors.deepPurple,
+                              color: primaryColor,
                               size: 8,
                             ),
                           ),
@@ -776,7 +776,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                           'Learn about treatments for heart failure',
                           style: TextStyle(
                               fontStyle: FontStyle.normal,
-                              color: Colors.deepPurple,
+                              color: primaryColor,
                               fontSize: 14.0),
                           maxLines: 2,
                           textAlign: TextAlign.left,
@@ -812,7 +812,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24.0),
                 border: Border.all(color: primaryColor, width: 1),
-                color: Colors.deepPurple,
+                color: primaryColor,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

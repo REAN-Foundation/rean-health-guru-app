@@ -208,7 +208,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               fontWeight: FontWeight.w400,
               fontSize: 14,
               fontFamily: 'Montserrat',
-              color: Colors.deepPurple)),
+              color: primaryColor)),
     );
   }
 
@@ -297,7 +297,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 SizedBox(
                                   width: 8,
                                 ),
-                                //ImageIcon(AssetImage('res/images/ic_drug_purpul.png'), size: 16, color: Colors.deepPurple,),
+                                //ImageIcon(AssetImage('res/images/ic_drug_purpul.png'), size: 16, color: primaryColor,),
                                 //SizedBox(width: 4,),
                                 Container(
                                   width:
@@ -461,7 +461,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             ImageIcon(
                               AssetImage('res/images/ic_drug_purpul.png'),
                               size: 16,
-                              color: Colors.deepPurple,
+                              color: primaryColor,
                             ),
                             SizedBox(
                               width: 4,

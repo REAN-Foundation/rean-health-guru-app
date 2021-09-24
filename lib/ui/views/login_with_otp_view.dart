@@ -195,12 +195,11 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
           child: Text('Get OTP', style: TextStyle(fontSize: 14)),
           style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.deepPurple),
+              backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(24)),
-                      side: BorderSide(color: Colors.deepPurple)))),
+                      side: BorderSide(color: primaryColor)))),
           onPressed: () {
             if (mobileNumber.length == 10) {
               countryCodeGlobe = countryCode;

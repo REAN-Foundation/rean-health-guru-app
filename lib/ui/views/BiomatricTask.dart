@@ -321,7 +321,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24.0),
                         border: Border.all(color: primaryColor, width: 1),
-                        color: Colors.deepPurple,
+                        color: primaryColor,
                       ),
                       child: Semantics(
                         label: 'Entry saved',
@@ -448,7 +448,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24.0),
                           border: Border.all(color: primaryColor, width: 1),
-                          color: Colors.deepPurple,
+                          color: primaryColor,
                         ),
                         child: Center(
                           child: Semantics(
@@ -569,7 +569,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24.0),
                           border: Border.all(color: primaryColor, width: 1),
-                          color: Colors.deepPurple,
+                          color: primaryColor,
                         ),
                         child: Center(
                           child: Semantics(

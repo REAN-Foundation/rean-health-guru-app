@@ -326,7 +326,7 @@ class _SelectGoalsForCarePlanViewState
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24.0),
                 border: Border.all(color: primaryColor, width: 1),
-                color: Colors.deepPurple,
+                color: primaryColor,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -334,7 +334,7 @@ class _SelectGoalsForCarePlanViewState
                 children: [
                   Icon(
                     Icons.arrow_back_ios,
-                    color: Colors.deepPurple,
+                    color: primaryColor,
                     size: 16,
                   ),
                   Text(

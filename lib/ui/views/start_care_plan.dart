@@ -228,7 +228,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                                     borderRadius: BorderRadius.circular(24.0),
                                     border: Border.all(
                                         color: primaryColor, width: 1),
-                                    color: Colors.deepPurple,
+                                    color: primaryColor,
                                   ),
                                   child: Row(
                                     mainAxisAlignment:
@@ -238,7 +238,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                                     children: [
                                       Icon(
                                         Icons.arrow_back_ios,
-                                        color: Colors.deepPurple,
+                                        color: primaryColor,
                                         size: 16,
                                       ),
                                       Text(

@@ -387,7 +387,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     child: Icon(
                       Icons.search,
                       size: 32,
-                      color: Colors.deepPurple,
+                      color: primaryColor,
                     )),
               ],
             ),

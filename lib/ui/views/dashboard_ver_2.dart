@@ -285,7 +285,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       children: [
                         Icon(
                           FontAwesomeIcons.meh,
-                          color: Colors.deepPurple,
+                          color: primaryColor,
                           size: 48,
                         ),
                         SizedBox(
@@ -293,7 +293,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ),
                         Text('Same',
                             style: TextStyle(
-                                color: Colors.deepPurple,
+                                color: primaryColor,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Montserrat')),
@@ -1267,9 +1267,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                 height: 56,
                                 width: 56,
                                 decoration: BoxDecoration(
-                                    color: Colors.deepPurple,
-                                    border:
-                                        Border.all(color: Colors.deepPurple),
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(12.0))),
                                 child: ImageIcon(
@@ -1311,9 +1310,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                 height: 56,
                                 width: 56,
                                 decoration: BoxDecoration(
-                                    color: Colors.deepPurple,
-                                    border:
-                                        Border.all(color: Colors.deepPurple),
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(12.0))),
                                 child: ImageIcon(
@@ -1355,9 +1353,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                 height: 56,
                                 width: 56,
                                 decoration: BoxDecoration(
-                                    color: Colors.deepPurple,
-                                    border:
-                                        Border.all(color: Colors.deepPurple),
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(12.0))),
                                 child: ImageIcon(
@@ -1397,9 +1394,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                 height: 56,
                                 width: 56,
                                 decoration: BoxDecoration(
-                                    color: Colors.deepPurple,
-                                    border:
-                                        Border.all(color: Colors.deepPurple),
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(12.0))),
                                 child: ImageIcon(

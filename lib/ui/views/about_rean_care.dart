@@ -24,6 +24,8 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
   var model = PatientCarePlanViewModel();
   String textMsg1 =
       "REAN HealthGuru provides a platform for your healthcare needs, helping you manage your and your family's health and well-being in a simple, comfortable, and economical manner.";
+  String textMsg2 =
+      "The six cardiologists who founded the American Heart Association in 1924 would be amazed. From humble beginnings, the AHA has grown into the nation’s oldest and largest voluntary organization dedicated to fighting heart disease and stroke.";
   String profileImage = '';
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
@@ -81,16 +83,22 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                     height: 120,
                                     width: 120,
                                     decoration: BoxDecoration(
-                                        color: primaryColor,
+                                        color: getAppType() == 'AHA'
+                                            ? primaryLightColor
+                                            : primaryColor,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(12))),
-                                    child: Image.asset(
-                                        'res/images/app_logo_tranparent.png'),
+                                    child: getAppType() == 'AHA'
+                                        ? Image.asset('res/images/aha_logo.png')
+                                        : Image.asset(
+                                            'res/images/app_logo_tranparent.png'),
                                   ),
                                   SizedBox(
                                     height: 16,
                                   ),
-                                  _title(),
+                                  getAppType() == 'AHA'
+                                      ? _titleAHA()
+                                      : _title(),
                                   SizedBox(
                                     height: 20,
                                   ),
@@ -103,7 +111,9 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          textMsg1,
+                                          getAppType() == 'AHA'
+                                              ? textMsg2
+                                              : textMsg1,
                                           textAlign: TextAlign.justify,
                                           style: TextStyle(
                                               fontWeight: FontWeight.w500,
@@ -152,8 +162,9 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                                     fontSize: 18),
                                                 children: <TextSpan>[
                                                   TextSpan(
-                                                    text:
-                                                        'https://www.reanfoundation.org',
+                                                    text: getAppType() == 'AHA'
+                                                        ? 'https://www.heart.org'
+                                                        : 'https://www.reanfoundation.org',
                                                     style: TextStyle(
                                                       color: Colors.blue,
                                                       fontSize: 18.0,
@@ -274,6 +285,20 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
     );
   }
 
+  Widget _titleAHA() {
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        text: 'AHA',
+        style: GoogleFonts.portLligatSans(
+          textStyle: Theme.of(context).textTheme.headline1,
+          fontSize: 30,
+          fontWeight: FontWeight.w700,
+          color: primaryColor,
+        ),
+      ),
+    );
+  }
 
   completeMessageTaskOfAHACarePlan(Task task) async {
     try {

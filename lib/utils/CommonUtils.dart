@@ -22,6 +22,7 @@ Task _task;
 String countryCodeGlobe = '';
 var dummyNumberList = <String>[];
 String _currentLocale = '';
+String _appName = '';
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');
@@ -62,6 +63,14 @@ void setTask(Task response) {
 
 Task getTask() {
   return _task;
+}
+
+void setAppType(String name) {
+  _appName = name;
+}
+
+String getAppType() {
+  return _appName;
 }
 
 void setSessionFlag(bool loginValue) {

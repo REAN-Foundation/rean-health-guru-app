@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 const Color backgroundColor = Color.fromARGB(255, 255, 241, 159);
 const Color commentColor = Color.fromARGB(255, 255, 246, 196);
 
-const Color primaryColor = Color(0XFF6541A5);
-const Color primaryLightColor = Color(0XFFEBE0FF);
+Color primaryColor = Color(0XFF6541A5);
+Color primaryLightColor = Color(0XFFEBE0FF);
 const Color textBlack = Color(0XFF303030);
 const Color color909CAC = Color(0XFF909CAC);
 const Color colorF6F6FF = Color(0XFFF6F6FF);

@@ -336,7 +336,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'About REAN',
+                        getAppType() == 'AHA' ? 'About AHA' : 'About REAN',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w700),
                       ),

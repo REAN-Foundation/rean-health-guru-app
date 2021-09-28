@@ -68,6 +68,13 @@ android {
             versionName flutterVersionName
         }
 
+        aha {
+            dimension "app"
+            applicationId "org.reanfoundation.patient.dev"
+            versionCode flutterVersionCode.toInteger()
+            versionName flutterVersionName
+        }
+
         uat {
             dimension "app"
             applicationId "org.reanfoundation.patient.uat"

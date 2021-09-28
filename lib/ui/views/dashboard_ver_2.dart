@@ -187,7 +187,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                 myBiometrics(),
                 energency(),
                 knowledgeTree(),
-                myTasks(),
+                //myTasks(),
                 //searchNearMe(),
                 SizedBox(
                   height: 32,
@@ -1172,7 +1172,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
-                                  color: primaryColor,
+                                  color: Colors.black,
                                   fontFamily: 'Montserrat')),
                         ],
                       ),

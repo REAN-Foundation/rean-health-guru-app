@@ -97,7 +97,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                     height: 16,
                                   ),
                                   getAppType() == 'AHA'
-                                      ? _titleAHA()
+                                      ? _titleAha()
                                       : _title(),
                                   SizedBox(
                                     height: 20,
@@ -144,8 +144,11 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                           InkWell(
                                             onTap: () async {
                                               //_launchURL('https://www.reanfoundation.org/');
-                                              const String url =
+                                              String url =
                                                   'https://www.reanfoundation.org/';
+                                              if (getAppType() == 'AHA') {
+                                                url = 'https://www.heart.org';
+                                              }
                                               if (await canLaunch(url)) {
                                                 await launch(url);
                                               } else {
@@ -190,7 +193,9 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  'Powered by\nREAN Foundation',
+                                  getAppType() == 'AHA'
+                                      ? 'Powered by\nREAN Foundation (Innovator\'s Network)'
+                                      : 'Powered by\nREAN Foundation',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 14,
@@ -285,16 +290,43 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
     );
   }
 
-  Widget _titleAHA() {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-        text: 'AHA',
-        style: GoogleFonts.portLligatSans(
-          textStyle: Theme.of(context).textTheme.headline1,
-          fontSize: 30,
-          fontWeight: FontWeight.w700,
-          color: primaryColor,
+  Widget _titleAha() {
+    return MergeSemantics(
+      child: Semantics(
+        label: 'App name',
+        readOnly: true,
+        child: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+              text: 'American',
+              style: GoogleFonts.portLligatSans(
+                textStyle: Theme.of(context).textTheme.headline4,
+                fontSize: 30,
+                fontWeight: FontWeight.w700,
+                color: primaryColor,
+              ),
+              children: [
+                TextSpan(
+                  text: ' ',
+                  style: TextStyle(color: Colors.black, fontSize: 30),
+                ),
+                TextSpan(
+                  text: 'H',
+                  style: TextStyle(color: primaryColor, fontSize: 30),
+                ),
+                TextSpan(
+                  text: 'eart',
+                  style: TextStyle(color: Colors.black, fontSize: 30),
+                ),
+                TextSpan(
+                  text: '\nA',
+                  style: TextStyle(color: primaryColor, fontSize: 30),
+                ),
+                TextSpan(
+                  text: 'ssociation',
+                  style: TextStyle(color: Colors.black, fontSize: 30),
+                ),
+              ]),
         ),
       ),
     );

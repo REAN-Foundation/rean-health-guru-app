@@ -33,7 +33,7 @@ class LoginViewModel extends BaseModel {
     setBusy(true);
     final BaseResponse response =
         await _authenticationService.updateProfile(body, userId, auth);
-    debugPrint(response.status.toString());
+    debugPrint(response.toString());
     setBusy(false);
     return response;
   }

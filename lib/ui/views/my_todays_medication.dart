@@ -107,7 +107,10 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
                     child: CircularProgressIndicator(),
                   ),
                 )
-              : (currentMedicationList.isEmpty
+              : (morningMedicationList.length == 0 &&
+                      afternoonMedicationList.length == 0 &&
+                      eveningMedicationList.length == 0 &&
+                      eveningMedicationList.length == 0
                   ? noMedicationFound()
                   : SingleChildScrollView(
                       child: Column(

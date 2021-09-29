@@ -23,7 +23,7 @@ class CarePlanTasksView extends StatefulWidget {
 class _CarePlanTasksViewState extends State<CarePlanTasksView>
     with WidgetsBindingObserver {
   var model = PatientCarePlanViewModel();
-  var dateFormat = DateFormat('MMM, dd - hh:mm a');
+  var dateFormat = DateFormat('MMM dd - hh:mm a');
   GetTaskOfAHACarePlanResponse _carePlanTaskResponse;
   List<Task> tasks = <Task>[];
   bool isSubscribe = false;
@@ -146,7 +146,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         },
                         child: Center(
                           child: Text(
-                            "Todo\'s",
+                            "To Do",
                             style: TextStyle(
                                 color: isUpCommingSelected
                                     ? primaryColor

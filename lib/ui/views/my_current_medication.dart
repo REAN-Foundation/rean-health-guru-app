@@ -22,7 +22,7 @@ class MyCurrentMedicationView extends StatefulWidget {
 class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   var model = PatientMedicationViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  var dateFormatStandard = DateFormat('MMMM dd, yyyy');
+  var dateFormatStandard = DateFormat('MMM dd, yyyy');
   var timeFormat = DateFormat('hh:mm a');
   List<Medications> currentMedicationList = <Medications>[];
   ProgressDialog progressDialog;

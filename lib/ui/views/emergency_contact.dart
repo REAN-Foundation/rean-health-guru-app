@@ -936,7 +936,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        'Add FamilyMember \n/ Friends',
+                        'Add Family Member \n/ Friends',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.bold,

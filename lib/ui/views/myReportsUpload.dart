@@ -36,7 +36,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   ProgressDialog progressDialog;
   String attachmentPath = '';
   List<Documents> documents = <Documents>[];
-  var dateFormat = DateFormat('dd MMM, yyyy');
+  var dateFormat = DateFormat('MMM dd, yyyy');
   var renameControler = TextEditingController();
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
   final ScrollController _scrollController =

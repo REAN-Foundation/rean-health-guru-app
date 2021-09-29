@@ -33,6 +33,19 @@ class MyApp extends StatelessWidget {
   String _baseUrl;
   String _botBaseUrl;
 
+  Map<int, Color> color = {
+    50: Color(0xFFFFEBEE),
+    100: Color(0xFFFFCDD2),
+    200: Color(0xFFEF9A9A),
+    300: Color(0xFFE57373),
+    400: Color(0xFFEF5350),
+    500: Color(0xFFF44336),
+    600: Color(0xFFE53935),
+    700: Color(0xFFD32F2F),
+    800: Color(0xFFC62828),
+    900: Color(0xFFB71C1C),
+  };
+
   MyApp(bool isLogin) {
     debugPrint('Print from .env ==> ${dotenv.env['DEV_BASE_URL']}');
     debugPrint('Print from .env ==> ${dotenv.env['DEV_BOT_BASE_URL']}');
@@ -50,6 +63,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MaterialColor colorCustom = MaterialColor(0xFFB71C1C, color);
     debugPrint('MyApp >> Login Session: $isLogin');
     debugPrint('ApiProvider >> Base URL: $_baseUrl');
     // Set portrait orientation
@@ -60,11 +74,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: providers,
       child: MaterialApp(
-        title: 'REAN HealthGuru',
+        title: 'AHA',
         showSemanticsDebugger: false,
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            primarySwatch: Colors.deepPurple, fontFamily: 'Montserrat'),
+        theme: ThemeData(primarySwatch: colorCustom, fontFamily: 'Montserrat'),
         //https://github.com/FilledStacks/flutter-tutorials/blob/master/014-provider-v3-updates/2-final/pubspec.yaml
         //initialRoute: RoutePaths.Login,
         initialRoute: RoutePaths.Splash_Screen,

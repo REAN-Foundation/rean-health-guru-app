@@ -69,7 +69,7 @@ class _EditProfileState extends State<EditProfile> {
   String auth = '';
   ProgressDialog progressDialog;
   String fullName = '';
-  var dateFormat = DateFormat('dd MMM, yyyy');
+  var dateFormat = DateFormat('MMM dd, yyyy');
   Patient patient;
 
   //String profileImage = "";
@@ -1146,11 +1146,11 @@ class _EditProfileState extends State<EditProfile> {
                         progressDialog.hide();
                         showToast(updateProfileSuccess.message, context);
                       }
-                    } catch (CustomException) {
+                    } on FetchDataException catch (e) {
+                      debugPrint("3");
+                      debugPrint('error caught: $e');
                       model.setBusy(false);
-                      progressDialog.hide();
-                      showToast(CustomException.toString(), context);
-                      debugPrint(CustomException.toString());
+                      showToast(e.toString(), context);
                     }
                   }
                 }),

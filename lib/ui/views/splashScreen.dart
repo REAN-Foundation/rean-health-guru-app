@@ -89,7 +89,12 @@ class _SplashScreenState extends State<SplashScreen> {
       if (getSessionFlag()) {
         Navigator.of(context).pushReplacementNamed(RoutePaths.Home);
       } else {
-        Navigator.of(context).pushReplacementNamed(RoutePaths.On_Boarding);
+        if (getAppType() == 'AHA') {
+          Navigator.of(context)
+              .pushReplacementNamed(RoutePaths.On_Boarding_AHA);
+        } else {
+          Navigator.of(context).pushReplacementNamed(RoutePaths.On_Boarding);
+        }
       }
     });
   }
@@ -143,9 +148,10 @@ class _SplashScreenState extends State<SplashScreen> {
                           height: 16,
                         ),
                         getAppType() == 'AHA'
-                            ? Text('AHA',
+                            ? Text('American Heart\nAssociation',
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 28,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.w700,
                                     color: primaryColor))
                             : Container(),

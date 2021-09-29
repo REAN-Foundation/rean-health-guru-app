@@ -5,6 +5,7 @@ import 'package:paitent/core/models/post.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/AfterSplashScreen.dart';
 import 'package:paitent/ui/views/BiomatricTask.dart';
+import 'package:paitent/ui/views/OnBoardingAhaPage.dart';
 import 'package:paitent/ui/views/OnBoardingPage.dart';
 import 'package:paitent/ui/views/about_rean_care.dart';
 import 'package:paitent/ui/views/addNewGoals/add_blood_presure_goals_for_care_plan.dart';
@@ -100,6 +101,8 @@ class Routers {
         );
       case RoutePaths.On_Boarding:
         return MaterialPageRoute(builder: (_) => OnBoardingPage());
+      case RoutePaths.On_Boarding_AHA:
+        return MaterialPageRoute(builder: (_) => OnBoardingAhaPage());
       case RoutePaths.OTP_Screen:
         return MaterialPageRoute(
             builder: (_) => OTPScreenView(settings.arguments));

@@ -285,7 +285,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       children: [
                         Icon(
                           FontAwesomeIcons.meh,
-                          color: primaryColor,
+                          color: Colors.grey,
                           size: 48,
                         ),
                         SizedBox(
@@ -293,7 +293,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ),
                         Text('Same',
                             style: TextStyle(
-                                color: primaryColor,
+                                color: Colors.grey,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Montserrat')),
@@ -311,7 +311,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       children: [
                         Icon(
                           FontAwesomeIcons.sadTear,
-                          color: Colors.deepOrange,
+                          color: primaryColor,
                           size: 48,
                         ),
                         SizedBox(
@@ -319,7 +319,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ),
                         Text('Worse',
                             style: TextStyle(
-                                color: Colors.deepOrange,
+                                color: primaryColor,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Montserrat')),
@@ -803,7 +803,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         children: [
                           Icon(
                             Icons.thumb_down,
-                            color: Colors.deepOrange,
+                            color: primaryColor,
                             size: 36,
                           ),
                           SizedBox(
@@ -811,7 +811,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           ),
                           Text('No',
                               style: TextStyle(
-                                  color: Colors.deepOrange,
+                                  color: primaryColor,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Montserrat')),
@@ -957,18 +957,18 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           children: [
                             Icon(
                               FontAwesomeIcons.ambulance,
-                                  color: Colors.deepOrange,
-                                  size: 36,
-                                ),
+                              color: primaryColor,
+                              size: 36,
+                            ),
                                 SizedBox(
                                   height: 8,
                                 ),
                                 Text('Yes',
                                     style: TextStyle(
-                                        color: Colors.deepOrange,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Montserrat')),
+                                        color: primaryColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'Montserrat')),
                               ],
                             ),
                           ),
@@ -1114,7 +1114,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: widgetBackgroundColor),
-            borderRadius: BorderRadius.all(Radius.circular(4.0))),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
         child: Column(
           children: <Widget>[
             Container(
@@ -1123,8 +1124,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
               decoration: BoxDecoration(
                   color: widgetBackgroundColor,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(4.0),
-                      topRight: Radius.circular(4.0))),
+                      topLeft: Radius.circular(3.0),
+                      topRight: Radius.circular(3.0))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,

@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MaterialColor colorCustom = MaterialColor(0xFFB71C1C, color);
+    final MaterialColor colorCustom = MaterialColor(0xFFB71C1C, color);
     debugPrint('MyApp >> Login Session: $isLogin');
     debugPrint('ApiProvider >> Base URL: $_baseUrl');
     // Set portrait orientation

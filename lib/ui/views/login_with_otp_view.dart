@@ -226,20 +226,24 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       debugPrint('Mobile = $mobileNumber');
 
       final response =
-          await apiProvider.get('/user/exists?phone=' + mobileNumber);
+          await apiProvider.get('/users/by-phone/' + mobileNumber + '/role/2');
 
       final CheckUserExistOrNotResonse checkUserExistOrNotResonse =
           CheckUserExistOrNotResonse.fromJson(response);
 
       if (checkUserExistOrNotResonse.status == 'success') {
-        if (checkUserExistOrNotResonse.data.exists.result) {
+        if (checkUserExistOrNotResonse.message ==
+            'User retrieved successfully!') {
           generateOTPForExistingUser(model);
-        } else {
-          generateOTP(model);
         }
       } else {
+        if (checkUserExistOrNotResonse.message == 'User not found') {
+          generateOTP(model);
+        } else {
+          showToast(checkUserExistOrNotResonse.message, context);
+        }
         model.setBusy(false);
-        showToast(checkUserExistOrNotResonse.error, context);
+        //showToast(checkUserExistOrNotResonse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
@@ -258,11 +262,12 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       debugPrint('Mobile = $mobileNumber');
 
       final body = <String, dynamic>{};
-      body['PhoneNumber'] = countryCode + '-' + mobileNumber;
+      body['Phone'] = countryCode + '-' + mobileNumber;
       body['Purpose'] = 'Login';
+      body['RoleId'] = 2;
 
-      final response =
-          await apiProvider.post('/user/generate-otp', header: map, body: body);
+      final response = await apiProvider.post('/users/generate-otp',
+          header: map, body: body);
 
       final BaseResponse doctorListApiResponse =
           BaseResponse.fromJson(response);
@@ -275,7 +280,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         model.setBusy(false);
       } else {
         model.setBusy(false);
-        showToast(doctorListApiResponse.error, context);
+        showToast(doctorListApiResponse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
@@ -294,7 +299,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       debugPrint('Mobile = $mobileNumber');
 
       final body = <String, dynamic>{};
-      body['PhoneNumber'] = countryCode + '-' + mobileNumber;
+      body['Phone'] = countryCode + '-' + mobileNumber;
       body['GenerateLoginOTP'] = true;
 
       final response =
@@ -312,7 +317,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         model.setBusy(false);
       } else {
         model.setBusy(false);
-        showToast(doctorListApiResponse.error, context);
+        showToast(doctorListApiResponse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
@@ -352,7 +357,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       } else {
         debugPrint('Its API Failuar');
         model.setBusy(false);
-        showToast(doctorListApiResponse.error, context);
+        showToast(doctorListApiResponse.message, context);
       }
     } on FetchDataException catch (e) {
       showToast('Opps! Something went wrong, Please try again', context);

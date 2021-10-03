@@ -1,26 +1,55 @@
 class PatientApiDetails {
   String status;
   String message;
-  String error;
+  int httpCode;
   Data data;
+  Client client;
+  User user;
+  String context;
+  List<String> clientIps;
+  String aPIVersion;
 
-  PatientApiDetails({this.status, this.message, this.error, this.data});
+  PatientApiDetails(
+      {this.status,
+      this.message,
+      this.httpCode,
+      this.data,
+      this.client,
+      this.user,
+      this.context,
+      this.clientIps,
+      this.aPIVersion});
 
   PatientApiDetails.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    error = json['error'];
-    data = json['data'] != String ? Data.fromJson(json['data']) : String;
+    status = json['Status'];
+    message = json['Message'];
+    httpCode = json['HttpCode'];
+    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
+    client =
+        json['Client'] != null ? new Client.fromJson(json['Client']) : null;
+    user = json['User'] != null ? new User.fromJson(json['User']) : null;
+    context = json['Context'];
+    clientIps = json['ClientIps'].cast<String>();
+    aPIVersion = json['APIVersion'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
-    data['error'] = error;
-    if (this.data != String) {
-      data['data'] = this.data.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Status'] = this.status;
+    data['Message'] = this.message;
+    data['HttpCode'] = this.httpCode;
+    if (this.data != null) {
+      data['Data'] = this.data.toJson();
     }
+    if (this.client != null) {
+      data['Client'] = this.client.toJson();
+    }
+    if (this.user != null) {
+      data['User'] = this.user.toJson();
+    }
+    data['Context'] = this.context;
+    data['ClientIps'] = this.clientIps;
+    data['APIVersion'] = this.aPIVersion;
     return data;
   }
 }
@@ -31,142 +60,191 @@ class Data {
   Data({this.patient});
 
   Data.fromJson(Map<String, dynamic> json) {
-    patient = json['patient'] != String ? Patient.fromJson(json['patient']) : String;
+    patient =
+        json['Patient'] != null ? new Patient.fromJson(json['Patient']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (patient != String) {
-      data['patient'] = patient.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.patient != null) {
+      data['Patient'] = this.patient.toJson();
     }
     return data;
   }
 }
 
 class Patient {
+  String id;
   String userId;
-  String roleId;
+  User user;
   String displayId;
-  String medicalProfileId;
-  String firstName;
-  String lastName;
-  String prefix;
-  String phoneNumber;
-  String email;
-  String gender;
-  DateTime birthDate;
-  String imageURL;
-  String locality;
-  String address;
-  String locationCoordsLongitude;
-  String locationCoordsLattitude;
-  String insuranceProvider;
-  String insurancePolicyCode;
-  String emergencyContactName;
-  String emergencyContactRelation;
-  String emergencyContactNumber;
-  bool inAppUser;
-  String dateCreated;
-  String dateUpdated;
+  String ehrId;
+  String healthProfile;
 
-  Patient(
-      {this.userId,
-      this.roleId,
-      this.displayId,
-      this.medicalProfileId,
-      this.firstName,
-      this.lastName,
-      this.prefix,
-      this.phoneNumber,
-      this.email,
-      this.gender,
-      this.birthDate,
-      this.imageURL,
-      this.locality,
-      this.address,
-      this.locationCoordsLongitude,
-      this.locationCoordsLattitude,
-      this.insuranceProvider,
-      this.insurancePolicyCode,
-      this.emergencyContactName,
-      this.emergencyContactRelation,
-      this.emergencyContactNumber,
-      this.inAppUser,
-      this.dateCreated,
-      this.dateUpdated});
+  Patient({
+    this.id,
+    this.userId,
+    this.user,
+    this.displayId,
+    this.ehrId,
+    this.healthProfile,
+  });
 
   Patient.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     userId = json['UserId'];
-    roleId = json['RoleId'];
+    user = json['User'] != null ? new User.fromJson(json['User']) : null;
     displayId = json['DisplayId'];
-    medicalProfileId = json['MedicalProfileId'];
-    firstName = json['FirstName'];
-    lastName = json['LastName'];
-    prefix = json['Prefix'];
-    phoneNumber = json['PhoneNumber'];
-    email = json['Email'];
-    gender = json['Gender'];
-    birthDate = json['BirthDate'] != null
-        ? DateTime.parse(json['BirthDate'])
-        : json['BirthDate'];
-    imageURL = json['ImageURL'];
-    locality = json['Locality'];
-    address = json['Address'];
-    locationCoordsLongitude = json['LocationCoords_Longitude'];
-    locationCoordsLattitude = json['LocationCoords_Lattitude'];
-    insuranceProvider = json['InsuranceProvider'];
-    insurancePolicyCode = json['InsurancePolicyCode'];
-    emergencyContactName = json['EmergencyContactName'];
-    emergencyContactRelation = json['EmergencyContactRelation'];
-    emergencyContactNumber = json['EmergencyContactNumber'];
-    inAppUser = json['InAppUser'];
-    dateCreated = json['DateCreated'];
-    dateUpdated = json['DateUpdated'];
+    ehrId = json['EhrId'];
+    healthProfile = json['HealthProfile'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['UserId'] = userId;
-    data['RoleId'] = roleId;
-    data['DisplayId'] = displayId;
-    data['MedicalProfileId'] = medicalProfileId;
-    data['FirstName'] = firstName;
-    data['LastName'] = lastName;
-    data['Prefix'] = prefix;
-    data['PhoneNumber'] = phoneNumber;
-    data['Email'] = email;
-    data['Gender'] = gender;
-    data['BirthDate'] =
-        birthDate != null ? birthDate.toIso8601String() : birthDate;
-    data['ImageURL'] = imageURL;
-    data['Locality'] = locality;
-    data['Address'] = address;
-    data['LocationCoords_Longitude'] = locationCoordsLongitude;
-    data['LocationCoords_Lattitude'] = locationCoordsLattitude;
-    data['InsuranceProvider'] = insuranceProvider;
-    data['InsurancePolicyCode'] = insurancePolicyCode;
-    data['EmergencyContactName'] = emergencyContactName;
-    data['EmergencyContactRelation'] = emergencyContactRelation;
-    data['EmergencyContactNumber'] = emergencyContactNumber;
-    data['InAppUser'] = inAppUser;
-    data['DateCreated'] = dateCreated;
-    data['DateUpdated'] = dateUpdated;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['UserId'] = this.userId;
+    if (this.user != null) {
+      data['User'] = this.user.toJson();
+    }
+    data['DisplayId'] = this.displayId;
+    data['EhrId'] = this.ehrId;
+    data['HealthProfile'] = this.healthProfile;
     return data;
   }
 }
 
-class AppointmentRelatedDetails {
-  String userId;
+class User {
+  String id;
+  String userName;
+  String personId;
+  Person person;
+  String lastLogin;
+  String defaultTimeZone;
+  String currentTimeZone;
+  int roleId;
+  String role;
 
-  AppointmentRelatedDetails({this.userId});
+  User(
+      {this.id,
+      this.userName,
+      this.personId,
+      this.person,
+      this.lastLogin,
+      this.defaultTimeZone,
+      this.currentTimeZone,
+      this.roleId,
+      this.role});
 
-  AppointmentRelatedDetails.fromJson(Map<String, dynamic> json) {
-    userId = json['UserId'];
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userName = json['UserName'];
+    personId = json['PersonId'];
+    person =
+        json['Person'] != null ? new Person.fromJson(json['Person']) : null;
+    lastLogin = json['LastLogin'];
+    defaultTimeZone = json['DefaultTimeZone'];
+    currentTimeZone = json['CurrentTimeZone'];
+    roleId = json['RoleId'];
+    role = json['Role'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['UserId'] = userId;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['UserName'] = this.userName;
+    data['PersonId'] = this.personId;
+    if (this.person != null) {
+      data['Person'] = this.person.toJson();
+    }
+    data['LastLogin'] = this.lastLogin;
+    data['DefaultTimeZone'] = this.defaultTimeZone;
+    data['CurrentTimeZone'] = this.currentTimeZone;
+    data['RoleId'] = this.roleId;
+    data['Role'] = this.role;
+    return data;
+  }
+}
+
+class Person {
+  String id;
+  String prefix;
+  String firstName;
+  String middleName;
+  String lastName;
+  String displayName;
+  String gender;
+  DateTime birthDate;
+  String age;
+  String phone;
+  String email;
+  String imageResourceId;
+  String activeSince;
+
+  Person(
+      {this.id,
+      this.prefix,
+      this.firstName,
+      this.middleName,
+      this.lastName,
+      this.displayName,
+      this.gender,
+      this.birthDate,
+      this.age,
+      this.phone,
+      this.email,
+      this.imageResourceId,
+      this.activeSince});
+
+  Person.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    prefix = json['Prefix'];
+    firstName = json['FirstName'];
+    middleName = json['MiddleName'];
+    lastName = json['LastName'];
+    displayName = json['DisplayName'];
+    gender = json['Gender'];
+    birthDate = DateTime.parse(json['BirthDate']);
+    age = json['Age'];
+    phone = json['Phone'];
+    email = json['Email'];
+    imageResourceId = json['ImageResourceId'];
+    activeSince = json['ActiveSince'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['Prefix'] = this.prefix;
+    data['FirstName'] = this.firstName;
+    data['MiddleName'] = this.middleName;
+    data['LastName'] = this.lastName;
+    data['DisplayName'] = this.displayName;
+    data['Gender'] = this.gender;
+    data['BirthDate'] = this.birthDate.toIso8601String();
+    data['Age'] = this.age;
+    data['Phone'] = this.phone;
+    data['Email'] = this.email;
+    data['ImageResourceId'] = this.imageResourceId;
+    data['ActiveSince'] = this.activeSince;
+    return data;
+  }
+}
+
+class Client {
+  String clientName;
+  String clientCode;
+
+  Client({this.clientName, this.clientCode});
+
+  Client.fromJson(Map<String, dynamic> json) {
+    clientName = json['ClientName'];
+    clientCode = json['ClientCode'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ClientName'] = this.clientName;
+    data['ClientCode'] = this.clientCode;
     return data;
   }
 }

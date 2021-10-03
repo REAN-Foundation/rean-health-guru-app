@@ -74,7 +74,7 @@ class _CreateProfileState extends State<CreateProfile> {
           UserData.fromJson(await _sharedPrefUtils.read('user'));
       //patient = Patient.fromJson(await _sharedPrefUtils.read("patientDetails"));
       debugPrint(user.toJson().toString());
-      userId = user.data.user.userId.toString();
+      userId = user.data.user.id.toString();
       auth = user.data.accessToken;
 
       /* fullName = user.data.user.firstName + " " + user.data.user.lastName;
@@ -450,7 +450,6 @@ class _CreateProfileState extends State<CreateProfile> {
                   map['LastName'] = _lastNameController.text;
                   map['BirthDate'] = unformatedDOB;
                   map['Gender'] = selectedGender;
-                  map['EmergencyContactNumber'] = '';
 
                   try {
                     final BaseResponse updateProfileSuccess = await model
@@ -491,7 +490,8 @@ class _CreateProfileState extends State<CreateProfile> {
       map['Content-Type'] = 'application/json';
       map['authorization'] = 'Bearer ' + auth;
 
-      final response = await apiProvider.get('/patient/' + userId, header: map);
+      final response =
+          await apiProvider.get('/patients/' + userId, header: map);
 
       final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
@@ -698,7 +698,8 @@ class _CreateProfileState extends State<CreateProfile> {
                   onChanged: (date) {
                     debugPrint('change $date');
               }, onConfirm: (date) {
-                    unformatedDOB = date.toIso8601String();
+                    unformatedDOB =
+                    date.toIso8601String().replaceAll("T00:00:00.000", "");
                 setState(() {
                   dob = dateFormat.format(date);
                 });

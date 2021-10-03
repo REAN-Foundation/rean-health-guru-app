@@ -75,7 +75,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
   loadSharedPrefs() async {
     try {
       user = UserData.fromJson(await _sharedPrefUtils.read('user'));
-      patientId = user.data.user.userId.toString();
+      patientId = user.data.user.id.toString();
       auth = user.data.accessToken;
 
       setSelfData();
@@ -87,23 +87,24 @@ class _BookingInfoViewState extends State<BookingInfoView> {
   }
 
   setSelfData() {
-    dob = dateFormat.format(bookingAppoinmentsDetails.patient.birthDate);
+    dob = dateFormat
+        .format(bookingAppoinmentsDetails.patient.user.person.birthDate);
 
-    _firstNameController.text = user.data.user.firstName;
+    _firstNameController.text = user.data.user.person.firstName;
     _firstNameController.selection = TextSelection.fromPosition(
       TextPosition(offset: _firstNameController.text.length),
     );
 
-    _lastNameController.text = user.data.user.lastName;
+    _lastNameController.text = user.data.user.person.lastName;
     _lastNameController.selection = TextSelection.fromPosition(
       TextPosition(offset: _lastNameController.text.length),
     );
 
-    _mobileNumberController.text = user.data.user.phoneNumber;
+    _mobileNumberController.text = user.data.user.person.phone;
     _mobileNumberController.selection = TextSelection.fromPosition(
       TextPosition(offset: _mobileNumberController.text.length),
     );
-    _emailController.text = user.data.user.email;
+    _emailController.text = user.data.user.person.email;
 
     setState(() {});
   }
@@ -381,8 +382,11 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      bookingAppoinmentsDetails.patient.gender == 'M' ||
-                              bookingAppoinmentsDetails.patient.gender == 'Male'
+                      bookingAppoinmentsDetails.patient.user.person.gender ==
+                                  'M' ||
+                              bookingAppoinmentsDetails
+                                      .patient.user.person.gender ==
+                                  'Male'
                           ? 'Male'
                           : 'Female',
                       style: TextStyle(

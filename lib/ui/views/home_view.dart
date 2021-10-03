@@ -23,7 +23,6 @@ import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'base_widget.dart';
 import 'care_plan_task.dart';
 import 'dashboard_ver_2.dart';
-import 'login_with_otp_view.dart';
 //ignore: must_be_immutable
 class HomeView extends StatefulWidget {
   int screenPosition = 0;
@@ -73,19 +72,19 @@ class _HomeViewState extends State<HomeView> {
       final Patient patient =
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       auth = user.data.accessToken;
-      patientUserId = user.data.user.userId;
-      patientGender = patient.gender;
+      patientUserId = user.data.user.id;
+      patientGender = patient.user.person.gender;
       //debugPrint(user.toJson().toString());
 
       /* */
       setState(() {
         //debugPrint('Gender ==> ${patient.gender.toString()}');
-        name = patient.firstName;
-        profileImage = patient.imageURL ?? '';
+        name = patient.user.person.firstName;
+        profileImage = patient.user.person.imageResourceId ?? '';
       });
 
-      if (!user.data.user.verifiedPhoneNumber ||
-          user.data.user.verifiedPhoneNumber == null) {
+      /*if (!user.data.isProfileComplete ||
+          user.data.isProfileComplete == null) {
         startCarePlanResponseGlob = null;
         _sharedPrefUtils.save('CarePlan', null);
         _sharedPrefUtils.saveBoolean('login', null);
@@ -93,7 +92,7 @@ class _HomeViewState extends State<HomeView> {
             MaterialPageRoute(builder: (context) {
           return LoginWithOTPView();
         }), (Route<dynamic> route) => false);
-      }
+      }*/
 
       //if(!isCoachMarkDisplayed) {
 

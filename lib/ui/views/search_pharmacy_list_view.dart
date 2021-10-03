@@ -36,7 +36,7 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
       auth = user.data.accessToken;
       getLabListByLocality();
       setState(() {
-        name = user.data.user.firstName;
+        name = user.data.user.person.firstName;
       });
     } catch (Excepetion) {
       // do something

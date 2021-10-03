@@ -40,7 +40,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
           UserData.fromJson(await _sharedPrefUtils.read('user'));
       //debugPrint(user.toJson().toString());
       setState(() {
-        name = user.data.user.firstName;
+        name = user.data.user.person.firstName;
       });
     } catch (Excepetion) {
       // do something

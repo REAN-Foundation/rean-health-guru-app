@@ -47,9 +47,9 @@ class MyApp extends StatelessWidget {
   };
 
   MyApp(bool isLogin) {
-    debugPrint('Print from .env ==> ${dotenv.env['DEV_BASE_URL']}');
+    debugPrint('Print from .env ==> ${dotenv.env['AHA_BASE_URL']}');
     debugPrint('Print from .env ==> ${dotenv.env['DEV_BOT_BASE_URL']}');
-    _baseUrl = dotenv.env['DEV_BASE_URL'];
+    _baseUrl = dotenv.env['AHA_BASE_URL'];
     _botBaseUrl = dotenv.env['DEV_BOT_BASE_URL'];
     this.isLogin = isLogin;
     setSessionFlag(isLogin);

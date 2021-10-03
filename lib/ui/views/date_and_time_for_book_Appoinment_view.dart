@@ -66,7 +66,7 @@ class _DateAndTimeForBookAppoinmentViewState
       auth = user.data.accessToken;
       getAvailableDoctorSlot();
       setState(() {
-        name = user.data.user.firstName;
+        name = user.data.user.person.firstName;
       });
     } catch (Excepetion) {
       // do something

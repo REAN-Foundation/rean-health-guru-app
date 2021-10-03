@@ -40,7 +40,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
     try {
       final UserData user =
           UserData.fromJson(await _sharedPrefUtils.read('user'));
-      phoneNumber = user.data.user.phoneNumber;
+      phoneNumber = user.data.user.person.phone;
 
       /* */
       setState(() {

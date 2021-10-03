@@ -306,18 +306,19 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       debugPrint('OTP = $otp');
 
       final body = <String, dynamic>{};
-      body['PhoneNumber'] = dummyNumberList.contains(mobileNumber)
+      body['Phone'] = dummyNumberList.contains(mobileNumber)
           ? mobileNumber
           : countryCodeGlobe + '-' + mobileNumber;
-      body['OTP'] = otp;
+      body['Otp'] = otp;
+      body['LoginRoleId'] = 2;
 
-      final response =
-          await apiProvider.post('/user/validate-otp', header: map, body: body);
-
+      final response = await apiProvider.post('/users/login-with-otp',
+          header: map, body: body);
+      debugPrint(response.toString());
       final UserData userData = UserData.fromJson(response);
       if (userData.status == 'success') {
         _sharedPrefUtils.save('user', userData.toJson());
-        if (userData.data.user.basicProfileComplete) {
+        if (userData.data.isProfileComplete) {
           /* _sharedPrefUtils.saveBoolean("login1.2", true);
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
@@ -325,7 +326,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
               }), (Route<dynamic> route) => false);*/
 
           getPatientDetails(
-              model, userData.data.accessToken, userData.data.user.userId);
+              model, userData.data.accessToken, userData.data.user.id);
         } else {
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
@@ -354,7 +355,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       map['Content-Type'] = 'application/json';
       map['authorization'] = 'Bearer ' + auth;
 
-      final response = await apiProvider.get('/patient/' + userId, header: map);
+      final response =
+          await apiProvider.get('/patients/' + userId, header: map);
 
       final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
@@ -371,7 +373,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         model.setBusy(false);
       } else {
         model.setBusy(false);
-        showToast(doctorListApiResponse.error, context);
+        showToast(doctorListApiResponse.message, context);
       }
     } on FetchDataException catch (e) {
       showToast('Opps! Something went wrong, Please try again', context);

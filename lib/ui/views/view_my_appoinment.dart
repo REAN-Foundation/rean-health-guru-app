@@ -468,7 +468,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                 fontSize: 14),
                             children: <TextSpan>[
                               TextSpan(
-                                  text: user.data.user.firstName,
+                                  text: user.data.user.person.firstName,
                                   style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       color: Colors.black,

@@ -96,7 +96,7 @@ class Api {
     map['authorization'] = auth;
 
     final response =
-        await apiProvider.put('/patient/' + userId, body: body, header: map);
+        await apiProvider.put('/patients/' + userId, body: body, header: map);
 
     debugPrint(response.toString());
 

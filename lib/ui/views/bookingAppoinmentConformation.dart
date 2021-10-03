@@ -84,7 +84,7 @@ class _BookingAppoinmentConfirmationViewViewState
     } else {
       doctorDetails = bookingAppoinmentsDetails.doctors;
     }
-    debugPrint(bookingAppoinmentsDetails.userData.data.user.userId);
+    debugPrint(bookingAppoinmentsDetails.userData.data.user.id);
     patientDetails = bookingAppoinmentsDetails.patient;
     userData = bookingAppoinmentsDetails.userData;
     return BaseWidget<BookAppoinmentViewModel>(
@@ -211,7 +211,9 @@ class _BookingAppoinmentConfirmationViewViewState
               height: 16,
             ),
             Text(
-              patientDetails.firstName + ' ' + patientDetails.lastName,
+              patientDetails.user.person.firstName +
+                  ' ' +
+                  patientDetails.user.person.lastName,
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -221,12 +223,12 @@ class _BookingAppoinmentConfirmationViewViewState
               height: 8,
             ),
             Text(
-                patientDetails.gender == 'M'
+                patientDetails.user.person.gender == 'M'
                     ? 'Male' ', ' +
-                        calculateAge(patientDetails.birthDate) +
+                        calculateAge(patientDetails.user.person.birthDate) +
                         ' years'
                     : 'Female' ', ' +
-                        calculateAge(patientDetails.birthDate) +
+                        calculateAge(patientDetails.user.person.birthDate) +
                         ' years',
                 style: TextStyle(
                     fontSize: 14.0,
@@ -237,9 +239,9 @@ class _BookingAppoinmentConfirmationViewViewState
             ),
             Text(
                 '+91 ' +
-                    userData.data.user.phoneNumber +
+                    userData.data.user.person.phone +
                     ' | ' +
-                    userData.data.user.email,
+                    userData.data.user.person.email,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -704,7 +706,7 @@ class _BookingAppoinmentConfirmationViewViewState
     try {
       model.setBusy(true);
       final map = <String, String>{};
-      map['PatientUserId'] = userData.data.user.userId;
+      map['PatientUserId'] = userData.data.user.id;
       map['Date'] = dateFormatFull
           .format(DateTime.parse(bookingAppoinmentsDetails.selectedDate));
       map['StartTime'] = bookingAppoinmentsDetails.slotStart;
@@ -742,8 +744,8 @@ class _BookingAppoinmentConfirmationViewViewState
       'buttontext': 'Pay',
       'description': 'Doctor Consutation Fee',
       'prefill': {
-        'contact': userData.data.user.phoneNumber,
-        'email': userData.data.user.email,
+        'contact': userData.data.user.person.phone,
+        'email': userData.data.user..person.email,
       }
     };
 

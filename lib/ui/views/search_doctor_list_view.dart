@@ -40,7 +40,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
       auth = user.data.accessToken;
       getDoctorList();
       setState(() {
-        name = user.data.user.firstName;
+        name = user.data.user.person.firstName;
       });
     } catch (Excepetion) {
       // do something

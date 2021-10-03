@@ -93,25 +93,26 @@ class _EditProfileState extends State<EditProfile> {
       patient = Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       debugPrint(user.toJson().toString());
 
-      dob = dateFormat.format(patient.birthDate);
-      unformatedDOB = patient.birthDate.toIso8601String();
-      userId = user.data.user.userId.toString();
+      dob = dateFormat.format(patient.user.person.birthDate);
+      unformatedDOB = patient.user.person.birthDate.toIso8601String();
+      userId = user.data.user.id.toString();
       auth = user.data.accessToken;
 
-      fullName = patient.firstName + ' ' + patient.lastName;
-      mobileNumber = patient.phoneNumber;
+      fullName =
+          patient.user.person.firstName + ' ' + patient.user.person.lastName;
+      mobileNumber = patient.user.person.phone;
 
-      _firstNameController.text = patient.firstName;
+      _firstNameController.text = patient.user.person.firstName;
       _firstNameController.selection = TextSelection.fromPosition(
         TextPosition(offset: _firstNameController.text.length),
       );
 
-      _lastNameController.text = patient.lastName;
+      _lastNameController.text = patient.user.person.lastName;
       _lastNameController.selection = TextSelection.fromPosition(
         TextPosition(offset: _lastNameController.text.length),
       );
 
-      _mobileNumberController.text = patient.phoneNumber;
+      _mobileNumberController.text = patient.user.person.phone;
       _mobileNumberController.selection = TextSelection.fromPosition(
         TextPosition(offset: _mobileNumberController.text.length),
       );
@@ -133,13 +134,13 @@ class _EditProfileState extends State<EditProfile> {
         debugPrint(Excepetion);
       }*/
 
-      _emailController.text = patient.email;
-      _emergencyMobileNumberController.text = patient.emergencyContactNumber;
+      /*_emailController.text = patient.user.person.email;
+      _emergencyMobileNumberController.text = patient.user.person.;
 
-      _cityController.text = patient.locality ?? '';
-      _addressController.text = patient.address ?? '';
+      _cityController.text = patient.user.person.locality ?? '';
+      _addressController.text = patient.user.person.address ?? '';*/
 
-      profileImagePath = patient.imageURL ?? '';
+      profileImagePath = patient.user.person.imageResourceId ?? '';
 
       setState(() {
         debugPrint(patientGender);
@@ -1177,8 +1178,8 @@ class _EditProfileState extends State<EditProfile> {
           PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        await _sharedPrefUtils.save(
-            'patientDetails', doctorListApiResponse.data.patient.toJson());
+        await _sharedPrefUtils.save('patientDetails',
+            doctorListApiResponse.data.patient.user.person.toJson());
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);

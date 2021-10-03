@@ -36,12 +36,13 @@ class _SupportViewState extends State<SupportView> {
       final Patient patient =
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       auth = user.data.accessToken;
-      patientUserId = user.data.user.userId;
+      patientUserId = user.data.user.id;
       //debugPrint(user.toJson().toString());
 
       setState(() {
-        name = patient.firstName + ' ' + patient.lastName;
-        userPhone = patient.phoneNumber;
+        name =
+            patient.user.person.firstName + ' ' + patient.user.person.lastName;
+        userPhone = patient.user.person.phone;
       });
     } catch (Excepetion) {
       // do something

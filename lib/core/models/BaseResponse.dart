@@ -7,19 +7,19 @@ class BaseResponse {
   BaseResponse({this.status, this.message, this.error, this.data});
 
   BaseResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    error = json['error'];
-    data = json['data'];
+    status = json['Status'];
+    message = json['Message'];
+    error = json['Error'];
+    data = json['Data'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
-    data['error'] = error;
+    data['Status'] = status;
+    data['Message'] = message;
+    data['Error'] = error;
     if (this.data != null) {
-      data['data'] = this.data;
+      data['Data'] = this.data;
     }
     return data;
   }

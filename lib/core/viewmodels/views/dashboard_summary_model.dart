@@ -199,7 +199,7 @@ class DashboardSummaryModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response =
-        await apiProvider.post('/symptoms/', header: map, body: body);
+        await apiProvider.post('/clinical/symptoms/', header: map, body: body);
 
     //setBusy(false);
     // Convert and return

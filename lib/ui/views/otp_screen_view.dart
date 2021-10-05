@@ -310,7 +310,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
           ? mobileNumber
           : countryCodeGlobe + '-' + mobileNumber;
       body['Otp'] = otp;
-      body['LoginRoleId'] = 2;
+      body['LoginRoleId'] = getRoleId();
 
       final response = await apiProvider.post('/users/login-with-otp',
           header: map, body: body);

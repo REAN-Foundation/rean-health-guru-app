@@ -5,6 +5,7 @@ import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GetAssesmentTemplateByIdResponse.dart';
 import 'package:paitent/core/models/GetMyAssesmentIdResponse.dart';
 import 'package:paitent/core/viewmodels/views/dashboard_summary_model.dart';
+import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/home_view.dart';
 import 'package:paitent/utils/CommonUtils.dart';
@@ -27,7 +28,7 @@ class SymptomsView extends StatefulWidget {
 class _SymptomsViewState extends State<SymptomsView> {
   var model = DashboardSummaryModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  AssessmentTemplate assessmentTemplate;
+  SymptomAssessmentTemplate assessmentTemplate;
 
   //List symptomList = new List<SymptomsPojo>();
   var dateFormat = DateFormat('yyyy-MM-dd');
@@ -283,7 +284,7 @@ class _SymptomsViewState extends State<SymptomsView> {
               height: 40,
               width: 40,
               child: CachedNetworkImage(
-                imageUrl: symptomTypes.publicImageUrl,
+                imageUrl: symptomTypes.symptomTypeId,
               ),
             ),
             title: Text(
@@ -299,7 +300,7 @@ class _SymptomsViewState extends State<SymptomsView> {
       secondaryBackground: slideLeftBackground(),
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.endToStart) {
-          addPatientSymptomsInAssesment(symptomTypes.id, true);
+          addPatientSymptomsInAssesment(symptomTypes.symptomTypeId, true);
           setState(() {
             assessmentTemplate.templateSymptomTypes.removeAt(index);
           });
@@ -337,7 +338,7 @@ class _SymptomsViewState extends State<SymptomsView> {
               });*/
           //return res;
         } else {
-          addPatientSymptomsInAssesment(symptomTypes.id, true);
+          addPatientSymptomsInAssesment(symptomTypes.symptomTypeId, true);
           setState(() {
             assessmentTemplate.templateSymptomTypes.removeAt(index);
           });
@@ -348,24 +349,28 @@ class _SymptomsViewState extends State<SymptomsView> {
 
   getAssesmentTemplateById() async {
     try {
+      debugPrint("1111");
       final GetAssesmentTemplateByIdResponse
           searchSymptomAssesmentTempleteResponse =
           await model.getAssesmentTemplateById(widget.assessmmentId);
       debugPrint(
           'Get Assesment Template By Id Response ==> ${searchSymptomAssesmentTempleteResponse.toJson()}');
       if (searchSymptomAssesmentTempleteResponse.status == 'success') {
-        assessmentTemplate =
-            searchSymptomAssesmentTempleteResponse.data.assessmentTemplate;
+        assessmentTemplate = searchSymptomAssesmentTempleteResponse
+            .data.symptomAssessmentTemplate;
+        debugPrint(
+            'Get Assesment Template Symptoms Types Length ==> ${searchSymptomAssesmentTempleteResponse.data.symptomAssessmentTemplate.templateSymptomTypes.length}');
         setState(() {});
         getMyAssesmentId();
       } else {
-        getAssesmentTemplateById();
+        //getAssesmentTemplateById();
         showToast(searchSymptomAssesmentTempleteResponse.message, context);
       }
-    } catch (CustomException) {
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
       model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException.toString());
+      setState(() {});
+      showToast(e.toString(), context);
     }
   }
 
@@ -381,10 +386,10 @@ class _SymptomsViewState extends State<SymptomsView> {
           await model.getMyAssesmentId(body);
       debugPrint('Get My Assesment Id Response ==> ${response.toJson()}');
       if (response.status == 'success') {
-        myAssesssmentId = response.data.assessment.id;
+        myAssesssmentId = response.data.symptomAssessment.id;
         setState(() {});
       } else {
-        getAssesmentTemplateById();
+        //getAssesmentTemplateById();
         showToast(response.message, context);
       }
     } catch (CustomException) {

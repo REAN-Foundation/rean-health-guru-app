@@ -18,7 +18,7 @@ class ApiProvider {
   }
 
   Future<dynamic> get(String url, {Map header}) async {
-    var headers = Map<String, String>();
+    final headers = <String, String>{};
     if (header != null) {
       headers.addAll(header);
     }
@@ -42,7 +42,7 @@ class ApiProvider {
   }
 
   Future<dynamic> post(String url, {Map body, Map header}) async {
-    var headers = Map<String, String>();
+    final headers = <String, String>{};
     if (header != null) {
       headers.addAll(header);
     }
@@ -71,7 +71,7 @@ class ApiProvider {
   }
 
   Future<dynamic> put(String url, {Map body, Map header}) async {
-    var headers = Map<String, String>();
+    final headers = <String, String>{};
     if (header != null) {
       headers.addAll(header);
     }
@@ -100,7 +100,7 @@ class ApiProvider {
   }
 
   Future<dynamic> delete(String url, {Map header}) async {
-    var headers = Map<String, String>();
+    final headers = <String, String>{};
     if (header != null) {
       headers.addAll(header);
     }

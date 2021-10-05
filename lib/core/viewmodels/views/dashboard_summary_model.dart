@@ -130,8 +130,8 @@ class DashboardSummaryModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
 
-    final response =
-        await apiProvider.post('/how-do-you-feel/', header: map, body: body);
+    final response = await apiProvider.post('/symptoms/how-do-you-feel/',
+        header: map, body: body);
 
     setBusy(false);
     // Convert and return
@@ -148,7 +148,7 @@ class DashboardSummaryModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.get(
-        '/symptom-assessment-templates/search?title=' + keyword,
+        '/clinical/symptom-assessment-templates/search?title=' + keyword,
         header: map);
 
     setBusy(false);
@@ -165,8 +165,9 @@ class DashboardSummaryModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
 
-    final response = await apiProvider
-        .get('/symptom-assessment-templates/' + assesmentId, header: map);
+    final response = await apiProvider.get(
+        '/clinical/symptom-assessment-templates/' + assesmentId,
+        header: map);
 
     setBusy(false);
     // Convert and return
@@ -181,7 +182,7 @@ class DashboardSummaryModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
 
-    final response = await apiProvider.post('/symptom-assessments/',
+    final response = await apiProvider.post('/clinical/symptom-assessments/',
         header: map, body: body);
 
     setBusy(false);

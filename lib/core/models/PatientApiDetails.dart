@@ -24,32 +24,31 @@ class PatientApiDetails {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
-    client =
-        json['Client'] != null ? new Client.fromJson(json['Client']) : null;
-    user = json['User'] != null ? new User.fromJson(json['User']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
+    client = json['Client'] != null ? Client.fromJson(json['Client']) : null;
+    user = json['User'] != null ? User.fromJson(json['User']) : null;
     context = json['Context'];
     clientIps = json['ClientIps'].cast<String>();
     aPIVersion = json['APIVersion'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['HttpCode'] = this.httpCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
-    if (this.client != null) {
-      data['Client'] = this.client.toJson();
+    if (client != null) {
+      data['Client'] = client.toJson();
     }
-    if (this.user != null) {
-      data['User'] = this.user.toJson();
+    if (user != null) {
+      data['User'] = user.toJson();
     }
-    data['Context'] = this.context;
-    data['ClientIps'] = this.clientIps;
-    data['APIVersion'] = this.aPIVersion;
+    data['Context'] = context;
+    data['ClientIps'] = clientIps;
+    data['APIVersion'] = aPIVersion;
     return data;
   }
 }
@@ -61,13 +60,13 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     patient =
-        json['Patient'] != null ? new Patient.fromJson(json['Patient']) : null;
+        json['Patient'] != null ? Patient.fromJson(json['Patient']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.patient != null) {
-      data['Patient'] = this.patient.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (patient != null) {
+      data['Patient'] = patient.toJson();
     }
     return data;
   }
@@ -93,22 +92,22 @@ class Patient {
   Patient.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['UserId'];
-    user = json['User'] != null ? new User.fromJson(json['User']) : null;
+    user = json['User'] != null ? User.fromJson(json['User']) : null;
     displayId = json['DisplayId'];
     ehrId = json['EhrId'];
     healthProfile = json['HealthProfile'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['UserId'] = this.userId;
-    if (this.user != null) {
-      data['User'] = this.user.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['UserId'] = userId;
+    if (user != null) {
+      data['User'] = user.toJson();
     }
-    data['DisplayId'] = this.displayId;
-    data['EhrId'] = this.ehrId;
-    data['HealthProfile'] = this.healthProfile;
+    data['DisplayId'] = displayId;
+    data['EhrId'] = ehrId;
+    data['HealthProfile'] = healthProfile;
     return data;
   }
 }
@@ -139,8 +138,7 @@ class User {
     id = json['id'];
     userName = json['UserName'];
     personId = json['PersonId'];
-    person =
-        json['Person'] != null ? new Person.fromJson(json['Person']) : null;
+    person = json['Person'] != null ? Person.fromJson(json['Person']) : null;
     lastLogin = json['LastLogin'];
     defaultTimeZone = json['DefaultTimeZone'];
     currentTimeZone = json['CurrentTimeZone'];
@@ -149,18 +147,18 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['UserName'] = this.userName;
-    data['PersonId'] = this.personId;
-    if (this.person != null) {
-      data['Person'] = this.person.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['UserName'] = userName;
+    data['PersonId'] = personId;
+    if (person != null) {
+      data['Person'] = person.toJson();
     }
-    data['LastLogin'] = this.lastLogin;
-    data['DefaultTimeZone'] = this.defaultTimeZone;
-    data['CurrentTimeZone'] = this.currentTimeZone;
-    data['RoleId'] = this.roleId;
-    data['Role'] = this.role;
+    data['LastLogin'] = lastLogin;
+    data['DefaultTimeZone'] = defaultTimeZone;
+    data['CurrentTimeZone'] = currentTimeZone;
+    data['RoleId'] = roleId;
+    data['Role'] = role;
     return data;
   }
 }
@@ -212,20 +210,20 @@ class Person {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['Prefix'] = this.prefix;
-    data['FirstName'] = this.firstName;
-    data['MiddleName'] = this.middleName;
-    data['LastName'] = this.lastName;
-    data['DisplayName'] = this.displayName;
-    data['Gender'] = this.gender;
-    data['BirthDate'] = this.birthDate.toIso8601String();
-    data['Age'] = this.age;
-    data['Phone'] = this.phone;
-    data['Email'] = this.email;
-    data['ImageResourceId'] = this.imageResourceId;
-    data['ActiveSince'] = this.activeSince;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['Prefix'] = prefix;
+    data['FirstName'] = firstName;
+    data['MiddleName'] = middleName;
+    data['LastName'] = lastName;
+    data['DisplayName'] = displayName;
+    data['Gender'] = gender;
+    data['BirthDate'] = birthDate.toIso8601String();
+    data['Age'] = age;
+    data['Phone'] = phone;
+    data['Email'] = email;
+    data['ImageResourceId'] = imageResourceId;
+    data['ActiveSince'] = activeSince;
     return data;
   }
 }
@@ -242,9 +240,9 @@ class Client {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ClientName'] = this.clientName;
-    data['ClientCode'] = this.clientCode;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['ClientName'] = clientName;
+    data['ClientCode'] = clientCode;
     return data;
   }
 }

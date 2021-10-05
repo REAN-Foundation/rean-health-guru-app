@@ -1636,17 +1636,18 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       if (searchSymptomAssesmentTempleteResponse.status == 'success') {
         Navigator.pushNamed(context, RoutePaths.Symptoms,
             arguments: searchSymptomAssesmentTempleteResponse
-                .data.assessmentTemplates
+                .data.symptomAssessmentTemplates.items
                 .elementAt(0)
                 .id);
         setState(() {});
       } else {
         //showToast(knowledgeTopicResponse.message);
       }
-    } catch (CustomException) {
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
       model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException.toString());
+      setState(() {});
+      showToast(e.toString(), context);
     }
   }
 }

@@ -75,7 +75,8 @@ class _HomeViewState extends State<HomeView> {
       patientUserId = user.data.user.id;
       patientGender = patient.user.person.gender;
       //debugPrint(user.toJson().toString());
-
+      dynamic roleId = await _sharedPrefUtils.read('roleId');
+      setRoleId(roleId);
       /* */
       setState(() {
         //debugPrint('Gender ==> ${patient.gender.toString()}');

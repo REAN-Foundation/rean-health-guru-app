@@ -271,11 +271,12 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       debugPrint('Mobile = $mobileNumber');
 
       final body = <String, dynamic>{};
-      body['PhoneNumber'] = countryCodeGlobe + '-' + mobileNumber;
+      body['Phone'] = countryCodeGlobe + '-' + mobileNumber;
       body['Purpose'] = 'Login';
+      body['RoleId'] = getRoleId();
 
-      final response =
-          await apiProvider.post('/user/generate-otp', header: map, body: body);
+      final response = await apiProvider.post('/users/generate-otp',
+          header: map, body: body);
 
       final BaseResponse doctorListApiResponse =
           BaseResponse.fromJson(response);
@@ -286,7 +287,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         model.setBusy(false);
       } else {
         model.setBusy(false);
-        showToast(doctorListApiResponse.error, context);
+        showToast(doctorListApiResponse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {

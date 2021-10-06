@@ -276,7 +276,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
           generateOTPForExistingUser(model);
         }
       } else {
-        if (checkUserExistOrNotResonse.message == 'User not found') {
+        if (checkUserExistOrNotResonse.message == 'User not found.') {
           generateOTP(model);
         } else {
           showToast(checkUserExistOrNotResonse.message, context);
@@ -342,7 +342,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       body['GenerateLoginOTP'] = true;
 
       final response =
-          await apiProvider.post('/patient', header: map, body: body);
+          await apiProvider.post('/patients', header: map, body: body);
 
       final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);

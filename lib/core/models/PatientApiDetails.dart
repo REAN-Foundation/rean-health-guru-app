@@ -95,7 +95,7 @@ class Patient {
     user = json['User'] != null ? User.fromJson(json['User']) : null;
     displayId = json['DisplayId'];
     ehrId = json['EhrId'];
-    healthProfile = json['HealthProfile'];
+    healthProfile = json['HealthProfile'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -201,7 +201,9 @@ class Person {
     lastName = json['LastName'];
     displayName = json['DisplayName'];
     gender = json['Gender'];
-    birthDate = DateTime.parse(json['BirthDate']);
+    birthDate = json['BirthDate'] != null
+        ? DateTime.parse(json['BirthDate'])
+        : new DateTime.now();
     age = json['Age'];
     phone = json['Phone'];
     email = json['Email'];

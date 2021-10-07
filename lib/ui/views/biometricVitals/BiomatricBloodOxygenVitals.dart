@@ -23,7 +23,7 @@ class _BiometricBloodOxygenVitalsViewState
   final ScrollController _scrollController = ScrollController();
 
   final _controller = TextEditingController();
-  List<Records> records = <Records>[];
+  List<Items> records = <Items>[];
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   ProgressDialog progressDialog;
 
@@ -253,7 +253,7 @@ class _BiometricBloodOxygenVitalsViewState
   }
 
   Widget _makeWeightList(BuildContext context, int index) {
-    final Records record = records.elementAt(index);
+    final Items record = records.elementAt(index);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -487,9 +487,13 @@ class _BiometricBloodOxygenVitalsViewState
       progressDialog.show();
       final map = <String, dynamic>{};
       map['BloodOxygenSaturation'] = _controller.text.toString();
+      map['PatientUserId'] = "";
+      map['Unit'] = "%";
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
-          await model.addMyVitals('blood-oxygen-saturation', map);
+          await model.addMyVitals('blood-oxygen-saturations', map);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
@@ -510,10 +514,10 @@ class _BiometricBloodOxygenVitalsViewState
   getVitalsHistory() async {
     try {
       final GetMyVitalsHistory getMyVitalsHistory =
-          await model.getMyVitalsHistory('blood-oxygen-saturation');
+          await model.getMyVitalsHistory('blood-oxygen-saturations');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
-        records.addAll(getMyVitalsHistory.data.biometrics.records);
+        records.addAll(getMyVitalsHistory.data.bloodOxygenSaturationRecords.items);
       } else {
         showToast(getMyVitalsHistory.message, context);
       }

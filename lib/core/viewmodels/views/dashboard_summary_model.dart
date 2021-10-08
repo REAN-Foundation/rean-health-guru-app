@@ -65,7 +65,7 @@ class DashboardSummaryModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider
-        .get('/patient-knowledge/today/' + patientUserId, header: map);
+        .get('/educational/knowledge-nuggets/today/' + patientUserId, header: map);
     setBusy(false);
     // Convert and return
     return KnowledgeTopicResponse.fromJson(response);

@@ -1487,11 +1487,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       debugPrint(
           'Today Knowledge Topic ==> ${knowledgeTopicResponse.toJson()}');
       if (knowledgeTopicResponse.status == 'success') {
-        final KnowledgeTopic topic =
-            knowledgeTopicResponse.data.knowledgeTopic.elementAt(0);
-        topicId = topic.id;
-        topicName = topic.topicName;
-        briefInformation = topic.briefInformation;
+        //final Items topic =
+         //knowledgeTopicResponse.data.knowledgeNuggetRecords.items.elementAt(0);
+        topicId = knowledgeTopicResponse.data.knowledgeNugget.id;
+        topicName = knowledgeTopicResponse.data.knowledgeNugget.topicName;
+        briefInformation = knowledgeTopicResponse.data.knowledgeNugget.briefInformation;
         setState(() {});
       } else {
         //showToast(knowledgeTopicResponse.message);

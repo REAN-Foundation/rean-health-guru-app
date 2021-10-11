@@ -11,10 +11,11 @@ class OnBoardingPage extends StatefulWidget {
 class _OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
+  static const Color primaryColorLocal = Color(0XFF6541A5);
+
   void _onIntroEnd(context) {
     Navigator.popAndPushNamed(context, RoutePaths.Login);
   }
-
 
   Widget _buildImage(String assetName, [double width = 350]) {
     return Image.asset('res/images/$assetName', width: width);
@@ -23,11 +24,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   @override
   Widget build(BuildContext context) {
     const bodyStyle = TextStyle(
-        fontSize: 18.0, fontWeight: FontWeight.w500, color: primaryColor);
+        fontSize: 18.0, fontWeight: FontWeight.w500, color: primaryColorLocal);
 
     const pageDecoration = PageDecoration(
       titleTextStyle: TextStyle(
-          fontSize: 22.0, fontWeight: FontWeight.w700, color: primaryColor),
+          fontSize: 22.0,
+          fontWeight: FontWeight.w700,
+          color: primaryColorLocal),
       bodyTextStyle: bodyStyle,
       descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
       pageColor: Colors.white,
@@ -85,14 +88,15 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       //rtl: true, // Display as right-to-left
       skip: const Text(
         'Skip',
-        style: TextStyle(color: primaryColor),
+        style: TextStyle(color: primaryColorLocal),
       ),
       next: const Icon(
         Icons.arrow_forward,
-        color: primaryColor,
+        color: primaryColorLocal,
       ),
       done: const Text('Done',
-          style: TextStyle(fontWeight: FontWeight.w600, color: primaryColor)),
+          style:
+              TextStyle(fontWeight: FontWeight.w600, color: primaryColorLocal)),
       curve: Curves.fastLinearToSlowEaseIn,
       //controlsMargin: const EdgeInsets.all(16),
       /*controlsPadding: kIsWeb
@@ -102,7 +106,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         size: Size(10.0, 10.0),
         color: Color(0xFFBDBDBD),
         activeSize: Size(22.0, 10.0),
-        activeColor: primaryColor,
+        activeColor: primaryColorLocal,
         activeShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(25.0)),
         ),

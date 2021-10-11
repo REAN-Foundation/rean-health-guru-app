@@ -53,7 +53,7 @@ class _CreateProfileState extends State<CreateProfile> {
   String auth = '';
   ProgressDialog progressDialog;
   String fullName = '';
-  var dateFormat = DateFormat('dd MMM, yyyy');
+  var dateFormat = DateFormat('MMM dd, yyyy');
 
   //Patient patient;
   //String profileImage = "";
@@ -469,11 +469,10 @@ class _CreateProfileState extends State<CreateProfile> {
                       progressDialog.hide();
                       showToast(updateProfileSuccess.message, context);
                     }
-                  } catch (CustomException) {
+                  } on FetchDataException catch (e) {
+                    debugPrint('error caught: $e');
                     model.setBusy(false);
-                    progressDialog.hide();
-                    showToast(CustomException.toString(), context);
-                    debugPrint(CustomException.toString());
+                    showToast(e.toString(), context);
                   }
                 }
               }),
@@ -511,10 +510,10 @@ class _CreateProfileState extends State<CreateProfile> {
         showToast(doctorListApiResponse.message, context);
         model.setBusy(false);
       }
-    } catch (CustomException) {
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
       model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint(CustomException.toString());
+      showToast(e.toString(), context);
     }
   }
 

@@ -149,7 +149,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                     borderRadius: BorderRadius.circular(24.0),
                                     border: Border.all(
                                         color: primaryColor, width: 1),
-                                    color: Colors.deepPurple,
+                                    color: primaryColor,
                                   ),
                                   child: Center(
                                     child: Text(

@@ -232,7 +232,7 @@ class _DeterminActionPlansForCarePlanViewState
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24.0),
           border: Border.all(color: primaryColor, width: 1),
-          color: Colors.deepPurple,
+          color: primaryColor,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -240,7 +240,7 @@ class _DeterminActionPlansForCarePlanViewState
           children: [
             Icon(
               Icons.arrow_back_ios,
-              color: Colors.deepPurple,
+              color: primaryColor,
               size: 16,
             ),
             Text(
@@ -342,7 +342,7 @@ class _DeterminActionPlansForCarePlanViewState
               Icon(
                 Icons.thumb_up,
                 size: 48,
-                color: Colors.deepPurple,
+                color: primaryColor,
               ),
               SizedBox(
                 height: 24,
@@ -375,7 +375,7 @@ class _DeterminActionPlansForCarePlanViewState
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24.0),
                         border: Border.all(color: primaryColor, width: 1),
-                        color: Colors.deepPurple,
+                        color: primaryColor,
                       ),
                       child: Center(
                         child: Text(

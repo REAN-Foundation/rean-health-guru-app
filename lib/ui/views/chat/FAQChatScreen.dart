@@ -6,6 +6,7 @@ import 'package:paitent/core/models/ChatApiResponse.dart';
 import 'package:paitent/core/models/FAQChatModelPojo.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/bot_view_model.dart';
+import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
@@ -303,10 +304,15 @@ class FAQChatScreenState extends State<FAQChatScreen> {
       } else {
         //showToast(knowledgeTopicResponse.message);
       }
-    } catch (CustomException) {
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+    /* catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
-    }
+    }*/
   }
 }

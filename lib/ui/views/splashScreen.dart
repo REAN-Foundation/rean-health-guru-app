@@ -89,7 +89,12 @@ class _SplashScreenState extends State<SplashScreen> {
       if (getSessionFlag()) {
         Navigator.of(context).pushReplacementNamed(RoutePaths.Home);
       } else {
-        Navigator.of(context).pushReplacementNamed(RoutePaths.On_Boarding);
+        if (getAppType() == 'AHA') {
+          Navigator.of(context)
+              .pushReplacementNamed(RoutePaths.On_Boarding_AHA);
+        } else {
+          Navigator.of(context).pushReplacementNamed(RoutePaths.On_Boarding);
+        }
       }
     });
   }
@@ -98,7 +103,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: primaryColor,
+      backgroundColor: getAppType() == 'AHA' ? primaryLightColor : primaryColor,
       body: InkWell(
         onTap: widget.onClick,
         child: Stack(
@@ -133,14 +138,23 @@ class _SplashScreenState extends State<SplashScreen> {
                           child: Semantics(
                             label: 'REAN care app logo',
                             image: true,
-                            child: Image.asset(
-                                'res/images/app_logo_tranparent.png'),
+                            child: getAppType() == 'AHA'
+                                ? Image.asset('res/images/aha_logo.png')
+                                : Image.asset(
+                                    'res/images/app_logo_tranparent.png'),
                           ),
                         ),
                         SizedBox(
                           height: 16,
                         ),
-                        //_title(),
+                        getAppType() == 'AHA'
+                            ? Text('American Heart\nAssociation',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: primaryColor))
+                            : Container(),
                         //SizedBox(height: 60,),
                         /*new CircleAvatar(
                               backgroundColor: Colors.transparent,
@@ -183,7 +197,9 @@ class _SplashScreenState extends State<SplashScreen> {
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w300,
-                                  color: Colors.white)),
+                                  color: getAppType() == 'AHA'
+                                      ? primaryColor
+                                      : Colors.white)),
                         ),
                       ],
                     ),

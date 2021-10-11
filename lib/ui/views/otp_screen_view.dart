@@ -86,7 +86,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                                         AssetImage(
                                             'res/images/mobile_verified.png'),
                                         size: 56,
-                                        color: Colors.deepPurple,
+                                        color: primaryColor,
                                       )),
                                 )),
                             //SizedBox(height: 30),
@@ -185,7 +185,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                     'Resend OTP?',
                     style: TextStyle(
                         fontSize: 14,
-                        color: Colors.deepPurple,
+                        color: primaryColor,
                         fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -206,12 +206,11 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             child: Text('Submit', style: TextStyle(fontSize: 14)),
             style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.deepPurple),
+                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(24)),
-                        side: BorderSide(color: Colors.deepPurple)))),
+                        side: BorderSide(color: primaryColor)))),
             onPressed: () async {
               debugPrint('mobile = ${widget.mobileNumber}');
               debugPrint('OTP = $otp');

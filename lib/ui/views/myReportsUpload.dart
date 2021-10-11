@@ -36,7 +36,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   ProgressDialog progressDialog;
   String attachmentPath = '';
   List<Documents> documents = <Documents>[];
-  var dateFormat = DateFormat('dd MMM, yyyy');
+  var dateFormat = DateFormat('MMM dd, yyyy');
   var renameControler = TextEditingController();
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
   final ScrollController _scrollController =
@@ -228,7 +228,7 @@ class _MyReportsViewState extends State<MyReportsView> {
               fontWeight: FontWeight.w400,
               fontSize: 14,
               fontFamily: 'Montserrat',
-              color: Colors.deepPurple)),
+              color: primaryColor)),
     );
   }
 
@@ -309,6 +309,7 @@ class _MyReportsViewState extends State<MyReportsView> {
           if (document.mimeType.contains('pdf')) {
             //createFileOfPdfUrl(document.urlAuth, document.fileName);
             createFileOfPdfUrl(document.urlAuth, document.fileName).then((f) {
+              debugPrint('PDF Path ==> ${f.path}');
               progressDialog.hide();
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => PDFScreen(f.path)));
@@ -406,7 +407,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                       Container(
                         height: 12,
                         width: 1,
-                        color: Colors.deepPurple,
+                        color: primaryColor,
                       ),
                       Semantics(
                         child: InkWell(
@@ -438,7 +439,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                       Container(
                         height: 12,
                         width: 1,
-                        color: Colors.deepPurple,
+                        color: primaryColor,
                       ),
                       Semantics(
                         child: InkWell(
@@ -518,7 +519,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   Future<File> createFileOfPdfUrl(String url, String fileName) async {
-    debugPrint('Base Url ==> url');
+    //debugPrint('Base Url ==> ${url}');
     //final url = "http://africau.edu/images/default/sample.pdf";
     //final url = "https://www.lalpathlabs.com/SampleReports/Z614.pdf";
     //final filename = url.substring(url.lastIndexOf("/") + 1);
@@ -530,7 +531,7 @@ class _MyReportsViewState extends State<MyReportsView> {
     request.headers.add('Authorization', 'Bearer ' + auth);
     final response = await request.close();
 
-    debugPrint('Base Url ==> PUT ${request.uri}');
+    debugPrint('Base Url ==> ${request.uri}');
     debugPrint('Headers ==> ${request.headers.toString()}');
 
     final bytes = await consolidateHttpClientResponseBytes(response);
@@ -793,14 +794,14 @@ class _MyReportsViewState extends State<MyReportsView> {
                           color: primaryLightColor,
                           borderRadius: BorderRadius.all(Radius.circular(50.0)),
                           border: Border.all(
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
                           child: Icon(
                             Icons.camera_alt,
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             size: 24,
                           ),
                         ),
@@ -836,14 +837,14 @@ class _MyReportsViewState extends State<MyReportsView> {
                           color: primaryLightColor,
                           borderRadius: BorderRadius.all(Radius.circular(50.0)),
                           border: Border.all(
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
                           child: Icon(
                             Icons.image,
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             size: 24,
                           ),
                         ),
@@ -879,12 +880,12 @@ class _MyReportsViewState extends State<MyReportsView> {
                           borderRadius:
                           new BorderRadius.all(new Radius.circular(50.0)),
                           border: new Border.all(
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
-                          child: Icon(Icons.close, color: Colors.deepPurple, size: 24,),
+                          child: Icon(Icons.close, color: primaryColor, size: 24,),
                         ),
                       ),
                       SizedBox(height: 8,),

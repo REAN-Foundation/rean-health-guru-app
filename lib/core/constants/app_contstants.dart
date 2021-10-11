@@ -4,6 +4,7 @@
 class RoutePaths {
   static const String Splash_Screen = 'SplashScreen';
   static const String On_Boarding = 'onBoarding';
+  static const String On_Boarding_AHA = 'onBoardingAha';
   static const String Login = 'login';
   static const String OTP_Screen = 'otpScreen';
   static const String CREATE_PROFILE = 'createProfile';

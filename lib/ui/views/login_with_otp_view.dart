@@ -83,7 +83,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SizedBox(height: height * .2),
-                            _title(),
+                            getAppType() == 'AHA' ? _titleAha() : _title(),
                             Semantics(
                                 label: 'Mobile number',
                                 readOnly: true,
@@ -195,12 +195,11 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
           child: Text('Get OTP', style: TextStyle(fontSize: 14)),
           style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.deepPurple),
+              backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(24)),
-                      side: BorderSide(color: Colors.deepPurple)))),
+                      side: BorderSide(color: primaryColor)))),
           onPressed: () {
             if (mobileNumber.length == 10) {
               countryCodeGlobe = countryCode;
@@ -397,6 +396,48 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                 ),
                 TextSpan(
                   text: 'uru',
+                  style: TextStyle(color: Colors.black, fontSize: 30),
+                ),
+              ]),
+        ),
+      ),
+    );
+  }
+
+  Widget _titleAha() {
+    return MergeSemantics(
+      child: Semantics(
+        label: 'App name',
+        readOnly: true,
+        child: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+              text: 'American',
+              style: GoogleFonts.portLligatSans(
+                textStyle: Theme.of(context).textTheme.headline4,
+                fontSize: 30,
+                fontWeight: FontWeight.w700,
+                color: primaryColor,
+              ),
+              children: [
+                TextSpan(
+                  text: ' ',
+                  style: TextStyle(color: Colors.black, fontSize: 30),
+                ),
+                TextSpan(
+                  text: 'H',
+                  style: TextStyle(color: primaryColor, fontSize: 30),
+                ),
+                TextSpan(
+                  text: 'eart',
+                  style: TextStyle(color: Colors.black, fontSize: 30),
+                ),
+                TextSpan(
+                  text: '\nA',
+                  style: TextStyle(color: primaryColor, fontSize: 30),
+                ),
+                TextSpan(
+                  text: 'ssociation',
                   style: TextStyle(color: Colors.black, fontSize: 30),
                 ),
               ]),

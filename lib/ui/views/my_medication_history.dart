@@ -76,7 +76,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
               fontWeight: FontWeight.w400,
               fontSize: 14,
               fontFamily: 'Montserrat',
-              color: Colors.deepPurple)),
+              color: primaryColor)),
     );
   }
 
@@ -165,7 +165,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                             Icon(
                               Icons.help_outline,
                               size: 16,
-                              color: Colors.deepPurple,
+                              color: primaryColor,
                             )
                           ],
                         ),

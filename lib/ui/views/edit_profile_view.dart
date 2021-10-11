@@ -69,7 +69,7 @@ class _EditProfileState extends State<EditProfile> {
   String auth = '';
   ProgressDialog progressDialog;
   String fullName = '';
-  var dateFormat = DateFormat('dd MMM, yyyy');
+  var dateFormat = DateFormat('MMM dd, yyyy');
   Patient patient;
 
   //String profileImage = "";
@@ -214,7 +214,7 @@ class _EditProfileState extends State<EditProfile> {
               child: Semantics(
                 label: 'edit_profile',
                 child: FloatingActionButton(
-                  backgroundColor: Colors.deepPurple,
+                  backgroundColor: primaryColor,
                   foregroundColor: Colors.white,
                   mini: false,
                   onPressed: () {
@@ -385,7 +385,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(50.0)),
                     border: Border.all(
-                      color: Colors.deepPurple,
+                      color: primaryColor,
                       width: 2.0,
                     ),
                   ),
@@ -1146,11 +1146,11 @@ class _EditProfileState extends State<EditProfile> {
                         progressDialog.hide();
                         showToast(updateProfileSuccess.message, context);
                       }
-                    } catch (CustomException) {
+                    } on FetchDataException catch (e) {
+                      debugPrint("3");
+                      debugPrint('error caught: $e');
                       model.setBusy(false);
-                      progressDialog.hide();
-                      showToast(CustomException.toString(), context);
-                      debugPrint(CustomException.toString());
+                      showToast(e.toString(), context);
                     }
                   }
                 }),
@@ -1456,14 +1456,14 @@ class _EditProfileState extends State<EditProfile> {
                           color: primaryLightColor,
                           borderRadius: BorderRadius.all(Radius.circular(50.0)),
                           border: Border.all(
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
                           child: Icon(
                             Icons.camera_alt,
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             size: 24,
                           ),
                         ),
@@ -1499,14 +1499,14 @@ class _EditProfileState extends State<EditProfile> {
                           color: primaryLightColor,
                           borderRadius: BorderRadius.all(Radius.circular(50.0)),
                           border: Border.all(
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             width: 1.0,
                           ),
                         ),
                         child: Center(
                           child: Icon(
                             Icons.image,
-                            color: Colors.deepPurple,
+                            color: primaryColor,
                             size: 24,
                           ),
                         ),
@@ -1543,14 +1543,14 @@ class _EditProfileState extends State<EditProfile> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(50.0)),
                             border: Border.all(
-                              color: Colors.deepPurple,
+                              color: primaryColor,
                               width: 1.0,
                             ),
                           ),
                           child: Center(
                             child: Icon(
                               Icons.close,
-                              color: Colors.deepPurple,
+                              color: primaryColor,
                               size: 24,
                             ),
                           ),

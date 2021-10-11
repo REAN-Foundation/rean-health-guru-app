@@ -336,7 +336,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'About REAN',
+                        getAppType() == 'AHA' ? 'About AHA' : 'About REAN',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w700),
                       ),
@@ -529,7 +529,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(50.0)),
                     border: Border.all(
-                      color: Colors.deepPurple,
+                      color: primaryColor,
                       width: 2.0,
                     ),
                   ),

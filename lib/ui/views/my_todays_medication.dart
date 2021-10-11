@@ -107,7 +107,10 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
                     child: CircularProgressIndicator(),
                   ),
                 )
-              : (currentMedicationList.isEmpty
+              : (morningMedicationList.isEmpty &&
+                      afternoonMedicationList.isEmpty &&
+                      eveningMedicationList.isEmpty &&
+                      nightMedicationList.isEmpty
                   ? noMedicationFound()
                   : SingleChildScrollView(
                       child: Column(
@@ -212,7 +215,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
                 fontFamily: 'Montserrat',
-                color: Colors.deepPurple)),
+                color: primaryColor)),
       ),
     );
   }

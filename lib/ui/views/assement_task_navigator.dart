@@ -417,7 +417,7 @@ class _AssesmentTaskNavigatorViewState
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24.0),
                       border: Border.all(color: primaryColor, width: 1),
-                      color: Colors.deepPurple,
+                      color: primaryColor,
                     ),
                     child: Center(
                       child: Text(

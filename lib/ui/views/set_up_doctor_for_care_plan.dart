@@ -187,10 +187,9 @@ class _SetUpDoctorForCarePlanViewState
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(24.0),
-                                border:
-                                    Border.all(color: primaryColor, width: 1),
-                                color: Colors.deepPurple,
-                              ),
+                            border: Border.all(color: primaryColor, width: 1),
+                            color: primaryColor,
+                          ),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -198,9 +197,9 @@ class _SetUpDoctorForCarePlanViewState
                                 children: [
                                   Icon(
                                     Icons.arrow_back_ios,
-                                    color: Colors.deepPurple,
-                                    size: 16,
-                                  ),
+                                color: primaryColor,
+                                size: 16,
+                              ),
                                   Text(
                                     'Next',
                                     style: TextStyle(
@@ -225,7 +224,7 @@ class _SetUpDoctorForCarePlanViewState
           floatingActionButton: Padding(
             padding: const EdgeInsets.only(bottom: 60.0),
             child: FloatingActionButton(
-              backgroundColor: Colors.deepPurple,
+              backgroundColor: primaryColor,
               foregroundColor: Colors.white,
               mini: false,
               onPressed: () {

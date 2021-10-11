@@ -23,7 +23,7 @@ class CarePlanTasksView extends StatefulWidget {
 class _CarePlanTasksViewState extends State<CarePlanTasksView>
     with WidgetsBindingObserver {
   var model = PatientCarePlanViewModel();
-  var dateFormat = DateFormat('MMM, dd - hh:mm a');
+  var dateFormat = DateFormat('MMM dd - hh:mm a');
   GetTaskOfAHACarePlanResponse _carePlanTaskResponse;
   List<Task> tasks = <Task>[];
   bool isSubscribe = false;
@@ -146,7 +146,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         },
                         child: Center(
                           child: Text(
-                            "Todo\'s",
+                            "To Do",
                             style: TextStyle(
                                 color: isUpCommingSelected
                                     ? primaryColor
@@ -208,7 +208,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               fontWeight: FontWeight.w400,
               fontSize: 14,
               fontFamily: 'Montserrat',
-              color: Colors.deepPurple)),
+              color: primaryColor)),
     );
   }
 
@@ -297,7 +297,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 SizedBox(
                                   width: 8,
                                 ),
-                                //ImageIcon(AssetImage('res/images/ic_drug_purpul.png'), size: 16, color: Colors.deepPurple,),
+                                //ImageIcon(AssetImage('res/images/ic_drug_purpul.png'), size: 16, color: primaryColor,),
                                 //SizedBox(width: 4,),
                                 Container(
                                   width:
@@ -461,7 +461,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             ImageIcon(
                               AssetImage('res/images/ic_drug_purpul.png'),
                               size: 16,
-                              color: Colors.deepPurple,
+                              color: primaryColor,
                             ),
                             SizedBox(
                               width: 4,

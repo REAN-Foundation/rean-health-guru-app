@@ -20,6 +20,9 @@ class SupportView extends StatefulWidget {
 class _SupportViewState extends State<SupportView> {
   //var model = PatientCarePlanViewModel();
   String msg = 'We are here to help you so please get in touch.';
+  String msgAHA = 'Please call us or email us for technical help.';
+  String subtitle =
+      'For medical help, please contact your health care professional.';
   String phone = '+2025397323';
   String email = 'support@reanfoundation.org';
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
@@ -82,20 +85,38 @@ class _SupportViewState extends State<SupportView> {
                                 children: [
                                   Container(
                                     width: MediaQuery.of(context).size.width,
-                                    child: Lottie.asset(
-                                      'res/lottiefiles/support_us.json',
-                                    ),
+                                    child: getAppType() == 'AHA'
+                                        ? Image.asset(
+                                            'res/images/support_us_aha.png',
+                                          )
+                                        : Lottie.asset(
+                                            'res/lottiefiles/support_us.json',
+                                          ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 32.0),
-                                    child: Text(msg,
+                                    child: Text(
+                                        getAppType() == 'AHA' ? msgAHA : msg,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w700,
                                             fontSize: 20,
                                             color: primaryColor)),
-                                  )
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 32.0),
+                                    child: Text(subtitle,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16,
+                                            color: primaryColor)),
+                                  ),
                                 ],
                               ),
                             ),
@@ -139,10 +160,14 @@ class _SupportViewState extends State<SupportView> {
                                               height: 160,
                                               child: Column(
                                                 children: [
-                                                  Lottie.asset(
-                                                    'res/lottiefiles/call.json',
-                                                    height: 120,
-                                                  ),
+                                                  getAppType() == 'AHA'
+                                                      ? Image.asset(
+                                                          'res/images/ic_call_aha.png',
+                                                          width: 120)
+                                                      : Lottie.asset(
+                                                          'res/lottiefiles/call.json',
+                                                          height: 120,
+                                                        ),
                                                   Text('Call us',
                                                       textAlign:
                                                           TextAlign.center,
@@ -178,9 +203,18 @@ class _SupportViewState extends State<SupportView> {
                                               }
                                           );*/
 
+                                            String appName =
+                                                'REAN%20HealthGuru';
+                                            if (getAppType() == 'AHA') {
+                                              appName =
+                                                  'American%20Heart%20Association';
+                                            }
+
                                             final link = 'mailto:' +
                                                 email +
-                                                '?subject=Regarding%20REAN%20HealthGuru%20App&body=Hey Team,%20\n\n' +
+                                                '?subject=Regarding%20' +
+                                                appName +
+                                                '%20App&body=Hey Team,%20\n\n' +
                                                 name +
                                                 '%20wants%20to%20get%20in%20touch%20with%20you.\n\nContact%20Number:%20' +
                                                 userPhone +
@@ -194,7 +228,7 @@ class _SupportViewState extends State<SupportView> {
                                                   path: email,
                                                   queryParameters: {
                                                     'subject':
-                                                        'REAN HealthGuru app query',
+                                                        appName + ' app query',
                                                     'body': ''
                                                             '' +
                                                         name +
@@ -226,11 +260,15 @@ class _SupportViewState extends State<SupportView> {
                                               height: 160,
                                               child: Column(
                                                 children: [
-                                                  Lottie.asset(
-                                                    'res/lottiefiles/mail.json',
-                                                    height: 120,
-                                                  ),
-                                                  Text('E mail us',
+                                                  getAppType() == 'AHA'
+                                                      ? Image.asset(
+                                                          'res/images/ic_mail_aha.png',
+                                                          width: 120)
+                                                      : Lottie.asset(
+                                                          'res/lottiefiles/mail.json',
+                                                          height: 120,
+                                                        ),
+                                                  Text('Email us',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: TextStyle(

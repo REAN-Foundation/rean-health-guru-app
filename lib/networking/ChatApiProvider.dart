@@ -104,7 +104,7 @@ class ChatApiProvider {
       //case 404:
       case 500:
       final responseJson = json.decode(response.body.toString());
-        debugPrint(responseJson);
+        debugPrint(responseJson.toString());
         return responseJson;
 
       default:

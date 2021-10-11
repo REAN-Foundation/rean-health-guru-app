@@ -188,18 +188,18 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(24.0),
-                            border: Border.all(color: primaryColor, width: 1),
-                            color: Colors.deepPurple,
-                          ),
+                        border: Border.all(color: primaryColor, width: 1),
+                        color: primaryColor,
+                      ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Icon(
                                 Icons.arrow_back_ios,
-                                color: Colors.deepPurple,
-                                size: 16,
-                              ),
+                            color: primaryColor,
+                            size: 16,
+                          ),
                               Text(
                                 assrotedUICount != 3 ? 'Next' : 'Done',
                                 style: TextStyle(
@@ -248,14 +248,14 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24.0),
                         border: Border.all(color: primaryColor, width: 1),
-                        color: Colors.deepPurple,
+                        color: primaryColor,
                       ),
                       child:
-                          /* assrotedUICount != 3 ?  Row(
+                      /* assrotedUICount != 3 ?  Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Icons.arrow_back_ios, color: Colors.deepPurple, size: 16,),
+                        Icon(Icons.arrow_back_ios, color: primaryColor, size: 16,),
                         Text(
                           'Skip All',
                           style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14, fontStyle: FontStyle.italic),
@@ -321,14 +321,14 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24.0),
                         border: Border.all(color: primaryColor, width: 1),
-                        color: Colors.deepPurple,
+                        color: primaryColor,
                       ),
                       child:
-                          /* assrotedUICount != 3 ?  Row(
+                      /* assrotedUICount != 3 ?  Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Icons.arrow_back_ios, color: Colors.deepPurple, size: 16,),
+                        Icon(Icons.arrow_back_ios, color: primaryColor, size: 16,),
                         Text(
                           'Skip All',
                           style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14, fontStyle: FontStyle.italic),

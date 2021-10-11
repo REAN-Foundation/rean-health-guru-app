@@ -252,14 +252,14 @@ class _HomeViewState extends State<HomeView> {
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyNavigation_drawer,
         (targets.length + 1).toString(),
-        'Navigation menu',
-        'Update your Profile, Add Vitals and Medical information.',
+        'Navigation Menu',
+        'Update your profile, add vitals and medical information.',
         CoachMarkContentPosition.bottom));
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyMyTasks,
         (targets.length + 1).toString(),
         'Daily Tasks',
-        'Keep a watch on your Daily Tasks.',
+        'Keep a watch on your daily tasks.',
         CoachMarkContentPosition.top));
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyUploadReports,
@@ -272,7 +272,7 @@ class _HomeViewState extends State<HomeView> {
         _keyEmergencyContacts,
         (targets.length + 1).toString(),
         'Emergency Contacts',
-        'Add your Emergency Contacts here.',
+        'Add your emergency contacts here.',
         CoachMarkContentPosition.top));
   }
 
@@ -377,7 +377,7 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(50.0)),
                         border: Border.all(
-                          color: Colors.deepPurple,
+                          color: primaryColor,
                           width: 1.0,
                         ),
                       ),

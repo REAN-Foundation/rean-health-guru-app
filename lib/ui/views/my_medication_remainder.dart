@@ -127,7 +127,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
                       ImageIcon(
                         AssetImage('res/images/ic_drug_purpul.png'),
                         size: 16,
-                        color: Colors.deepPurple,
+                        color: primaryColor,
                       ),
                       SizedBox(
                         width: 4,

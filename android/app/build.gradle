@@ -32,7 +32,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -62,6 +62,13 @@ android {
     productFlavors {
 
         dev {
+            dimension "app"
+            applicationId "org.reanfoundation.patient.dev"
+            versionCode flutterVersionCode.toInteger()
+            versionName flutterVersionName
+        }
+
+        aha {
             dimension "app"
             applicationId "org.reanfoundation.patient.dev"
             versionCode flutterVersionCode.toInteger()

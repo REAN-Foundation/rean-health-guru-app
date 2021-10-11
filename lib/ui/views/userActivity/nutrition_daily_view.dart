@@ -689,7 +689,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                     submitButtonListner:
                         (name, caloriesConsumed, nutritionType) {
                       debugPrint(nutritionType);
-                      recordMyCaloriesConsumed(name, caloriesConsumed);
+                      recordMyCaloriesConsumed(name, nutritionType, caloriesConsumed);
                       addNutrition(nutritionType, caloriesConsumed);
                       Navigator.of(context, rootNavigator: true).pop();
                     },
@@ -737,12 +737,13 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
   }
 
   recordMyCaloriesConsumed(
-      String nutritionName, double caloriesConsumed) async {
+      String nutritionName, String nutritionType, double caloriesConsumed) async {
     try {
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['Name'] = nutritionName;
-      map['ConsumedCalories'] = caloriesConsumed.toString();
+      map['ConsumedAs'] = nutritionType[0].toUpperCase() + nutritionType.substring(1);
+      map['Food'] = nutritionName;
+      map['Calories'] = caloriesConsumed.toString();
       map['StartTime'] = dateFormat.format(DateTime.now());
       map['EndTime'] = dateFormat.format(DateTime.now());
 

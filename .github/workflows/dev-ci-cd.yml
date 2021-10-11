@@ -63,11 +63,21 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
 
-      - name: Create env
-        env:
-          FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
-        run: |
-          echo $FLUTTER_DOTENV > ./res/.env
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Create env file
+        run: aws s3 cp s3://duploservices-dev-configs-167414264568/.env ./res/.env
+
+      # - name: Create env
+      #   env:
+      #     FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
+      #   run: |
+      #     echo $FLUTTER_DOTENV > ./res/.env
 
       - name: Run Flutter Analyze
         run: |
@@ -106,15 +116,25 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Create env file
+        run: aws s3 cp s3://duploservices-dev-configs-167414264568/.env ./res/.env
+
       - name: Import Build Environment Dependencies
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_JSON }}
           KEYSTORE_TOKEN: ${{ secrets.KEYSTORE_TOKEN_BASE64 }}
-          FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
+          # FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
         run: |
           echo $FIREBASE_CONFIG > ./android/app/src/dev/google-services.json
           echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
-          echo $FLUTTER_DOTENV > ./res/.env
+          # echo $FLUTTER_DOTENV > ./res/.env
 
       # Flutter Build Artifact
       # - if: github.ref == 'refs/heads/development'
@@ -199,14 +219,24 @@ jobs:
       - name: Setup Flutter
         uses: ./.github/actions/setup_flutter
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Create env file
+        run: aws s3 cp s3://duploservices-dev-configs-167414264568/.env ./res/.env
+
       - name: Import Build Environment Dependencies
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_PLIST }}
-          FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
+          # FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
         run: |
           mkdir -p ./ios/config/dev/
           echo $FIREBASE_CONFIG > ./ios/config/dev/GoogleService-Info.plist
-          echo $FLUTTER_DOTENV > ./res/.env
+          # echo $FLUTTER_DOTENV > ./res/.env
 
       # Flutter Build Artifact
       - name: Flutter Build

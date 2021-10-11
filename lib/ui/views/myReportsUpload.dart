@@ -519,7 +519,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   Future<File> createFileOfPdfUrl(String url, String fileName) async {
-    debugPrint('Base Url ==> ${url}');
+    //debugPrint('Base Url ==> ${url}');
     //final url = "http://africau.edu/images/default/sample.pdf";
     //final url = "https://www.lalpathlabs.com/SampleReports/Z614.pdf";
     //final filename = url.substring(url.lastIndexOf("/") + 1);

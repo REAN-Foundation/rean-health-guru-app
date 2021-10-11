@@ -24,7 +24,7 @@ class PDFScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.white,
           brightness: Brightness.light,
-          iconTheme: new IconThemeData(color: Colors.black),
+          iconTheme: IconThemeData(color: Colors.black),
           title: Text(
             "Reports",
             style: TextStyle(

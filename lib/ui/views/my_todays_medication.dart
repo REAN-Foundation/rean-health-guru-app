@@ -110,7 +110,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               : (morningMedicationList.isEmpty &&
                       afternoonMedicationList.isEmpty &&
                       eveningMedicationList.isEmpty &&
-                      eveningMedicationList.isEmpty
+                      nightMedicationList.isEmpty
                   ? noMedicationFound()
                   : SingleChildScrollView(
                       child: Column(

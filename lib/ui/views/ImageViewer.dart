@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:photo_view/photo_view.dart';
@@ -15,10 +14,11 @@ class ImageViewer extends StatelessWidget {
   ImageViewer(this.path, this.fileName);
 
   ProgressDialog progressDialog;
+  File file;
 
   @override
   Widget build(BuildContext context) {
-    final File file = File(path);
+    file = File(path);
     progressDialog = ProgressDialog(context);
     return Scaffold(
       key: _globalKey,
@@ -56,7 +56,7 @@ class ImageViewer extends StatelessWidget {
     if (Platform.isAndroid) {
       /*  var url = 'https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg';
       var response = await get(url);
-      final documentDirectory = (await getExternalStorageDirectory()).path;*/
+      final documentDirectory = (await getExternalStorageDirectory()).path;
       final File imgFile = File(path);
       /*imgFile.writeAsBytesSync(response.bodyBytes);*/
       debugPrint('File Path ==> ${imgFile.path}');
@@ -65,10 +65,13 @@ class ImageViewer extends StatelessWidget {
       Share.shareFiles(fileList,
           subject: '',
           text: '',
+          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);*/
+      Share.shareFiles([file.path],
+          subject: 'Hello, check your shared file.',
           sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
     } else {
-      Share.share('Hello, check your share files!',
-          subject: 'URL File Share',
+      Share.share(path,
+          subject: 'Hello, check your shared file.',
           sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
     }
   }

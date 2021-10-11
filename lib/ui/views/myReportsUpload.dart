@@ -309,6 +309,7 @@ class _MyReportsViewState extends State<MyReportsView> {
           if (document.mimeType.contains('pdf')) {
             //createFileOfPdfUrl(document.urlAuth, document.fileName);
             createFileOfPdfUrl(document.urlAuth, document.fileName).then((f) {
+              debugPrint('PDF Path ==> ${f.path}');
               progressDialog.hide();
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => PDFScreen(f.path)));
@@ -518,7 +519,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   Future<File> createFileOfPdfUrl(String url, String fileName) async {
-    debugPrint('Base Url ==> url');
+    debugPrint('Base Url ==> ${url}');
     //final url = "http://africau.edu/images/default/sample.pdf";
     //final url = "https://www.lalpathlabs.com/SampleReports/Z614.pdf";
     //final filename = url.substring(url.lastIndexOf("/") + 1);
@@ -530,7 +531,7 @@ class _MyReportsViewState extends State<MyReportsView> {
     request.headers.add('Authorization', 'Bearer ' + auth);
     final response = await request.close();
 
-    debugPrint('Base Url ==> PUT ${request.uri}');
+    debugPrint('Base Url ==> ${request.uri}');
     debugPrint('Headers ==> ${request.headers.toString()}');
 
     final bytes = await consolidateHttpClientResponseBytes(response);

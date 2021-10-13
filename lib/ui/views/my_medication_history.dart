@@ -15,7 +15,8 @@ class MyMedicationHistoryView extends StatefulWidget {
 class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
   var model = PatientMedicationViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  List<Summary> summarys = <Summary>[];
+  List<MedicationConsumptionSummary> summarys =
+      <MedicationConsumptionSummary>[];
 
   getMyMedicationSummary() async {
     try {
@@ -24,7 +25,8 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
       debugPrint('Medication ==> ${myMedicationSummaryRespose.toJson()}');
       if (myMedicationSummaryRespose.status == 'success') {
         summarys.clear();
-        for (final item in myMedicationSummaryRespose.data.summary) {
+        for (final item
+            in myMedicationSummaryRespose.data.medicationConsumptionSummary) {
           if (item.summaryForMonth.isNotEmpty) {
             summarys.add(item);
           }
@@ -95,7 +97,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
   }
 
   Widget _makeMedicinePrescriptionCard(BuildContext context, int index) {
-    final Summary summary = summarys.elementAt(index);
+    final MedicationConsumptionSummary summary = summarys.elementAt(index);
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
@@ -212,7 +214,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                                     MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(item.drugSummary.taken.toString(),
+                                  Text(item.summaryForDrug.taken.toString(),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -222,7 +224,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                                   SizedBox(
                                     width: 8,
                                   ),
-                                  Text(item.drugSummary.missed.toString(),
+                                  Text(item.summaryForDrug.missed.toString(),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -232,7 +234,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                                   SizedBox(
                                     width: 8,
                                   ),
-                                  Text(item.drugSummary.unknown.toString(),
+                                  Text(item.summaryForDrug.unknown.toString(),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(

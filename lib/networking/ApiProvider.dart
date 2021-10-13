@@ -133,9 +133,9 @@ class ApiProvider {
       case 400:
       case 401:
       case 403:
-      //case 404:
+      case 404:
       case 500:
-      final responseJson = json.decode(response.body.toString());
+        final responseJson = json.decode(response.body.toString());
         debugPrint(responseJson.toString());
         return responseJson;
 

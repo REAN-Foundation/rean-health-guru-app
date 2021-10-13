@@ -93,7 +93,7 @@ class DashboardSummaryModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.get(
-        '/medication-consumption/schedule-for-day/' +
+        '/clinical/medication-consumptions/schedule-for-day/' +
             patientUserId +
             '/' +
             date,

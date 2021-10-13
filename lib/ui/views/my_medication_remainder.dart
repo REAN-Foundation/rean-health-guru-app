@@ -20,7 +20,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var dateFormatStandard = DateFormat('yyyy-MM-dd');
   var timeFormat = DateFormat('hh:mm a');
-  List<MedConsumptions> medConsumptions = <MedConsumptions>[];
+  List<Schedules> medConsumptions = <Schedules>[];
   ProgressDialog progressDialog;
 
   @override
@@ -36,7 +36,8 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
       debugPrint('Medication ==> ${getMyMedicationsResponse.toJson()}');
       if (getMyMedicationsResponse.status == 'success') {
         medConsumptions.clear();
-        medConsumptions.addAll(getMyMedicationsResponse.data.medConsumptions);
+        medConsumptions.addAll(
+            getMyMedicationsResponse.data.medicationSchedulesForDay.schedules);
       } else {
         showToast(getMyMedicationsResponse.message, context);
       }
@@ -98,7 +99,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
   }
 
   Widget _makeMedicineCard(BuildContext context, int index) {
-    final MedConsumptions consumptions = medConsumptions.elementAt(index);
+    final Schedules consumptions = medConsumptions.elementAt(index);
     return Container(
       height: 100,
       decoration: BoxDecoration(
@@ -164,7 +165,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
               ),
             ),
           ),
-          Expanded(
+          /*Expanded(
             flex: 5,
             child: Padding(
               padding: const EdgeInsets.all(0.0),
@@ -179,10 +180,10 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          if (consumptions.note == null)
+                          if (consumptions.details == null)
                             Container()
                           else
-                            Text(consumptions.note,
+                            Text(consumptions.v,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -295,7 +296,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
                       ),
                     ),
                   ]
-                  /*Visibility(
+                  */ /*Visibility(
                     visible: index != 0 ? true : false,
                     child: Expanded(
                       flex: 3,
@@ -318,11 +319,11 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
                         ),
                       ),
                     ),
-                  ),*/
+                  ),*/ /*
                 ],
               ),
             ),
-          ),
+          ),*/
         ],
       ),
     );

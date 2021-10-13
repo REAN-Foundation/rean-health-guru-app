@@ -114,7 +114,7 @@ class _HomeViewState extends State<HomeView> {
         //debugPrint("CarePlan ==> ${startCarePlanResponseGlob.data.carePlan.carePlanCode}");
       }
       Timer(Duration(seconds: 3), () {
-        getCarePlan();
+        //getCarePlan();
       });
       Future.delayed(
         Duration(seconds: 4),
@@ -122,7 +122,7 @@ class _HomeViewState extends State<HomeView> {
       );
     } catch (Excepetion) {
       Timer(Duration(seconds: 3), () {
-        getCarePlan();
+        //getCarePlan();
       });
       Future.delayed(
         Duration(seconds: 4),

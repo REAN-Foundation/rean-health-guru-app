@@ -29,7 +29,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
   final ScrollController _scrollController = ScrollController();
 
   final _controller = TextEditingController();
-  List<Records> records = <Records>[];
+  List<Items> records = <Items>[];
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   ProgressDialog progressDialog;
 
@@ -310,7 +310,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
   }
 
   Widget _makeWeightList(BuildContext context, int index) {
-    final Records record = records.elementAt(index);
+    final Items record = records.elementAt(index);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -546,6 +546,10 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
       progressDialog.show();
       final map = <String, dynamic>{};
       map['Pulse'] = _controller.text.toString();
+      map['PatientUserId'] = "";
+      map['Unit'] = "bpm";
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse = await model.addMyVitals('pulse', map);
 
@@ -571,7 +575,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
           await model.getMyVitalsHistory('pulse');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
-        records.addAll(getMyVitalsHistory.data.biometrics.records);
+        records.addAll(getMyVitalsHistory.data.pulseRecords.items);
       } else {
         showToast(getMyVitalsHistory.message, context);
       }

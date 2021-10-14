@@ -23,7 +23,7 @@ class _BiometricBodyTemperatureVitalsViewState
   final ScrollController _scrollController = ScrollController();
 
   final _controller = TextEditingController();
-  List<Records> records = <Records>[];
+  List<Items> records = <Items>[];
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   ProgressDialog progressDialog;
 
@@ -251,7 +251,7 @@ class _BiometricBodyTemperatureVitalsViewState
   }
 
   Widget _makeWeightList(BuildContext context, int index) {
-    final Records record = records.elementAt(index);
+    final Items record = records.elementAt(index);
     return Semantics(
       label: 'making list of body temperature',
       readOnly: true,
@@ -267,7 +267,7 @@ class _BiometricBodyTemperatureVitalsViewState
             overflow: TextOverflow.ellipsis,
           ),
           Text(
-            record.temperature.toString() + ' °F',
+            record.bodyTemperature.toString() + ' °F',
             style: TextStyle(
                 color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
             maxLines: 1,
@@ -331,7 +331,7 @@ class _BiometricBodyTemperatureVitalsViewState
 
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
-          double.parse(records.elementAt(i).temperature.toString())));
+          double.parse(records.elementAt(i).bodyTemperature.toString())));
     }
 
     return [
@@ -494,10 +494,14 @@ class _BiometricBodyTemperatureVitalsViewState
     try {
       progressDialog.show();
       final map = <String, dynamic>{};
-      map['Temperature'] = _controller.text.toString();
+      map['BodyTemperature'] = _controller.text.toString();
+      map['PatientUserId'] = "";
+      map['Unit'] = "Celsius";
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
-          await model.addMyVitals('temperature', map);
+          await model.addMyVitals('body-temperature', map);
 
       if (baseResponse.status == 'success') {
         showToast(baseResponse.message, context);
@@ -518,10 +522,10 @@ class _BiometricBodyTemperatureVitalsViewState
   getVitalsHistory() async {
     try {
       final GetMyVitalsHistory getMyVitalsHistory =
-          await model.getMyVitalsHistory('temperature');
+          await model.getMyVitalsHistory('body-temperature');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
-        records.addAll(getMyVitalsHistory.data.biometrics.records);
+        records.addAll(getMyVitalsHistory.data.bodyTemperatureRecords.items);
       } else {
         showToast(getMyVitalsHistory.message, context);
       }

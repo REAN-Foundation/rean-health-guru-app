@@ -173,6 +173,7 @@ class Person {
     age = json['Age'];
     phone = json['Phone'];
     email = json['Email'];
+
     imageResourceId = json['ImageResourceId'];
     activeSince = json['ActiveSince'];
   }
@@ -190,6 +191,8 @@ class Person {
     data['Age'] = age;
     data['Phone'] = phone;
     data['Email'] = email;
+    data['Addresses'] = addresses;
+
     data['ImageResourceId'] = imageResourceId;
     data['ActiveSince'] = activeSince;
 

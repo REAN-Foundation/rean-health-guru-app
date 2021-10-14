@@ -8,6 +8,7 @@ import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/common_config_model.dart';
+import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/emergency_contact.dart';
 import 'package:paitent/ui/views/myReportsUpload.dart';
@@ -72,16 +73,18 @@ class _HomeViewState extends State<HomeView> {
       final Patient patient =
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       auth = user.data.accessToken;
+
       patientUserId = user.data.user.id;
-      patientGender = patient.user.person.gender;
+      patientGender = user.data.user.person.gender;
+      debugPrint('Address ==> ${patient.user.person.addresses.elementAt(0).city}');
       //debugPrint(user.toJson().toString());
       dynamic roleId = await _sharedPrefUtils.read('roleId');
       setRoleId(roleId);
       /* */
       setState(() {
-        //debugPrint('Gender ==> ${patient.gender.toString()}');
-        name = patient.user.person.firstName;
-        profileImage = patient.user.person.imageResourceId ?? '';
+        //debugPrint('Gender ==> ${patient.user.person.gender}');
+        name = user.data.user.person.firstName;
+        profileImage = user.data.user.person.imageResourceId ?? '';
       });
 
       /*if (!user.data.isProfileComplete ||
@@ -99,9 +102,8 @@ class _HomeViewState extends State<HomeView> {
 
       //}
 
-    } catch (Excepetion) {
-      // do something
-      debugPrint(Excepetion);
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
     }
   }
 

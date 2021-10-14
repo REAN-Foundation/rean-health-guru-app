@@ -969,9 +969,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
     try {
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['ActiveCalories'] = totalActiveCalories;
-      map['BasalCalories'] = totalBasalCalories;
-      map['RecordDate'] = dateFormat.format(DateTime.now());
+      map['CaloriesBurned'] = totalActiveCalories;
 
       final BaseResponse baseResponse = await model.recordMyCalories(map);
       if (baseResponse.status == 'success') {
@@ -987,8 +985,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
     try {
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['Steps'] = steps;
-      map['DistanceCovered_Km'] = 0;
+      map['StepCount'] = steps;
       map['RecordDate'] = dateFormat.format(DateTime.now());
 
       final BaseResponse baseResponse = await model.recordMySteps(map);
@@ -1010,8 +1007,8 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
 
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['WaterConsumed'] = waterGlass;
-      map['RecordDate'] = dateFormat.format(DateTime.now());
+      map['Volume'] = waterGlass;
+      map['Time'] = dateFormat.format(DateTime.now());
 
       final BaseResponse baseResponse = await model.recordMyWaterCount(map);
       if (baseResponse.status == 'success') {

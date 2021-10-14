@@ -3,52 +3,24 @@ class PatientApiDetails {
   String message;
   int httpCode;
   Data data;
-  Client client;
-  User user;
-  String context;
-  List<String> clientIps;
-  String aPIVersion;
 
-  PatientApiDetails(
-      {this.status,
-      this.message,
-      this.httpCode,
-      this.data,
-      this.client,
-      this.user,
-      this.context,
-      this.clientIps,
-      this.aPIVersion});
+  PatientApiDetails({this.status, this.message, this.httpCode, this.data});
 
   PatientApiDetails.fromJson(Map<String, dynamic> json) {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
-    client = json['Client'] != null ? Client.fromJson(json['Client']) : null;
-    user = json['User'] != null ? User.fromJson(json['User']) : null;
-    context = json['Context'];
-    clientIps = json['ClientIps'].cast<String>();
-    aPIVersion = json['APIVersion'];
+    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['Status'] = status;
-    data['Message'] = message;
-    data['HttpCode'] = httpCode;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Status'] = this.status;
+    data['Message'] = this.message;
+    data['HttpCode'] = this.httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
-    if (client != null) {
-      data['Client'] = client.toJson();
-    }
-    if (user != null) {
-      data['User'] = user.toJson();
-    }
-    data['Context'] = context;
-    data['ClientIps'] = clientIps;
-    data['APIVersion'] = aPIVersion;
     return data;
   }
 }
@@ -60,13 +32,13 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     patient =
-        json['Patient'] != null ? Patient.fromJson(json['Patient']) : null;
+    json['Patient'] != null ? new Patient.fromJson(json['Patient']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (patient != null) {
-      data['Patient'] = patient.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.patient != null) {
+      data['Patient'] = this.patient.toJson();
     }
     return data;
   }
@@ -78,36 +50,33 @@ class Patient {
   User user;
   String displayId;
   String ehrId;
-  String healthProfile;
 
-  Patient({
-    this.id,
-    this.userId,
-    this.user,
-    this.displayId,
-    this.ehrId,
-    this.healthProfile,
-  });
+  Patient(
+      {this.id,
+        this.userId,
+        this.user,
+        this.displayId,
+        this.ehrId,
+        });
 
   Patient.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['UserId'];
-    user = json['User'] != null ? User.fromJson(json['User']) : null;
+    user = json['User'] != null ? new User.fromJson(json['User']) : null;
     displayId = json['DisplayId'];
     ehrId = json['EhrId'];
-    healthProfile = json['HealthProfile'].toString();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['id'] = id;
-    data['UserId'] = userId;
-    if (user != null) {
-      data['User'] = user.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['UserId'] = this.userId;
+    if (this.user != null) {
+      data['User'] = this.user.toJson();
     }
-    data['DisplayId'] = displayId;
-    data['EhrId'] = ehrId;
-    data['HealthProfile'] = healthProfile;
+    data['DisplayId'] = this.displayId;
+    data['EhrId'] = this.ehrId;
+
     return data;
   }
 }
@@ -125,20 +94,21 @@ class User {
 
   User(
       {this.id,
-      this.userName,
-      this.personId,
-      this.person,
-      this.lastLogin,
-      this.defaultTimeZone,
-      this.currentTimeZone,
-      this.roleId,
-      this.role});
+        this.userName,
+        this.personId,
+        this.person,
+        this.lastLogin,
+        this.defaultTimeZone,
+        this.currentTimeZone,
+        this.roleId,
+        this.role});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userName = json['UserName'];
     personId = json['PersonId'];
-    person = json['Person'] != null ? Person.fromJson(json['Person']) : null;
+    person =
+    json['Person'] != null ? Person.fromJson(json['Person']) : null;
     lastLogin = json['LastLogin'];
     defaultTimeZone = json['DefaultTimeZone'];
     currentTimeZone = json['CurrentTimeZone'];
@@ -147,18 +117,18 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['UserName'] = userName;
-    data['PersonId'] = personId;
-    if (person != null) {
-      data['Person'] = person.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['UserName'] = this.userName;
+    data['PersonId'] = this.personId;
+    if (this.person != null) {
+      data['Person'] = this.person.toJson();
     }
-    data['LastLogin'] = lastLogin;
-    data['DefaultTimeZone'] = defaultTimeZone;
-    data['CurrentTimeZone'] = currentTimeZone;
-    data['RoleId'] = roleId;
-    data['Role'] = role;
+    data['LastLogin'] = this.lastLogin;
+    data['DefaultTimeZone'] = this.defaultTimeZone;
+    data['CurrentTimeZone'] = this.currentTimeZone;
+    data['RoleId'] = this.roleId;
+    data['Role'] = this.role;
     return data;
   }
 }
@@ -167,7 +137,7 @@ class Person {
   String id;
   String prefix;
   String firstName;
-  String middleName;
+  Null middleName;
   String lastName;
   String displayName;
   String gender;
@@ -177,21 +147,23 @@ class Person {
   String email;
   String imageResourceId;
   String activeSince;
+  List<Addresses> addresses;
 
   Person(
       {this.id,
-      this.prefix,
-      this.firstName,
-      this.middleName,
-      this.lastName,
-      this.displayName,
-      this.gender,
-      this.birthDate,
-      this.age,
-      this.phone,
-      this.email,
-      this.imageResourceId,
-      this.activeSince});
+        this.prefix,
+        this.firstName,
+        this.middleName,
+        this.lastName,
+        this.displayName,
+        this.gender,
+        this.birthDate,
+        this.age,
+        this.phone,
+        this.email,
+        this.imageResourceId,
+        this.activeSince,
+        this.addresses});
 
   Person.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -201,50 +173,91 @@ class Person {
     lastName = json['LastName'];
     displayName = json['DisplayName'];
     gender = json['Gender'];
-    birthDate = json['BirthDate'] != null
-        ? DateTime.parse(json['BirthDate'])
-        : new DateTime.now();
+    birthDate = DateTime.parse(json['BirthDate']);
     age = json['Age'];
     phone = json['Phone'];
     email = json['Email'];
     imageResourceId = json['ImageResourceId'];
     activeSince = json['ActiveSince'];
+    if (json['Addresses'] != null) {
+      addresses = new List<Addresses>();
+      json['Addresses'].forEach((v) {
+        addresses.add(new Addresses.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['id'] = id;
-    data['Prefix'] = prefix;
-    data['FirstName'] = firstName;
-    data['MiddleName'] = middleName;
-    data['LastName'] = lastName;
-    data['DisplayName'] = displayName;
-    data['Gender'] = gender;
-    data['BirthDate'] = birthDate.toIso8601String();
-    data['Age'] = age;
-    data['Phone'] = phone;
-    data['Email'] = email;
-    data['ImageResourceId'] = imageResourceId;
-    data['ActiveSince'] = activeSince;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['Prefix'] = this.prefix;
+    data['FirstName'] = this.firstName;
+    data['MiddleName'] = this.middleName;
+    data['LastName'] = this.lastName;
+    data['DisplayName'] = this.displayName;
+    data['Gender'] = this.gender;
+    data['BirthDate'] = this.birthDate.toIso8601String();
+    data['Age'] = this.age;
+    data['Phone'] = this.phone;
+    data['Email'] = this.email;
+    data['ImageResourceId'] = this.imageResourceId;
+    data['ActiveSince'] = this.activeSince;
+    if (this.addresses != null) {
+      data['Addresses'] = this.addresses.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
 
-class Client {
-  String clientName;
-  String clientCode;
+class Addresses {
+  String id;
+  String type;
+  String addressLine;
+  String city;
+  String district;
+  String state;
+  String country;
+  String postalCode;
+  double longitude;
+  double lattitude;
 
-  Client({this.clientName, this.clientCode});
+  Addresses(
+      {this.id,
+        this.type,
+        this.addressLine,
+        this.city,
+        this.district,
+        this.state,
+        this.country,
+        this.postalCode,
+        this.longitude,
+        this.lattitude});
 
-  Client.fromJson(Map<String, dynamic> json) {
-    clientName = json['ClientName'];
-    clientCode = json['ClientCode'];
+  Addresses.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    type = json['Type'];
+    addressLine = json['AddressLine'];
+    city = json['City'];
+    district = json['District'];
+    state = json['State'];
+    country = json['Country'];
+    postalCode = json['PostalCode'];
+    longitude = json['Longitude'];
+    lattitude = json['Lattitude'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['ClientName'] = clientName;
-    data['ClientCode'] = clientCode;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['Type'] = this.type;
+    data['AddressLine'] = this.addressLine;
+    data['City'] = this.city;
+    data['District'] = this.district;
+    data['State'] = this.state;
+    data['Country'] = this.country;
+    data['PostalCode'] = this.postalCode;
+    data['Longitude'] = this.longitude;
+    data['Lattitude'] = this.lattitude;
     return data;
   }
 }

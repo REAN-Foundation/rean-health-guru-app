@@ -1508,7 +1508,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       final map = <String, String>{};
       map['PatientUserId'] = patientUserId;
       map['Details'] = emergencyBreif;
-      map['DateOfEmergency'] = dateFormat.format(DateTime.now());
+      map['EmergencyDate'] = dateFormat.format(DateTime.now());
 
       final BaseResponse baseResponse =
           await model.addMedicalEmergencyEvent(map);

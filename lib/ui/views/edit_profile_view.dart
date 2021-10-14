@@ -773,7 +773,7 @@ class _EditProfileState extends State<EditProfile> {
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (term) {
                   _fieldFocusChange(
-                      context, _emailFocus, _emergencyMobileNumberFocus);
+                      context, _emailFocus, _addressFocus);
                 },
                 enabled: isEditable,
                 decoration: InputDecoration(
@@ -1247,7 +1247,7 @@ class _EditProfileState extends State<EditProfile> {
                     //map['ImageURL'] =
                         profileImagePath == '' ? null : profileImagePath;
                     //map['EmergencyContactNumber'] =
-                        _emergencyMobileNumberController.text;
+                      //  _emergencyMobileNumberController.text;
                     map['Email'] = _emailController.text;
                     //map['LocationCoords_Longitude'] = null;
                     //map['LocationCoords_Lattitude'] = null;
@@ -1525,7 +1525,7 @@ class _EditProfileState extends State<EditProfile> {
         _genderWidget(),
         _entryEmailField('Email*'),
         //_entryBloodGroupField("Blood Group"),
-        _entryEmergencyMobileNoField('Emergency Contact Number'),
+        //_entryEmergencyMobileNoField('Emergency Contact Number'),
         _entryAddressField('Address Line'),
         _entryLocalityField('City'),
         _entryCountryField('Country'),

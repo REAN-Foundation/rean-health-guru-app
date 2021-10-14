@@ -39,11 +39,16 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _middleNameController = TextEditingController();
+
   final TextEditingController _mobileNumberController = TextEditingController();
-  final TextEditingController _emergencyMobileNumberController =
-      TextEditingController();
+  final TextEditingController _emergencyMobileNumberController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
+  final TextEditingController _countryController = TextEditingController();
+
+  final TextEditingController _postalCodeController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   String profileImagePath = '';
@@ -60,6 +65,9 @@ class _EditProfileState extends State<EditProfile> {
   final _emergencyMobileNumberFocus = FocusNode();
   final _emailFocus = FocusNode();
   final _cityFocus = FocusNode();
+  final _countryFocus = FocusNode();
+
+  final _postalFocus = FocusNode();
   final _addressFocus = FocusNode();
   final _sharedPrefUtils = SharedPrefUtils();
   String selectedGender = '';
@@ -67,6 +75,7 @@ class _EditProfileState extends State<EditProfile> {
   String unformatedDOB = '';
   String userId = '';
   String auth = '';
+  String addresses = '';
   ProgressDialog progressDialog;
   String fullName = '';
   var dateFormat = DateFormat('MMM dd, yyyy');
@@ -91,7 +100,7 @@ class _EditProfileState extends State<EditProfile> {
       final UserData user =
           UserData.fromJson(await _sharedPrefUtils.read('user'));
       patient = Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
-      debugPrint(user.toJson().toString());
+      debugPrint(patient.toJson().toString());
 
       dob = dateFormat.format(patient.user.person.birthDate);
       unformatedDOB = patient.user.person.birthDate.toIso8601String();
@@ -117,7 +126,7 @@ class _EditProfileState extends State<EditProfile> {
         TextPosition(offset: _mobileNumberController.text.length),
       );
 
-      debugPrint(patientGender);
+      //debugPrint(patientGender);
       selectedGender = patientGender;
 
       /*try {
@@ -134,13 +143,17 @@ class _EditProfileState extends State<EditProfile> {
         debugPrint(Excepetion);
       }*/
 
-      /*_emailController.text = patient.user.person.email;
-      _emergencyMobileNumberController.text = patient.user.person.;
+      _emailController.text = patient.user.person.email;
+      // _emergencyMobileNumberController.text = patient.user.person;
 
-      _cityController.text = patient.user.person.locality ?? '';
-      _addressController.text = patient.user.person.address ?? '';*/
+       _cityController.text = patient.user.person.addresses.elementAt(0).city;
+      _addressController.text = patient.user.person.addresses.elementAt(0).addressLine;
+      _countryController.text = patient.user.person.addresses.elementAt(0).country;
+      _postalCodeController.text = patient.user.person.addresses.elementAt(0).postalCode;
 
-      profileImagePath = patient.user.person.imageResourceId ?? '';
+
+
+    //profileImagePath = patient.user.person.imageResourceId ?? '';
 
       setState(() {
         debugPrint(patientGender);
@@ -580,6 +593,103 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
+  Widget _entryCountryField(String title, {bool isPassword = false}) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+                color: Colors.black87),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              border: Border.all(
+                color: Color(0XFF909CAC),
+                width: 1.0,
+              ),
+            ),
+            child: TextFormField(
+                textCapitalization: TextCapitalization.sentences,
+                obscureText: isPassword,
+                controller: _countryController,
+                focusNode: _countryFocus,
+                keyboardType: TextInputType.streetAddress,
+                maxLines: 1,
+                enabled: isEditable,
+                textInputAction: TextInputAction.done,
+                onFieldSubmitted: (term) {
+                  //_fieldFocusChange(context, _cityFocus, _addressFocus);
+                },
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Colors.white,
+                    filled: true)),
+          )
+        ],
+      ),
+    );
+  }
+
+
+  Widget _entryPostalField(String title, {bool isPassword = false}) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+                color: Colors.black87),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              border: Border.all(
+                color: Color(0XFF909CAC),
+                width: 1.0,
+              ),
+            ),
+            child: TextFormField(
+                textCapitalization: TextCapitalization.sentences,
+                obscureText: isPassword,
+                controller: _postalCodeController,
+                focusNode: _postalFocus,
+                keyboardType: TextInputType.number,
+                maxLines: 1,
+                enabled: isEditable,
+                textInputAction: TextInputAction.done,
+                onFieldSubmitted: (term) {
+                  //_fieldFocusChange(context, _cityFocus, _addressFocus);
+                },
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Colors.white,
+                    filled: true)),
+          )
+        ],
+      ),
+    );
+  }
+
   Widget _entryAddressField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -628,6 +738,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
+
   Widget _entryEmailField(String title) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -662,7 +773,7 @@ class _EditProfileState extends State<EditProfile> {
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (term) {
                   _fieldFocusChange(
-                      context, _emailFocus, _emergencyMobileNumberFocus);
+                      context, _emailFocus, _addressFocus);
                 },
                 enabled: isEditable,
                 decoration: InputDecoration(
@@ -1117,20 +1228,32 @@ class _EditProfileState extends State<EditProfile> {
                     showToast('Please enter email', context);
                   } else {
                     progressDialog.show();
-                    final map = <String, String>{};
+
+                    final map = <String, dynamic>{};
                     map['Gender'] = selectedGender;
-                    map['BirthDate'] = unformatedDOB;
-                    map['Locality'] = _cityController.text;
-                    map['Address'] = _addressController.text;
-                    map['ImageURL'] =
+                    map['BirthDate'] = DateFormat('yyyy-MM-dd').format(DateTime.parse(unformatedDOB));
+                    map['FirstName'] = _firstNameController.text;
+                    map['MiddleName'] = _middleNameController.text;
+                    map['LastName'] = _lastNameController.text;
+                    final address = <String, String>{};
+                    address['AddressLine'] = _addressController.text;
+                    address['City'] = _cityController.text;
+                    address['Country'] = _countryController.text;
+                    address['PostalCode'] = _postalCodeController.text;
+                    map['Address'] = address;
+
+                    //map['Locality'] = _cityController.text;
+                    //map['Address'] = _addressController.text;
+                    //map['ImageURL'] =
                         profileImagePath == '' ? null : profileImagePath;
-                    map['EmergencyContactNumber'] =
-                        _emergencyMobileNumberController.text;
+                    //map['EmergencyContactNumber'] =
+                      //  _emergencyMobileNumberController.text;
                     map['Email'] = _emailController.text;
-                    map['LocationCoords_Longitude'] = null;
-                    map['LocationCoords_Lattitude'] = null;
+                    //map['LocationCoords_Longitude'] = null;
+                    //map['LocationCoords_Lattitude'] = null;
 
                     try {
+
                       final BaseResponse updateProfileSuccess = await model
                           .updateProfile(map, userId, 'Bearer ' + auth);
 
@@ -1172,14 +1295,15 @@ class _EditProfileState extends State<EditProfile> {
       map['Content-Type'] = 'application/json';
       map['authorization'] = 'Bearer ' + auth;
 
-      final response = await apiProvider.get('/patient/' + userId, header: map);
+      final response = await apiProvider.get('/patients/' + userId, header: map);
 
       final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
+        debugPrint(doctorListApiResponse.data.patient.user.person.toJson().toString());
         await _sharedPrefUtils.save('patientDetails',
-            doctorListApiResponse.data.patient.user.person.toJson());
+            doctorListApiResponse.data.patient.toJson());
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);
@@ -1401,9 +1525,11 @@ class _EditProfileState extends State<EditProfile> {
         _genderWidget(),
         _entryEmailField('Email*'),
         //_entryBloodGroupField("Blood Group"),
-        _entryEmergencyMobileNoField('Emergency Contact Number'),
-        _entryAddressField('Address'),
+        //_entryEmergencyMobileNoField('Emergency Contact Number'),
+        _entryAddressField('Address Line'),
         _entryLocalityField('City'),
+        _entryCountryField('Country'),
+        _entryPostalField('Postal Code'),
       ],
     );
   }

@@ -57,7 +57,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   String topicName = '';
   String briefInformation = '';
   var emergencyDetailsTextControler = TextEditingController();
-  List<MedConsumptions> currentMedicationList = <MedConsumptions>[];
+  List<Schedules> currentMedicationList = <Schedules>[];
   DashboardTile emergencyDashboardTile;
 
   loadSharedPrefs() async {
@@ -83,9 +83,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       Duration(seconds: 4),
       () {
         getTodaysKnowledgeTopic();
-        getTaskPlanSummary();
+        //getTaskPlanSummary();
         getMyMedications();
-        getMedicationSummary();
+        //getMedicationSummary();
         //getLatestBiometrics();
       },
     );
@@ -1508,7 +1508,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       final map = <String, String>{};
       map['PatientUserId'] = patientUserId;
       map['Details'] = emergencyBreif;
-      map['DateOfEmergency'] = dateFormat.format(DateTime.now());
+      map['EmergencyDate'] = dateFormat.format(DateTime.now());
 
       final BaseResponse baseResponse =
           await model.addMedicalEmergencyEvent(map);
@@ -1539,10 +1539,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       debugPrint('Medication ==> ${getMyMedicationsResponse.toJson()}');
       if (getMyMedicationsResponse.status == 'success') {
         debugPrint(
-            'Medication Length ==> ${getMyMedicationsResponse.data.medConsumptions.length}');
-        if (getMyMedicationsResponse.data.medConsumptions.isNotEmpty) {
-          currentMedicationList
-              .addAll(getMyMedicationsResponse.data.medConsumptions);
+            'Medication Length ==> ${getMyMedicationsResponse.data.medicationSchedulesForDay.schedules.length}');
+        if (getMyMedicationsResponse
+            .data.medicationSchedulesForDay.schedules.isNotEmpty) {
+          currentMedicationList.addAll(getMyMedicationsResponse
+              .data.medicationSchedulesForDay.schedules);
         }
       } else {
         showToast(getMyMedicationsResponse.message, context);

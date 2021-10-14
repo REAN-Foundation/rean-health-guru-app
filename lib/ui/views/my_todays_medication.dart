@@ -23,11 +23,11 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   //var dateFormatStandard = DateFormat("MMMM dd, yyyy");
   var dateFormatStandard = DateFormat('yyyy-MM-dd');
   var timeFormat = DateFormat('hh:mm a');
-  List<MedConsumptions> currentMedicationList = <MedConsumptions>[];
-  List<MedConsumptions> morningMedicationList = <MedConsumptions>[];
-  List<MedConsumptions> afternoonMedicationList = <MedConsumptions>[];
-  List<MedConsumptions> eveningMedicationList = <MedConsumptions>[];
-  List<MedConsumptions> nightMedicationList = <MedConsumptions>[];
+  List<Schedules> currentMedicationList = <Schedules>[];
+  List<Schedules> morningMedicationList = <Schedules>[];
+  List<Schedules> afternoonMedicationList = <Schedules>[];
+  List<Schedules> eveningMedicationList = <Schedules>[];
+  List<Schedules> nightMedicationList = <Schedules>[];
   ProgressDialog progressDialog;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
@@ -45,12 +45,13 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
       debugPrint('Medication ==> ${getMyMedicationsResponse.toJson()}');
       if (getMyMedicationsResponse.status == 'success') {
         debugPrint(
-            'Medication Length ==> ${getMyMedicationsResponse.data.medConsumptions.length}');
-        if (getMyMedicationsResponse.data.medConsumptions.isNotEmpty) {
-          currentMedicationList
-              .addAll(getMyMedicationsResponse.data.medConsumptions);
-          formatMedicationSectionWise(
-              getMyMedicationsResponse.data.medConsumptions);
+            'Medication Length ==> ${getMyMedicationsResponse.data.medicationSchedulesForDay.schedules.length}');
+        if (getMyMedicationsResponse
+            .data.medicationSchedulesForDay.schedules.isNotEmpty) {
+          currentMedicationList.addAll(getMyMedicationsResponse
+              .data.medicationSchedulesForDay.schedules);
+          formatMedicationSectionWise(getMyMedicationsResponse
+              .data.medicationSchedulesForDay.schedules);
         }
       } else {
         showToast(getMyMedicationsResponse.message, context);
@@ -62,29 +63,35 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     }
   }
 
-  formatMedicationSectionWise(List<MedConsumptions> medications) {
+  formatMedicationSectionWise(List<Schedules> medications) {
     morningMedicationList.clear();
     afternoonMedicationList.clear();
     eveningMedicationList.clear();
     nightMedicationList.clear();
 
     medications.forEach((currentMedication) {
-      if (currentMedication.details.contains('morning') &&
-          !currentMedication.isMissed &&
-          !currentMedication.isTaken) {
-        morningMedicationList.add(currentMedication);
-      } else if (currentMedication.details.contains('afternoon') &&
-          !currentMedication.isMissed &&
-          !currentMedication.isTaken) {
-        afternoonMedicationList.add(currentMedication);
-      } else if (currentMedication.details.contains('evening') &&
-          !currentMedication.isMissed &&
-          !currentMedication.isTaken) {
-        eveningMedicationList.add(currentMedication);
-      } else if (currentMedication.details.contains('night') &&
-          !currentMedication.isMissed &&
-          !currentMedication.isTaken) {
-        nightMedicationList.add(currentMedication);
+      if (currentMedication.details.contains('Morning')) {
+        debugPrint(
+            'Medication ==> ${currentMedication.drugName} ${currentMedication.details} ${currentMedication.status}');
+        if (currentMedication.status == 'Unknown' ||
+            currentMedication.status == 'Upcoming') {
+          morningMedicationList.add(currentMedication);
+        }
+      } else if (currentMedication.details.contains('Afternoon')) {
+        if (currentMedication.status == 'Unknown' ||
+            currentMedication.status == 'Upcoming') {
+          afternoonMedicationList.add(currentMedication);
+        }
+      } else if (currentMedication.details.contains('Evening')) {
+        if (currentMedication.status == 'Unknown' ||
+            currentMedication.status == 'Upcoming') {
+          eveningMedicationList.add(currentMedication);
+        }
+      } else if (currentMedication.details.contains('Night')) {
+        if (currentMedication.status == 'Unknown' ||
+            currentMedication.status == 'Upcoming') {
+          nightMedicationList.add(currentMedication);
+        }
       }
     });
     setState(() {});
@@ -110,7 +117,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               : (morningMedicationList.isEmpty &&
                       afternoonMedicationList.isEmpty &&
                       eveningMedicationList.isEmpty &&
-                      eveningMedicationList.isEmpty
+              nightMedicationList.isEmpty
                   ? noMedicationFound()
                   : SingleChildScrollView(
                       child: Column(
@@ -164,7 +171,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   }
 
   Widget medicationTimeWiseSection(
-      String tittle, String imagePath, List<MedConsumptions> medications) {
+      String tittle, String imagePath, List<Schedules> medications) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: Column(
@@ -220,7 +227,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     );
   }
 
-  Widget listWidget(List<MedConsumptions> medications) {
+  Widget listWidget(List<Schedules> medications) {
     return Padding(
       padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
       child: ListView.separated(
@@ -239,8 +246,8 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   }
 
   Widget _makeMedicineSwipeCard(
-      BuildContext context, int index, List<MedConsumptions> medications) {
-    final MedConsumptions medication = medications.elementAt(index);
+      BuildContext context, int index, List<Schedules> medications) {
+    final Schedules medication = medications.elementAt(index);
 
     return Dismissible(
       key: Key(medication.drugName),

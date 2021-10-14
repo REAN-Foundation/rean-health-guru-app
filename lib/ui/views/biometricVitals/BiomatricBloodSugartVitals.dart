@@ -30,7 +30,7 @@ class _BiometricBloodSugarVitalsViewState
   final ScrollController _scrollController = ScrollController();
 
   final _controller = TextEditingController();
-  List<Records> records = <Records>[];
+  List<Items> records = <Items>[];
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   ProgressDialog progressDialog;
 
@@ -313,7 +313,7 @@ class _BiometricBloodSugarVitalsViewState
   }
 
   Widget _makeWeightList(BuildContext context, int index) {
-    final Records record = records.elementAt(index);
+    final Items record = records.elementAt(index);
     return Semantics(
       label: 'make blood sugar list',
       readOnly: true,
@@ -561,9 +561,13 @@ class _BiometricBloodSugarVitalsViewState
       progressDialog.show();
       final map = <String, dynamic>{};
       map['BloodGlucose'] = _controller.text.toString();
+      map['PatientUserId'] = "";
+      map['Unit'] = "mg|dL";
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
-          await model.addMyVitals('blood-sugar', map);
+          await model.addMyVitals('blood-glucose', map);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
@@ -584,10 +588,10 @@ class _BiometricBloodSugarVitalsViewState
   getVitalsHistory() async {
     try {
       final GetMyVitalsHistory getMyVitalsHistory =
-          await model.getMyVitalsHistory('blood-sugar');
+          await model.getMyVitalsHistory('blood-glucose');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
-        records.addAll(getMyVitalsHistory.data.biometrics.records);
+        records.addAll(getMyVitalsHistory.data.bloodGlucoseRecords.items);
       } else {
         showToast(getMyVitalsHistory.message, context);
       }

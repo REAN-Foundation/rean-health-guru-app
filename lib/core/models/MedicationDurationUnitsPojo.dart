@@ -1,66 +1,43 @@
 class MedicationDurationUnitsPojo {
   String status;
   String message;
+  int httpCode;
   Data data;
 
-  MedicationDurationUnitsPojo({this.status, this.message, this.data});
+  MedicationDurationUnitsPojo(
+      {this.status, this.message, this.httpCode, this.data});
 
   MedicationDurationUnitsPojo.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    status = json['Status'];
+    message = json['Message'];
+    httpCode = json['HttpCode'];
+    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Status'] = this.status;
+    data['Message'] = this.message;
+    data['HttpCode'] = this.httpCode;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['Data'] = this.data.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<MedicationDurationUnits> medicationDurationUnits;
+  List<String> medicationDurationUnits;
 
   Data({this.medicationDurationUnits});
 
   Data.fromJson(Map<String, dynamic> json) {
-    if (json['medicationDurationUnits'] != null) {
-      medicationDurationUnits = <MedicationDurationUnits>[];
-      json['medicationDurationUnits'].forEach((v) {
-        medicationDurationUnits.add(MedicationDurationUnits.fromJson(v));
-      });
-    }
+    medicationDurationUnits = json['MedicationDurationUnits'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (medicationDurationUnits != null) {
-      data['medicationDurationUnits'] =
-          medicationDurationUnits.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class MedicationDurationUnits {
-  String name;
-  dynamic id;
-
-  MedicationDurationUnits({this.name, this.id});
-
-  MedicationDurationUnits.fromJson(Map<String, dynamic> json) {
-    name = json['Name'];
-    id = json['id'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['Name'] = name;
-    data['id'] = id;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['MedicationDurationUnits'] = this.medicationDurationUnits;
     return data;
   }
 }

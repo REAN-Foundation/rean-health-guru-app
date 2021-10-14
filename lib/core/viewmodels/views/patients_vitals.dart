@@ -19,8 +19,13 @@ class PatientVitalsViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
 
+    body['PatientUserId'] = patientUserId;
+    //body['RecordedByUserId'] = recordedByUserId;
+
+    print('body:');
+
     final response = await apiProvider.post(
-        '/biometrics/' + patientUserId + '/' + path,
+        '/biometrics/' + path,
         header: map,
         body: body);
 
@@ -38,7 +43,7 @@ class PatientVitalsViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.get(
-        '/biometrics/' + patientUserId + '/' + path + '/search',
+        '/biometrics/' + path + '/search?patientUserId=' + patientUserId,
         header: map);
 
     setBusy(false);

@@ -24,7 +24,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   var timeFormat = DateFormat('hh:mm a');
-  List<Medications> currentMedicationList = <Medications>[];
+  List<CurrentMedications> currentMedicationList = <CurrentMedications>[];
   ProgressDialog progressDialog;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
@@ -41,7 +41,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       debugPrint('Medication ==> ${currentMedication.toJson()}');
       if (currentMedication.status == 'success') {
         currentMedicationList.clear();
-        currentMedicationList.addAll(currentMedication.data.medications);
+        currentMedicationList.addAll(currentMedication.data.currentMedications);
       } else {
         showToast(currentMedication.message, context);
       }
@@ -124,7 +124,8 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   }
 
   Widget _makeMedicineCard(BuildContext context, int index) {
-    final Medications medication = currentMedicationList.elementAt(index);
+    final CurrentMedications medication =
+        currentMedicationList.elementAt(index);
 
     return Card(
       semanticContainer: false,
@@ -145,8 +146,8 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Semantics(
-                    label: medication.drug,
-                    child: Text(medication.drug,
+                    label: medication.drugName,
+                    child: Text(medication.drugName,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontSize: 16,
@@ -169,7 +170,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   Text(
                       medication.frequencyUnit.toString() +
                           ' - ' +
-                          medication.timeSchedule,
+                          medication.timeSchedules.join(', '),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -196,7 +197,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                 ],
               ),
             ),
-            if (medication.medicationImageResourceId != null)
+            if (medication.imageResourceId != null)
               Expanded(
                 flex: 1,
                 child: Semantics(
@@ -204,7 +205,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   child: CachedNetworkImage(
                     imageUrl: apiProvider.getBaseUrl() +
                         '/resources/download-public/' +
-                        medication.medicationImageResourceId,
+                        medication.imageResourceId,
                   ),
                 ),
               )

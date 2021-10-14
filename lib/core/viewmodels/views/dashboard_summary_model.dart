@@ -78,7 +78,7 @@ class DashboardSummaryModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response =
-        await apiProvider.post('/emergency-event/', header: map, body: body);
+        await apiProvider.post('/clinical/emergency-events', header: map, body: body);
     setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);
@@ -93,7 +93,7 @@ class DashboardSummaryModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.get(
-        '/medication-consumption/schedule-for-day/' +
+        '/clinical/medication-consumptions/schedule-for-day/' +
             patientUserId +
             '/' +
             date,

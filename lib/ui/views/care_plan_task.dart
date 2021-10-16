@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
+import 'package:paitent/core/models/UserTaskResponse.dart';
 import 'package:paitent/core/models/assortedViewConfigs.dart';
 import 'package:paitent/core/models/startTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
@@ -25,7 +26,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   var model = PatientCarePlanViewModel();
   var dateFormat = DateFormat('MMM dd - hh:mm a');
   GetTaskOfAHACarePlanResponse _carePlanTaskResponse;
+  UserTaskResponse userTaskResponse;
   List<Task> tasks = <Task>[];
+  List<Items> tasksList = <Items>[];
   bool isSubscribe = false;
   ProgressDialog progressDialog;
   bool isUpCommingSelected = true;
@@ -50,6 +53,34 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       }
     } on FetchDataException catch (e) {
       tasks.clear();
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+    /*catch (Exception e) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint(CustomException.toString());
+    }*/
+  }
+
+  getUserTask() async {
+    try {
+      //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
+      userTaskResponse = await model.getUserTasks(query);
+
+      if (userTaskResponse.status == 'success') {
+        tasksList.clear();
+        tasksList.addAll(userTaskResponse.data.userTasks.items);
+        debugPrint('User Tasks ==> ${userTaskResponse.toJson()}');
+        debugPrint(
+            'User Tasks Count ==> ${userTaskResponse.data.userTasks.items.length}');
+      } else {
+        tasksList.clear();
+        showToast(userTaskResponse.message, context);
+      }
+    } on FetchDataException catch (e) {
+      tasksList.clear();
       debugPrint('error caught: $e');
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -92,7 +123,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       isSubscribe = false;
     }else {
       isSubscribe = true;*/
-    getAHACarePlanSummary();
+    //getAHACarePlanSummary();
 
     //}
   }
@@ -190,7 +221,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       padding: const EdgeInsets.all(16.0),
                       child: model.busy
                           ? Center(child: CircularProgressIndicator())
-                          : tasks.isEmpty
+                          : tasksList.isEmpty
                               ? noTaskFound()
                               : listWidget())),
             ],
@@ -228,13 +259,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       isAlwaysShown: true,
       controller: _scrollController,
       child: ListView.separated(
-          itemBuilder: (context, index) => _createToDos(context, index),
+          itemBuilder: (context, index) => _makeMedicineCard(context, index),
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(
               height: 8,
             );
           },
-          itemCount: tasks.length,
+          itemCount: tasksList.length,
           scrollDirection: Axis.vertical,
           shrinkWrap: true),
     );
@@ -424,14 +455,14 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   }
 
   Widget _makeMedicineCard(BuildContext context, int index) {
-    final Task task = tasks.elementAt(index);
+    final Items task = tasksList.elementAt(index);
     final DateTime startTime =
-        DateTime.parse(task.details.timeScheduleStart).toLocal();
+        DateTime.parse(task.scheduledStartTime).toLocal();
     debugPrint(
-        'Medication Taken ==> ${task.details.isTaken}  && Start Time ==> ${DateTime.now().isAfter(startTime)} ');
+        'Medication Taken ==> ${task.status}  && Start Time ==> ${DateTime.now().isAfter(startTime)} ');
     return MergeSemantics(
       child: Semantics(
-        label: task.details.mainTitle,
+        label: task.category,
         child: Container(
           height: 100,
           decoration: BoxDecoration(
@@ -478,9 +509,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         Row(
                           children: [
                             Text(
-                                dateFormat.format(DateTime.parse(
-                                        task.details.timeScheduleStart)
-                                    .toLocal()),
+                                dateFormat.format(DateTime.parse(task.scheduledStartTime)
+                                        .toLocal()),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -511,24 +541,21 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                if (task.details.drugName == null)
-                                  Container()
-                                else
-                                  Text(task.details.drugName,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w200,
-                                          color: textBlack)),
+                                Text(task.task,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w200,
+                                        color: textBlack)),
                                 SizedBox(
                                   height: 4,
                                 ),
-                                if (!task.details.isTaken) ...[
+                                if (task.status != 'Completed') ...[
                                   Text(
                                       'Consume before : ' +
                                           dateFormat.format(DateTime.parse(
-                                                  task.details.timeScheduleEnd)
+                                                  task.scheduledEndTime)
                                               .toLocal()),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
@@ -537,12 +564,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                           fontWeight: FontWeight.w300,
                                           color: Color(0XFF909CAC))),
                                 ],
-                                if (task.details.isTaken) ...[
+                                if (task.status == 'Completed') ...[
                                   Text(
                                       'Consumed at : ' +
-                                          dateFormat.format(DateTime.parse(
-                                                  task.details.takenAt)
-                                              .toLocal()),
+                                          dateFormat.format(
+                                              task.finishedAt.toLocal()),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -557,18 +583,16 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         SizedBox(
                           width: 8,
                         ),
-                        if (!task.details.isTaken &&
-                            !task.details.isMissed) ...[
+                        if (task.status != 'Completed') ...[
                           Visibility(
-                            visible:
-                                !(DateTime.parse(task.details.timeScheduleStart)
-                                        .toLocal())
-                                    .isAfter(DateTime.now()),
+                            visible: !(DateTime.parse(task.scheduledStartTime)
+                                    .toLocal())
+                                .isAfter(DateTime.now()),
                             child: Expanded(
                               flex: 2,
                               child: InkWell(
                                 onTap: () {
-                                  markMedicationsAsTaken(task.details.id);
+                                  markMedicationsAsTaken(task.id);
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -602,7 +626,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             ),
                           ),
                         ],
-                        if (task.details.isTaken) ...[
+                        if (task.status == 'Completed') ...[
                           Expanded(
                             flex: 2,
                             child: InkWell(
@@ -628,7 +652,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             ),
                           ),
                         ],
-                        if (task.details.isMissed) ...[
+                        if (task.status == 'cancelled') ...[
                           Expanded(
                             flex: 2,
                             child: InkWell(

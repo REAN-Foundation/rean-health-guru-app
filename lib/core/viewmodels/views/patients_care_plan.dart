@@ -14,6 +14,7 @@ import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/StartAssesmentResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/core/models/TeamCarePlanReesponse.dart';
+import 'package:paitent/core/models/UserTaskResponse.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/models/pharmacyListApiResponse.dart';
 import 'package:paitent/core/models/startTaskOfAHACarePlanResponse.dart';
@@ -184,6 +185,24 @@ class PatientCarePlanViewModel extends BaseModel {
     setBusy(false);
     // Convert and return
     return GetTaskOfAHACarePlanResponse.fromJson(response);
+  }
+
+  Future<UserTaskResponse> getUserTasks(String state) async {
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
+
+    final String query = state == '' ? '' : '?status=' + state;
+
+    //var response = await apiProvider.get('/aha/care-plan/'+ahaCarePlanId+'/fetch-daily-tasks', header: map);
+    final response =
+        await apiProvider.get('/user-tasks/search?' + query, header: map);
+
+    setBusy(false);
+    // Convert and return
+    return UserTaskResponse.fromJson(response);
   }
 
   Future<GetTaskOfAHACarePlanResponse> getTaskOfPaitent(String state) async {

@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/EmergencyContactResponse.dart';
-import 'package:paitent/core/models/TeamCarePlanReesponse.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/viewmodels/views/common_config_model.dart';
+import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/addDoctorDetailsDialog.dart';
 import 'package:paitent/ui/views/addFamilyMemberDialog.dart';
@@ -24,10 +24,10 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
 
-  var doctorTeam = <Contacts>[];
-  var pharmaTeam = <Contacts>[];
-  var socialWorkerTeam = <Contacts>[];
-  var familyTeam = <Contacts>[];
+  var doctorTeam = <Items>[];
+  var pharmaTeam = <Items>[];
+  var socialWorkerTeam = <Items>[];
+  var familyTeam = <Items>[];
 
   getEmergencyTeam() async {
     try {
@@ -41,7 +41,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         familyTeam.clear();
         debugPrint(
             'Emergency Contact ==> ${emergencyContactResponse.toJson()}');
-        _srotTeamMembers(emergencyContactResponse);
+        _sortTeamMembers(emergencyContactResponse);
       } else {
         showToast(emergencyContactResponse.message, context);
       }
@@ -52,16 +52,16 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     }
   }
 
-  _srotTeamMembers(EmergencyContactResponse emergencyContactResponse) {
-    for (final teamMemeber in emergencyContactResponse.data.contacts) {
-      if (teamMemeber.roleName == 'Doctor') {
-        doctorTeam.add(teamMemeber);
-      } else if (teamMemeber.roleName == 'Pharmacy') {
-        pharmaTeam.add(teamMemeber);
-      } else if (teamMemeber.roleName == 'HealthWorker') {
-        socialWorkerTeam.add(teamMemeber);
-      } else if (teamMemeber.roleName == 'FamilyMember') {
-        familyTeam.add(teamMemeber);
+  _sortTeamMembers(EmergencyContactResponse emergencyContactResponse) {
+    for (final teamMember in emergencyContactResponse.data.emergencyContacts.items) {
+      if (teamMember.contactRelation == 'Doctor') {
+        doctorTeam.add(teamMember);
+      } else if (teamMember.contactRelation == 'Pharmacy user') {
+        pharmaTeam.add(teamMember);
+      } else if (teamMember.contactRelation == 'Social health worker') {
+        socialWorkerTeam.add(teamMember);
+      } else if (teamMember.contactRelation == 'Patient family member') {
+        familyTeam.add(teamMember);
       }
 
       setState(() {});
@@ -271,7 +271,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   Widget _makeDoctorListCard(BuildContext context, int index) {
-    final Details details = doctorTeam.elementAt(index).details;
+    final Items details = doctorTeam.elementAt(index);
     return ExcludeSemantics(
       child: Container(
         height: 80,
@@ -317,15 +317,15 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   padding: const EdgeInsets.only(right: 18.0),
                                   child: Text(
                                       'Dr. ' +
-                                          details.firstName +
+                                          details.contactPerson.firstName +
                                           ' ' +
-                                          details.lastName,
+                                          details.contactPerson.lastName,
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.w700,
                                           color: primaryColor)),
                                 ),
-                                Text(details.gender,
+                                Text(details.contactPerson.gender,
                                     style: TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.w300,
@@ -336,7 +336,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
-                                    Text('Phone:  ' + details.phoneNumber,
+                                    Text('Phone:  ' + details.contactPerson.phone,
                                         style: TextStyle(
                                             fontSize: 12.0,
                                             fontWeight: FontWeight.w300,
@@ -502,7 +502,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   Widget _makeNurseListCard(BuildContext context, int index) {
-    final Details details = socialWorkerTeam.elementAt(index).details;
+    final Items details = socialWorkerTeam.elementAt(index);
     return ExcludeSemantics(
       child: Container(
         height: 80,
@@ -548,21 +548,21 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 18.0),
                                   child: Text(
-                                      details.firstName +
+                                      details.contactPerson.firstName +
                                           ' ' +
-                                          details.lastName,
+                                          details.contactPerson.lastName,
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: primaryColor)),
                                 ),
-                                Text('Phone:  ' + details.phoneNumber,
+                                Text('Phone:  ' + details.contactPerson.phone,
                                     style: TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w300,
                                         color: primaryColor)),
                                 Text(
-                                  details.gender,
+                                  details.contactPerson.gender,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w200,
@@ -637,7 +637,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   Widget _makeFamilyMemberListCard(BuildContext context, int index) {
-    final Details details = familyTeam.elementAt(index).details;
+    final Items details = familyTeam.elementAt(index);
     return ExcludeSemantics(
       child: Container(
         height: 80,
@@ -683,21 +683,21 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 18.0),
                                   child: Text(
-                                      details.firstName +
+                                      details.contactPerson.firstName +
                                           ' ' +
-                                          details.lastName,
+                                          details.contactPerson.lastName,
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: primaryColor)),
                                 ),
-                                Text('Phone: ' + details.phoneNumber,
+                                Text('Phone: ' + details.contactPerson.phone,
                                     style: TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w300,
                                         color: primaryColor)),
                                 Text(
-                                  details.relation,
+                                  details.contactRelation,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w200,
@@ -986,18 +986,17 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       jsonRequest.isEmergencyContact = true;*/
       //jsonRequest.details.userId = pharmacies.userId.toString();
 
-      final data = <String, dynamic>{};
-      data['FirstName'] = firstName;
-      data['LastName'] = lastName;
-      data['Prefix'] = ' ';
-      data['PhoneNumber'] = phoneNumber;
-      data['Gender'] = gender;
-      data['Relation'] = relation;
+      final contactPerson = <String, dynamic>{};
+      contactPerson['FirstName'] = firstName;
+      contactPerson['LastName'] = lastName;
+      contactPerson['Prefix'] = ' ';
+      contactPerson['Phone'] = phoneNumber;
 
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['Type'] = type;
-      map['Details'] = data;
+      map['ContactRelation'] = type;
+      map['ContactPerson'] = contactPerson;
+      map['IsAvailableForEmergency'] = true;
 
       final BaseResponse addTeamMemberResponse =
           await model.addTeamMembers(map);
@@ -1008,15 +1007,15 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       } else {
         showToast(addTeamMemberResponse.message, context);
       }
-    } catch (CustomException) {
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
       model.setBusy(false);
-      //progressDialog.hide();
-      showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException);
+      setState(() {});
+      showToast(e.toString(), context);
     }
   }
 
-  _removeConfirmation(Contacts contact) {
+  _removeConfirmation(Items contact) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(

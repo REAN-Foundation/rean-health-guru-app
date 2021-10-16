@@ -103,7 +103,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider
-        .get('/emergency-contact/list/' + patientUserId, header: map);
+        .get('/patient-emergency-contacts/search?orderBy=IsAvailableForEmergency&order=ascending' , header: map);
 
     setBusy(false);
     // Convert and return
@@ -120,7 +120,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response =
-        await apiProvider.post('/emergency-contact', body: body, header: map);
+        await apiProvider.post('/patient-emergency-contacts', body: body, header: map);
     setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);

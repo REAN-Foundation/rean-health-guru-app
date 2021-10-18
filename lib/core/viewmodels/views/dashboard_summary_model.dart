@@ -130,7 +130,7 @@ class DashboardSummaryModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
 
-    final response = await apiProvider.post('/symptoms/how-do-you-feel/',
+    final response = await apiProvider.post('/clinical/symptoms/how-do-you-feel/',
         header: map, body: body);
 
     setBusy(false);

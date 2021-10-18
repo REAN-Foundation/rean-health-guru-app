@@ -19,7 +19,7 @@ class PatientHealthMarkerViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
 
-    final response = await apiProvider.post('/daily-records/calorie-balance',
+    final response = await apiProvider.post('/wellness/daily-records/calorie-balances',
         header: map, body: body);
 
     setBusy(false);
@@ -35,7 +35,7 @@ class PatientHealthMarkerViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
 
-    final response = await apiProvider.post('/daily-records/step-count',
+    final response = await apiProvider.post('/wellness/daily-records/step-counts',
         header: map, body: body);
 
     setBusy(false);
@@ -52,7 +52,7 @@ class PatientHealthMarkerViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider
-        .post('/nutrition/daily-water-consumption/', header: map, body: body);
+        .post('/wellness/nutrition/water-consumptions', header: map, body: body);
 
     setBusy(false);
     // Convert and return
@@ -68,7 +68,7 @@ class PatientHealthMarkerViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response =
-        await apiProvider.post('/nutrition/food-consumption', header: map, body: body);
+        await apiProvider.post('/wellness/nutrition/food-consumptions', header: map, body: body);
 
     debugPrint(response.toString());
 

@@ -25,7 +25,7 @@ class PatientVitalsViewModel extends BaseModel {
     print('body:');
 
     final response = await apiProvider.post(
-        '/biometrics/' + path,
+        '/clinical/biometrics/' + path,
         header: map,
         body: body);
 
@@ -43,7 +43,7 @@ class PatientVitalsViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.get(
-        '/biometrics/' + path + '/search?patientUserId=' + patientUserId,
+        '/clinical/biometrics/' + path + '/search?patientUserId=' + patientUserId,
         header: map);
 
     setBusy(false);

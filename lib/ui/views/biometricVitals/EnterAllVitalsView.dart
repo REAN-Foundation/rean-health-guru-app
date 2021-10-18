@@ -915,7 +915,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
-          await model.addMyVitals('blood-pressure', map);
+          await model.addMyVitals('blood-pressures', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
@@ -1003,7 +1003,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
-          await model.addMyVitals('body-temperature', map);
+          await model.addMyVitals('body-temperatures', map);
 
       if (baseResponse.status == 'success') {
         //showToast('Record added successfully');

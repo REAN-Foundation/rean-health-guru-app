@@ -38,8 +38,8 @@ class CommonConfigModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
 
-    final response = await apiProvider
-        .get('/patient/' + patientUserId + '/document', header: map);
+    final response =
+        await apiProvider.get('/patient-documents/search', header: map);
     setBusy(false);
     // Convert and return
     return GetAllRecordResponse.fromJson(response);
@@ -53,7 +53,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.put(
-        '/patient/' + patientUserId + '/document/rename/' + documentId,
+        '/patient-documents/' + documentId + '/rename',
         header: map,
         body: body);
     setBusy(false);
@@ -69,8 +69,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.delete(
-        '/patient/' + patientUserId + '/document/' + documentId,
-        header: map);
+        '/patient-documents/' + documentId, header: map);
     setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);
@@ -84,11 +83,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.get(
-        '/patient/' +
-            patientUserId +
-            '/share-document/' +
-            documentId +
-            '/duration-minutes/120',
+        '/patient-documents/' + documentId + '/share?durationMinutes=120',
         header: map);
     //setBusy(false);
     // Convert and return

@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -13,6 +14,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GetAllRecordResponse.dart';
 import 'package:paitent/core/models/GetSharablePublicLink.dart';
+import 'package:paitent/core/models/UploadDocumentResponse.dart';
 import 'package:paitent/core/viewmodels/views/common_config_model.dart';
 import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
@@ -35,16 +37,18 @@ class _MyReportsViewState extends State<MyReportsView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   ProgressDialog progressDialog;
   String attachmentPath = '';
-  List<Documents> documents = <Documents>[];
+  List<Items> documents = <Items>[];
   var dateFormat = DateFormat('MMM dd, yyyy');
   var renameControler = TextEditingController();
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
   final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
   final ImagePicker _picker = ImagePicker();
+  String _api_key = '';
 
   @override
   void initState() {
+    _api_key = dotenv.env['Patient_API_KEY'];
     getAllRecords();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
@@ -63,9 +67,9 @@ class _MyReportsViewState extends State<MyReportsView> {
       debugPrint('Records ==> ${allRecordResponse.toJson()}');
       if (allRecordResponse.status == 'success') {
         documents.clear();
-        if (allRecordResponse.data.documents.isNotEmpty) {
+        if (allRecordResponse.data.patientDocuments.items.isNotEmpty) {
           documents.clear();
-          documents.addAll(allRecordResponse.data.documents);
+          documents.addAll(allRecordResponse.data.patientDocuments.items);
         }
         //showToast(startCarePlanResponse.message);
       } else {
@@ -78,7 +82,7 @@ class _MyReportsViewState extends State<MyReportsView> {
     }
   }
 
-  getDocumentPublicLink(Documents document, bool imageView) async {
+  getDocumentPublicLink(Items document, bool imageView) async {
     try {
       if (!imageView) {
         progressDialog.show();
@@ -93,10 +97,11 @@ class _MyReportsViewState extends State<MyReportsView> {
               context,
               MaterialPageRoute(
                   builder: (context) => ImageViewer(
-                      getSharablePublicLink.data.link, document.fileName)));
+                      getSharablePublicLink.data.patientDocumentLink,
+                      document.fileName)));
         } else {
           progressDialog.hide();
-          urlFileShare(getSharablePublicLink.data.link);
+          urlFileShare(getSharablePublicLink.data.patientDocumentLink);
         }
         //showToast(startCarePlanResponse.message);
       } else {
@@ -299,7 +304,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   Widget _myReports(BuildContext context, int index) {
-    final Documents document = documents.elementAt(index);
+    final Items document = documents.elementAt(index);
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       child: InkWell(
@@ -308,13 +313,15 @@ class _MyReportsViewState extends State<MyReportsView> {
           //showToast(document.mimeType);
           if (document.mimeType.contains('pdf')) {
             //createFileOfPdfUrl(document.urlAuth, document.fileName);
-            createFileOfPdfUrl(document.urlAuth, document.fileName).then((f) {
+            createFileOfPdfUrl(document.authenticatedUrl, document.fileName)
+                .then((f) {
               progressDialog.hide();
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => PDFScreen(f.path)));
             });
           } else if (document.mimeType.contains('image')) {
-            createFileOfPdfUrl(document.urlAuth, document.fileName).then((f) {
+            createFileOfPdfUrl(document.authenticatedUrl, document.fileName)
+                .then((f) {
               progressDialog.hide();
               Navigator.push(
                   context,
@@ -352,7 +359,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                               fontSize: 10,
                               fontWeight: FontWeight.w300,
                               color: textBlack)),
-                      Text(dateFormat.format(document.createdAt.toLocal()),
+                      Text(dateFormat.format(document.uploadedDate.toLocal()),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -528,6 +535,7 @@ class _MyReportsViewState extends State<MyReportsView> {
 
     final request = await HttpClient().getUrl(Uri.parse(url));
     request.headers.add('Authorization', 'Bearer ' + auth);
+    request.headers.add('x-api-key', _api_key);
     final response = await request.close();
 
     debugPrint('Base Url ==> PUT ${request.uri}');
@@ -631,27 +639,28 @@ class _MyReportsViewState extends State<MyReportsView> {
       final map = <String, String>{};
       map['enc'] = 'multipart/form-data';
       map['Authorization'] = 'Bearer ' + auth;
+      map['x-api-key'] = _api_key;
 
       final String _baseUrl = apiProvider.getBaseUrl();
 
-      final postUri = Uri.parse(
-          _baseUrl + '/patient/' + patientUserId + '/upload-document');
+      final postUri = Uri.parse(_baseUrl + '/patient-documents/');
       final request = http.MultipartRequest('POST', postUri);
       request.headers.addAll(map);
       request.files.add(http.MultipartFile(
-          'name', file.readAsBytes().asStream(), file.lengthSync(),
+          'Name', file.readAsBytes().asStream(), file.lengthSync(),
           filename: file.path.split('/').last));
       //request.files.add(new http.MultipartFile.fromBytes('name', await file.readAsBytes()), fileName);
       request.fields['DocumentType'] = type;
+      request.fields['PatientUserId'] = patientUserId;
 
       request.send().then((response) async {
-        if (response.statusCode == 200) {
+        if (response.statusCode == 201) {
           progressDialog.hide();
           debugPrint('Uploaded!');
           final respStr = await response.stream.bytesToString();
           debugPrint('Uploded ' + respStr);
-          final GetAllRecordResponse uploadResponse =
-              GetAllRecordResponse.fromJson(json.decode(respStr));
+          final UploadDocumentResponse uploadResponse =
+              UploadDocumentResponse.fromJson(json.decode(respStr));
           if (uploadResponse.status == 'success') {
             getAllRecords();
             showToast(uploadResponse.message, context);
@@ -659,9 +668,10 @@ class _MyReportsViewState extends State<MyReportsView> {
             showToast('Opps, something wents wrong!', context);
           }
         } else {
+          final respStr = await response.stream.bytesToString();
           progressDialog.hide();
           showToast('Opps, something wents wrong!', context);
-          debugPrint('Upload Faild !');
+          debugPrint('Upload Faild ! ==> ${respStr}');
         }
       }); // debugPrint("3");
 
@@ -672,7 +682,7 @@ class _MyReportsViewState extends State<MyReportsView> {
     }
   }
 
-  _removeConfirmation(Documents document) {
+  _removeConfirmation(Items document) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -712,7 +722,7 @@ class _MyReportsViewState extends State<MyReportsView> {
     );
   }
 
-  _renameDialog(Documents document) async {
+  _renameDialog(Items document) async {
     renameControler.text = document.fileName;
     renameControler.selection = TextSelection.fromPosition(
       TextPosition(offset: renameControler.text.length - 4),

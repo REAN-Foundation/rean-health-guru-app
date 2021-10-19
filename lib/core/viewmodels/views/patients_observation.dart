@@ -35,7 +35,7 @@ class PatientObservationsViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.get(
-        '/medical-profile?patientUserId=' + patientId,
+        '/patient-health-profiles/' + patientUserId,
         header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
 
     debugPrint(response.toString());
@@ -51,7 +51,7 @@ class PatientObservationsViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.put(
-        '/medical-profile/' + patientProfileId,
+        '/patient-health-profiles/' + patientProfileId,
         header: map,
         body: body); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
 

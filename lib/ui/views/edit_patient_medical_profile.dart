@@ -32,7 +32,7 @@ class _EditPatientMedicalProfileViewState
 
   final List<GroupItem> maritalStatusItems = [
     GroupItem(title: 'Married'),
-    GroupItem(title: 'Unmarried'),
+    GroupItem(title: 'Single'),
   ];
 
   var model = PatientObservationsViewModel();
@@ -41,17 +41,15 @@ class _EditPatientMedicalProfileViewState
   final TextEditingController _bloodGroupController = TextEditingController();
   final TextEditingController _ocupationController = TextEditingController();
   final TextEditingController _nationalityController = TextEditingController();
-  final TextEditingController _surgicalHistoryController =
-      TextEditingController();
-  final TextEditingController _obstetricHistoryController =
-     TextEditingController();
   final TextEditingController _otherConditionsController = TextEditingController();
   final TextEditingController _procedureHistoryController = TextEditingController();
+  final TextEditingController _ethnicityController = TextEditingController();
 
 
   ProgressDialog progressDialog;
 
   final _majorAilmentFocus = FocusNode();
+  final _ethnicityFocus = FocusNode();
   final _bloodGroupFocus = FocusNode();
   final _ocupationFocus = FocusNode();
   final _nationalityFocus = FocusNode();
@@ -95,16 +93,22 @@ class _EditPatientMedicalProfileViewState
       TextPosition(offset: _nationalityController.text.length),
     );
 
+    _procedureHistoryController.text = widget.healthProfile.procedureHistory;
+    _procedureHistoryController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _procedureHistoryController.text.length),
+    );
+
    /* _surgicalHistoryController.text = widget.medicalProfiles.surgicalHistory;
     _surgicalHistoryController.selection = TextSelection.fromPosition(
       TextPosition(offset: _surgicalHistoryController.text.length),
     );*/
 
-    _obstetricHistoryController.text = widget.healthProfile.obstetricHistory;
-    _obstetricHistoryController.selection = TextSelection.fromPosition(
-      TextPosition(offset: _obstetricHistoryController.text.length),
-    );
-
+    isDiabetic = yesOrNo(widget.healthProfile.isDiabetic);
+    hasHeartAilment = yesOrNo(widget.healthProfile.hasHeartAilment);
+    sedentaryLifestyle = yesOrNo(widget.healthProfile.sedentaryLifestyle);
+    isSmoker = yesOrNo(widget.healthProfile.isSmoker);
+    isDrinker = yesOrNo(widget.healthProfile.isSmoker);
+    maritalStatus = widget.healthProfile.maritalStatus;
     _otherConditionsController.text = widget.healthProfile.otherConditions;
     _otherConditionsController.selection = TextSelection.fromPosition(
       TextPosition(offset: _otherConditionsController.text.length),
@@ -113,6 +117,11 @@ class _EditPatientMedicalProfileViewState
     _procedureHistoryController.text = widget.healthProfile.procedureHistory;
     _procedureHistoryController.selection = TextSelection.fromPosition(
       TextPosition(offset: _procedureHistoryController.text.length),
+    );
+
+    _ethnicityController.text = widget.healthProfile.ethnicity;
+    _ethnicityController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _ethnicityController.text.length),
     );
 
     isDiabetic = yesOrNo(widget.healthProfile.isDiabetic);
@@ -175,7 +184,13 @@ class _EditPatientMedicalProfileViewState
                       ),
                       _sizedBoxHeight(),
                       _textFeilds('Major Ailment', _majorAilmentController,
-                          _majorAilmentFocus, _bloodGroupFocus),
+                          _majorAilmentFocus, _otherConditionsFocus),
+                      _sizedBoxHeight(),
+                      _textFeilds('Other Conditions', _otherConditionsController,
+                          _otherConditionsFocus, _ethnicityFocus),
+                      _sizedBoxHeight(),
+                      _textFeilds('Ethnicity', _ethnicityController,
+                          _ethnicityFocus, _bloodGroupFocus),
                       _sizedBoxHeight(),
                       _textFeilds('Blood Group', _bloodGroupController,
                           _bloodGroupFocus, _ocupationFocus),
@@ -186,6 +201,7 @@ class _EditPatientMedicalProfileViewState
                       _textFeilds('Nationality', _nationalityController,
                           _nationalityFocus, _procedureHistoryFocus),
                       _sizedBoxHeight(),
+
                       _textFeilds(
                           'Procedure history',
                           _procedureHistoryController,
@@ -255,7 +271,7 @@ class _EditPatientMedicalProfileViewState
                           isSmoker = item.title;
                         },
                       ),
-                      Text('Is Alcoholic?',
+                      Text('Is Drinker?',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w700,
@@ -268,18 +284,6 @@ class _EditPatientMedicalProfileViewState
                           isDrinker = item.title;
                         },
                       ),
-                      /*Text('Substance abuse',
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w700,
-                        color: textBlack)),
-
-                RadioGroup(
-                  items: radioItems,
-                  onSelected: (item) {
-                    debugPrint(item.title);
-                  },
-                ),*/
                       SizedBox(
                         width: 24,
                       ),
@@ -374,9 +378,9 @@ class _EditPatientMedicalProfileViewState
       data['SedentaryLifestyle'] = sedentaryLifestyle == 'Yes';
       data['IsSmoker'] = isSmoker == 'Yes';
       data['IsDrinker'] = isDrinker == 'Yes';
-      data['DrinkingSeverity'] = 1;
-      data['DrinkingSince'] = null;
-      data['Ethnicity'] = null;
+      //data['DrinkingSeverity'] = 'medium';
+      //data['DrinkingSince'] = null;
+      data['Ethnicity'] = 'Asian';
       data['Nationality'] = _nationalityController.text;
       data['Occupation'] = _ocupationController.text;
       data['MaritalStatus'] = maritalStatus;

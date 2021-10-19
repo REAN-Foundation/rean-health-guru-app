@@ -24,7 +24,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
   final TextEditingController _nationalityController = TextEditingController();
   final TextEditingController _procedureHistoryController =
       TextEditingController();
-  final TextEditingController _obstetricHistoryController =
+  final TextEditingController _ethnicityController =
   TextEditingController();
 
   String mobileNumber = '';
@@ -33,7 +33,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
   final _ocupationFocus = FocusNode();
   final _nationalityFocus = FocusNode();
   final _procedureHistoryFocus = FocusNode();
-  final _obstetricHistoryFocus = FocusNode();
+  final _ethnicityFocus = FocusNode();
 
 
   @override
@@ -95,6 +95,70 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                         '' +
                                             replaceNull(
                                                 healthProfile.majorAilment),
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w500,
+                                            color: textBlack)),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: 150,
+                                      child: Text('Other Conditions',
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w700,
+                                              color: textBlack)),
+                                    ),
+                                    Text(': ',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w500,
+                                            color: textBlack)),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                        '' +
+                                            replaceNull(
+                                                healthProfile.otherConditions),
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w500,
+                                            color: textBlack)),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: 150,
+                                      child: Text('Ethnicity',
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w700,
+                                              color: textBlack)),
+                                    ),
+                                    Text(': ',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w500,
+                                            color: textBlack)),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                        '' +
+                                            replaceNull(
+                                                healthProfile.ethnicity),
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.w500,
@@ -357,7 +421,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                   children: <Widget>[
                                     SizedBox(
                                       width: 150,
-                                      child: Text('Is Alcoholic?',
+                                      child: Text('Is Drinker?',
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w700,
@@ -379,32 +443,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                             color: textBlack)),
                                   ],
                                 ),
-                                /*SizedBox(height: 8,),
-                    Row(
-                      children: <Widget>[
-                        SizedBox(width: 150,
-                          child: Text('Substance Abuse',
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w700,
-                                  color: textBlack)),
-                        ),
-                        Text(':',
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
-                                color: textBlack)),
-                        SizedBox(width: 8,),
-                        Text('No',
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
-                                color: textBlack)),
-                      ],
-                    ),*/
-                                SizedBox(
-                                  height: 32,
-                                ),
+                                SizedBox(height: 8,),
                                 Row(
                                   children: <Widget>[
                                     SizedBox(
@@ -438,36 +477,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 SizedBox(
                                   height: 8,
                                 ),
-                                Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Obstetric History',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(':',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                          '' +
-                                              replaceNull(healthProfile
-                                                  .obstetricHistory),
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w500,
-                                              color: textBlack)),
-                                    ),
-                                  ],
-                                ),
+
                               ],
                             ),
                           ),
@@ -584,8 +594,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                           _textFeilds(
                               'Procedure history',
                               _procedureHistoryController,
-                              _procedureHistoryFocus,
-                              _obstetricHistoryFocus),
+                              _procedureHistoryFocus,_procedureHistoryFocus),
                         ],
                       ),
                     ),
@@ -611,7 +620,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
       controller: editingController,
       focusNode: focusNode,
       textAlign: TextAlign.left,
-      textInputAction: nextFocusNode == _obstetricHistoryFocus
+      textInputAction: nextFocusNode == _procedureHistoryController
           ? TextInputAction.done
           : TextInputAction.next,
       onFieldSubmitted: (term) {

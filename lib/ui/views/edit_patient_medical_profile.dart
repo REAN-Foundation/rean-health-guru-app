@@ -370,20 +370,20 @@ class _EditPatientMedicalProfileViewState
     try {
       progressDialog.show();
       final Map<String, dynamic> data = <String, dynamic>{};
+      data['BloodGroup'] = _bloodGroupController.text.toUpperCase();
       data['MajorAilment'] = _majorAilmentController.text;
       data['OtherConditions'] = _otherConditionsController.text;
-      data['BloodGroup'] = _bloodGroupController.text;
       data['IsDiabetic'] = isDiabetic == 'Yes';
       data['HasHeartAilment'] = hasHeartAilment == 'Yes';
+      data['MaritalStatus'] = maritalStatus;
+      data['Ethnicity'] = 'Asian';
+      data['Nationality'] = _nationalityController.text;
+      data['Occupation'] = _ocupationController.text;
       data['SedentaryLifestyle'] = sedentaryLifestyle == 'Yes';
       data['IsSmoker'] = isSmoker == 'Yes';
       data['IsDrinker'] = isDrinker == 'Yes';
       //data['DrinkingSeverity'] = 'medium';
       //data['DrinkingSince'] = null;
-      data['Ethnicity'] = 'Asian';
-      data['Nationality'] = _nationalityController.text;
-      data['Occupation'] = _ocupationController.text;
-      data['MaritalStatus'] = maritalStatus;
       data['ProcedureHistory'] = _procedureHistoryController.text;
 
       final BaseResponse baseResponse = await model.updatePatientMedicalProfile(

@@ -38,6 +38,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   ProgressDialog progressDialog;
   String attachmentPath = '';
   List<Items> documents = <Items>[];
+
   var dateFormat = DateFormat('MMM dd, yyyy');
   var renameControler = TextEditingController();
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
@@ -313,6 +314,7 @@ class _MyReportsViewState extends State<MyReportsView> {
           //showToast(document.mimeType);
           if (document.mimeType.contains('pdf')) {
             //createFileOfPdfUrl(document.urlAuth, document.fileName);
+
             createFileOfPdfUrl(document.authenticatedUrl, document.fileName)
                 .then((f) {
               progressDialog.hide();
@@ -525,7 +527,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   Future<File> createFileOfPdfUrl(String url, String fileName) async {
-    debugPrint('Base Url ==> url');
+    //debugPrint('Base Url ==> ${url}');
     //final url = "http://africau.edu/images/default/sample.pdf";
     //final url = "https://www.lalpathlabs.com/SampleReports/Z614.pdf";
     //final filename = url.substring(url.lastIndexOf("/") + 1);
@@ -538,7 +540,7 @@ class _MyReportsViewState extends State<MyReportsView> {
     request.headers.add('x-api-key', _api_key);
     final response = await request.close();
 
-    debugPrint('Base Url ==> PUT ${request.uri}');
+    debugPrint('Base Url ==> ${request.uri}');
     debugPrint('Headers ==> ${request.headers.toString()}');
 
     final bytes = await consolidateHttpClientResponseBytes(response);

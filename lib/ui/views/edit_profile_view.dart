@@ -126,8 +126,8 @@ class _EditProfileState extends State<EditProfile> {
         TextPosition(offset: _mobileNumberController.text.length),
       );
 
-      //debugPrint(patientGender);
-      selectedGender = patientGender;
+      debugPrint("selectedGender ==> ${patient.user.person.gender}");
+      selectedGender = patient.user.person.gender;
 
       /*try {
         debugPrint(await _sharedPrefUtils.readString("bloodGroup"));
@@ -1421,7 +1421,7 @@ class _EditProfileState extends State<EditProfile> {
               child: ToggleSwitch(
                   minWidth: 120.0,
                   cornerRadius: 20,
-                  initialLabelIndex: 0,
+                  initialLabelIndex: selectedGender == 'Male' ? 0 : 1,
                   totalSwitches: 2,
                   activeBgColor: [Colors.green],
                   inactiveBgColor: Colors.grey,

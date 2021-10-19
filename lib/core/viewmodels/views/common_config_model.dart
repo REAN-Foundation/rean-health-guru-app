@@ -126,8 +126,9 @@ class CommonConfigModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
 
-    final response = await apiProvider
-        .delete('/emergency-contact/' + emergencyContactId, header: map);
+    final response = await apiProvider.delete(
+        '/patient-emergency-contacts/' + emergencyContactId,
+        header: map);
     setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);

@@ -197,8 +197,9 @@ class PatientCarePlanViewModel extends BaseModel {
     final String query = state == '' ? '' : '?status=' + state;
 
     //var response = await apiProvider.get('/aha/care-plan/'+ahaCarePlanId+'/fetch-daily-tasks', header: map);
-    final response =
-        await apiProvider.get('/user-tasks/search?' + query, header: map);
+    final response = await apiProvider.get(
+        '/user-tasks/search' + query + '&userId=' + patientUserId,
+        header: map);
 
     setBusy(false);
     // Convert and return

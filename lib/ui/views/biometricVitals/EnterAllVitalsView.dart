@@ -6,6 +6,7 @@ import 'package:paitent/core/viewmodels/views/patients_vitals.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
+import 'package:paitent/utils/StringUtility.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class EnterAllVitalsView extends StatefulWidget {
@@ -888,11 +889,12 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
         entertedWeight = entertedWeight / 2.20462;
       }
       final map = <String, dynamic>{};
-      map['Weight'] = entertedWeight.toString();
-      map['PatientUserId'] = "";
-      map['Unit'] = "lbs";
+      map['BodyWeight'] = entertedWeight.toString();
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = "Kg";
 
-      final BaseResponse baseResponse = await model.addMyVitals('body-weight', map);
+      final BaseResponse baseResponse =
+          await model.addMyVitals('body-weights', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
@@ -909,7 +911,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       final map = <String, dynamic>{};
       map['Systolic'] = _systolicController.text.toString();
       map['Diastolic'] = _diastolicController.text.toString();
-      map['PatientUserId'] = "";
+      map['PatientUserId'] = patientUserId;
       map['Unit'] = "mmHg";
       map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
@@ -931,7 +933,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     try {
       final map = <String, dynamic>{};
       map['BloodGlucose'] = _bloodGlucosecontroller.text.toString();
-      map['PatientUserId'] = "";
+      map['PatientUserId'] = patientUserId;
       map['Unit'] = "mg|dL";
       map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
@@ -954,7 +956,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       final map = <String, dynamic>{};
       map['BloodOxygenSaturation'] =
           _bloodOxygenSaturationController.text.toString();
-      map['PatientUserId'] = "";
+      map['PatientUserId'] = patientUserId;
       map['Unit'] = "%";
       map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
@@ -976,7 +978,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     try {
       final map = <String, dynamic>{};
       map['Pulse'] = _pulseRateController.text.toString();
-      map['PatientUserId'] = "";
+      map['PatientUserId'] = patientUserId;
       map['Unit'] = "bpm";
       map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
@@ -997,7 +999,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     try {
       final map = <String, dynamic>{};
       map['BodyTemperature'] = _bodyTempratureController.text.toString();
-      map['PatientUserId'] = "";
+      map['PatientUserId'] = patientUserId;
       map['Unit'] = "Celsius";
       map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;

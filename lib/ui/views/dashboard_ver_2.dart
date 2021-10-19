@@ -1546,7 +1546,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
               .data.medicationSchedulesForDay.schedules);
         }
       } else {
-        showToast(getMyMedicationsResponse.message, context);
+        //showToast(getMyMedicationsResponse.message, context);
       }
     } catch (CustomException) {
       model.setBusy(false);

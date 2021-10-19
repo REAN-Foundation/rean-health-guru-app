@@ -58,9 +58,9 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         doctorTeam.add(teamMember);
       } else if (teamMember.contactRelation == 'Pharmacy user') {
         pharmaTeam.add(teamMember);
-      } else if (teamMember.contactRelation == 'Social health worker') {
+      } else if (teamMember.contactRelation == 'HealthWorker') {
         socialWorkerTeam.add(teamMember);
-      } else if (teamMember.contactRelation == 'Patient family member') {
+      } else if (teamMember.contactRelation == 'FamilyMember') {
         familyTeam.add(teamMember);
       }
 
@@ -608,7 +608,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     return Container(
       height: 80,
       child: Center(
-        child: Text('No family member found',
+        child: Text('No family member / friend found',
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,

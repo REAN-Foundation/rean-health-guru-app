@@ -74,8 +74,8 @@ class _HomeViewState extends State<HomeView> {
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       auth = user.data.accessToken;
 
-      patientUserId = user.data.user.id;
-      patientGender = user.data.user.person.gender;
+      patientUserId = patient.user.id;
+      patientGender = patient.user.person.gender;
       //debugPrint('Address ==> ${patient.user.person.addresses.elementAt(0).city}');
       //debugPrint(user.toJson().toString());
       dynamic roleId = await _sharedPrefUtils.read('roleId');

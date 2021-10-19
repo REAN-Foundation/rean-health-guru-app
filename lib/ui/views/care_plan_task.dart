@@ -32,7 +32,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   bool isSubscribe = false;
   ProgressDialog progressDialog;
   bool isUpCommingSelected = true;
-  String query = 'incomplete';
+  String query = 'pending';
   final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
 
@@ -123,7 +123,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       isSubscribe = false;
     }else {
       isSubscribe = true;*/
-    //getAHACarePlanSummary();
+    //getUserTask();
 
     //}
   }
@@ -171,8 +171,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       flex: 1,
                       child: InkWell(
                         onTap: () {
-                          query = 'incomplete';
-                          getAHACarePlanSummary();
+                          query = 'pending';
+                          getUserTask();
                           isUpCommingSelected = true;
                         },
                         child: Center(
@@ -195,7 +195,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       child: InkWell(
                         onTap: () {
                           query = 'completed';
-                          getAHACarePlanSummary();
+                          getUserTask();
                           isUpCommingSelected = false;
                         },
                         child: Center(
@@ -568,7 +568,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                   Text(
                                       'Consumed at : ' +
                                           dateFormat.format(
-                                              task.finishedAt.toLocal()),
+                                              DateTime.parse(task.finishedAt)
+                                                  .toLocal()),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -583,7 +584,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         SizedBox(
                           width: 8,
                         ),
-                        if (task.status != 'Completed') ...[
+                        if (task.status != 'Completed' &&
+                            task.status != 'Delayed') ...[
                           Visibility(
                             visible: !(DateTime.parse(task.scheduledStartTime)
                                     .toLocal())
@@ -652,7 +654,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             ),
                           ),
                         ],
-                        if (task.status == 'cancelled') ...[
+                        if (task.status == 'cancelled' ||
+                            task.status == 'Delayed') ...[
                           Expanded(
                             flex: 2,
                             child: InkWell(
@@ -885,7 +888,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
                 arguments: newAssortedViewConfigs)
             .then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         break;
@@ -894,7 +897,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           Navigator.pushNamed(context, RoutePaths.Assessment_Navigator,
                   arguments: task)
               .then((value) {
-            getAHACarePlanSummary();
+            getUserTask();
             //showToast('Task completed successfully');
           });
         } else {
@@ -904,7 +907,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         break;
       case 'Link':
         _launchURL(task.details.url.replaceAll(' ', '%20')).then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         if (!task.finished) {
@@ -915,7 +918,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         Navigator.pushNamed(context, RoutePaths.Biometric_Care_Plan_Line,
                 arguments: task)
             .then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         break;
@@ -923,7 +926,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         Navigator.pushNamed(context, RoutePaths.Challenge_Care_Plan,
                 arguments: task)
             .then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         break;
@@ -932,7 +935,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           Navigator.pushNamed(
                   context, RoutePaths.Set_Prority_For_Goals_Care_Plan)
               .then((value) {
-            getAHACarePlanSummary();
+            getUserTask();
             //showToast('Task completed successfully');
           });
         } else {
@@ -951,7 +954,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
                 arguments: newAssortedViewConfigs)
             .then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         break;
@@ -967,7 +970,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         Navigator.pushNamed(context, RoutePaths.Word_Of_The_Week_Care_Plan,
                 arguments: newAssortedViewConfigs)
             .then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         break;
@@ -977,7 +980,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                   context, RoutePaths.Self_Reflection_For_Goals_Care_Plan,
                   arguments: task)
               .then((value) {
-            getAHACarePlanSummary();
+            getUserTask();
             //showToast('Task completed successfully');
           });
         } else {
@@ -989,7 +992,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           Navigator.pushNamed(context, RoutePaths.Care_Plan_Status_Check,
                   arguments: task)
               .then((value) {
-            getAHACarePlanSummary();
+            getUserTask();
             //showToast('Task completed successfully');
           });
         } else {
@@ -1010,11 +1013,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             context, RoutePaths.Video_More_Care_Plan,
             arguments: newAssortedViewConfigs)
             .then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
         });
         }else {*/
         _launchURL(task.details.url.replaceAll(' ', '%20')).then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         //}
@@ -1025,7 +1028,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       case 'Infographics':
         debugPrint('URL ==> ${task.details.url.replaceAll(' ', '%20')}');
         _launchURL(task.details.url.replaceAll(' ', '%20')).then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         if (!task.finished) {
@@ -1035,7 +1038,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       case 'Animation':
         debugPrint('URL ==> ${task.details.url.replaceAll(' ', '%20')}');
         _launchURL(task.details.url.replaceAll(' ', '%20')).then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         if (!task.finished) {

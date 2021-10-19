@@ -599,7 +599,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   getVitalsHistory() async {
     try {
       final GetMyVitalsHistory getMyVitalsHistory =
-          await model.getMyVitalsHistory('body-weight');
+          await model.getMyVitalsHistory('body-weights');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
         records.addAll(getMyVitalsHistory.data.bodyWeightRecords.items);

@@ -933,7 +933,7 @@ class _BiometricBloodPresureVitalsViewState
 
 
       final BaseResponse baseResponse =
-          await model.addMyVitals('blood-pressure', map);
+          await model.addMyVitals('blood-pressures', map);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
@@ -954,7 +954,7 @@ class _BiometricBloodPresureVitalsViewState
   getVitalsHistory() async {
     try {
       final GetMyVitalsHistory getMyVitalsHistory =
-          await model.getMyVitalsHistory('blood-pressure');
+          await model.getMyVitalsHistory('blood-pressures');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
         records.addAll(getMyVitalsHistory.data.bloodPressureRecords.items);

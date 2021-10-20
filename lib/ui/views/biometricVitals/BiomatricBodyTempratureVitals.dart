@@ -501,7 +501,7 @@ class _BiometricBodyTemperatureVitalsViewState
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
-          await model.addMyVitals('body-temperature', map);
+          await model.addMyVitals('body-temperatures', map);
 
       if (baseResponse.status == 'success') {
         showToast(baseResponse.message, context);
@@ -522,7 +522,7 @@ class _BiometricBodyTemperatureVitalsViewState
   getVitalsHistory() async {
     try {
       final GetMyVitalsHistory getMyVitalsHistory =
-          await model.getMyVitalsHistory('body-temperature');
+          await model.getMyVitalsHistory('body-temperatures');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
         records.addAll(getMyVitalsHistory.data.bodyTemperatureRecords.items);

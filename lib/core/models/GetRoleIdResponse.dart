@@ -30,7 +30,7 @@ class GetRoleIdResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['Status'] = status;
     data['Message'] = message;
     data['HttpCode'] = httpCode;
@@ -54,7 +54,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['PersonRoleTypes'] != null) {
-      personRoleTypes = List<PersonRoleTypes>();
+      personRoleTypes = <PersonRoleTypes>[];
       json['PersonRoleTypes'].forEach((v) {
         personRoleTypes.add(PersonRoleTypes.fromJson(v));
       });
@@ -82,7 +82,7 @@ class PersonRoleTypes {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['RoleName'] = roleName;
     return data;

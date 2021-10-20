@@ -10,14 +10,14 @@ class DrugsLibraryPojo {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['HttpCode'] = this.httpCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
@@ -31,13 +31,13 @@ class Data {
   Data({this.drugs});
 
   Data.fromJson(Map<String, dynamic> json) {
-    drugs = json['Drugs'] != null ? new Drugs.fromJson(json['Drugs']) : null;
+    drugs = json['Drugs'] != null ? Drugs.fromJson(json['Drugs']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.drugs != null) {
-      data['Drugs'] = this.drugs.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (drugs != null) {
+      data['Drugs'] = drugs.toJson();
     }
     return data;
   }
@@ -69,23 +69,23 @@ class Drugs {
     order = json['Order'];
     orderedBy = json['OrderedBy'];
     if (json['Items'] != null) {
-      items = new List<Items>();
+      items = <Items>[];
       json['Items'].forEach((v) {
-        items.add(new Items.fromJson(v));
+        items.add(Items.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['TotalCount'] = this.totalCount;
-    data['RetrievedCount'] = this.retrievedCount;
-    data['PageIndex'] = this.pageIndex;
-    data['ItemsPerPage'] = this.itemsPerPage;
-    data['Order'] = this.order;
-    data['OrderedBy'] = this.orderedBy;
-    if (this.items != null) {
-      data['Items'] = this.items.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['TotalCount'] = totalCount;
+    data['RetrievedCount'] = retrievedCount;
+    data['PageIndex'] = pageIndex;
+    data['ItemsPerPage'] = itemsPerPage;
+    data['Order'] = order;
+    data['OrderedBy'] = orderedBy;
+    if (items != null) {
+      data['Items'] = items.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -97,7 +97,7 @@ class Items {
   String drugName;
   String genericName;
   String ingredients;
-  Null strength;
+  String strength;
   String otherCommercialNames;
   String manufacturer;
   String otherInformation;
@@ -126,16 +126,16 @@ class Items {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['EhrId'] = this.ehrId;
-    data['DrugName'] = this.drugName;
-    data['GenericName'] = this.genericName;
-    data['Ingredients'] = this.ingredients;
-    data['Strength'] = this.strength;
-    data['OtherCommercialNames'] = this.otherCommercialNames;
-    data['Manufacturer'] = this.manufacturer;
-    data['OtherInformation'] = this.otherInformation;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['EhrId'] = ehrId;
+    data['DrugName'] = drugName;
+    data['GenericName'] = genericName;
+    data['Ingredients'] = ingredients;
+    data['Strength'] = strength;
+    data['OtherCommercialNames'] = otherCommercialNames;
+    data['Manufacturer'] = manufacturer;
+    data['OtherInformation'] = otherInformation;
     return data;
   }
 }

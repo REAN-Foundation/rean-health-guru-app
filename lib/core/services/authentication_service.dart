@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/user_data.dart';
 
 import 'api.dart';

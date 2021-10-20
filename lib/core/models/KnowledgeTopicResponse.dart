@@ -10,14 +10,14 @@ class KnowledgeTopicResponse {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['HttpCode'] = this.httpCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
@@ -32,14 +32,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     knowledgeNugget = json['KnowledgeNugget'] != null
-        ? new KnowledgeNugget.fromJson(json['KnowledgeNugget'])
+        ? KnowledgeNugget.fromJson(json['KnowledgeNugget'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.knowledgeNugget != null) {
-      data['KnowledgeNugget'] = this.knowledgeNugget.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (knowledgeNugget != null) {
+      data['KnowledgeNugget'] = knowledgeNugget.toJson();
     }
     return data;
   }
@@ -63,10 +63,10 @@ class KnowledgeNugget {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['TopicName'] = this.topicName;
-    data['BriefInformation'] = this.briefInformation;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['TopicName'] = topicName;
+    data['BriefInformation'] = briefInformation;
     return data;
   }
 }

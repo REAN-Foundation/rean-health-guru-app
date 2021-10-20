@@ -272,104 +272,104 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   Widget _makeDoctorListCard(BuildContext context, int index) {
     final Items details = doctorTeam.elementAt(index);
-    return ExcludeSemantics(
-      child: Container(
-        height: 80,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: primaryLightColor),
-            borderRadius: BorderRadius.all(Radius.circular(8.0))),
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Card(
-            elevation: 0,
-            child: Stack(
-              children: [
-                Column(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 2,
-                            child: Center(
-                              child: Container(
-                                height: 48,
-                                width: 48,
-                                child: Image(
-                                  image: AssetImage(
-                                      'res/images/profile_placeholder.png'),
-                                ),
+    return Container(
+      height: 80,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: primaryLightColor),
+          borderRadius: BorderRadius.all(Radius.circular(8.0))),
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Card(
+          semanticContainer: false,
+          elevation: 0,
+          child: Stack(
+            children: [
+              InkWell(
+                  onTap: () {
+                    _removeConfirmation(doctorTeam.elementAt(index));
+                  },
+                  child: Semantics(
+                    label: 'delete_doctor',
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.delete_forever,
+                          color: primaryColor,
+                          size: 24,
+                        ),
+                      ),
+                    ),
+                  )),
+              Column(
+                children: <Widget>[
+                  Expanded(
+                    flex: 3,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 2,
+                          child: Center(
+                            child: Container(
+                              height: 48,
+                              width: 48,
+                              child: Image(
+                                image: AssetImage(
+                                    'res/images/profile_placeholder.png'),
                               ),
                             ),
                           ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Expanded(
-                            flex: 8,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 18.0),
-                                  child: Text(
-                                      'Dr. ' +
-                                          details.contactPerson.firstName +
-                                          ' ' +
-                                          details.contactPerson.lastName,
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.w700,
-                                          color: primaryColor)),
-                                ),
-                                Text(details.contactPerson.gender,
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
+                          flex: 8,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(right: 18.0),
+                                child: Text(
+                                    'Dr. ' +
+                                        details.contactPerson.firstName +
+                                        ' ' +
+                                        details.contactPerson.lastName,
                                     style: TextStyle(
                                         fontSize: 14.0,
-                                        fontWeight: FontWeight.w300,
-                                        color: Color(0XFF909CAC))),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text('Phone:  ' + details.contactPerson.phone,
-                                        style: TextStyle(
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.w300,
-                                            color: primaryColor)),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                        fontWeight: FontWeight.w700,
+                                        color: primaryColor)),
+                              ),
+                              Text("Doctor",
+                                  style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w300,
+                                      color: Color(0XFF909CAC))),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Text('Phone:  ' + details.contactPerson.phone,
+                                      style: TextStyle(
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.w300,
+                                          color: primaryColor)),
+                                ],
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                Semantics(
-                    label: 'delete_doctor',
-                    child: InkWell(
-                        onTap: () {
-                          _removeConfirmation(doctorTeam.elementAt(index));
-                        },
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.delete_forever,
-                              color: primaryColor,
-                              size: 24,
-                            ),
-                          ),
-                        )))
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -503,7 +503,9 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   Widget _makeNurseListCard(BuildContext context, int index) {
     final Items details = socialWorkerTeam.elementAt(index);
-    return ExcludeSemantics(
+    return Card(
+      semanticContainer: false,
+      elevation: 0,
       child: Container(
         height: 80,
         decoration: BoxDecoration(
@@ -638,7 +640,9 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   Widget _makeFamilyMemberListCard(BuildContext context, int index) {
     final Items details = familyTeam.elementAt(index);
-    return ExcludeSemantics(
+    return Card(
+      semanticContainer: false,
+      elevation: 0,
       child: Container(
         height: 80,
         decoration: BoxDecoration(

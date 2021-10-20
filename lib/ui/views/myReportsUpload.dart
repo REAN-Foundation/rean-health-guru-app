@@ -671,7 +671,7 @@ class _MyReportsViewState extends State<MyReportsView> {
           final respStr = await response.stream.bytesToString();
           progressDialog.hide();
           showToast('Opps, something wents wrong!', context);
-          debugPrint('Upload Faild ! ==> ${respStr}');
+          debugPrint('Upload Faild ! ==> $respStr');
         }
       }); // debugPrint("3");
 

@@ -8,13 +8,13 @@ class UploadDocumentResponse {
   UploadDocumentResponse.fromJson(Map<String, dynamic> json) {
     status = json['Status'];
     message = json['Message'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
@@ -29,14 +29,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     patientDocument = json['PatientDocument'] != null
-        ? new PatientDocument.fromJson(json['PatientDocument'])
+        ? PatientDocument.fromJson(json['PatientDocument'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.patientDocument != null) {
-      data['PatientDocument'] = this.patientDocument.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (patientDocument != null) {
+      data['PatientDocument'] = patientDocument.toJson();
     }
     return data;
   }
@@ -104,25 +104,25 @@ class PatientDocument {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['DisplayId'] = this.displayId;
-    data['DocumentType'] = this.documentType;
-    data['PatientUserId'] = this.patientUserId;
-    data['MedicalPractitionerUserId'] = this.medicalPractitionerUserId;
-    data['MedicalPractionerRole'] = this.medicalPractionerRole;
-    data['UploadedByUserId'] = this.uploadedByUserId;
-    data['AssociatedVisitId'] = this.associatedVisitId;
-    data['AssociatedVisitType'] = this.associatedVisitType;
-    data['AssociatedOrderId'] = this.associatedOrderId;
-    data['AssociatedOrderType'] = this.associatedOrderType;
-    data['FileName'] = this.fileName;
-    data['ResourceId'] = this.resourceId;
-    data['AuthenticatedUrl'] = this.authenticatedUrl;
-    data['MimeType'] = this.mimeType;
-    data['SizeInKBytes'] = this.sizeInKBytes;
-    data['RecordDate'] = this.recordDate;
-    data['UploadedDate'] = this.uploadedDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['DisplayId'] = displayId;
+    data['DocumentType'] = documentType;
+    data['PatientUserId'] = patientUserId;
+    data['MedicalPractitionerUserId'] = medicalPractitionerUserId;
+    data['MedicalPractionerRole'] = medicalPractionerRole;
+    data['UploadedByUserId'] = uploadedByUserId;
+    data['AssociatedVisitId'] = associatedVisitId;
+    data['AssociatedVisitType'] = associatedVisitType;
+    data['AssociatedOrderId'] = associatedOrderId;
+    data['AssociatedOrderType'] = associatedOrderType;
+    data['FileName'] = fileName;
+    data['ResourceId'] = resourceId;
+    data['AuthenticatedUrl'] = authenticatedUrl;
+    data['MimeType'] = mimeType;
+    data['SizeInKBytes'] = sizeInKBytes;
+    data['RecordDate'] = recordDate;
+    data['UploadedDate'] = uploadedDate;
     return data;
   }
 }

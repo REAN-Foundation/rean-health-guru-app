@@ -10,14 +10,14 @@ class GetAllRecordResponse {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['HttpCode'] = this.httpCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
@@ -32,14 +32,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     patientDocuments = json['PatientDocuments'] != null
-        ? new PatientDocuments.fromJson(json['PatientDocuments'])
+        ? PatientDocuments.fromJson(json['PatientDocuments'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.patientDocuments != null) {
-      data['PatientDocuments'] = this.patientDocuments.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (patientDocuments != null) {
+      data['PatientDocuments'] = patientDocuments.toJson();
     }
     return data;
   }
@@ -71,23 +71,23 @@ class PatientDocuments {
     order = json['Order'];
     orderedBy = json['OrderedBy'];
     if (json['Items'] != null) {
-      items = new List<Items>();
+      items = <Items>[];
       json['Items'].forEach((v) {
-        items.add(new Items.fromJson(v));
+        items.add(Items.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['TotalCount'] = this.totalCount;
-    data['RetrievedCount'] = this.retrievedCount;
-    data['PageIndex'] = this.pageIndex;
-    data['ItemsPerPage'] = this.itemsPerPage;
-    data['Order'] = this.order;
-    data['OrderedBy'] = this.orderedBy;
-    if (this.items != null) {
-      data['Items'] = this.items.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['TotalCount'] = totalCount;
+    data['RetrievedCount'] = retrievedCount;
+    data['PageIndex'] = pageIndex;
+    data['ItemsPerPage'] = itemsPerPage;
+    data['Order'] = order;
+    data['OrderedBy'] = orderedBy;
+    if (items != null) {
+      data['Items'] = items.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -158,26 +158,26 @@ class Items {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['EhrId'] = this.ehrId;
-    data['DisplayId'] = this.displayId;
-    data['DocumentType'] = this.documentType;
-    data['PatientUserId'] = this.patientUserId;
-    data['MedicalPractitionerUserId'] = this.medicalPractitionerUserId;
-    data['MedicalPractionerRole'] = this.medicalPractionerRole;
-    data['UploadedByUserId'] = this.uploadedByUserId;
-    data['AssociatedVisitId'] = this.associatedVisitId;
-    data['AssociatedVisitType'] = this.associatedVisitType;
-    data['AssociatedOrderId'] = this.associatedOrderId;
-    data['AssociatedOrderType'] = this.associatedOrderType;
-    data['FileName'] = this.fileName;
-    data['ResourceId'] = this.resourceId;
-    data['AuthenticatedUrl'] = this.authenticatedUrl;
-    data['MimeType'] = this.mimeType;
-    data['SizeInKBytes'] = this.sizeInKBytes;
-    data['RecordDate'] = this.recordDate.toIso8601String();
-    data['UploadedDate'] = this.uploadedDate.toIso8601String();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['EhrId'] = ehrId;
+    data['DisplayId'] = displayId;
+    data['DocumentType'] = documentType;
+    data['PatientUserId'] = patientUserId;
+    data['MedicalPractitionerUserId'] = medicalPractitionerUserId;
+    data['MedicalPractionerRole'] = medicalPractionerRole;
+    data['UploadedByUserId'] = uploadedByUserId;
+    data['AssociatedVisitId'] = associatedVisitId;
+    data['AssociatedVisitType'] = associatedVisitType;
+    data['AssociatedOrderId'] = associatedOrderId;
+    data['AssociatedOrderType'] = associatedOrderType;
+    data['FileName'] = fileName;
+    data['ResourceId'] = resourceId;
+    data['AuthenticatedUrl'] = authenticatedUrl;
+    data['MimeType'] = mimeType;
+    data['SizeInKBytes'] = sizeInKBytes;
+    data['RecordDate'] = recordDate.toIso8601String();
+    data['UploadedDate'] = uploadedDate.toIso8601String();
     return data;
   }
 }

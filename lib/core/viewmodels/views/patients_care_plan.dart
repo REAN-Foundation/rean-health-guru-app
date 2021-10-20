@@ -194,11 +194,11 @@ class PatientCarePlanViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
 
-    final String query = state == '' ? '' : '?status=' + state;
-
+    //final String query = state == '' ? '' : '?status=' + state;
+    final String query = '';
     //var response = await apiProvider.get('/aha/care-plan/'+ahaCarePlanId+'/fetch-daily-tasks', header: map);
     final response = await apiProvider.get(
-        '/user-tasks/search' + query + '&userId=' + patientUserId,
+        '/user-tasks/search' + query + '?userId=' + patientUserId,
         header: map);
 
     setBusy(false);
@@ -572,7 +572,7 @@ class PatientCarePlanViewModel extends BaseModel {
     final body = <String, String>{};
 
     final response = await apiProvider.put(
-        '/medication-consumption/mark-as-taken/' + consumptionId,
+        '/clinical/medication-consumptions/mark-as-taken/' + consumptionId,
         header: map,
         body: body);
 

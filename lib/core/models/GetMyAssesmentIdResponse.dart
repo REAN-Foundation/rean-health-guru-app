@@ -24,32 +24,31 @@ class GetMyAssesmentIdResponse {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
-    client =
-        json['Client'] != null ? new Client.fromJson(json['Client']) : null;
-    user = json['User'] != null ? new User.fromJson(json['User']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
+    client = json['Client'] != null ? Client.fromJson(json['Client']) : null;
+    user = json['User'] != null ? User.fromJson(json['User']) : null;
     context = json['Context'];
     clientIps = json['ClientIps'].cast<String>();
     aPIVersion = json['APIVersion'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['HttpCode'] = this.httpCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
-    if (this.client != null) {
-      data['Client'] = this.client.toJson();
+    if (client != null) {
+      data['Client'] = client.toJson();
     }
-    if (this.user != null) {
-      data['User'] = this.user.toJson();
+    if (user != null) {
+      data['User'] = user.toJson();
     }
-    data['Context'] = this.context;
-    data['ClientIps'] = this.clientIps;
-    data['APIVersion'] = this.aPIVersion;
+    data['Context'] = context;
+    data['ClientIps'] = clientIps;
+    data['APIVersion'] = aPIVersion;
     return data;
   }
 }
@@ -61,14 +60,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     symptomAssessment = json['SymptomAssessment'] != null
-        ? new SymptomAssessment.fromJson(json['SymptomAssessment'])
+        ? SymptomAssessment.fromJson(json['SymptomAssessment'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.symptomAssessment != null) {
-      data['SymptomAssessment'] = this.symptomAssessment.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (symptomAssessment != null) {
+      data['SymptomAssessment'] = symptomAssessment.toJson();
     }
     return data;
   }
@@ -108,13 +107,13 @@ class SymptomAssessment {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['PatientUserId'] = this.patientUserId;
-    data['Title'] = this.title;
-    data['AssessmentTemplateId'] = this.assessmentTemplateId;
-    data['OverallStatus'] = this.overallStatus;
-    data['AssessmentDate'] = this.assessmentDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['PatientUserId'] = patientUserId;
+    data['Title'] = title;
+    data['AssessmentTemplateId'] = assessmentTemplateId;
+    data['OverallStatus'] = overallStatus;
+    data['AssessmentDate'] = assessmentDate;
     /*if (this.symptomsRecorded != null) {
       data['SymptomsRecorded'] =
           this.symptomsRecorded.map((v) => v.toJson()).toList();
@@ -135,9 +134,9 @@ class Client {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ClientName'] = this.clientName;
-    data['ClientCode'] = this.clientCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ClientName'] = clientName;
+    data['ClientCode'] = clientCode;
     return data;
   }
 }
@@ -174,15 +173,15 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['UserId'] = this.userId;
-    data['DisplayName'] = this.displayName;
-    data['Phone'] = this.phone;
-    data['Email'] = this.email;
-    data['UserName'] = this.userName;
-    data['CurrentRoleId'] = this.currentRoleId;
-    data['iat'] = this.iat;
-    data['exp'] = this.exp;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['UserId'] = userId;
+    data['DisplayName'] = displayName;
+    data['Phone'] = phone;
+    data['Email'] = email;
+    data['UserName'] = userName;
+    data['CurrentRoleId'] = currentRoleId;
+    data['iat'] = iat;
+    data['exp'] = exp;
     return data;
   }
 }

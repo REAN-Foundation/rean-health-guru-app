@@ -71,7 +71,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
       if (userTaskResponse.status == 'success') {
         tasksList.clear();
-        tasksList.addAll(userTaskResponse.data.userTasks.items);
+        //tasksList.addAll(userTaskResponse.data.userTasks.items);
+        _sortUserTask(userTaskResponse.data.userTasks.items);
         debugPrint('User Tasks ==> ${userTaskResponse.toJson()}');
         debugPrint(
             'User Tasks Count ==> ${userTaskResponse.data.userTasks.items.length}');
@@ -90,6 +91,24 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }*/
+  }
+
+  _sortUserTask(List<Items> tasks) {
+    for (final task in tasks) {
+      if (query == 'pending') {
+        if (task.status == 'Delayed' ||
+            task.status == 'InProgress' ||
+            task.status == 'Pending' ||
+            task.status == 'Upcoming' ||
+            task.status == 'Overdue') {
+          tasksList.add(task);
+        }
+      } else {
+        if (task.status == 'Completed' || task.status == 'Cancelled') {
+          tasksList.add(task);
+        }
+      }
+    }
   }
 
   @override
@@ -123,7 +142,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       isSubscribe = false;
     }else {
       isSubscribe = true;*/
-    //getUserTask();
+    getUserTask();
 
     //}
   }
@@ -271,7 +290,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     );
   }
 
-  Widget _createToDos(BuildContext context, int index) {
+/*  Widget _createToDos(BuildContext context, int index) {
     final Task task = tasks.elementAt(index);
 
     return task.categoryName == 'Care-plan-task'
@@ -281,9 +300,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             : task.categoryName == 'Appointment-task'
                 ? _makeUpcommingAppointmentCard(context, index)
                 : Container();
-  }
+  }*/
 
-  Widget _makeTaskCard(BuildContext context, int index) {
+/*  Widget _makeTaskCard(BuildContext context, int index) {
     final Task task = tasks.elementAt(index);
     //debugPrint('Category Name ==> ${task.categoryName} && Task Tittle ==> ${task.details.mainTitle}');
     return InkWell(
@@ -427,20 +446,20 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 ),
                               ],
                             )
-                            /*Column(
+                            */ /*Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Icon(task.finished ? Icons.check : Icons.chevron_right, size: 32, color: task.finished ? Colors.green : Colors.grey,),
-                             */ /* SizedBox(height: 4,),
+                             */ /* */ /* SizedBox(height: 4,),
                               Text(
                                 'Start',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 10),
-                              ),*/ /*
+                              ),*/ /* */ /*
                             ],
-                          ),*/
+                          ),*/ /*
                             ),
                       ],
                     ),
@@ -452,7 +471,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         ),
       ),
     );
-  }
+  }*/
 
   Widget _makeMedicineCard(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
@@ -585,7 +604,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                           width: 8,
                         ),
                         if (task.status != 'Completed' &&
-                            task.status != 'Delayed') ...[
+                            task.status != 'Cancelled') ...[
                           Visibility(
                             visible: !(DateTime.parse(task.scheduledStartTime)
                                     .toLocal())
@@ -654,8 +673,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             ),
                           ),
                         ],
-                        if (task.status == 'cancelled' ||
-                            task.status == 'Delayed') ...[
+                        if (task.status == 'Cancelled') ...[
                           Expanded(
                             flex: 2,
                             child: InkWell(
@@ -738,7 +756,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     }
   }
 
-  Widget _makeUpcommingAppointmentCard(BuildContext context, int index) {
+/*  Widget _makeUpcommingAppointmentCard(BuildContext context, int index) {
     final Task task = tasks.elementAt(index);
     return InkWell(
       onTap: () {},
@@ -837,7 +855,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         ),
       ),
     );
-  }
+  }*/
 
   startAHACarePlanSummary(Task task) async {
     try {

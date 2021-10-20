@@ -11,14 +11,14 @@ class MyMedicationSummaryRespose {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['HttpCode'] = this.httpCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
@@ -33,19 +33,19 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['MedicationConsumptionSummary'] != null) {
-      medicationConsumptionSummary = new List<MedicationConsumptionSummary>();
+      medicationConsumptionSummary = [];
       json['MedicationConsumptionSummary'].forEach((v) {
         medicationConsumptionSummary
-            .add(new MedicationConsumptionSummary.fromJson(v));
+            .add(MedicationConsumptionSummary.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.medicationConsumptionSummary != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (medicationConsumptionSummary != null) {
       data['MedicationConsumptionSummary'] =
-          this.medicationConsumptionSummary.map((v) => v.toJson()).toList();
+          medicationConsumptionSummary.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -63,20 +63,19 @@ class MedicationConsumptionSummary {
     month = json['Month'];
     daysInMonth = json['DaysInMonth'];
     if (json['SummaryForMonth'] != null) {
-      summaryForMonth = new List<SummaryForMonth>();
+      summaryForMonth = <SummaryForMonth>[];
       json['SummaryForMonth'].forEach((v) {
-        summaryForMonth.add(new SummaryForMonth.fromJson(v));
+        summaryForMonth.add(SummaryForMonth.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Month'] = this.month;
-    data['DaysInMonth'] = this.daysInMonth;
-    if (this.summaryForMonth != null) {
-      data['SummaryForMonth'] =
-          this.summaryForMonth.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Month'] = month;
+    data['DaysInMonth'] = daysInMonth;
+    if (summaryForMonth != null) {
+      data['SummaryForMonth'] = summaryForMonth.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -91,15 +90,15 @@ class SummaryForMonth {
   SummaryForMonth.fromJson(Map<String, dynamic> json) {
     drug = json['Drug'];
     summaryForDrug = json['SummaryForDrug'] != null
-        ? new SummaryForDrug.fromJson(json['SummaryForDrug'])
+        ? SummaryForDrug.fromJson(json['SummaryForDrug'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Drug'] = this.drug;
-    if (this.summaryForDrug != null) {
-      data['SummaryForDrug'] = this.summaryForDrug.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Drug'] = drug;
+    if (summaryForDrug != null) {
+      data['SummaryForDrug'] = summaryForDrug.toJson();
     }
     return data;
   }
@@ -124,12 +123,12 @@ class SummaryForDrug {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Missed'] = this.missed;
-    data['Taken'] = this.taken;
-    data['Unknown'] = this.unknown;
-    data['Upcoming'] = this.upcoming;
-    data['Overdue'] = this.overdue;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Missed'] = missed;
+    data['Taken'] = taken;
+    data['Unknown'] = unknown;
+    data['Upcoming'] = upcoming;
+    data['Overdue'] = overdue;
     return data;
   }
 }

@@ -24,32 +24,31 @@ class GetAssesmentTemplateByIdResponse {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
-    client =
-        json['Client'] != null ? new Client.fromJson(json['Client']) : null;
-    user = json['User'] != null ? new User.fromJson(json['User']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
+    client = json['Client'] != null ? Client.fromJson(json['Client']) : null;
+    user = json['User'] != null ? User.fromJson(json['User']) : null;
     context = json['Context'];
     clientIps = json['ClientIps'].cast<String>();
     aPIVersion = json['APIVersion'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['HttpCode'] = this.httpCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
-    if (this.client != null) {
-      data['Client'] = this.client.toJson();
+    if (client != null) {
+      data['Client'] = client.toJson();
     }
-    if (this.user != null) {
-      data['User'] = this.user.toJson();
+    if (user != null) {
+      data['User'] = user.toJson();
     }
-    data['Context'] = this.context;
-    data['ClientIps'] = this.clientIps;
-    data['APIVersion'] = this.aPIVersion;
+    data['Context'] = context;
+    data['ClientIps'] = clientIps;
+    data['APIVersion'] = aPIVersion;
     return data;
   }
 }
@@ -61,16 +60,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     symptomAssessmentTemplate = json['SymptomAssessmentTemplate'] != null
-        ? new SymptomAssessmentTemplate.fromJson(
-            json['SymptomAssessmentTemplate'])
+        ? SymptomAssessmentTemplate.fromJson(json['SymptomAssessmentTemplate'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.symptomAssessmentTemplate != null) {
-      data['SymptomAssessmentTemplate'] =
-          this.symptomAssessmentTemplate.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (symptomAssessmentTemplate != null) {
+      data['SymptomAssessmentTemplate'] = symptomAssessmentTemplate.toJson();
     }
     return data;
   }
@@ -96,22 +93,22 @@ class SymptomAssessmentTemplate {
     description = json['Description'];
     tags = json['Tags'].cast<String>();
     if (json['TemplateSymptomTypes'] != null) {
-      templateSymptomTypes = new List<TemplateSymptomTypes>();
+      templateSymptomTypes = [];
       json['TemplateSymptomTypes'].forEach((v) {
-        templateSymptomTypes.add(new TemplateSymptomTypes.fromJson(v));
+        templateSymptomTypes.add(TemplateSymptomTypes.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['Title'] = this.title;
-    data['Description'] = this.description;
-    data['Tags'] = this.tags;
-    if (this.templateSymptomTypes != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['Title'] = title;
+    data['Description'] = description;
+    data['Tags'] = tags;
+    if (templateSymptomTypes != null) {
       data['TemplateSymptomTypes'] =
-          this.templateSymptomTypes.map((v) => v.toJson()).toList();
+          templateSymptomTypes.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -134,11 +131,11 @@ class TemplateSymptomTypes {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Index'] = this.index;
-    data['SymptomTypeId'] = this.symptomTypeId;
-    data['Symptom'] = this.symptom;
-    data['Description'] = this.description;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Index'] = index;
+    data['SymptomTypeId'] = symptomTypeId;
+    data['Symptom'] = symptom;
+    data['Description'] = description;
     return data;
   }
 }
@@ -155,9 +152,9 @@ class Client {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ClientName'] = this.clientName;
-    data['ClientCode'] = this.clientCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['ClientName'] = clientName;
+    data['ClientCode'] = clientCode;
     return data;
   }
 }
@@ -194,15 +191,15 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['UserId'] = this.userId;
-    data['DisplayName'] = this.displayName;
-    data['Phone'] = this.phone;
-    data['Email'] = this.email;
-    data['UserName'] = this.userName;
-    data['CurrentRoleId'] = this.currentRoleId;
-    data['iat'] = this.iat;
-    data['exp'] = this.exp;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['UserId'] = userId;
+    data['DisplayName'] = displayName;
+    data['Phone'] = phone;
+    data['Email'] = email;
+    data['UserName'] = userName;
+    data['CurrentRoleId'] = currentRoleId;
+    data['iat'] = iat;
+    data['exp'] = exp;
     return data;
   }
 }

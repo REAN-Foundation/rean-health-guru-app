@@ -10,14 +10,14 @@ class MyCurrentMedication {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['HttpCode'] = this.httpCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
@@ -32,18 +32,18 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['CurrentMedications'] != null) {
-      currentMedications = new List<CurrentMedications>();
+      currentMedications = <CurrentMedications>[];
       json['CurrentMedications'].forEach((v) {
-        currentMedications.add(new CurrentMedications.fromJson(v));
+        currentMedications.add(CurrentMedications.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.currentMedications != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (currentMedications != null) {
       data['CurrentMedications'] =
-          this.currentMedications.map((v) => v.toJson()).toList();
+          currentMedications.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -135,33 +135,33 @@ class CurrentMedications {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['EhrId'] = this.ehrId;
-    data['PatientUserId'] = this.patientUserId;
-    data['MedicalPractitionerUserId'] = this.medicalPractitionerUserId;
-    data['VisitId'] = this.visitId;
-    data['OrderId'] = this.orderId;
-    data['DrugId'] = this.drugId;
-    data['DrugName'] = this.drugName;
-    data['Dose'] = this.dose;
-    data['DosageUnit'] = this.dosageUnit;
-    data['TimeSchedules'] = this.timeSchedules;
-    data['Frequency'] = this.frequency;
-    data['FrequencyUnit'] = this.frequencyUnit;
-    data['Route'] = this.route;
-    data['Duration'] = this.duration;
-    data['DurationUnit'] = this.durationUnit;
-    data['StartDate'] = this.startDate;
-    data['EndDate'] = this.endDate;
-    data['RefillNeeded'] = this.refillNeeded;
-    data['RefillCount'] = this.refillCount;
-    data['Instructions'] = this.instructions;
-    data['ImageResourceId'] = this.imageResourceId;
-    data['IsExistingMedication'] = this.isExistingMedication;
-    data['TakenForLastNDays'] = this.takenForLastNDays;
-    data['ToBeTakenForNextNDays'] = this.toBeTakenForNextNDays;
-    data['IsCancelled'] = this.isCancelled;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['EhrId'] = ehrId;
+    data['PatientUserId'] = patientUserId;
+    data['MedicalPractitionerUserId'] = medicalPractitionerUserId;
+    data['VisitId'] = visitId;
+    data['OrderId'] = orderId;
+    data['DrugId'] = drugId;
+    data['DrugName'] = drugName;
+    data['Dose'] = dose;
+    data['DosageUnit'] = dosageUnit;
+    data['TimeSchedules'] = timeSchedules;
+    data['Frequency'] = frequency;
+    data['FrequencyUnit'] = frequencyUnit;
+    data['Route'] = route;
+    data['Duration'] = duration;
+    data['DurationUnit'] = durationUnit;
+    data['StartDate'] = startDate;
+    data['EndDate'] = endDate;
+    data['RefillNeeded'] = refillNeeded;
+    data['RefillCount'] = refillCount;
+    data['Instructions'] = instructions;
+    data['ImageResourceId'] = imageResourceId;
+    data['IsExistingMedication'] = isExistingMedication;
+    data['TakenForLastNDays'] = takenForLastNDays;
+    data['ToBeTakenForNextNDays'] = toBeTakenForNextNDays;
+    data['IsCancelled'] = isCancelled;
     return data;
   }
 }

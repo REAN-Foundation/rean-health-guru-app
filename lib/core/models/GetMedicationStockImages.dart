@@ -11,14 +11,14 @@ class GetMedicationStockImages {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['HttpCode'] = this.httpCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
@@ -33,18 +33,18 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['MedicationStockImages'] != null) {
-      medicationStockImages = new List<MedicationStockImages>();
+      medicationStockImages = <MedicationStockImages>[];
       json['MedicationStockImages'].forEach((v) {
-        medicationStockImages.add(new MedicationStockImages.fromJson(v));
+        medicationStockImages.add(MedicationStockImages.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.medicationStockImages != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (medicationStockImages != null) {
       data['MedicationStockImages'] =
-          this.medicationStockImages.map((v) => v.toJson()).toList();
+          medicationStockImages.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -70,12 +70,12 @@ class MedicationStockImages {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['Code'] = this.code;
-    data['FileName'] = this.fileName;
-    data['ResourceId'] = this.resourceId;
-    data['PublicUrl'] = this.publicUrl;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['Code'] = code;
+    data['FileName'] = fileName;
+    data['ResourceId'] = resourceId;
+    data['PublicUrl'] = publicUrl;
     return data;
   }
 }

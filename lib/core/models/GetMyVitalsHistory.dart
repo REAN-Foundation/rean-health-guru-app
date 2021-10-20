@@ -10,14 +10,14 @@ class GetMyVitalsHistory {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['HttpCode'] = this.httpCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
@@ -43,45 +43,45 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     bloodGlucoseRecords = json['BloodGlucoseRecords'] != null
-        ? new Records.fromJson(json['BloodGlucoseRecords'])
+        ? Records.fromJson(json['BloodGlucoseRecords'])
         : null;
     bloodPressureRecords = json['BloodPressureRecords'] != null
-        ? new Records.fromJson(json['BloodPressureRecords'])
+        ? Records.fromJson(json['BloodPressureRecords'])
         : null;
     pulseRecords = json['PulseRecords'] != null
-        ? new Records.fromJson(json['PulseRecords'])
+        ? Records.fromJson(json['PulseRecords'])
         : null;
     bodyTemperatureRecords = json['BodyTemperatureRecords'] != null
-        ? new Records.fromJson(json['BodyTemperatureRecords'])
+        ? Records.fromJson(json['BodyTemperatureRecords'])
         : null;
     bodyWeightRecords = json['BodyWeightRecords'] != null
-        ? new Records.fromJson(json['BodyWeightRecords'])
+        ? Records.fromJson(json['BodyWeightRecords'])
         : null;
     bloodOxygenSaturationRecords = json['BloodOxygenSaturationRecords'] != null
-        ? new Records.fromJson(json['BloodOxygenSaturationRecords'])
+        ? Records.fromJson(json['BloodOxygenSaturationRecords'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.bloodGlucoseRecords != null) {
-      data['BloodGlucoseRecords'] = this.bloodGlucoseRecords.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (bloodGlucoseRecords != null) {
+      data['BloodGlucoseRecords'] = bloodGlucoseRecords.toJson();
     }
-    if (this.bloodPressureRecords != null) {
-      data['BloodPressureRecords'] = this.bloodPressureRecords.toJson();
+    if (bloodPressureRecords != null) {
+      data['BloodPressureRecords'] = bloodPressureRecords.toJson();
     }
-    if (this.pulseRecords != null) {
-      data['PulseRecords'] = this.pulseRecords.toJson();
+    if (pulseRecords != null) {
+      data['PulseRecords'] = pulseRecords.toJson();
     }
-    if (this.bodyTemperatureRecords != null) {
-      data['BodyTemperatureRecords'] = this.bodyTemperatureRecords.toJson();
+    if (bodyTemperatureRecords != null) {
+      data['BodyTemperatureRecords'] = bodyTemperatureRecords.toJson();
     }
-    if (this.bodyWeightRecords != null) {
-      data['BodyWeightRecords'] = this.bodyWeightRecords.toJson();
+    if (bodyWeightRecords != null) {
+      data['BodyWeightRecords'] = bodyWeightRecords.toJson();
     }
-    if (this.bloodOxygenSaturationRecords != null) {
+    if (bloodOxygenSaturationRecords != null) {
       data['BloodOxygenSaturationRecords'] =
-          this.bloodOxygenSaturationRecords.toJson();
+          bloodOxygenSaturationRecords.toJson();
     }
     return data;
   }
@@ -113,23 +113,23 @@ class Records {
     order = json['Order'];
     orderedBy = json['OrderedBy'];
     if (json['Items'] != null) {
-      items = new List<Items>();
+      items = [];
       json['Items'].forEach((v) {
-        items.add(new Items.fromJson(v));
+        items.add(Items.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['TotalCount'] = this.totalCount;
-    data['RetrievedCount'] = this.retrievedCount;
-    data['PageIndex'] = this.pageIndex;
-    data['ItemsPerPage'] = this.itemsPerPage;
-    data['Order'] = this.order;
-    data['OrderedBy'] = this.orderedBy;
-    if (this.items != null) {
-      data['Items'] = this.items.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['TotalCount'] = totalCount;
+    data['RetrievedCount'] = retrievedCount;
+    data['PageIndex'] = pageIndex;
+    data['ItemsPerPage'] = itemsPerPage;
+    data['Order'] = order;
+    data['OrderedBy'] = orderedBy;
+    if (items != null) {
+      data['Items'] = items.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -182,20 +182,20 @@ class Items {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['EhrId'] = this.ehrId;
-    data['PatientUserId'] = this.patientUserId;
-    data['BloodGlucose'] = this.bloodGlucose;
-    data['Systolic'] = this.systolic;
-    data['Diastolic'] = this.diastolic;
-    data['Pulse'] = this.pulse;
-    data['BodyTemperature'] = this.bodyTemperature;
-    data['BodyWeight'] = this.bodyWeight;
-    data['BloodOxygenSaturation'] = this.bloodOxygenSaturation;
-    data['Unit'] = this.unit;
-    data['RecordDate'] = this.recordDate;
-    data['RecordedByUserId'] = this.recordedByUserId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['EhrId'] = ehrId;
+    data['PatientUserId'] = patientUserId;
+    data['BloodGlucose'] = bloodGlucose;
+    data['Systolic'] = systolic;
+    data['Diastolic'] = diastolic;
+    data['Pulse'] = pulse;
+    data['BodyTemperature'] = bodyTemperature;
+    data['BodyWeight'] = bodyWeight;
+    data['BloodOxygenSaturation'] = bloodOxygenSaturation;
+    data['Unit'] = unit;
+    data['RecordDate'] = recordDate;
+    data['RecordedByUserId'] = recordedByUserId;
     return data;
   }
 }

@@ -11,14 +11,14 @@ class EmergencyContactResponse {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['HttpCode'] = this.httpCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
@@ -33,14 +33,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     emergencyContacts = json['EmergencyContacts'] != null
-        ? new EmergencyContacts.fromJson(json['EmergencyContacts'])
+        ? EmergencyContacts.fromJson(json['EmergencyContacts'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.emergencyContacts != null) {
-      data['EmergencyContacts'] = this.emergencyContacts.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (emergencyContacts != null) {
+      data['EmergencyContacts'] = emergencyContacts.toJson();
     }
     return data;
   }
@@ -72,23 +72,23 @@ class EmergencyContacts {
     order = json['Order'];
     orderedBy = json['OrderedBy'];
     if (json['Items'] != null) {
-      items = new List<Items>();
+      items = [];
       json['Items'].forEach((v) {
-        items.add(new Items.fromJson(v));
+        items.add(Items.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['TotalCount'] = this.totalCount;
-    data['RetrievedCount'] = this.retrievedCount;
-    data['PageIndex'] = this.pageIndex;
-    data['ItemsPerPage'] = this.itemsPerPage;
-    data['Order'] = this.order;
-    data['OrderedBy'] = this.orderedBy;
-    if (this.items != null) {
-      data['Items'] = this.items.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['TotalCount'] = totalCount;
+    data['RetrievedCount'] = retrievedCount;
+    data['PageIndex'] = pageIndex;
+    data['ItemsPerPage'] = itemsPerPage;
+    data['Order'] = order;
+    data['OrderedBy'] = orderedBy;
+    if (items != null) {
+      data['Items'] = items.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -129,7 +129,7 @@ class Items {
     patientUserId = json['PatientUserId'];
     contactPersonId = json['ContactPersonId'];
     contactPerson = json['ContactPerson'] != null
-        ? new ContactPerson.fromJson(json['ContactPerson'])
+        ? ContactPerson.fromJson(json['ContactPerson'])
         : null;
     contactRelation = json['ContactRelation'];
     addressId = json['AddressId'];
@@ -143,22 +143,22 @@ class Items {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['PatientUserId'] = this.patientUserId;
-    data['ContactPersonId'] = this.contactPersonId;
-    if (this.contactPerson != null) {
-      data['ContactPerson'] = this.contactPerson.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['PatientUserId'] = patientUserId;
+    data['ContactPersonId'] = contactPersonId;
+    if (contactPerson != null) {
+      data['ContactPerson'] = contactPerson.toJson();
     }
-    data['ContactRelation'] = this.contactRelation;
-    data['AddressId'] = this.addressId;
-    data['Address'] = this.address;
-    data['OrganizationId'] = this.organizationId;
-    data['Organization'] = this.organization;
-    data['IsAvailableForEmergency'] = this.isAvailableForEmergency;
-    data['TimeOfAvailability'] = this.timeOfAvailability;
-    data['Description'] = this.description;
-    data['AdditionalPhoneNumbers'] = this.additionalPhoneNumbers;
+    data['ContactRelation'] = contactRelation;
+    data['AddressId'] = addressId;
+    data['Address'] = address;
+    data['OrganizationId'] = organizationId;
+    data['Organization'] = organization;
+    data['IsAvailableForEmergency'] = isAvailableForEmergency;
+    data['TimeOfAvailability'] = timeOfAvailability;
+    data['Description'] = description;
+    data['AdditionalPhoneNumbers'] = additionalPhoneNumbers;
     return data;
   }
 }
@@ -210,20 +210,20 @@ class ContactPerson {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['Prefix'] = this.prefix;
-    data['FirstName'] = this.firstName;
-    data['MiddleName'] = this.middleName;
-    data['LastName'] = this.lastName;
-    data['DisplayName'] = this.displayName;
-    data['Gender'] = this.gender;
-    data['BirthDate'] = this.birthDate;
-    data['Age'] = this.age;
-    data['Phone'] = this.phone;
-    data['Email'] = this.email;
-    data['ImageResourceId'] = this.imageResourceId;
-    data['ActiveSince'] = this.activeSince;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['Prefix'] = prefix;
+    data['FirstName'] = firstName;
+    data['MiddleName'] = middleName;
+    data['LastName'] = lastName;
+    data['DisplayName'] = displayName;
+    data['Gender'] = gender;
+    data['BirthDate'] = birthDate;
+    data['Age'] = age;
+    data['Phone'] = phone;
+    data['Email'] = email;
+    data['ImageResourceId'] = imageResourceId;
+    data['ActiveSince'] = activeSince;
     return data;
   }
 }

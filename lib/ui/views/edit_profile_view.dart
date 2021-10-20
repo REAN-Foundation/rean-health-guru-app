@@ -9,7 +9,6 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
@@ -42,7 +41,7 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController _middleNameController = TextEditingController();
 
   final TextEditingController _mobileNumberController = TextEditingController();
-  final TextEditingController _emergencyMobileNumberController = TextEditingController();
+  //final TextEditingController _emergencyMobileNumberController = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
@@ -62,7 +61,8 @@ class _EditProfileState extends State<EditProfile> {
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _mobileNumberFocus = FocusNode();
-  final _emergencyMobileNumberFocus = FocusNode();
+
+  //final _emergencyMobileNumberFocus = FocusNode();
   final _emailFocus = FocusNode();
   final _cityFocus = FocusNode();
   final _countryFocus = FocusNode();
@@ -976,7 +976,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Widget _entryEmergencyMobileNoField(String title) {
+  /* Widget _entryEmergencyMobileNoField(String title) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -1004,7 +1004,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               ),
               child:
-                  /*Row(
+                  */ /*Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
@@ -1035,9 +1035,9 @@ class _EditProfileState extends State<EditProfile> {
                             filled: false)),
                   )
                 ],
-              )*/
+              )*/ /*
 
-                  /* InternationalPhoneNumberInput(
+                  */ /* InternationalPhoneNumberInput(
                 onInputChanged: (PhoneNumber number) {
                   emergencymobileNumber = number.parseNumber();
                   debugPrint(number.parseNumber());
@@ -1077,15 +1077,15 @@ class _EditProfileState extends State<EditProfile> {
                     borderSide: BorderSide(color: Colors.white),
                   ),
                 ),
-              )*/
+              )*/ /*
 
                   IntlPhoneField(
-                /*decoration: InputDecoration(
+                */ /*decoration: InputDecoration(
                     labelText: 'Phone Number',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(),
                     ),
-                  ),*/
+                  ),*/ /*
                 style: TextStyle(fontSize: 16, color: Colors.black),
                 autoValidate: true,
                 enabled: isEditable,
@@ -1109,13 +1109,13 @@ class _EditProfileState extends State<EditProfile> {
                   debugPrint(phone.number);
                   mobileNumber = phone.number;
                   countryCode = phone.countryCode;
-                  /*if(mobileNumber.length == 10){
+                  */ /*if(mobileNumber.length == 10){
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
-                    }*/
+                    }*/ /*
                 },
               )
 
-              /*InternationalPhoneNumberInput
+              */ /*InternationalPhoneNumberInput
               .withCustomDecoration(
               onInputChanged: (PhoneNumber number) {
                 mobileNumber = number.toString().trim();
@@ -1143,12 +1143,12 @@ class _EditProfileState extends State<EditProfile> {
                   border: InputBorder.none,
                   fillColor: Color(0xfff3f3f4),
                   filled: true)
-          ),*/
+          ),*/ /*
               ),
         ],
       ),
     );
-  }
+  }*/
 
   /*Widget _entryMobileNoField(String title) {
     return Container(

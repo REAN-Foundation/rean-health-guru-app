@@ -1138,7 +1138,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   _addPatientMedication(BuildContext context) async {
     try {
-      var timeShedule = List<String>();
+      final timeShedule = <String>[];
       int frequency = 0;
 
       if (_frequencyUnit == 'Daily') {

@@ -11,14 +11,14 @@ class GetMyMedicationsResponse {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['HttpCode'] = this.httpCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
@@ -33,16 +33,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     medicationSchedulesForDay = json['MedicationSchedulesForDay'] != null
-        ? new MedicationSchedulesForDay.fromJson(
-            json['MedicationSchedulesForDay'])
+        ? MedicationSchedulesForDay.fromJson(json['MedicationSchedulesForDay'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.medicationSchedulesForDay != null) {
-      data['MedicationSchedulesForDay'] =
-          this.medicationSchedulesForDay.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (medicationSchedulesForDay != null) {
+      data['MedicationSchedulesForDay'] = medicationSchedulesForDay.toJson();
     }
     return data;
   }
@@ -57,18 +55,18 @@ class MedicationSchedulesForDay {
   MedicationSchedulesForDay.fromJson(Map<String, dynamic> json) {
     day = json['Day'];
     if (json['Schedules'] != null) {
-      schedules = new List<Schedules>();
+      schedules = [];
       json['Schedules'].forEach((v) {
-        schedules.add(new Schedules.fromJson(v));
+        schedules.add(Schedules.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Day'] = this.day;
-    if (this.schedules != null) {
-      data['Schedules'] = this.schedules.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Day'] = day;
+    if (schedules != null) {
+      data['Schedules'] = schedules.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -103,14 +101,14 @@ class Schedules {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['PatientUserId'] = this.patientUserId;
-    data['DrugName'] = this.drugName;
-    data['Details'] = this.details;
-    data['TimeScheduleStart'] = this.timeScheduleStart;
-    data['TimeScheduleEnd'] = this.timeScheduleEnd;
-    data['Status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['PatientUserId'] = patientUserId;
+    data['DrugName'] = drugName;
+    data['Details'] = details;
+    data['TimeScheduleStart'] = timeScheduleStart;
+    data['TimeScheduleEnd'] = timeScheduleEnd;
+    data['Status'] = status;
     return data;
   }
 }

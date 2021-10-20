@@ -5,20 +5,26 @@
 # file with configuration.  For more information, see:
 # https://github.com/actions/labeler
 
-name: DEV Workflow
+name: UAT Workflow
 
-# Controls when the workflow will run
+# Controls when the workflow will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [develop]
-  pull_request:
-    branches: [develop]
+    branches: [feature/uat-workflow]
+  # pull_request:
+  #   branches: [master]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
+  # test-job:
+  #   name: env
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Show env
+  #       run: echo ${{ secrets.FLUTTER_DOTENV }}
   gitguardian-scanning:
     name: GitGuardian Scan
     runs-on: ubuntu-latest
@@ -35,21 +41,6 @@ jobs:
           GITHUB_PULL_BASE_SHA: ${{ github.event.pull_request.base.sha }}
           GITHUB_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
-
-  # CodeScan-GitHubSuperLinter:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     # Checkout Code
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v2.3.4
-  #       with:
-  #         fetch-depth: 0
-
-  #     - name: GitHub SuperLinter Scan
-  #       uses: github/super-linter@v4
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         VALIDATE_DART: true
 
   CodeScan-FlutterAnalyze:
     runs-on: ubuntu-latest
@@ -73,13 +64,19 @@ jobs:
       - name: Create env file
         run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
 
+      # - name: Create env
+      #   env:
+      #     FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
+      #   run: |
+      #     echo $FLUTTER_DOTENV > ./res/.env
+
       - name: Run Flutter Analyze
         run: |
           flutter clean
           flutter analyze --preamble --congratulate
 
   Android-BuildApp:
-    environment: dev
+    environment: uat
     # needs: [Code-Scan]
     runs-on: ubuntu-latest
     steps:
@@ -124,14 +121,14 @@ jobs:
           KEYSTORE_TOKEN: ${{ secrets.KEYSTORE_TOKEN_BASE64 }}
           # FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
         run: |
-          echo $FIREBASE_CONFIG > ./android/app/src/dev/google-services.json
+          echo $FIREBASE_CONFIG > ./android/app/src/uat/google-services.json
           echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
           # echo $FLUTTER_DOTENV > ./res/.env
 
       # Flutter Build Artifact
       # - if: github.ref == 'refs/heads/development'
       - name: Flutter Build
-        run: flutter build apk --debug --flavor dev -t "lib/main_dev.dart"
+        run: flutter build appbundle --release --flavor uat -t "lib/main_uat.dart"
 
       # Upload Artifacts
       - name: Upload build Artifacts
@@ -142,10 +139,10 @@ jobs:
           path: |
             build/app/outputs
           if-no-files-found: error
-          retention-days: 7 # Keeping short for Dev Builds
+          retention-days: 14
 
-  Android-PublishAppInternally:
-    environment: dev
+  Android-Release-Alpha:
+    environment: uat
     needs: Android-BuildApp
     runs-on: ubuntu-latest
     defaults:
@@ -170,30 +167,14 @@ jobs:
           name: android-artifacts
           path: android/build/app/outputs
 
-      - name: Publish to BrowserStack
-        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:debug
+      - name: Publish to Playstore
+        run: bundle exec fastlane release_alpha_build aab_path:"build/app/outputs/bundle/uatRelease/app-uat-release.aab"
         env:
-          BROWSERSTACK_APP_ID: RHG-APP-Android-Dev
-          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-
-      - name: Publish to Firebase
-        run: bundle exec fastlane publish_to_firebase flavor:dev mode:debug
-        env:
-          FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
-          FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
-
-      - name: Publish to TestProject.io
-        uses: ./.github/actions/upload_to_testproject
-        with:
-          project_id: ${{ secrets.TPIO_ANDROID_PROJECT_ID }}
-          app_id: ${{ secrets.TPIO_ANDROID_APP_ID }}
-          app_name: app-dev-debug.apk
-          app_path: "android/build/app/outputs/apk/dev/debug/app-dev-debug.apk"
-          tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}
+          PLAYSTORE_JSON_KEY_DATA: ${{ secrets.PLAYSTORE_JSON_KEY_DATA }}
+          
 
   iOS-BuildApp:
-    environment: dev
+    environment: uat
     # needs: [Code-Scan]
     runs-on: macos-latest
     steps:
@@ -226,16 +207,16 @@ jobs:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_PLIST }}
           # FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
         run: |
-          mkdir -p ./ios/config/dev/
-          echo $FIREBASE_CONFIG > ./ios/config/dev/GoogleService-Info.plist
+          mkdir -p ./ios/config/uat/
+          echo $FIREBASE_CONFIG > ./ios/config/uat/GoogleService-Info.plist
           # echo $FLUTTER_DOTENV > ./res/.env
 
       # Flutter Build Artifact
       - name: Flutter Build
-        run: flutter build ios --release --no-codesign --flavor dev -t "lib/main_dev.dart"
+        run: flutter build ios --release --no-codesign --flavor uat -t "lib/main_uat.dart"
 
       - name: Generate Signed Build
-        run: bundle exec fastlane build flavor:dev mode:release
+        run: bundle exec fastlane build flavor:uat mode:release
         working-directory: ios
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
@@ -253,10 +234,10 @@ jobs:
           path: |
             ios/output
           if-no-files-found: error
-          retention-days: 7 # Keeping short for Dev Builds
+          retention-days: 14
 
-  iOS-PublishAppInternally:
-    environment: dev
+  iOS-Release-Alpha:
+    environment: uat
     needs: iOS-BuildApp
     runs-on: macos-latest
     defaults:
@@ -281,24 +262,11 @@ jobs:
           name: ios-artifacts
           path: ios/output
 
-      - name: Publish to BrowserStack
-        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:release
+      - name: Publish to Appstore
+        run: bundle exec fastlane upload_build_to_testflight flavor:uat mode:release
         env:
-          BROWSERSTACK_APP_ID: RHG-APP-iOS-Dev
-          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-
-      - name: Publish to Firebase
-        run: bundle exec fastlane publish_to_firebase flavor:dev mode:release
-        env:
-          FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
-          FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}
-
-      - name: Publish to TestProject.io
-        uses: ./.github/actions/upload_to_testproject
-        with:
-          project_id: ${{ secrets.TPIO_ANDROID_PROJECT_ID }}
-          app_id: ${{ secrets.TPIO_ANDROID_APP_ID }}
-          app_name: RHG-APP-release-dev.ipa
-          app_path: "ios/output/build/RHG-APP-release-dev.ipa"
-          tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
+          IOS_DEMO_USER: ${{ secrets.IOS_DEMO_USER }}
+          IOS_DEMO_PASSWORD: ${{ secrets.IOS_DEMO_PASSWORD }}

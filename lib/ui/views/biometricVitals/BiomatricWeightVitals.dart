@@ -578,7 +578,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
       map['PatientUserId'] = "";
       map['Unit'] = "lbs";
 
-      final BaseResponse baseResponse = await model.addMyVitals('body-weight', map);
+      final BaseResponse baseResponse = await model.addMyVitals('body-weights', map);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();

@@ -12,7 +12,7 @@ description: A new Flutter application.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.5.2+43
+version: 1.5.8+49
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -44,7 +44,7 @@ dependencies:
   masked_text_input_formatter: 0.0.1
   syncfusion_flutter_pdfviewer: ^19.2.57-beta
   #flutter_full_pdf_viewer: ^1.0.6
-  firebase_core: ^1.6.0
+  #firebase_core: ^1.6.0
   firebase_messaging: ^10.0.6
   #razorpay_flutter: ^1.2.3
   flutter_autolink_text: ^1.0.0+1

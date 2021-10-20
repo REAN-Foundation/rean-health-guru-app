@@ -475,10 +475,14 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   Widget _makeMedicineCard(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
+    //debugPrint('Medication Pojo ${task.toJson().toString()}');
+    if (task.scheduledStartTime == null) {
+      return Container();
+    }
     final DateTime startTime =
         DateTime.parse(task.scheduledStartTime).toLocal();
-    debugPrint(
-        'Medication Taken ==> ${task.status}  && Start Time ==> ${DateTime.now().isAfter(startTime)} ');
+    /* debugPrint(
+        'Medication Taken ==> ${task.status}  && Start Time ==> ${DateTime.now().isAfter(startTime)} ');*/
     return MergeSemantics(
       child: Semantics(
         label: task.category,

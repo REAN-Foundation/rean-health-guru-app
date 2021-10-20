@@ -47,8 +47,6 @@ class ApiProvider {
       headers.addAll(header);
     }
     headers['x-api-key'] = _api_key;
-    debugPrint('Base Url ==> GET ${_baseUrl + url}');
-    debugPrint('Headers ==> ${json.encode(headers).toString()}');
 
     debugPrint('Base Url ==> POST ${_baseUrl + url}');
     debugPrint('Request Body ==> ${json.encode(body).toString()}');

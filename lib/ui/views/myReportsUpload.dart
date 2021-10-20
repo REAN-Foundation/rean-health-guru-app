@@ -655,6 +655,10 @@ class _MyReportsViewState extends State<MyReportsView> {
       request.fields['DocumentType'] = type;
       request.fields['PatientUserId'] = patientUserId;
 
+      debugPrint('Base Url ==> MultiPart ${request.url}');
+      debugPrint('Request Body ==> ${json.encode(request.fields).toString()}');
+      debugPrint('Headers ==> ${json.encode(request.headers).toString()}');
+
       request.send().then((response) async {
         if (response.statusCode == 201) {
           progressDialog.hide();

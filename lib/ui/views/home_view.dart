@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/common_config_model.dart';
+import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/emergency_contact.dart';
@@ -61,6 +63,8 @@ class _HomeViewState extends State<HomeView> {
   TutorialCoachMark tutorialCoachMark;
   List<TargetFocus> targets = [];
   CoachMarkUtilites coackMarkUtilites = CoachMarkUtilites();
+  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  String imageResourceId = '';
 
   _HomeViewState(int screenPosition) {
     _currentNav = screenPosition;
@@ -84,7 +88,13 @@ class _HomeViewState extends State<HomeView> {
       setState(() {
         //debugPrint('Gender ==> ${patient.user.person.gender}');
         name = user.data.user.person.firstName;
-        profileImage = user.data.user.person.imageResourceId ?? '';
+        imageResourceId = patient.user.person.imageResourceId ?? '';
+        profileImage = imageResourceId != ''
+            ? apiProvider.getBaseUrl() +
+                '/file-resources/' +
+                imageResourceId +
+                '/download'
+            : '';
       });
 
       /*if (!user.data.isProfileComplete ||

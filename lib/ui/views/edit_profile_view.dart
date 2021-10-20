@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -11,8 +12,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
+import 'package:paitent/core/models/FileUploadPublicResourceResponse.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
-import 'package:paitent/core/models/UploadImageResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/login_view_model.dart';
 import 'package:paitent/networking/ApiProvider.dart';
@@ -86,11 +87,13 @@ class _EditProfileState extends State<EditProfile> {
   bool isEditable = false;
 
   String countryCode = '';
+  String imageResourceId = '';
+  var _api_key;
 
   @override
   void initState() {
     debugPrint('TimeZone ==> ${DateTime.now().timeZoneOffset}');
-
+    _api_key = dotenv.env['Patient_API_KEY'];
     super.initState();
     loadSharedPrefs();
   }
@@ -146,14 +149,21 @@ class _EditProfileState extends State<EditProfile> {
       _emailController.text = patient.user.person.email;
       // _emergencyMobileNumberController.text = patient.user.person;
 
-       _cityController.text = patient.user.person.addresses.elementAt(0).city;
-      _addressController.text = patient.user.person.addresses.elementAt(0).addressLine;
-      _countryController.text = patient.user.person.addresses.elementAt(0).country;
-      _postalCodeController.text = patient.user.person.addresses.elementAt(0).postalCode;
+      _cityController.text = patient.user.person.addresses.elementAt(0).city;
+      _addressController.text =
+          patient.user.person.addresses.elementAt(0).addressLine;
+      _countryController.text =
+          patient.user.person.addresses.elementAt(0).country;
+      _postalCodeController.text =
+          patient.user.person.addresses.elementAt(0).postalCode;
 
-
-
-    //profileImagePath = patient.user.person.imageResourceId ?? '';
+      imageResourceId = patient.user.person.imageResourceId ?? '';
+      profileImagePath = imageResourceId != ''
+          ? apiProvider.getBaseUrl() +
+              '/file-resources/' +
+              imageResourceId +
+              '/download'
+          : '';
 
       setState(() {
         debugPrint(patientGender);
@@ -325,29 +335,36 @@ class _EditProfileState extends State<EditProfile> {
       final map = <String, String>{};
       map['enc'] = 'multipart/form-data';
       map['Authorization'] = 'Bearer ' + auth;
+      map['x-api-key'] = _api_key;
 
-      final postUri = Uri.parse(_baseUrl + '/resources/upload/');
+      final postUri = Uri.parse(_baseUrl + '/file-resources/upload/');
       final request = http.MultipartRequest('POST', postUri);
       request.headers.addAll(map);
       request.files.add(http.MultipartFile(
           'name', file.readAsBytes().asStream(), file.lengthSync(),
           filename: file.path.split('/').last));
-      request.fields['isPublicResource'] = 'true';
+      request.fields['IsPublicResource'] = 'true';
+
+      debugPrint('Base Url ==> MultiPart ${request.url}');
+      debugPrint('Request Body ==> ${json.encode(request.fields).toString()}');
+      debugPrint('Headers ==> ${json.encode(request.headers).toString()}');
 
       request.send().then((response) async {
-        if (response.statusCode == 200) {
+        if (response.statusCode == 201) {
           debugPrint('Uploaded!');
           final respStr = await response.stream.bytesToString();
           debugPrint('Uploded ' + respStr);
-          final UploadImageResponse uploadResponse =
-              UploadImageResponse.fromJson(json.decode(respStr));
+          final FileUploadPublicResourceResponse uploadResponse =
+              FileUploadPublicResourceResponse.fromJson(json.decode(respStr));
           if (uploadResponse.status == 'success') {
-            profileImagePath = uploadResponse.data.details.elementAt(0).url;
+            profileImagePath =
+                uploadResponse.data.fileResources.elementAt(0).url;
+            imageResourceId = uploadResponse.data.fileResources.elementAt(0).id;
             //profileImage = uploadResponse.data.details.elementAt(0).url;
             showToast(uploadResponse.message, context);
             setState(() {
               debugPrint(
-                  'File Public URL ==> ${uploadResponse.data.details.elementAt(0).url}');
+                  'File Public URL ==> ${uploadResponse.data.fileResources.elementAt(0).url}');
             });
           } else {
             showToast('Opps, something wents wrong!', context);
@@ -1244,16 +1261,15 @@ class _EditProfileState extends State<EditProfile> {
 
                     //map['Locality'] = _cityController.text;
                     //map['Address'] = _addressController.text;
-                    //map['ImageURL'] =
-                        profileImagePath == '' ? null : profileImagePath;
+                    map['ImageResourceId'] =
+                        imageResourceId == '' ? null : imageResourceId;
                     //map['EmergencyContactNumber'] =
-                      //  _emergencyMobileNumberController.text;
+                    //  _emergencyMobileNumberController.text;
                     map['Email'] = _emailController.text;
                     //map['LocationCoords_Longitude'] = null;
                     //map['LocationCoords_Lattitude'] = null;
 
                     try {
-
                       final BaseResponse updateProfileSuccess = await model
                           .updateProfile(map, userId, 'Bearer ' + auth);
 

@@ -204,8 +204,9 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   label: 'medication_image',
                   child: CachedNetworkImage(
                     imageUrl: apiProvider.getBaseUrl() +
-                        '/resources/download-public/' +
-                        medication.imageResourceId,
+                        '/file-resources/' +
+                        medication.imageResourceId +
+                        '/download-by-version-name/1',
                   ),
                 ),
               )
@@ -216,6 +217,8 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       ),
     );
   }
+
+  //http://localhost:7272/api/v1/file-resources/05e911d6-b0bd-4bc7-b495-973d2d67d39c/download-by-version-name/1
 
   /*Widget _makeMedicineCard(BuildContext context, int index) {
     MedConsumptions consumptions = medConsumptions.elementAt(index);

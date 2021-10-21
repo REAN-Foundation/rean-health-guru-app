@@ -326,7 +326,9 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          dateFormatStandard.format(DateTime.parse(record.recordDate)),
+          dateFormatStandard.format(records.elementAt(index).recordDate == null
+              ? DateTime.now()
+              : DateTime.parse(records.elementAt(index).recordDate)),
           style: TextStyle(
               color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
           maxLines: 1,
@@ -403,7 +405,10 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           ? (double.parse(records.elementAt(i).bodyWeight.toString()) * 2.20462)
               .toStringAsFixed(1)
           : records.elementAt(i).bodyWeight.toString();
-      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(
+          records.elementAt(i).recordDate == null
+              ? DateTime.now()
+              : DateTime.parse(records.elementAt(i).recordDate),
           double.parse(receivedWeight)));
     }
 
@@ -576,9 +581,10 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
       final map = <String, dynamic>{};
       map['BodyWeight'] = entertedWeight.toString();
       map['PatientUserId'] = "";
-      map['Unit'] = "lbs";
+      map['Unit'] = "kg";
 
-      final BaseResponse baseResponse = await model.addMyVitals('body-weights', map);
+      final BaseResponse baseResponse =
+          await model.addMyVitals('body-weights', map);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();

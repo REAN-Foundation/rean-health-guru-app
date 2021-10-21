@@ -1243,12 +1243,23 @@ class _EditProfileState extends State<EditProfile> {
                 onPressed: () async {
                   if (_emailController.text.toString() == '') {
                     showToast('Please enter email', context);
-                  } else {
+                  } else if (_addressController.text.toString() == '') {
+                    showToast('Please enter address', context);
+                  } else if (_cityController.text.toString() == '') {
+                    showToast('Please enter city', context);
+                  } else if (_countryController.text.toString() == '') {
+                    showToast('Please enter country', context);
+                  }
+                  /*else if (_postalCodeController.text.toString() == '') {
+                    showToast('Please enter postal code', context);
+                  } */
+                  else {
                     progressDialog.show();
 
                     final map = <String, dynamic>{};
                     map['Gender'] = selectedGender;
-                    map['BirthDate'] = DateFormat('yyyy-MM-dd').format(DateTime.parse(unformatedDOB));
+                    map['BirthDate'] = DateFormat('yyyy-MM-dd')
+                        .format(DateTime.parse(unformatedDOB));
                     map['FirstName'] = _firstNameController.text;
                     map['MiddleName'] = _middleNameController.text;
                     map['LastName'] = _lastNameController.text;
@@ -1256,7 +1267,10 @@ class _EditProfileState extends State<EditProfile> {
                     address['AddressLine'] = _addressController.text;
                     address['City'] = _cityController.text;
                     address['Country'] = _countryController.text;
-                    address['PostalCode'] = _postalCodeController.text;
+                    address['PostalCode'] =
+                        _postalCodeController.text.length == 0
+                            ? null
+                            : _postalCodeController.text;
                     map['Address'] = address;
 
                     //map['Locality'] = _cityController.text;
@@ -1542,9 +1556,9 @@ class _EditProfileState extends State<EditProfile> {
         _entryEmailField('Email*'),
         //_entryBloodGroupField("Blood Group"),
         //_entryEmergencyMobileNoField('Emergency Contact Number'),
-        _entryAddressField('Address Line'),
-        _entryLocalityField('City'),
-        _entryCountryField('Country'),
+        _entryAddressField('Address*'),
+        _entryLocalityField('City*'),
+        _entryCountryField('Country*'),
         _entryPostalField('Postal Code'),
       ],
     );

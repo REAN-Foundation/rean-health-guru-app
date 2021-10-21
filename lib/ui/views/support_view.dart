@@ -230,7 +230,9 @@ class _SupportViewState extends State<SupportView> {
                                                   path: email,
                                                   queryParameters: {
                                                     'subject':
-                                                        appName + ' app query',
+                                                        appName.replaceAll(
+                                                                '%20', ' ') +
+                                                            ' app query',
                                                     'body': ''
                                                             '' +
                                                         name +

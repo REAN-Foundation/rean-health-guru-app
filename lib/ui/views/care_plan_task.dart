@@ -476,9 +476,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   Widget _makeMedicineCard(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
     //debugPrint('Medication Pojo ${task.toJson().toString()}');
-    if (task.scheduledStartTime == null) {
+    /*if (task.scheduledStartTime == null) {
       return Container();
-    }
+    }*/
     final DateTime startTime =
         DateTime.parse(task.scheduledStartTime).toLocal();
     /* debugPrint(
@@ -607,17 +607,18 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         SizedBox(
                           width: 8,
                         ),
-                        if (task.status != 'Completed' &&
-                            task.status != 'Cancelled') ...[
+                        if (!task.actionDto.isTaken &&
+                            !task.actionDto.isMissed) ...[
                           Visibility(
-                            visible: !(DateTime.parse(task.scheduledStartTime)
+                            visible: !(DateTime.parse(
+                                        task.actionDto.timeScheduleStart)
                                     .toLocal())
                                 .isAfter(DateTime.now()),
                             child: Expanded(
                               flex: 2,
                               child: InkWell(
                                 onTap: () {
-                                  markMedicationsAsTaken(task.id);
+                                  markMedicationsAsTaken(task.actionId);
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -651,7 +652,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             ),
                           ),
                         ],
-                        if (task.status == 'Completed') ...[
+                        if (task.actionDto.isTaken) ...[
                           Expanded(
                             flex: 2,
                             child: InkWell(
@@ -677,7 +678,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             ),
                           ),
                         ],
-                        if (task.status == 'Cancelled') ...[
+                        if (task.actionDto.isMissed) ...[
                           Expanded(
                             flex: 2,
                             child: InkWell(

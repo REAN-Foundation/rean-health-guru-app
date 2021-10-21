@@ -37,7 +37,10 @@ class DashboardSummaryModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.get(
-        '/medication-consumption/summary-for-day/' + patientUserId + '/' + date,
+        '/clinical/medication-consumptions/summary-for-day/' +
+            patientUserId +
+            '/' +
+            date,
         header: map);
     setBusy(false);
     // Convert and return
@@ -113,7 +116,7 @@ class DashboardSummaryModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.put(
-        '/medication-consumption/mark-list-as-taken/',
+        '/clinical/medication-consumptions/mark-list-as-taken/',
         header: map,
         body: body);
 

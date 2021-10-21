@@ -46,12 +46,12 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   int incompleteTaskCount = 0;
   int completedMedicationCount = 0;
   int incompleteMedicationCount = 0;
-  Weight weight;
+/*  Weight weight;
   BloodPressure bloodPressure;
   BloodSugar bloodSugar;
   BloodOxygenSaturation bloodOxygenSaturation;
   Pulse pulse;
-  Temperature temperature;
+  Temperature temperature;*/
   String unit = 'Kg';
   String topicId;
   String topicName = '';
@@ -118,6 +118,21 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     }
   }
 
+  sortMyMedication(GetMyMedicationsResponse response) {
+    for (var medSummary in response.data.medicationSchedulesForDay.schedules) {
+      if (medSummary.status == 'Unknown' ||
+          medSummary.status == 'Upcoming' ||
+          medSummary.status == 'Overdue') {
+        incompleteMedicationCount = incompleteMedicationCount + 1;
+      }
+
+      if (medSummary.status == 'Taken') {
+        completedMedicationCount = completedMedicationCount + 1;
+      }
+    }
+    setState(() {});
+  }
+
   getMedicationSummary() async {
     try {
       final TaskSummaryResponse taskSummaryResponse =
@@ -134,13 +149,14 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       } else {
         //showToast(startCarePlanResponse.message);
       }
-    } catch (CustomException) {
-      model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException.toString());
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      setState(() {});
+      showToast(e.toString(), context);
     }
   }
 
+/*
   getLatestBiometrics() async {
     try {
       final TaskSummaryResponse taskSummaryResponse =
@@ -164,7 +180,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -1544,6 +1560,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
             .data.medicationSchedulesForDay.schedules.isNotEmpty) {
           currentMedicationList.addAll(getMyMedicationsResponse
               .data.medicationSchedulesForDay.schedules);
+          sortMyMedication(getMyMedicationsResponse);
         }
       } else {
         //showToast(getMyMedicationsResponse.message, context);
@@ -1569,7 +1586,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
 
       if (medicationIds.isNotEmpty) {
         final body = <String, dynamic>{};
-        body['ids'] = medicationIds;
+        body['MedicationConsumptionIds'] = medicationIds;
 
         final BaseResponse baseResponse =
             await model.markAllMedicationsAsTaken(body);

@@ -10,14 +10,14 @@ class UserTaskResponse {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
+    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['Status'] = status;
-    data['Message'] = message;
-    data['HttpCode'] = httpCode;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Status'] = this.status;
+    data['Message'] = this.message;
+    data['HttpCode'] = this.httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
@@ -32,14 +32,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     userTasks = json['UserTasks'] != null
-        ? UserTasks.fromJson(json['UserTasks'])
+        ? new UserTasks.fromJson(json['UserTasks'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (userTasks != null) {
-      data['UserTasks'] = userTasks.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.userTasks != null) {
+      data['UserTasks'] = this.userTasks.toJson();
     }
     return data;
   }
@@ -71,23 +71,23 @@ class UserTasks {
     order = json['Order'];
     orderedBy = json['OrderedBy'];
     if (json['Items'] != null) {
-      items = <Items>[];
+      items = new List<Items>();
       json['Items'].forEach((v) {
-        items.add(Items.fromJson(v));
+        items.add(new Items.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['TotalCount'] = totalCount;
-    data['RetrievedCount'] = retrievedCount;
-    data['PageIndex'] = pageIndex;
-    data['ItemsPerPage'] = itemsPerPage;
-    data['Order'] = order;
-    data['OrderedBy'] = orderedBy;
-    if (items != null) {
-      data['Items'] = items.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['TotalCount'] = this.totalCount;
+    data['RetrievedCount'] = this.retrievedCount;
+    data['PageIndex'] = this.pageIndex;
+    data['ItemsPerPage'] = this.itemsPerPage;
+    data['Order'] = this.order;
+    data['OrderedBy'] = this.orderedBy;
+    if (this.items != null) {
+      data['Items'] = this.items.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -98,7 +98,7 @@ class Items {
   String displayId;
   String userId;
   String task;
-  String description;
+  Null description;
   String category;
   String actionType;
   String actionId;
@@ -110,10 +110,11 @@ class Items {
   bool finished;
   String finishedAt;
   bool cancelled;
-  String cancelledAt;
-  String cancellationReason;
+  Null cancelledAt;
+  Null cancellationReason;
   bool isRecurrent;
-  String recurrenceScheduleId;
+  Null recurrenceScheduleId;
+  ActionDto actionDto;
 
   Items(
       {this.id,
@@ -135,7 +136,8 @@ class Items {
       this.cancelledAt,
       this.cancellationReason,
       this.isRecurrent,
-      this.recurrenceScheduleId});
+      this.recurrenceScheduleId,
+      this.actionDto});
 
   Items.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -158,30 +160,117 @@ class Items {
     cancellationReason = json['CancellationReason'];
     isRecurrent = json['IsRecurrent'];
     recurrenceScheduleId = json['RecurrenceScheduleId'];
+    actionDto = json['ActionDto'] != null
+        ? new ActionDto.fromJson(json['ActionDto'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['DisplayId'] = displayId;
-    data['UserId'] = userId;
-    data['Task'] = task;
-    data['Description'] = description;
-    data['Category'] = category;
-    data['ActionType'] = actionType;
-    data['ActionId'] = actionId;
-    data['ScheduledStartTime'] = scheduledStartTime;
-    data['ScheduledEndTime'] = scheduledEndTime;
-    data['Status'] = status;
-    data['Started'] = started;
-    data['StartedAt'] = startedAt;
-    data['Finished'] = finished;
-    data['FinishedAt'] = finishedAt;
-    data['Cancelled'] = cancelled;
-    data['CancelledAt'] = cancelledAt;
-    data['CancellationReason'] = cancellationReason;
-    data['IsRecurrent'] = isRecurrent;
-    data['RecurrenceScheduleId'] = recurrenceScheduleId;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['DisplayId'] = this.displayId;
+    data['UserId'] = this.userId;
+    data['Task'] = this.task;
+    data['Description'] = this.description;
+    data['Category'] = this.category;
+    data['ActionType'] = this.actionType;
+    data['ActionId'] = this.actionId;
+    data['ScheduledStartTime'] = this.scheduledStartTime;
+    data['ScheduledEndTime'] = this.scheduledEndTime;
+    data['Status'] = this.status;
+    data['Started'] = this.started;
+    data['StartedAt'] = this.startedAt;
+    data['Finished'] = this.finished;
+    data['FinishedAt'] = this.finishedAt;
+    data['Cancelled'] = this.cancelled;
+    data['CancelledAt'] = this.cancelledAt;
+    data['CancellationReason'] = this.cancellationReason;
+    data['IsRecurrent'] = this.isRecurrent;
+    data['RecurrenceScheduleId'] = this.recurrenceScheduleId;
+    if (this.actionDto != null) {
+      data['ActionDto'] = this.actionDto.toJson();
+    }
+    return data;
+  }
+}
+
+class ActionDto {
+  String id;
+  String ehrId;
+  String patientUserId;
+  String medicationId;
+  String drugName;
+  String drugId;
+  int dose;
+  String details;
+  String timeScheduleStart;
+  String timeScheduleEnd;
+  bool isTaken;
+  String takenAt;
+  bool isMissed;
+  bool isCancelled;
+  String cancelledOn;
+  String note;
+  String status;
+
+  ActionDto(
+      {this.id,
+      this.ehrId,
+      this.patientUserId,
+      this.medicationId,
+      this.drugName,
+      this.drugId,
+      this.dose,
+      this.details,
+      this.timeScheduleStart,
+      this.timeScheduleEnd,
+      this.isTaken,
+      this.takenAt,
+      this.isMissed,
+      this.isCancelled,
+      this.cancelledOn,
+      this.note,
+      this.status});
+
+  ActionDto.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    ehrId = json['EhrId'];
+    patientUserId = json['PatientUserId'];
+    medicationId = json['MedicationId'];
+    drugName = json['DrugName'];
+    drugId = json['DrugId'];
+    dose = json['Dose'];
+    details = json['Details'];
+    timeScheduleStart = json['TimeScheduleStart'];
+    timeScheduleEnd = json['TimeScheduleEnd'];
+    isTaken = json['IsTaken'];
+    takenAt = json['TakenAt'];
+    isMissed = json['IsMissed'];
+    isCancelled = json['IsCancelled'];
+    cancelledOn = json['CancelledOn'];
+    note = json['Note'];
+    status = json['Status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['EhrId'] = this.ehrId;
+    data['PatientUserId'] = this.patientUserId;
+    data['MedicationId'] = this.medicationId;
+    data['DrugName'] = this.drugName;
+    data['DrugId'] = this.drugId;
+    data['Dose'] = this.dose;
+    data['Details'] = this.details;
+    data['TimeScheduleStart'] = this.timeScheduleStart;
+    data['TimeScheduleEnd'] = this.timeScheduleEnd;
+    data['IsTaken'] = this.isTaken;
+    data['TakenAt'] = this.takenAt;
+    data['IsMissed'] = this.isMissed;
+    data['IsCancelled'] = this.isCancelled;
+    data['CancelledOn'] = this.cancelledOn;
+    data['Note'] = this.note;
+    data['Status'] = this.status;
     return data;
   }
 }

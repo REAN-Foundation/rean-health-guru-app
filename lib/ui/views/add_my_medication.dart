@@ -1191,7 +1191,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       map['StartDate'] = startOn;
       map['RefillNeeded'] = false;
       map['Instructions'] = _instructionController.text;
-      map['MedicationImageResourceId'] = medcationResourceId;
+      map['ImageResourceId'] = medcationResourceId;
 
       final BaseResponse baseResponse = await model.addMedicationforVisit(map);
 

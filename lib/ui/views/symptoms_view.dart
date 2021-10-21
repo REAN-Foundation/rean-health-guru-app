@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GetAssesmentTemplateByIdResponse.dart';
 import 'package:paitent/core/models/GetMyAssesmentIdResponse.dart';
 import 'package:paitent/core/viewmodels/views/dashboard_summary_model.dart';
+import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/home_view.dart';
@@ -29,6 +31,7 @@ class _SymptomsViewState extends State<SymptomsView> {
   var model = DashboardSummaryModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   SymptomAssessmentTemplate assessmentTemplate;
+  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
   //List symptomList = new List<SymptomsPojo>();
   var dateFormat = DateFormat('yyyy-MM-dd');
@@ -112,7 +115,7 @@ class _SymptomsViewState extends State<SymptomsView> {
                             label: 'swipe right for better or left for worse',
                             readOnly: true,
                             child: Text(
-                              'Are these symptoms getting Better or Worse?',
+                              'Are symptoms getting Better or Worse?',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700),
@@ -284,7 +287,10 @@ class _SymptomsViewState extends State<SymptomsView> {
               height: 40,
               width: 40,
               child: CachedNetworkImage(
-                imageUrl: symptomTypes.symptomTypeId,
+                imageUrl: apiProvider.getBaseUrl() +
+                    '/file-resources/' +
+                    symptomTypes.imageResourceId +
+                    '/download-by-version-name/1',
               ),
             ),
             title: Text(
@@ -349,7 +355,6 @@ class _SymptomsViewState extends State<SymptomsView> {
 
   getAssesmentTemplateById() async {
     try {
-      debugPrint("1111");
       final GetAssesmentTemplateByIdResponse
           searchSymptomAssesmentTempleteResponse =
           await model.getAssesmentTemplateById(widget.assessmmentId);

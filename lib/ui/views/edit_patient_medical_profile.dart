@@ -376,7 +376,7 @@ class _EditPatientMedicalProfileViewState
       data['IsDiabetic'] = isDiabetic == 'Yes';
       data['HasHeartAilment'] = hasHeartAilment == 'Yes';
       data['MaritalStatus'] = maritalStatus;
-      data['Ethnicity'] = 'Asian';
+      data['Ethnicity'] = _ethnicityController.text;
       data['Nationality'] = _nationalityController.text;
       data['Occupation'] = _ocupationController.text;
       data['SedentaryLifestyle'] = sedentaryLifestyle == 'Yes';

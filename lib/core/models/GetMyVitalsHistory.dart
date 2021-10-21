@@ -139,24 +139,24 @@ class Items {
   String id;
   String ehrId;
   String patientUserId;
-  int bloodGlucose;
-  int systolic;
-  int diastolic;
-  int pulse;
-  int bodyTemperature;
-  double bodyWeight;
-  int bloodOxygenSaturation;
+  dynamic bloodGlucose;
+  dynamic systolic;
+  dynamic diastolic;
+  dynamic pulse;
+  dynamic bodyTemperature;
+  dynamic bodyWeight;
+  dynamic bloodOxygenSaturation;
   String unit;
   String recordDate;
   String recordedByUserId;
 
   Items(
       {this.id,
-        this.ehrId,
-        this.patientUserId,
-        this.bloodGlucose,
-        this.systolic,
-        this.diastolic,
+      this.ehrId,
+      this.patientUserId,
+      this.bloodGlucose,
+      this.systolic,
+      this.diastolic,
         this.pulse,
         this.bodyTemperature,
         this.bodyWeight,

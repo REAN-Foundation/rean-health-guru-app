@@ -97,8 +97,10 @@ class CommonConfigModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
 
-    final response = await apiProvider
-        .get('/patient-emergency-contacts/search?orderBy=IsAvailableForEmergency&order=ascending' , header: map);
+    final response = await apiProvider.get(
+        '/patient-emergency-contacts/search?orderBy=IsAvailableForEmergency&order=ascending&patientUserId=' +
+            patientUserId,
+        header: map);
 
     setBusy(false);
     // Convert and return

@@ -11,20 +11,11 @@ name: UAT Workflow
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [feature/uat-workflow]
+    branches: [release/**]
   # pull_request:
-  #   branches: [master]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  #   branches: [main]
 
 jobs:
-  # test-job:
-  #   name: env
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Show env
-  #       run: echo ${{ secrets.FLUTTER_DOTENV }}
   gitguardian-scanning:
     name: GitGuardian Scan
     runs-on: ubuntu-latest
@@ -62,13 +53,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Create env file
-        run: aws s3 cp s3://duploservices-dev-configs-167414264568/.env ./res/.env
-
-      # - name: Create env
-      #   env:
-      #     FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
-      #   run: |
-      #     echo $FLUTTER_DOTENV > ./res/.env
+        run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
 
       - name: Run Flutter Analyze
         run: |
@@ -113,20 +98,17 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Create env file
-        run: aws s3 cp s3://duploservices-dev-configs-167414264568/.env ./res/.env
+        run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
 
       - name: Import Build Environment Dependencies
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_JSON }}
           KEYSTORE_TOKEN: ${{ secrets.KEYSTORE_TOKEN_BASE64 }}
-          # FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
         run: |
           echo $FIREBASE_CONFIG > ./android/app/src/uat/google-services.json
           echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
           # echo $FLUTTER_DOTENV > ./res/.env
-
-      # Flutter Build Artifact
-      # - if: github.ref == 'refs/heads/development'
+          
       - name: Flutter Build
         run: flutter build appbundle --release --flavor uat -t "lib/main_uat.dart"
 
@@ -200,7 +182,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Create env file
-        run: aws s3 cp s3://duploservices-dev-configs-167414264568/.env ./res/.env
+        run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
 
       - name: Import Build Environment Dependencies
         env:

@@ -56,7 +56,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Create env file
-        run: aws s3 cp s3://duploservices-dev-configs-167414264568/.env ./res/.env
+        run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
 
       # - name: Create env
       #   env:
@@ -107,7 +107,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Create env file
-        run: aws s3 cp s3://duploservices-dev-configs-167414264568/.env ./res/.env
+        run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
 
       - name: Import Build Environment Dependencies
         env:
@@ -194,7 +194,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Create env file
-        run: aws s3 cp s3://duploservices-dev-configs-167414264568/.env ./res/.env
+        run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
 
       - name: Import Build Environment Dependencies
         env:

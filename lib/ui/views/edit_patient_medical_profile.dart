@@ -53,7 +53,7 @@ class _EditPatientMedicalProfileViewState
   final _bloodGroupFocus = FocusNode();
   final _ocupationFocus = FocusNode();
   final _nationalityFocus = FocusNode();
-  final _surgicalHistoryFocus = FocusNode();
+  //final _surgicalHistoryFocus = FocusNode();
   final _obstetricHistoryFocus = FocusNode();
   final _otherConditionsFocus = FocusNode();
   final _procedureHistoryFocus = FocusNode();

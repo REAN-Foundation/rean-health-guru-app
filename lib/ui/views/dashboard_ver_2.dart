@@ -119,7 +119,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   }
 
   sortMyMedication(GetMyMedicationsResponse response) {
-    for (var medSummary in response.data.medicationSchedulesForDay.schedules) {
+    for (final medSummary
+        in response.data.medicationSchedulesForDay.schedules) {
       if (medSummary.status == 'Unknown' ||
           medSummary.status == 'Upcoming' ||
           medSummary.status == 'Overdue') {
@@ -327,7 +328,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       children: [
                         Icon(
                           FontAwesomeIcons.sadTear,
-                          color: primaryColor,
+                          color: Colors.red.shade700,
                           size: 48,
                         ),
                         SizedBox(
@@ -335,7 +336,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ),
                         Text('Worse',
                             style: TextStyle(
-                                color: primaryColor,
+                                color: Colors.red.shade700,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Montserrat')),

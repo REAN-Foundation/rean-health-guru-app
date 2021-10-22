@@ -24,32 +24,31 @@ class PatientMedicalProfilePojo {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
-    client =
-    json['Client'] != null ? new Client.fromJson(json['Client']) : null;
-    user = json['User'] != null ? new User.fromJson(json['User']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
+    client = json['Client'] != null ? Client.fromJson(json['Client']) : null;
+    user = json['User'] != null ? User.fromJson(json['User']) : null;
     context = json['Context'];
     clientIps = json['ClientIps'].cast<String>();
     aPIVersion = json['APIVersion'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['HttpCode'] = this.httpCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
-    if (this.client != null) {
-      data['Client'] = this.client.toJson();
+    if (client != null) {
+      data['Client'] = client.toJson();
     }
-    if (this.user != null) {
-      data['User'] = this.user.toJson();
+    if (user != null) {
+      data['User'] = user.toJson();
     }
-    data['Context'] = this.context;
-    data['ClientIps'] = this.clientIps;
-    data['APIVersion'] = this.aPIVersion;
+    data['Context'] = context;
+    data['ClientIps'] = clientIps;
+    data['APIVersion'] = aPIVersion;
     return data;
   }
 }
@@ -61,14 +60,14 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     healthProfile = json['HealthProfile'] != null
-        ? new HealthProfile.fromJson(json['HealthProfile'])
+        ? HealthProfile.fromJson(json['HealthProfile'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.healthProfile != null) {
-      data['HealthProfile'] = this.healthProfile.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (healthProfile != null) {
+      data['HealthProfile'] = healthProfile.toJson();
     }
     return data;
   }
@@ -89,25 +88,25 @@ class HealthProfile {
   bool sedentaryLifestyle;
   bool isSmoker;
   String smokingSeverity;
-  Null smokingSince;
+  String smokingSince;
   bool isDrinker;
   String drinkingSeverity;
   String drinkingSince;
   bool substanceAbuse;
   String procedureHistory;
-  Null obstetricHistory;
-  Null otherInformation;
+  String obstetricHistory;
+  String otherInformation;
 
   HealthProfile(
       {this.id,
-        this.patientUserId,
-        this.bloodGroup,
-        this.majorAilment,
-        this.otherConditions,
-        this.isDiabetic,
-        this.hasHeartAilment,
-        this.maritalStatus,
-        this.ethnicity,
+      this.patientUserId,
+      this.bloodGroup,
+      this.majorAilment,
+      this.otherConditions,
+      this.isDiabetic,
+      this.hasHeartAilment,
+      this.maritalStatus,
+      this.ethnicity,
         this.nationality,
         this.occupation,
         this.sedentaryLifestyle,
@@ -148,29 +147,29 @@ class HealthProfile {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['PatientUserId'] = this.patientUserId;
-    data['BloodGroup'] = this.bloodGroup;
-    data['MajorAilment'] = this.majorAilment;
-    data['OtherConditions'] = this.otherConditions;
-    data['IsDiabetic'] = this.isDiabetic;
-    data['HasHeartAilment'] = this.hasHeartAilment;
-    data['MaritalStatus'] = this.maritalStatus;
-    data['Ethnicity'] = this.ethnicity;
-    data['Nationality'] = this.nationality;
-    data['Occupation'] = this.occupation;
-    data['SedentaryLifestyle'] = this.sedentaryLifestyle;
-    data['IsSmoker'] = this.isSmoker;
-    data['SmokingSeverity'] = this.smokingSeverity;
-    data['SmokingSince'] = this.smokingSince;
-    data['IsDrinker'] = this.isDrinker;
-    data['DrinkingSeverity'] = this.drinkingSeverity;
-    data['DrinkingSince'] = this.drinkingSince;
-    data['SubstanceAbuse'] = this.substanceAbuse;
-    data['ProcedureHistory'] = this.procedureHistory;
-    data['ObstetricHistory'] = this.obstetricHistory;
-    data['OtherInformation'] = this.otherInformation;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['PatientUserId'] = patientUserId;
+    data['BloodGroup'] = bloodGroup;
+    data['MajorAilment'] = majorAilment;
+    data['OtherConditions'] = otherConditions;
+    data['IsDiabetic'] = isDiabetic;
+    data['HasHeartAilment'] = hasHeartAilment;
+    data['MaritalStatus'] = maritalStatus;
+    data['Ethnicity'] = ethnicity;
+    data['Nationality'] = nationality;
+    data['Occupation'] = occupation;
+    data['SedentaryLifestyle'] = sedentaryLifestyle;
+    data['IsSmoker'] = isSmoker;
+    data['SmokingSeverity'] = smokingSeverity;
+    data['SmokingSince'] = smokingSince;
+    data['IsDrinker'] = isDrinker;
+    data['DrinkingSeverity'] = drinkingSeverity;
+    data['DrinkingSince'] = drinkingSince;
+    data['SubstanceAbuse'] = substanceAbuse;
+    data['ProcedureHistory'] = procedureHistory;
+    data['ObstetricHistory'] = obstetricHistory;
+    data['OtherInformation'] = otherInformation;
     return data;
   }
 }
@@ -187,9 +186,9 @@ class Client {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ClientName'] = this.clientName;
-    data['ClientCode'] = this.clientCode;
+    final Map<String, dynamic> data = {};
+    data['ClientName'] = clientName;
+    data['ClientCode'] = clientCode;
     return data;
   }
 }
@@ -226,15 +225,15 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['UserId'] = this.userId;
-    data['DisplayName'] = this.displayName;
-    data['Phone'] = this.phone;
-    data['Email'] = this.email;
-    data['UserName'] = this.userName;
-    data['CurrentRoleId'] = this.currentRoleId;
-    data['iat'] = this.iat;
-    data['exp'] = this.exp;
+    final Map<String, dynamic> data = {};
+    data['UserId'] = userId;
+    data['DisplayName'] = displayName;
+    data['Phone'] = phone;
+    data['Email'] = email;
+    data['UserName'] = userName;
+    data['CurrentRoleId'] = currentRoleId;
+    data['iat'] = iat;
+    data['exp'] = exp;
     return data;
   }
 }

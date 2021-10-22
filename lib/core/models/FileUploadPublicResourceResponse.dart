@@ -11,14 +11,14 @@ class FileUploadPublicResourceResponse {
     status = json['Status'];
     message = json['Message'];
     httpCode = json['HttpCode'];
-    data = json['Data'] != null ? new Data.fromJson(json['Data']) : null;
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Status'] = this.status;
-    data['Message'] = this.message;
-    data['HttpCode'] = this.httpCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
@@ -33,18 +33,17 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['FileResources'] != null) {
-      fileResources = new List<FileResources>();
+      fileResources = [];
       json['FileResources'].forEach((v) {
-        fileResources.add(new FileResources.fromJson(v));
+        fileResources.add(FileResources.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.fileResources != null) {
-      data['FileResources'] =
-          this.fileResources.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (fileResources != null) {
+      data['FileResources'] = fileResources.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -81,30 +80,30 @@ class FileResources {
     isPublicResource = json['IsPublicResource'];
     mimeType = json['MimeType'];
     if (json['Versions'] != null) {
-      versions = new List<Versions>();
+      versions = [];
       json['Versions'].forEach((v) {
-        versions.add(new Versions.fromJson(v));
+        versions.add(Versions.fromJson(v));
       });
     }
     defaultVersion = json['DefaultVersion'] != null
-        ? new Versions.fromJson(json['DefaultVersion'])
+        ? Versions.fromJson(json['DefaultVersion'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['FileName'] = this.fileName;
-    data['Url'] = this.url;
-    data['OwnerUserId'] = this.ownerUserId;
-    data['UploadedByUserId'] = this.uploadedByUserId;
-    data['IsPublicResource'] = this.isPublicResource;
-    data['MimeType'] = this.mimeType;
-    if (this.versions != null) {
-      data['Versions'] = this.versions.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = {};
+    data['id'] = id;
+    data['FileName'] = fileName;
+    data['Url'] = url;
+    data['OwnerUserId'] = ownerUserId;
+    data['UploadedByUserId'] = uploadedByUserId;
+    data['IsPublicResource'] = isPublicResource;
+    data['MimeType'] = mimeType;
+    if (versions != null) {
+      data['Versions'] = versions.map((v) => v.toJson()).toList();
     }
-    if (this.defaultVersion != null) {
-      data['DefaultVersion'] = this.defaultVersion.toJson();
+    if (defaultVersion != null) {
+      data['DefaultVersion'] = defaultVersion.toJson();
     }
     return data;
   }
@@ -148,17 +147,17 @@ class Versions {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['VersionId'] = this.versionId;
-    data['ResourceId'] = this.resourceId;
-    data['Version'] = this.version;
-    data['FileName'] = this.fileName;
-    data['MimeType'] = this.mimeType;
-    data['OriginalName'] = this.originalName;
-    data['Size'] = this.size;
-    data['StorageKey'] = this.storageKey;
-    data['Url'] = this.url;
-    data['SourceFilePath'] = this.sourceFilePath;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['VersionId'] = versionId;
+    data['ResourceId'] = resourceId;
+    data['Version'] = version;
+    data['FileName'] = fileName;
+    data['MimeType'] = mimeType;
+    data['OriginalName'] = originalName;
+    data['Size'] = size;
+    data['StorageKey'] = storageKey;
+    data['Url'] = url;
+    data['SourceFilePath'] = sourceFilePath;
     return data;
   }
 }

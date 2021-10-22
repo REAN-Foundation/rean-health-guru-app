@@ -1268,8 +1268,8 @@ class _EditProfileState extends State<EditProfile> {
                     address['City'] = _cityController.text;
                     address['Country'] = _countryController.text;
                     address['PostalCode'] =
-                        _postalCodeController.text.length == 0
-                            ? null
+                        _postalCodeController.text.isEmpty
+                        ? null
                             : _postalCodeController.text;
                     map['Address'] = address;
 

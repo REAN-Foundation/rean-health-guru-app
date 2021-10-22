@@ -98,7 +98,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.get(
-        '/patient-emergency-contacts/search?orderBy=IsAvailableForEmergency&order=ascending&patientUserId=' +
+        '/patient-emergency-contacts/search?isAvailableForEmergency=true&order=ascending&patientUserId=' +
             patientUserId,
         header: map);
 

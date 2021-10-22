@@ -18,14 +18,14 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
   HealthProfile healthProfile;
 
   var model = PatientObservationsViewModel();
-  final TextEditingController _majorAilmentController =
-      TextEditingController();
+  final TextEditingController _majorAilmentController = TextEditingController();
   final TextEditingController _ocupationController = TextEditingController();
   final TextEditingController _nationalityController = TextEditingController();
   final TextEditingController _procedureHistoryController =
       TextEditingController();
-  final TextEditingController _ethnicityController =
-  TextEditingController();
+
+  /*final TextEditingController _ethnicityController =
+  TextEditingController();*/
 
   String mobileNumber = '';
 
@@ -33,8 +33,8 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
   final _ocupationFocus = FocusNode();
   final _nationalityFocus = FocusNode();
   final _procedureHistoryFocus = FocusNode();
-  final _ethnicityFocus = FocusNode();
 
+  /* final _ethnicityFocus = FocusNode();*/
 
   @override
   void initState() {

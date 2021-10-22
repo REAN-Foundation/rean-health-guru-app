@@ -479,9 +479,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     /*if (task.scheduledStartTime == null) {
       return Container();
     }*/
-    final DateTime startTime =
+    /* final DateTime startTime =
         DateTime.parse(task.scheduledStartTime).toLocal();
-    /* debugPrint(
+    debugPrint(
         'Medication Taken ==> ${task.status}  && Start Time ==> ${DateTime.now().isAfter(startTime)} ');*/
     return MergeSemantics(
       child: Semantics(

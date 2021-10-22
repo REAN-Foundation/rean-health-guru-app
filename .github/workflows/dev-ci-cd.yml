@@ -52,6 +52,7 @@ jobs:
   #         VALIDATE_DART: true
 
   CodeScan-FlutterAnalyze:
+    environment: dev
     runs-on: ubuntu-latest
     steps:
       # Checkout Code

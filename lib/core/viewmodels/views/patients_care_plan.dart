@@ -198,7 +198,11 @@ class PatientCarePlanViewModel extends BaseModel {
     final String query = '';
     //var response = await apiProvider.get('/aha/care-plan/'+ahaCarePlanId+'/fetch-daily-tasks', header: map);
     final response = await apiProvider.get(
-        '/user-tasks/search' + query + '?userId=' + patientUserId,
+        '/user-tasks/search' +
+            query +
+            '?userId=' +
+            patientUserId +
+            '&orderBy=ScheduledStartTime&order=descending',
         header: map);
 
     setBusy(false);

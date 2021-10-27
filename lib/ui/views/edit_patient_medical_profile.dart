@@ -392,7 +392,7 @@ class _EditPatientMedicalProfileViewState
       if (baseResponse.status == 'success') {
         progressDialog.hide();
         Navigator.pop(context);
-        showToast('Medical Profile updated successfully.', context);
+        showToast('Medical Profile updated successfully!', context);
       } else {
         showToast(baseResponse.message, context);
         progressDialog.hide();

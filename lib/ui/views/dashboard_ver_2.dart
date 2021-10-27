@@ -1535,7 +1535,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
             'emergency',
             DashboardTile(DateTime.now(), 'emergency', emergencyBreif)
                 .toJson());
-        showToast('Emergency details saved successfully', context);
+        showToast('Emergency details saved successfully!', context);
         loadSharedPrefs();
         setState(() {});
       } else {
@@ -1578,8 +1578,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       debugPrint(currentMedicationList.length.toString());
       final medicationIds = <String>[];
       for (final item in currentMedicationList) {
-        //debugPrint(item.timeScheduleEnd.toString() +'  '+ DateTime.now().toString() +'  '+DateTime.now().isAfter(item.timeScheduleEnd).toString());
-        if (DateTime.now().isAfter(item.timeScheduleStart)) {
+        //debugPrint(item.timeScheduleEnd.toString() +'  '+ DateTime.now().toString() +'  '+DateTime.now().isAfter(DateTime.parse(item.timeScheduleEnd)).toString());
+        if (DateTime.now().isAfter(item.timeScheduleStart) &&
+            item.status != 'Taken') {
           medicationIds.add(item.id);
           debugPrint(item.id);
         }
@@ -1601,6 +1602,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
           //progressDialog.hide();
           showToast(baseResponse.message, context);
         }
+      } else {
+        showToast('You have taken all the medication till now.', context);
       }
     } catch (CustomException) {
       //progressDialog.hide();

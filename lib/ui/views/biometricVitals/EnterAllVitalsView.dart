@@ -1024,7 +1024,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     if (toastDisplay) {
       _scrollController.animateTo(0.0,
           duration: Duration(seconds: 2), curve: Curves.ease);
-      showToast('Record Updated Successfully', context);
+      showToast('Record Updated Successfully!', context);
       toastDisplay = false;
     }
 

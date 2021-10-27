@@ -1680,7 +1680,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               ),
             ),
-            if (profileImagePath != '') ...[
+            /*if (profileImagePath != '') ...[
               Semantics(
                 label: 'removeProfileImage',
                 child: InkWell(
@@ -1725,7 +1725,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 ),
               ),
-            ],
+            ],*/
           ],
         ),
       ),

@@ -20,8 +20,14 @@ on:
 
 jobs:
   gitguardian-scanning:
-    name: GitGuardian Scan
+    environment: dev
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: android
+    name: GitGuardian Scan
+    # runs-on: ubuntu-latest
     steps:
       - name: Current branch name
         run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"

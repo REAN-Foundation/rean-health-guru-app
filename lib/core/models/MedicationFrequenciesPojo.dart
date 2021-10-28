@@ -1,58 +1,43 @@
 class MedicationFrequenciesPojo {
   String status;
   String message;
+  int httpCode;
   Data data;
 
-  MedicationFrequenciesPojo({this.status, this.message, this.data});
+  MedicationFrequenciesPojo(
+      {this.status, this.message, this.httpCode, this.data});
 
   MedicationFrequenciesPojo.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    status = json['Status'];
+    message = json['Message'];
+    httpCode = json['HttpCode'];
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['Data'] = this.data.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<String> frequencyUnits;
+  List<String> medicationFrequencyUnits;
 
-  Data({this.frequencyUnits});
+  Data({this.medicationFrequencyUnits});
 
   Data.fromJson(Map<String, dynamic> json) {
-    frequencyUnits = json['frequencyUnits'].cast<String>();
+    medicationFrequencyUnits = json['MedicationFrequencyUnits'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['frequencyUnits'] = frequencyUnits;
+    data['MedicationFrequencyUnits'] = medicationFrequencyUnits;
     return data;
   }
 }
-/*
-class MedicationFrequencies {
-  String name;
-  String uuid;
-
-  MedicationFrequencies({this.name, this.uuid});
-
-  MedicationFrequencies.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    uuid = json['uuid'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['uuid'] = this.uuid;
-    return data;
-  }
-}*/

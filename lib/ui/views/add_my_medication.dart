@@ -39,7 +39,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   final _typeAheadController = TextEditingController();
 
   bool searchForDrug = false;
-  List<Drugs> drugs = [];
+  List<Items> drugs = [];
 
   List<String> drugsList = [];
   List<DropdownMenuItem<String>> _dosageUnitMenuItems;
@@ -81,11 +81,11 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
           MedicationFrequenciesPojo.fromJson(
               await _sharedPrefUtils.read('MedicationFrequencies'));
       debugPrint(
-          'Frequency = ${frequenciesPojo.data.frequencyUnits.length.toString()}');
+          'Frequency = ${frequenciesPojo.data.medicationFrequencyUnits.length.toString()}');
 
       setState(() {
         _frequencyUnitMenuItems = buildDropDownMenuItemsForFrequency(
-            frequenciesPojo.data.frequencyUnits);
+            frequenciesPojo.data.medicationFrequencyUnits);
         _dosageUnitMenuItems = buildDropDownMenuItemsForDosageUnit(
             dosageUnitsPojo.data.medicationDosageUnits);
       });
@@ -99,24 +99,24 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   }
 
   List<DropdownMenuItem<String>> buildDropDownMenuItemsForDosageUnit(
-      List<MedicationDosageUnits> allergenCategories) {
+      List<String> allergenCategories) {
     final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < allergenCategories.length; i++) {
       items.add(DropdownMenuItem(
-        child: Text(allergenCategories.elementAt(i).name),
-        value: allergenCategories.elementAt(i).name,
+        child: Text(allergenCategories.elementAt(i)),
+        value: allergenCategories.elementAt(i),
       ));
     }
     return items;
   }
 
   List<DropdownMenuItem<String>> buildDropDownMenuItemsForDurationUnit(
-      List<MedicationDurationUnits> allergenCategories) {
+      List<String> allergenCategories) {
     final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < allergenCategories.length; i++) {
       items.add(DropdownMenuItem(
-        child: Text(allergenCategories.elementAt(i).name),
-        value: allergenCategories.elementAt(i).name,
+        child: Text(allergenCategories.elementAt(i)),
+        value: allergenCategories.elementAt(i),
       ));
     }
     return items;
@@ -670,7 +670,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   width: 32,
                   height: 32,
                   child: CachedNetworkImage(
-                    imageUrl: images.urlPublic,
+                    imageUrl: images.publicUrl,
                   ),
                 )),
                 if (images.isSelected)
@@ -1112,7 +1112,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         });
         drugs.clear();
         setState(() {
-          drugs.addAll(baseResponse.data.drugs);
+          drugs.addAll(baseResponse.data.drugs.items);
         });
         _sortDrugs();
       } else {
@@ -1132,36 +1132,36 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   _sortDrugs() {
     drugsList.clear();
     for (int i = 0; i < drugs.length; i++) {
-      drugsList.add(drugs.elementAt(i).name);
+      drugsList.add(drugs.elementAt(i).drugName);
     }
   }
 
   _addPatientMedication(BuildContext context) async {
     try {
-      String timeShedule = '';
+      final timeShedule = <String>[];
       int frequency = 0;
 
       if (_frequencyUnit == 'Daily') {
         if (morningCheck) {
           frequency = frequency + 1;
-          timeShedule = 'Morning,';
+          timeShedule.add('Morning');
         }
         if (afternoonCheck) {
           frequency = frequency + 1;
-          timeShedule = timeShedule + ' Afternoon,';
+          timeShedule.add('Afternoon');
         }
         if (eveningCheck) {
           frequency = frequency + 1;
-          timeShedule = timeShedule + ' Evening,';
+          timeShedule.add('Evening');
         }
         if (nightCheck) {
           frequency = frequency + 1;
-          timeShedule = timeShedule + ' Night';
+          timeShedule.add('Night');
         }
       } else {
         frequency = frequency + 1;
         //timeShedule = _timeScheduledController.text;
-        timeShedule = 'Afternoon';
+        timeShedule.add('Afternoon');
       }
 
       String durationUnitValue = '';
@@ -1179,11 +1179,11 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       map['PatientUserId'] = patientUserId;
       //map["DoctorUserId"] = doctorUserId;
       //map["VisitId"] = widget._visitInformation.visitInfo.id;
-      map['Drug'] = _typeAheadController.text;
+      map['DrugName'] = _typeAheadController.text;
       map['Dose'] = int.parse(_unitController.text);
       map['DosageUnit'] = _dosageUnit;
-      map['TimeSchedule'] = timeShedule;
-      map['Frequency'] = frequency == 0 ? int.parse(timeShedule) : frequency;
+      map['TimeSchedules'] = timeShedule;
+      map['Frequency'] = frequency;
       map['FrequencyUnit'] = _frequencyUnit;
       map['Route'] = ' ';
       map['Duration'] = int.parse(_durationController.text);
@@ -1191,7 +1191,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       map['StartDate'] = startOn;
       map['RefillNeeded'] = false;
       map['Instructions'] = _instructionController.text;
-      map['MedicationImageResourceId'] = medcationResourceId;
+      map['ImageResourceId'] = medcationResourceId;
 
       final BaseResponse baseResponse = await model.addMedicationforVisit(map);
 
@@ -1202,8 +1202,11 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       } else {
         showToast('Please try again', context);
       }
-    } catch (CustomException) {
-      debugPrint('Error ' + CustomException.toString());
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      setState(() {});
+      showToast(e.toString(), context);
     }
   }
 

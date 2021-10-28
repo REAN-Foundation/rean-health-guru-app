@@ -23,6 +23,7 @@ String countryCodeGlobe = '';
 var dummyNumberList = <String>[];
 String _currentLocale = '';
 String _appName = '';
+dynamic _roleId = '';
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');
@@ -63,6 +64,14 @@ void setTask(Task response) {
 
 Task getTask() {
   return _task;
+}
+
+void setRoleId(dynamic roleId) {
+  _roleId = roleId;
+}
+
+dynamic getRoleId() {
+  return _roleId;
 }
 
 void setAppType(String name) {

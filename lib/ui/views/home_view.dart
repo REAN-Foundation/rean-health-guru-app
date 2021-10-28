@@ -3,11 +3,14 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/common_config_model.dart';
+import 'package:paitent/networking/ApiProvider.dart';
+import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/emergency_contact.dart';
 import 'package:paitent/ui/views/myReportsUpload.dart';
@@ -23,7 +26,6 @@ import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'base_widget.dart';
 import 'care_plan_task.dart';
 import 'dashboard_ver_2.dart';
-import 'login_with_otp_view.dart';
 //ignore: must_be_immutable
 class HomeView extends StatefulWidget {
   int screenPosition = 0;
@@ -61,6 +63,8 @@ class _HomeViewState extends State<HomeView> {
   TutorialCoachMark tutorialCoachMark;
   List<TargetFocus> targets = [];
   CoachMarkUtilites coackMarkUtilites = CoachMarkUtilites();
+  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  String imageResourceId = '';
 
   _HomeViewState(int screenPosition) {
     _currentNav = screenPosition;
@@ -73,19 +77,28 @@ class _HomeViewState extends State<HomeView> {
       final Patient patient =
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       auth = user.data.accessToken;
-      patientUserId = user.data.user.userId;
-      patientGender = patient.gender;
-      //debugPrint(user.toJson().toString());
 
+      patientUserId = patient.user.id;
+      patientGender = patient.user.person.gender;
+      //debugPrint('Address ==> ${patient.user.person.addresses.elementAt(0).city}');
+      //debugPrint(user.toJson().toString());
+      final dynamic roleId = await _sharedPrefUtils.read('roleId');
+      setRoleId(roleId);
       /* */
       setState(() {
-        //debugPrint('Gender ==> ${patient.gender.toString()}');
-        name = patient.firstName;
-        profileImage = patient.imageURL ?? '';
+        //debugPrint('Gender ==> ${patient.user.person.gender}');
+        name = user.data.user.person.firstName;
+        imageResourceId = patient.user.person.imageResourceId ?? '';
+        profileImage = imageResourceId != ''
+            ? apiProvider.getBaseUrl() +
+                '/file-resources/' +
+                imageResourceId +
+                '/download'
+            : '';
       });
 
-      if (!user.data.user.verifiedPhoneNumber ||
-          user.data.user.verifiedPhoneNumber == null) {
+      /*if (!user.data.isProfileComplete ||
+          user.data.isProfileComplete == null) {
         startCarePlanResponseGlob = null;
         _sharedPrefUtils.save('CarePlan', null);
         _sharedPrefUtils.saveBoolean('login', null);
@@ -93,15 +106,14 @@ class _HomeViewState extends State<HomeView> {
             MaterialPageRoute(builder: (context) {
           return LoginWithOTPView();
         }), (Route<dynamic> route) => false);
-      }
+      }*/
 
       //if(!isCoachMarkDisplayed) {
 
       //}
 
-    } catch (Excepetion) {
-      // do something
-      debugPrint(Excepetion);
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
     }
   }
 
@@ -114,7 +126,7 @@ class _HomeViewState extends State<HomeView> {
         //debugPrint("CarePlan ==> ${startCarePlanResponseGlob.data.carePlan.carePlanCode}");
       }
       Timer(Duration(seconds: 3), () {
-        getCarePlan();
+        //getCarePlan();
       });
       Future.delayed(
         Duration(seconds: 4),
@@ -122,7 +134,7 @@ class _HomeViewState extends State<HomeView> {
       );
     } catch (Excepetion) {
       Timer(Duration(seconds: 3), () {
-        getCarePlan();
+        //getCarePlan();
       });
       Future.delayed(
         Duration(seconds: 4),

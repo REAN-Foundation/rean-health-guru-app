@@ -12,10 +12,10 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'base_widget.dart';
 //ignore: must_be_immutable
 class EditPatientMedicalProfileView extends StatefulWidget {
-  MedicalProfiles medicalProfiles;
+  HealthProfile healthProfile;
 
-  EditPatientMedicalProfileView(MedicalProfiles mProfiles) {
-    medicalProfiles = mProfiles;
+  EditPatientMedicalProfileView(HealthProfile mProfiles) {
+    healthProfile = mProfiles;
   }
 
   @override
@@ -32,33 +32,35 @@ class _EditPatientMedicalProfileViewState
 
   final List<GroupItem> maritalStatusItems = [
     GroupItem(title: 'Married'),
-    GroupItem(title: 'Unmarried'),
+    GroupItem(title: 'Single'),
   ];
 
   var model = PatientObservationsViewModel();
-  final TextEditingController _majorComplaintController =
+  final TextEditingController _majorAilmentController =
       TextEditingController();
   final TextEditingController _bloodGroupController = TextEditingController();
   final TextEditingController _ocupationController = TextEditingController();
   final TextEditingController _nationalityController = TextEditingController();
-  final TextEditingController _surgicalHistoryController =
-      TextEditingController();
-  final TextEditingController _obstetricHistoryController =
-      TextEditingController();
+  final TextEditingController _otherConditionsController = TextEditingController();
+  final TextEditingController _procedureHistoryController = TextEditingController();
+  final TextEditingController _ethnicityController = TextEditingController();
+
 
   ProgressDialog progressDialog;
 
-  final _majorComplaintFocus = FocusNode();
+  final _majorAilmentFocus = FocusNode();
+  final _ethnicityFocus = FocusNode();
   final _bloodGroupFocus = FocusNode();
   final _ocupationFocus = FocusNode();
   final _nationalityFocus = FocusNode();
-  final _surgicalHistoryFocus = FocusNode();
+  //final _surgicalHistoryFocus = FocusNode();
   final _obstetricHistoryFocus = FocusNode();
+  final _otherConditionsFocus = FocusNode();
+  final _procedureHistoryFocus = FocusNode();
+
 
   var isDiabetic;
   var hasHeartAilment;
-  var isVegetarian;
-  var isVegan;
   var sedentaryLifestyle;
   var isSmoker;
   var isDrinker;
@@ -71,44 +73,63 @@ class _EditPatientMedicalProfileViewState
   }
 
   setData() {
-    _majorComplaintController.text = widget.medicalProfiles.majorAilment;
-    _majorComplaintController.selection = TextSelection.fromPosition(
-      TextPosition(offset: _majorComplaintController.text.length),
+    _majorAilmentController.text = widget.healthProfile.majorAilment;
+    _majorAilmentController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _majorAilmentController.text.length),
     );
 
-    _bloodGroupController.text = widget.medicalProfiles.bloodGroup;
+    _bloodGroupController.text = widget.healthProfile.bloodGroup;
     _bloodGroupController.selection = TextSelection.fromPosition(
       TextPosition(offset: _bloodGroupController.text.length),
     );
 
-    _ocupationController.text = widget.medicalProfiles.occupation;
+    _ocupationController.text = widget.healthProfile.occupation;
     _ocupationController.selection = TextSelection.fromPosition(
       TextPosition(offset: _ocupationController.text.length),
     );
 
-    _nationalityController.text = widget.medicalProfiles.nationality;
+    _nationalityController.text = widget.healthProfile.nationality;
     _nationalityController.selection = TextSelection.fromPosition(
       TextPosition(offset: _nationalityController.text.length),
     );
 
-    _surgicalHistoryController.text = widget.medicalProfiles.surgicalHistory;
+    _procedureHistoryController.text = widget.healthProfile.procedureHistory;
+    _procedureHistoryController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _procedureHistoryController.text.length),
+    );
+
+   /* _surgicalHistoryController.text = widget.medicalProfiles.surgicalHistory;
     _surgicalHistoryController.selection = TextSelection.fromPosition(
       TextPosition(offset: _surgicalHistoryController.text.length),
+    );*/
+
+    isDiabetic = yesOrNo(widget.healthProfile.isDiabetic);
+    hasHeartAilment = yesOrNo(widget.healthProfile.hasHeartAilment);
+    sedentaryLifestyle = yesOrNo(widget.healthProfile.sedentaryLifestyle);
+    isSmoker = yesOrNo(widget.healthProfile.isSmoker);
+    isDrinker = yesOrNo(widget.healthProfile.isSmoker);
+    maritalStatus = widget.healthProfile.maritalStatus;
+    _otherConditionsController.text = widget.healthProfile.otherConditions;
+    _otherConditionsController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _otherConditionsController.text.length),
     );
 
-    _obstetricHistoryController.text = widget.medicalProfiles.obstetricHistory;
-    _obstetricHistoryController.selection = TextSelection.fromPosition(
-      TextPosition(offset: _obstetricHistoryController.text.length),
+    _procedureHistoryController.text = widget.healthProfile.procedureHistory;
+    _procedureHistoryController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _procedureHistoryController.text.length),
     );
 
-    isDiabetic = yesOrNo(widget.medicalProfiles.isDiabetic);
-    hasHeartAilment = yesOrNo(widget.medicalProfiles.hasHeartAilment);
-    isVegetarian = yesOrNo(widget.medicalProfiles.isVegetarian);
-    isVegan = yesOrNo(widget.medicalProfiles.isVegan);
-    sedentaryLifestyle = yesOrNo(widget.medicalProfiles.sedentaryLifestyle);
-    isSmoker = yesOrNo(widget.medicalProfiles.isSmoker);
-    isDrinker = yesOrNo(widget.medicalProfiles.isSmoker);
-    maritalStatus = widget.medicalProfiles.maritalStatus;
+    _ethnicityController.text = widget.healthProfile.ethnicity;
+    _ethnicityController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _ethnicityController.text.length),
+    );
+
+    isDiabetic = yesOrNo(widget.healthProfile.isDiabetic);
+    hasHeartAilment = yesOrNo(widget.healthProfile.hasHeartAilment);
+    sedentaryLifestyle = yesOrNo(widget.healthProfile.sedentaryLifestyle);
+    isSmoker = yesOrNo(widget.healthProfile.isSmoker);
+    isDrinker = yesOrNo(widget.healthProfile.isSmoker);
+    maritalStatus = widget.healthProfile.maritalStatus;
   }
 
   String yesOrNo(bool flag) {
@@ -162,8 +183,14 @@ class _EditPatientMedicalProfileViewState
                         width: 24,
                       ),
                       _sizedBoxHeight(),
-                      _textFeilds('Major Complaint', _majorComplaintController,
-                          _majorComplaintFocus, _bloodGroupFocus),
+                      _textFeilds('Major Ailment', _majorAilmentController,
+                          _majorAilmentFocus, _otherConditionsFocus),
+                      _sizedBoxHeight(),
+                      _textFeilds('Other Conditions', _otherConditionsController,
+                          _otherConditionsFocus, _ethnicityFocus),
+                      _sizedBoxHeight(),
+                      _textFeilds('Ethnicity', _ethnicityController,
+                          _ethnicityFocus, _bloodGroupFocus),
                       _sizedBoxHeight(),
                       _textFeilds('Blood Group', _bloodGroupController,
                           _bloodGroupFocus, _ocupationFocus),
@@ -172,18 +199,13 @@ class _EditPatientMedicalProfileViewState
                           _ocupationFocus, _nationalityFocus),
                       _sizedBoxHeight(),
                       _textFeilds('Nationality', _nationalityController,
-                          _nationalityFocus, _surgicalHistoryFocus),
+                          _nationalityFocus, _procedureHistoryFocus),
                       _sizedBoxHeight(),
+
                       _textFeilds(
-                          'Surgical history',
-                          _surgicalHistoryController,
-                          _surgicalHistoryFocus,
-                          _obstetricHistoryFocus),
-                      _sizedBoxHeight(),
-                      _textFeilds(
-                          'Obstetric history',
-                          _obstetricHistoryController,
-                          _obstetricHistoryFocus,
+                          'Procedure history',
+                          _procedureHistoryController,
+                          _procedureHistoryFocus,
                           _obstetricHistoryFocus),
                       _sizedBoxHeight(),
                       Text('Marital status',
@@ -236,32 +258,6 @@ class _EditPatientMedicalProfileViewState
                     debugPrint(item.title);
                   },
                 ),*/
-                      Text('Is vegetarian?',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w700,
-                              color: textBlack)),
-                      RadioGroup(
-                        items: radioItems,
-                        selected: showSelectedItemForYesOrNo(isVegetarian),
-                        onSelected: (item) {
-                          debugPrint(item.title);
-                          isVegetarian = item.title;
-                        },
-                      ),
-                      Text('Is vegan?',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w700,
-                              color: textBlack)),
-                      RadioGroup(
-                        items: radioItems,
-                        selected: showSelectedItemForYesOrNo(isVegan),
-                        onSelected: (item) {
-                          debugPrint(item.title);
-                          isVegan = item.title;
-                        },
-                      ),
                       Text('Is smoker?',
                           style: TextStyle(
                               fontSize: 16.0,
@@ -275,7 +271,7 @@ class _EditPatientMedicalProfileViewState
                           isSmoker = item.title;
                         },
                       ),
-                      Text('Is Alcoholic?',
+                      Text('Is Drinker?',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w700,
@@ -288,18 +284,6 @@ class _EditPatientMedicalProfileViewState
                           isDrinker = item.title;
                         },
                       ),
-                      /*Text('Substance abuse',
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w700,
-                        color: textBlack)),
-
-                RadioGroup(
-                  items: radioItems,
-                  onSelected: (item) {
-                    debugPrint(item.title);
-                  },
-                ),*/
                       SizedBox(
                         width: 24,
                       ),
@@ -386,34 +370,29 @@ class _EditPatientMedicalProfileViewState
     try {
       progressDialog.show();
       final Map<String, dynamic> data = <String, dynamic>{};
-      data['MajorAilment'] = _majorComplaintController.text;
-      data['Comorbidities'] = '';
-      data['BloodGroup'] = _bloodGroupController.text;
+      data['BloodGroup'] = _bloodGroupController.text.toUpperCase();
+      data['MajorAilment'] = _majorAilmentController.text;
+      data['OtherConditions'] = _otherConditionsController.text;
       data['IsDiabetic'] = isDiabetic == 'Yes';
       data['HasHeartAilment'] = hasHeartAilment == 'Yes';
-      data['IsVegetarian'] = isVegetarian == 'Yes';
-      data['IsVegan'] = isVegan == 'Yes';
-      data['SedentaryLifestyle'] = sedentaryLifestyle == 'Yes';
-      data['IsSmoker'] = isSmoker == 'Yes';
-      data['SmokingSeverity'] = 1;
-      data['SmokingSince'] = null;
-      data['IsDrinker'] = isDrinker == 'Yes';
-      data['DrinkingSeverity'] = 1;
-      data['DrinkingSince'] = null;
-      data['Ethnicity'] = null;
+      data['MaritalStatus'] = maritalStatus;
+      data['Ethnicity'] = _ethnicityController.text;
       data['Nationality'] = _nationalityController.text;
       data['Occupation'] = _ocupationController.text;
-      data['MaritalStatus'] = maritalStatus;
-      data['SurgicalHistory'] = _surgicalHistoryController.text;
-      data['ObstetricHistory'] = _obstetricHistoryController.text;
+      data['SedentaryLifestyle'] = sedentaryLifestyle == 'Yes';
+      data['IsSmoker'] = isSmoker == 'Yes';
+      data['IsDrinker'] = isDrinker == 'Yes';
+      //data['DrinkingSeverity'] = 'medium';
+      //data['DrinkingSince'] = null;
+      data['ProcedureHistory'] = _procedureHistoryController.text;
 
       final BaseResponse baseResponse = await model.updatePatientMedicalProfile(
-          widget.medicalProfiles.id, data);
+          widget.healthProfile.id, data);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
         Navigator.pop(context);
-        showToast('Medical Profile updated successfully.', context);
+        showToast('Medical Profile updated successfully!', context);
       } else {
         showToast(baseResponse.message, context);
         progressDialog.hide();

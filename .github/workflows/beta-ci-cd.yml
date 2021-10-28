@@ -37,6 +37,7 @@ jobs:
           GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
 
   CodeScan-FlutterAnalyze:
+    environment: prod
     runs-on: ubuntu-latest
     steps:
       # Checkout Code

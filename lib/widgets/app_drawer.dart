@@ -28,6 +28,7 @@ class _AppDrawerState extends State<AppDrawer> {
   String profileImage = '';
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
   String _baseUrl = '';
+  String imageResourceId = '';
 
   loadSharedPrefs() async {
     try {
@@ -35,10 +36,17 @@ class _AppDrawerState extends State<AppDrawer> {
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       //debugPrint(user.toJson().toString());
       setState(() {
-        name = patient.firstName + ' ' + patient.lastName;
+        name =
+            patient.user.person.firstName + ' ' + patient.user.person.lastName;
 
-        mobileNumber = patient.phoneNumber;
-        profileImage = patient.imageURL ?? '';
+        mobileNumber = patient.user.person.phone;
+        imageResourceId = patient.user.person.imageResourceId ?? '';
+        profileImage = imageResourceId != ''
+            ? apiProvider.getBaseUrl() +
+                '/file-resources/' +
+                imageResourceId +
+                '/download'
+            : '';
       });
       _baseUrl = apiProvider.getBaseUrl();
     } catch (Excepetion) {

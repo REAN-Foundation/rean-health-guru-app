@@ -1,66 +1,70 @@
 class GetAssesmentTemplateByIdResponse {
   String status;
   String message;
+  int httpCode;
   Data data;
 
-  GetAssesmentTemplateByIdResponse({this.status, this.message, this.data});
+  GetAssesmentTemplateByIdResponse(
+      {this.status, this.message, this.httpCode, this.data});
 
   GetAssesmentTemplateByIdResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    status = json['Status'];
+    message = json['Message'];
+    httpCode = json['HttpCode'];
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['Data'] = this.data.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  AssessmentTemplate assessmentTemplate;
+  SymptomAssessmentTemplate symptomAssessmentTemplate;
 
-  Data({this.assessmentTemplate});
+  Data({this.symptomAssessmentTemplate});
 
   Data.fromJson(Map<String, dynamic> json) {
-    assessmentTemplate = json['assessmentTemplate'] != null
-        ? AssessmentTemplate.fromJson(json['assessmentTemplate'])
+    symptomAssessmentTemplate = json['SymptomAssessmentTemplate'] != null
+        ? SymptomAssessmentTemplate.fromJson(json['SymptomAssessmentTemplate'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (assessmentTemplate != null) {
-      data['assessmentTemplate'] = assessmentTemplate.toJson();
+    if (symptomAssessmentTemplate != null) {
+      data['SymptomAssessmentTemplate'] = symptomAssessmentTemplate.toJson();
     }
     return data;
   }
 }
 
-class AssessmentTemplate {
+class SymptomAssessmentTemplate {
   String id;
   String title;
   String description;
-  String tags;
+  List<String> tags;
   List<TemplateSymptomTypes> templateSymptomTypes;
 
-  AssessmentTemplate(
+  SymptomAssessmentTemplate(
       {this.id,
       this.title,
       this.description,
       this.tags,
       this.templateSymptomTypes});
 
-  AssessmentTemplate.fromJson(Map<String, dynamic> json) {
+  SymptomAssessmentTemplate.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['Title'];
     description = json['Description'];
-    tags = json['Tags'];
+    tags = json['Tags'].cast<String>();
     if (json['TemplateSymptomTypes'] != null) {
       templateSymptomTypes = <TemplateSymptomTypes>[];
       json['TemplateSymptomTypes'].forEach((v) {
@@ -85,41 +89,33 @@ class AssessmentTemplate {
 
 class TemplateSymptomTypes {
   int index;
-  String id;
+  String symptomTypeId;
   String symptom;
   String description;
-  String tags;
   String imageResourceId;
-  String publicImageUrl;
 
   TemplateSymptomTypes(
       {this.index,
-      this.id,
+      this.symptomTypeId,
       this.symptom,
       this.description,
-      this.tags,
-      this.imageResourceId,
-      this.publicImageUrl});
+      this.imageResourceId});
 
   TemplateSymptomTypes.fromJson(Map<String, dynamic> json) {
     index = json['Index'];
-    id = json['id'];
+    symptomTypeId = json['SymptomTypeId'];
     symptom = json['Symptom'];
     description = json['Description'];
-    tags = json['Tags'];
     imageResourceId = json['ImageResourceId'];
-    publicImageUrl = json['PublicImageUrl'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['Index'] = index;
-    data['id'] = id;
+    data['SymptomTypeId'] = symptomTypeId;
     data['Symptom'] = symptom;
     data['Description'] = description;
-    data['Tags'] = tags;
     data['ImageResourceId'] = imageResourceId;
-    data['PublicImageUrl'] = publicImageUrl;
     return data;
   }
 }

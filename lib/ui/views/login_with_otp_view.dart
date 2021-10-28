@@ -8,6 +8,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/CheckUserExistOrNotResonse.dart';
+import 'package:paitent/core/models/GetRoleIdResponse.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/viewmodels/views/login_view_model.dart';
 import 'package:paitent/networking/ApiProvider.dart';
@@ -40,8 +41,44 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     //if(apiProvider.getBaseUrl().contains('dev')) {
     setUpDummyNumbers();
     //}
+    getRoleIdApi();
     firebase();
     super.initState();
+  }
+
+  getRoleIdApi() async {
+    try {
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      debugPrint('Mobile = $mobileNumber');
+
+      final response =
+          await apiProvider.get('/types/person-roles', header: map);
+
+      final GetRoleIdResponse getRoleIdResponse =
+          GetRoleIdResponse.fromJson(response);
+
+      if (getRoleIdResponse.status == 'success') {
+        for (int i = 0;
+            i < getRoleIdResponse.data.personRoleTypes.length;
+            i++) {
+          if (getRoleIdResponse.data.personRoleTypes.elementAt(i).roleName ==
+              "Patient") {
+            _sharedPrefUtils.save('roleId',
+                getRoleIdResponse.data.personRoleTypes.elementAt(i).id);
+            debugPrint(
+                "ROLE ID ==> ${getRoleIdResponse.data.personRoleTypes.elementAt(i).id}");
+            setRoleId(getRoleIdResponse.data.personRoleTypes.elementAt(i).id);
+          }
+        }
+      } else {
+        setState(() {});
+      }
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      setState(() {});
+      showToast(e.toString(), context);
+    }
   }
 
   permissionDialog() async {
@@ -225,21 +262,27 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     try {
       debugPrint('Mobile = $mobileNumber');
 
-      final response =
-          await apiProvider.get('/user/exists?phone=' + mobileNumber);
+      final response = await apiProvider.get('/users/by-phone/' +
+          mobileNumber +
+          '/role/' +
+          getRoleId().toString());
 
       final CheckUserExistOrNotResonse checkUserExistOrNotResonse =
           CheckUserExistOrNotResonse.fromJson(response);
 
       if (checkUserExistOrNotResonse.status == 'success') {
-        if (checkUserExistOrNotResonse.data.exists.result) {
+        if (checkUserExistOrNotResonse.message ==
+            'User retrieved successfully!') {
           generateOTPForExistingUser(model);
-        } else {
-          generateOTP(model);
         }
       } else {
+        if (checkUserExistOrNotResonse.message == 'User not found.') {
+          generateOTP(model);
+        } else {
+          showToast(checkUserExistOrNotResonse.message, context);
+        }
         model.setBusy(false);
-        showToast(checkUserExistOrNotResonse.error, context);
+        //showToast(checkUserExistOrNotResonse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
@@ -258,11 +301,12 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       debugPrint('Mobile = $mobileNumber');
 
       final body = <String, dynamic>{};
-      body['PhoneNumber'] = countryCode + '-' + mobileNumber;
+      body['Phone'] = countryCode + '-' + mobileNumber;
       body['Purpose'] = 'Login';
+      body['RoleId'] = getRoleId();
 
-      final response =
-          await apiProvider.post('/user/generate-otp', header: map, body: body);
+      final response = await apiProvider.post('/users/generate-otp',
+          header: map, body: body);
 
       final BaseResponse doctorListApiResponse =
           BaseResponse.fromJson(response);
@@ -275,7 +319,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         model.setBusy(false);
       } else {
         model.setBusy(false);
-        showToast(doctorListApiResponse.error, context);
+        showToast(doctorListApiResponse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
@@ -294,11 +338,11 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       debugPrint('Mobile = $mobileNumber');
 
       final body = <String, dynamic>{};
-      body['PhoneNumber'] = countryCode + '-' + mobileNumber;
+      body['Phone'] = countryCode + '-' + mobileNumber;
       body['GenerateLoginOTP'] = true;
 
       final response =
-          await apiProvider.post('/patient', header: map, body: body);
+          await apiProvider.post('/patients', header: map, body: body);
 
       final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
@@ -312,7 +356,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         model.setBusy(false);
       } else {
         model.setBusy(false);
-        showToast(doctorListApiResponse.error, context);
+        showToast(doctorListApiResponse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
@@ -352,7 +396,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       } else {
         debugPrint('Its API Failuar');
         model.setBusy(false);
-        showToast(doctorListApiResponse.error, context);
+        showToast(doctorListApiResponse.message, context);
       }
     } on FetchDataException catch (e) {
       showToast('Opps! Something went wrong, Please try again', context);

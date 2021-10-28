@@ -36,12 +36,13 @@ class _SupportViewState extends State<SupportView> {
       final Patient patient =
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       auth = user.data.accessToken;
-      patientUserId = user.data.user.userId;
+      patientUserId = user.data.user.id;
       //debugPrint(user.toJson().toString());
 
       setState(() {
-        name = patient.firstName + ' ' + patient.lastName;
-        userPhone = patient.phoneNumber;
+        name =
+            patient.user.person.firstName + ' ' + patient.user.person.lastName;
+        userPhone = patient.user.person.phone;
       });
     } catch (Excepetion) {
       // do something
@@ -78,47 +79,48 @@ class _SupportViewState extends State<SupportView> {
                         children: [
                           Expanded(
                             flex: 6,
-                            child: ExcludeSemantics(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: getAppType() == 'AHA'
-                                        ? Image.asset(
-                                            'res/images/support_us_aha.png',
-                                          )
-                                        : Lottie.asset(
-                                            'res/lottiefiles/support_us.json',
-                                          ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 32.0),
-                                    child: Text(
-                                        getAppType() == 'AHA' ? msgAHA : msg,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 20,
-                                            color: primaryColor)),
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 32.0),
-                                    child: Text(subtitle,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16,
-                                            color: primaryColor)),
-                                  ),
-                                ],
-                              ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: getAppType() == 'AHA'
+                                      ? Image.asset(
+                                          'res/images/support_us_aha.png',
+                                        )
+                                      : Lottie.asset(
+                                          'res/lottiefiles/support_us.json',
+                                        ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 32.0),
+                                  child: Text(
+                                      getAppType() == 'AHA' ? msgAHA : msg,
+                                      textAlign: TextAlign.center,
+                                      semanticsLabel:
+                                          getAppType() == 'AHA' ? msgAHA : msg,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 20,
+                                          color: primaryColor)),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 32.0),
+                                  child: Text(subtitle,
+                                      semanticsLabel: subtitle,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                          color: primaryColor)),
+                                ),
+                              ],
                             ),
                           ),
                           Expanded(
@@ -228,7 +230,9 @@ class _SupportViewState extends State<SupportView> {
                                                   path: email,
                                                   queryParameters: {
                                                     'subject':
-                                                        appName + ' app query',
+                                                        appName.replaceAll(
+                                                                '%20', ' ') +
+                                                            ' app query',
                                                     'body': ''
                                                             '' +
                                                         name +

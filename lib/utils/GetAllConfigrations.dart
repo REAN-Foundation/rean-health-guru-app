@@ -24,8 +24,8 @@ class GetAllConfigrations {
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
-    final response =
-        await apiProvider.get('/types/medication-dosage-units', header: map);
+    final response = await apiProvider.get('/clinical/medications/dosage-units',
+        header: map);
     debugPrint('Medication Dosage Units ==> $response');
     _sharedPrefUtils.save('MedicationDosageUnits', response);
     // Convert and return
@@ -35,8 +35,8 @@ class GetAllConfigrations {
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
-    final response =
-        await apiProvider.get('/types/medication-frequency-units', header: map);
+    final response = await apiProvider
+        .get('/clinical/medications/frequency-units', header: map);
     debugPrint('Medication Frequencies ==> $response');
     _sharedPrefUtils.save('MedicationFrequencies', response);
     // Convert and return
@@ -46,8 +46,8 @@ class GetAllConfigrations {
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
-    final response =
-        await apiProvider.get('/types/medication-duration-units', header: map);
+    final response = await apiProvider
+        .get('/clinical/medications/duration-units', header: map);
     debugPrint('Medication Duration Units ==> $response');
     _sharedPrefUtils.save('MedicationDurationUnits', response);
     // Convert and return

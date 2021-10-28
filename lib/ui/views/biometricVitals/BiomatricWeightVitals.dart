@@ -27,7 +27,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   var model = PatientVitalsViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
-  List<Records> records = <Records>[];
+  List<Items> records = <Items>[];
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   final _weightController = TextEditingController();
   ProgressDialog progressDialog;
@@ -320,13 +320,15 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   }
 
   Widget _makeWeightList(BuildContext context, int index) {
-    final Records record = records.elementAt(index);
+    final Items record = records.elementAt(index);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          dateFormatStandard.format(DateTime.parse(record.recordDate)),
+          dateFormatStandard.format(records.elementAt(index).recordDate == null
+              ? DateTime.now()
+              : DateTime.parse(records.elementAt(index).recordDate)),
           style: TextStyle(
               color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
           maxLines: 1,
@@ -334,10 +336,10 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         ),
         Text(
           unit == 'lbs'
-              ? (double.parse(record.weight.toString()) * 2.20462)
+              ? (double.parse(record.bodyWeight.toString()) * 2.20462)
                       .toStringAsFixed(1) +
                   ' lbs'
-              : record.weight.toString() + ' Kgs',
+              : record.bodyWeight.toString() + ' Kgs',
           style: TextStyle(
               color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
           maxLines: 1,
@@ -400,10 +402,13 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
     for (int i = 0; i < records.length; i++) {
       final String receivedWeight = unit == 'lbs'
-          ? (double.parse(records.elementAt(i).weight.toString()) * 2.20462)
+          ? (double.parse(records.elementAt(i).bodyWeight.toString()) * 2.20462)
               .toStringAsFixed(1)
-          : records.elementAt(i).weight.toString();
-      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
+          : records.elementAt(i).bodyWeight.toString();
+      data.add(TimeSeriesSales(
+          records.elementAt(i).recordDate == null
+              ? DateTime.now()
+              : DateTime.parse(records.elementAt(i).recordDate),
           double.parse(receivedWeight)));
     }
 
@@ -574,9 +579,12 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
       }
 
       final map = <String, dynamic>{};
-      map['Weight'] = entertedWeight.toString();
+      map['BodyWeight'] = entertedWeight.toString();
+      map['PatientUserId'] = "";
+      map['Unit'] = "kg";
 
-      final BaseResponse baseResponse = await model.addMyVitals('weight', map);
+      final BaseResponse baseResponse =
+          await model.addMyVitals('body-weights', map);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
@@ -597,10 +605,10 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   getVitalsHistory() async {
     try {
       final GetMyVitalsHistory getMyVitalsHistory =
-          await model.getMyVitalsHistory('weight');
+          await model.getMyVitalsHistory('body-weights');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
-        records.addAll(getMyVitalsHistory.data.biometrics.records);
+        records.addAll(getMyVitalsHistory.data.bodyWeightRecords.items);
       } else {
         showToast(getMyVitalsHistory.message, context);
       }

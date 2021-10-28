@@ -15,25 +15,26 @@ class PatientMedicalProfileView extends StatefulWidget {
 }
 
 class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
-  MedicalProfiles medicalProfiles;
+  HealthProfile healthProfile;
 
   var model = PatientObservationsViewModel();
-  final TextEditingController _majorComplaintController =
-      TextEditingController();
+  final TextEditingController _majorAilmentController = TextEditingController();
   final TextEditingController _ocupationController = TextEditingController();
   final TextEditingController _nationalityController = TextEditingController();
-  final TextEditingController _surgicalHistoryController =
+  final TextEditingController _procedureHistoryController =
       TextEditingController();
-  final TextEditingController _obstetricHistoryController =
-      TextEditingController();
+
+  /*final TextEditingController _ethnicityController =
+  TextEditingController();*/
 
   String mobileNumber = '';
 
-  final _majorComplaintFocus = FocusNode();
+  final _majorAilmentFocus = FocusNode();
   final _ocupationFocus = FocusNode();
   final _nationalityFocus = FocusNode();
-  final _surgicalHistoryFocus = FocusNode();
-  final _obstetricHistoryFocus = FocusNode();
+  final _procedureHistoryFocus = FocusNode();
+
+  /* final _ethnicityFocus = FocusNode();*/
 
   @override
   void initState() {
@@ -76,7 +77,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                   children: <Widget>[
                                     SizedBox(
                                       width: 150,
-                                      child: Text('Major Complaint',
+                                      child: Text('Major Ailment',
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w700,
@@ -93,7 +94,71 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                     Text(
                                         '' +
                                             replaceNull(
-                                                medicalProfiles.majorAilment),
+                                                healthProfile.majorAilment),
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w500,
+                                            color: textBlack)),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: 150,
+                                      child: Text('Other Conditions',
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w700,
+                                              color: textBlack)),
+                                    ),
+                                    Text(': ',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w500,
+                                            color: textBlack)),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                        '' +
+                                            replaceNull(
+                                                healthProfile.otherConditions),
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w500,
+                                            color: textBlack)),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: 150,
+                                      child: Text('Ethnicity',
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w700,
+                                              color: textBlack)),
+                                    ),
+                                    Text(': ',
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w500,
+                                            color: textBlack)),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                        '' +
+                                            replaceNull(
+                                                healthProfile.ethnicity),
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.w500,
@@ -124,7 +189,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                     Text(
                                         '' +
                                             replaceNull(
-                                                medicalProfiles.bloodGroup),
+                                                healthProfile.bloodGroup),
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.w500,
@@ -155,7 +220,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                     ),
                                     Text(
                                         '' +
-                                            yesOrNo(medicalProfiles.isDiabetic),
+                                            yesOrNo(healthProfile.isDiabetic),
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.w500,
@@ -185,7 +250,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                     ),
                                     Text(
                                         '' +
-                                            yesOrNo(medicalProfiles
+                                            yesOrNo(healthProfile
                                                 .hasHeartAilment),
                                         style: TextStyle(
                                             fontSize: 16.0,
@@ -220,7 +285,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                     Expanded(
                                       child: Text(
                                           '' +
-                                              replaceNull(medicalProfiles
+                                              replaceNull(healthProfile
                                                   .maritalStatus),
                                           style: TextStyle(
                                               fontSize: 16.0,
@@ -254,7 +319,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                       child: Text(
                                           '' +
                                               replaceNull(
-                                                  medicalProfiles.occupation),
+                                                  healthProfile.occupation),
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500,
@@ -310,7 +375,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                       child: Text(
                                           '' +
                                               replaceNull(
-                                                  medicalProfiles.nationality),
+                                                  healthProfile.nationality),
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500,
@@ -320,62 +385,6 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 ),
                                 SizedBox(
                                   height: 32,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Is vegetarian?',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(':',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                        '' +
-                                            yesOrNo(
-                                                medicalProfiles.isVegetarian),
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Is vegan?',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(':',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text('' + yesOrNo(medicalProfiles.isVegan),
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                  ],
                                 ),
                                 SizedBox(
                                   height: 8,
@@ -398,7 +407,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                     SizedBox(
                                       width: 8,
                                     ),
-                                    Text('' + yesOrNo(medicalProfiles.isSmoker),
+                                    Text('' + yesOrNo(healthProfile.isSmoker),
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.w500,
@@ -412,7 +421,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                   children: <Widget>[
                                     SizedBox(
                                       width: 150,
-                                      child: Text('Is Alcoholic?',
+                                      child: Text('Is Drinker?',
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w700,
@@ -427,44 +436,19 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                       width: 8,
                                     ),
                                     Text(
-                                        '' + yesOrNo(medicalProfiles.isDrinker),
+                                        '' + yesOrNo(healthProfile.isDrinker),
                                         style: TextStyle(
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.w500,
                                             color: textBlack)),
                                   ],
                                 ),
-                                /*SizedBox(height: 8,),
-                    Row(
-                      children: <Widget>[
-                        SizedBox(width: 150,
-                          child: Text('Substance Abuse',
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w700,
-                                  color: textBlack)),
-                        ),
-                        Text(':',
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
-                                color: textBlack)),
-                        SizedBox(width: 8,),
-                        Text('No',
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
-                                color: textBlack)),
-                      ],
-                    ),*/
-                                SizedBox(
-                                  height: 32,
-                                ),
+                                SizedBox(height: 8,),
                                 Row(
                                   children: <Widget>[
                                     SizedBox(
                                       width: 150,
-                                      child: Text('Surgical History',
+                                      child: Text('Procedure History',
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w700,
@@ -481,8 +465,8 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                     Expanded(
                                       child: Text(
                                           '' +
-                                              replaceNull(medicalProfiles
-                                                  .surgicalHistory),
+                                              replaceNull(healthProfile
+                                                  .procedureHistory),
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500,
@@ -493,36 +477,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 SizedBox(
                                   height: 8,
                                 ),
-                                Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Obstetric History',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(':',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                          '' +
-                                              replaceNull(medicalProfiles
-                                                  .obstetricHistory),
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w500,
-                                              color: textBlack)),
-                                    ),
-                                  ],
-                                ),
+
                               ],
                             ),
                           ),
@@ -541,7 +496,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               onPressed: () {
                                 Navigator.pushNamed(context,
                                         RoutePaths.Patient_EDIT_MEDIACL_PROFILE,
-                                        arguments: medicalProfiles)
+                                        arguments: healthProfile)
                                     .then((value) {
                                   _getPatientMedicalProfile();
                                 });
@@ -565,7 +520,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
           await model.getPatientMedicalProfile('Bearer ' + auth, patientUserId);
 
       if (allergiesPojo.status == 'success') {
-        medicalProfiles = allergiesPojo.data.medicalProfiles;
+        healthProfile = allergiesPojo.data.healthProfile;
       } else {}
     } catch (CustomException) {
       debugPrint('Error ' + CustomException.toString());
@@ -628,24 +583,18 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                       child: Column(
                         children: [
                           _textFeilds(
-                              'Major Complaint',
-                              _majorComplaintController,
-                              _majorComplaintFocus,
+                              'Major Ailment',
+                              _majorAilmentController,
+                              _majorAilmentFocus,
                               _ocupationFocus),
                           _textFeilds('Occupation', _ocupationController,
                               _ocupationFocus, _nationalityFocus),
                           _textFeilds('Nationality', _nationalityController,
-                              _nationalityFocus, _surgicalHistoryFocus),
+                              _nationalityFocus, _procedureHistoryFocus),
                           _textFeilds(
-                              'Surgical history',
-                              _surgicalHistoryController,
-                              _surgicalHistoryFocus,
-                              _obstetricHistoryFocus),
-                          _textFeilds(
-                              'Obstetric history',
-                              _obstetricHistoryController,
-                              _obstetricHistoryFocus,
-                              _obstetricHistoryFocus),
+                              'Procedure history',
+                              _procedureHistoryController,
+                              _procedureHistoryFocus,_procedureHistoryFocus),
                         ],
                       ),
                     ),
@@ -671,7 +620,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
       controller: editingController,
       focusNode: focusNode,
       textAlign: TextAlign.left,
-      textInputAction: nextFocusNode == _obstetricHistoryFocus
+      textInputAction: nextFocusNode == _procedureHistoryController
           ? TextInputAction.done
           : TextInputAction.next,
       onFieldSubmitted: (term) {

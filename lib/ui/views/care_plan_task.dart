@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
+import 'package:paitent/core/models/UserTaskResponse.dart';
 import 'package:paitent/core/models/assortedViewConfigs.dart';
 import 'package:paitent/core/models/startTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
@@ -25,11 +26,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   var model = PatientCarePlanViewModel();
   var dateFormat = DateFormat('MMM dd - hh:mm a');
   GetTaskOfAHACarePlanResponse _carePlanTaskResponse;
+  UserTaskResponse userTaskResponse;
   List<Task> tasks = <Task>[];
+  List<Items> tasksList = <Items>[];
   bool isSubscribe = false;
   ProgressDialog progressDialog;
   bool isUpCommingSelected = true;
-  String query = 'incomplete';
+  String query = 'pending';
   final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
 
@@ -59,6 +62,53 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }*/
+  }
+
+  getUserTask() async {
+    try {
+      //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
+      userTaskResponse = await model.getUserTasks(query);
+
+      if (userTaskResponse.status == 'success') {
+        tasksList.clear();
+        //tasksList.addAll(userTaskResponse.data.userTasks.items);
+        _sortUserTask(userTaskResponse.data.userTasks.items);
+        debugPrint('User Tasks ==> ${userTaskResponse.toJson()}');
+        debugPrint(
+            'User Tasks Count ==> ${userTaskResponse.data.userTasks.items.length}');
+      } else {
+        tasksList.clear();
+        showToast(userTaskResponse.message, context);
+      }
+    } on FetchDataException catch (e) {
+      tasksList.clear();
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+    /*catch (Exception e) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint(CustomException.toString());
+    }*/
+  }
+
+  _sortUserTask(List<Items> tasks) {
+    for (final task in tasks) {
+      if (query == 'pending') {
+        if (task.status == 'Delayed' ||
+            task.status == 'InProgress' ||
+            task.status == 'Pending' ||
+            task.status == 'Upcoming' ||
+            task.status == 'Overdue') {
+          tasksList.add(task);
+        }
+      } else {
+        if (task.status == 'Completed' || task.status == 'Cancelled') {
+          tasksList.add(task);
+        }
+      }
+    }
   }
 
   @override
@@ -92,7 +142,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       isSubscribe = false;
     }else {
       isSubscribe = true;*/
-    getAHACarePlanSummary();
+    getUserTask();
 
     //}
   }
@@ -140,8 +190,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       flex: 1,
                       child: InkWell(
                         onTap: () {
-                          query = 'incomplete';
-                          getAHACarePlanSummary();
+                          query = 'pending';
+                          getUserTask();
                           isUpCommingSelected = true;
                         },
                         child: Center(
@@ -164,7 +214,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       child: InkWell(
                         onTap: () {
                           query = 'completed';
-                          getAHACarePlanSummary();
+                          getUserTask();
                           isUpCommingSelected = false;
                         },
                         child: Center(
@@ -190,7 +240,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       padding: const EdgeInsets.all(16.0),
                       child: model.busy
                           ? Center(child: CircularProgressIndicator())
-                          : tasks.isEmpty
+                          : tasksList.isEmpty
                               ? noTaskFound()
                               : listWidget())),
             ],
@@ -228,19 +278,19 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       isAlwaysShown: true,
       controller: _scrollController,
       child: ListView.separated(
-          itemBuilder: (context, index) => _createToDos(context, index),
+          itemBuilder: (context, index) => _makeMedicineCard(context, index),
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(
               height: 8,
             );
           },
-          itemCount: tasks.length,
+          itemCount: tasksList.length,
           scrollDirection: Axis.vertical,
           shrinkWrap: true),
     );
   }
 
-  Widget _createToDos(BuildContext context, int index) {
+/*  Widget _createToDos(BuildContext context, int index) {
     final Task task = tasks.elementAt(index);
 
     return task.categoryName == 'Care-plan-task'
@@ -250,9 +300,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             : task.categoryName == 'Appointment-task'
                 ? _makeUpcommingAppointmentCard(context, index)
                 : Container();
-  }
+  }*/
 
-  Widget _makeTaskCard(BuildContext context, int index) {
+/*  Widget _makeTaskCard(BuildContext context, int index) {
     final Task task = tasks.elementAt(index);
     //debugPrint('Category Name ==> ${task.categoryName} && Task Tittle ==> ${task.details.mainTitle}');
     return InkWell(
@@ -396,20 +446,20 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 ),
                               ],
                             )
-                            /*Column(
+                            */ /*Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Icon(task.finished ? Icons.check : Icons.chevron_right, size: 32, color: task.finished ? Colors.green : Colors.grey,),
-                             */ /* SizedBox(height: 4,),
+                             */ /* */ /* SizedBox(height: 4,),
                               Text(
                                 'Start',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 10),
-                              ),*/ /*
+                              ),*/ /* */ /*
                             ],
-                          ),*/
+                          ),*/ /*
                             ),
                       ],
                     ),
@@ -421,17 +471,21 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         ),
       ),
     );
-  }
+  }*/
 
   Widget _makeMedicineCard(BuildContext context, int index) {
-    final Task task = tasks.elementAt(index);
-    final DateTime startTime =
-        DateTime.parse(task.details.timeScheduleStart).toLocal();
+    final Items task = tasksList.elementAt(index);
+    //debugPrint('Medication Pojo ${task.toJson().toString()}');
+    /*if (task.scheduledStartTime == null) {
+      return Container();
+    }*/
+    /* final DateTime startTime =
+        DateTime.parse(task.scheduledStartTime).toLocal();
     debugPrint(
-        'Medication Taken ==> ${task.details.isTaken}  && Start Time ==> ${DateTime.now().isAfter(startTime)} ');
+        'Medication Taken ==> ${task.status}  && Start Time ==> ${DateTime.now().isAfter(startTime)} ');*/
     return MergeSemantics(
       child: Semantics(
-        label: task.details.mainTitle,
+        label: task.category,
         child: Container(
           height: 100,
           decoration: BoxDecoration(
@@ -478,9 +532,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         Row(
                           children: [
                             Text(
-                                dateFormat.format(DateTime.parse(
-                                        task.details.timeScheduleStart)
-                                    .toLocal()),
+                                dateFormat.format(DateTime.parse(task.scheduledStartTime)
+                                        .toLocal()),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -511,24 +564,21 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                if (task.details.drugName == null)
-                                  Container()
-                                else
-                                  Text(task.details.drugName,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w200,
-                                          color: textBlack)),
+                                Text(task.task,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w200,
+                                        color: textBlack)),
                                 SizedBox(
                                   height: 4,
                                 ),
-                                if (!task.details.isTaken) ...[
+                                if (task.status != 'Completed') ...[
                                   Text(
                                       'Consume before : ' +
                                           dateFormat.format(DateTime.parse(
-                                                  task.details.timeScheduleEnd)
+                                                  task.scheduledEndTime)
                                               .toLocal()),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
@@ -537,12 +587,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                           fontWeight: FontWeight.w300,
                                           color: Color(0XFF909CAC))),
                                 ],
-                                if (task.details.isTaken) ...[
+                                if (task.status == 'Completed') ...[
                                   Text(
                                       'Consumed at : ' +
-                                          dateFormat.format(DateTime.parse(
-                                                  task.details.takenAt)
-                                              .toLocal()),
+                                          dateFormat.format(
+                                              DateTime.parse(task.finishedAt)
+                                                  .toLocal()),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -557,18 +607,18 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         SizedBox(
                           width: 8,
                         ),
-                        if (!task.details.isTaken &&
-                            !task.details.isMissed) ...[
+                        if (!task.actionDto.isTaken &&
+                            !task.actionDto.isMissed) ...[
                           Visibility(
-                            visible:
-                                !(DateTime.parse(task.details.timeScheduleStart)
-                                        .toLocal())
-                                    .isAfter(DateTime.now()),
+                            visible: !(DateTime.parse(
+                                        task.actionDto.timeScheduleStart)
+                                    .toLocal())
+                                .isAfter(DateTime.now()),
                             child: Expanded(
                               flex: 2,
                               child: InkWell(
                                 onTap: () {
-                                  markMedicationsAsTaken(task.details.id);
+                                  markMedicationsAsTaken(task.actionId);
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -602,7 +652,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             ),
                           ),
                         ],
-                        if (task.details.isTaken) ...[
+                        if (task.actionDto.isTaken) ...[
                           Expanded(
                             flex: 2,
                             child: InkWell(
@@ -628,7 +678,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             ),
                           ),
                         ],
-                        if (task.details.isMissed) ...[
+                        if (task.actionDto.isMissed) ...[
                           Expanded(
                             flex: 2,
                             child: InkWell(
@@ -711,7 +761,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     }
   }
 
-  Widget _makeUpcommingAppointmentCard(BuildContext context, int index) {
+/*  Widget _makeUpcommingAppointmentCard(BuildContext context, int index) {
     final Task task = tasks.elementAt(index);
     return InkWell(
       onTap: () {},
@@ -810,7 +860,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         ),
       ),
     );
-  }
+  }*/
 
   startAHACarePlanSummary(Task task) async {
     try {
@@ -861,7 +911,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
                 arguments: newAssortedViewConfigs)
             .then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         break;
@@ -870,7 +920,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           Navigator.pushNamed(context, RoutePaths.Assessment_Navigator,
                   arguments: task)
               .then((value) {
-            getAHACarePlanSummary();
+            getUserTask();
             //showToast('Task completed successfully');
           });
         } else {
@@ -880,7 +930,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         break;
       case 'Link':
         _launchURL(task.details.url.replaceAll(' ', '%20')).then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         if (!task.finished) {
@@ -891,7 +941,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         Navigator.pushNamed(context, RoutePaths.Biometric_Care_Plan_Line,
                 arguments: task)
             .then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         break;
@@ -899,7 +949,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         Navigator.pushNamed(context, RoutePaths.Challenge_Care_Plan,
                 arguments: task)
             .then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         break;
@@ -908,7 +958,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           Navigator.pushNamed(
                   context, RoutePaths.Set_Prority_For_Goals_Care_Plan)
               .then((value) {
-            getAHACarePlanSummary();
+            getUserTask();
             //showToast('Task completed successfully');
           });
         } else {
@@ -927,7 +977,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
                 arguments: newAssortedViewConfigs)
             .then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         break;
@@ -943,7 +993,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         Navigator.pushNamed(context, RoutePaths.Word_Of_The_Week_Care_Plan,
                 arguments: newAssortedViewConfigs)
             .then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         break;
@@ -953,7 +1003,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                   context, RoutePaths.Self_Reflection_For_Goals_Care_Plan,
                   arguments: task)
               .then((value) {
-            getAHACarePlanSummary();
+            getUserTask();
             //showToast('Task completed successfully');
           });
         } else {
@@ -965,7 +1015,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           Navigator.pushNamed(context, RoutePaths.Care_Plan_Status_Check,
                   arguments: task)
               .then((value) {
-            getAHACarePlanSummary();
+            getUserTask();
             //showToast('Task completed successfully');
           });
         } else {
@@ -986,11 +1036,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             context, RoutePaths.Video_More_Care_Plan,
             arguments: newAssortedViewConfigs)
             .then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
         });
         }else {*/
         _launchURL(task.details.url.replaceAll(' ', '%20')).then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         //}
@@ -1001,7 +1051,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       case 'Infographics':
         debugPrint('URL ==> ${task.details.url.replaceAll(' ', '%20')}');
         _launchURL(task.details.url.replaceAll(' ', '%20')).then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         if (!task.finished) {
@@ -1011,7 +1061,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       case 'Animation':
         debugPrint('URL ==> ${task.details.url.replaceAll(' ', '%20')}');
         _launchURL(task.details.url.replaceAll(' ', '%20')).then((value) {
-          getAHACarePlanSummary();
+          getUserTask();
           //showToast('Task completed successfully');
         });
         if (!task.finished) {

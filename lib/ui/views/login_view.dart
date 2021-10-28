@@ -303,14 +303,14 @@ class _LoginViewState extends State<LoginView> {
                 _sharedPrefUtils.save('user', loginSuccess.toJson());
                 //_sharedPrefUtils.saveBoolean("login1.2", true);
                 getPatientDetails(model, loginSuccess.data.accessToken,
-                    loginSuccess.data.user.userId);
-                debugPrint(loginSuccess.data.user.firstName);
+                    loginSuccess.data.user.id);
+                //debugPrint(loginSuccess.data.user.firstName);
                 /*Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder: (context) {
                       return HomeView();
                     }), (Route<dynamic> route) => false);*/
               } else {
-                showToast(loginSuccess.error, context);
+                showToast(loginSuccess.message, context);
               }
             } catch (CustomException) {
               model.setBusy(false);

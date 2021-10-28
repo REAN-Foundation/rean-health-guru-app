@@ -1,66 +1,43 @@
 class MedicationDosageUnitsPojo {
   String status;
   String message;
+  int httpCode;
   Data data;
 
-  MedicationDosageUnitsPojo({this.status, this.message, this.data});
+  MedicationDosageUnitsPojo(
+      {this.status, this.message, this.httpCode, this.data});
 
   MedicationDosageUnitsPojo.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    status = json['Status'];
+    message = json['Message'];
+    httpCode = json['HttpCode'];
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['Data'] = this.data.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<MedicationDosageUnits> medicationDosageUnits;
+  List<String> medicationDosageUnits;
 
   Data({this.medicationDosageUnits});
 
   Data.fromJson(Map<String, dynamic> json) {
-    if (json['medicationDosageUnits'] != null) {
-      medicationDosageUnits = <MedicationDosageUnits>[];
-      json['medicationDosageUnits'].forEach((v) {
-        medicationDosageUnits.add(MedicationDosageUnits.fromJson(v));
-      });
-    }
+    medicationDosageUnits = json['MedicationDosageUnits'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (medicationDosageUnits != null) {
-      data['medicationDosageUnits'] =
-          medicationDosageUnits.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class MedicationDosageUnits {
-  String name;
-  String uuid;
-
-  MedicationDosageUnits({this.name, this.uuid});
-
-  MedicationDosageUnits.fromJson(Map<String, dynamic> json) {
-    name = json['Name'];
-    uuid = json['uuid'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['Name'] = name;
-    data['uuid'] = uuid;
+    data['MedicationDosageUnits'] = medicationDosageUnits;
     return data;
   }
 }

@@ -1,120 +1,138 @@
 class PatientMedicalProfilePojo {
   String status;
   String message;
+  int httpCode;
   Data data;
+  Client client;
+  User user;
+  String context;
+  List<String> clientIps;
+  String aPIVersion;
 
-  PatientMedicalProfilePojo({this.status, this.message, this.data});
+  PatientMedicalProfilePojo(
+      {this.status,
+        this.message,
+        this.httpCode,
+        this.data,
+        this.client,
+        this.user,
+        this.context,
+        this.clientIps,
+        this.aPIVersion});
 
   PatientMedicalProfilePojo.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    status = json['Status'];
+    message = json['Message'];
+    httpCode = json['HttpCode'];
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
+    client = json['Client'] != null ? Client.fromJson(json['Client']) : null;
+    user = json['User'] != null ? User.fromJson(json['User']) : null;
+    context = json['Context'];
+    clientIps = json['ClientIps'].cast<String>();
+    aPIVersion = json['APIVersion'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['Data'] = this.data.toJson();
     }
+    if (client != null) {
+      data['Client'] = client.toJson();
+    }
+    if (user != null) {
+      data['User'] = user.toJson();
+    }
+    data['Context'] = context;
+    data['ClientIps'] = clientIps;
+    data['APIVersion'] = aPIVersion;
     return data;
   }
 }
 
 class Data {
-  MedicalProfiles medicalProfiles;
+  HealthProfile healthProfile;
 
-  Data({this.medicalProfiles});
+  Data({this.healthProfile});
 
   Data.fromJson(Map<String, dynamic> json) {
-    medicalProfiles = json['medicalProfiles'] != null
-        ? MedicalProfiles.fromJson(json['medicalProfiles'])
+    healthProfile = json['HealthProfile'] != null
+        ? HealthProfile.fromJson(json['HealthProfile'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (medicalProfiles != null) {
-      data['medicalProfiles'] = medicalProfiles.toJson();
+    if (healthProfile != null) {
+      data['HealthProfile'] = healthProfile.toJson();
     }
     return data;
   }
 }
 
-class MedicalProfiles {
+class HealthProfile {
   String id;
   String patientUserId;
-  String updatedBy = '';
-  String majorAilment = '';
-  String comorbidities = '';
-  String gender;
-  String birthDate;
-  String bloodGroup = '';
+  String bloodGroup;
+  String majorAilment;
+  String otherConditions;
   bool isDiabetic;
   bool hasHeartAilment;
-  bool isVegetarian;
-  bool isVegan;
+  String maritalStatus;
+  String ethnicity;
+  String nationality;
+  String occupation;
   bool sedentaryLifestyle;
   bool isSmoker;
-  int smokingSeverity;
-  String smokingSince = '';
+  String smokingSeverity;
+  String smokingSince;
   bool isDrinker;
-  int drinkingSeverity;
-  String drinkingSince = '';
-  String ethnicity = '';
-  String nationality = '';
-  String occupation = '';
-  String maritalStatus = '';
-  String surgicalHistory = '';
-  String obstetricHistory = '';
-  String otherInformation = '';
-  String createdAt;
-  String updatedAt;
+  String drinkingSeverity;
+  String drinkingSince;
+  bool substanceAbuse;
+  String procedureHistory;
+  String obstetricHistory;
+  String otherInformation;
 
-  MedicalProfiles(
+  HealthProfile(
       {this.id,
       this.patientUserId,
-      this.updatedBy,
-      this.majorAilment,
-      this.comorbidities,
-      this.gender,
-      this.birthDate,
       this.bloodGroup,
+      this.majorAilment,
+      this.otherConditions,
       this.isDiabetic,
       this.hasHeartAilment,
-      this.isVegetarian,
-      this.isVegan,
-      this.sedentaryLifestyle,
-      this.isSmoker,
-      this.smokingSeverity,
-      this.smokingSince,
-      this.isDrinker,
-      this.drinkingSeverity,
-      this.drinkingSince,
-      this.ethnicity,
-      this.nationality,
-      this.occupation,
       this.maritalStatus,
-      this.surgicalHistory,
-      this.obstetricHistory,
-      this.otherInformation,
-      this.createdAt,
-      this.updatedAt});
+      this.ethnicity,
+        this.nationality,
+        this.occupation,
+        this.sedentaryLifestyle,
+        this.isSmoker,
+        this.smokingSeverity,
+        this.smokingSince,
+        this.isDrinker,
+        this.drinkingSeverity,
+        this.drinkingSince,
+        this.substanceAbuse,
+        this.procedureHistory,
+        this.obstetricHistory,
+        this.otherInformation});
 
-  MedicalProfiles.fromJson(Map<String, dynamic> json) {
+  HealthProfile.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     patientUserId = json['PatientUserId'];
-    updatedBy = json['UpdatedBy'];
-    majorAilment = json['MajorAilment'];
-    comorbidities = json['Comorbidities'];
-    gender = json['Gender'];
-    birthDate = json['BirthDate'];
     bloodGroup = json['BloodGroup'];
+    majorAilment = json['MajorAilment'];
+    otherConditions = json['OtherConditions'];
     isDiabetic = json['IsDiabetic'];
     hasHeartAilment = json['HasHeartAilment'];
-    isVegetarian = json['IsVegetarian'];
-    isVegan = json['IsVegan'];
+    maritalStatus = json['MaritalStatus'];
+    ethnicity = json['Ethnicity'];
+    nationality = json['Nationality'];
+    occupation = json['Occupation'];
     sedentaryLifestyle = json['SedentaryLifestyle'];
     isSmoker = json['IsSmoker'];
     smokingSeverity = json['SmokingSeverity'];
@@ -122,31 +140,25 @@ class MedicalProfiles {
     isDrinker = json['IsDrinker'];
     drinkingSeverity = json['DrinkingSeverity'];
     drinkingSince = json['DrinkingSince'];
-    ethnicity = json['Ethnicity'];
-    nationality = json['Nationality'];
-    occupation = json['Occupation'];
-    maritalStatus = json['MaritalStatus'];
-    surgicalHistory = json['SurgicalHistory'];
+    substanceAbuse = json['SubstanceAbuse'];
+    procedureHistory = json['ProcedureHistory'];
     obstetricHistory = json['ObstetricHistory'];
     otherInformation = json['OtherInformation'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['PatientUserId'] = patientUserId;
-    data['UpdatedBy'] = updatedBy;
-    data['MajorAilment'] = majorAilment;
-    data['Comorbidities'] = comorbidities;
-    data['Gender'] = gender;
-    data['BirthDate'] = birthDate;
     data['BloodGroup'] = bloodGroup;
+    data['MajorAilment'] = majorAilment;
+    data['OtherConditions'] = otherConditions;
     data['IsDiabetic'] = isDiabetic;
     data['HasHeartAilment'] = hasHeartAilment;
-    data['IsVegetarian'] = isVegetarian;
-    data['IsVegan'] = isVegan;
+    data['MaritalStatus'] = maritalStatus;
+    data['Ethnicity'] = ethnicity;
+    data['Nationality'] = nationality;
+    data['Occupation'] = occupation;
     data['SedentaryLifestyle'] = sedentaryLifestyle;
     data['IsSmoker'] = isSmoker;
     data['SmokingSeverity'] = smokingSeverity;
@@ -154,15 +166,74 @@ class MedicalProfiles {
     data['IsDrinker'] = isDrinker;
     data['DrinkingSeverity'] = drinkingSeverity;
     data['DrinkingSince'] = drinkingSince;
-    data['Ethnicity'] = ethnicity;
-    data['Nationality'] = nationality;
-    data['Occupation'] = occupation;
-    data['MaritalStatus'] = maritalStatus;
-    data['SurgicalHistory'] = surgicalHistory;
+    data['SubstanceAbuse'] = substanceAbuse;
+    data['ProcedureHistory'] = procedureHistory;
     data['ObstetricHistory'] = obstetricHistory;
     data['OtherInformation'] = otherInformation;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
+    return data;
+  }
+}
+
+class Client {
+  String clientName;
+  String clientCode;
+
+  Client({this.clientName, this.clientCode});
+
+  Client.fromJson(Map<String, dynamic> json) {
+    clientName = json['ClientName'];
+    clientCode = json['ClientCode'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['ClientName'] = clientName;
+    data['ClientCode'] = clientCode;
+    return data;
+  }
+}
+
+class User {
+  String userId;
+  String displayName;
+  String phone;
+  String email;
+  String userName;
+  int currentRoleId;
+  int iat;
+  int exp;
+
+  User(
+      {this.userId,
+        this.displayName,
+        this.phone,
+        this.email,
+        this.userName,
+        this.currentRoleId,
+        this.iat,
+        this.exp});
+
+  User.fromJson(Map<String, dynamic> json) {
+    userId = json['UserId'];
+    displayName = json['DisplayName'];
+    phone = json['Phone'];
+    email = json['Email'];
+    userName = json['UserName'];
+    currentRoleId = json['CurrentRoleId'];
+    iat = json['iat'];
+    exp = json['exp'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['UserId'] = userId;
+    data['DisplayName'] = displayName;
+    data['Phone'] = phone;
+    data['Email'] = email;
+    data['UserName'] = userName;
+    data['CurrentRoleId'] = currentRoleId;
+    data['iat'] = iat;
+    data['exp'] = exp;
     return data;
   }
 }

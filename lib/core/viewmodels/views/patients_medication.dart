@@ -26,7 +26,7 @@ class PatientMedicationViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider
-        .get('/medication/current/' + patientUserId, header: map);
+        .get('/clinical/medications/current/' + patientUserId, header: map);
 
     setBusy(false);
     // Convert and return
@@ -42,7 +42,7 @@ class PatientMedicationViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.get(
-        '/medication-consumption/schedule-for-day/' +
+        '/clinical/medication-consumptions/schedule-for-day/' +
             patientUserId +
             '/' +
             date,
@@ -64,7 +64,7 @@ class PatientMedicationViewModel extends BaseModel {
     final body = <String, String>{};
 
     final response = await apiProvider.put(
-        '/medication-consumption/mark-as-taken/' + consumptionId,
+        '/clinical/medication-consumptions/mark-as-taken/' + consumptionId,
         header: map,
         body: body);
 
@@ -84,7 +84,7 @@ class PatientMedicationViewModel extends BaseModel {
     final body = <String, String>{};
 
     final response = await apiProvider.put(
-        '/medication-consumption/mark-as-missed/' + consumptionId,
+        '/clinical/medication-consumptions/mark-as-missed/' + consumptionId,
         header: map,
         body: body);
 
@@ -102,7 +102,8 @@ class PatientMedicationViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.get(
-        '/medication-consumption/summary-for-calendar-months/' + patientUserId,
+        '/clinical/medication-consumptions/summary-for-calendar-months/' +
+            patientUserId,
         header: map);
 
     setBusy(false);
@@ -114,7 +115,8 @@ class PatientMedicationViewModel extends BaseModel {
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
-    final response = await apiProvider.get('/types/drugs?name=' + searchKeyword,
+    final response = await apiProvider.get(
+        '/clinical/drugs/search?name=' + searchKeyword,
         header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
     debugPrint(response.toString());
     // Convert and return
@@ -127,7 +129,7 @@ class PatientMedicationViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
 
-    final response = await apiProvider.post('/medication',
+    final response = await apiProvider.post('/clinical/medications',
         body: body, header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
 
     debugPrint(response.toString());
@@ -141,7 +143,7 @@ class PatientMedicationViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
     final response =
-        await apiProvider.post('/types/drugs', body: body, header: map);
+        await apiProvider.post('/clinical/drugs', body: body, header: map);
     debugPrint(response.toString());
     // Convert and return
     return BaseResponse.fromJson(response);
@@ -166,7 +168,7 @@ class PatientMedicationViewModel extends BaseModel {
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
-    final response = await apiProvider.get('/medication/stock-images',
+    final response = await apiProvider.get('/clinical/medications/stock-images',
         header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
     debugPrint(response.toString());
     // Convert and return

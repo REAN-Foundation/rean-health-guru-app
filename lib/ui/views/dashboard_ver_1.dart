@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/KnowledgeTopicResponse.dart';
-import 'package:paitent/core/models/TaskSummaryResponse.dart';
 import 'package:paitent/core/viewmodels/views/dashboard_summary_model.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/TimeAgo.dart';
 //ignore: must_be_immutable
 class DashBoardVer1View extends StatefulWidget {
   Function positionToChangeNavigationBar;
@@ -38,12 +36,12 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
   int incompleteTaskCount = 0;
   int completedMedicationCount = 0;
   int incompleteMedicationCount = 0;
-  Weight weight;
+ /* Weight weight;
   BloodPressure bloodPressure;
   BloodSugar bloodSugar;
   BloodOxygenSaturation bloodOxygenSaturation;
   Pulse pulse;
-  Temperature temperature;
+  Temperature temperature;*/
   String unit = 'Kg';
   String topicId;
   String topicName = '';
@@ -55,9 +53,9 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
     Future.delayed(
       Duration(seconds: 4),
       () {
-        getTaskPlanSummary();
+        /* getTaskPlanSummary();
         getMedicationSummary();
-        getLatestBiometrics();
+        getLatestBiometrics();*/
         getTodaysKnowledgeTopic();
       },
     );
@@ -68,75 +66,75 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
     super.initState();
   }
 
-  getTaskPlanSummary() async {
-    try {
-      final TaskSummaryResponse taskSummaryResponse =
-          await model.getTaskPlanSummary();
-      debugPrint('Task Summary ==> ${taskSummaryResponse.toJson()}');
-      if (taskSummaryResponse.status == 'success') {
-        completedTaskCount =
-            taskSummaryResponse.data.summary.completedTaskCount;
-        incompleteTaskCount =
-            taskSummaryResponse.data.summary.incompleteTaskCount;
-        setState(() {});
-        //showToast(startCarePlanResponse.message);
-      } else {
-        //showToast(startCarePlanResponse.message);
-      }
-    } catch (CustomException) {
-      model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException.toString());
-    }
-  }
-
-  getMedicationSummary() async {
-    try {
-      final TaskSummaryResponse taskSummaryResponse =
-          await model.getMedicationSummary(dateFormat.format(DateTime.now()));
-      debugPrint('Medication Summary ==> ${taskSummaryResponse.toJson()}');
-      if (taskSummaryResponse.status == 'success') {
-        completedMedicationCount = taskSummaryResponse.data.summary.taken;
-        incompleteMedicationCount = taskSummaryResponse.data.summary.missed +
-            taskSummaryResponse.data.summary.unknown +
-            taskSummaryResponse.data.summary.overdue +
-            taskSummaryResponse.data.summary.upcoming;
-        setState(() {});
-        //showToast(startCarePlanResponse.message);
-      } else {
-        //showToast(startCarePlanResponse.message);
-      }
-    } catch (CustomException) {
-      model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException.toString());
-    }
-  }
-
-  getLatestBiometrics() async {
-    try {
-      final TaskSummaryResponse taskSummaryResponse =
-          await model.getLatestBiometrics();
-      debugPrint('Vitals Summary ==> ${taskSummaryResponse.toJson()}');
-      if (taskSummaryResponse.status == 'success') {
-        pulse = taskSummaryResponse.data.summary.pulse;
-        bloodPressure = taskSummaryResponse.data.summary.bloodPressure;
-        bloodSugar = taskSummaryResponse.data.summary.bloodSugar;
-        temperature = taskSummaryResponse.data.summary.temperature;
-        weight = taskSummaryResponse.data.summary.weight;
-        bloodOxygenSaturation =
-            taskSummaryResponse.data.summary.bloodOxygenSaturation;
-        setState(() {});
-        //showToast(startCarePlanResponse.message);
-      } else {
-        //showToast(startCarePlanResponse.message);
-      }
-    } catch (CustomException) {
-      model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException.toString());
-    }
-  }
+  // getTaskPlanSummary() async {
+  //   try {
+  //     final TaskSummaryResponse taskSummaryResponse =
+  //         await model.getTaskPlanSummary();
+  //     debugPrint('Task Summary ==> ${taskSummaryResponse.toJson()}');
+  //     if (taskSummaryResponse.status == 'success') {
+  //       completedTaskCount =
+  //           taskSummaryResponse.data.summary.completedTaskCount;
+  //       incompleteTaskCount =
+  //           taskSummaryResponse.data.summary.incompleteTaskCount;
+  //       setState(() {});
+  //       //showToast(startCarePlanResponse.message);
+  //     } else {
+  //       //showToast(startCarePlanResponse.message);
+  //     }
+  //   } catch (CustomException) {
+  //     model.setBusy(false);
+  //     showToast(CustomException.toString(), context);
+  //     debugPrint('Error ' + CustomException.toString());
+  //   }
+  // }
+  //
+  // getMedicationSummary() async {
+  //   try {
+  //     final TaskSummaryResponse taskSummaryResponse =
+  //         await model.getMedicationSummary(dateFormat.format(DateTime.now()));
+  //     debugPrint('Medication Summary ==> ${taskSummaryResponse.toJson()}');
+  //     if (taskSummaryResponse.status == 'success') {
+  //       completedMedicationCount = taskSummaryResponse.data.summary.taken;
+  //       incompleteMedicationCount = taskSummaryResponse.data.summary.missed +
+  //           taskSummaryResponse.data.summary.unknown +
+  //           taskSummaryResponse.data.summary.overdue +
+  //           taskSummaryResponse.data.summary.upcoming;
+  //       setState(() {});
+  //       //showToast(startCarePlanResponse.message);
+  //     } else {
+  //       //showToast(startCarePlanResponse.message);
+  //     }
+  //   } catch (CustomException) {
+  //     model.setBusy(false);
+  //     showToast(CustomException.toString(), context);
+  //     debugPrint('Error ' + CustomException.toString());
+  //   }
+  // }
+  //
+  // getLatestBiometrics() async {
+  //   try {
+  //     final TaskSummaryResponse taskSummaryResponse =
+  //         await model.getLatestBiometrics();
+  //     debugPrint('Vitals Summary ==> ${taskSummaryResponse.toJson()}');
+  //     if (taskSummaryResponse.status == 'success') {
+  //       pulse = taskSummaryResponse.data.summary.pulse;
+  //       bloodPressure = taskSummaryResponse.data.summary.bloodPressure;
+  //       bloodSugar = taskSummaryResponse.data.summary.bloodSugar;
+  //       temperature = taskSummaryResponse.data.summary.temperature;
+  //       weight = taskSummaryResponse.data.summary.weight;
+  //       bloodOxygenSaturation =
+  //           taskSummaryResponse.data.summary.bloodOxygenSaturation;
+  //       setState(() {});
+  //       //showToast(startCarePlanResponse.message);
+  //     } else {
+  //       //showToast(startCarePlanResponse.message);
+  //     }
+  //   } catch (CustomException) {
+  //     model.setBusy(false);
+  //     showToast(CustomException.toString(), context);
+  //     debugPrint('Error ' + CustomException.toString());
+  //   }
+  // }
 
   getTodaysKnowledgeTopic() async {
     try {
@@ -145,11 +143,11 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
       debugPrint(
           'Today Knowledge Topic ==> ${knowledgeTopicResponse.toJson()}');
       if (knowledgeTopicResponse.status == 'success') {
-        final KnowledgeTopic topic =
-            knowledgeTopicResponse.data.knowledgeTopic.elementAt(0);
-        topicId = topic.id;
-        topicName = topic.topicName;
-        briefInformation = topic.briefInformation;
+        //final Items topic =
+        //knowledgeTopicResponse.data.knowledgeNuggetRecords.items.elementAt(0);
+        topicId = knowledgeTopicResponse.data.knowledgeNugget.id;
+        topicName = knowledgeTopicResponse.data.knowledgeNugget.topicName;
+        briefInformation = knowledgeTopicResponse.data.knowledgeNugget.briefInformation;
         setState(() {});
       } else {
         //showToast(knowledgeTopicResponse.message);
@@ -179,7 +177,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                 myMedication(),
                 //myActivites(),
                 knowledgeTree(),
-                myBiometrics(),
+                //myBiometrics(),
                 SizedBox(
                   height: 32,
                 )
@@ -900,7 +898,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
     );
   }
 
-  Widget myBiometrics() {
+/* Widget myBiometrics() {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
       child: Container(
@@ -1263,7 +1261,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                     else
                       Container(),
 
-                    /*Align(
+                    */ /*Align(
                     alignment: Alignment.centerRight,
                     child: InkWell(
                       onTap: (){
@@ -1278,7 +1276,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                               fontFamily: 'Montserrat')),
                     ),
                   ),
-                  SizedBox(height: 16,),*/
+                  SizedBox(height: 16,),*/ /*
                       ],
                     ),
             ],
@@ -1286,5 +1284,5 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
         ),
       ),
     );
-  }
+  }*/
 }

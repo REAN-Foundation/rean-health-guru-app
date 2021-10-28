@@ -23,11 +23,11 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   //var dateFormatStandard = DateFormat("MMMM dd, yyyy");
   var dateFormatStandard = DateFormat('yyyy-MM-dd');
   var timeFormat = DateFormat('hh:mm a');
-  List<MedConsumptions> currentMedicationList = <MedConsumptions>[];
-  List<MedConsumptions> morningMedicationList = <MedConsumptions>[];
-  List<MedConsumptions> afternoonMedicationList = <MedConsumptions>[];
-  List<MedConsumptions> eveningMedicationList = <MedConsumptions>[];
-  List<MedConsumptions> nightMedicationList = <MedConsumptions>[];
+  List<Schedules> currentMedicationList = <Schedules>[];
+  List<Schedules> morningMedicationList = <Schedules>[];
+  List<Schedules> afternoonMedicationList = <Schedules>[];
+  List<Schedules> eveningMedicationList = <Schedules>[];
+  List<Schedules> nightMedicationList = <Schedules>[];
   ProgressDialog progressDialog;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
@@ -45,12 +45,13 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
       debugPrint('Medication ==> ${getMyMedicationsResponse.toJson()}');
       if (getMyMedicationsResponse.status == 'success') {
         debugPrint(
-            'Medication Length ==> ${getMyMedicationsResponse.data.medConsumptions.length}');
-        if (getMyMedicationsResponse.data.medConsumptions.isNotEmpty) {
-          currentMedicationList
-              .addAll(getMyMedicationsResponse.data.medConsumptions);
-          formatMedicationSectionWise(
-              getMyMedicationsResponse.data.medConsumptions);
+            'Medication Length ==> ${getMyMedicationsResponse.data.medicationSchedulesForDay.schedules.length}');
+        if (getMyMedicationsResponse
+            .data.medicationSchedulesForDay.schedules.isNotEmpty) {
+          currentMedicationList.addAll(getMyMedicationsResponse
+              .data.medicationSchedulesForDay.schedules);
+          formatMedicationSectionWise(getMyMedicationsResponse
+              .data.medicationSchedulesForDay.schedules);
         }
       } else {
         showToast(getMyMedicationsResponse.message, context);
@@ -62,29 +63,39 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     }
   }
 
-  formatMedicationSectionWise(List<MedConsumptions> medications) {
+  formatMedicationSectionWise(List<Schedules> medications) {
     morningMedicationList.clear();
     afternoonMedicationList.clear();
     eveningMedicationList.clear();
     nightMedicationList.clear();
 
     medications.forEach((currentMedication) {
-      if (currentMedication.details.contains('morning') &&
-          !currentMedication.isMissed &&
-          !currentMedication.isTaken) {
-        morningMedicationList.add(currentMedication);
-      } else if (currentMedication.details.contains('afternoon') &&
-          !currentMedication.isMissed &&
-          !currentMedication.isTaken) {
-        afternoonMedicationList.add(currentMedication);
-      } else if (currentMedication.details.contains('evening') &&
-          !currentMedication.isMissed &&
-          !currentMedication.isTaken) {
-        eveningMedicationList.add(currentMedication);
-      } else if (currentMedication.details.contains('night') &&
-          !currentMedication.isMissed &&
-          !currentMedication.isTaken) {
-        nightMedicationList.add(currentMedication);
+      if (currentMedication.details.contains('Morning')) {
+        debugPrint(
+            'Medication ==> ${currentMedication.drugName} ${currentMedication.details} ${currentMedication.status}');
+        if (currentMedication.status == 'Unknown' ||
+            currentMedication.status == 'Upcoming' ||
+            currentMedication.status == 'Overdue') {
+          morningMedicationList.add(currentMedication);
+        }
+      } else if (currentMedication.details.contains('Afternoon')) {
+        if (currentMedication.status == 'Unknown' ||
+            currentMedication.status == 'Upcoming' ||
+            currentMedication.status == 'Overdue') {
+          afternoonMedicationList.add(currentMedication);
+        }
+      } else if (currentMedication.details.contains('Evening')) {
+        if (currentMedication.status == 'Unknown' ||
+            currentMedication.status == 'Upcoming' ||
+            currentMedication.status == 'Overdue') {
+          eveningMedicationList.add(currentMedication);
+        }
+      } else if (currentMedication.details.contains('Night')) {
+        if (currentMedication.status == 'Unknown' ||
+            currentMedication.status == 'Upcoming' ||
+            currentMedication.status == 'Overdue') {
+          nightMedicationList.add(currentMedication);
+        }
       }
     });
     setState(() {});
@@ -110,7 +121,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               : (morningMedicationList.isEmpty &&
                       afternoonMedicationList.isEmpty &&
                       eveningMedicationList.isEmpty &&
-                      nightMedicationList.isEmpty
+              nightMedicationList.isEmpty
                   ? noMedicationFound()
                   : SingleChildScrollView(
                       child: Column(
@@ -164,7 +175,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   }
 
   Widget medicationTimeWiseSection(
-      String tittle, String imagePath, List<MedConsumptions> medications) {
+      String tittle, String imagePath, List<Schedules> medications) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: Column(
@@ -220,7 +231,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     );
   }
 
-  Widget listWidget(List<MedConsumptions> medications) {
+  Widget listWidget(List<Schedules> medications) {
     return Padding(
       padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
       child: ListView.separated(
@@ -239,8 +250,8 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   }
 
   Widget _makeMedicineSwipeCard(
-      BuildContext context, int index, List<MedConsumptions> medications) {
-    final MedConsumptions medication = medications.elementAt(index);
+      BuildContext context, int index, List<Schedules> medications) {
+    final Schedules medication = medications.elementAt(index);
 
     return Dismissible(
       key: Key(medication.drugName),
@@ -267,11 +278,11 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
         if (direction == DismissDirection.endToStart) {
           markMedicationsAsTaken(medication.id);
           setState(() {
-            if (medication.details.contains('morning')) {
+            if (medication.details.contains('Morning')) {
               morningMedicationList.removeAt(index);
-            } else if (medication.details.contains('afternoon')) {
+            } else if (medication.details.contains('Afternoon')) {
               afternoonMedicationList.removeAt(index);
-            } else if (medication.details.contains('evening')) {
+            } else if (medication.details.contains('Evening')) {
               eveningMedicationList.removeAt(index);
             } else {
               nightMedicationList.removeAt(index);
@@ -313,11 +324,11 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
         } else {
           markMedicationsAsMissed(medication.id);
           setState(() {
-            if (medication.details.contains('morning')) {
+            if (medication.details.contains('Morning')) {
               morningMedicationList.removeAt(index);
-            } else if (medication.details.contains('afternoon')) {
+            } else if (medication.details.contains('Afternoon')) {
               afternoonMedicationList.removeAt(index);
-            } else if (medication.details.contains('evening')) {
+            } else if (medication.details.contains('Evening')) {
               eveningMedicationList.removeAt(index);
             } else {
               nightMedicationList.removeAt(index);
@@ -388,19 +399,19 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
 
   markMedicationsAsTaken(String consumptionId) async {
     try {
-      progressDialog.show();
+      //progressDialog.show();
       final BaseResponse baseResponse =
           await model.markMedicationsAsTaken(consumptionId);
       debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
+        //progressDialog.hide();
         //getMyMedications();
       } else {
-        progressDialog.hide();
+        //progressDialog.hide();
         showToast(baseResponse.message, context);
       }
     } catch (CustomException) {
-      progressDialog.hide();
+      //progressDialog.hide();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
@@ -409,19 +420,19 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
 
   markMedicationsAsMissed(String consumptionId) async {
     try {
-      progressDialog.show();
+      //progressDialog.show();
       final BaseResponse baseResponse =
           await model.markMedicationsAsMissed(consumptionId);
       debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
+        //progressDialog.hide();
         //getMyMedications();
       } else {
-        progressDialog.hide();
+        //progressDialog.hide();
         showToast(baseResponse.message, context);
       }
     } catch (CustomException) {
-      progressDialog.hide();
+      //progressDialog.hide();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());

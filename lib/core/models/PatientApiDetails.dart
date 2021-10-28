@@ -1,25 +1,25 @@
 class PatientApiDetails {
   String status;
   String message;
-  String error;
+  int httpCode;
   Data data;
 
-  PatientApiDetails({this.status, this.message, this.error, this.data});
+  PatientApiDetails({this.status, this.message, this.httpCode, this.data});
 
   PatientApiDetails.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    error = json['error'];
-    data = json['data'] != String ? Data.fromJson(json['data']) : String;
+    status = json['Status'];
+    message = json['Message'];
+    httpCode = json['HttpCode'];
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
-    data['error'] = error;
-    if (this.data != String) {
-      data['data'] = this.data.toJson();
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
+    if (this.data != null) {
+      data['Data'] = this.data.toJson();
     }
     return data;
   }
@@ -31,142 +31,234 @@ class Data {
   Data({this.patient});
 
   Data.fromJson(Map<String, dynamic> json) {
-    patient = json['patient'] != String ? Patient.fromJson(json['patient']) : String;
+    patient =
+        json['Patient'] != null ? Patient.fromJson(json['Patient']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (patient != String) {
-      data['patient'] = patient.toJson();
+    if (patient != null) {
+      data['Patient'] = patient.toJson();
     }
     return data;
   }
 }
 
 class Patient {
+  String id;
   String userId;
-  String roleId;
+  User user;
   String displayId;
-  String medicalProfileId;
-  String firstName;
-  String lastName;
-  String prefix;
-  String phoneNumber;
-  String email;
-  String gender;
-  DateTime birthDate;
-  String imageURL;
-  String locality;
-  String address;
-  String locationCoordsLongitude;
-  String locationCoordsLattitude;
-  String insuranceProvider;
-  String insurancePolicyCode;
-  String emergencyContactName;
-  String emergencyContactRelation;
-  String emergencyContactNumber;
-  bool inAppUser;
-  String dateCreated;
-  String dateUpdated;
+  String ehrId;
 
   Patient(
-      {this.userId,
-      this.roleId,
-      this.displayId,
-      this.medicalProfileId,
-      this.firstName,
-      this.lastName,
-      this.prefix,
-      this.phoneNumber,
-      this.email,
-      this.gender,
-      this.birthDate,
-      this.imageURL,
-      this.locality,
-      this.address,
-      this.locationCoordsLongitude,
-      this.locationCoordsLattitude,
-      this.insuranceProvider,
-      this.insurancePolicyCode,
-      this.emergencyContactName,
-      this.emergencyContactRelation,
-      this.emergencyContactNumber,
-      this.inAppUser,
-      this.dateCreated,
-      this.dateUpdated});
+      {this.id,
+        this.userId,
+        this.user,
+        this.displayId,
+        this.ehrId,
+        });
 
   Patient.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     userId = json['UserId'];
-    roleId = json['RoleId'];
+    user = json['User'] != null ? User.fromJson(json['User']) : null;
     displayId = json['DisplayId'];
-    medicalProfileId = json['MedicalProfileId'];
-    firstName = json['FirstName'];
-    lastName = json['LastName'];
-    prefix = json['Prefix'];
-    phoneNumber = json['PhoneNumber'];
-    email = json['Email'];
-    gender = json['Gender'];
-    birthDate = json['BirthDate'] != null
-        ? DateTime.parse(json['BirthDate'])
-        : json['BirthDate'];
-    imageURL = json['ImageURL'];
-    locality = json['Locality'];
-    address = json['Address'];
-    locationCoordsLongitude = json['LocationCoords_Longitude'];
-    locationCoordsLattitude = json['LocationCoords_Lattitude'];
-    insuranceProvider = json['InsuranceProvider'];
-    insurancePolicyCode = json['InsurancePolicyCode'];
-    emergencyContactName = json['EmergencyContactName'];
-    emergencyContactRelation = json['EmergencyContactRelation'];
-    emergencyContactNumber = json['EmergencyContactNumber'];
-    inAppUser = json['InAppUser'];
-    dateCreated = json['DateCreated'];
-    dateUpdated = json['DateUpdated'];
+    ehrId = json['EhrId'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['UserId'] = userId;
-    data['RoleId'] = roleId;
+    if (user != null) {
+      data['User'] = user.toJson();
+    }
     data['DisplayId'] = displayId;
-    data['MedicalProfileId'] = medicalProfileId;
-    data['FirstName'] = firstName;
-    data['LastName'] = lastName;
-    data['Prefix'] = prefix;
-    data['PhoneNumber'] = phoneNumber;
-    data['Email'] = email;
-    data['Gender'] = gender;
-    data['BirthDate'] =
-        birthDate != null ? birthDate.toIso8601String() : birthDate;
-    data['ImageURL'] = imageURL;
-    data['Locality'] = locality;
-    data['Address'] = address;
-    data['LocationCoords_Longitude'] = locationCoordsLongitude;
-    data['LocationCoords_Lattitude'] = locationCoordsLattitude;
-    data['InsuranceProvider'] = insuranceProvider;
-    data['InsurancePolicyCode'] = insurancePolicyCode;
-    data['EmergencyContactName'] = emergencyContactName;
-    data['EmergencyContactRelation'] = emergencyContactRelation;
-    data['EmergencyContactNumber'] = emergencyContactNumber;
-    data['InAppUser'] = inAppUser;
-    data['DateCreated'] = dateCreated;
-    data['DateUpdated'] = dateUpdated;
+    data['EhrId'] = ehrId;
+
     return data;
   }
 }
 
-class AppointmentRelatedDetails {
-  String userId;
+class User {
+  String id;
+  String userName;
+  String personId;
+  Person person;
+  String lastLogin;
+  String defaultTimeZone;
+  String currentTimeZone;
+  int roleId;
+  String role;
 
-  AppointmentRelatedDetails({this.userId});
+  User(
+      {this.id,
+        this.userName,
+        this.personId,
+        this.person,
+        this.lastLogin,
+        this.defaultTimeZone,
+        this.currentTimeZone,
+        this.roleId,
+        this.role});
 
-  AppointmentRelatedDetails.fromJson(Map<String, dynamic> json) {
-    userId = json['UserId'];
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userName = json['UserName'];
+    personId = json['PersonId'];
+    person =
+    json['Person'] != null ? Person.fromJson(json['Person']) : null;
+    lastLogin = json['LastLogin'];
+    defaultTimeZone = json['DefaultTimeZone'];
+    currentTimeZone = json['CurrentTimeZone'];
+    roleId = json['RoleId'];
+    role = json['Role'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['UserId'] = userId;
+    data['id'] = id;
+    data['UserName'] = userName;
+    data['PersonId'] = personId;
+    if (person != null) {
+      data['Person'] = person.toJson();
+    }
+    data['LastLogin'] = lastLogin;
+    data['DefaultTimeZone'] = defaultTimeZone;
+    data['CurrentTimeZone'] = currentTimeZone;
+    data['RoleId'] = roleId;
+    data['Role'] = role;
+    return data;
+  }
+}
+
+class Person {
+  String id;
+  String prefix;
+  String firstName;
+  String middleName;
+  String lastName;
+  String displayName;
+  String gender;
+  DateTime birthDate;
+  String age;
+  String phone;
+  String email;
+  String imageResourceId;
+  String activeSince;
+  List<Addresses> addresses;
+
+  Person(
+      {this.id,
+        this.prefix,
+        this.firstName,
+        this.middleName,
+        this.lastName,
+        this.displayName,
+        this.gender,
+        this.birthDate,
+        this.age,
+        this.phone,
+        this.email,
+        this.imageResourceId,
+        this.activeSince,
+        this.addresses});
+
+  Person.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    prefix = json['Prefix'];
+    firstName = json['FirstName'];
+    middleName = json['MiddleName'];
+    lastName = json['LastName'];
+    displayName = json['DisplayName'];
+    gender = json['Gender'];
+    birthDate =
+        json['BirthDate'] != null ? DateTime.parse(json['BirthDate']) : '';
+    age = json['Age'];
+    phone = json['Phone'];
+    email = json['Email'];
+    imageResourceId = json['ImageResourceId'];
+    activeSince = json['ActiveSince'];
+    if (json['Addresses'] != null) {
+      addresses = <Addresses>[];
+      json['Addresses'].forEach((v) {
+        addresses.add(Addresses.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['Prefix'] = prefix;
+    data['FirstName'] = firstName;
+    data['MiddleName'] = middleName;
+    data['LastName'] = lastName;
+    data['DisplayName'] = displayName;
+    data['Gender'] = gender;
+    data['BirthDate'] = birthDate.toIso8601String();
+    data['Age'] = age;
+    data['Phone'] = phone;
+    data['Email'] = email;
+    data['ImageResourceId'] = imageResourceId;
+    data['ActiveSince'] = activeSince;
+    if (addresses != null) {
+      data['Addresses'] = addresses.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Addresses {
+  String id;
+  String type;
+  String addressLine;
+  String city;
+  String district;
+  String state;
+  String country;
+  String postalCode;
+  double longitude;
+  double lattitude;
+
+  Addresses(
+      {this.id,
+        this.type,
+        this.addressLine,
+        this.city,
+        this.district,
+        this.state,
+        this.country,
+        this.postalCode,
+        this.longitude,
+        this.lattitude});
+
+  Addresses.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    type = json['Type'];
+    addressLine = json['AddressLine'];
+    city = json['City'];
+    district = json['District'];
+    state = json['State'];
+    country = json['Country'];
+    postalCode = json['PostalCode'];
+    longitude = json['Longitude'];
+    lattitude = json['Lattitude'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['Type'] = type;
+    data['AddressLine'] = addressLine;
+    data['City'] = city;
+    data['District'] = district;
+    data['State'] = state;
+    data['Country'] = country;
+    data['PostalCode'] = postalCode;
+    data['Longitude'] = longitude;
+    data['Lattitude'] = lattitude;
     return data;
   }
 }

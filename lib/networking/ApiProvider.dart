@@ -3,25 +3,33 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 import 'CustomException.dart';
 
 class ApiProvider {
   String _baseUrl = '';
+  String _api_key = '';
 
   ApiProvider(String baseUrl) {
     _baseUrl = baseUrl;
+    _api_key = dotenv.env['Patient_API_KEY'];
   }
 
   Future<dynamic> get(String url, {Map header}) async {
+    final headers = <String, String>{};
+    if (header != null) {
+      headers.addAll(header);
+    }
+    headers['x-api-key'] = _api_key;
     debugPrint('Base Url ==> GET ${_baseUrl + url}');
-    debugPrint('Headers ==> ${json.encode(header).toString()}');
+    debugPrint('Headers ==> ${json.encode(headers).toString()}');
 
     var responseJson;
     try {
       final response = await http
-          .get(Uri.parse(_baseUrl + url), headers: header)
+          .get(Uri.parse(_baseUrl + url), headers: headers)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -34,15 +42,21 @@ class ApiProvider {
   }
 
   Future<dynamic> post(String url, {Map body, Map header}) async {
+    final headers = <String, String>{};
+    if (header != null) {
+      headers.addAll(header);
+    }
+    headers['x-api-key'] = _api_key;
+
     debugPrint('Base Url ==> POST ${_baseUrl + url}');
     debugPrint('Request Body ==> ${json.encode(body).toString()}');
-    debugPrint('Headers ==> ${json.encode(header).toString()}');
+    debugPrint('Headers ==> ${json.encode(headers).toString()}');
 
     var responseJson;
     try {
       final response = await http
           .post(Uri.parse(_baseUrl + url),
-              body: json.encode(body), headers: header)
+              body: json.encode(body), headers: headers)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -55,15 +69,23 @@ class ApiProvider {
   }
 
   Future<dynamic> put(String url, {Map body, Map header}) async {
+    final headers = <String, String>{};
+    if (header != null) {
+      headers.addAll(header);
+    }
+    headers['x-api-key'] = _api_key;
+    debugPrint('Base Url ==> GET ${_baseUrl + url}');
+    debugPrint('Headers ==> ${json.encode(headers).toString()}');
+
     debugPrint('Base Url ==> PUT ${_baseUrl + url}');
     debugPrint('Request Body ==> ${json.encode(body).toString()}');
-    debugPrint('Headers ==> ${json.encode(header).toString()}');
+    debugPrint('Headers ==> ${json.encode(headers).toString()}');
 
     var responseJson;
     try {
       final response = await http
           .put(Uri.parse(_baseUrl + url),
-              body: json.encode(body), headers: header)
+              body: json.encode(body), headers: headers)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -76,13 +98,21 @@ class ApiProvider {
   }
 
   Future<dynamic> delete(String url, {Map header}) async {
+    final headers = <String, String>{};
+    if (header != null) {
+      headers.addAll(header);
+    }
+    headers['x-api-key'] = _api_key;
+    debugPrint('Base Url ==> GET ${_baseUrl + url}');
+    debugPrint('Headers ==> ${json.encode(headers).toString()}');
+
     debugPrint('Base Url ==> DELETE ${_baseUrl + url}');
-    debugPrint('Headers ==> ${json.encode(header).toString()}');
+    debugPrint('Headers ==> ${json.encode(headers).toString()}');
 
     var responseJson;
     try {
       final response = await http
-          .delete(Uri.parse(_baseUrl + url), headers: header)
+          .delete(Uri.parse(_baseUrl + url), headers: headers)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -101,9 +131,11 @@ class ApiProvider {
       case 400:
       case 401:
       case 403:
-      //case 404:
+      case 404:
+      case 409:
+      case 422:
       case 500:
-      final responseJson = json.decode(response.body.toString());
+        final responseJson = json.decode(response.body.toString());
         debugPrint(responseJson.toString());
         return responseJson;
 

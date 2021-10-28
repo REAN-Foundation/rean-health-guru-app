@@ -1,15 +1,13 @@
-class GetAllRecordResponse {
+class UploadDocumentResponse {
   String status;
   String message;
-  int httpCode;
   Data data;
 
-  GetAllRecordResponse({this.status, this.message, this.httpCode, this.data});
+  UploadDocumentResponse({this.status, this.message, this.data});
 
-  GetAllRecordResponse.fromJson(Map<String, dynamic> json) {
+  UploadDocumentResponse.fromJson(Map<String, dynamic> json) {
     status = json['Status'];
     message = json['Message'];
-    httpCode = json['HttpCode'];
     data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
@@ -17,7 +15,6 @@ class GetAllRecordResponse {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['Status'] = status;
     data['Message'] = message;
-    data['HttpCode'] = httpCode;
     if (this.data != null) {
       data['Data'] = this.data.toJson();
     }
@@ -26,76 +23,27 @@ class GetAllRecordResponse {
 }
 
 class Data {
-  PatientDocuments patientDocuments;
+  PatientDocument patientDocument;
 
-  Data({this.patientDocuments});
+  Data({this.patientDocument});
 
   Data.fromJson(Map<String, dynamic> json) {
-    patientDocuments = json['PatientDocuments'] != null
-        ? PatientDocuments.fromJson(json['PatientDocuments'])
+    patientDocument = json['PatientDocument'] != null
+        ? PatientDocument.fromJson(json['PatientDocument'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (patientDocuments != null) {
-      data['PatientDocuments'] = patientDocuments.toJson();
+    if (patientDocument != null) {
+      data['PatientDocument'] = patientDocument.toJson();
     }
     return data;
   }
 }
 
-class PatientDocuments {
-  int totalCount;
-  int retrievedCount;
-  int pageIndex;
-  int itemsPerPage;
-  String order;
-  String orderedBy;
-  List<Items> items;
-
-  PatientDocuments(
-      {this.totalCount,
-      this.retrievedCount,
-      this.pageIndex,
-      this.itemsPerPage,
-      this.order,
-      this.orderedBy,
-      this.items});
-
-  PatientDocuments.fromJson(Map<String, dynamic> json) {
-    totalCount = json['TotalCount'];
-    retrievedCount = json['RetrievedCount'];
-    pageIndex = json['PageIndex'];
-    itemsPerPage = json['ItemsPerPage'];
-    order = json['Order'];
-    orderedBy = json['OrderedBy'];
-    if (json['Items'] != null) {
-      items = <Items>[];
-      json['Items'].forEach((v) {
-        items.add(Items.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['TotalCount'] = totalCount;
-    data['RetrievedCount'] = retrievedCount;
-    data['PageIndex'] = pageIndex;
-    data['ItemsPerPage'] = itemsPerPage;
-    data['Order'] = order;
-    data['OrderedBy'] = orderedBy;
-    if (items != null) {
-      data['Items'] = items.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Items {
+class PatientDocument {
   String id;
-  String ehrId;
   String displayId;
   String documentType;
   String patientUserId;
@@ -111,12 +59,11 @@ class Items {
   String authenticatedUrl;
   String mimeType;
   int sizeInKBytes;
-  DateTime recordDate;
-  DateTime uploadedDate;
+  String recordDate;
+  String uploadedDate;
 
-  Items(
+  PatientDocument(
       {this.id,
-      this.ehrId,
       this.displayId,
       this.documentType,
       this.patientUserId,
@@ -135,9 +82,8 @@ class Items {
       this.recordDate,
       this.uploadedDate});
 
-  Items.fromJson(Map<String, dynamic> json) {
+  PatientDocument.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    ehrId = json['EhrId'];
     displayId = json['DisplayId'];
     documentType = json['DocumentType'];
     patientUserId = json['PatientUserId'];
@@ -153,14 +99,13 @@ class Items {
     authenticatedUrl = json['AuthenticatedUrl'];
     mimeType = json['MimeType'];
     sizeInKBytes = json['SizeInKBytes'];
-    recordDate = DateTime.parse(json['RecordDate']);
-    uploadedDate = DateTime.parse(json['UploadedDate']);
+    recordDate = json['RecordDate'];
+    uploadedDate = json['UploadedDate'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['EhrId'] = ehrId;
     data['DisplayId'] = displayId;
     data['DocumentType'] = documentType;
     data['PatientUserId'] = patientUserId;
@@ -176,8 +121,8 @@ class Items {
     data['AuthenticatedUrl'] = authenticatedUrl;
     data['MimeType'] = mimeType;
     data['SizeInKBytes'] = sizeInKBytes;
-    data['RecordDate'] = recordDate.toIso8601String();
-    data['UploadedDate'] = uploadedDate.toIso8601String();
+    data['RecordDate'] = recordDate;
+    data['UploadedDate'] = uploadedDate;
     return data;
   }
 }

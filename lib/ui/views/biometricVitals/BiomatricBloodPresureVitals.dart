@@ -31,7 +31,7 @@ class _BiometricBloodPresureVitalsViewState
 
   final TextEditingController _systolicController = TextEditingController();
   final TextEditingController _diastolicController = TextEditingController();
-  List<Records> records = <Records>[];
+  List<Items> records = <Items>[];
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   final _systolicFocus = FocusNode();
   final _diastolicFocus = FocusNode();
@@ -427,7 +427,7 @@ class _BiometricBloodPresureVitalsViewState
   }
 
   Widget _makeWeightList(BuildContext context, int index) {
-    final Records record = records.elementAt(index);
+    final Items record = records.elementAt(index);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
@@ -450,7 +450,7 @@ class _BiometricBloodPresureVitalsViewState
             flex: 1,
             child: Center(
               child: Text(
-                record.systolicBloodPressure.toString() + ' mm Hg',
+                record.systolic.toString() + ' mm Hg',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -464,7 +464,7 @@ class _BiometricBloodPresureVitalsViewState
             flex: 1,
             child: Center(
               child: Text(
-                record.diastolicBloodPressure.toString() + ' mm Hg',
+                record.diastolic.toString() + ' mm Hg',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -526,7 +526,7 @@ class _BiometricBloodPresureVitalsViewState
 
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
-          double.parse(records.elementAt(i).systolicBloodPressure.toString())));
+          double.parse(records.elementAt(i).systolic.toString())));
     }
 
     return [
@@ -589,7 +589,7 @@ class _BiometricBloodPresureVitalsViewState
       data.add(TimeSeriesSales(
           DateTime.parse(records.elementAt(i).recordDate),
           double.parse(
-              records.elementAt(i).diastolicBloodPressure.toString())));
+              records.elementAt(i).diastolic.toString())));
     }
 
     return [
@@ -924,11 +924,16 @@ class _BiometricBloodPresureVitalsViewState
     try {
       progressDialog.show();
       final map = <String, dynamic>{};
-      map['SystolicBloodPressure'] = _systolicController.text.toString();
-      map['DiastolicBloodPressure'] = _diastolicController.text.toString();
+      map['Systolic'] = _systolicController.text.toString();
+      map['Diastolic'] = _diastolicController.text.toString();
+      map['PatientUserId'] = "";
+      map['Unit'] = "mmHg";
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      //map['RecordedByUserId'] = null;
+
 
       final BaseResponse baseResponse =
-          await model.addMyVitals('blood-pressure', map);
+          await model.addMyVitals('blood-pressures', map);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
@@ -949,10 +954,10 @@ class _BiometricBloodPresureVitalsViewState
   getVitalsHistory() async {
     try {
       final GetMyVitalsHistory getMyVitalsHistory =
-          await model.getMyVitalsHistory('blood-pressure');
+          await model.getMyVitalsHistory('blood-pressures');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
-        records.addAll(getMyVitalsHistory.data.biometrics.records);
+        records.addAll(getMyVitalsHistory.data.bloodPressureRecords.items);
       } else {
         showToast(getMyVitalsHistory.message, context);
       }

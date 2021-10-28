@@ -1,58 +1,62 @@
 class KnowledgeTopicResponse {
   String status;
   String message;
+  int httpCode;
   Data data;
 
-  KnowledgeTopicResponse({this.status, this.message, this.data});
+  KnowledgeTopicResponse({this.status, this.message, this.httpCode, this.data});
 
   KnowledgeTopicResponse.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    status = json['Status'];
+    message = json['Message'];
+    httpCode = json['HttpCode'];
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['Data'] = this.data.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<KnowledgeTopic> knowledgeTopic;
+  KnowledgeNugget knowledgeNugget;
 
-  Data({this.knowledgeTopic});
+  Data({this.knowledgeNugget});
 
   Data.fromJson(Map<String, dynamic> json) {
-    if (json['knowledge_topic'] != null) {
-      knowledgeTopic = <KnowledgeTopic>[];
-      json['knowledge_topic'].forEach((v) {
-        knowledgeTopic.add(KnowledgeTopic.fromJson(v));
-      });
-    }
+    knowledgeNugget = json['KnowledgeNugget'] != null
+        ? KnowledgeNugget.fromJson(json['KnowledgeNugget'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (knowledgeTopic != null) {
-      data['knowledge_topic'] = knowledgeTopic.map((v) => v.toJson()).toList();
+    if (knowledgeNugget != null) {
+      data['KnowledgeNugget'] = knowledgeNugget.toJson();
     }
     return data;
   }
 }
 
-class KnowledgeTopic {
+class KnowledgeNugget {
   String id;
   String topicName;
   String briefInformation;
 
-  KnowledgeTopic({this.id, this.topicName, this.briefInformation});
+  KnowledgeNugget(
+      {this.id,
+        this.topicName,
+        this.briefInformation,
+      });
 
-  KnowledgeTopic.fromJson(Map<String, dynamic> json) {
+  KnowledgeNugget.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     topicName = json['TopicName'];
     briefInformation = json['BriefInformation'];

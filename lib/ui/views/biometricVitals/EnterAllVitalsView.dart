@@ -6,6 +6,7 @@ import 'package:paitent/core/viewmodels/views/patients_vitals.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
+import 'package:paitent/utils/StringUtility.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class EnterAllVitalsView extends StatefulWidget {
@@ -24,12 +25,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
   final _bloodOxygenSaturationController = TextEditingController();
   final _pulseRateController = TextEditingController();
   final _bodyTempratureController = TextEditingController();
-
+  final _patientUserIdController = TextEditingController();
   final _bodyTempratureFocus = FocusNode();
   final _pulseRateFocus = FocusNode();
   final _bloodOxygenSaturationFocus = FocusNode();
   final _bloodGlucoseFocus = FocusNode();
   final _weightFocus = FocusNode();
+
   final _systolicFocus = FocusNode();
   final _diastolicFocus = FocusNode();
   ProgressDialog progressDialog;
@@ -887,9 +889,12 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
         entertedWeight = entertedWeight / 2.20462;
       }
       final map = <String, dynamic>{};
-      map['Weight'] = entertedWeight.toString();
+      map['BodyWeight'] = entertedWeight.toString();
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = "Kg";
 
-      final BaseResponse baseResponse = await model.addMyVitals('weight', map);
+      final BaseResponse baseResponse =
+          await model.addMyVitals('body-weights', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
@@ -904,11 +909,15 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
   addBPVitals() async {
     try {
       final map = <String, dynamic>{};
-      map['SystolicBloodPressure'] = _systolicController.text.toString();
-      map['DiastolicBloodPressure'] = _diastolicController.text.toString();
+      map['Systolic'] = _systolicController.text.toString();
+      map['Diastolic'] = _diastolicController.text.toString();
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = "mmHg";
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
-          await model.addMyVitals('blood-pressure', map);
+          await model.addMyVitals('blood-pressures', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
@@ -924,9 +933,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     try {
       final map = <String, dynamic>{};
       map['BloodGlucose'] = _bloodGlucosecontroller.text.toString();
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = "mg|dL";
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
-          await model.addMyVitals('blood-sugar', map);
+          await model.addMyVitals('blood-glucose', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
@@ -943,9 +956,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       final map = <String, dynamic>{};
       map['BloodOxygenSaturation'] =
           _bloodOxygenSaturationController.text.toString();
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = "%";
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
-          await model.addMyVitals('blood-oxygen-saturation', map);
+          await model.addMyVitals('blood-oxygen-saturations', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
@@ -961,6 +978,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     try {
       final map = <String, dynamic>{};
       map['Pulse'] = _pulseRateController.text.toString();
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = "bpm";
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse = await model.addMyVitals('pulse', map);
 
@@ -977,10 +998,14 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
   addTemperatureVitals() async {
     try {
       final map = <String, dynamic>{};
-      map['Temperature'] = _bodyTempratureController.text.toString();
+      map['BodyTemperature'] = _bodyTempratureController.text.toString();
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = "Celsius";
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
-          await model.addMyVitals('temperature', map);
+          await model.addMyVitals('body-temperatures', map);
 
       if (baseResponse.status == 'success') {
         //showToast('Record added successfully');
@@ -999,7 +1024,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     if (toastDisplay) {
       _scrollController.animateTo(0.0,
           duration: Duration(seconds: 2), curve: Curves.ease);
-      showToast('Record Updated Successfully', context);
+      showToast('Record Updated Successfully!', context);
       toastDisplay = false;
     }
 
@@ -1028,6 +1053,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       TextPosition(offset: _bloodOxygenSaturationController.text.length),
     );
 
+    _patientUserIdController.text = '';
+    _patientUserIdController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _patientUserIdController.text.length),
+    );
+
     _pulseRateController.text = '';
     _pulseRateController.selection = TextSelection.fromPosition(
       TextPosition(offset: _pulseRateController.text.length),
@@ -1039,3 +1069,4 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     );
   }
 }
+

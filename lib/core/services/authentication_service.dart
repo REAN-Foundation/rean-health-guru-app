@@ -54,7 +54,7 @@ class AuthenticationService {
     if (fetchedUser.status == 'success') {
       _updateProfileBaseResponseController.add(fetchedUser);
     }
-
     return fetchedUser;
   }
+
 }

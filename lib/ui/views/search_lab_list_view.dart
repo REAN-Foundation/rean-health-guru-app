@@ -40,7 +40,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
       auth = user.data.accessToken;
       getLabList();
       setState(() {
-        name = user.data.user.firstName;
+        name = user.data.user.person.firstName;
       });
     } catch (Excepetion) {
       // do something

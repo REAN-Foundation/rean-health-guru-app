@@ -1,22 +1,26 @@
 class GetMedicationStockImages {
   String status;
   String message;
+  int httpCode;
   Data data;
 
-  GetMedicationStockImages({this.status, this.message, this.data});
+  GetMedicationStockImages(
+      {this.status, this.message, this.httpCode, this.data});
 
   GetMedicationStockImages.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    status = json['Status'];
+    message = json['Message'];
+    httpCode = json['HttpCode'];
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['Data'] = this.data.toJson();
     }
     return data;
   }
@@ -28,9 +32,9 @@ class Data {
   Data({this.medicationStockImages});
 
   Data.fromJson(Map<String, dynamic> json) {
-    if (json['medicationStockImages'] != null) {
+    if (json['MedicationStockImages'] != null) {
       medicationStockImages = <MedicationStockImages>[];
-      json['medicationStockImages'].forEach((v) {
+      json['MedicationStockImages'].forEach((v) {
         medicationStockImages.add(MedicationStockImages.fromJson(v));
       });
     }
@@ -39,7 +43,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (medicationStockImages != null) {
-      data['medicationStockImages'] =
+      data['MedicationStockImages'] =
           medicationStockImages.map((v) => v.toJson()).toList();
     }
     return data;
@@ -51,28 +55,18 @@ class MedicationStockImages {
   String code;
   String fileName;
   String resourceId;
-  String urlPublic;
-  String createdAt;
-  String updatedAt;
+  String publicUrl;
   bool isSelected = false;
 
   MedicationStockImages(
-      {this.id,
-      this.code,
-      this.fileName,
-      this.resourceId,
-      this.urlPublic,
-      this.createdAt,
-      this.updatedAt});
+      {this.id, this.code, this.fileName, this.resourceId, this.publicUrl});
 
   MedicationStockImages.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     code = json['Code'];
     fileName = json['FileName'];
     resourceId = json['ResourceId'];
-    urlPublic = json['Url_Public'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    publicUrl = json['PublicUrl'];
   }
 
   Map<String, dynamic> toJson() {
@@ -81,9 +75,7 @@ class MedicationStockImages {
     data['Code'] = code;
     data['FileName'] = fileName;
     data['ResourceId'] = resourceId;
-    data['Url_Public'] = urlPublic;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
+    data['PublicUrl'] = publicUrl;
     return data;
   }
 }

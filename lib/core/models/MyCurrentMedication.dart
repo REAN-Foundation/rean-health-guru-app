@@ -1,163 +1,167 @@
 class MyCurrentMedication {
   String status;
   String message;
+  int httpCode;
   Data data;
 
-  MyCurrentMedication({this.status, this.message, this.data});
+  MyCurrentMedication({this.status, this.message, this.httpCode, this.data});
 
   MyCurrentMedication.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    status = json['Status'];
+    message = json['Message'];
+    httpCode = json['HttpCode'];
+    data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
+    data['Status'] = status;
+    data['Message'] = message;
+    data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['Data'] = this.data.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<Medications> medications;
+  List<CurrentMedications> currentMedications;
 
-  Data({this.medications});
+  Data({this.currentMedications});
 
   Data.fromJson(Map<String, dynamic> json) {
-    if (json['medications'] != null) {
-      medications = <Medications>[];
-      json['medications'].forEach((v) {
-        medications.add(Medications.fromJson(v));
+    if (json['CurrentMedications'] != null) {
+      currentMedications = <CurrentMedications>[];
+      json['CurrentMedications'].forEach((v) {
+        currentMedications.add(CurrentMedications.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (medications != null) {
-      data['medications'] = medications.map((v) => v.toJson()).toList();
+    if (currentMedications != null) {
+      data['CurrentMedications'] =
+          currentMedications.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Medications {
+class CurrentMedications {
   String id;
+  String ehrId;
   String patientUserId;
-  String doctorUserId;
+  String medicalPractitionerUserId;
   String visitId;
-  String drugOrderId;
-  String drug;
+  String orderId;
+  String drugId;
+  String drugName;
   int dose;
   String dosageUnit;
-  String timeSchedule;
+  List<String> timeSchedules;
   int frequency;
   String frequencyUnit;
   String route;
   int duration;
   String durationUnit;
   DateTime startDate;
+  String endDate;
   bool refillNeeded;
   int refillCount;
   String instructions;
-  String endDate;
-  int totalConsumptionCount;
-  int totalDoseCount;
-  int pendingConsumptionCount;
-  int pendingDoseCount;
-  DateTime dateCreated;
-  String dateUpdated;
-  String medicationImageResourceId;
+  String imageResourceId;
+  bool isExistingMedication;
+  int takenForLastNDays;
+  int toBeTakenForNextNDays;
+  bool isCancelled;
 
-  Medications(
+  CurrentMedications(
       {this.id,
+      this.ehrId,
       this.patientUserId,
-      this.doctorUserId,
+      this.medicalPractitionerUserId,
       this.visitId,
-      this.drugOrderId,
-      this.drug,
+      this.orderId,
+      this.drugId,
+      this.drugName,
       this.dose,
       this.dosageUnit,
-      this.timeSchedule,
+      this.timeSchedules,
       this.frequency,
       this.frequencyUnit,
       this.route,
       this.duration,
       this.durationUnit,
       this.startDate,
+      this.endDate,
       this.refillNeeded,
       this.refillCount,
       this.instructions,
-      this.endDate,
-      this.totalConsumptionCount,
-      this.totalDoseCount,
-      this.pendingConsumptionCount,
-      this.pendingDoseCount,
-      this.dateCreated,
-      this.dateUpdated,
-      this.medicationImageResourceId});
+      this.imageResourceId,
+      this.isExistingMedication,
+      this.takenForLastNDays,
+      this.toBeTakenForNextNDays,
+      this.isCancelled});
 
-  Medications.fromJson(Map<String, dynamic> json) {
+  CurrentMedications.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    ehrId = json['EhrId'];
     patientUserId = json['PatientUserId'];
-    doctorUserId = json['DoctorUserId'];
+    medicalPractitionerUserId = json['MedicalPractitionerUserId'];
     visitId = json['VisitId'];
-    drugOrderId = json['DrugOrderId'];
-    drug = json['Drug'];
+    orderId = json['OrderId'];
+    drugId = json['DrugId'];
+    drugName = json['DrugName'];
     dose = json['Dose'];
     dosageUnit = json['DosageUnit'];
-    timeSchedule = json['TimeSchedule'];
+    timeSchedules = json['TimeSchedules'].cast<String>();
     frequency = json['Frequency'];
     frequencyUnit = json['FrequencyUnit'];
     route = json['Route'];
     duration = json['Duration'];
     durationUnit = json['DurationUnit'];
     startDate = DateTime.parse(json['StartDate']);
+    endDate = json['EndDate'];
     refillNeeded = json['RefillNeeded'];
     refillCount = json['RefillCount'];
     instructions = json['Instructions'];
-    endDate = json['EndDate'];
-    totalConsumptionCount = json['TotalConsumptionCount'];
-    totalDoseCount = json['TotalDoseCount'];
-    pendingConsumptionCount = json['PendingConsumptionCount'];
-    pendingDoseCount = json['PendingDoseCount'];
-    dateCreated = DateTime.parse(json['DateCreated']);
-    dateUpdated = json['DateUpdated'];
-    medicationImageResourceId = json['MedicationImageResourceId'];
+    imageResourceId = json['ImageResourceId'];
+    isExistingMedication = json['IsExistingMedication'];
+    takenForLastNDays = json['TakenForLastNDays'];
+    toBeTakenForNextNDays = json['ToBeTakenForNextNDays'];
+    isCancelled = json['IsCancelled'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    data['EhrId'] = ehrId;
     data['PatientUserId'] = patientUserId;
-    data['DoctorUserId'] = doctorUserId;
+    data['MedicalPractitionerUserId'] = medicalPractitionerUserId;
     data['VisitId'] = visitId;
-    data['DrugOrderId'] = drugOrderId;
-    data['Drug'] = drug;
+    data['OrderId'] = orderId;
+    data['DrugId'] = drugId;
+    data['DrugName'] = drugName;
     data['Dose'] = dose;
     data['DosageUnit'] = dosageUnit;
-    data['TimeSchedule'] = timeSchedule;
+    data['TimeSchedules'] = timeSchedules;
     data['Frequency'] = frequency;
     data['FrequencyUnit'] = frequencyUnit;
     data['Route'] = route;
     data['Duration'] = duration;
     data['DurationUnit'] = durationUnit;
-    data['StartDate'] = startDate.toIso8601String();
+    data['StartDate'] = startDate;
+    data['EndDate'] = endDate;
     data['RefillNeeded'] = refillNeeded;
     data['RefillCount'] = refillCount;
     data['Instructions'] = instructions;
-    data['EndDate'] = endDate;
-    data['TotalConsumptionCount'] = totalConsumptionCount;
-    data['TotalDoseCount'] = totalDoseCount;
-    data['PendingConsumptionCount'] = pendingConsumptionCount;
-    data['PendingDoseCount'] = pendingDoseCount;
-    data['DateCreated'] = dateCreated.toIso8601String();
-    data['DateUpdated'] = dateUpdated;
-    data['MedicationImageResourceId'] = medicationImageResourceId;
+    data['ImageResourceId'] = imageResourceId;
+    data['IsExistingMedication'] = isExistingMedication;
+    data['TakenForLastNDays'] = takenForLastNDays;
+    data['ToBeTakenForNextNDays'] = toBeTakenForNextNDays;
+    data['IsCancelled'] = isCancelled;
     return data;
   }
 }

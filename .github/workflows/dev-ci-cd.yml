@@ -36,22 +36,8 @@ jobs:
           GITHUB_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
 
-  # CodeScan-GitHubSuperLinter:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     # Checkout Code
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v2.3.4
-  #       with:
-  #         fetch-depth: 0
-
-  #     - name: GitHub SuperLinter Scan
-  #       uses: github/super-linter@v4
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         VALIDATE_DART: true
-
   CodeScan-FlutterAnalyze:
+    environment: dev
     runs-on: ubuntu-latest
     steps:
       # Checkout Code
@@ -71,18 +57,10 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Create env file
-        run: aws s3 cp s3://duploservices-dev-configs-167414264568/.env ./res/.env
-
-      # - name: Create env
-      #   env:
-      #     FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
-      #   run: |
-      #     echo $FLUTTER_DOTENV > ./res/.env
+        run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
 
       - name: Run Flutter Analyze
         run: |
-          # flutter pub add --dev flutter_lints
-          # flutter format lib/** --set-exit-if-changed
           flutter clean
           flutter analyze --preamble --congratulate
 
@@ -90,7 +68,13 @@ jobs:
     environment: dev
     # needs: [Code-Scan]
     runs-on: ubuntu-latest
+    outputs:
+      branchName: ${{ steps.myref.outputs.branch }}
     steps:
+      - name: Current branch name
+        run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+        id: myref
+
       # Checkout Code
       - name: Checkout Code
         uses: actions/checkout@v2.3.4
@@ -124,20 +108,17 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Create env file
-        run: aws s3 cp s3://duploservices-dev-configs-167414264568/.env ./res/.env
+        run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
 
       - name: Import Build Environment Dependencies
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_JSON }}
           KEYSTORE_TOKEN: ${{ secrets.KEYSTORE_TOKEN_BASE64 }}
-          # FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
         run: |
           echo $FIREBASE_CONFIG > ./android/app/src/dev/google-services.json
           echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
           # echo $FLUTTER_DOTENV > ./res/.env
 
-      # Flutter Build Artifact
-      # - if: github.ref == 'refs/heads/development'
       - name: Flutter Build
         run: flutter build apk --debug --flavor dev -t "lib/main_dev.dart"
 
@@ -161,6 +142,7 @@ jobs:
         shell: bash
         working-directory: android
     steps:
+
       # Checkout Code
       - name: Checkout Code
         uses: actions/checkout@v2.3.4
@@ -178,12 +160,12 @@ jobs:
           name: android-artifacts
           path: android/build/app/outputs
 
-      - name: Publish to BrowserStack
-        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:debug
-        env:
-          BROWSERSTACK_APP_ID: RHG-APP-Android-Dev
-          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      # - name: Publish to BrowserStack
+      #   run: bundle exec fastlane publish_to_browserstack flavor:dev mode:debug
+      #   env:
+      #     BROWSERSTACK_APP_ID: RHG-APP-Android-Dev
+      #     BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+      #     BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Publish to Firebase
         run: bundle exec fastlane publish_to_firebase flavor:dev mode:debug
@@ -191,7 +173,8 @@ jobs:
           FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
           FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
 
-      - name: Publish to TestProject.io
+      - name: Publish to TestProject.io - Smoke Test
+        if: ${{ needs.Android-BuildApp.outputs.branchName != 'develop' }}
         uses: ./.github/actions/upload_to_testproject
         with:
           project_id: ${{ secrets.TPIO_ANDROID_PROJECT_ID }}
@@ -200,11 +183,33 @@ jobs:
           app_path: "android/build/app/outputs/apk/dev/debug/app-dev-debug.apk"
           tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}
 
+      - name: Trigger-SmokeTests
+        if: ${{ needs.Android-BuildApp.outputs.branchName != 'develop' }}
+        run: |
+          curl -X POST "https://api.testproject.io/v2/projects/${{ secrets.TPIO_ANDROID_PROJECT_ID }}/jobs/${{ secrets.SMOKE_TEST_JOB_ID }}/run" -H "accept: application/json" -H "Authorization: ${{ secrets.TESTPROJECT_API_KEY }}" -H "Content-Type: application/json" -d "{}"
+          # curl -X POST "https://api.testproject.io/v2/projects/$PATIENT_iOS_PROJECT_ID/jobs/$PATIENT_iOS_SMOKETESTS_JOB_ID/run" -H "accept: application/json" -H "Authorization: ${{ secrets.TESTPROJECT_API_KEY }}" -H "Content-Type: application/json" -d "{}"
+
+      - name: Publish to TestProject.io - Regression
+        if: ${{ needs.Android-BuildApp.outputs.branchName == 'develop' }}
+        uses: ./.github/actions/upload_to_testproject
+        with:
+          project_id: ${{ secrets.TPIO_ANDROID_PROJECT_ID }}
+          app_id: ${{ secrets.TPIO_ANDROID_APP_ID_REGRESSION }}
+          app_name: app-dev-debug.apk
+          app_path: "android/build/app/outputs/apk/dev/debug/app-dev-debug.apk"
+          tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}
+
   iOS-BuildApp:
     environment: dev
     # needs: [Code-Scan]
     runs-on: macos-latest
+    outputs:
+      branchName: ${{ steps.myref.outputs.branch }}
     steps:
+      - name: Current branch name
+        run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+        id: myref
+
       # Checkout Code
       - name: Checkout Code
         uses: actions/checkout@v2.3.4
@@ -227,7 +232,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Create env file
-        run: aws s3 cp s3://duploservices-dev-configs-167414264568/.env ./res/.env
+        run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
 
       - name: Import Build Environment Dependencies
         env:
@@ -289,12 +294,12 @@ jobs:
           name: ios-artifacts
           path: ios/output
 
-      - name: Publish to BrowserStack
-        run: bundle exec fastlane publish_to_browserstack flavor:dev mode:release
-        env:
-          BROWSERSTACK_APP_ID: RHG-APP-iOS-Dev
-          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      # - name: Publish to BrowserStack
+      #   run: bundle exec fastlane publish_to_browserstack flavor:dev mode:release
+      #   env:
+      #     BROWSERSTACK_APP_ID: RHG-APP-iOS-Dev
+      #     BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+      #     BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Publish to Firebase
         run: bundle exec fastlane publish_to_firebase flavor:dev mode:release
@@ -302,11 +307,27 @@ jobs:
           FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
           FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}
 
-      - name: Publish to TestProject.io
+      - name: Publish to TestProject.io - Smoke Test
+        if: ${{ needs.iOS-BuildApp.outputs.branchName != 'develop' }}
         uses: ./.github/actions/upload_to_testproject
         with:
-          project_id: ${{ secrets.TPIO_ANDROID_PROJECT_ID }}
-          app_id: ${{ secrets.TPIO_ANDROID_APP_ID }}
+          project_id: ${{ secrets.TPIO_IOS_PROJECT_ID }}
+          app_id: ${{ secrets.TPIO_IOS_APP_ID_SMOKE }}
+          app_name: RHG-APP-release-dev.ipa
+          app_path: "ios/output/build/RHG-APP-release-dev.ipa"
+          tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}
+
+      - name: Trigger-SmokeTests
+        if: ${{ needs.iOS-BuildApp.outputs.branchName != 'develop' }}
+        run: |
+            curl -X POST "https://api.testproject.io/v2/projects/${{ secrets.TPIO_IOS_PROJECT_ID }}/jobs/${{ secrets.SMOKE_TEST_JOB_ID_IOS }}/run" -H "accept: application/json" -H "Authorization: ${{ secrets.TESTPROJECT_API_KEY }}" -H "Content-Type: application/json" -d "{}"
+
+      - name: Publish to TestProject.io - Regression
+        if: ${{ needs.iOS-BuildApp.outputs.branchName == 'develop' }}
+        uses: ./.github/actions/upload_to_testproject
+        with:
+          project_id: ${{ secrets.TPIO_IOS_PROJECT_ID }}
+          app_id: ${{ secrets.TPIO_IOS_APP_ID_REGRESSION }}
           app_name: RHG-APP-release-dev.ipa
           app_path: "ios/output/build/RHG-APP-release-dev.ipa"
           tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}

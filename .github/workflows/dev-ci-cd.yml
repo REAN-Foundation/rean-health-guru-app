@@ -320,7 +320,7 @@ jobs:
       - name: Trigger-SmokeTests
         if: ${{ needs.iOS-BuildApp.outputs.branchName != 'develop' }}
         run: |
-            curl -X POST "https://api.testproject.io/v2/projects/${{ secrets.TPIO_IOS_PROJECT_ID }}/jobs/$ {{ secrets.SMOKE_TEST_JOB_ID_IOS }}/run" -H "accept: application/json" -H "Authorization: ${{ secrets.TESTPROJECT_API_KEY }}" -H "Content-Type: application/json" -d "{}"
+            curl -X POST "https://api.testproject.io/v2/projects/${{ secrets.TPIO_IOS_PROJECT_ID }}/jobs/${{ secrets.SMOKE_TEST_JOB_ID_IOS }}/run" -H "accept: application/json" -H "Authorization: ${{ secrets.TESTPROJECT_API_KEY }}" -H "Content-Type: application/json" -d "{}"
 
       - name: Publish to TestProject.io - Regression
         if: ${{ needs.iOS-BuildApp.outputs.branchName == 'develop' }}

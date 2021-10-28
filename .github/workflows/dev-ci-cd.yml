@@ -203,7 +203,13 @@ jobs:
     environment: dev
     # needs: [Code-Scan]
     runs-on: macos-latest
+    outputs:
+      branchName: ${{ steps.myref.outputs.branch }}
     steps:
+      - name: Current branch name
+        run: echo "::set-output name=branch::${GITHUB_REF#refs/heads/}"
+        id: myref
+
       # Checkout Code
       - name: Checkout Code
         uses: actions/checkout@v2.3.4
@@ -301,22 +307,27 @@ jobs:
           FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
           FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}
 
-      - name: Publish to TestProject.io
+      - name: Publish to TestProject.io - Smoke Test
+        if: ${{ needs.iOS-BuildApp.outputs.branchName != 'develop' }}
         uses: ./.github/actions/upload_to_testproject
         with:
-          project_id: ${{ secrets.TPIO_ANDROID_PROJECT_ID }}
-          app_id: ${{ secrets.TPIO_ANDROID_APP_ID }}
+          project_id: ${{ secrets.TPIO_IOS_PROJECT_ID }}
+          app_id: ${{ secrets.TPIO_IOS_APP_ID_SMOKE }}
           app_name: RHG-APP-release-dev.ipa
           app_path: "ios/output/build/RHG-APP-release-dev.ipa"
           tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}
 
+      - name: Trigger-SmokeTests
+        if: ${{ needs.iOS-BuildApp.outputs.branchName != 'develop' }}
+        run: |
+            curl -X POST "https://api.testproject.io/v2/projects/${{ secrets.TPIO_IOS_PROJECT_ID }}/jobs/$ {{ secrets.SMOKE_TEST_JOB_ID_IOS }}/run" -H "accept: application/json" -H "Authorization: ${{ secrets.TESTPROJECT_API_KEY }}" -H "Content-Type: application/json" -d "{}"
 
-    # Trigger-SmokeTests:
-    #   environment: dev
-    #   runs-on: macos-latest
-    #   steps:
-    #     -  name: Trigger Smoke Tests on TestProject
-    #        command: |
-    #         curl -X POST "https://api.testproject.io/v2/projects/${{ secrets.TPIO_ANDROID_PROJECT_ID }}/jobs/$PATIENT_ANDROID_SMOKETESTS_JOB_ID/run" -H "accept: application/json" -H "Authorization: ${{ secrets.TESTPROJECT_API_KEY }}" -H "Content-Type: application/json" -d "{}"
-    #         curl -X POST "https://api.testproject.io/v2/projects/$PATIENT_iOS_PROJECT_ID/jobs/$PATIENT_iOS_SMOKETESTS_JOB_ID/run" -H "accept: application/json" -H "Authorization: ${{ secrets.TESTPROJECT_API_KEY }}" -H "Content-Type: application/json" -d "{}"
-
+      - name: Publish to TestProject.io - Regression
+        if: ${{ needs.iOS-BuildApp.outputs.branchName == 'develop' }}
+        uses: ./.github/actions/upload_to_testproject
+        with:
+          project_id: ${{ secrets.TPIO_IOS_PROJECT_ID }}
+          app_id: ${{ secrets.TPIO_IOS_APP_ID_REGRESSION }}
+          app_name: RHG-APP-release-dev.ipa
+          app_path: "ios/output/build/RHG-APP-release-dev.ipa"
+          tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}

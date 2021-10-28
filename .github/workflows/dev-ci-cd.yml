@@ -174,7 +174,7 @@ jobs:
           FIREBASE_APP_ID_ANDROID: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
 
       - name: Publish to TestProject.io - Smoke Test
-        if: ${{ Android-BuildApp.outputs.branchName != 'develop' }}
+        if: ${{ needs.Android-BuildApp.outputs.branchName != 'develop' }}
         uses: ./.github/actions/upload_to_testproject
         with:
           project_id: ${{ secrets.TPIO_ANDROID_PROJECT_ID }}
@@ -184,13 +184,13 @@ jobs:
           tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}
 
       - name: Trigger-SmokeTests
-        if: ${{ Android-BuildApp.outputs.branchName != 'develop' }}
+        if: ${{ needs.Android-BuildApp.outputs.branchName != 'develop' }}
         run: |
           curl -X POST "https://api.testproject.io/v2/projects/${{ secrets.TPIO_ANDROID_PROJECT_ID }}/jobs/${{ secrets.SMOKE_TEST_JOB_ID }}/run" -H "accept: application/json" -H "Authorization: ${{ secrets.TESTPROJECT_API_KEY }}" -H "Content-Type: application/json" -d "{}"
           # curl -X POST "https://api.testproject.io/v2/projects/$PATIENT_iOS_PROJECT_ID/jobs/$PATIENT_iOS_SMOKETESTS_JOB_ID/run" -H "accept: application/json" -H "Authorization: ${{ secrets.TESTPROJECT_API_KEY }}" -H "Content-Type: application/json" -d "{}"
 
       - name: Publish to TestProject.io - Regression
-        if: ${{ Android-BuildApp.outputs.branchName == 'develop' }}
+        if: ${{ needs.Android-BuildApp.outputs.branchName == 'develop' }}
         uses: ./.github/actions/upload_to_testproject
         with:
           project_id: ${{ secrets.TPIO_ANDROID_PROJECT_ID }}

@@ -309,12 +309,12 @@ jobs:
           tp_api_key: ${{ secrets.TESTPROJECT_API_KEY }}
 
 
-    Trigger-SmokeTests:
-      environment: dev
-      runs-on: macos-latest
-      steps:
-        -  name: Trigger Smoke Tests on TestProject
-           command: |
-            curl -X POST "https://api.testproject.io/v2/projects/${{ secrets.TPIO_ANDROID_PROJECT_ID }}/jobs/$PATIENT_ANDROID_SMOKETESTS_JOB_ID/run" -H "accept: application/json" -H "Authorization: ${{ secrets.TESTPROJECT_API_KEY }}" -H "Content-Type: application/json" -d "{}"
-            curl -X POST "https://api.testproject.io/v2/projects/$PATIENT_iOS_PROJECT_ID/jobs/$PATIENT_iOS_SMOKETESTS_JOB_ID/run" -H "accept: application/json" -H "Authorization: ${{ secrets.TESTPROJECT_API_KEY }}" -H "Content-Type: application/json" -d "{}"
+    # Trigger-SmokeTests:
+    #   environment: dev
+    #   runs-on: macos-latest
+    #   steps:
+    #     -  name: Trigger Smoke Tests on TestProject
+    #        command: |
+    #         curl -X POST "https://api.testproject.io/v2/projects/${{ secrets.TPIO_ANDROID_PROJECT_ID }}/jobs/$PATIENT_ANDROID_SMOKETESTS_JOB_ID/run" -H "accept: application/json" -H "Authorization: ${{ secrets.TESTPROJECT_API_KEY }}" -H "Content-Type: application/json" -d "{}"
+    #         curl -X POST "https://api.testproject.io/v2/projects/$PATIENT_iOS_PROJECT_ID/jobs/$PATIENT_iOS_SMOKETESTS_JOB_ID/run" -H "accept: application/json" -H "Authorization: ${{ secrets.TESTPROJECT_API_KEY }}" -H "Content-Type: application/json" -d "{}"
 

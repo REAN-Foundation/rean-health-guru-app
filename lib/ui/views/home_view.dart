@@ -86,8 +86,8 @@ class _HomeViewState extends State<HomeView> {
       setRoleId(roleId);
       /* */
       setState(() {
-        //debugPrint('Gender ==> ${patient.user.person.gender}');
-        name = user.data.user.person.firstName;
+        debugPrint('FirstName ==> ${patient.user.person.firstName}');
+        name = patient.user.person.firstName;
         imageResourceId = patient.user.person.imageResourceId ?? '';
         profileImage = imageResourceId != ''
             ? apiProvider.getBaseUrl() +
@@ -290,6 +290,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   void initState() {
+    loadSharedPrefs();
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
     getCarePlanSubscribe();
     initTargets();
@@ -299,7 +300,6 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    loadSharedPrefs();
     //UserData data = UserData.fromJson(_sharedPrefUtils.read("user"));
     //debugPrint(_sharedPrefUtils.read("user"));
 

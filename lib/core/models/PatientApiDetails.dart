@@ -173,8 +173,11 @@ class Person {
     lastName = json['LastName'];
     displayName = json['DisplayName'];
     gender = json['Gender'];
-    birthDate =
-        json['BirthDate'] != null ? DateTime.parse(json['BirthDate']) : '';
+    if (json['BirthDate'] != null) {
+      birthDate = DateTime.parse(json['BirthDate']);
+    } else {
+      birthDate = json['BirthDate'];
+    }
     age = json['Age'];
     phone = json['Phone'];
     email = json['Email'];

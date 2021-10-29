@@ -200,7 +200,11 @@ class Person {
     data['LastName'] = lastName;
     data['DisplayName'] = displayName;
     data['Gender'] = gender;
-    data['BirthDate'] = birthDate.toIso8601String();
+    if (birthDate == null) {
+      data['BirthDate'] = birthDate;
+    } else {
+      data['BirthDate'] = birthDate.toIso8601String();
+    }
     data['Age'] = age;
     data['Phone'] = phone;
     data['Email'] = email;

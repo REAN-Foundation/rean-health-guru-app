@@ -188,9 +188,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                           fontWeight: FontWeight.w300,
                           color: Colors.grey)),
                   Text(
-                      medication.instructions == null
-                          ? ' '
-                          : medication.instructions,
+                      medication.instructions ?? ' ',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(

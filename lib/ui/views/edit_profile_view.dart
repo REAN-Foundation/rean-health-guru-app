@@ -149,14 +149,6 @@ class _EditProfileState extends State<EditProfile> {
       _emailController.text = patient.user.person.email;
       // _emergencyMobileNumberController.text = patient.user.person;
 
-      _cityController.text = patient.user.person.addresses.elementAt(0).city;
-      _addressController.text =
-          patient.user.person.addresses.elementAt(0).addressLine;
-      _countryController.text =
-          patient.user.person.addresses.elementAt(0).country;
-      _postalCodeController.text =
-          patient.user.person.addresses.elementAt(0).postalCode;
-
       imageResourceId = patient.user.person.imageResourceId ?? '';
       profileImagePath = imageResourceId != ''
           ? apiProvider.getBaseUrl() +
@@ -172,6 +164,19 @@ class _EditProfileState extends State<EditProfile> {
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
       showToast(e.toString(), context);
+    }
+
+    try {
+      _cityController.text = patient.user.person.addresses.elementAt(0).city;
+      _addressController.text =
+          patient.user.person.addresses.elementAt(0).addressLine;
+      _countryController.text =
+          patient.user.person.addresses.elementAt(0).country;
+      _postalCodeController.text =
+          patient.user.person.addresses.elementAt(0).postalCode;
+      setState(() {});
+    } catch (e) {
+      debugPrint('error caught: $e');
     }
   }
 

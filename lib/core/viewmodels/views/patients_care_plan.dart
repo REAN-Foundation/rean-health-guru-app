@@ -187,7 +187,8 @@ class PatientCarePlanViewModel extends BaseModel {
     return GetTaskOfAHACarePlanResponse.fromJson(response);
   }
 
-  Future<UserTaskResponse> getUserTasks(String state) async {
+  Future<UserTaskResponse> getUserTasks(
+      String state, String dateFrom, String dateTo) async {
     setBusy(true);
 
     final map = <String, String>{};
@@ -202,7 +203,10 @@ class PatientCarePlanViewModel extends BaseModel {
             query +
             '?userId=' +
             patientUserId +
-            '&orderBy=ScheduledStartTime&order=descending',
+            '&orderBy=ScheduledStartTime&order=descending&scheduledFrom=' +
+            dateFrom +
+            '&scheduledTo=' +
+            dateTo,
         header: map);
 
     setBusy(false);

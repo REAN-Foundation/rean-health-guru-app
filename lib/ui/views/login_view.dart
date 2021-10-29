@@ -301,7 +301,7 @@ class _LoginViewState extends State<LoginView> {
 
               if (loginSuccess.status == 'success') {
                 _sharedPrefUtils.save('user', loginSuccess.toJson());
-                //_sharedPrefUtils.saveBoolean("login1.2", true);
+                //_sharedPrefUtils.saveBoolean("login1.5", true);
                 getPatientDetails(model, loginSuccess.data.accessToken,
                     loginSuccess.data.user.id);
                 //debugPrint(loginSuccess.data.user.firstName);
@@ -365,7 +365,7 @@ class _LoginViewState extends State<LoginView> {
       if (doctorListApiResponse.status == 'success') {
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data.patient.toJson());
-        _sharedPrefUtils.saveBoolean('login1.2', true);
+        _sharedPrefUtils.saveBoolean('login1.5', true);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);

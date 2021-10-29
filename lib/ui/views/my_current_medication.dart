@@ -179,14 +179,16 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                           color: Colors.grey)),
                   Text(
                       'Started on ' +
-                          dateFormatStandard.format(medication.startDate),
+                          dateFormatStandard
+                              .format(medication.startDate.toLocal()),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w300,
                           color: Colors.grey)),
-                  Text(medication.instructions,
+                  Text(
+                      medication.instructions ?? ' ',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(

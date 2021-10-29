@@ -133,7 +133,7 @@ class ApiProvider {
       case 403:
       case 404:
       case 409:
-      case 422:
+      //case 422:
       case 500:
         final responseJson = json.decode(response.body.toString());
         debugPrint(responseJson.toString());

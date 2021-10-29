@@ -25,6 +25,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     with WidgetsBindingObserver {
   var model = PatientCarePlanViewModel();
   var dateFormat = DateFormat('MMM dd - hh:mm a');
+  var dateQueryFormat = DateFormat('yyyy-MM-dd');
   GetTaskOfAHACarePlanResponse _carePlanTaskResponse;
   UserTaskResponse userTaskResponse;
   List<Task> tasks = <Task>[];
@@ -67,7 +68,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   getUserTask() async {
     try {
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
-      userTaskResponse = await model.getUserTasks(query);
+      userTaskResponse = await model.getUserTasks(
+          query,
+          dateQueryFormat.format(DateTime.now()),
+          dateQueryFormat.format(DateTime.now()));
 
       if (userTaskResponse.status == 'success') {
         tasksList.clear();

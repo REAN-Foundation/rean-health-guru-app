@@ -70,7 +70,9 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     nightMedicationList.clear();
 
     medications.forEach((currentMedication) {
-      if (currentMedication.details.contains('Morning')) {
+      if (currentMedication.details
+          .toUpperCase()
+          .contains('Morning'.toUpperCase())) {
         debugPrint(
             'Medication ==> ${currentMedication.drugName} ${currentMedication.details} ${currentMedication.status}');
         if (currentMedication.status == 'Unknown' ||
@@ -78,19 +80,25 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
             currentMedication.status == 'Overdue') {
           morningMedicationList.add(currentMedication);
         }
-      } else if (currentMedication.details.contains('Afternoon')) {
+      } else if (currentMedication.details
+          .toUpperCase()
+          .contains('Afternoon'.toUpperCase())) {
         if (currentMedication.status == 'Unknown' ||
             currentMedication.status == 'Upcoming' ||
             currentMedication.status == 'Overdue') {
           afternoonMedicationList.add(currentMedication);
         }
-      } else if (currentMedication.details.contains('Evening')) {
+      } else if (currentMedication.details
+          .toUpperCase()
+          .contains('Evening'.toUpperCase())) {
         if (currentMedication.status == 'Unknown' ||
             currentMedication.status == 'Upcoming' ||
             currentMedication.status == 'Overdue') {
           eveningMedicationList.add(currentMedication);
         }
-      } else if (currentMedication.details.contains('Night')) {
+      } else if (currentMedication.details
+          .toUpperCase()
+          .contains('Night'.toUpperCase())) {
         if (currentMedication.status == 'Unknown' ||
             currentMedication.status == 'Upcoming' ||
             currentMedication.status == 'Overdue') {

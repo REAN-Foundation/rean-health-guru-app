@@ -499,10 +499,10 @@ class _CreateProfileState extends State<CreateProfile> {
           PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        _sharedPrefUtils.saveBoolean('login1.2', true);
+        _sharedPrefUtils.saveBoolean('login1.5', true);
         await _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data.patient.toJson());
-        _sharedPrefUtils.saveBoolean('login1.2', true);
+        _sharedPrefUtils.saveBoolean('login1.5', true);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);

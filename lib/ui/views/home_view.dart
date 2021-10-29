@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
@@ -413,7 +412,7 @@ class _HomeViewState extends State<HomeView> {
                     },
                   ),
                 ),*/
-                IconButton(
+                /*IconButton(
                   icon: Icon(
                     Icons.chat,
                     size: 32,
@@ -422,7 +421,7 @@ class _HomeViewState extends State<HomeView> {
                   onPressed: () {
                     Navigator.pushNamed(context, RoutePaths.FAQ_BOT);
                   },
-                ),
+                ),*/
               ],
             ),
           ),

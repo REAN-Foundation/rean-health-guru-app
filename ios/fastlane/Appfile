@@ -1,0 +1,7 @@
+itc_team_id "123005334" # ITC Team ID
+team_id "39C32559A7" # Developer Portal Team ID
+app_identifier "org.reanfoundation.patient.dev" # Defaults to Dev Bundle Identifier
+
+for_lane :build do |options|
+    app_identifier "org.reanfoundation.patient"
+end

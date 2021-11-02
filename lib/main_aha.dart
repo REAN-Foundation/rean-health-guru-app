@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
   };
 
   MyApp(bool isLogin) {
-
+    getKnowdledgeLinkLastViewDate();
     debugPrint('Print from .env ==> ${dotenv.env['AHA_BASE_URL']}');
     debugPrint('Print from .env ==> ${dotenv.env['DEV_BOT_BASE_URL']}');
     _baseUrl = dotenv.env['AHA_BASE_URL'];

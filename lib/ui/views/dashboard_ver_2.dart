@@ -16,6 +16,8 @@ import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 //ignore: must_be_immutable
 class DashBoardVer2View extends StatefulWidget {
   Function positionToChangeNavigationBar;
@@ -62,12 +64,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
 
   loadSharedPrefs() async {
     try {
-      emergencyDashboardTile =
-          DashboardTile.fromJson(await _sharedPrefUtils.read('emergency'));
-      //debugPrint('Emergency Dashboard Tile ==> ${emergencyDashboardTile.date}');
+      setKnowdledgeLinkLastViewDate(dateFormat.format(DateTime.now()));
       setState(() {});
     } on FetchDataException catch (e) {
-      debugPrint('error caught: $e');
+      //debugPrint('error caught: $e');
     }
     /*catch (Excepetion) {
       // do something
@@ -202,7 +202,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                 else
                   Container(),
                 myBiometrics(),
-                energency(),
+                //emergency(),
                 knowledgeTree(),
                 //myTasks(),
                 //searchNearMe(),
@@ -845,7 +845,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     );
   }
 
-  Widget energency() {
+  Widget emergency() {
     String discription = '';
 
     if (emergencyDashboardTile != null) {
@@ -1125,6 +1125,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   }
 
   Widget knowledgeTree() {
+    //debugPrint('knowledgeLinkDisplayedDate ==> ${knowledgeLinkDisplayedDate} ');
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
       child: Container(
@@ -1170,18 +1171,52 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
             Container(
               color: primaryLightColor,
               padding: const EdgeInsets.all(8),
-              child: model.busy
-                  ? Center(
-                      child: SizedBox(
-                          height: 32,
-                          width: 32,
-                          child: CircularProgressIndicator()))
-                  : RichText(
-                      text: TextSpan(
-                        text: topicName.toString(),
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w700,
+              child: getAppType() == 'AHA' &&
+                      knowledgeLinkDisplayedDate !=
+                          dateFormat.format(DateTime.now())
+                  ? InkWell(
+                      onTap: () async {
+                        String url = 'https://supportnetwork.heart.org/s/';
+
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Visit: ',
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w200,
+                              color: Colors.black,
+                              fontSize: 16),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'https://supportnetwork.heart.org/s/',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  : model.busy
+                      ? Center(
+                          child: SizedBox(
+                              height: 32,
+                              width: 32,
+                              child: CircularProgressIndicator()))
+                      : RichText(
+                          text: TextSpan(
+                            text: topicName.toString(),
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w700,
                             color: Colors.black,
                             fontSize: 14),
                         children: <TextSpan>[

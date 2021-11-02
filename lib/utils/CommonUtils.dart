@@ -4,6 +4,8 @@ import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 
+import 'SharedPrefUtils.dart';
+
 StartCarePlanResponse startCarePlanResponseGlob;
 List<String> goalPlanScreenStack = <String>[];
 /*StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponseGlobe;
@@ -24,6 +26,8 @@ var dummyNumberList = <String>[];
 String _currentLocale = '';
 String _appName = '';
 dynamic _roleId = '';
+final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+String knowledgeLinkDisplayedDate = '';
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');
@@ -159,6 +163,25 @@ String calculateAge(DateTime birthDate) {
     }
   }
   return age.toString();
+}
+
+getKnowdledgeLinkLastViewDate() async {
+  try {
+    knowledgeLinkDisplayedDate =
+        await _sharedPrefUtils.read("knowledgeLinkDisplayedDate");
+  } catch (Excepetion) {
+    // do something
+  }
+  //return knowledgeLinkDisplayedDate ?? '';
+}
+
+setKnowdledgeLinkLastViewDate(String viewedDate) async {
+  try {
+    _sharedPrefUtils.save("knowledgeLinkDisplayedDate", viewedDate);
+  } catch (Excepetion) {
+    // do something
+  }
+  //return knowledgeLinkDisplayedDate ?? '';
 }
 
 enum AppState {

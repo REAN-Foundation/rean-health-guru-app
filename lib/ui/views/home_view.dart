@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
@@ -445,60 +446,39 @@ class _HomeViewState extends State<HomeView> {
               elevation: 8.0,
               items: [
                 BottomNavigationBarItem(
-                  icon: _currentNav == 0
-                      ? Semantics(
-                          label: 'home page',
-                          readOnly: true,
-                          child: SizedBox(
-                              height: 24,
-                              width: 24,
-                              child: Image.asset(
-                                  'res/images/ic_home_colored.png')),
-                        )
-                      : SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: Image.asset('res/images/ic_home.png')),
+                  icon: Semantics(
+                    label: 'home page',
+                    readOnly: true,
+                    child: ImageIcon(
+                      AssetImage('res/images/ic_home_colored.png'),
+                      size: 24,
+                      color: _currentNav == 0 ? Colors.white : Colors.white54,
+                    ),
+                  ),
                   label: '',
                 ),
                 BottomNavigationBarItem(
-                  icon: _currentNav == 1
-                      ? Semantics(
-                          label: 'daily task',
-                          readOnly: true,
-                          child: SizedBox(
-                              height: 24,
-                              width: 24,
-                              child: Image.asset(
-                                  'res/images/ic_daily_tasks_colored.png')),
-                        )
-                      : SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: Image.asset(
-                            'res/images/ic_daily_tasks.png',
-                            key: _keyMyTasks,
-                          )),
+                  icon: Semantics(
+                    label: 'daily task',
+                    readOnly: true,
+                    child: ImageIcon(
+                      AssetImage('res/images/ic_daily_tasks_colored.png'),
+                      size: 24,
+                      color: _currentNav == 1 ? Colors.white : Colors.white54,
+                    ),
+                  ),
                   label: '',
                 ),
                 BottomNavigationBarItem(
-                  icon: _currentNav == 2
-                      ? Semantics(
-                          label: 'upload files',
-                          readOnly: true,
-                          child: SizedBox(
-                              height: 28,
-                              width: 28,
-                              child: Image.asset(
-                                  'res/images/ic_upload_files_colored.png')),
-                        )
-                      : SizedBox(
-                          height: 28,
-                          width: 28,
-                          child: Image.asset(
-                            'res/images/ic_upload_files.png',
-                            key: _keyUploadReports,
-                          )),
+                  icon: Semantics(
+                    label: 'upload files',
+                    readOnly: true,
+                    child: ImageIcon(
+                      AssetImage('res/images/ic_upload_files_colored.png'),
+                      size: 24,
+                      color: _currentNav == 2 ? Colors.white : Colors.white54,
+                    ),
+                  ),
                   label: '',
                 ),
                 /*BottomNavigationBarItem(
@@ -516,23 +496,14 @@ class _HomeViewState extends State<HomeView> {
                   title: Container(height: 10.0),
                 ),*/
                 BottomNavigationBarItem(
-                  icon: _currentNav == 3
-                      ? Semantics(
-                          label: 'emergency contact',
-                          readOnly: true,
-                          child: SizedBox(
-                              height: 24,
-                              width: 24,
-                              child: Image.asset(
-                                  'res/images/ic_call_colered.png')),
-                        )
-                      : SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: Image.asset(
-                            'res/images/ic_call.png',
-                            key: _keyEmergencyContacts,
-                          )),
+                  icon: Semantics(
+                      label: 'emergency contact',
+                      readOnly: true,
+                      child: Icon(
+                        FontAwesomeIcons.firstAid,
+                        color: _currentNav == 3 ? Colors.white : Colors.white54,
+                        size: 20,
+                      )),
                   label: '',
                 ),
               ],

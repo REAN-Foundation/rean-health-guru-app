@@ -89,7 +89,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       //debugPrint('Emergency Dashboard Tile ==> ${emergencyDashboardTile.date}');
       setState(() {});
     } on FetchDataException catch (e) {
-      //debugPrint('error caught: $e');
+      debugPrint('error caught: $e');
     }
     /*catch (Excepetion) {
       // do something

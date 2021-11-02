@@ -67,7 +67,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       setKnowdledgeLinkLastViewDate(dateFormat.format(DateTime.now()));
       setState(() {});
     } on FetchDataException catch (e) {
-      //debugPrint('error caught: $e');
+      debugPrint('error caught: $e');
     }
     /*catch (Excepetion) {
       // do something
@@ -1176,7 +1176,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           dateFormat.format(DateTime.now())
                   ? InkWell(
                       onTap: () async {
-                        String url = 'https://supportnetwork.heart.org/s/';
+                        final String url =
+                            'https://supportnetwork.heart.org/s/';
 
                         if (await canLaunch(url)) {
                           await launch(url);

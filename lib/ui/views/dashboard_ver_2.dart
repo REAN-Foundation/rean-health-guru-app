@@ -1,15 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/DashboardTile.dart';
 import 'package:paitent/core/models/GetMyMedicationsResponse.dart';
 import 'package:paitent/core/models/KnowledgeTopicResponse.dart';
+import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/SearchSymptomAssesmentTempleteResponse.dart';
 import 'package:paitent/core/models/TaskSummaryResponse.dart';
+import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/dashboard_summary_model.dart';
+import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
@@ -17,6 +21,8 @@ import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'DataTasksDisplay.dart';
 
 //ignore: must_be_immutable
 class DashBoardVer2View extends StatefulWidget {
@@ -61,10 +67,38 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   var emergencyDetailsTextControler = TextEditingController();
   List<Schedules> currentMedicationList = <Schedules>[];
   DashboardTile emergencyDashboardTile;
+  String name = '';
+  String profileImage = '';
+  String imageResourceId = '';
+  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
   loadSharedPrefs() async {
     try {
       setKnowdledgeLinkLastViewDate(dateFormat.format(DateTime.now()));
+      final UserData user =
+          UserData.fromJson(await _sharedPrefUtils.read('user'));
+      final Patient patient =
+          Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
+      auth = user.data.accessToken;
+
+      patientUserId = patient.user.id;
+      patientGender = patient.user.person.gender;
+      //debugPrint('Address ==> ${patient.user.person.addresses.elementAt(0).city}');
+      //debugPrint(user.toJson().toString());
+      final dynamic roleId = await _sharedPrefUtils.read('roleId');
+      setRoleId(roleId);
+      /* */
+      setState(() {
+        debugPrint('FirstName ==> ${patient.user.person.firstName}');
+        name = patient.user.person.firstName;
+        imageResourceId = patient.user.person.imageResourceId ?? '';
+        profileImage = imageResourceId != ''
+            ? apiProvider.getBaseUrl() +
+                '/file-resources/' +
+                imageResourceId +
+                '/download'
+            : '';
+      });
       setState(() {});
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -191,29 +225,192 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
         child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: Colors.white,
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                howAreYouFeelingToday(),
-                if (incompleteMedicationCount > 0)
-                  myMedication()
-                else
-                  Container(),
-                myBiometrics(),
-                //emergency(),
-                knowledgeTree(),
-                //myTasks(),
-                //searchNearMe(),
-                SizedBox(
-                  height: 32,
-                )
-              ],
-            ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 40,
+              ),
+              _createProfileData(context),
+              const SizedBox(
+                height: 16,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      howAreYouFeelingToday(),
+                      myMedication(),
+                      /*if (incompleteMedicationCount > 0)
+                        myMedication()
+                      else
+                        Container(),*/
+                      myBiometrics(),
+                      //emergency(),
+                      knowledgeTree(),
+                      //myTasks(),
+                      //searchNearMe(),
+                      SizedBox(
+                        height: 32,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _createProfileData(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Hi, $name',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                'Let\'s check your activity',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+          Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(50.0)),
+              border: Border.all(
+                color: primaryColor,
+                width: 2.0,
+              ),
+            ),
+            child: profileImage == ''
+                ? CircleAvatar(
+                    backgroundImage:
+                        AssetImage('res/images/profile_placeholder.png'),
+                    radius: 60)
+                : CircleAvatar(
+                    child: ClipOval(
+                        child: FadeInImage.assetNetwork(
+                            placeholder: 'res/images/profile_placeholder.png',
+                            image: profileImage,
+                            fit: BoxFit.cover,
+                            width: 200,
+                            height: 120)),
+                    radius: 25),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _createComletedTasks(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    return Container(
+      padding: const EdgeInsets.all(15),
+      height: 200,
+      width: screenWidth * 0.35,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 5.0,
+            spreadRadius: 1.1,
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.task,
+                color: primaryColor,
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  "Tasks",
+                  style: TextStyle(
+                    color: textBlack,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                ),
+              ),
+            ],
+          ),
+          Text(
+            '12',
+            style: TextStyle(
+              fontSize: 48,
+              fontWeight: FontWeight.w700,
+              color: textBlack,
+            ),
+          ),
+          Text(
+            'Completed Tasks',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _createColumnStatistics() {
+    return Column(
+      children: [
+        DataTasksDisplay(
+          icon: Icon(
+            Icons.check,
+            color: Colors.green,
+            size: 24,
+          ),
+          title: 'Medication',
+          count: 2,
+          text: 'Taken',
+        ),
+        const SizedBox(height: 20),
+        DataTasksDisplay(
+          icon: Icon(
+            Icons.close,
+            color: Colors.red,
+            size: 24,
+          ),
+          title: 'Medication',
+          count: 10,
+          text: 'Remaining',
+        ),
+      ],
     );
   }
 
@@ -221,21 +418,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
       child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: widgetBackgroundColor),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
         child: Column(
           children: <Widget>[
             Container(
               height: 48,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  color: widgetBackgroundColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(3.0),
-                      topRight: Radius.circular(3.0))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -251,25 +438,29 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   ),
                   Text('How are you feeling today?',
                       style: TextStyle(
-                          color: textColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          color: primaryColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
                           fontFamily: 'Montserrat')),
                 ],
               ),
             ),
             Container(
-              color: primaryLightColor,
               padding: const EdgeInsets.all(16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  InkWell(
-                    onTap: () {
+                  ElevatedButton(
+                    onPressed: () {
                       recordHowAreYouFeeling(1);
                       //Navigator.pushNamed(context, RoutePaths.Symptoms);
                     },
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        fixedSize: Size(100, 100),
+                        enableFeedback: true,
+                        onPrimary: primaryColor),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -291,11 +482,16 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       ],
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
+                  ElevatedButton(
+                    onPressed: () {
                       recordHowAreYouFeeling(0);
                       //Navigator.pushNamed(context, RoutePaths.Symptoms);
                     },
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        fixedSize: Size(100, 100),
+                        enableFeedback: true,
+                        onPrimary: primaryColor),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -317,11 +513,16 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       ],
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
+                  ElevatedButton(
+                    onPressed: () {
                       recordHowAreYouFeeling(-1);
                       //Navigator.pushNamed(context, RoutePaths.Symptoms);
                     },
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        fixedSize: Size(100, 100),
+                        enableFeedback: true,
+                        onPrimary: primaryColor),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -732,269 +933,132 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
 
   Widget myMedication() {
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: widgetBackgroundColor),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 48,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  color: widgetBackgroundColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(3.0),
-                      topRight: Radius.circular(3.0))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 8,
-                  ),
-                  ImageIcon(
-                    AssetImage('res/images/ic_pharmacy_colored.png'),
-                    size: 24,
-                    color: iconColor,
-                  ),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Text('Did you take your medications?',
-                      style: TextStyle(
-                          color: textColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Montserrat')),
-                ],
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              ImageIcon(
+                AssetImage('res/images/ic_pharmacy_colored.png'),
+                size: 24,
+                color: primaryColor,
               ),
-            ),
-            Container(
-              color: primaryLightColor,
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Semantics(
-                    label: 'my_medication_yes',
-                    child: InkWell(
-                      onTap: () {
-                        markAllMedicationAsTaken();
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.thumb_up,
-                            color: Colors.green,
-                            size: 36,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text('Yes',
-                              style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Montserrat')),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Semantics(
-                    label: 'my_medication_no',
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, RoutePaths.My_Medications);
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.thumb_down,
-                            color: primaryColor,
-                            size: 36,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text('No',
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Montserrat')),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
+              SizedBox(
+                width: 12,
               ),
+              Text('Medication',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Montserrat')),
+            ],
+          ),
+          /*Container(
+            margin: const EdgeInsets.symmetric(vertical: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _createComletedTasks(context),
+                _createColumnStatistics(),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget emergency() {
-    String discription = '';
-
-    if (emergencyDashboardTile != null) {
-      //debugPrint('Emergency ==> ${emergencyDashboardTile.date.difference(DateTime.now()).inDays}');
-      if (emergencyDashboardTile.date.difference(DateTime.now()).inDays == 0) {
-        discription = emergencyDashboardTile.discription;
-      }
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: widgetBackgroundColor),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 48,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  color: widgetBackgroundColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(3.0),
-                      topRight: Radius.circular(3.0))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 8,
-                  ),
-                  /*ImageIcon(
-                    AssetImage('res/images/ic_pharmacy_colored.png'),
-                    size: 24,
-                    color: iconColor,
-                  ),*/
-                  Icon(
-                    FontAwesomeIcons.firstAid,
-                    color: Colors.white,
-                    size: 24,
-                  ),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Text('Did you have an emergency?',
-                      style: TextStyle(
-                          color: textColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Montserrat')),
-                ],
+          ),*/
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                flex: 5,
+                child: Text('Did you take your medications?',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Montserrat')),
               ),
-            ),
-            Container(
-              color: primaryLightColor,
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  /* Expanded(
-                    flex: 1,
-                    child: InkWell(
-                      onTap: (){
-
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(FontAwesomeIcons.home, color: Colors.green, size: 40,),
-                          SizedBox(height: 6,),
-                          Text('No I am good!',
-                              style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Montserrat')),
-                        ],
-                      ),
-                    ),
-                  ),*/
-
-                  if (discription != '')
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(discription,
-                              maxLines: 4,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Montserrat')),
-                              Semantics(
-                                label: 'edit_emergency_text',
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.edit,
-                                size: 24,
-                                color: primaryColor,
+              Expanded(
+                  flex: 5,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Semantics(
+                        label: 'my_medication_yes',
+                        child: ElevatedButton(
+                          onPressed: () {
+                            markAllMedicationAsTaken();
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              fixedSize: Size(80, 80),
+                              enableFeedback: true,
+                              onPrimary: primaryColor),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.thumb_up,
+                                color: Colors.green,
+                                size: 36,
                               ),
-                              onPressed: () {
-                                _emergencyDetailDialog(true);
-                              },
-                            ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Yes',
+                                  style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    )
-                  else
-                    Semantics(
-                      label: 'emergency_yes',
-                      child: InkWell(
-                        onTap: () {
-                          _emergencyDetailDialog(false);
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              FontAwesomeIcons.ambulance,
-                              color: primaryColor,
-                              size: 36,
-                            ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Yes',
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Montserrat')),
-                              ],
-                            ),
+                      Semantics(
+                        label: 'my_medication_no',
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, RoutePaths.My_Medications);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              fixedSize: Size(80, 80),
+                              enableFeedback: true,
+                              onPrimary: primaryColor),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.thumb_down,
+                                color: primaryColor,
+                                size: 36,
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('No',
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
                           ),
-                        )
-                ],
-              ),
-            ),
-          ],
-        ),
+                        ),
+                      )
+                    ],
+                  ))
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -1129,21 +1193,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
       child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: widgetBackgroundColor),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
         child: Column(
           children: <Widget>[
             Container(
               height: 48,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  color: widgetBackgroundColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(3.0),
-                      topRight: Radius.circular(3.0))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -1154,22 +1208,21 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   ImageIcon(
                     AssetImage('res/images/ic_tree.png'),
                     size: 28,
-                    color: iconColor,
+                    color: primaryColor,
                   ),
                   SizedBox(
                     width: 8,
                   ),
                   Text('Knowledge Tree',
                       style: TextStyle(
-                          color: textColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          color: primaryColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
                           fontFamily: 'Montserrat')),
                 ],
               ),
             ),
             Container(
-              color: primaryLightColor,
               padding: const EdgeInsets.all(8),
               child: getAppType() == 'AHA' &&
                       knowledgeLinkDisplayedDate !=
@@ -1241,24 +1294,14 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   // Display My Biometric
 
   Widget myBiometrics() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: widgetBackgroundColor),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
-        child: Column(
-          children: <Widget>[
-            Container(
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 0.0),
+            child: Container(
               height: 48,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  color: widgetBackgroundColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(3.0),
-                      topRight: Radius.circular(3.0))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -1273,16 +1316,16 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       ImageIcon(
                         AssetImage('res/images/ic_heart_biometric.png'),
                         size: 24,
-                        color: iconColor,
+                        color: primaryColor,
                       ),
                       SizedBox(
                         width: 8,
                       ),
                       Text('Vitals',
                           style: TextStyle(
-                              color: textColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              color: primaryColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
                               fontFamily: 'Montserrat')),
                     ],
                   ),
@@ -1290,7 +1333,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       icon: Icon(
                         Icons.add_circle,
                         size: 32,
-                        color: iconColor,
+                        color: primaryColor,
                       ),
                       onPressed: () {
                         Navigator.pushNamed(context, RoutePaths.My_Vitals);
@@ -1298,20 +1341,30 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                 ],
               ),
             ),
-            Container(
-                color: primaryLightColor,
-                padding: const EdgeInsets.all(16),
+          ),
+          Container(
+              height: 130,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    const SizedBox(
+                      width: 24,
+                    ),
                     Semantics(
                       label: 'Weight',
-                      child: InkWell(
-                        onTap: () {
+                      child: ElevatedButton(
+                        onPressed: () {
                           Navigator.pushNamed(context,
                               RoutePaths.Biometric_Weight_Vitals_Care_Plan);
                         },
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            fixedSize: Size(100, 120),
+                            enableFeedback: true,
+                            onPrimary: primaryColor),
                         child: Container(
                           height: 96,
                           child: Column(
@@ -1346,15 +1399,23 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ),
                       ),
                     ),
+                    const SizedBox(
+                      width: 8,
+                    ),
                     Semantics(
                       label: "Blood Pressure",
-                      child: InkWell(
-                        onTap: () {
+                      child: ElevatedButton(
+                        onPressed: () {
                           Navigator.pushNamed(
                               context,
                               RoutePaths
                                   .Biometric_Blood_Presure_Vitals_Care_Plan);
                         },
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            fixedSize: Size(100, 120),
+                            enableFeedback: true,
+                            onPrimary: primaryColor),
                         child: Container(
                           height: 96,
                           child: Column(
@@ -1389,15 +1450,23 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ),
                       ),
                     ),
+                    const SizedBox(
+                      width: 8,
+                    ),
                     Semantics(
                       label: 'Blood Glucose',
-                      child: InkWell(
-                        onTap: () {
+                      child: ElevatedButton(
+                        onPressed: () {
                           Navigator.pushNamed(
                               context,
                               RoutePaths
                                   .Biometric_Blood_Glucose_Vitals_Care_Plan);
                         },
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            fixedSize: Size(100, 120),
+                            enableFeedback: true,
+                            onPrimary: primaryColor),
                         child: Container(
                           height: 96,
                           child: Column(
@@ -1432,13 +1501,21 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ),
                       ),
                     ),
+                    const SizedBox(
+                      width: 8,
+                    ),
                     Semantics(
                       label: 'Pulse',
-                      child: InkWell(
-                        onTap: () {
+                      child: ElevatedButton(
+                        onPressed: () {
                           Navigator.pushNamed(context,
                               RoutePaths.Biometric_Pulse_Vitals_Care_Plan);
                         },
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            fixedSize: Size(100, 120),
+                            enableFeedback: true,
+                            onPrimary: primaryColor),
                         child: Container(
                           height: 96,
                           child: Column(
@@ -1472,10 +1549,117 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ),
                       ),
                     ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Semantics(
+                      label: 'Blood Oxygen',
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context,
+                              RoutePaths
+                                  .Biometric_Blood_Oxygen_Vitals_Care_Plan);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            fixedSize: Size(100, 120),
+                            enableFeedback: true,
+                            onPrimary: primaryColor),
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(10.0),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_oximeter.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Blood\nOxygen',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Semantics(
+                      label: 'Body Temperature',
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context,
+                              RoutePaths
+                                  .Biometric_Temperature_Vitals_Care_Plan);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            fixedSize: Size(100, 120),
+                            enableFeedback: true,
+                            onPrimary: primaryColor),
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(10.0),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_thermometer.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Body\nTemperature',
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 24,
+                    ),
                   ],
-                )),
-          ],
-        ),
+                ),
+              )),
+        ],
       ),
     );
   }

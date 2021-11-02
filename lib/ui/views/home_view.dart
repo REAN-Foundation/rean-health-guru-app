@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
+//import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,7 +20,8 @@ import 'package:paitent/utils/GetAllConfigrations.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringConstant.dart';
 import 'package:paitent/utils/StringUtility.dart';
-import 'package:paitent/widgets/app_drawer.dart';
+
+//import 'package:paitent/widgets/app_drawer.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import 'base_widget.dart';
@@ -333,7 +334,7 @@ class _HomeViewState extends State<HomeView> {
         child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: Colors.white,
-          appBar: PreferredSize(
+          /*appBar: PreferredSize(
             preferredSize: Size.fromHeight(56.0),
             child: AppBar(
               elevation: 10.0,
@@ -366,13 +367,13 @@ class _HomeViewState extends State<HomeView> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 8.0, 0.0, 8.0),
                   child:
-                      /*CircleAvatar(
+                      */ /*CircleAvatar(
                     radius: 48,
                     backgroundColor: primaryLightColor,
                     child: CircleAvatar(
                         radius: 48,
                         backgroundImage:  profileImage == "" ? AssetImage('res/images/profile_placeholder.png') : new NetworkImage(profileImage)),
-                  )*/
+                  )*/ /*
                       Semantics(
                     label: 'navigation_drawer',
                     child: Container(
@@ -398,7 +399,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
               actions: <Widget>[
-                /*Badge(
+                */ /*Badge(
                   position: BadgePosition.topRight(top: 4, right: 4),
                   animationType: BadgeAnimationType.scale,
                   badgeColor: primaryColor,
@@ -412,8 +413,8 @@ class _HomeViewState extends State<HomeView> {
                       debugPrint("Clicked on notification icon");
                     },
                   ),
-                ),*/
-                /*IconButton(
+                ),*/ /*
+                */ /*IconButton(
                   icon: Icon(
                     Icons.chat,
                     size: 32,
@@ -422,23 +423,22 @@ class _HomeViewState extends State<HomeView> {
                   onPressed: () {
                     Navigator.pushNamed(context, RoutePaths.FAQ_BOT);
                   },
-                ),*/
+                ),*/ /*
               ],
             ),
           ),
-          drawer: AppDrawer(),
+          drawer: AppDrawer(),*/
           body: SizedBox.expand(child: screen),
           bottomNavigationBar: Container(
             decoration: BoxDecoration(
               boxShadow: <BoxShadow>[
                 BoxShadow(
-                  color: Colors.black,
-                  blurRadius: 10,
+                  color: Colors.grey,
+                  blurRadius: 4,
                 ),
               ],
             ),
             child: BottomNavigationBar(
-              backgroundColor: primaryColor,
               currentIndex: _currentNav,
               showSelectedLabels: false,
               showUnselectedLabels: false,
@@ -452,7 +452,7 @@ class _HomeViewState extends State<HomeView> {
                     child: ImageIcon(
                       AssetImage('res/images/ic_home_colored.png'),
                       size: 24,
-                      color: _currentNav == 0 ? Colors.white : Colors.white54,
+                      color: _currentNav == 0 ? primaryColor : colorLightGray,
                     ),
                   ),
                   label: '',
@@ -464,7 +464,7 @@ class _HomeViewState extends State<HomeView> {
                     child: ImageIcon(
                       AssetImage('res/images/ic_daily_tasks_colored.png'),
                       size: 24,
-                      color: _currentNav == 1 ? Colors.white : Colors.white54,
+                      color: _currentNav == 1 ? primaryColor : colorLightGray,
                     ),
                   ),
                   label: '',
@@ -476,7 +476,7 @@ class _HomeViewState extends State<HomeView> {
                     child: ImageIcon(
                       AssetImage('res/images/ic_upload_files_colored.png'),
                       size: 24,
-                      color: _currentNav == 2 ? Colors.white : Colors.white54,
+                      color: _currentNav == 2 ? primaryColor : colorLightGray,
                     ),
                   ),
                   label: '',
@@ -501,7 +501,7 @@ class _HomeViewState extends State<HomeView> {
                       readOnly: true,
                       child: Icon(
                         FontAwesomeIcons.firstAid,
-                        color: _currentNav == 3 ? Colors.white : Colors.white54,
+                        color: _currentNav == 3 ? primaryColor : colorLightGray,
                         size: 20,
                       )),
                   label: '',

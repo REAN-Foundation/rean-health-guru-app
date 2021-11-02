@@ -14,3 +14,4 @@ const Color colorBlue = Color(0XFF2277F1);
 const Color colorLightBlue = Color(0XFF58B9FB);
 const Color colorGreen = Color(0XFF10B26C);
 const Color colorVoilet = Color(0XFFC891D6);
+const Color colorLightGray = Color(0XFFA8A8A8);

@@ -184,8 +184,7 @@ platform :ios do
       automatic_release: true,
       force: true, # Skip HTMl report verification
       skip_screenshots: true,
-      skip_metadata: true,
-      skip_binary_upload: true,
+      build_number: latest_testflight_build_number,
       submission_information: {
         add_id_info_uses_idfa: false,
         add_id_info_serves_ads: false,

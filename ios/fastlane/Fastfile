@@ -185,6 +185,7 @@ platform :ios do
       force: true, # Skip HTMl report verification
       skip_screenshots: true,
       skip_metadata: true,
+      skip_binary_upload: true,
       submission_information: {
         add_id_info_uses_idfa: false,
         add_id_info_serves_ads: false,

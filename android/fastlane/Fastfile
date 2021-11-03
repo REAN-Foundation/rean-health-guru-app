@@ -76,7 +76,7 @@ platform :android do
   lane :promote_beta_to_production do
     upload_to_play_store(
       track: 'beta',
-      skip_upload_changelogs: true
+      skip_upload_changelogs: true,
       track_promote_to: 'production',
       package_name: "org.reanfoundation.patient",
       json_key_data: ENV["PLAYSTORE_JSON_KEY_DATA"]

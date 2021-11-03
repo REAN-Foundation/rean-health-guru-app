@@ -31,7 +31,7 @@ jobs:
       - name: Setup Fastlane
         uses: ./.github/actions/setup_fastlane
         with:
-          fastlane-dir: ios
+          fastlane-dir: android
       - name: Promote to Playstore
         run: bundle exec fastlane promote_beta_to_production
         env:

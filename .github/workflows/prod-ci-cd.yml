@@ -14,10 +14,36 @@ on:
   workflow_dispatch:
 
 jobs:
-  iOS-BuildApp:
+  Android-App-Release-Prod:
     environment: prod
-    # needs: [Code-Scan]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: android
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: ios
+      - name: Promote to Playstore
+        run: bundle exec fastlane promote_beta_to_production
+        env:
+          PLAYSTORE_JSON_KEY_DATA: ${{ secrets.PLAYSTORE_JSON_KEY_DATA }}
+
+  iOS-App-Release-Prod:
+    environment: prod
     runs-on: macos-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ios
     steps:
       # Checkout Code
       - name: Checkout Code
@@ -38,8 +64,3 @@ jobs:
           APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
           IOS_DEMO_USER: ${{ secrets.IOS_DEMO_USER }}
           IOS_DEMO_PASSWORD: ${{ secrets.IOS_DEMO_PASSWORD }}
-
-      - name: Promote to Playstore
-        run: bundle exec fastlane promote_beta_to_production
-        env:
-          PLAYSTORE_JSON_KEY_DATA: ${{ secrets.PLAYSTORE_JSON_KEY_DATA }}

@@ -169,7 +169,7 @@ getKnowdledgeLinkLastViewDate() async {
   try {
     knowledgeLinkDisplayedDate =
         await _sharedPrefUtils.read("knowledgeLinkDisplayedDate");
-    debugPrint('knowledgeLinkDisplayedDate ==> ${knowledgeLinkDisplayedDate} ');
+    debugPrint('knowledgeLinkDisplayedDate ==> $knowledgeLinkDisplayedDate ');
   } catch (Excepetion) {
     // do something
   }

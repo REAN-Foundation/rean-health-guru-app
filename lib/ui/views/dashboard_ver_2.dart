@@ -956,7 +956,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       fontFamily: 'Montserrat')),
             ],
           ),
-          /*Container(
+          Container(
             margin: const EdgeInsets.symmetric(vertical: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -965,7 +965,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                 _createColumnStatistics(),
               ],
             ),
-          ),*/
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,

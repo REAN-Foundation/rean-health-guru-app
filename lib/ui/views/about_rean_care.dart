@@ -27,7 +27,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
   String textMsg2 =
       "The six cardiologists who founded the American Heart Association in 1924 would be amazed. From humble beginnings, the AHA has grown into the nation’s oldest and largest voluntary organization dedicated to fighting heart disease and stroke.";
   String textMsg3 =
-      'The American Heart Association’s National Heart Failure Initiative, IMPLEMENT-HFTM, is made possible with funding by founding sponsor, Novartis and national sponsor, Boehringer Ingelheim and Eli Lilly and Company';
+      'The American Heart Association’s National Heart Failure Initiative, IMPLEMENT-HFTM, is made possible with funding by founding sponsor, Novartis and national sponsor, Boehringer Ingelheim and Eli Lilly and Company.';
   String profileImage = '';
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 

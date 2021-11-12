@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/dailyCheckIn/howIsYourMood.dart';
+import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/widgets/delayed_animation.dart';
 
 class HowAreYouFeelingToday extends StatefulWidget {
@@ -14,6 +16,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
   final int delayedAmount = 500;
   AnimationController _controller;
   int selectedFeelings = 0;
+  var dateFormat = DateFormat('yyyy-MM-dd');
 
   @override
   void initState() {
@@ -29,6 +32,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
       });
 
     _controller.isAnimating;
+    setDailyCheckInDate(dateFormat.format(DateTime.now()));
     super.initState();
   }
 

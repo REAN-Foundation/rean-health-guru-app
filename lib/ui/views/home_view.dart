@@ -298,6 +298,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   void initState() {
+    getDailyCheckInDate();
     loadSharedPrefs();
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
     getCarePlanSubscribe();
@@ -470,6 +471,7 @@ class _HomeViewState extends State<HomeView> {
               items: [
                 BottomNavigationBarItem(
                   icon: Semantics(
+                    key:,
                     label: 'home page',
                     readOnly: true,
                     child: ImageIcon(
@@ -482,6 +484,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 BottomNavigationBarItem(
                   icon: Semantics(
+                    key: _keyMyTasks,
                     label: 'daily task',
                     readOnly: true,
                     child: ImageIcon(
@@ -494,6 +497,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 BottomNavigationBarItem(
                   icon: Semantics(
+                    key: _keyUploadReports,
                     label: 'upload files',
                     readOnly: true,
                     child: ImageIcon(
@@ -520,6 +524,7 @@ class _HomeViewState extends State<HomeView> {
                 ),*/
                 BottomNavigationBarItem(
                   icon: Semantics(
+                      key: _keyEmergencyContacts,
                       label: 'emergency contact',
                       readOnly: true,
                       child: Icon(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/ui/views/dailyCheckIn/thanksForTheFeedback.dart';
 import 'package:paitent/widgets/delayed_animation.dart';
 
 class HowIsYourEnergyLevel extends StatefulWidget {
@@ -649,7 +651,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  showDailyCheckIn();
                 },
                 child: Text(
                   "Done",
@@ -662,5 +664,18 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
             ],
           ),
         ));
+  }
+
+  showDailyCheckIn() {
+    debugPrint('Inside Daily Check In');
+    Navigator.pop(context);
+    showMaterialModalBottomSheet(
+        isDismissible: true,
+        backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+        ),
+        context: context,
+        builder: (context) => ThanksForTheFeedBack());
   }
 }

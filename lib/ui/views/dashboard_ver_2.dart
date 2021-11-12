@@ -65,7 +65,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   loadSharedPrefs() async {
     try {
       setKnowdledgeLinkLastViewDate(dateFormat.format(DateTime.now()));
-      setDailyCheckInDate(dateFormat.format(DateTime.now()));
+
       setState(() {});
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -203,7 +203,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                 // else
                 //   Container(),
                 myBiometrics(),
-                //myNutrition(),
+                myNutrition(),
                 //emergency(),
                 knowledgeTree(),
                 //myTasks(),
@@ -1585,7 +1585,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           child: Column(
                             children: [
                               Container(
-                                padding: EdgeInsets.all(8),
                                 height: 56,
                                 width: 56,
                                 decoration: BoxDecoration(
@@ -1594,7 +1593,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(12.0))),
                                 child: ImageIcon(
-                                  AssetImage('res/images/ic_body_weight.png'),
+                                  AssetImage('res/images/ic_breakfast.png'),
                                   size: 32,
                                   color: iconColor,
                                 ),
@@ -1626,7 +1625,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           child: Column(
                             children: [
                               Container(
-                                padding: EdgeInsets.all(8),
                                 height: 56,
                                 width: 56,
                                 decoration: BoxDecoration(
@@ -1635,7 +1633,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(12.0))),
                                 child: ImageIcon(
-                                  AssetImage('res/images/ic_blood_presure.png'),
+                                  AssetImage('res/images/ic_lunch.png'),
                                   size: 32,
                                   color: iconColor,
                                 ),
@@ -1667,7 +1665,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           child: Column(
                             children: [
                               Container(
-                                padding: EdgeInsets.all(12),
                                 height: 56,
                                 width: 56,
                                 decoration: BoxDecoration(
@@ -1676,7 +1673,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(12.0))),
                                 child: ImageIcon(
-                                  AssetImage('res/images/ic_blood_glucose.png'),
+                                  AssetImage('res/images/ic_dinner.png'),
                                   size: 32,
                                   color: iconColor,
                                 ),
@@ -1708,7 +1705,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           child: Column(
                             children: [
                               Container(
-                                padding: EdgeInsets.only(right: 12),
                                 height: 56,
                                 width: 56,
                                 decoration: BoxDecoration(
@@ -1717,7 +1713,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(12.0))),
                                 child: ImageIcon(
-                                  AssetImage('res/images/ic_pulse.png'),
+                                  AssetImage('res/images/ic_snacks.png'),
                                   size: 32,
                                   color: iconColor,
                                 ),

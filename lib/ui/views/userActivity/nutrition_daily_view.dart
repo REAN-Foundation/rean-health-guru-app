@@ -427,7 +427,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          'Snacks',
+                          'Snack',
                           semanticsLabel: 'Snacks',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,

@@ -1721,7 +1721,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               SizedBox(
                                 height: 8,
                               ),
-                              Text('Snacks',
+                              Text('Snack',
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 12,

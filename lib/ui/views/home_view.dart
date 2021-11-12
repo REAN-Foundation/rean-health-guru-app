@@ -471,7 +471,6 @@ class _HomeViewState extends State<HomeView> {
               items: [
                 BottomNavigationBarItem(
                   icon: Semantics(
-                    key:,
                     label: 'home page',
                     readOnly: true,
                     child: ImageIcon(

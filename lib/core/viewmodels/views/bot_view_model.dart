@@ -18,8 +18,10 @@ class BotViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
 
-    final response = await apiProvider.post('/v1/appsupport/receive',
-        header: map, body: body);
+    final response = await apiProvider.post(
+        '/REAN_SUPPORT/1939038806:AAGaoH24jZQzkGD2VU8pgodhlVefjPXokWs/receive',
+        header: map,
+        body: body);
 
     setBusy(false);
     // Convert and return

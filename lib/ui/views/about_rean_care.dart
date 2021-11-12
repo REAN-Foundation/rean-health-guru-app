@@ -191,8 +191,10 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                                 : '',
                                             textAlign: TextAlign.justify,
                                             style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: getAppType() == 'AHA'
+                                                    ? 14
+                                                    : 16,
                                                 fontFamily: 'Montserrat'),
                                           ),
                                         ],

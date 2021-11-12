@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:paitent/core/models/FAQChatModelPojo.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
@@ -28,6 +29,8 @@ String _appName = '';
 dynamic _roleId = '';
 final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
 String knowledgeLinkDisplayedDate = '';
+String dailyCheckInDate = '';
+var chatList = <FAQChatModelPojo>[];
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');
@@ -179,6 +182,25 @@ getKnowdledgeLinkLastViewDate() async {
 setKnowdledgeLinkLastViewDate(String viewedDate) async {
   try {
     _sharedPrefUtils.save("knowledgeLinkDisplayedDate", viewedDate);
+  } catch (Excepetion) {
+    // do something
+  }
+  //return knowledgeLinkDisplayedDate ?? '';
+}
+
+getDailyCheckInDate() async {
+  try {
+    dailyCheckInDate = await _sharedPrefUtils.read("dailyCheckInDate");
+    debugPrint('dailyCheckInDate ==> $dailyCheckInDate ');
+  } catch (Excepetion) {
+    // do something
+  }
+  //return knowledgeLinkDisplayedDate ?? '';
+}
+
+setDailyCheckInDate(String viewedDate) async {
+  try {
+    _sharedPrefUtils.save("dailyCheckInDate", viewedDate);
   } catch (Excepetion) {
     // do something
   }

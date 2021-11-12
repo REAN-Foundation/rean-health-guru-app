@@ -110,7 +110,7 @@ class ChatApiProvider {
       default:
         final code = response.statusCode.toString();
         debugPrint('Status_Code ${code.toString()}');
-        throw FetchDataException('Opps! Something wents wrong.');
+        throw FetchDataException('Oops! Something went wrong.');
 
 //      case 400:
 //        throw BadRequestException(response.body.toString());

@@ -65,6 +65,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   loadSharedPrefs() async {
     try {
       setKnowdledgeLinkLastViewDate(dateFormat.format(DateTime.now()));
+      setDailyCheckInDate(dateFormat.format(DateTime.now()));
       setState(() {});
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -196,12 +197,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                howAreYouFeelingToday(),
-                if (incompleteMedicationCount > 0)
-                  myMedication()
-                else
-                  Container(),
+                howAreYoursymptoms(),
+                //if (incompleteMedicationCount > 0)
+                myMedication(),
+                // else
+                //   Container(),
                 myBiometrics(),
+                //myNutrition(),
                 //emergency(),
                 knowledgeTree(),
                 //myTasks(),
@@ -217,7 +219,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     );
   }
 
-  Widget howAreYouFeelingToday() {
+  Widget howAreYoursymptoms() {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
       child: Container(
@@ -249,7 +251,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   SizedBox(
                     width: 8,
                   ),
-                  Text('How are you feeling today?',
+                  Text('How are your symptoms? ',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
@@ -274,10 +276,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(
-                          FontAwesomeIcons.smileBeam,
-                          color: Colors.green,
+                        ImageIcon(
+                          AssetImage('res/images/ic_better_emoji.png'),
                           size: 48,
+                          color: Colors.green,
                         ),
                         SizedBox(
                           height: 8,
@@ -300,10 +302,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(
-                          FontAwesomeIcons.meh,
-                          color: Colors.grey,
+                        ImageIcon(
+                          AssetImage('res/images/ic_same_emoji.png'),
                           size: 48,
+                          color: Colors.grey,
                         ),
                         SizedBox(
                           height: 8,
@@ -326,10 +328,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(
-                          FontAwesomeIcons.sadTear,
-                          color: Colors.red.shade700,
+                        ImageIcon(
+                          AssetImage('res/images/ic_worse_emoji.png'),
                           size: 48,
+                          color: Colors.red.shade700,
                         ),
                         SizedBox(
                           height: 8,
@@ -750,26 +752,42 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       topLeft: Radius.circular(3.0),
                       topRight: Radius.circular(3.0))),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: 8,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 8,
+                      ),
+                      ImageIcon(
+                        AssetImage('res/images/ic_pharmacy_colored.png'),
+                        size: 24,
+                        color: iconColor,
+                      ),
+                      SizedBox(
+                        width: 12,
+                      ),
+                      Text('Did you take your medications?',
+                          style: TextStyle(
+                              color: textColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Montserrat')),
+                    ],
                   ),
-                  ImageIcon(
-                    AssetImage('res/images/ic_pharmacy_colored.png'),
-                    size: 24,
-                    color: iconColor,
-                  ),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Text('Did you take your medications?',
-                      style: TextStyle(
-                          color: textColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Montserrat')),
+                  IconButton(
+                      icon: Icon(
+                        Icons.add_circle,
+                        size: 32,
+                        color: iconColor,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, RoutePaths.ADD_MY_MEDICATION);
+                      })
                 ],
               ),
             ),
@@ -784,7 +802,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     label: 'my_medication_yes',
                     child: InkWell(
                       onTap: () {
-                        markAllMedicationAsTaken();
+                        if (currentMedicationList.isEmpty) {
+                          showToast(
+                              'Your medication list is empty. Please add your medications.',
+                              context);
+                        } else {
+                          markAllMedicationAsTaken();
+                        }
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -1135,6 +1159,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
               height: 48,
@@ -1172,65 +1198,66 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
               color: primaryLightColor,
               padding: const EdgeInsets.all(8),
               child: getAppType() == 'AHA' &&
-                      knowledgeLinkDisplayedDate !=
-                          dateFormat.format(DateTime.now())
+                  knowledgeLinkDisplayedDate !=
+                      dateFormat.format(DateTime.now())
                   ? InkWell(
-                      onTap: () async {
-                        final String url =
-                            'https://supportnetwork.heart.org/s/';
+                onTap: () async {
+                  final String url =
+                      'https://supportnetwork.heart.org/s/';
 
-                        if (await canLaunch(url)) {
-                          await launch(url);
-                        } else {
-                          throw 'Could not launch $url';
-                        }
-                      },
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Visit: ',
-                          style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w200,
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Visit: ',
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700,
                               color: Colors.black,
                               fontSize: 16),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'https://supportnetwork.heart.org/s/',
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  : model.busy
-                      ? Center(
-                          child: SizedBox(
-                              height: 32,
-                              width: 32,
-                              child: CircularProgressIndicator()))
-                      : RichText(
-                          text: TextSpan(
-                            text: topicName.toString(),
-                            style: TextStyle(
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'https://supportnetwork.heart.org/s/',
+                        style: TextStyle(
+                          color: Colors.blue,
+                                fontSize: 16.0,
                                 fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w500,
+                              ),
+                      )
+                    ],
+                  ),
+                ),
+              )
+                  : model.busy
+                  ? Center(
+                  child: SizedBox(
+                      height: 32,
+                      width: 32,
+                      child: CircularProgressIndicator()))
+                  : RichText(
+                text: TextSpan(
+                  text: topicName.toString(),
+                  style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black,
+                      fontSize: 14),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: ' ' + briefInformation.toString(),
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
                             color: Colors.black,
-                            fontSize: 14),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: ' ' + briefInformation.toString(),
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                  fontFamily: 'Montserrat')),
-                        ],
-                      ),
-                    ),
+                            fontFamily: 'Montserrat')),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
@@ -1462,6 +1489,243 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                 height: 8,
                               ),
                               Text('Pulse',
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget myNutrition() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: widgetBackgroundColor),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 48,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  color: widgetBackgroundColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(3.0),
+                      topRight: Radius.circular(3.0))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 8,
+                      ),
+                      ImageIcon(
+                        AssetImage('res/images/ic_nutrition.png'),
+                        size: 32,
+                        color: iconColor,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text('Nutrition',
+                          style: TextStyle(
+                              color: textColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Montserrat')),
+                    ],
+                  ),
+                  IconButton(
+                      icon: Icon(
+                        Icons.add_circle,
+                        size: 32,
+                        color: iconColor,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, RoutePaths.My_Nutrition,
+                            arguments: '');
+                      })
+                ],
+              ),
+            ),
+            Container(
+                color: primaryLightColor,
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Semantics(
+                      label: 'Breakfast',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePaths.My_Nutrition,
+                              arguments: 'breakfast');
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_body_weight.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Breakfast',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Semantics(
+                      label: "Lunch",
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePaths.My_Nutrition,
+                              arguments: 'lunch');
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_blood_presure.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Lunch',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Semantics(
+                      label: 'Dinner',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePaths.My_Nutrition,
+                              arguments: 'dinner');
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(12),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_blood_glucose.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Dinner',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Semantics(
+                      label: 'Snacks',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePaths.My_Nutrition,
+                              arguments: 'snacks');
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(right: 12),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_pulse.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Snacks',
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 12,

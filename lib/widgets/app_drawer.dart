@@ -204,7 +204,8 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.popAndPushNamed(context, RoutePaths.My_Nutrition);
+                  Navigator.popAndPushNamed(context, RoutePaths.My_Nutrition,
+                      arguments: '');
                 },
                 child: Container(
                   height: 48,
@@ -482,6 +483,7 @@ class _AppDrawerState extends State<AppDrawer> {
               _sharedPrefUtils.save('CarePlan', null);
               _sharedPrefUtils.saveBoolean('login', null);
               _sharedPrefUtils.clearAll();
+              chatList.clear();
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (context) {
                 return LoginWithOTPView();

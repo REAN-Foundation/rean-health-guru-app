@@ -157,7 +157,8 @@ class Routers {
       case RoutePaths.My_Activity:
         return MaterialPageRoute(builder: (_) => ViewMyDailyActivity());
       case RoutePaths.My_Nutrition:
-        return MaterialPageRoute(builder: (_) => NutritionDailyView());
+        return MaterialPageRoute(
+            builder: (_) => NutritionDailyView(settings.arguments));
       /*case RoutePaths.My_Vitals_By_Device_Framework:
         return MaterialPageRoute(builder: (_) => BiomatricVitalsByDeviceFrameWork());*/
       case RoutePaths.Biometric_Weight_Vitals_Care_Plan:

@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
@@ -13,6 +15,7 @@ import 'package:paitent/core/viewmodels/views/common_config_model.dart';
 import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/ui/views/dailyCheckIn/howAreYouFeeling.dart';
 import 'package:paitent/ui/views/emergency_contact.dart';
 import 'package:paitent/ui/views/myReportsUpload.dart';
 import 'package:paitent/utils/CoachMarkUtilities.dart';
@@ -56,7 +59,7 @@ class _HomeViewState extends State<HomeView> {
   GlobalKey key = GlobalKey();
 
   String profileImage = '';
-
+  var dateFormat = DateFormat('yyyy-MM-dd');
   final GlobalKey _keyNavigation_drawer = GlobalKey();
   final GlobalKey _keyMyTasks = GlobalKey();
   final GlobalKey _keyUploadReports = GlobalKey();
@@ -217,6 +220,8 @@ class _HomeViewState extends State<HomeView> {
     if (!isCoachMarkDisplayed || isCoachMarkDisplayed == null) {
       Future.delayed(const Duration(seconds: 2), () => showTutorial());
       //showTutorial();
+    } else {
+      Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
     }
   }
 
@@ -249,10 +254,12 @@ class _HomeViewState extends State<HomeView> {
         onCoachMartkFinish: () {
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
+      Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
       debugPrint('Coach Mark Finish');
     }, onCoachMartkSkip: () {
-      _sharedPrefUtils.saveBoolean(
+          _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
+      Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
       debugPrint('Coach Mark Skip');
     }, onCoachMartkClickTarget: (target) {
       debugPrint('Coach Mark target click');
@@ -296,7 +303,22 @@ class _HomeViewState extends State<HomeView> {
     getCarePlanSubscribe();
     initTargets();
     WidgetsBinding.instance.addPostFrameCallback(_layout);
+
     super.initState();
+  }
+
+  showDailyCheckIn() {
+    debugPrint('Inside Daily Check In');
+    if (dailyCheckInDate != dateFormat.format(DateTime.now())) {
+      showMaterialModalBottomSheet(
+          isDismissible: true,
+          backgroundColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+          ),
+          context: context,
+          builder: (context) => HowAreYouFeelingToday());
+    }
   }
 
   @override
@@ -415,8 +437,8 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),*/
                 IconButton(
-                  icon: Icon(
-                    Icons.chat,
+                  icon: ImageIcon(
+                    AssetImage('res/images/ic_chat_bot.png'),
                     size: 32,
                     color: primaryColor,
                   ),
@@ -501,7 +523,7 @@ class _HomeViewState extends State<HomeView> {
                       label: 'emergency contact',
                       readOnly: true,
                       child: Icon(
-                        FontAwesomeIcons.firstAid,
+                        FontAwesomeIcons.ambulance,
                         color: _currentNav == 3 ? Colors.white : Colors.white54,
                         size: 20,
                       )),

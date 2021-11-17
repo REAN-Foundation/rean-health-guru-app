@@ -46,6 +46,7 @@ dependencies:
   #flutter_full_pdf_viewer: ^1.0.6
   #firebase_core: ^1.6.0
   firebase_messaging: ^10.0.6
+  firebase_analytics: ^8.3.4
   #razorpay_flutter: ^1.2.3
   flutter_autolink_text: ^1.0.0+1
   url_launcher: ^6.0.9

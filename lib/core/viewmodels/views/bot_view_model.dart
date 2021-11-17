@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:paitent/core/models/ChatApiResponse.dart';
 import 'package:paitent/networking/ChatApiProvider.dart';
@@ -19,7 +20,7 @@ class BotViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth;
 
     final response = await apiProvider.post(
-        '/REAN_SUPPORT/1939038806:AAGaoH24jZQzkGD2VU8pgodhlVefjPXokWs/receive',
+        '/REAN_SUPPORT/' + dotenv.env['BOT_API_TOKEN'] + '/receive',
         header: map,
         body: body);
 

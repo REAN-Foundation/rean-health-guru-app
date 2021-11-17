@@ -12,9 +12,7 @@ class BotViewModel extends BaseModel {
   ChatApiProvider apiProvider = GetIt.instance<ChatApiProvider>();
 
   Future<ChatApiResponse> sendMsgApi(Map body) async {
-    // Get user profile for id
     setBusy(true);
-
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;

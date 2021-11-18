@@ -69,6 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     _initPackageInfo();
+    getDailyCheckInDate();
     super.initState();
     Timer(Duration(seconds: widget.seconds), () {
       /*if (widget.navigateAfterSeconds is String) {

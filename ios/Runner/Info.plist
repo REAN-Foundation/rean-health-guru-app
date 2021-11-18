@@ -38,7 +38,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>In REAN HealthGuru you can upload your Profile picture / Medical reports using Camera for ease of use. Your photos / Documents won&apos;t be shared without your permission.</string>
+	<string>In REAN HealthGuru you can upload your Profile picture / Medical reports using Camera for ease of use. Your photos / Documents won't be shared without your permission.</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Integrating your Apple Health data with REAN HealthGuru will make it easy for you to track and manage all health goals!</string>
 	<key>NSHealthUpdateUsageDescription</key>
@@ -46,7 +46,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This application requires location permission for Booking Appoinment</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>In REAN HealthGuru you can upload your Profile picture / Medical reports using Photo Library for ease of use. Your photos / Documents won&apos;t be shared without your permission.</string>
+	<string>In REAN HealthGuru you can upload your Profile picture / Medical reports using Photo Library for ease of use. Your photos / Documents won't be shared without your permission.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

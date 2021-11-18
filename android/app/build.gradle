@@ -70,7 +70,14 @@ android {
 
         aha {
             dimension "app"
-            applicationId "org.reanfoundation.patient.dev"
+            applicationId "org.heart.hfpatient"
+            versionCode flutterVersionCode.toInteger()
+            versionName flutterVersionName
+        }
+
+        aha_uat {
+            dimension "app"
+            applicationId "org.heart.hfpatient.uat"
             versionCode flutterVersionCode.toInteger()
             versionName flutterVersionName
         }

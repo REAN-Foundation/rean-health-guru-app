@@ -3,7 +3,11 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
@@ -11,6 +15,7 @@ import 'package:paitent/core/viewmodels/views/common_config_model.dart';
 import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/ui/views/dailyCheckIn/howAreYouFeeling.dart';
 import 'package:paitent/ui/views/emergency_contact.dart';
 import 'package:paitent/ui/views/myReportsUpload.dart';
 import 'package:paitent/utils/CoachMarkUtilities.dart';
@@ -54,7 +59,7 @@ class _HomeViewState extends State<HomeView> {
   GlobalKey key = GlobalKey();
 
   String profileImage = '';
-
+  var dateFormat = DateFormat('yyyy-MM-dd');
   final GlobalKey _keyNavigation_drawer = GlobalKey();
   final GlobalKey _keyMyTasks = GlobalKey();
   final GlobalKey _keyUploadReports = GlobalKey();
@@ -215,6 +220,8 @@ class _HomeViewState extends State<HomeView> {
     if (!isCoachMarkDisplayed || isCoachMarkDisplayed == null) {
       Future.delayed(const Duration(seconds: 2), () => showTutorial());
       //showTutorial();
+    } else {
+      Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
     }
   }
 
@@ -247,10 +254,12 @@ class _HomeViewState extends State<HomeView> {
         onCoachMartkFinish: () {
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
+      Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
       debugPrint('Coach Mark Finish');
     }, onCoachMartkSkip: () {
-      _sharedPrefUtils.saveBoolean(
+          _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
+      Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
       debugPrint('Coach Mark Skip');
     }, onCoachMartkClickTarget: (target) {
       debugPrint('Coach Mark target click');
@@ -289,12 +298,28 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   void initState() {
+    getDailyCheckInDate();
     loadSharedPrefs();
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
     getCarePlanSubscribe();
     initTargets();
     WidgetsBinding.instance.addPostFrameCallback(_layout);
+
     super.initState();
+  }
+
+  showDailyCheckIn() {
+    debugPrint('Inside Daily Check In');
+    if (dailyCheckInDate != dateFormat.format(DateTime.now())) {
+      showMaterialModalBottomSheet(
+          isDismissible: true,
+          backgroundColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+          ),
+          context: context,
+          builder: (context) => HowAreYouFeelingToday());
+    }
   }
 
   @override
@@ -412,16 +437,16 @@ class _HomeViewState extends State<HomeView> {
                     },
                   ),
                 ),*/
-                /*IconButton(
-                  icon: Icon(
-                    Icons.chat,
+                IconButton(
+                  icon: ImageIcon(
+                    AssetImage('res/images/ic_chat_bot.png'),
                     size: 32,
                     color: primaryColor,
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, RoutePaths.FAQ_BOT);
                   },
-                ),*/
+                ),
               ],
             ),
           ),
@@ -445,60 +470,41 @@ class _HomeViewState extends State<HomeView> {
               elevation: 8.0,
               items: [
                 BottomNavigationBarItem(
-                  icon: _currentNav == 0
-                      ? Semantics(
-                          label: 'home page',
-                          readOnly: true,
-                          child: SizedBox(
-                              height: 24,
-                              width: 24,
-                              child: Image.asset(
-                                  'res/images/ic_home_colored.png')),
-                        )
-                      : SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: Image.asset('res/images/ic_home.png')),
+                  icon: Semantics(
+                    label: 'home page',
+                    readOnly: true,
+                    child: ImageIcon(
+                      AssetImage('res/images/ic_home_colored.png'),
+                      size: 24,
+                      color: _currentNav == 0 ? Colors.white : Colors.white54,
+                    ),
+                  ),
                   label: '',
                 ),
                 BottomNavigationBarItem(
-                  icon: _currentNav == 1
-                      ? Semantics(
-                          label: 'daily task',
-                          readOnly: true,
-                          child: SizedBox(
-                              height: 24,
-                              width: 24,
-                              child: Image.asset(
-                                  'res/images/ic_daily_tasks_colored.png')),
-                        )
-                      : SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: Image.asset(
-                            'res/images/ic_daily_tasks.png',
-                            key: _keyMyTasks,
-                          )),
+                  icon: Semantics(
+                    key: _keyMyTasks,
+                    label: 'daily task',
+                    readOnly: true,
+                    child: ImageIcon(
+                      AssetImage('res/images/ic_daily_tasks_colored.png'),
+                      size: 24,
+                      color: _currentNav == 1 ? Colors.white : Colors.white54,
+                    ),
+                  ),
                   label: '',
                 ),
                 BottomNavigationBarItem(
-                  icon: _currentNav == 2
-                      ? Semantics(
-                          label: 'upload files',
-                          readOnly: true,
-                          child: SizedBox(
-                              height: 28,
-                              width: 28,
-                              child: Image.asset(
-                                  'res/images/ic_upload_files_colored.png')),
-                        )
-                      : SizedBox(
-                          height: 28,
-                          width: 28,
-                          child: Image.asset(
-                            'res/images/ic_upload_files.png',
-                            key: _keyUploadReports,
-                          )),
+                  icon: Semantics(
+                    key: _keyUploadReports,
+                    label: 'upload files',
+                    readOnly: true,
+                    child: ImageIcon(
+                      AssetImage('res/images/ic_upload_files_colored.png'),
+                      size: 24,
+                      color: _currentNav == 2 ? Colors.white : Colors.white54,
+                    ),
+                  ),
                   label: '',
                 ),
                 /*BottomNavigationBarItem(
@@ -516,23 +522,15 @@ class _HomeViewState extends State<HomeView> {
                   title: Container(height: 10.0),
                 ),*/
                 BottomNavigationBarItem(
-                  icon: _currentNav == 3
-                      ? Semantics(
-                          label: 'emergency contact',
-                          readOnly: true,
-                          child: SizedBox(
-                              height: 24,
-                              width: 24,
-                              child: Image.asset(
-                                  'res/images/ic_call_colered.png')),
-                        )
-                      : SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: Image.asset(
-                            'res/images/ic_call.png',
-                            key: _keyEmergencyContacts,
-                          )),
+                  icon: Semantics(
+                      key: _keyEmergencyContacts,
+                      label: 'emergency contact',
+                      readOnly: true,
+                      child: Icon(
+                        FontAwesomeIcons.ambulance,
+                        color: _currentNav == 3 ? Colors.white : Colors.white54,
+                        size: 20,
+                      )),
                   label: '',
                 ),
               ],

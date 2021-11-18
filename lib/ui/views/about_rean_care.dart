@@ -26,6 +26,8 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
       "REAN HealthGuru provides a platform for your healthcare needs, helping you manage your and your family's health and well-being in a simple, comfortable, and economical manner.";
   String textMsg2 =
       "The six cardiologists who founded the American Heart Association in 1924 would be amazed. From humble beginnings, the AHA has grown into the nation’s oldest and largest voluntary organization dedicated to fighting heart disease and stroke.";
+  String textMsg3 =
+      'The American Heart Association’s National Heart Failure Initiative, IMPLEMENT-HFTM, is made possible with funding by founding sponsor, Novartis and national sponsor, Boehringer Ingelheim and Eli Lilly and Company.';
   String profileImage = '';
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
@@ -76,12 +78,12 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SizedBox(
-                                    height: 100,
+                                    height: getAppType() == 'AHA' ? 80 : 100,
                                   ),
                                   Container(
                                     padding: const EdgeInsets.all(16.0),
-                                    height: 120,
-                                    width: 120,
+                                    height: getAppType() == 'AHA' ? 80 : 120,
+                                    width: getAppType() == 'AHA' ? 80 : 120,
                                     decoration: BoxDecoration(
                                         color: getAppType() == 'AHA'
                                             ? primaryLightColor
@@ -117,8 +119,9 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                           textAlign: TextAlign.justify,
                                           style: TextStyle(
                                               fontWeight: FontWeight.w500,
-                                              fontSize: 16,
-                                              height: 1.5,
+                                              fontSize: getAppType() == 'AHA'
+                                                  ? 14
+                                                  : 16,
                                               fontFamily: 'Montserrat'),
                                         ),
                                       ],
@@ -162,7 +165,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                                     fontFamily: 'Montserrat',
                                                     fontWeight: FontWeight.w200,
                                                     color: Colors.black,
-                                                    fontSize: 18),
+                                                    fontSize: 16),
                                                 children: <TextSpan>[
                                                   TextSpan(
                                                     text: getAppType() == 'AHA'
@@ -178,6 +181,21 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                                 ],
                                               ),
                                             ),
+                                          ),
+                                          SizedBox(
+                                            height: 16,
+                                          ),
+                                          Text(
+                                            getAppType() == 'AHA'
+                                                ? textMsg3
+                                                : '',
+                                            textAlign: TextAlign.justify,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: getAppType() == 'AHA'
+                                                    ? 14
+                                                    : 16,
+                                                fontFamily: 'Montserrat'),
                                           ),
                                         ],
                                       ),
@@ -301,30 +319,30 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
               text: 'American',
               style: GoogleFonts.portLligatSans(
                 textStyle: Theme.of(context).textTheme.headline4,
-                fontSize: 30,
+                fontSize: 26,
                 fontWeight: FontWeight.w700,
                 color: primaryColor,
               ),
               children: [
                 TextSpan(
                   text: ' ',
-                  style: TextStyle(color: Colors.black, fontSize: 30),
+                  style: TextStyle(color: Colors.black, fontSize: 26),
                 ),
                 TextSpan(
                   text: 'H',
-                  style: TextStyle(color: primaryColor, fontSize: 30),
+                  style: TextStyle(color: primaryColor, fontSize: 26),
                 ),
                 TextSpan(
                   text: 'eart',
-                  style: TextStyle(color: Colors.black, fontSize: 30),
+                  style: TextStyle(color: Colors.black, fontSize: 26),
                 ),
                 TextSpan(
                   text: '\nA',
-                  style: TextStyle(color: primaryColor, fontSize: 30),
+                  style: TextStyle(color: primaryColor, fontSize: 26),
                 ),
                 TextSpan(
                   text: 'ssociation',
-                  style: TextStyle(color: Colors.black, fontSize: 30),
+                  style: TextStyle(color: Colors.black, fontSize: 26),
                 ),
               ]),
         ),

@@ -11,8 +11,12 @@ import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
 
 import 'addNutritionsDetailsDialog.dart';
-
+//ignore: must_be_immutable
 class NutritionDailyView extends StatefulWidget {
+  String mode;
+
+  NutritionDailyView(this.mode);
+
   @override
   _NutritionDailyViewState createState() => _NutritionDailyViewState();
 }
@@ -74,9 +78,21 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
     _sharedPrefUtils.save('nutrition', nutritionResponseStore.toJson());
   }
 
+  addCaloriesDialog() {
+    if (widget.mode != '') {
+      showDialog(
+          context: context,
+          builder: (_) {
+            return _addCaloriesConsumedDialog(context, widget.mode);
+          });
+    }
+  }
+
   @override
   void initState() {
     loadSharedPref();
+    Future.delayed(
+        const Duration(milliseconds: 200), () => addCaloriesDialog());
     super.initState();
   }
 
@@ -411,7 +427,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          'Snacks',
+                          'Snack',
                           semanticsLabel: 'Snacks',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,

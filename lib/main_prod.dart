@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +30,7 @@ class MyApp extends StatelessWidget {
   bool isLogin;
   String _baseUrl;
   String _botBaseUrl;
+  FirebaseAnalytics analytics = FirebaseAnalytics();
 
   MyApp(bool isLogin) {
     debugPrint('Print from .env ==> ${dotenv.env['PROD_BASE_URL']}');
@@ -74,6 +77,9 @@ class MyApp extends StatelessWidget {
             baseUrl: _baseUrl,
         ),*/
         onGenerateRoute: Routers.generateRoute,
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: analytics),
+        ],
       ),
     );
   }

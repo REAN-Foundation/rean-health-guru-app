@@ -72,6 +72,7 @@ import 'package:paitent/ui/views/statusPastCheckTask.dart';
 import 'package:paitent/ui/views/successfully_setup_care_plan.dart';
 import 'package:paitent/ui/views/support_view.dart';
 import 'package:paitent/ui/views/symptoms_view.dart';
+import 'package:paitent/ui/views/userActivity/MedicationTimmerView.dart';
 import 'package:paitent/ui/views/userActivity/nutrition_daily_view.dart';
 import 'package:paitent/ui/views/userActivity/view_my_daily_activity.dart';
 import 'package:paitent/ui/views/video_more_care_plan.dart';
@@ -159,6 +160,8 @@ class Routers {
       case RoutePaths.My_Nutrition:
         return MaterialPageRoute(
             builder: (_) => NutritionDailyView(settings.arguments));
+      case RoutePaths.Meditation:
+        return MaterialPageRoute(builder: (_) => MedicationTimmerView());
       /*case RoutePaths.My_Vitals_By_Device_Framework:
         return MaterialPageRoute(builder: (_) => BiomatricVitalsByDeviceFrameWork());*/
       case RoutePaths.Biometric_Weight_Vitals_Care_Plan:

@@ -82,6 +82,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   #permission_handler: 5.0.1
   get: ^4.3.8
+  pausable_timer: ^1.0.0+2
 
 dev_dependencies:
   #test: any

@@ -428,7 +428,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                       children: [
                         Text(
                           'Snack',
-                          semanticsLabel: 'Snacks',
+                          semanticsLabel: 'snack',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 16.0,
@@ -474,7 +474,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                       context: context,
                                       builder: (_) {
                                         return _addCaloriesConsumedDialog(
-                                            context, 'snacks');
+                                            context, 'snack');
                                       });
                                 },
                                 child: Icon(
@@ -677,7 +677,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
                         'Calories Intake ' +
-                            nutritionName.replaceAll('Snacks', ' snacks'),
+                            nutritionName.replaceAll('snack', ' snack'),
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.bold,
@@ -723,7 +723,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
       totalLunchCal = totalLunchCal + caloriesConsumed;
     } else if (type == 'dinner') {
       totalDinnerCal = totalDinnerCal + caloriesConsumed;
-    } else if (type == 'snacks') {
+    } else if (type == 'snack') {
       totalMorningSnackCal = totalMorningSnackCal + caloriesConsumed;
     } else if (type == 'afternoonSnacks') {
       totalAfernoonSnackCal = totalAfernoonSnackCal + caloriesConsumed;

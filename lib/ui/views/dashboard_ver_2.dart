@@ -1698,7 +1698,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
-                              arguments: 'snacks');
+                              arguments: 'snack');
                         },
                         child: Container(
                           height: 96,

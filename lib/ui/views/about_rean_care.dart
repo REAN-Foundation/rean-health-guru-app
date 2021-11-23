@@ -139,9 +139,8 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                             'For more information,',
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
-                                                fontWeight: FontWeight.w500,
+                                                fontWeight: FontWeight.w200,
                                                 fontSize: 16,
-                                                height: 1.5,
                                                 fontFamily: 'Montserrat'),
                                           ),
                                           InkWell(
@@ -173,9 +172,9 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                                         : 'https://www.reanfoundation.org',
                                                     style: TextStyle(
                                                       color: Colors.blue,
-                                                      fontSize: 18.0,
+                                                      fontSize: 16.0,
                                                       fontWeight:
-                                                          FontWeight.w300,
+                                                          FontWeight.w200,
                                                     ),
                                                   )
                                                 ],

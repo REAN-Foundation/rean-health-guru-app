@@ -363,7 +363,11 @@ class _OTPScreenViewState extends State<OTPScreenView> {
           PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        showToast('Welcome to REAN HealthGuru', context);
+        if (getAppType() == 'AHA') {
+          showToast('Welcome to AHA-CHF', context);
+        } else {
+          showToast('Welcome to REAN HealthGuru', context);
+        }
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data.patient.toJson());
         _sharedPrefUtils.saveBoolean('login1.5', true);

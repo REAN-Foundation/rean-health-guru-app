@@ -101,7 +101,7 @@ class Items {
   ContactPerson contactPerson;
   String contactRelation;
   String addressId;
-  String address;
+  //String address;
   String organizationId;
   String organization;
   bool isAvailableForEmergency;
@@ -116,8 +116,8 @@ class Items {
         this.contactPerson,
         this.contactRelation,
         this.addressId,
-        this.address,
-        this.organizationId,
+        //this.address,
+      this.organizationId,
         this.organization,
         this.isAvailableForEmergency,
         this.timeOfAvailability,
@@ -133,7 +133,7 @@ class Items {
         : null;
     contactRelation = json['ContactRelation'];
     addressId = json['AddressId'];
-    address = json['Address'];
+    //address = json['Address'];
     organizationId = json['OrganizationId'];
     organization = json['Organization'];
     isAvailableForEmergency = json['IsAvailableForEmergency'];
@@ -152,7 +152,7 @@ class Items {
     }
     data['ContactRelation'] = contactRelation;
     data['AddressId'] = addressId;
-    data['Address'] = address;
+    //data['Address'] = address;
     data['OrganizationId'] = organizationId;
     data['Organization'] = organization;
     data['IsAvailableForEmergency'] = isAvailableForEmergency;

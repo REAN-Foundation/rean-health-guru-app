@@ -286,7 +286,8 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                       child: Text(
                                           '' +
                                               replaceNull(healthProfile
-                                                  .maritalStatus),
+                                                  .maritalStatus
+                                                  .replaceAll('Unknown', '')),
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               fontWeight: FontWeight.w500,

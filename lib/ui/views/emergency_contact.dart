@@ -58,10 +58,10 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       } else {
         showToast(emergencyContactResponse.message, context);
       }
-    } catch (CustomException) {
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
       model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint(CustomException.toString());
+      showToast(e.toString(), context);
     }
   }
 

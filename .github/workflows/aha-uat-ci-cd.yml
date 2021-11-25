@@ -103,7 +103,7 @@ jobs:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_JSON }}
           KEYSTORE_TOKEN: ${{ secrets.KEYSTORE_TOKEN_BASE64 }}
         run: |
-          echo $FIREBASE_CONFIG > ./android/app/src/uat/google-services.json
+          echo $FIREBASE_CONFIG > ./android/app/src/aha_uat/google-services.json
           echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
           
       - name: Flutter Build

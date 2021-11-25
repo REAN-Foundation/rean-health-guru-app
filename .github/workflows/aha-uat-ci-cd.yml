@@ -107,7 +107,7 @@ jobs:
           echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
           
       - name: Flutter Build
-        run: flutter build appbundle --release --flavor uat -t "lib/main_uat.dart"
+        run: flutter build appbundle --release --flavor aha_uat -t "lib/main_aha_uat.dart"
 
       # Upload Artifacts
       - name: Upload build Artifacts

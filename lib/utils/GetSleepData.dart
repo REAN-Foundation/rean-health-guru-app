@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
@@ -7,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'CommonUtils.dart';
 import 'SharedPrefUtils.dart';
 
-class GetHealthData {
+class GetSleepData {
   List<HealthDataPoint> _healthDataList = [];
   AppState _state = AppState.DATA_NOT_FETCHED;
   var dateFormat = DateFormat('yyyy-MM-dd');
@@ -26,16 +24,16 @@ class GetHealthData {
   DateTime endDate;
   double totalSleepInMin = 0;
 
-  GetHealthData() {
-    startDate = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
+  GetSleepData() {
+    //String startDateString = dateFormat.format(DateTime.now().subtract(Duration(days: 1)))+', 21, 59, 59';
+    //startDate = DateTime.parse(startDateString);
+    startDate = DateTime(DateTime.now().year, DateTime.now().month,
+        DateTime.now().subtract(Duration(days: 2)).day, 21, 59, 59);
     endDate = DateTime(DateTime.now().year, DateTime.now().month,
         DateTime.now().day, 11, 59, 59);
-    debugPrint('Start Date ==> $startDate');
-    debugPrint('End Date ==> $endDate');
-    if (Platform.isIOS) {
-      fetchData();
-    }
+    debugPrint('Start Sleep Date ==> $startDate');
+    debugPrint('End Sleep Date ==> $endDate');
+    fetchData();
     loadHeightAndWeight();
   }
 
@@ -56,12 +54,12 @@ class GetHealthData {
 
     /// Define the types to get.
     final List<HealthDataType> types = [
-      HealthDataType.STEPS,
-      HealthDataType.WEIGHT,
-      HealthDataType.HEIGHT,
-      HealthDataType.ACTIVE_ENERGY_BURNED,
+      //HealthDataType.STEPS,
+      //HealthDataType.WEIGHT,
+      //HealthDataType.HEIGHT,
+      //HealthDataType.ACTIVE_ENERGY_BURNED,
       HealthDataType.SLEEP_ASLEEP,
-      HealthDataType.SLEEP_AWAKE,
+      //HealthDataType.SLEEP_AWAKE,
       //HealthDataType.BASAL_ENERGY_BURNED,
       //HealthDataType.DISTANCE_WALKING_RUNNING,
     ];
@@ -76,7 +74,7 @@ class GetHealthData {
       try {
         /// Fetch new data
         final List<HealthDataPoint> healthData =
-        await health.getHealthDataFromTypes(startDate, endDate, types);
+            await health.getHealthDataFromTypes(startDate, endDate, types);
 
         /// Save all the new data points
         _healthDataList.addAll(healthData);
@@ -88,10 +86,10 @@ class GetHealthData {
       _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
 
       /// Print the results
-      /* _healthDataList.forEach((x) {
-        //debugPrint('Data point:  ${x}');
+      _healthDataList.forEach((x) {
+        debugPrint('Sleep Data point:  ${x}');
         //steps += x.value.round();
-      });*/
+      });
 
       //debugPrint("Steps: $steps");
 
@@ -142,19 +140,20 @@ class GetHealthData {
       }
     }
 
-    if (height == 0.0 || weight == 0.0) {} else {
+    if (height == 0.0 || weight == 0.0) {
+    } else {
       calculetBMI();
     }
 
     totalCalories = totalActiveCalories + totalBasalCalories;
     debugPrint(
         '========================############################=============================');
-    debugPrint('STEPS : $steps');
-    debugPrint('ACTIVE_ENERGY_BURNED : $totalActiveCalories');
-    debugPrint('BASAL_ENERGY_BURNED : $totalBasalCalories');
-    debugPrint('CALORIES_BURNED : $totalBasalCalories');
-    debugPrint('WEIGHT : $weight');
-    debugPrint('Height : $height');
+    //debugPrint('STEPS : $steps');
+    //debugPrint('ACTIVE_ENERGY_BURNED : $totalActiveCalories');
+    //debugPrint('BASAL_ENERGY_BURNED : $totalBasalCalories');
+    //debugPrint('CALORIES_BURNED : $totalBasalCalories');
+    //debugPrint('WEIGHT : $weight');
+    //debugPrint('Height : $height');
     debugPrint('SLEEP_ASLEEP : $totalSleepInMin');
     debugPrint(
         '========================############################=============================');
@@ -184,6 +183,13 @@ class GetHealthData {
       bmiResult = 'Severely Obese';
       bmiResultColor = Colors.red;
     }
+  }
+
+  String getSleepDuration() {
+    DateTime startTime = _healthDataList.elementAt(0).dateFrom;
+    DateTime endTime = _healthDataList.elementAt(_healthDataList.length).dateTo;
+
+    return endTime.difference(startTime).inMinutes.toString();
   }
 
   String getWeight() {

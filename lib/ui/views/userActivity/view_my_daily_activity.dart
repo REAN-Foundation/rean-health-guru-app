@@ -11,6 +11,7 @@ import 'package:paitent/core/viewmodels/views/patients_health_marker.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/userActivity/addBMIDetailsDialog.dart';
 import 'package:paitent/utils/CommonUtils.dart';
+import 'package:paitent/utils/GetSleepData.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -29,7 +30,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
   List<HealthDataPoint> _healthDataList = [];
   AppState _state = AppState.DATA_NOT_FETCHED;
   var dateFormat = DateFormat('yyyy-MM-dd');
-
+  GetSleepData sleepData;
   int steps = 0;
   double weight = 0;
   double height = 0;
@@ -43,6 +44,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
   GlassOfWaterConsumption glassOfWaterConsumption;
   DateTime startDate;
   DateTime endDate;
+  int heartRateBmp = 0;
 
   loadSharedPref() async {
     height = await _sharedPrefUtils.readDouble('height');
@@ -84,6 +86,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
     loadWaterConsuption();
     if (Platform.isIOS) {
       fetchData();
+      sleepData = GetSleepData();
     }
     super.initState();
   }
@@ -104,6 +107,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
       HealthDataType.WEIGHT,
       HealthDataType.HEIGHT,
       HealthDataType.ACTIVE_ENERGY_BURNED,
+      HealthDataType.HEART_RATE
       //HealthDataType.BASAL_ENERGY_BURNED,
       //HealthDataType.DISTANCE_WALKING_RUNNING,
     ];
@@ -130,10 +134,10 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
       _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
 
       /// Print the results
-      _healthDataList.forEach((x) {
+      /*_healthDataList.forEach((x) {
         debugPrint('Data point:  $x');
         steps += x.value.round();
-      });
+      });*/
 
       //debugPrint("Steps: $steps");
 
@@ -176,7 +180,15 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
         SizedBox(
           height: 16,
         ),
+        heartRate(),
+        SizedBox(
+          height: 8,
+        ),
         calories(),
+        SizedBox(
+          height: 8,
+        ),
+        sleep(),
         SizedBox(
           height: 8,
         ),
@@ -248,6 +260,8 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
         totalActiveCalories = totalActiveCalories + p.value.toDouble();
       } else if (p.typeString == 'BASAL_ENERGY_BURNED') {
         totalBasalCalories = totalBasalCalories + p.value.toDouble();
+      } else if (p.typeString == 'HEART_RATE') {
+        heartRateBmp = p.value.toInt();
       }
     }
 
@@ -502,7 +516,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                 ImageIcon(
                   AssetImage('res/images/ic_activity_heart_rate.png'),
                   size: 24,
-                  color: primaryColor,
+                  color: Colors.red,
                 ),
                 SizedBox(
                   width: 8,
@@ -511,9 +525,9 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   'Heart Rate',
                   semanticsLabel: 'Heart Rate',
                   style: TextStyle(
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w700,
                       fontSize: 18.0,
-                      color: primaryColor),
+                      color: Colors.red),
                 ),
               ],
             ),
@@ -522,11 +536,11 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.baseline,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  '72',
-                  semanticsLabel: '72',
+                  heartRateBmp.toString(),
+                  semanticsLabel: heartRateBmp.toString(),
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 28.0,
@@ -824,7 +838,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
                       '6',

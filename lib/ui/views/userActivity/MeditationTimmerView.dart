@@ -7,12 +7,12 @@ import 'package:paitent/ui/shared/app_colors.dart';
 
 import '../base_widget.dart';
 
-class MedicationTimmerView extends StatefulWidget {
+class MeditationTimmerView extends StatefulWidget {
   @override
-  _MedicationTimmerViewState createState() => _MedicationTimmerViewState();
+  _MeditationTimmerViewState createState() => _MeditationTimmerViewState();
 }
 
-class _MedicationTimmerViewState extends State<MedicationTimmerView> {
+class _MeditationTimmerViewState extends State<MeditationTimmerView> {
   var model = PatientHealthMarkerViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Timer _timer;
@@ -62,10 +62,16 @@ class _MedicationTimmerViewState extends State<MedicationTimmerView> {
                   if (_timer != null) ...[
                     _timer.isActive
                         ? countUpTimmer()
-                        : Image.asset('res/images/medication_rean_bg.png'),
+                        : Container(
+                            height: 260,
+                            child: Image.asset(
+                                'res/images/medication_rean_bg.png')),
                   ],
                   if (_timer == null) ...[
-                    Image.asset('res/images/medication_rean_bg.png'),
+                    Container(
+                        height: 260,
+                        child:
+                            Image.asset('res/images/medication_rean_bg.png')),
                   ],
                   SizedBox(
                     height: 80,
@@ -142,6 +148,62 @@ class _MedicationTimmerViewState extends State<MedicationTimmerView> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 80,
+                  ),
+                  if (_timer != null) ...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: OutlinedButton(
+                            child: Text('Discard Session'),
+                            onPressed: () {
+                              _timer.cancel();
+                              _timer = null;
+                              minutes = 0;
+                              seconds = 0;
+                              hours = 0;
+                              setState(() {});
+                              Navigator.of(context).pop();
+                            },
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(width: 1.0, color: primaryColor),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 14),
+                              textStyle: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
+                              primary: primaryColor,
+                              shape: BeveledRectangleBorder(
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: ElevatedButton(
+                            child: Text('Finish'),
+                            onPressed: () {
+                              _timer.cancel();
+                              Navigator.of(context).pop();
+                            },
+                            style: ElevatedButton.styleFrom(
+                                primary: primaryColor,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 50, vertical: 14),
+                                textStyle: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ]
                 ],
               ),
             )),
@@ -151,7 +213,7 @@ class _MedicationTimmerViewState extends State<MedicationTimmerView> {
 
   Widget countUpTimmer() {
     return Container(
-      height: 360,
+      height: 260,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

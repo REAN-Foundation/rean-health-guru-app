@@ -1850,14 +1850,14 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       label: "Stand",
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity,
-                              arguments: 'lunch');
+                          Navigator.pushNamed(context, RoutePaths.My_Activity);
                         },
                         child: Container(
                           height: 96,
                           child: Column(
                             children: [
                               Container(
+                                padding: const EdgeInsets.all(4.0),
                                 height: 56,
                                 width: 56,
                                 decoration: BoxDecoration(
@@ -1866,8 +1866,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(12.0))),
                                 child: ImageIcon(
-                                  AssetImage('res/images/ic_stand.png'),
-                                  size: 32,
+                                  AssetImage(
+                                      'res/images/ic_stand_activity.png'),
+                                  size: 24,
                                   color: iconColor,
                                 ),
                               ),

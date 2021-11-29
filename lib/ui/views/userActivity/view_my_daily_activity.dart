@@ -107,7 +107,9 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
       HealthDataType.WEIGHT,
       HealthDataType.HEIGHT,
       HealthDataType.ACTIVE_ENERGY_BURNED,
-      HealthDataType.HEART_RATE
+      HealthDataType.SLEEP_ASLEEP,
+      HealthDataType.SLEEP_AWAKE,
+      //HealthDataType.HEART_RATE
       //HealthDataType.BASAL_ENERGY_BURNED,
       //HealthDataType.DISTANCE_WALKING_RUNNING,
     ];
@@ -180,18 +182,18 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
         SizedBox(
           height: 16,
         ),
-        heartRate(),
+        /*heartRate(),
         SizedBox(
           height: 8,
-        ),
+        ),*/
         calories(),
         SizedBox(
           height: 8,
         ),
-        sleep(),
+        /*sleep(),
         SizedBox(
           height: 8,
-        ),
+        ),*/
         /*Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

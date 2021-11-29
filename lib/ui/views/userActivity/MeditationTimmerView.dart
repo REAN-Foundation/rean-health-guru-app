@@ -214,50 +214,55 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
   Widget countUpTimmer() {
     return Container(
       height: 260,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Stack(
         children: [
-          Container(
-            width: 80,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                minutes.toString().padLeft(2, '0'),
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 60),
-                textAlign: TextAlign.center,
+          Image.asset('res/images/meditation_bg1.png'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 120,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    minutes.toString().padLeft(2, '0'),
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 60),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Container(
-            width: 20,
-            child: Center(
-              child: Text(
-                ":",
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40),
-                textAlign: TextAlign.center,
+              Container(
+                width: 20,
+                child: Center(
+                  child: Text(
+                    ":",
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Container(
-            width: 80,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                seconds.toString().padLeft(2, '0'),
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 60),
-                textAlign: TextAlign.center,
+              Container(
+                width: 80,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    seconds.toString().padLeft(2, '0'),
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 60),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),

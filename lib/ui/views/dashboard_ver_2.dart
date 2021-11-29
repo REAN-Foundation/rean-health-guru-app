@@ -1808,45 +1808,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Semantics(
-                      label: 'Steps',
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_steps.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Steps',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Montserrat')),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Semantics(
                       label: "Stand",
                       child: InkWell(
                         onTap: () {
@@ -1876,6 +1837,45 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                 height: 8,
                               ),
                               Text('Stand',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Semantics(
+                      label: 'Steps',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePaths.My_Activity);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_steps.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Steps',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: primaryColor,
@@ -2043,7 +2043,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       label: 'Sleep',
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity);
+                          Navigator.pushNamed(context, RoutePaths.MySleepData);
                         },
                         child: Container(
                           height: 96,

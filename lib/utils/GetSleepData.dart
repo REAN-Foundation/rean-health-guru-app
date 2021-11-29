@@ -86,10 +86,10 @@ class GetSleepData {
       _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
 
       /// Print the results
-      _healthDataList.forEach((x) {
-        debugPrint('Sleep Data point:  ${x}');
+      /* _healthDataList.forEach((x) {
+        debugPrint('Sleep Data point:  $x');
         //steps += x.value.round();
-      });
+      });*/
 
       //debugPrint("Steps: $steps");
 
@@ -186,8 +186,9 @@ class GetSleepData {
   }
 
   String getSleepDuration() {
-    DateTime startTime = _healthDataList.elementAt(0).dateFrom;
-    DateTime endTime = _healthDataList.elementAt(_healthDataList.length).dateTo;
+    final DateTime startTime = _healthDataList.elementAt(0).dateFrom;
+    final DateTime endTime =
+        _healthDataList.elementAt(_healthDataList.length).dateTo;
 
     return endTime.difference(startTime).inMinutes.toString();
   }

@@ -9,9 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:paitent/core/models/GlassOfWaterConsumption.dart';
 import 'package:paitent/core/viewmodels/views/patients_health_marker.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/GetSleepData.dart';
-import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/SimpleTimeSeriesChart.dart';
 
 import '../base_widget.dart';
@@ -24,9 +22,7 @@ class ViewMyDailySleep extends StatefulWidget {
 class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
   var model = PatientHealthMarkerViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   List<HealthDataPoint> _healthDataList = [];
-  AppState _state = AppState.DATA_NOT_FETCHED;
   var dateFormat = DateFormat('yyyy-MM-dd');
   GetSleepData sleepData;
   int steps = 0;
@@ -81,7 +77,6 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
       //HealthDataType.DISTANCE_WALKING_RUNNING,
     ];
 
-    setState(() => _state = AppState.FETCHING_DATA);
 
     /// You MUST request access to the data types before reading them
     final bool accessWasGranted = await health.requestAuthorization(types);
@@ -113,201 +108,10 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
       //this.steps = steps;
 
       /// Update the UI to display the results
-      setState(() {
-        _state =
-            _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
-      });
+
     } else {
       debugPrint('Authorization not granted');
-      setState(() => _state = AppState.DATA_NOT_FETCHED);
     }
-  }
-
-  Widget _contentFetchingData() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-            padding: EdgeInsets.all(20),
-            child: CircularProgressIndicator(
-              strokeWidth: 10,
-            )),
-        Text('Fetching data...')
-      ],
-    );
-  }
-
-  Widget _contentDataReady() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          height: 40,
-        ),
-        /*stepCounter(),
-        SizedBox(
-          height: 16,
-        ),
-        */ /*heartRate(),
-        SizedBox(
-          height: 8,
-        ),*/ /*
-        calories(),
-        SizedBox(
-          height: 8,
-        ),*/
-        /* sleep(),
-        SizedBox(
-          height: 16,
-        ),
-        Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [primaryLightColor, colorF6F6FF]),
-              border: Border.all(color: primaryLightColor),
-              borderRadius: BorderRadius.all(Radius.circular(8.0))),
-          padding: const EdgeInsets.all(16),
-          height: 200,
-          child: Center(
-            child: Container(),
-          ),
-        ),*/
-        /*Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-                flex: 1,
-                child: heartRate()),
-            SizedBox(width: 8,),
-            Expanded(
-                flex: 1,
-                child: bmi()),
-          ],
-        ),
-        SizedBox(height: 8,),
-        glassForWater(),
-        SizedBox(height: 8,),
-        sleep(),*/
-      ],
-    );
-  }
-
-  Widget _contentNotFetched() {
-    return Text(''); //Press the download button to fetch data
-  }
-
-  Widget _authorizationNotGranted() {
-    return Text('''Authorization not given.
-        For Android please check your OAUTH2 client ID is correct in Google Developer Console.
-         For iOS check your permissions in Apple Health.''');
-  }
-
-  _content() {
-    if (_state == AppState.DATA_READY) {
-      calculateSteps();
-      debugPrint('DATA_READY');
-      return _contentDataReady();
-    } else if (_state == AppState.NO_DATA) {
-      debugPrint('NO_DATA');
-      return _contentDataReady();
-    } else if (_state == AppState.FETCHING_DATA) {
-      debugPrint('FETCHING_DATA');
-      return _contentFetchingData();
-    } else if (_state == AppState.AUTH_NOT_GRANTED) {
-      debugPrint('AUTH_NOT_GRANTED');
-      return _authorizationNotGranted();
-    }
-    return _contentNotFetched();
-  }
-
-  calculateSteps() {
-    clearAllRecords();
-    for (int i = 0; i < _healthDataList.length; i++) {
-      final HealthDataPoint p = _healthDataList[i];
-      if (p.typeString == 'STEPS') {
-        steps = steps + p.value.toInt();
-      } else if (p.typeString == 'WEIGHT') {
-        if (p.value.toDouble() != 0) {
-          //weight = p.value.toDouble();
-        }
-      } else if (p.typeString == 'HEIGHT') {
-        if (p.value.toDouble() != 0) {
-          //height = p.value.toDouble() * 100;
-        }
-      } else if (p.typeString == 'ACTIVE_ENERGY_BURNED') {
-        totalActiveCalories = totalActiveCalories + p.value.toDouble();
-      } else if (p.typeString == 'BASAL_ENERGY_BURNED') {
-        totalBasalCalories = totalBasalCalories + p.value.toDouble();
-      } else if (p.typeString == 'HEART_RATE') {
-        heartRateBmp = p.value.toInt();
-      }
-    }
-
-    if (height == 0.0 || weight == 0.0) {
-    } else {
-      calculetBMI();
-    }
-
-    totalCalories = totalActiveCalories + totalBasalCalories;
-
-    debugPrint('STEPS : $steps');
-    debugPrint('ACTIVE_ENERGY_BURNED : $totalActiveCalories');
-    debugPrint('BASAL_ENERGY_BURNED : $totalBasalCalories');
-    debugPrint('CALORIES_BURNED : $totalBasalCalories');
-    debugPrint('WEIGHT : $weight');
-    debugPrint('Height : $height');
-    //recordMySteps();
-    //recordMyCalories();
-  }
-
-  calculetBMI() {
-    final double heightInMeters = height / 100;
-    final double heightInMetersSquare = heightInMeters * heightInMeters;
-
-    bmiValue = weight / heightInMetersSquare;
-
-    if (bmiValue == 0.0) {
-      bmiResult = '';
-    } else if (bmiValue < 18.5) {
-      bmiResult = 'Underweight';
-      bmiResultColor = Colors.indigoAccent;
-    } else if (bmiValue > 18.6 && bmiValue < 24.9) {
-      bmiResult = 'Healthy';
-      bmiResultColor = Colors.green;
-    } else if (bmiValue > 25 && bmiValue < 29.9) {
-      bmiResult = 'Overweight';
-      bmiResultColor = Colors.orange;
-    } else if (bmiValue > 30 && bmiValue < 39.9) {
-      bmiResult = 'Obese';
-      bmiResultColor = Colors.deepOrange;
-    } else {
-      bmiResult = 'Severely Obese';
-      bmiResultColor = Colors.red;
-    }
-
-    if (Platform.isAndroid) {
-      setState(() {});
-    }
-
-    /*new Timer(const Duration(milliseconds: 3000), () {
-      setState(() {
-      });
-    });
-*/
-  }
-
-  clearAllRecords() {
-    //bmiValue = 0 ;
-    totalActiveCalories = 0;
-    totalBasalCalories = 0;
-    totalCalories = 0;
-    steps = 0;
-    //weight = 0;
-    //height = 0;
   }
 
   @override
@@ -486,14 +290,14 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
 
   static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
     final data = [
-      new TimeSeriesSales(DateTime.now(), 6),
-      new TimeSeriesSales(DateTime.now().subtract(Duration(days: 1)), 7),
-      new TimeSeriesSales(DateTime.now().subtract(Duration(days: 2)), 6.5),
-      new TimeSeriesSales(DateTime.now().subtract(Duration(days: 3)), 7.5),
+      TimeSeriesSales(DateTime.now(), 6),
+      TimeSeriesSales(DateTime.now().subtract(Duration(days: 1)), 7),
+      TimeSeriesSales(DateTime.now().subtract(Duration(days: 2)), 6.5),
+      TimeSeriesSales(DateTime.now().subtract(Duration(days: 3)), 7.5),
     ];
 
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
+      charts.Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,

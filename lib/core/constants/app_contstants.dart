@@ -35,6 +35,8 @@ class RoutePaths {
       'patientEditMedicalProfile';
   static const String My_Medications = 'MyMedications';
   static const String My_Activity = 'MyActivity';
+  static const String MySleepData = 'MySleepData';
+  static const String Meditation = 'Meditation';
   static const String My_Nutrition = 'MyNutrition';
   static const String ADD_MY_MEDICATION = 'AddMyMedication';
   static const String My_Care_Plan = 'MyCarePlan';

@@ -21,6 +21,7 @@ import 'package:paitent/ui/views/myReportsUpload.dart';
 import 'package:paitent/utils/CoachMarkUtilities.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/GetAllConfigrations.dart';
+import 'package:paitent/utils/GetHealthData.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringConstant.dart';
 import 'package:paitent/utils/StringUtility.dart';
@@ -57,7 +58,7 @@ class _HomeViewState extends State<HomeView> {
   var model = CommonConfigModel();
   GlobalKey drawerKey = GlobalKey();
   GlobalKey key = GlobalKey();
-
+  GetHealthData healthData;
   String profileImage = '';
   var dateFormat = DateFormat('yyyy-MM-dd');
   final GlobalKey _keyNavigation_drawer = GlobalKey();
@@ -221,6 +222,8 @@ class _HomeViewState extends State<HomeView> {
       Future.delayed(const Duration(seconds: 2), () => showTutorial());
       //showTutorial();
     } else {
+      GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
+      healthData = GetIt.instance<GetHealthData>();
       Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
     }
   }

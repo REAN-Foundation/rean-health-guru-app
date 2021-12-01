@@ -204,7 +204,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                 //   Container(),
                 myBiometrics(),
                 myNutrition(),
-                //emergency(),
+                myActivity(),
+                myStress(),
                 knowledgeTree(),
                 //myTasks(),
                 //searchNearMe(),
@@ -1732,6 +1733,468 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ),
                       ),
                     ),
+                  ],
+                )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget myActivity() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: widgetBackgroundColor),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 48,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  color: widgetBackgroundColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(3.0),
+                      topRight: Radius.circular(3.0))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 8,
+                      ),
+                      ImageIcon(
+                        AssetImage('res/images/ic_activity.png'),
+                        size: 32,
+                        color: iconColor,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text('Activity',
+                          style: TextStyle(
+                              color: textColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Montserrat')),
+                    ],
+                  ),
+                  IconButton(
+                      icon: Icon(
+                        Icons.add_circle,
+                        size: 32,
+                        color: iconColor,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, RoutePaths.My_Activity,
+                            arguments: '');
+                      })
+                ],
+              ),
+            ),
+            Container(
+                color: primaryLightColor,
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Semantics(
+                      label: "Stand",
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePaths.My_Activity);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(4.0),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage(
+                                      'res/images/ic_stand_activity.png'),
+                                  size: 24,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Stand',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Semantics(
+                      label: 'Steps',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePaths.My_Activity);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_steps.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Steps',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Semantics(
+                      label: 'Exercise',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePaths.My_Activity);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_exercise.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Exercise',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    /*Semantics(
+                      label: 'Snacks',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePaths.My_Nutrition,
+                              arguments: 'snacks');
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_snacks.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Snack',
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),*/
+                  ],
+                )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget myStress() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: widgetBackgroundColor),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 48,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  color: widgetBackgroundColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(3.0),
+                      topRight: Radius.circular(3.0))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 8,
+                      ),
+                      ImageIcon(
+                        AssetImage('res/images/ic_stress.png'),
+                        size: 32,
+                        color: iconColor,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text('Stress',
+                          style: TextStyle(
+                              color: textColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Montserrat')),
+                    ],
+                  ),
+                  /*IconButton(
+                      icon: Icon(
+                        Icons.add_circle,
+                        size: 32,
+                        color: iconColor,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, RoutePaths.My_Activity,
+                            arguments: '');
+                      })*/
+                ],
+              ),
+            ),
+            Container(
+                color: primaryLightColor,
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Semantics(
+                      label: 'Sleep',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePaths.MySleepData);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_sleep.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Sleep',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Semantics(
+                      label: "Meditation",
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePaths.Meditation);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_medication.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Meditation',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    /*Semantics(
+                      label: 'Exercise',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePaths.My_Activity);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_exercise.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Exercise',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),*/
+                    /*Semantics(
+                      label: 'Snacks',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePaths.My_Nutrition,
+                              arguments: 'snacks');
+                        },
+                        child: Container(
+                          height: 96,
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_snacks.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Snack',
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),*/
                   ],
                 )),
           ],

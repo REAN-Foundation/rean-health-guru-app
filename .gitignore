@@ -54,3 +54,4 @@ ios/Flutter/fluttter_export_environments.sh
 ios/Flutter/Generated.xcconfig
 
 .flutter*
+.envrc

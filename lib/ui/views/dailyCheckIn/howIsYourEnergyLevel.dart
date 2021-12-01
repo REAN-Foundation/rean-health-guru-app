@@ -35,7 +35,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 400,
+        height: 440,
         color: Colors.transparent,
         child: Container(
           decoration: BoxDecoration(
@@ -95,12 +95,12 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                         alignment: Alignment.topRight,
                         children: [
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            height: 40,
+                            padding: EdgeInsets.symmetric(horizontal: 4),
+                            height: 48,
                             width: 200,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey.shade400),
+                              color: Colors.grey.shade200,
+                              border: Border.all(color: Colors.grey.shade200),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(24.0)),
                             ),
@@ -109,12 +109,21 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 24,
-                                  width: 24,
-                                  child: Image.asset(
-                                    'res/images/dailyCheckIn/ic_bed.png',
-                                    height: 80,
-                                    width: 80,
+                                  decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(36.0)),
+                                  ),
+                                  height: 40,
+                                  width: 40,
+                                  child: Container(
+                                    padding: EdgeInsets.all(4.0),
+                                    height: 16,
+                                    width: 16,
+                                    child: Image.asset(
+                                      'res/images/dailyCheckIn/ic_bed.png',
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
@@ -123,7 +132,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                 Text('Get off the bed',
                                     style: TextStyle(
                                         fontSize: 14,
-                                        color: Colors.grey,
+                                        color: Colors.black,
                                         fontWeight: FontWeight.w700,
                                         fontFamily: 'Montserrat')),
                               ],
@@ -169,6 +178,273 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                 children: [
                   InkWell(
                     onTap: () {
+                      if (selectedList.contains(5)) {
+                        selectedList.remove(5);
+                      } else {
+                        selectedList.add(5);
+                      }
+                      setState(() {});
+                    },
+                    child: DelayedAnimation(
+                      child: Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 4),
+                            height: 40,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              border: Border.all(color: Colors.grey.shade200),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(24.0)),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(36.0)),
+                                  ),
+                                  height: 40,
+                                  width: 40,
+                                  child: Container(
+                                    padding: EdgeInsets.all(4.0),
+                                    height: 16,
+                                    width: 16,
+                                    child: Image.asset(
+                                      'res/images/dailyCheckIn/ic_stand.png',
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Text('Stand',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
+                          ),
+                          if (selectedList.contains(5))
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: Container(
+                                width: 20,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  border: Border.all(
+                                    color: Colors.green,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(24)),
+                                ),
+                                child: Icon(
+                                  Icons.check,
+                                  size: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          else
+                            Container(),
+                        ],
+                      ),
+                      delay: delayedAmount + 2000,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      if (selectedList.contains(4)) {
+                        selectedList.remove(4);
+                      } else {
+                        selectedList.add(4);
+                      }
+                      setState(() {});
+                    },
+                    child: DelayedAnimation(
+                      child: Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 4),
+                            height: 40,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              border: Border.all(color: Colors.grey.shade200),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(24.0)),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(36.0)),
+                                  ),
+                                  height: 40,
+                                  width: 40,
+                                  child: Container(
+                                    padding: EdgeInsets.all(4.0),
+                                    height: 16,
+                                    width: 16,
+                                    child: Image.asset(
+                                      'res/images/dailyCheckIn/ic_walk.png',
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Text('Walk',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
+                          ),
+                          if (selectedList.contains(4))
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: Container(
+                                width: 20,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  border: Border.all(
+                                    color: Colors.green,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(24)),
+                                ),
+                                child: Icon(
+                                  Icons.check,
+                                  size: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          else
+                            Container(),
+                        ],
+                      ),
+                      delay: delayedAmount + 2000,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      if (selectedList.contains(6)) {
+                        selectedList.remove(6);
+                      } else {
+                        selectedList.add(6);
+                      }
+                      setState(() {});
+                    },
+                    child: DelayedAnimation(
+                      child: Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 4),
+                            height: 40,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              border: Border.all(color: Colors.grey.shade200),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(24.0)),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(36.0)),
+                                  ),
+                                  height: 40,
+                                  width: 40,
+                                  child: Container(
+                                    padding: EdgeInsets.all(4.0),
+                                    height: 16,
+                                    width: 16,
+                                    child: Image.asset(
+                                      'res/images/dailyCheckIn/ic_eat.png',
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Text('Eat',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
+                          ),
+                          if (selectedList.contains(6))
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: Container(
+                                width: 20,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  border: Border.all(
+                                    color: Colors.green,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(24)),
+                                ),
+                                child: Icon(
+                                  Icons.check,
+                                  size: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          else
+                            Container(),
+                        ],
+                      ),
+                      delay: delayedAmount + 2000,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
                       if (selectedList.contains(2)) {
                         selectedList.remove(2);
                       } else {
@@ -181,12 +457,12 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                         alignment: Alignment.topRight,
                         children: [
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             height: 40,
                             width: 180,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey.shade400),
+                              color: Colors.grey.shade200,
+                              border: Border.all(color: Colors.grey.shade200),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(24.0)),
                             ),
@@ -195,12 +471,21 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 24,
-                                  width: 24,
-                                  child: Image.asset(
-                                    'res/images/dailyCheckIn/ic_stairs.png',
-                                    height: 80,
-                                    width: 80,
+                                  decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(36.0)),
+                                  ),
+                                  height: 40,
+                                  width: 40,
+                                  child: Container(
+                                    padding: EdgeInsets.all(4.0),
+                                    height: 16,
+                                    width: 16,
+                                    child: Image.asset(
+                                      'res/images/dailyCheckIn/ic_stairs.png',
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
@@ -209,7 +494,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                 Text('Climb Stairs',
                                     style: TextStyle(
                                         fontSize: 14,
-                                        color: Colors.grey,
+                                        color: Colors.black,
                                         fontWeight: FontWeight.w700,
                                         fontFamily: 'Montserrat')),
                               ],
@@ -258,12 +543,12 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                         alignment: Alignment.topRight,
                         children: [
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             height: 40,
                             width: 180,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey.shade400),
+                              color: Colors.grey.shade200,
+                              border: Border.all(color: Colors.grey.shade200),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(24.0)),
                             ),
@@ -272,12 +557,21 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  height: 24,
-                                  width: 24,
-                                  child: Image.asset(
-                                    'res/images/dailyCheckIn/ic_exersise.png',
-                                    height: 80,
-                                    width: 80,
+                                  decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(36.0)),
+                                  ),
+                                  height: 40,
+                                  width: 40,
+                                  child: Container(
+                                    padding: EdgeInsets.all(4.0),
+                                    height: 16,
+                                    width: 16,
+                                    child: Image.asset(
+                                      'res/images/dailyCheckIn/ic_exersise.png',
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
@@ -286,253 +580,13 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                 Text('Exercise',
                                     style: TextStyle(
                                         fontSize: 14,
-                                        color: Colors.grey,
+                                        color: Colors.black,
                                         fontWeight: FontWeight.w700,
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
                           ),
                           if (selectedList.contains(3))
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: Container(
-                                width: 20,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  border: Border.all(
-                                    color: Colors.green,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(24)),
-                                ),
-                                child: Icon(
-                                  Icons.check,
-                                  size: 16,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )
-                          else
-                            Container(),
-                        ],
-                      ),
-                      delay: delayedAmount + 2000,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      if (selectedList.contains(4)) {
-                        selectedList.remove(4);
-                      } else {
-                        selectedList.add(4);
-                      }
-                      setState(() {});
-                    },
-                    child: DelayedAnimation(
-                      child: Stack(
-                        alignment: Alignment.topRight,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            height: 40,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey.shade400),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(24.0)),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  height: 24,
-                                  width: 24,
-                                  child: Image.asset(
-                                    'res/images/dailyCheckIn/ic_walk.png',
-                                    height: 80,
-                                    width: 80,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 4,
-                                ),
-                                Text('Walk',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Montserrat')),
-                              ],
-                            ),
-                          ),
-                          if (selectedList.contains(4))
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: Container(
-                                width: 20,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  border: Border.all(
-                                    color: Colors.green,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(24)),
-                                ),
-                                child: Icon(
-                                  Icons.check,
-                                  size: 16,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )
-                          else
-                            Container(),
-                        ],
-                      ),
-                      delay: delayedAmount + 2000,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      if (selectedList.contains(5)) {
-                        selectedList.remove(5);
-                      } else {
-                        selectedList.add(5);
-                      }
-                      setState(() {});
-                    },
-                    child: DelayedAnimation(
-                      child: Stack(
-                        alignment: Alignment.topRight,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            height: 40,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey.shade400),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(24.0)),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  height: 24,
-                                  width: 24,
-                                  child: Image.asset(
-                                    'res/images/dailyCheckIn/ic_stand.png',
-                                    height: 80,
-                                    width: 80,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 4,
-                                ),
-                                Text('Stand',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Montserrat')),
-                              ],
-                            ),
-                          ),
-                          if (selectedList.contains(5))
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: Container(
-                                width: 20,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  border: Border.all(
-                                    color: Colors.green,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(24)),
-                                ),
-                                child: Icon(
-                                  Icons.check,
-                                  size: 16,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )
-                          else
-                            Container(),
-                        ],
-                      ),
-                      delay: delayedAmount + 2000,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      if (selectedList.contains(6)) {
-                        selectedList.remove(6);
-                      } else {
-                        selectedList.add(6);
-                      }
-                      setState(() {});
-                    },
-                    child: DelayedAnimation(
-                      child: Stack(
-                        alignment: Alignment.topRight,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                            height: 40,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey.shade400),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(24.0)),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  height: 24,
-                                  width: 24,
-                                  child: Image.asset(
-                                    'res/images/dailyCheckIn/ic_eat.png',
-                                    height: 80,
-                                    width: 80,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 4,
-                                ),
-                                Text('Eat',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Montserrat')),
-                              ],
-                            ),
-                          ),
-                          if (selectedList.contains(6))
                             Align(
                               alignment: Alignment.topRight,
                               child: Container(
@@ -582,12 +636,12 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                       alignment: Alignment.topRight,
                       children: [
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          padding: EdgeInsets.symmetric(horizontal: 4),
                           height: 40,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.grey.shade400),
+                            color: Colors.grey.shade200,
+                            border: Border.all(color: Colors.grey.shade200),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(24.0)),
                           ),
@@ -596,12 +650,21 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                height: 24,
-                                width: 24,
-                                child: Image.asset(
-                                  'res/images/dailyCheckIn/ic_nap.png',
-                                  height: 80,
-                                  width: 80,
+                                decoration: BoxDecoration(
+                                  color: primaryColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(36.0)),
+                                ),
+                                height: 40,
+                                width: 40,
+                                child: Container(
+                                  padding: EdgeInsets.all(4.0),
+                                  height: 16,
+                                  width: 16,
+                                  child: Image.asset(
+                                    'res/images/dailyCheckIn/ic_nap.png',
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                               SizedBox(
@@ -610,7 +673,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                               Text('Get through the day without a nap',
                                   style: TextStyle(
                                       fontSize: 14,
-                                      color: Colors.grey,
+                                      color: Colors.black,
                                       fontWeight: FontWeight.w700,
                                       fontFamily: 'Montserrat')),
                             ],
@@ -649,18 +712,25 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
               const SizedBox(
                 height: 20,
               ),
-              TextButton(
-                onPressed: () {
-                  showDailyCheckIn();
-                },
-                child: Text(
-                  "Done",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                      color: primaryColor),
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 32,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () {
+                    showDailyCheckIn();
+                  },
+                  child: Text(
+                    "Done",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18.0,
+                        color: Colors.white),
+                  ),
                 ),
-              )
+              ),
+              const SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ));

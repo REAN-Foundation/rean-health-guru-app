@@ -7,14 +7,14 @@ for_lane :build_rf do |options|
 end
 
 for_lane :build_aha do |options|
+    itc_team_id "575858" # ITC Team ID
+    team_id "44HU6X9V79" # Developer Portal Team ID
     app_identifier "org.heart.hfpatient"
 end
 
-for_lane :upload_build_to_testflight_rf do |options|
-    itc_team_id "123005334" # ITC Team ID
-    team_id "39C32559A7" # Developer Portal Team ID
-    app_identifier "org.reanfoundation.patient"
-end
+# for_lane :upload_build_to_testflight_rf do |options|
+#     app_identifier "org.reanfoundation.patient"
+# end
 
 for_lane :upload_build_to_testflight_aha do |options|
     itc_team_id "575858" # ITC Team ID

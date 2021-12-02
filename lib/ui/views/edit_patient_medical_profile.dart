@@ -130,6 +130,9 @@ class _EditPatientMedicalProfileViewState
     isSmoker = yesOrNo(widget.healthProfile.isSmoker);
     isDrinker = yesOrNo(widget.healthProfile.isDrinker);
     maritalStatus = widget.healthProfile.maritalStatus;
+    if (maritalStatus == 'Unknown') {
+      maritalStatus = 'Single';
+    }
   }
 
   String yesOrNo(bool flag) {

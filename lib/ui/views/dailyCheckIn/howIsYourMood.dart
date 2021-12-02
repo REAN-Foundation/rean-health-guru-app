@@ -187,7 +187,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                           Text('Lonely',
                               style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Montserrat')),
                         ],

@@ -189,7 +189,7 @@ class _BiometricBloodPresureVitalsViewState
                         child: TextFormField(
                             inputFormatters: [
                               FilteringTextInputFormatter.deny(
-                                  RegExp('[\\,|\\+|\\-]')),
+                                  RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
                             ],
                             controller: _systolicController,
                             focusNode: _systolicFocus,
@@ -251,7 +251,7 @@ class _BiometricBloodPresureVitalsViewState
                           textInputAction: TextInputAction.done,
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-]')),
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
                           ],
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {

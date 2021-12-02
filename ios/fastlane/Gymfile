@@ -9,3 +9,11 @@ workspace("Runner.xcworkspace")
 codesigning_identity("Apple Distribution: The REAN Foundation (977TJPD6JJ)")
 skip_profile_detection(true)
 output_directory("./output/build")    # store the ipa in this folder
+
+for_lane :build_rf do |options|
+    codesigning_identity("Apple Distribution: The REAN Foundation (977TJPD6JJ)")
+end
+
+for_lane :build_aha do |options|
+    codesigning_identity("Apple Distribution: American Heart Association (44HU6X9V79)")
+end

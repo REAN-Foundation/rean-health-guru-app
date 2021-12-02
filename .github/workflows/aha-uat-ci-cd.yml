@@ -105,7 +105,7 @@ jobs:
         run: |
           echo $FIREBASE_CONFIG > ./android/app/src/aha_uat/google-services.json
           echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
-          
+
       - name: Flutter Build
         run: flutter build appbundle --release --flavor aha_uat -t "lib/main_aha_uat.dart"
 
@@ -120,132 +120,132 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
-  # Android-Release-Alpha:
-  #   environment: uat
-  #   needs: Android-BuildApp
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       shell: bash
-  #       working-directory: android
-  #   steps:
-  #     # Checkout Code
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v2.3.4
-  #       with:
-  #         fetch-depth: 0
+  Android-Release-Alpha:
+    environment: aha-uat
+    needs: Android-BuildApp
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: android
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
 
-  #     - name: Setup Fastlane
-  #       uses: ./.github/actions/setup_fastlane
-  #       with:
-  #         fastlane-dir: android
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: android
 
-  #     - uses: actions/download-artifact@v2
-  #       id: download
-  #       with:
-  #         name: android-artifacts
-  #         path: android/build/app/outputs
+      - uses: actions/download-artifact@v2
+        id: download
+        with:
+          name: android-artifacts
+          path: android/build/app/outputs
 
-  #     - name: Publish to Playstore
-  #       run: bundle exec fastlane release_alpha_build aab_path:"build/app/outputs/bundle/uatRelease/app-uat-release.aab"
-  #       env:
-  #         PLAYSTORE_JSON_KEY_DATA: ${{ secrets.PLAYSTORE_JSON_KEY_DATA }}
-          
+      - name: Publish to Playstore
+        run: bundle exec fastlane release_alpha_build aab_path:"build/app/outputs/bundle/uatRelease/app-uat-release.aab"
+        env:
+          PLAYSTORE_JSON_KEY_DATA: ${{ secrets.PLAYSTORE_JSON_KEY_DATA }}
 
-  # iOS-BuildApp:
-  #   environment: uat
-  #   # needs: [Code-Scan]
-  #   runs-on: macos-latest
-  #   steps:
-  #     # Checkout Code
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v2.3.4
-  #       with:
-  #         fetch-depth: 0
 
-  #     - name: Setup Fastlane
-  #       uses: ./.github/actions/setup_fastlane
-  #       with:
-  #         fastlane-dir: ios
+  iOS-BuildApp:
+    environment: aha-uat
+    # needs: [Code-Scan]
+    runs-on: macos-latest
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
 
-  #     - name: Setup Flutter
-  #       uses: ./.github/actions/setup_flutter
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: ios
 
-  #     - name: Configure AWS credentials
-  #       uses: aws-actions/configure-aws-credentials@v1
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: ${{ secrets.AWS_REGION }}
+      - name: Setup Flutter
+        uses: ./.github/actions/setup_flutter
 
-  #     - name: Create env file
-  #       run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-  #     - name: Import Build Environment Dependencies
-  #       env:
-  #         FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_PLIST }}
-  #         # FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
-  #       run: |
-  #         mkdir -p ./ios/config/uat/
-  #         echo $FIREBASE_CONFIG > ./ios/config/uat/GoogleService-Info.plist
-  #         # echo $FLUTTER_DOTENV > ./res/.env
+      - name: Create env file
+        run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
 
-  #     # Flutter Build Artifact
-  #     - name: Flutter Build
-  #       run: flutter build ios --release --no-codesign --flavor uat -t "lib/main_uat.dart"
+      - name: Import Build Environment Dependencies
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_PLIST }}
+          # FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
+        run: |
+          mkdir -p ./ios/config/uat/
+          echo $FIREBASE_CONFIG > ./ios/config/uat/GoogleService-Info.plist
+          # echo $FLUTTER_DOTENV > ./res/.env
 
-  #     - name: Generate Signed Build
-  #       run: bundle exec fastlane build flavor:uat mode:release
-  #       working-directory: ios
-  #       env:
-  #         APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-  #         APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}
-  #         APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
-  #         MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
-  #         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      # Flutter Build Artifact
+      - name: Flutter Build
+        run: flutter build ios --release --no-codesign --flavor aha_uat -t "lib/main_aha_uat.dart"
 
-  #     # Upload Artifacts
-  #     - name: Upload build Artifacts
-  #       id: upload_build_artifacts
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: ios-artifacts
-  #         path: |
-  #           ios/output
-  #         if-no-files-found: error
-  #         retention-days: 14
+      - name: Generate Signed Build
+        run: bundle exec fastlane build flavor:uat mode:release
+        working-directory: ios
+        env:
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
-  # iOS-Release-Alpha:
-  #   environment: uat
-  #   needs: iOS-BuildApp
-  #   runs-on: macos-latest
-  #   defaults:
-  #     run:
-  #       shell: bash
-  #       working-directory: ios
-  #   steps:
-  #     # Checkout Code
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v2.3.4
-  #       with:
-  #         fetch-depth: 0
+      # Upload Artifacts
+      - name: Upload build Artifacts
+        id: upload_build_artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ios-artifacts
+          path: |
+            ios/output
+          if-no-files-found: error
+          retention-days: 14
 
-  #     - name: Setup Fastlane
-  #       uses: ./.github/actions/setup_fastlane
-  #       with:
-  #         fastlane-dir: ios
+  iOS-Release-Alpha:
+    environment: aha-uat
+    needs: iOS-BuildApp
+    runs-on: macos-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ios
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
 
-  #     - uses: actions/download-artifact@v2
-  #       id: download
-  #       with:
-  #         name: ios-artifacts
-  #         path: ios/output
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: ios
 
-  #     - name: Publish to Appstore
-  #       run: bundle exec fastlane upload_build_to_testflight flavor:uat mode:release
-  #       env:
-  #         APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-  #         APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}
-  #         APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
-  #         IOS_DEMO_USER: ${{ secrets.IOS_DEMO_USER }}
-  #         IOS_DEMO_PASSWORD: ${{ secrets.IOS_DEMO_PASSWORD }}
+      - uses: actions/download-artifact@v2
+        id: download
+        with:
+          name: ios-artifacts
+          path: ios/output
+
+      - name: Publish to Appstore
+        run: bundle exec fastlane upload_build_to_testflight flavor:aha_uat mode:release
+        env:
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
+          IOS_DEMO_USER: ${{ secrets.IOS_DEMO_USER }}
+          IOS_DEMO_PASSWORD: ${{ secrets.IOS_DEMO_PASSWORD }}

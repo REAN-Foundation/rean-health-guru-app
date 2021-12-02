@@ -222,7 +222,6 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: 120,
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
@@ -249,7 +248,6 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                 ),
               ),
               Container(
-                width: 80,
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(

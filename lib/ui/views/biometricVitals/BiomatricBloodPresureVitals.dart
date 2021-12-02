@@ -389,11 +389,11 @@ class _BiometricBloodPresureVitalsViewState
                         height: 16,
                       ),
                       Expanded(
-                        child: Scrollbar(
-                          isAlwaysShown: true,
-                          controller: _scrollController,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Scrollbar(
+                            isAlwaysShown: true,
+                            controller: _scrollController,
                             child: ListView.separated(
                                 itemBuilder: (context, index) =>
                                     _makeWeightList(context, index),

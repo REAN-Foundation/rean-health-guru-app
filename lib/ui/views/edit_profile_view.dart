@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -1530,7 +1529,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             onTap: () {
-              DatePicker.showDatePicker(context,
+              /*DatePicker.showDatePicker(context,
                   showTitleActions: true,
                   minTime: DateTime(1940, 1, 1),
                   maxTime: DateTime.now().subtract(Duration(days: 1)),
@@ -1542,7 +1541,7 @@ class _EditProfileState extends State<EditProfile> {
                   dob = dateFormat.format(date);
                 });
                 debugPrint('confirm $date');
-              }, currentTime: DateTime.now(), locale: LocaleType.en);
+              }, currentTime: DateTime.now(), locale: LocaleType.en);*/
             },
           ),
         ],

@@ -54,9 +54,9 @@ class _HowIsYourMood extends State<HowIsYourMood>
                 child: Text(
                   "How is your mood?",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
                       fontSize: 18.0,
-                      color: Colors.black),
+                      color: Color(0XFF383739)),
                 ),
                 delay: delayedAmount,
               ),
@@ -123,7 +123,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                           Text('Happy',
                               style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Montserrat')),
                         ],
@@ -251,7 +251,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                           Text('Angry',
                               style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Montserrat')),
                         ],
@@ -324,7 +324,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                           Text('Stressed',
                               style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Montserrat')),
                         ],
@@ -388,7 +388,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                           Text('Anxious',
                               style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Montserrat')),
                         ],
@@ -452,7 +452,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                           Text('Fearful',
                               style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Montserrat')),
                         ],
@@ -525,7 +525,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                           Text('Sad',
                               style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Montserrat')),
                         ],
@@ -589,7 +589,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                           Text('Hopeful',
                               style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Montserrat')),
                         ],

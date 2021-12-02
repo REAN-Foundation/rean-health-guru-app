@@ -247,9 +247,9 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
       child: ElevatedButton(
         onPressed: () {
           if (_weightController.text.isEmpty) {
-            showToast("Please enter weight", context);
+            showToastMsg("Please enter weight", context);
           } else if (_heightController.text.isEmpty) {
-            showToast("Please enter height", context);
+            showToastMsg("Please enter height", context);
           } else {
             widget._submitButtonListner(
                 unit == 'lbs'

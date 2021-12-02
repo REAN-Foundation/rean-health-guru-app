@@ -61,9 +61,9 @@ class _ThanksForTheFeedBack extends State<ThanksForTheFeedBack>
                 child: Text(
                   "Thanks for the feedback!",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
                       fontSize: 18.0,
-                      color: Colors.black),
+                      color: Color(0XFF383739)),
                 ),
                 delay: delayedAmount,
               ),

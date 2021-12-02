@@ -254,6 +254,8 @@ class _LoginViewState extends State<LoginView> {
                       borderSide: BorderSide(),
                     ),
                   ),*/
+                    keyboardType: TextInputType.numberWithOptions(
+                    decimal: false, signed: false),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 autoValidate: true,
                 decoration: InputDecoration(
@@ -265,14 +267,14 @@ class _LoginViewState extends State<LoginView> {
                     filled: true),
                 initialCountryCode: getCurrentLocale(),
                 onChanged: (phone) {
-                  debugPrint(phone.countryCode);
-                  debugPrint(phone.number);
-                  mobileNumber = phone.number;
-                  countryCode = phone.countryCode;
-                  /*if(mobileNumber.length == 10){
+                      debugPrint(phone.countryCode);
+                      debugPrint(phone.number);
+                      mobileNumber = phone.number;
+                      countryCode = phone.countryCode;
+                      /*if(mobileNumber.length == 10){
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/
-                },
+                    },
               )),
         ],
       ),

@@ -128,7 +128,7 @@ class _EditPatientMedicalProfileViewState
     hasHeartAilment = yesOrNo(widget.healthProfile.hasHeartAilment);
     sedentaryLifestyle = yesOrNo(widget.healthProfile.sedentaryLifestyle);
     isSmoker = yesOrNo(widget.healthProfile.isSmoker);
-    isDrinker = yesOrNo(widget.healthProfile.isSmoker);
+    isDrinker = yesOrNo(widget.healthProfile.isDrinker);
     maritalStatus = widget.healthProfile.maritalStatus;
   }
 

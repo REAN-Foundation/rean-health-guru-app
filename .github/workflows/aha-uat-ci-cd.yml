@@ -195,7 +195,7 @@ jobs:
         run: flutter build ios --release --no-codesign --flavor aha_uat -t "lib/main_aha_uat.dart"
 
       - name: Generate Signed Build
-        run: bundle exec fastlane build flavor:uat mode:release
+        run: bundle exec fastlane build_aha flavor:uat mode:release
         working-directory: ios
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
@@ -242,7 +242,7 @@ jobs:
           path: ios/output
 
       - name: Publish to Appstore
-        run: bundle exec fastlane upload_build_to_testflight flavor:aha_uat mode:release
+        run: bundle exec fastlane upload_build_to_testflight_aha flavor:aha_uat mode:release
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}

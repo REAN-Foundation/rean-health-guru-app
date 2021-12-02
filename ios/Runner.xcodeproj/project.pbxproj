@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -205,6 +205,7 @@
 		97C146E61CF9000F007C117D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "The Chromium Authors";
 				TargetAttributes = {
@@ -420,7 +421,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		D300396F274665AA0037542B /* Release-aha */ = {
+		D300396F274665AA0037542B /* Release-aha_prod */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -449,8 +450,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Distribution: The REAN Foundation (977TJPD6JJ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: The REAN Foundation (977TJPD6JJ)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: American Heart Association (44HU6X9V79)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: American Heart Association (44HU6X9V79)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -470,13 +471,14 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = "Release-aha";
+			name = "Release-aha_prod";
 		};
-		D3003970274665AA0037542B /* Release-aha */ = {
+		D3003970274665AA0037542B /* Release-aha_prod */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
@@ -494,22 +496,25 @@
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reanfoundation.patient;
+				PRODUCT_BUNDLE_IDENTIFIER = org.heart.hfpatient;
 				PRODUCT_NAME = "AHA-CHF";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.reanfoundation.patient";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.heart.hfpatient";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
-			name = "Release-aha";
+			name = "Release-aha_prod";
 		};
-		D3003971274665C70037542B /* Debug-aha */ = {
+		D3003971274665C70037542B /* Debug-aha_prod */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -538,8 +543,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Distribution: The REAN Foundation (977TJPD6JJ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: The REAN Foundation (977TJPD6JJ)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: American Heart Association (44HU6X9V79)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: American Heart Association (44HU6X9V79)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -567,9 +572,9 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = "Debug-aha";
+			name = "Debug-aha_prod";
 		};
-		D3003972274665C70037542B /* Debug-aha */ = {
+		D3003972274665C70037542B /* Debug-aha_prod */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
@@ -587,21 +592,24 @@
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reanfoundation.patient;
+				PRODUCT_BUNDLE_IDENTIFIER = org.heart.hfpatient;
 				PRODUCT_NAME = "AHA-CHF";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.reanfoundation.patient";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.heart.hfpatient";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
-			name = "Debug-aha";
+			name = "Debug-aha_prod";
 		};
 		D3003973274665D70037542B /* Debug-aha_uat */ = {
 			isa = XCBuildConfiguration;
@@ -632,8 +640,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Distribution: The REAN Foundation (977TJPD6JJ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: The REAN Foundation (977TJPD6JJ)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: American Heart Association (44HU6X9V79)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: American Heart Association (44HU6X9V79)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -681,14 +689,17 @@
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reanfoundation.patient.uat;
-				PRODUCT_NAME = "AHA-CHF";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc org.reanfoundation.patient.uat";
+				PRODUCT_BUNDLE_IDENTIFIER = org.heart.hfpatient.uat;
+				PRODUCT_NAME = "AHA-CHF-UAT";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.heart.hfpatient.uat";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -726,8 +737,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Distribution: The REAN Foundation (977TJPD6JJ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: The REAN Foundation (977TJPD6JJ)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: American Heart Association (44HU6X9V79)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: American Heart Association (44HU6X9V79)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -747,7 +758,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -771,14 +783,17 @@
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reanfoundation.patient.uat;
-				PRODUCT_NAME = "AHA-CHF";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.reanfoundation.patient.uat";
+				PRODUCT_BUNDLE_IDENTIFIER = org.heart.hfpatient.uat;
+				PRODUCT_NAME = "AHA-CHF-UAT";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.heart.hfpatient.uat";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -864,7 +879,10 @@
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -930,7 +948,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -954,7 +973,10 @@
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -1048,7 +1070,10 @@
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -1142,7 +1167,10 @@
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -1208,7 +1236,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1232,7 +1261,10 @@
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -1298,7 +1330,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1322,7 +1355,10 @@
 				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
@@ -1346,12 +1382,12 @@
 				D346B9BF25DD6E81003DB2F9 /* Debug-uat */,
 				D3003973274665D70037542B /* Debug-aha_uat */,
 				D3AEFBDA2552E61E00C82377 /* Debug-prod */,
-				D3003971274665C70037542B /* Debug-aha */,
+				D3003971274665C70037542B /* Debug-aha_prod */,
 				D3AEFBD82552E61000C82377 /* Debug-dev */,
 				D346B9C125DD6EA2003DB2F9 /* Release-uat */,
 				D3003975274665EA0037542B /* Release-aha_uat */,
 				D3AEFBDE2552E63800C82377 /* Release-prod */,
-				D300396F274665AA0037542B /* Release-aha */,
+				D300396F274665AA0037542B /* Release-aha_prod */,
 				D3AEFBDC2552E62C00C82377 /* Release-dev */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1363,12 +1399,12 @@
 				D346B9C025DD6E81003DB2F9 /* Debug-uat */,
 				D3003974274665D70037542B /* Debug-aha_uat */,
 				D3AEFBDB2552E61E00C82377 /* Debug-prod */,
-				D3003972274665C70037542B /* Debug-aha */,
+				D3003972274665C70037542B /* Debug-aha_prod */,
 				D3AEFBD92552E61000C82377 /* Debug-dev */,
 				D346B9C225DD6EA2003DB2F9 /* Release-uat */,
 				D3003976274665EA0037542B /* Release-aha_uat */,
 				D3AEFBDF2552E63800C82377 /* Release-prod */,
-				D3003970274665AA0037542B /* Release-aha */,
+				D3003970274665AA0037542B /* Release-aha_prod */,
 				D3AEFBDD2552E62C00C82377 /* Release-dev */,
 			);
 			defaultConfigurationIsVisible = 0;

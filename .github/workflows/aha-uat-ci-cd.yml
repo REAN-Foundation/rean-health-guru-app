@@ -187,7 +187,7 @@ jobs:
           # FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
         run: |
           mkdir -p ./ios/config/uat/
-          echo $FIREBASE_CONFIG > ./ios/config/uat/GoogleService-Info.plist
+          echo $FIREBASE_CONFIG > ./ios/config/aha_uat/GoogleService-Info.plist
           # echo $FLUTTER_DOTENV > ./res/.env
 
       # Flutter Build Artifact

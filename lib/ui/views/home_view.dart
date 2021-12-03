@@ -222,8 +222,8 @@ class _HomeViewState extends State<HomeView> {
       Future.delayed(const Duration(seconds: 2), () => showTutorial());
       //showTutorial();
     } else {
-      GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
-      healthData = GetIt.instance<GetHealthData>();
+      /*GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
+      healthData = GetIt.instance<GetHealthData>();*/
       Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
     }
   }

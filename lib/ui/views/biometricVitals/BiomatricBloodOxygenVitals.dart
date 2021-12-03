@@ -94,7 +94,7 @@ class _BiometricBloodOxygenVitalsViewState
                       onFieldSubmitted: (term) {},
                       inputFormatters: [
                         FilteringTextInputFormatter.deny(
-                            RegExp('[\\,|\\+|\\-]')),
+                            RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
                       ],
                       decoration: InputDecoration(
                           hintText: '(92 to 100)',

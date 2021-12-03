@@ -154,6 +154,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             length: 6,
             width: MediaQuery.of(context).size.width,
             fieldWidth: 40,
+            keyboardType:
+                TextInputType.numberWithOptions(decimal: false, signed: false),
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
             textFieldAlignment: MainAxisAlignment.spaceAround,
             fieldStyle: FieldStyle.box,

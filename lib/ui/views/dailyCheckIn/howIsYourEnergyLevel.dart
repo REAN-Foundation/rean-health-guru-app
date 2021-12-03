@@ -740,7 +740,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
     debugPrint('Inside Daily Check In');
     Navigator.pop(context);
     showMaterialModalBottomSheet(
-        isDismissible: true,
+        isDismissible: false,
         backgroundColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),

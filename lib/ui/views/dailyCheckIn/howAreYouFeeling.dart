@@ -292,7 +292,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
     debugPrint('Inside Daily Check In');
     Navigator.pop(context);
     showMaterialModalBottomSheet(
-        isDismissible: true,
+        isDismissible: false,
         backgroundColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),

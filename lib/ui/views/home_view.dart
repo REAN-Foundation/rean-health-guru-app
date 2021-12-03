@@ -222,8 +222,8 @@ class _HomeViewState extends State<HomeView> {
       Future.delayed(const Duration(seconds: 2), () => showTutorial());
       //showTutorial();
     } else {
-      /*GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
-      healthData = GetIt.instance<GetHealthData>();*/
+      GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
+      healthData = GetIt.instance<GetHealthData>();
       Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
     }
   }
@@ -315,7 +315,7 @@ class _HomeViewState extends State<HomeView> {
     debugPrint('Inside Daily Check In');
     if (dailyCheckInDate != dateFormat.format(DateTime.now())) {
       showMaterialModalBottomSheet(
-          isDismissible: true,
+          isDismissible: false,
           backgroundColor: Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),

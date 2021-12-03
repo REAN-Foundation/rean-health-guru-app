@@ -14,10 +14,7 @@ on:
     branches: [develop]
   pull_request:
     branches: [develop]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
+    
 jobs:
   gitguardian-scanning:
     name: GitGuardian Scan
@@ -35,6 +32,7 @@ jobs:
           GITHUB_PULL_BASE_SHA: ${{ github.event.pull_request.base.sha }}
           GITHUB_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
           GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
+          GITGUARDIAN_API_URL: ${{ secrets.GITGUARDIAN_API_URL }}
 
   CodeScan-FlutterAnalyze:
     environment: dev

@@ -164,7 +164,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                       onFieldSubmitted: (term) {},
                       inputFormatters: [
                         FilteringTextInputFormatter.deny(
-                            RegExp('[\\,|\\+|\\-]')),
+                            RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
                       ],
                       decoration: InputDecoration(
                           hintText:
@@ -405,12 +405,11 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           ? (double.parse(records.elementAt(i).bodyWeight.toString()) * 2.20462)
               .toStringAsFixed(1)
           : records.elementAt(i).bodyWeight.toString();
-      data.add(TimeSeriesSales(
-          records.elementAt(i).recordDate == null
-              ? DateTime.now()
-              : DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
           double.parse(receivedWeight)));
     }
+
+    debugPrint('Biometric Weight Date ==> ${data.elementAt(0).time}');
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(

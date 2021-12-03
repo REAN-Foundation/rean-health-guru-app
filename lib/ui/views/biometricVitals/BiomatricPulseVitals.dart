@@ -155,7 +155,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                       onFieldSubmitted: (term) {},
                       inputFormatters: [
                         FilteringTextInputFormatter.deny(
-                            RegExp('[\\,|\\+|\\-]')),
+                            RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
                       ],
                       decoration: InputDecoration(
                           hintText: '(65 to 95)',
@@ -194,7 +194,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
             child: InkWell(
               onTap: () {
                 if (_controller.text.toString().isEmpty) {
-                  showToast('Please enter your pulse', context);
+                  showToast('Please enter your Pulse Rate', context);
                 } else {
                   addvitals();
                 }

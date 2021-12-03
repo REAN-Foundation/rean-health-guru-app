@@ -189,7 +189,7 @@ class _BiometricBloodPresureVitalsViewState
                         child: TextFormField(
                             inputFormatters: [
                               FilteringTextInputFormatter.deny(
-                                  RegExp('[\\,|\\+|\\-]')),
+                                  RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
                             ],
                             controller: _systolicController,
                             focusNode: _systolicFocus,
@@ -251,7 +251,7 @@ class _BiometricBloodPresureVitalsViewState
                           textInputAction: TextInputAction.done,
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-]')),
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
                           ],
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {
@@ -389,11 +389,11 @@ class _BiometricBloodPresureVitalsViewState
                         height: 16,
                       ),
                       Expanded(
-                        child: Scrollbar(
-                          isAlwaysShown: true,
-                          controller: _scrollController,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Scrollbar(
+                            isAlwaysShown: true,
+                            controller: _scrollController,
                             child: ListView.separated(
                                 itemBuilder: (context, index) =>
                                     _makeWeightList(context, index),

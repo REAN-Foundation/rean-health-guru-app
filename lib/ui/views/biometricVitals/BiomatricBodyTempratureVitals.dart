@@ -96,7 +96,7 @@ class _BiometricBodyTemperatureVitalsViewState
                       onFieldSubmitted: (term) {},
                       inputFormatters: [
                         FilteringTextInputFormatter.deny(
-                            RegExp('[\\,|\\+|\\-]')),
+                            RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
                       ],
                       decoration: InputDecoration(
                           hintText: '(95 to 100)',

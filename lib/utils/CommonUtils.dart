@@ -1,8 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:paitent/core/models/FAQChatModelPojo.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
+
+import 'SharedPrefUtils.dart';
 
 StartCarePlanResponse startCarePlanResponseGlob;
 List<String> goalPlanScreenStack = <String>[];
@@ -24,6 +28,10 @@ var dummyNumberList = <String>[];
 String _currentLocale = '';
 String _appName = '';
 dynamic _roleId = '';
+final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+String knowledgeLinkDisplayedDate = '';
+String dailyCheckInDate = '';
+var chatList = <FAQChatModelPojo>[];
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');
@@ -123,6 +131,17 @@ void showToast(String msg, BuildContext context) {
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
+void showToastMsg(String msg, BuildContext context) {
+  FocusManager.instance.primaryFocus.unfocus();
+  Fluttertoast.showToast(
+    msg: msg,
+    gravity: ToastGravity.SNACKBAR,
+    toastLength: Toast.LENGTH_LONG,
+    backgroundColor: Colors.black,
+    textColor: Colors.white,
+  );
+}
+
 setImage(String url) {
   CachedNetworkImage(
     imageUrl:
@@ -159,6 +178,45 @@ String calculateAge(DateTime birthDate) {
     }
   }
   return age.toString();
+}
+
+getKnowdledgeLinkLastViewDate() async {
+  try {
+    knowledgeLinkDisplayedDate =
+        await _sharedPrefUtils.read("knowledgeLinkDisplayedDate");
+    debugPrint('knowledgeLinkDisplayedDate ==> $knowledgeLinkDisplayedDate ');
+  } catch (Excepetion) {
+    // do something
+  }
+  //return knowledgeLinkDisplayedDate ?? '';
+}
+
+setKnowdledgeLinkLastViewDate(String viewedDate) async {
+  try {
+    _sharedPrefUtils.save("knowledgeLinkDisplayedDate", viewedDate);
+  } catch (Excepetion) {
+    // do something
+  }
+  //return knowledgeLinkDisplayedDate ?? '';
+}
+
+getDailyCheckInDate() async {
+  try {
+    dailyCheckInDate = await _sharedPrefUtils.read("dailyCheckInDate");
+    debugPrint('dailyCheckInDate ==> $dailyCheckInDate ');
+  } catch (Excepetion) {
+    // do something
+  }
+  //return knowledgeLinkDisplayedDate ?? '';
+}
+
+setDailyCheckInDate(String viewedDate) async {
+  try {
+    _sharedPrefUtils.save("dailyCheckInDate", viewedDate);
+  } catch (Excepetion) {
+    // do something
+  }
+  //return knowledgeLinkDisplayedDate ?? '';
 }
 
 enum AppState {

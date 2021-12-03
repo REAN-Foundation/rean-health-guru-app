@@ -154,6 +154,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             length: 6,
             width: MediaQuery.of(context).size.width,
             fieldWidth: 40,
+            keyboardType:
+                TextInputType.numberWithOptions(decimal: false, signed: false),
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
             textFieldAlignment: MainAxisAlignment.spaceAround,
             fieldStyle: FieldStyle.box,
@@ -363,7 +365,11 @@ class _OTPScreenViewState extends State<OTPScreenView> {
           PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        showToast('Welcome to REAN HealthGuru', context);
+        if (getAppType() == 'AHA') {
+          showToast('Welcome to AHA-CHF', context);
+        } else {
+          showToast('Welcome to REAN HealthGuru', context);
+        }
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data.patient.toJson());
         _sharedPrefUtils.saveBoolean('login1.5', true);

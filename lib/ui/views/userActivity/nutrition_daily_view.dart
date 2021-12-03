@@ -11,8 +11,12 @@ import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
 
 import 'addNutritionsDetailsDialog.dart';
-
+//ignore: must_be_immutable
 class NutritionDailyView extends StatefulWidget {
+  String mode;
+
+  NutritionDailyView(this.mode);
+
   @override
   _NutritionDailyViewState createState() => _NutritionDailyViewState();
 }
@@ -74,9 +78,21 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
     _sharedPrefUtils.save('nutrition', nutritionResponseStore.toJson());
   }
 
+  addCaloriesDialog() {
+    if (widget.mode != '') {
+      showDialog(
+          context: context,
+          builder: (_) {
+            return _addCaloriesConsumedDialog(context, widget.mode);
+          });
+    }
+  }
+
   @override
   void initState() {
     loadSharedPref();
+    Future.delayed(
+        const Duration(milliseconds: 200), () => addCaloriesDialog());
     super.initState();
   }
 
@@ -411,8 +427,8 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          'Snacks',
-                          semanticsLabel: 'Snacks',
+                          'Snack',
+                          semanticsLabel: 'snack',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 16.0,
@@ -458,7 +474,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                       context: context,
                                       builder: (_) {
                                         return _addCaloriesConsumedDialog(
-                                            context, 'snacks');
+                                            context, 'snack');
                                       });
                                 },
                                 child: Icon(
@@ -661,7 +677,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
                         'Calories Intake ' +
-                            nutritionName.replaceAll('Snacks', ' snacks'),
+                            nutritionName.replaceAll('snack', ' snack'),
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.bold,
@@ -707,7 +723,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
       totalLunchCal = totalLunchCal + caloriesConsumed;
     } else if (type == 'dinner') {
       totalDinnerCal = totalDinnerCal + caloriesConsumed;
-    } else if (type == 'snacks') {
+    } else if (type == 'snack') {
       totalMorningSnackCal = totalMorningSnackCal + caloriesConsumed;
     } else if (type == 'afternoonSnacks') {
       totalAfernoonSnackCal = totalAfernoonSnackCal + caloriesConsumed;

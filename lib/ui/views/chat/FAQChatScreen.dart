@@ -29,7 +29,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
       ScrollController(initialScrollOffset: 50.0);
   final _chatController = TextEditingController();
   final _chatFocus = FocusNode();
-  var chatList = <FAQChatModelPojo>[];
+
   var chatBoxWidth = 0.0;
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   String phoneNumber = '';
@@ -79,7 +79,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                 backgroundColor: Colors.white,
             brightness: Brightness.light,
             title: Text(
-              'FAQ',
+              'Support',
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
@@ -103,18 +103,44 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  listWidget(),
-                  Container(
-                    constraints: BoxConstraints(maxHeight: 100),
-                    padding: const EdgeInsets.all(8.0),
-                    width: MediaQuery.of(context).size.width,
-                    color: Colors.black12,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: SingleChildScrollView(
+              chatList.isEmpty
+                  ? Expanded(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ImageIcon(
+                              AssetImage('res/images/ic_chat_bot.png'),
+                              size: 64,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              'Type your question below',
+                              style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : listWidget(),
+              Container(
+                constraints: BoxConstraints(maxHeight: 100),
+                padding: const EdgeInsets.all(8.0),
+                width: MediaQuery.of(context).size.width,
+                color: Colors.black12,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
                             scrollDirection: Axis.vertical,
                             reverse: true,
                             child: Theme(
@@ -134,7 +160,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                                   ),
                                   filled: true,
                                   hintStyle: TextStyle(color: Colors.black38),
-                                  hintText: 'Type in your question',
+                                  hintText: 'Type your question',
                                   fillColor: Colors.white)),
                             ),
                           ),
@@ -215,7 +241,9 @@ class FAQChatScreenState extends State<FAQChatScreen> {
               left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
           constraints: BoxConstraints(maxWidth: chatBoxWidth, minWidth: 100),
           decoration: BoxDecoration(
-              color: primaryLightColor,
+              color: getAppType() == 'AHA'
+                  ? Colors.red.shade200
+                  : primaryLightColor,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16.0),
                   bottomLeft: Radius.circular(16.0),

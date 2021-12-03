@@ -133,7 +133,10 @@ class ApiProvider {
       case 403:
       case 404:
       case 409:
-      //case 422:
+      case 422:
+        final responseJson = json.decode(response.body.toString());
+        debugPrint(responseJson.toString());
+        return responseJson;
       case 500:
         final responseJson = json.decode(response.body.toString());
         debugPrint(responseJson.toString());
@@ -142,7 +145,7 @@ class ApiProvider {
       default:
         final code = response.statusCode.toString();
         debugPrint('Status_Code ${code.toString()}');
-        throw FetchDataException('Opps! Something wents wrong.');
+        throw FetchDataException('Oops! Something went wrong.');
 
 //      case 400:
 //        throw BadRequestException(response.body.toString());

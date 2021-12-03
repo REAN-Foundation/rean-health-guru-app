@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
+import 'package:paitent/core/models/DashboardTile.dart';
 import 'package:paitent/core/models/EmergencyContactResponse.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/viewmodels/views/common_config_model.dart';
@@ -12,6 +15,7 @@ import 'package:paitent/ui/views/addFamilyMemberDialog.dart';
 import 'package:paitent/ui/views/addNurseDialog.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/utils/CommonUtils.dart';
+import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -25,11 +29,18 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
-
+  var dateFormat = DateFormat('yyyy-MM-dd');
+  DashboardTile emergencyDashboardTile;
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   var doctorTeam = <Items>[];
   var pharmaTeam = <Items>[];
   var socialWorkerTeam = <Items>[];
   var familyTeam = <Items>[];
+  Color widgetBackgroundColor = primaryColor;
+  Color widgetBorderColor = primaryColor;
+  Color iconColor = Colors.white;
+  Color textColor = Colors.white;
+  var emergencyDetailsTextControler = TextEditingController();
 
   getEmergencyTeam() async {
     try {
@@ -47,10 +58,10 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       } else {
         showToast(emergencyContactResponse.message, context);
       }
-    } catch (CustomException) {
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
       model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint(CustomException.toString());
+      showToast(e.toString(), context);
     }
   }
 
@@ -70,8 +81,25 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     }
   }
 
+  loadSharedPrefs() async {
+    try {
+      setKnowdledgeLinkLastViewDate(dateFormat.format(DateTime.now()));
+      emergencyDashboardTile =
+          DashboardTile.fromJson(await _sharedPrefUtils.read('emergency'));
+      //debugPrint('Emergency Dashboard Tile ==> ${emergencyDashboardTile.date}');
+      setState(() {});
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+    }
+    /*catch (Excepetion) {
+      // do something
+      debugPrint(Excepetion);
+    }*/
+  }
+
   @override
   void initState() {
+    loadSharedPrefs();
     getEmergencyTeam();
     super.initState();
   }
@@ -92,6 +120,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  emergency(),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
@@ -158,6 +187,213 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget emergency() {
+    String discription = '';
+
+    if (emergencyDashboardTile != null) {
+      //debugPrint('Emergency ==> ${emergencyDashboardTile.date.difference(DateTime.now()).inDays}');
+      if (emergencyDashboardTile.date.difference(DateTime.now()).inDays == 0) {
+        discription = emergencyDashboardTile.discription;
+      }
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: widgetBackgroundColor),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 48,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  color: widgetBackgroundColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(3.0),
+                      topRight: Radius.circular(3.0))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 8,
+                  ),
+                  /*ImageIcon(
+                    AssetImage('res/images/ic_pharmacy_colored.png'),
+                    size: 24,
+                    color: iconColor,
+                  ),*/
+                  Icon(
+                    FontAwesomeIcons.firstAid,
+                    color: Colors.white,
+                    size: 24,
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Text('Did you have an emergency?',
+                      style: TextStyle(
+                          color: textColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Montserrat')),
+                ],
+              ),
+            ),
+            Container(
+              color: primaryLightColor,
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  /* Expanded(
+                    flex: 1,
+                    child: InkWell(
+                      onTap: (){
+
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(FontAwesomeIcons.home, color: Colors.green, size: 40,),
+                          SizedBox(height: 6,),
+                          Text('No I am good!',
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'Montserrat')),
+                        ],
+                      ),
+                    ),
+                  ),*/
+
+                  if (discription != '')
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(discription,
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Montserrat')),
+                          Semantics(
+                            label: 'edit_emergency_text',
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.edit,
+                                size: 24,
+                                color: primaryColor,
+                              ),
+                              onPressed: () {
+                                _emergencyDetailDialog(true);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  else
+                    Semantics(
+                      label: 'emergency_yes',
+                      child: InkWell(
+                        onTap: () {
+                          _emergencyDetailDialog(false);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.ambulance,
+                              color: primaryColor,
+                              size: 36,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text('Yes',
+                                style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'Montserrat')),
+                          ],
+                        ),
+                      ),
+                    )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _emergencyDetailDialog(bool isEdit) async {
+    if (isEdit) {
+      emergencyDetailsTextControler.text = emergencyDashboardTile.discription;
+      emergencyDetailsTextControler.selection = TextSelection.fromPosition(
+        TextPosition(offset: emergencyDetailsTextControler.text.length),
+      );
+    }
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        contentPadding: const EdgeInsets.all(16.0),
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Semantics(
+            label: 'updateEmergencyText',
+            child: TextField(
+              controller: emergencyDetailsTextControler,
+              autofocus: true,
+              style: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontStyle: FontStyle.normal,
+                  fontSize: 16.0,
+                  color: Colors.black),
+              decoration: InputDecoration(
+                  labelStyle: TextStyle(fontSize: 16),
+                  labelText: 'Enter emergency details',
+                  hintText: ''),
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop();
+                emergencyDetailsTextControler.clear();
+              }),
+          TextButton(
+              child: const Text('Submit'),
+              onPressed: () {
+                if (emergencyDetailsTextControler.text.isEmpty) {
+                  showToast('Please enter emergency details', context);
+                } else {
+                  addMedicalEmergencyEvent(emergencyDetailsTextControler.text);
+                  Navigator.of(context, rootNavigator: true).pop();
+                  emergencyDetailsTextControler.clear();
+                }
+              })
+        ],
       ),
     );
   }
@@ -1120,6 +1356,34 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       //progressDialog.hide();
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException);
+    }
+  }
+
+  addMedicalEmergencyEvent(String emergencyBreif) async {
+    try {
+      final map = <String, String>{};
+      map['PatientUserId'] = patientUserId;
+      map['Details'] = emergencyBreif;
+      map['EmergencyDate'] = dateFormat.format(DateTime.now());
+
+      final BaseResponse baseResponse =
+          await model.addMedicalEmergencyEvent(map);
+      debugPrint('Base Response ==> ${baseResponse.toJson()}');
+      if (baseResponse.status == 'success') {
+        _sharedPrefUtils.save(
+            'emergency',
+            DashboardTile(DateTime.now(), 'emergency', emergencyBreif)
+                .toJson());
+        showToast('Emergency details saved successfully!', context);
+        loadSharedPrefs();
+        setState(() {});
+      } else {
+        //showToast(knowledgeTopicResponse.message);
+      }
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 }

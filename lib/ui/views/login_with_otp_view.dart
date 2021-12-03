@@ -37,6 +37,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   @override
   void initState() {
+    getKnowdledgeLinkLastViewDate();
     permissionDialog();
     //if(apiProvider.getBaseUrl().contains('dev')) {
     setUpDummyNumbers();

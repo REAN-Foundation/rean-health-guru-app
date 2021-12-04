@@ -2,7 +2,7 @@ default_platform :ios
 
 platform :ios do
   before_all do
-    xcversion(version: "12.4")
+    xcversion(version: "13.1")
     setup_ci
   end
 
@@ -11,9 +11,10 @@ platform :ios do
     app_store_connect_api_key(
       key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
       issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+      # key_filepath: "AuthKey_7RT93VJT72.p8"
       key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
       is_key_content_base64: true,
-      in_house: false
+      duration: 200
     )
   end
 
@@ -59,11 +60,11 @@ platform :ios do
 
   desc "Install App Store Certificates and Profiles"
   lane :get_signing_profiles do |options|
-    register_devices(
-      devices_file: "./ios-devices.txt",
-      api_key: get_api_key,
-      platform: 'ios'
-    )
+    # register_devices(
+    #   devices_file: "./ios-devices.txt",
+    #   api_key: get_api_key,
+    #   platform: 'ios'
+    # )
     match(
       app_identifier: options[:identifier],
       api_key: get_api_key,

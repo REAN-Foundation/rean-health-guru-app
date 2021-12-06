@@ -23,7 +23,7 @@ runs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ inputs.ruby-version }}
-        bundler-cache: true
+        bundler-cache: false
         working-directory: ${{ inputs.fastlane-dir }}
 
     # Installing bundler to use fastlane on the machine

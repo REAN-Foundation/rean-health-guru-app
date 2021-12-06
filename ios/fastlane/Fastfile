@@ -78,7 +78,16 @@ platform :ios do
     if(options[:flavor] != "prod")
       app_identifier = app_identifier + ".#{options[:flavor]}"
     end
-    build(flavor: options[:flavor] , mode: options[:mode], app_identifier: app_identifier)
+
+    if(options[:flavor] == "prod" or (options[:flavor] == "uat" and options[:mode] == "release"))
+      profile_type = "appstore"
+      export_option = "app-store"
+    else
+      profile_type = "adhoc"
+      export_option = "ad-hoc"
+    end
+
+    build(flavor: options[:flavor] , mode: options[:mode], app_identifier: app_identifier, profile_type: profile_type, export_option: export_option)
   end
 
   lane :build_aha do |options|
@@ -86,7 +95,16 @@ platform :ios do
     if(options[:flavor] != "prod")
       app_identifier = app_identifier + ".#{options[:flavor].partition('_').last}"
     end
-    build(flavor: options[:flavor] , mode: options[:mode], app_identifier: app_identifier)
+
+    if(options[:flavor].partition('_').last == "prod" or (options[:flavor].partition('_').last == "uat" and options[:mode] == "release"))
+      profile_type = "appstore"
+      export_option = "app-store"
+    else
+      profile_type = "adhoc"
+      export_option = "ad-hoc"
+    end
+
+    build(flavor: options[:flavor] , mode: options[:mode], app_identifier: app_identifier, profile_type: profile_type, export_option: export_option)
   end
 
   lane :upload_build_to_testflight_rf do |options|
@@ -108,13 +126,13 @@ platform :ios do
     # end
 
     # Defining the Provisioning Profile type and the IPA export method based
-    if(options[:flavor] == "prod" or (options[:flavor] == "uat" and options[:mode] == "release"))
-      profile_type = "appstore"
-      export_option = "app-store"
-    else
-      profile_type = "adhoc"
-      export_option = "ad-hoc"
-    end
+    # if(options[:flavor] == "prod" or (options[:flavor] == "uat" and options[:mode] == "release"))
+    #   profile_type = "appstore"
+    #   export_option = "app-store"
+    # else
+    #   profile_type = "adhoc"
+    #   export_option = "ad-hoc"
+    # end
 
     # Defning the XCode Configuration Profile type (ex: Debug-dev, Debug-uat, Release-uat, Release-prod)
     if(options[:mode] == "debug")
@@ -123,12 +141,12 @@ platform :ios do
       config = "Release-#{options[:flavor]}"
     end
 
-    get_signing_profiles(type: profile_type , identifier: options[:app_identifier])
+    get_signing_profiles(type: options[:profile_type] , identifier: options[:app_identifier])
     gym(
       scheme: "#{options[:flavor]}",
       configuration: config,
       output_name: "RHG-APP-#{options[:mode]}-#{options[:flavor]}",
-      export_method: export_option
+      export_method: options[:export_option]
     )
   end
 

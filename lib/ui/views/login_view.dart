@@ -272,14 +272,14 @@ class _LoginViewState extends State<LoginView> {
                       RegExp('[\\,|\\+|\\-|\\a-zA-Z]|\\ ')),
                 ],
                 onChanged: (phone) {
-                  debugPrint(phone.countryCode);
-                  debugPrint(phone.number);
-                  mobileNumber = phone.number;
-                  countryCode = phone.countryCode;
-                  /*if(mobileNumber.length == 10){
+                      debugPrint(phone.countryCode);
+                      debugPrint(phone.number);
+                      mobileNumber = phone.number;
+                      countryCode = phone.countryCode;
+                      /*if(mobileNumber.length == 10){
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/
-                },
+                    },
               )),
         ],
       ),

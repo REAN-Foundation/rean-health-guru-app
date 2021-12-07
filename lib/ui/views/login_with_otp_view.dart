@@ -215,8 +215,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       fillColor: Colors.white,
                       filled: true),
                   initialCountryCode: getCurrentLocale(),
-                  enabled: !model.busy,
-                  readOnly: !model.busy,
+                  readOnly: model.busy,
                   onChanged: (phone) {
                     debugPrint(phone.countryCode);
                     debugPrint(phone.number);
@@ -228,6 +227,9 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   },
                   onCountryChanged: (phone) {
                     _clearFeilds();
+                  },
+                  onTap: () {
+                    debugPrint("=========Tapped=======");
                   },
                 )),
           ),

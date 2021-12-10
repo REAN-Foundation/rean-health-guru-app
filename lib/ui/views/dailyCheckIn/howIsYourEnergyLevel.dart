@@ -35,7 +35,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 440,
+        height: 460,
         color: Colors.transparent,
         child: Container(
           decoration: BoxDecoration(
@@ -55,9 +55,9 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                 child: Text(
                   "How is your energy level?",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
                       fontSize: 18.0,
-                      color: Colors.black),
+                      color: Color(0XFF383739)),
                 ),
                 delay: delayedAmount,
               ),
@@ -68,9 +68,9 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                 child: Text(
                   "You are able to:",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
                       fontSize: 16.0,
-                      color: Colors.black),
+                      color: Color(0XFF383739)),
                 ),
                 delay: delayedAmount,
               ),
@@ -99,8 +99,8 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                             height: 48,
                             width: 200,
                             decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              border: Border.all(color: Colors.grey.shade200),
+                              color: Color(0XFFF0F0F0),
+                              border: Border.all(color: Color(0XFFF0F0F0)),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(24.0)),
                             ),
@@ -194,8 +194,9 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                             height: 40,
                             width: 120,
                             decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              border: Border.all(color: Colors.grey.shade200),
+
+                              color: Color(0XFFF0F0F0),
+                              border: Border.all(color: Color(0XFFF0F0F0)),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(24.0)),
                             ),
@@ -259,7 +260,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                             Container(),
                         ],
                       ),
-                      delay: delayedAmount + 2000,
+                      delay: delayedAmount + 1000,
                     ),
                   ),
                   InkWell(
@@ -280,8 +281,8 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                             height: 40,
                             width: 120,
                             decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              border: Border.all(color: Colors.grey.shade200),
+                              color: Color(0XFFF0F0F0),
+                              border: Border.all(color: Color(0XFFF0F0F0)),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(24.0)),
                             ),
@@ -345,7 +346,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                             Container(),
                         ],
                       ),
-                      delay: delayedAmount + 2000,
+                      delay: delayedAmount + 1000,
                     ),
                   ),
                   InkWell(
@@ -366,8 +367,8 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                             height: 40,
                             width: 120,
                             decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              border: Border.all(color: Colors.grey.shade200),
+                              color: Color(0XFFF0F0F0),
+                              border: Border.all(color: Color(0XFFF0F0F0)),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(24.0)),
                             ),
@@ -431,7 +432,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                             Container(),
                         ],
                       ),
-                      delay: delayedAmount + 2000,
+                      delay: delayedAmount + 1000,
                     ),
                   ),
                 ],
@@ -461,8 +462,8 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                             height: 40,
                             width: 180,
                             decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              border: Border.all(color: Colors.grey.shade200),
+                              color: Color(0XFFF0F0F0),
+                              border: Border.all(color: Color(0XFFF0F0F0)),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(24.0)),
                             ),
@@ -526,7 +527,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                             Container(),
                         ],
                       ),
-                      delay: delayedAmount + 2000,
+                      delay: delayedAmount + 1000,
                     ),
                   ),
                   InkWell(
@@ -547,8 +548,8 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                             height: 40,
                             width: 180,
                             decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              border: Border.all(color: Colors.grey.shade200),
+                              color: Color(0XFFF0F0F0),
+                              border: Border.all(color: Color(0XFFF0F0F0)),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(24.0)),
                             ),
@@ -612,7 +613,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                             Container(),
                         ],
                       ),
-                      delay: delayedAmount + 2000,
+                      delay: delayedAmount + 1000,
                     ),
                   ),
                 ],
@@ -640,8 +641,8 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                           height: 40,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            border: Border.all(color: Colors.grey.shade200),
+                            color: Color(0XFFF0F0F0),
+                            border: Border.all(color: Color(0XFFF0F0F0)),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(24.0)),
                           ),
@@ -705,12 +706,12 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                           Container(),
                       ],
                     ),
-                    delay: delayedAmount + 2000,
+                    delay: delayedAmount + 1000,
                   ),
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 40,
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width - 32,

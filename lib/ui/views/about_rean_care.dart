@@ -143,43 +143,43 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                                 fontSize: 16,
                                                 fontFamily: 'Montserrat'),
                                           ),
-                                          InkWell(
-                                            onTap: () async {
-                                              //_launchURL('https://www.reanfoundation.org/');
-                                              String url =
-                                                  'https://www.reanfoundation.org/';
-                                              if (getAppType() == 'AHA') {
-                                                url = 'https://www.heart.org';
-                                              }
-                                              if (await canLaunch(url)) {
-                                                await launch(url);
-                                              } else {
-                                                throw 'Could not launch $url';
-                                              }
-                                            },
-                                            child: RichText(
-                                              text: TextSpan(
-                                                text: 'Visit: ',
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Visit: ',
                                                 style: TextStyle(
                                                     fontFamily: 'Montserrat',
                                                     fontWeight: FontWeight.w200,
                                                     color: Colors.black,
                                                     fontSize: 16),
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                    text: getAppType() == 'AHA'
-                                                        ? 'https://www.heart.org'
-                                                        : 'https://www.reanfoundation.org',
-                                                    style: TextStyle(
-                                                      color: Colors.blue,
-                                                      fontSize: 16.0,
-                                                      fontWeight:
-                                                          FontWeight.w200,
-                                                    ),
-                                                  )
-                                                ],
                                               ),
-                                            ),
+                                              InkWell(
+                                                onTap: () async {
+                                                  //_launchURL('https://www.reanfoundation.org/');
+                                                  String url =
+                                                      'https://www.reanfoundation.org/';
+                                                  if (getAppType() == 'AHA') {
+                                                    url =
+                                                        'https://www.heart.org';
+                                                  }
+                                                  if (await canLaunch(url)) {
+                                                    await launch(url);
+                                                  } else {
+                                                    throw 'Could not launch $url';
+                                                  }
+                                                },
+                                                child: Text(
+                                                  getAppType() == 'AHA'
+                                                      ? 'https://www.heart.org'
+                                                      : 'https://www.reanfoundation.org',
+                                                  style: TextStyle(
+                                                    color: Colors.blue,
+                                                    fontSize: 16.0,
+                                                    fontWeight: FontWeight.w200,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
                                           ),
                                           SizedBox(
                                             height: 16,

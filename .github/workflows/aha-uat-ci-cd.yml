@@ -186,8 +186,10 @@ jobs:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_PLIST }}
           # FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
         run: |
+
           mkdir -p ./ios/config/aha_uat/
           echo $FIREBASE_CONFIG > ./ios/config/aha_uat/GoogleService-Info.plist
+
           # echo $FLUTTER_DOTENV > ./res/.env
 
       # Flutter Build Artifact
@@ -196,6 +198,7 @@ jobs:
 
       - name: Generate Signed Build
         run: bundle exec fastlane build_aha flavor:aha_uat mode:release
+
         working-directory: ios
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
@@ -242,7 +245,9 @@ jobs:
           path: ios/output
 
       - name: Publish to Appstore
+
         run: bundle exec fastlane upload_build_to_testflight_aha flavor:aha_uat mode:release
+
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}

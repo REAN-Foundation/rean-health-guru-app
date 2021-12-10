@@ -59,9 +59,9 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                 child: Text(
                   "How are you feeling?",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
                       fontSize: 18.0,
-                      color: Colors.black),
+                      color: Color(0XFF383739)),
                 ),
                 delay: delayedAmount,
               ),
@@ -129,7 +129,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                           Text('Better',
                               style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Montserrat')),
                         ],
@@ -193,7 +193,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                           Text('Same',
                               style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Montserrat')),
                         ],
@@ -257,7 +257,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                           Text('Worse',
                               style: TextStyle(
                                   fontSize: 14,
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Montserrat')),
                         ],

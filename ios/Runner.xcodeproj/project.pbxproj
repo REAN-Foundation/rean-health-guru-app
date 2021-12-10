@@ -422,6 +422,7 @@
 
 /* Begin XCBuildConfiguration section */
 		D300396F274665AA0037542B /* Release-aha_prod */ = {
+
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -455,7 +456,9 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+
 				DEVELOPMENT_TEAM = 44HU6X9V79;
+
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -471,6 +474,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
+
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -479,6 +483,7 @@
 			name = "Release-aha_prod";
 		};
 		D3003970274665AA0037542B /* Release-aha_prod */ = {
+
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
@@ -507,14 +512,17 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.heart.hfpatient;
 				PRODUCT_NAME = "AHA-CHF";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.heart.hfpatient";
+
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
+
 			name = "Release-aha_prod";
 		};
 		D3003971274665C70037542B /* Debug-aha_prod */ = {
+
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -548,7 +556,9 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+
 				DEVELOPMENT_TEAM = 44HU6X9V79;
+
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -575,6 +585,7 @@
 			name = "Debug-aha_prod";
 		};
 		D3003972274665C70037542B /* Debug-aha_prod */ = {
+
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
@@ -600,16 +611,20 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+
 				PRODUCT_BUNDLE_IDENTIFIER = org.heart.hfpatient;
 				PRODUCT_NAME = "AHA-CHF";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.heart.hfpatient";
+
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
+
 			name = "Debug-aha_prod";
+
 		};
 		D3003973274665D70037542B /* Debug-aha_uat */ = {
 			isa = XCBuildConfiguration;
@@ -700,6 +715,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.heart.hfpatient.uat;
 				PRODUCT_NAME = "AHA-CHF-UAT";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.heart.hfpatient.uat";
+
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -791,9 +807,11 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+
 				PRODUCT_BUNDLE_IDENTIFIER = org.heart.hfpatient.uat;
 				PRODUCT_NAME = "AHA-CHF-UAT";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.heart.hfpatient.uat";
+
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1383,11 +1401,14 @@
 				D3003973274665D70037542B /* Debug-aha_uat */,
 				D3AEFBDA2552E61E00C82377 /* Debug-prod */,
 				D3003971274665C70037542B /* Debug-aha_prod */,
+
 				D3AEFBD82552E61000C82377 /* Debug-dev */,
 				D346B9C125DD6EA2003DB2F9 /* Release-uat */,
 				D3003975274665EA0037542B /* Release-aha_uat */,
 				D3AEFBDE2552E63800C82377 /* Release-prod */,
+
 				D300396F274665AA0037542B /* Release-aha_prod */,
+
 				D3AEFBDC2552E62C00C82377 /* Release-dev */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1399,12 +1420,16 @@
 				D346B9C025DD6E81003DB2F9 /* Debug-uat */,
 				D3003974274665D70037542B /* Debug-aha_uat */,
 				D3AEFBDB2552E61E00C82377 /* Debug-prod */,
+
 				D3003972274665C70037542B /* Debug-aha_prod */,
+
 				D3AEFBD92552E61000C82377 /* Debug-dev */,
 				D346B9C225DD6EA2003DB2F9 /* Release-uat */,
 				D3003976274665EA0037542B /* Release-aha_uat */,
 				D3AEFBDF2552E63800C82377 /* Release-prod */,
+
 				D3003970274665AA0037542B /* Release-aha_prod */,
+
 				D3AEFBDD2552E62C00C82377 /* Release-dev */,
 			);
 			defaultConfigurationIsVisible = 0;

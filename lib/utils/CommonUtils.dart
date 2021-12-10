@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:paitent/core/models/FAQChatModelPojo.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
@@ -128,6 +129,17 @@ void showToast(String msg, BuildContext context) {
   // Find the ScaffoldMessenger in the widget tree
   // and use it to show a SnackBar.
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+void showToastMsg(String msg, BuildContext context) {
+  FocusManager.instance.primaryFocus.unfocus();
+  Fluttertoast.showToast(
+    msg: msg,
+    gravity: ToastGravity.SNACKBAR,
+    toastLength: Toast.LENGTH_LONG,
+    backgroundColor: Colors.black,
+    textColor: Colors.white,
+  );
 }
 
 setImage(String url) {

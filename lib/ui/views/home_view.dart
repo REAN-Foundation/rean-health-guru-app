@@ -315,7 +315,7 @@ class _HomeViewState extends State<HomeView> {
     debugPrint('Inside Daily Check In');
     if (dailyCheckInDate != dateFormat.format(DateTime.now())) {
       showMaterialModalBottomSheet(
-          isDismissible: false,
+          isDismissible: true,
           backgroundColor: Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),

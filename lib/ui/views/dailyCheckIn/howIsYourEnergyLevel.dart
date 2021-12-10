@@ -194,6 +194,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                             height: 40,
                             width: 120,
                             decoration: BoxDecoration(
+
                               color: Color(0XFFF0F0F0),
                               border: Border.all(color: Color(0XFFF0F0F0)),
                               borderRadius:

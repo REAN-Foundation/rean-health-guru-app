@@ -2,7 +2,7 @@ default_platform :ios
 
 platform :ios do
   before_all do
-    xcversion(version: "12.4")
+    xcversion(version: "13.1")
     setup_ci
   end
 
@@ -11,9 +11,10 @@ platform :ios do
     app_store_connect_api_key(
       key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
       issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+      # key_filepath: "AuthKey_7RT93VJT72.p8"
       key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
       is_key_content_base64: true,
-      in_house: false
+      duration: 200
     )
   end
 
@@ -59,11 +60,11 @@ platform :ios do
 
   desc "Install App Store Certificates and Profiles"
   lane :get_signing_profiles do |options|
-    register_devices(
-      devices_file: "./ios-devices.txt",
-      api_key: get_api_key,
-      platform: 'ios'
-    )
+    # register_devices(
+    #   devices_file: "./ios-devices.txt",
+    #   api_key: get_api_key,
+    #   platform: 'ios'
+    # )
     match(
       app_identifier: options[:identifier],
       api_key: get_api_key,
@@ -72,16 +73,12 @@ platform :ios do
     )
   end
 
-  desc "Build the ipa file as per the flavor"
-  lane :build do |options|
+  lane :build_rf do |options|
     app_identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
-
-    # Choosing the app_identifier (App Store Bundle ID) based on the flavor type
     if(options[:flavor] != "prod")
       app_identifier = app_identifier + ".#{options[:flavor]}"
     end
 
-    # Defining the Provisioning Profile type and the IPA export method based
     if(options[:flavor] == "prod" or (options[:flavor] == "uat" and options[:mode] == "release"))
       profile_type = "appstore"
       export_option = "app-store"
@@ -90,6 +87,38 @@ platform :ios do
       export_option = "ad-hoc"
     end
 
+    build(flavor: options[:flavor] , mode: options[:mode], app_identifier: app_identifier, profile_type: profile_type, export_option: export_option)
+  end
+
+  lane :build_aha do |options|
+    app_identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+    if(options[:flavor] != "prod")
+      app_identifier = app_identifier + ".#{options[:flavor].partition('_').last}"
+    end
+
+    if(options[:flavor].partition('_').last == "prod" or (options[:flavor].partition('_').last == "uat" and options[:mode] == "release"))
+      profile_type = "appstore"
+      export_option = "app-store"
+    else
+      profile_type = "adhoc"
+      export_option = "ad-hoc"
+    end
+
+    build(flavor: options[:flavor] , mode: options[:mode], app_identifier: app_identifier, profile_type: profile_type, export_option: export_option)
+  end
+
+  lane :upload_build_to_testflight_rf do |options|
+    upload_build_to_testflight(flavorId: options[:flavor] , mode: options[:mode], app_store_app_id:"1569585646", flavor: options[:flavor])
+  end
+
+  lane :upload_build_to_testflight_aha do |options|
+    upload_build_to_testflight(flavorId: options[:flavor].partition('_').last , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor])
+  end
+
+
+  desc "Build the ipa file as per the flavor"
+  lane :build do |options|
+
     # Defning the XCode Configuration Profile type (ex: Debug-dev, Debug-uat, Release-uat, Release-prod)
     if(options[:mode] == "debug")
       config = "Debug-#{options[:flavor]}"
@@ -97,12 +126,12 @@ platform :ios do
       config = "Release-#{options[:flavor]}"
     end
 
-    get_signing_profiles(type: profile_type , identifier: app_identifier)
+    get_signing_profiles(type: options[:profile_type] , identifier: options[:app_identifier])
     gym(
       scheme: "#{options[:flavor]}",
       configuration: config,
       output_name: "RHG-APP-#{options[:mode]}-#{options[:flavor]}",
-      export_method: export_option
+      export_method: options[:export_option]
     )
   end
 
@@ -142,11 +171,11 @@ platform :ios do
 
   desc "Upload Build to TestFlight"
   lane :upload_build_to_testflight do |options|
-    if options[:flavor] == 'uat'
-      app_store_app_id = '1569585646'
+    if options[:flavorId] == 'uat'
+      app_store_app_id = options[:app_store_app_id]
       testers_group = [ "Alpha Testers" ]
     else
-      app_store_app_id = '1567923095'
+      app_store_app_id = options[:app_store_app_id]
       testers_group = [ "Beta Testers" ]
     end
 

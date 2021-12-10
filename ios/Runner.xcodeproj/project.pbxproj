@@ -65,7 +65,6 @@
 		D30C7266262721D800C92E5C /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		D30DD6E4265D3BFF0094B5C0 /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; path = config; sourceTree = "<group>"; };
 		D310882B2693498500F38C82 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
-		D396CB56275FAB5F003C855C /* RunnerDebug-aha_uat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "RunnerDebug-aha_uat.entitlements"; sourceTree = "<group>"; };
 		DA281AB27CFE15B3ED7DA35A /* Pods-Runner.debug-uat_aha.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-uat_aha.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-uat_aha.xcconfig"; sourceTree = "<group>"; };
 		DA5DEC0AC66D4569225F63CA /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		ED043889798B04601350F5D3 /* Pods-Runner.release-uat.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-uat.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-uat.xcconfig"; sourceTree = "<group>"; };
@@ -153,7 +152,6 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
-				D396CB56275FAB5F003C855C /* RunnerDebug-aha_uat.entitlements */,
 				D30C7266262721D800C92E5C /* Runner.entitlements */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
@@ -424,7 +422,6 @@
 
 /* Begin XCBuildConfiguration section */
 		D300396F274665AA0037542B /* Release-aha_prod */ = {
-
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -458,9 +455,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-
 				DEVELOPMENT_TEAM = 44HU6X9V79;
-
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -476,7 +471,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
-
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -485,7 +479,6 @@
 			name = "Release-aha_prod";
 		};
 		D3003970274665AA0037542B /* Release-aha_prod */ = {
-
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
@@ -514,17 +507,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.heart.hfpatient;
 				PRODUCT_NAME = "AHA-CHF";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.heart.hfpatient";
-
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
-
 			name = "Release-aha_prod";
 		};
 		D3003971274665C70037542B /* Debug-aha_prod */ = {
-
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -558,9 +548,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-
 				DEVELOPMENT_TEAM = 44HU6X9V79;
-
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -587,7 +575,6 @@
 			name = "Debug-aha_prod";
 		};
 		D3003972274665C70037542B /* Debug-aha_prod */ = {
-
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
@@ -597,7 +584,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution: American Heart Association (44HU6X9V79)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 44HU6X9V79;
+				DEVELOPMENT_TEAM = 977TJPD6JJ;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -613,20 +600,16 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-
 				PRODUCT_BUNDLE_IDENTIFIER = org.heart.hfpatient;
 				PRODUCT_NAME = "AHA-CHF";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.heart.hfpatient";
-
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
-
 			name = "Debug-aha_prod";
-
 		};
 		D3003975274665EA0037542B /* Release-aha_uat */ = {
 			isa = XCBuildConfiguration;
@@ -713,7 +696,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.heart.hfpatient.uat;
 				PRODUCT_NAME = "AHA-CHF-UAT";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.heart.hfpatient.uat";
-
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -750,7 +732,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Apple Distribution: American Heart Association (44HU6X9V79)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: The REAN Foundation (977TJPD6JJ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: American Heart Association (44HU6X9V79)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
@@ -791,10 +773,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution: American Heart Association (44HU6X9V79)";
+				CODE_SIGN_IDENTITY = "Apple Distribution: The REAN Foundation (977TJPD6JJ)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = 44HU6X9V79;
+				DEVELOPMENT_TEAM = 977TJPD6JJ;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -811,11 +793,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-
-				PRODUCT_BUNDLE_IDENTIFIER = org.heart.hfpatient.uat;
+				PRODUCT_BUNDLE_IDENTIFIER = org.reanfoundation.patient.uat;
 				PRODUCT_NAME = "AHA-CHF-UAT";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.heart.hfpatient.uat";
-
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc org.reanfoundation.patient.uat";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1405,15 +1385,12 @@
 				D346B9BF25DD6E81003DB2F9 /* Debug-uat */,
 				D3AEFBDA2552E61E00C82377 /* Debug-prod */,
 				D3003971274665C70037542B /* Debug-aha_prod */,
-
 				D3AEFBD82552E61000C82377 /* Debug-dev */,
 				D326D91D2762547000C44ADF /* Debug-aha_uat */,
 				D346B9C125DD6EA2003DB2F9 /* Release-uat */,
 				D3003975274665EA0037542B /* Release-aha_uat */,
 				D3AEFBDE2552E63800C82377 /* Release-prod */,
-
 				D300396F274665AA0037542B /* Release-aha_prod */,
-
 				D3AEFBDC2552E62C00C82377 /* Release-dev */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1424,17 +1401,13 @@
 			buildConfigurations = (
 				D346B9C025DD6E81003DB2F9 /* Debug-uat */,
 				D3AEFBDB2552E61E00C82377 /* Debug-prod */,
-
 				D3003972274665C70037542B /* Debug-aha_prod */,
-
 				D3AEFBD92552E61000C82377 /* Debug-dev */,
 				D326D91E2762547000C44ADF /* Debug-aha_uat */,
 				D346B9C225DD6EA2003DB2F9 /* Release-uat */,
 				D3003976274665EA0037542B /* Release-aha_uat */,
 				D3AEFBDF2552E63800C82377 /* Release-prod */,
-
 				D3003970274665AA0037542B /* Release-aha_prod */,
-
 				D3AEFBDD2552E62C00C82377 /* Release-dev */,
 			);
 			defaultConfigurationIsVisible = 0;

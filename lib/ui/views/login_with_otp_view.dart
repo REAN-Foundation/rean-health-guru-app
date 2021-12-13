@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -33,7 +34,10 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+
   //String _fcmToken ="";
+  final TextEditingController _mobileNumberController = TextEditingController();
+  final _mobileNumberFocus = FocusNode();
 
   @override
   void initState() {
@@ -127,7 +131,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                                 readOnly: true,
                                 child: SizedBox(height: 100)),
                             //_emailPasswordWidget(),
-                            _textFeild('Mobile Number'),
+                            _textFeild('Mobile Number', model),
                             SizedBox(height: 40),
                             if (model.busy)
                               CircularProgressIndicator()
@@ -164,7 +168,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   }
 
 
-  Widget _textFeild(String title) {
+  Widget _textFeild(String title, LoginViewModel model) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -197,6 +201,12 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   ),*/
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   autoValidate: true,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(
+                        RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                  ],
+                  controller: _mobileNumberController,
+                  focusNode: _mobileNumberFocus,
                   decoration: InputDecoration(
                       counterText: '',
                       hintText: 'mobile_number',
@@ -205,6 +215,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       fillColor: Colors.white,
                       filled: true),
                   initialCountryCode: getCurrentLocale(),
+                  readOnly: model.busy,
                   onChanged: (phone) {
                     debugPrint(phone.countryCode);
                     debugPrint(phone.number);
@@ -213,6 +224,12 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                     /*if(mobileNumber.length == 10){
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/
+                  },
+                  onCountryChanged: (phone) {
+                    _clearFeilds();
+                  },
+                  onTap: () {
+                    debugPrint("=========Tapped=======");
                   },
                 )),
           ),
@@ -317,6 +334,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
             'OTP has been successfully sent on your mobile number', context);
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,
             arguments: mobileNumber);
+        _clearFeilds();
         model.setBusy(false);
       } else {
         model.setBusy(false);
@@ -354,6 +372,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
             'patientDetails', doctorListApiResponse.data.patient.toJson());
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,
             arguments: mobileNumber);
+        _clearFeilds();
         model.setBusy(false);
       } else {
         model.setBusy(false);
@@ -389,6 +408,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data.patient.toJson());
         _sharedPrefUtils.saveBoolean('login1.5', true);
+        _clearFeilds();
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);
@@ -500,6 +520,11 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     } on SocketException catch (_) {
       debugPrint('not connected');
     }
+  }
+
+  _clearFeilds() {
+    _mobileNumberController.clear();
+    setState(() {});
   }
 
   void firebase() {

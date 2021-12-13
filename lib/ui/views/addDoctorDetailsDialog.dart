@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -367,7 +368,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                       borderSide: BorderSide(),
                     ),
                   ),*/
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   autoValidate: true,
                   decoration: InputDecoration(
                       counterText: '',
@@ -377,6 +378,10 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                       fillColor: Colors.white,
                       filled: true),
                   initialCountryCode: getCurrentLocale(),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(
+                        RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                  ],
                   onChanged: (phone) {
                     debugPrint(phone.countryCode);
                     debugPrint(phone.number);

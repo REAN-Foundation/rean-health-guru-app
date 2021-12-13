@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
@@ -10,7 +9,6 @@ import 'package:paitent/core/models/GlassOfWaterConsumption.dart';
 import 'package:paitent/core/viewmodels/views/patients_health_marker.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/utils/GetSleepData.dart';
-import 'package:paitent/utils/SimpleTimeSeriesChart.dart';
 
 import '../base_widget.dart';
 
@@ -158,19 +156,21 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                       height: 16,
                     ),
                     Container(
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [primaryLightColor, colorF6F6FF]),
-                          border: Border.all(color: primaryLightColor),
-                          borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                      padding: const EdgeInsets.all(16),
-                      height: 200,
-                      child: Center(
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [primaryLightColor, colorF6F6FF]),
+                            border: Border.all(color: primaryLightColor),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0))),
+                        padding: const EdgeInsets.all(16),
+                        height: 200,
+                        child:
+                            Container() /* Center(
                         child: SimpleTimeSeriesChart(_createSampleData()),
-                      ),
-                    ),
+                      ),*/
+                        ),
                   ],
                 ),
               ),
@@ -288,7 +288,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
     );
   }
 
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
+/*static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
     final data = [
       TimeSeriesSales(DateTime.now(), 6),
       TimeSeriesSales(DateTime.now().subtract(Duration(days: 1)), 7),
@@ -305,5 +305,5 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
         data: data,
       )
     ];
-  }
+  }*/
 }

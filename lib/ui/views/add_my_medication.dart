@@ -862,16 +862,34 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                                     borderRadius: BorderRadius.circular(24),
                                     side: BorderSide(color: primaryColor)))),
                     onPressed: () {
+                      int frequency = 0;
+
+                      if (_frequencyUnit == 'Daily') {
+                        if (morningCheck) {
+                          frequency = frequency + 1;
+                        }
+                        if (afternoonCheck) {
+                          frequency = frequency + 1;
+                        }
+                        if (eveningCheck) {
+                          frequency = frequency + 1;
+                        }
+                        if (nightCheck) {
+                          frequency = frequency + 1;
+                        }
+                      }
                       if (_typeAheadController.text == '') {
                         showToast('Please select drug', context);
-                      } else if (_unitController == '') {
+                      } else if (_frequencyUnit == '') {
+                        showToast('Please select frequency', context);
+                      } else if (_frequencyUnit == 'Daily' && frequency == 0) {
+                        showToast('Please select daily time schedule', context);
+                      } else if (_durationController.text == '') {
+                        showToast('Please enter duration', context);
+                      } else if (_unitController.text == '') {
                         showToast('Please enter unit qty', context);
                       } else if (_dosageUnit == '') {
                         showToast('Please Select dosage unit', context);
-                      } else if (_frequencyUnit == '') {
-                        showToast('Please select frequency', context);
-                      } else if (_durationController.text == '') {
-                        showToast('Please enter duration', context);
                       } else if (startOn == '') {
                         showToast('Please select start date', context);
                       } else {

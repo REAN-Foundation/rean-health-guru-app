@@ -260,7 +260,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
             children: <Widget>[
               Expanded(
                 child: Semantics(
-                  label: 'drug_name',
+                  label: 'Drug Name',
                   child: TypeAheadFormField(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: _typeAheadController,
@@ -280,7 +280,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     },
                     itemBuilder: (context, suggestion) {
                       return ListTile(
-                        title: Text(suggestion),
+                        title: Text(
+                          suggestion,
+                          semanticsLabel: suggestion,
+                        ),
                       );
                     },
                     transitionBuilder: (context, suggestionsBox, controller) {
@@ -308,17 +311,20 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 height: 40.0,
                 width: 40.0,
                 child: Center(
-                  child: InkWell(
-                    onTap: () {
-                      _getDrugsByName();
-                    },
-                    child: searchForDrug
-                        ? CircularProgressIndicator()
-                        : Icon(
-                            Icons.search,
-                            color: primaryColor,
-                            size: 32.0,
-                          ),
+                  child: Semantics(
+                    label: 'Add new drug',
+                    child: InkWell(
+                      onTap: () {
+                        _getDrugsByName();
+                      },
+                      child: searchForDrug
+                          ? CircularProgressIndicator()
+                          : Icon(
+                              Icons.search,
+                              color: primaryColor,
+                              size: 32.0,
+                            ),
+                    ),
                   ),
                 ),
               ),

@@ -450,6 +450,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                         color: primaryColor,
                       ),
                       Semantics(
+                        label: 'Share',
                         child: InkWell(
                             onTap: () {
                               if (document.mimeType != null) {
@@ -472,7 +473,6 @@ class _MyReportsViewState extends State<MyReportsView> {
                                     width: 4,
                                   ),
                                   Text('Share',
-                                      semanticsLabel: 'share',
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,

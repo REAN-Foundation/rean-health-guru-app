@@ -205,7 +205,8 @@ class _EditProfileState extends State<EditProfile> {
               brightness: Brightness.light,
               backgroundColor: Colors.white,
               title: Text(
-                'Edit Profile',
+                isEditable ? 'Edit Profile' : 'View Profile',
+                semanticsLabel: isEditable ? 'Edit Profile' : 'View Profile',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
@@ -488,7 +489,7 @@ class _EditProfileState extends State<EditProfile> {
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(8)),
               border: Border.all(
-                color: Colors.black26,
+                color: textGrey,
                 width: 1.0,
               ),
             ),
@@ -501,7 +502,7 @@ class _EditProfileState extends State<EditProfile> {
                 keyboardType: TextInputType.name,
                 enabled: false,
                 style: TextStyle(
-                  color: Colors.black26,
+                  color: textGrey,
                 ),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (term) {
@@ -536,7 +537,7 @@ class _EditProfileState extends State<EditProfile> {
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(8)),
               border: Border.all(
-                color: Colors.black26,
+                color: textGrey,
                 width: 1.0,
               ),
             ),
@@ -548,7 +549,7 @@ class _EditProfileState extends State<EditProfile> {
                 keyboardType: TextInputType.name,
                 enabled: false,
                 style: TextStyle(
-                  color: Colors.black26,
+                  color: textGrey,
                 ),
                 maxLines: 1,
                 textInputAction: TextInputAction.next,
@@ -827,12 +828,12 @@ class _EditProfileState extends State<EditProfile> {
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(8)),
               border: Border.all(
-                color: Colors.black26,
+                color: textGrey,
                 width: 1.0,
               ),
             ),
             child:
-                /*Row(
+            /*Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
@@ -840,7 +841,7 @@ class _EditProfileState extends State<EditProfile> {
                     child: Text(
                       "+91",
                       style: TextStyle(
-                          fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black26,),
+                          fontWeight: FontWeight.normal, fontSize: 16, color: textGrey,),
                     ),
                   ),
                   SizedBox(width: 8,),
@@ -856,7 +857,7 @@ class _EditProfileState extends State<EditProfile> {
                           */ /*_fieldFocusChange(
                               context, _mobileNumberFocus, _passwordFocus);*/ /*
                         },
-                        style: TextStyle(color: Colors.black26,),
+                        style: TextStyle(color: textGrey,),
                         maxLines: 1,
                         decoration: InputDecoration(
                             counterText: "",
@@ -881,7 +882,7 @@ class _EditProfileState extends State<EditProfile> {
                 keyboardAction: TextInputAction.next,
                 focusNode: _mobileNumberFocus,
                 textStyle:
-                    TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black26),
+                    TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: textGrey),
                 textFieldController: _mobileNumberController,
                 isEnabled: false,
                 formatInput: true,
@@ -922,7 +923,7 @@ class _EditProfileState extends State<EditProfile> {
                                         context, _mobileNumberFocus, _passwordFocus);*/
                   },
                   style: TextStyle(
-                    color: Colors.black26,
+                    color: textGrey,
                   ),
                   maxLines: 1,
                   decoration: InputDecoration(
@@ -939,7 +940,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ),*/ /*
                 readOnly: true,
-                style: TextStyle(fontSize: 16, color: Colors.black26),
+                style: TextStyle(fontSize: 16, color: textGrey),
                 autoValidate: true,
                 enabled: false,
                 controller: _mobileNumberController,
@@ -1515,7 +1516,7 @@ class _EditProfileState extends State<EditProfile> {
                         style: TextStyle(
                             fontWeight: FontWeight.normal,
                             fontSize: 16,
-                            color: Colors.black26),
+                            color: textGrey),
                       ),
                     ),
                     SizedBox(

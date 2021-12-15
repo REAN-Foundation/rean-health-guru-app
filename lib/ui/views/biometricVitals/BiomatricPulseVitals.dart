@@ -147,22 +147,25 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                       borderRadius: BorderRadius.circular(8.0),
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
-                  child: TextFormField(
-                      controller: _controller,
-                      maxLines: 1,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      onFieldSubmitted: (term) {},
-                      inputFormatters: [
-                        FilteringTextInputFormatter.deny(
-                            RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
-                      ],
-                      decoration: InputDecoration(
-                          hintText: '(65 to 95)',
-                          contentPadding: EdgeInsets.all(0),
-                          border: InputBorder.none,
-                          fillColor: Colors.white,
-                          filled: true)),
+                  child: Semantics(
+                    label: 'Pulse textfield',
+                    child: TextFormField(
+                        controller: _controller,
+                        maxLines: 1,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.number,
+                        onFieldSubmitted: (term) {},
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(
+                              RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                        ],
+                        decoration: InputDecoration(
+                            hintText: '(65 to 95)',
+                            contentPadding: EdgeInsets.all(0),
+                            border: InputBorder.none,
+                            fillColor: Colors.white,
+                            filled: true)),
+                  ),
                 ),
               ),
               RichText(

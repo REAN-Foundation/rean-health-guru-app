@@ -99,6 +99,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                             child: CircularProgressIndicator())
                         : Semantics(
                             label: 'Save',
+                            button: true,
                             child: InkWell(
                               onTap: () {
                                 toastDisplay = true;
@@ -233,7 +234,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'weight',
+                      label: 'Weight textfield measures in ' + unit,
                       child: TextFormField(
                           controller: _weightController,
                           focusNode: _weightFocus,
@@ -347,7 +348,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           border: Border.all(color: primaryColor, width: 1),
                           color: Colors.white),
                       child: Semantics(
-                        label: 'Systolic',
+                        label: 'Systolic textfield',
                         child: TextFormField(
                             inputFormatters: [
                               FilteringTextInputFormatter.deny(
@@ -386,7 +387,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           border: Border.all(color: primaryColor, width: 1),
                           color: Colors.white),
                       child: Semantics(
-                        label: 'diastolic',
+                        label: 'Diastolic textfield',
                         child: TextFormField(
                             controller: _diastolicController,
                             focusNode: _diastolicFocus,
@@ -576,7 +577,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'blood_glucose',
+                      label: 'Blood Glucose textfield',
                       child: TextFormField(
                           focusNode: _bloodGlucoseFocus,
                           controller: _bloodGlucosecontroller,
@@ -756,7 +757,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'pulse_rate',
+                      label: 'Pulse textfield',
                       child: TextFormField(
                           focusNode: _pulseRateFocus,
                           controller: _pulseRateController,
@@ -843,7 +844,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'body_temperature',
+                      label: 'Body Temprature textfield',
                       child: TextFormField(
                           focusNode: _bodyTempratureFocus,
                           controller: _bodyTempratureController,

@@ -440,15 +440,18 @@ class _HomeViewState extends State<HomeView> {
                     },
                   ),
                 ),*/
-                IconButton(
-                  icon: ImageIcon(
-                    AssetImage('res/images/ic_chat_bot.png'),
-                    size: 32,
-                    color: primaryColor,
+                Semantics(
+                  label: 'FAQ Button',
+                  child: IconButton(
+                    icon: ImageIcon(
+                      AssetImage('res/images/ic_chat_bot.png'),
+                      size: 32,
+                      color: primaryColor,
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, RoutePaths.FAQ_BOT);
+                    },
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, RoutePaths.FAQ_BOT);
-                  },
                 ),
               ],
             ),
@@ -475,7 +478,7 @@ class _HomeViewState extends State<HomeView> {
                 BottomNavigationBarItem(
                   icon: Semantics(
                     label: 'home page',
-                    readOnly: true,
+                    selected: true,
                     child: ImageIcon(
                       AssetImage('res/images/ic_home_colored.png'),
                       size: 24,
@@ -488,7 +491,7 @@ class _HomeViewState extends State<HomeView> {
                   icon: Semantics(
                     key: _keyMyTasks,
                     label: 'daily task',
-                    readOnly: true,
+                    selected: true,
                     child: ImageIcon(
                       AssetImage('res/images/ic_daily_tasks_colored.png'),
                       size: 24,
@@ -501,7 +504,7 @@ class _HomeViewState extends State<HomeView> {
                   icon: Semantics(
                     key: _keyUploadReports,
                     label: 'upload files',
-                    readOnly: true,
+                    selected: true,
                     child: ImageIcon(
                       AssetImage('res/images/ic_upload_files_colored.png'),
                       size: 24,
@@ -528,7 +531,7 @@ class _HomeViewState extends State<HomeView> {
                   icon: Semantics(
                       key: _keyEmergencyContacts,
                       label: 'emergency contact',
-                      readOnly: true,
+                      selected: true,
                       child: Icon(
                         FontAwesomeIcons.ambulance,
                         color: _currentNav == 3 ? Colors.white : Colors.white54,

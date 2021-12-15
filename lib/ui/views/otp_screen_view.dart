@@ -145,7 +145,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                 (dummyNumberList.contains(mobileNumber)
                     ? mobileNumber
                     : countryCodeGlobe + '-' + mobileNumber),
-            style: TextStyle(fontSize: 14, color: Colors.grey),
+            style: TextStyle(fontSize: 14, color: textGrey),
           ),
           SizedBox(
             height: 8,
@@ -173,7 +173,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             children: [
               Text(
                 '  Didn’t received OTP?',
-                style: TextStyle(fontSize: 14, color: Colors.grey),
+                style: TextStyle(fontSize: 14, color: textGrey),
               ),
               if (loginOTP)
                 SizedBox(
@@ -185,6 +185,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                   },
                   child: Text(
                     'Resend OTP?',
+                    semanticsLabel: 'Resend OTP?',
                     style: TextStyle(
                         fontSize: 14,
                         color: primaryColor,
@@ -200,7 +201,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
 
   Widget _submitOTPButton(LoginViewModel model) {
     return Semantics(
-      label: 'getOTP',
+      label: 'Submit',
       child: SizedBox(
         width: 160,
         height: 40,

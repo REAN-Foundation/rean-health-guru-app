@@ -113,7 +113,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Semantics(
-                      label: 'medication reminder',
+                      label: 'Medication Reminder 1 of 3',
                       image: true,
                       child: ImageIcon(
                         AssetImage(
@@ -137,7 +137,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
               ),
             ),
             Semantics(
-              label: 'set to my current medication view',
+              label: 'My Current Medication View 2 of 3',
               button: true,
               child: InkWell(
                 onTap: () {
@@ -173,7 +173,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
               ),
             ),
             Semantics(
-              label: 'set to my medication history view',
+              label: 'My Medication History View 3 of 3',
               button: true,
               child: InkWell(
                 onTap: () {

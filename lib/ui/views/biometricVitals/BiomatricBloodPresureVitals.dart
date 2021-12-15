@@ -184,7 +184,7 @@ class _BiometricBloodPresureVitalsViewState
                           border: Border.all(color: primaryColor, width: 1),
                           color: Colors.white),
                       child: Semantics(
-                        label: 'between',
+                        label: 'Systolic textfield',
                         readOnly: true,
                         child: TextFormField(
                             inputFormatters: [
@@ -244,28 +244,31 @@ class _BiometricBloodPresureVitalsViewState
                           borderRadius: BorderRadius.circular(8.0),
                           border: Border.all(color: primaryColor, width: 1),
                           color: Colors.white),
-                      child: TextFormField(
-                          controller: _diastolicController,
-                          focusNode: _diastolicFocus,
-                          maxLines: 1,
-                          textInputAction: TextInputAction.done,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
-                          ],
-                          keyboardType: TextInputType.number,
-                          onFieldSubmitted: (term) {
-                            /*_fieldFocusChange(
-                              context,
-                              _diastolicFocus,
-                              _weightFocus);*/
-                          },
-                          decoration: InputDecoration(
-                              hintText: '(60 to 80)',
-                              contentPadding: EdgeInsets.all(0),
-                              border: InputBorder.none,
-                              fillColor: Colors.white,
-                              filled: true)),
+                      child: Semantics(
+                        label: 'Diastolic textfield',
+                        child: TextFormField(
+                            controller: _diastolicController,
+                            focusNode: _diastolicFocus,
+                            maxLines: 1,
+                            textInputAction: TextInputAction.done,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.deny(
+                                  RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                            ],
+                            keyboardType: TextInputType.number,
+                            onFieldSubmitted: (term) {
+                              /*_fieldFocusChange(
+                                context,
+                                _diastolicFocus,
+                                _weightFocus);*/
+                            },
+                            decoration: InputDecoration(
+                                hintText: '(60 to 80)',
+                                contentPadding: EdgeInsets.all(0),
+                                border: InputBorder.none,
+                                fillColor: Colors.white,
+                                filled: true)),
+                      ),
                     ),
                   )
                 ],

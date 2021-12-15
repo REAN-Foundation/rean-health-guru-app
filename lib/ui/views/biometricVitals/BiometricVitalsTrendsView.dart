@@ -85,58 +85,66 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          InkWell(
-            onTap: () {
-              setState(() {
-                _currentIndex = 0;
-              });
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ImageIcon(
-                  AssetImage('res/images/ic_heart_biometric.png'),
-                  size: 24,
-                  color: _currentIndex == 0 ? Colors.white : Colors.grey,
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  'Vitals',
-                  style: TextStyle(
-                      color: _currentIndex == 0 ? Colors.white : Colors.grey,
-                      fontSize: 10),
-                ),
-              ],
+          Semantics(
+            label: 'Vitals 1 of 2',
+            selected: true,
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  _currentIndex = 0;
+                });
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ImageIcon(
+                    AssetImage('res/images/ic_heart_biometric.png'),
+                    size: 24,
+                    color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    'Vitals',
+                    style: TextStyle(
+                        color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                        fontSize: 10),
+                  ),
+                ],
+              ),
             ),
           ),
-          InkWell(
-            onTap: () {
-              setState(() {
-                _currentIndex = 1;
-              });
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ImageIcon(
-                  AssetImage('res/images/ic_trends.png'),
-                  size: 28,
-                  color: _currentIndex == 1 ? Colors.white : Colors.grey,
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  'Trends',
-                  style: TextStyle(
-                      color: _currentIndex == 1 ? Colors.white : Colors.grey,
-                      fontSize: 10),
-                ),
-              ],
+          Semantics(
+            label: 'Trends 2 of 2',
+            selected: true,
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  _currentIndex = 1;
+                });
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ImageIcon(
+                    AssetImage('res/images/ic_trends.png'),
+                    size: 28,
+                    color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    'Trends',
+                    style: TextStyle(
+                        color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                        fontSize: 10),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

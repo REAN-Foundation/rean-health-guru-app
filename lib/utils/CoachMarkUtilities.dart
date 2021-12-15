@@ -25,6 +25,7 @@ class CoachMarkUtilites {
                   padding: const EdgeInsets.only(bottom: 20.0),
                   child: Text(
                     heading,
+                    semanticsLabel: heading,
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -34,6 +35,7 @@ class CoachMarkUtilites {
                 Container(
                   child: Text(
                     description,
+                    semanticsLabel: description,
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.w100),
                   ),

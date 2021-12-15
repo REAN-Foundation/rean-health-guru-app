@@ -82,7 +82,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
               container: true,
               child: FloatingActionButton(
                   elevation: 0.0,
-                  tooltip: 'add_my_medication',
+                  tooltip: 'Add my medication',
                   child: Icon(
                     Icons.add,
                     color: Colors.white,

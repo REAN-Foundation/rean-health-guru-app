@@ -779,16 +779,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  IconButton(
-                      icon: Icon(
-                        Icons.add_circle,
-                        size: 32,
-                        color: iconColor,
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(
-                            context, RoutePaths.ADD_MY_MEDICATION);
-                      })
+                  Semantics(
+                    label: 'Add medication',
+                    child: IconButton(
+                        icon: Icon(
+                          Icons.add_circle,
+                          size: 32,
+                          color: iconColor,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, RoutePaths.ADD_MY_MEDICATION);
+                        }),
+                  )
                 ],
               ),
             ),
@@ -1314,15 +1317,18 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  IconButton(
-                      icon: Icon(
-                        Icons.add_circle,
-                        size: 32,
-                        color: iconColor,
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, RoutePaths.My_Vitals);
-                      })
+                  Semantics(
+                    label: 'Add Vitals',
+                    child: IconButton(
+                        icon: Icon(
+                          Icons.add_circle,
+                          size: 32,
+                          color: iconColor,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, RoutePaths.My_Vitals);
+                        }),
+                  )
                 ],
               ),
             ),
@@ -1334,7 +1340,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Semantics(
-                      label: 'Weight',
+                      label: 'Add Weight',
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context,
@@ -1375,7 +1381,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       ),
                     ),
                     Semantics(
-                      label: "Blood Pressure",
+                      label: "Add Blood Pressure",
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(
@@ -1461,7 +1467,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       ),
                     ),
                     Semantics(
-                      label: 'Pulse',
+                      label: 'Add Pulse',
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context,
@@ -1554,16 +1560,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  IconButton(
-                      icon: Icon(
-                        Icons.add_circle,
-                        size: 32,
-                        color: iconColor,
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, RoutePaths.My_Nutrition,
-                            arguments: '');
-                      })
+                  Semantics(
+                    label: 'Add Nutrition',
+                    child: IconButton(
+                        icon: Icon(
+                          Icons.add_circle,
+                          size: 32,
+                          color: iconColor,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, RoutePaths.My_Nutrition,
+                              arguments: '');
+                        }),
+                  )
                 ],
               ),
             ),
@@ -1575,7 +1584,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Semantics(
-                      label: 'Breakfast',
+                      label: 'Add Breakfast',
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1615,7 +1624,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       ),
                     ),
                     Semantics(
-                      label: "Lunch",
+                      label: "Add Lunch",
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1655,7 +1664,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       ),
                     ),
                     Semantics(
-                      label: 'Dinner',
+                      label: 'Add Dinner',
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1695,7 +1704,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       ),
                     ),
                     Semantics(
-                      label: 'Snacks',
+                      label: 'Add Snacks',
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,

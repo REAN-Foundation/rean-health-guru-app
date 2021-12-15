@@ -156,23 +156,26 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                       borderRadius: BorderRadius.circular(8.0),
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
-                  child: TextFormField(
-                      controller: _weightController,
-                      maxLines: 1,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      onFieldSubmitted: (term) {},
-                      inputFormatters: [
-                        FilteringTextInputFormatter.deny(
-                            RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
-                      ],
-                      decoration: InputDecoration(
-                          hintText:
-                              unit == 'lbs' ? '(100 to 200)' : '(50 to 100)',
-                          contentPadding: EdgeInsets.all(0),
-                          border: InputBorder.none,
-                          fillColor: Colors.white,
-                          filled: true)),
+                  child: Semantics(
+                    label: 'Weight textfield measures in ' + unit,
+                    child: TextFormField(
+                        controller: _weightController,
+                        maxLines: 1,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.number,
+                        onFieldSubmitted: (term) {},
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(
+                              RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                        ],
+                        decoration: InputDecoration(
+                            hintText:
+                                unit == 'lbs' ? '(100 to 200)' : '(50 to 100)',
+                            contentPadding: EdgeInsets.all(0),
+                            border: InputBorder.none,
+                            fillColor: Colors.white,
+                            filled: true)),
+                  ),
                 ),
               ),
               RichText(

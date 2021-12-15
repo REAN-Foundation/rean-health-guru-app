@@ -246,7 +246,7 @@ jobs:
         run: flutter build ios --release --no-codesign --flavor dev -t "lib/main_dev.dart"
 
       - name: Generate Signed Build
-        run: bundle exec fastlane build flavor:dev mode:release
+        run: bundle exec fastlane build_rf flavor:dev mode:release
         working-directory: ios
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}

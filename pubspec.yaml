@@ -73,7 +73,7 @@ dependencies:
   charts_flutter: ^0.11.0
   lottie: ^1.1.0
   tutorial_coach_mark: ^1.1.1
-  intl_phone_field: ^2.1.0
+  intl_phone_field: ^2.0.1
   introduction_screen: ^2.1.0
   #dots_indicator: ^1.2.0
   otp_text_field: ^1.1.1

@@ -33,21 +33,29 @@ class ImageViewer extends StatelessWidget {
         ),
         actions: <Widget>[
           if (Platform.isAndroid)
-            IconButton(
-              icon: Icon(Icons.share),
-              onPressed: () {
-                urlFileShare();
-              },
+            Semantics(
+              label: 'Share',
+              button: true,
+              child: IconButton(
+                icon: Icon(Icons.share),
+                onPressed: () {
+                  urlFileShare();
+                },
+              ),
             )
           else
             Container()
         ],
       ),
-      body: Container(
-          child: PhotoView.customChild(
-        child: Image.file(file),
-        //imageProvider: NetworkImage(path),
-      )),
+      body: Semantics(
+        label: fileName,
+        image: true,
+        child: Container(
+            child: PhotoView.customChild(
+          child: Image.file(file),
+          //imageProvider: NetworkImage(path),
+        )),
+      ),
     );
   }
 

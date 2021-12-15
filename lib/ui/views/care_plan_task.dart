@@ -194,6 +194,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       flex: 1,
                       child: Semantics(
                         label: 'To Do 1 of 2',
+                        selected: true,
                         child: InkWell(
                           onTap: () {
                             query = 'pending';
@@ -220,6 +221,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       flex: 1,
                       child: Semantics(
                         label: 'Completed 2 of 2',
+                        selected: true,
                         child: InkWell(
                           onTap: () {
                             query = 'completed';

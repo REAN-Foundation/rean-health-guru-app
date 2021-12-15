@@ -101,19 +101,18 @@ class _MyDialogState extends State<AddNurseDialog> {
 
   Widget _submitButton(BuildContext context) {
     return Semantics(
-      label: 'save nurse contacts button',
+      label: 'Save',
       button: true,
-      onTap: () {},
       child: ElevatedButton(
         onPressed: () {
           if (_firstNameController.text == '') {
-            showToast('Enter first name', context);
+            showToastMsg('Enter first name', context);
           } else if (_lastNameController.text == '') {
-            showToast('Enter last name', context);
+            showToastMsg('Enter last name', context);
           } else if (mobileNumber == '' || mobileNumber.length != 10) {
-            showToast('Enter mobile number', context);
+            showToastMsg('Enter mobile number', context);
           } else if (selectedGender == '') {
-            showToast('Select gender', context);
+            showToastMsg('Select gender', context);
           } else {
             widget._submitButtonListner(_firstNameController.text,
                 _lastNameController.text, mobileNumber, selectedGender);
@@ -168,6 +167,9 @@ class _MyDialogState extends State<AddNurseDialog> {
                   onFieldSubmitted: (term) {
                     _fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
                   },
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
+                  ],
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       fillColor: Colors.white,
@@ -207,6 +209,9 @@ class _MyDialogState extends State<AddNurseDialog> {
                   focusNode: _lastNameFocus,
                   maxLines: 1,
                   textInputAction: TextInputAction.next,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
+                  ],
                   onFieldSubmitted: (term) {
                     _fieldFocusChange(
                         context, _lastNameFocus, _mobileNumberFocus);
@@ -334,9 +339,8 @@ class _MyDialogState extends State<AddNurseDialog> {
                       fillColor: Colors.white,
                       filled: true),
                   initialCountryCode: getCurrentLocale(),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.deny(
-                        RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                   ],
                   onChanged: (phone) {
                     debugPrint(phone.countryCode);
@@ -429,9 +433,9 @@ class _MyDialogState extends State<AddNurseDialog> {
           if (uploadResponse.status == 'success') {
             profileImagePath = uploadResponse.data.details.elementAt(0).url;
             profileImage = uploadResponse.data.details.elementAt(0).url;
-            showToast(uploadResponse.message, context);
+            showToastMsg(uploadResponse.message, context);
           } else {
-            showToast('Opps, something wents wrong!', context);
+            showToastMsg('Opps, something wents wrong!', context);
           }
         } else {
           debugPrint('Upload Faild !');
@@ -440,7 +444,7 @@ class _MyDialogState extends State<AddNurseDialog> {
 
     } catch (CustomException) {
       debugPrint('4');
-      showToast(CustomException.toString(), context);
+      showToastMsg(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
     }
   }

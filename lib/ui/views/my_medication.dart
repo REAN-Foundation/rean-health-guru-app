@@ -137,7 +137,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
               ),
             ),
             Semantics(
-              label: 'My Current Medication View 2 of 3',
+              label: 'My Current Medication 2 of 3',
               button: true,
               child: InkWell(
                 onTap: () {

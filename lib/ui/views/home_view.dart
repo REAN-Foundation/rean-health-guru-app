@@ -441,7 +441,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),*/
                 Semantics(
-                  label: 'FAQ Button',
+                  label: 'FAQ',
                   child: IconButton(
                     icon: ImageIcon(
                       AssetImage('res/images/ic_chat_bot.png'),

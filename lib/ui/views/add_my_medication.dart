@@ -423,7 +423,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     border: Border.all(color: primaryColor, width: 0.80),
                     color: Colors.white),
                 child: Semantics(
-                  label: 'Select_Unit',
+                  label: 'Select Unit',
+                  button: true,
                   child: DropdownButton<String>(
                     isExpanded: true,
                     value: _dosageUnit == '' ? null : _dosageUnit,
@@ -655,8 +656,15 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       selcetedColor = Colors.white;
     }
 
+    debugPrint(
+        'Medication Name ==> ${images.code.replaceAll(new RegExp("[0-9]"), "").replaceAll('_', ' ').trimLeft()}');
+
     return Semantics(
-      label: index.toString(),
+      label: images.code
+          .replaceAll(new RegExp("[0-9]"), "")
+          .replaceAll('_', ' ')
+          .trimLeft(),
+      image: true,
       child: InkWell(
         child: Container(
           height: 50,

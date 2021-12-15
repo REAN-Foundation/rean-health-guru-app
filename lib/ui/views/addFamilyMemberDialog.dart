@@ -104,21 +104,21 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
   Widget _submitButton(BuildContext context) {
     return Semantics(
       button: true,
-      label: 'save family or friends contacts',
+      label: 'Save',
       onTap: () {},
       child: ElevatedButton(
         onPressed: () {
           debugPrint(mobileNumber);
           if (_firstNameController.text == '') {
-            showToast('Enter first name', context);
+            showToastMsg('Enter first name', context);
           } else if (_lastNameController.text == '') {
-            showToast('Enter last name', context);
+            showToastMsg('Enter last name', context);
           } else if (mobileNumber == '' || mobileNumber.length != 10) {
-            showToast('Enter mobile number', context);
+            showToastMsg('Enter mobile number', context);
           } else if (_descriptionController.text == '') {
-            showToast('Enter relation', context);
+            showToastMsg('Enter relation', context);
           } else if (selectedGender == '') {
-            showToast('Select gender', context);
+            showToastMsg('Select gender', context);
           } else {
             widget._submitButtonListner(
                 _firstNameController.text,
@@ -221,6 +221,9 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                   onFieldSubmitted: (term) {
                     _fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
                   },
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
+                  ],
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       fillColor: Colors.white,
@@ -264,6 +267,9 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                     _fieldFocusChange(
                         context, _lastNameFocus, _mobileNumberFocus);
                   },
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
+                  ],
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       fillColor: Colors.white,
@@ -389,9 +395,8 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                       fillColor: Colors.white,
                       filled: true),
                   initialCountryCode: getCurrentLocale(),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.deny(
-                        RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                   ],
                   onChanged: (phone) {
                     debugPrint(phone.countryCode);
@@ -522,9 +527,9 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
           if (uploadResponse.status == 'success') {
             profileImagePath = uploadResponse.data.details.elementAt(0).url;
             profileImage = uploadResponse.data.details.elementAt(0).url;
-            showToast(uploadResponse.message, context);
+            showToastMsg(uploadResponse.message, context);
           } else {
-            showToast('Opps, something wents wrong!', context);
+            showToastMsg('Opps, something wents wrong!', context);
           }
         } else {
           debugPrint('Upload Faild !');
@@ -533,7 +538,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
 
     } catch (CustomException) {
       debugPrint('4');
-      showToast(CustomException.toString(), context);
+      showToastMsg(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
     }
   }

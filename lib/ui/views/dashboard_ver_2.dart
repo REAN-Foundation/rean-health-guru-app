@@ -803,7 +803,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Semantics(
-                    label: 'my_medication_yes',
+                    label: 'Yes I have taken my medications',
+                    button: true,
                     child: InkWell(
                       onTap: () {
                         if (currentMedicationList.isEmpty) {
@@ -837,7 +838,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     ),
                   ),
                   Semantics(
-                    label: 'my_medication_no',
+                    label: 'Yes I haven\'t taken my medications',
+                    button: true,
                     child: InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, RoutePaths.My_Medications);
@@ -1319,6 +1321,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   ),
                   Semantics(
                     label: 'Add Vitals',
+                    button: true,
                     child: IconButton(
                         icon: Icon(
                           Icons.add_circle,
@@ -1341,6 +1344,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   children: [
                     Semantics(
                       label: 'Add Weight',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context,
@@ -1382,6 +1386,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     ),
                     Semantics(
                       label: "Add Blood Pressure",
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(
@@ -1425,6 +1430,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     ),
                     Semantics(
                       label: 'Blood Glucose',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(
@@ -1468,6 +1474,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     ),
                     Semantics(
                       label: 'Add Pulse',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context,
@@ -1585,6 +1592,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   children: [
                     Semantics(
                       label: 'Add Breakfast',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1625,6 +1633,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     ),
                     Semantics(
                       label: "Add Lunch",
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1665,6 +1674,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     ),
                     Semantics(
                       label: 'Add Dinner',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1705,6 +1715,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     ),
                     Semantics(
                       label: 'Add Snacks',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,

@@ -764,7 +764,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Pulse measures in bpm',
+                      label: 'Pulse rate measures in bpm',
                       child: TextFormField(
                           focusNode: _pulseRateFocus,
                           controller: _pulseRateController,

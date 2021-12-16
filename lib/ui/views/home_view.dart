@@ -277,26 +277,30 @@ class _HomeViewState extends State<HomeView> {
         (targets.length + 1).toString(),
         'Navigation Menu',
         'Update your profile, add vitals and medical information.',
-        CoachMarkContentPosition.bottom));
+        CoachMarkContentPosition.bottom,
+        ShapeLightFocus.Circle));
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyMyTasks,
         (targets.length + 1).toString(),
         'Daily Tasks',
         'Keep a watch on your daily tasks.',
-        CoachMarkContentPosition.top));
+        CoachMarkContentPosition.top,
+        ShapeLightFocus.Circle));
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyUploadReports,
         (targets.length + 1).toString(),
         'Upload Reports',
         'Upload all your reports here.',
-        CoachMarkContentPosition.top));
+        CoachMarkContentPosition.top,
+        ShapeLightFocus.Circle));
     //targets.add(GetTargetFocus.getTargetFocus(_keyViewAppointments, (targets.length + 1).toString(), 'Appointments List', 'View all your Appointments here.', CoachMarkContentPosition.top));
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyEmergencyContacts,
         (targets.length + 1).toString(),
         'Emergency Contacts',
         'Add your emergency contacts here.',
-        CoachMarkContentPosition.top));
+        CoachMarkContentPosition.top,
+        ShapeLightFocus.Circle));
   }
 
   @override

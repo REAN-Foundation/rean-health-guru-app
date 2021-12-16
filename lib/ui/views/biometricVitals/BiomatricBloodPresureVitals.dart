@@ -183,8 +183,7 @@ class _BiometricBloodPresureVitalsViewState
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Systolic',
-                      textField: true,
+                      label: 'Systolic measures in mm Hg',
                       child: TextFormField(
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
@@ -244,8 +243,7 @@ class _BiometricBloodPresureVitalsViewState
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Diastolic',
-                      textField: true,
+                      label: 'Diastolic measures in mm Hg',
                       child: TextFormField(
                           controller: _diastolicController,
                           focusNode: _diastolicFocus,

@@ -91,16 +91,14 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(12))),
                                     child: getAppType() == 'AHA'
-                                        ? Semantics(
-                                            label: 'American Heart Association',
-                                            image: true,
-                                            child: Image.asset(
-                                                'res/images/aha_logo.png'))
-                                        : Semantics(
-                                            label: 'REAN HealthGuru',
-                                            image: true,
-                                            child: Image.asset(
-                                                'res/images/app_logo_tranparent.png'),
+                                        ? Image.asset(
+                                            'res/images/aha_logo.png',
+                                            semanticLabel:
+                                                'American Heart Association',
+                                          )
+                                        : Image.asset(
+                                            'res/images/app_logo_tranparent.png',
+                                            semanticLabel: 'REAN HealthGuru',
                                           ),
                                   ),
                                   SizedBox(

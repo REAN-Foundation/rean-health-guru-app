@@ -168,35 +168,32 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                     SizedBox(
                       width: 8,
                     ),
-                    Semantics(
-                      label: 'Send',
-                      button: true,
-                      child: IconButton(
-                          icon: Icon(
-                            Icons.send,
-                            color: primaryColor,
-                            size: 32,
-                          ),
-                          onPressed: () {
-                            if (_chatController.text.isNotEmpty) {
-                              sendMessageBotApi(_chatController.text);
-                              final chatMsg = FAQChatModelPojo(
-                                  _chatController.text, DateTime.now(), 'ME');
-                              _chatController.clear();
-                              chatList.insert(0, chatMsg);
-                              /* var chatMsgReceive = new FAQChatModelPojo(
-                                'Text msg ' + chatList.length.toString(),
-                                new DateTime.now(),
-                                'BOT');
-                            chatList.insert(0, chatMsgReceive);*/
-                              setState(() {
-                                _scrollController.animateTo(00,
-                                    duration: Duration(milliseconds: 200),
-                                    curve: Curves.easeInOut);
-                              });
-                            }
-                          }),
-                    ),
+                    IconButton(
+                        icon: Icon(
+                          Icons.send,
+                          color: primaryColor,
+                          size: 32,
+                          semanticLabel: 'Send',
+                        ),
+                        onPressed: () {
+                          if (_chatController.text.isNotEmpty) {
+                            sendMessageBotApi(_chatController.text);
+                            final chatMsg = FAQChatModelPojo(
+                                _chatController.text, DateTime.now(), 'ME');
+                            _chatController.clear();
+                            chatList.insert(0, chatMsg);
+                            /* var chatMsgReceive = new FAQChatModelPojo(
+                              'Text msg ' + chatList.length.toString(),
+                              new DateTime.now(),
+                              'BOT');
+                          chatList.insert(0, chatMsgReceive);*/
+                            setState(() {
+                              _scrollController.animateTo(00,
+                                  duration: Duration(milliseconds: 200),
+                                  curve: Curves.easeInOut);
+                            });
+                          }
+                        }),
                   ],
                     ),
                   )

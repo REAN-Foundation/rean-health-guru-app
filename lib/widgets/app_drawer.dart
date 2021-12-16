@@ -555,15 +555,15 @@ class _AppDrawerState extends State<AppDrawer> {
             height: 8,
           ),
           Semantics(
-              label: name,
-              child: Text(
-                name,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: primaryColor),
-                semanticsLabel: name,
-              )),
+            child: Text(
+              name,
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: primaryColor),
+              semanticsLabel: name,
+            ),
+          ),
           Text(
             mobileNumber,
             style: TextStyle(

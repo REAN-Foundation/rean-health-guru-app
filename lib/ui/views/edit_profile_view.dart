@@ -241,10 +241,12 @@ class _EditProfileState extends State<EditProfile> {
             floatingActionButton: Visibility(
               visible: !isEditable,
               child: Semantics(
-                label: 'edit_profile',
+                label: 'Edit profile',
+                button: true,
                 child: FloatingActionButton(
                   backgroundColor: primaryColor,
                   foregroundColor: Colors.white,
+                  tooltip: 'Edit profile',
                   mini: false,
                   onPressed: () {
                     isEditable = true;
@@ -493,25 +495,28 @@ class _EditProfileState extends State<EditProfile> {
                 width: 1.0,
               ),
             ),
-            child: TextFormField(
-                textCapitalization: TextCapitalization.sentences,
-                obscureText: isPassword,
-                controller: _firstNameController,
-                focusNode: _firstNameFocus,
-                maxLines: 1,
-                keyboardType: TextInputType.name,
-                enabled: false,
-                style: TextStyle(
-                  color: textGrey,
-                ),
-                textInputAction: TextInputAction.next,
-                onFieldSubmitted: (term) {
-                  _fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
-                },
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
+            child: Semantics(
+              label: 'First Name ' + _firstNameController.text.toString(),
+              child: TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
+                  obscureText: isPassword,
+                  controller: _firstNameController,
+                  focusNode: _firstNameFocus,
+                  maxLines: 1,
+                  keyboardType: TextInputType.name,
+                  enabled: false,
+                  style: TextStyle(
+                    color: textGrey,
+                  ),
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term) {
+                    _fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
+                  },
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Colors.white,
+                      filled: true)),
+            ),
           )
         ],
       ),
@@ -541,26 +546,29 @@ class _EditProfileState extends State<EditProfile> {
                 width: 1.0,
               ),
             ),
-            child: TextFormField(
-                textCapitalization: TextCapitalization.sentences,
-                obscureText: isPassword,
-                controller: _lastNameController,
-                focusNode: _lastNameFocus,
-                keyboardType: TextInputType.name,
-                enabled: false,
-                style: TextStyle(
-                  color: textGrey,
-                ),
-                maxLines: 1,
-                textInputAction: TextInputAction.next,
-                onFieldSubmitted: (term) {
-                  _fieldFocusChange(
-                      context, _lastNameFocus, _mobileNumberFocus);
-                },
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
+            child: Semantics(
+              label: 'Last Name ' + _lastNameController.text.toString(),
+              child: TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
+                  obscureText: isPassword,
+                  controller: _lastNameController,
+                  focusNode: _lastNameFocus,
+                  keyboardType: TextInputType.name,
+                  enabled: false,
+                  style: TextStyle(
+                    color: textGrey,
+                  ),
+                  maxLines: 1,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term) {
+                    _fieldFocusChange(
+                        context, _lastNameFocus, _mobileNumberFocus);
+                  },
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Colors.white,
+                      filled: true)),
+            ),
           )
         ],
       ),
@@ -593,22 +601,25 @@ class _EditProfileState extends State<EditProfile> {
                 width: 1.0,
               ),
             ),
-            child: TextFormField(
-                textCapitalization: TextCapitalization.sentences,
-                obscureText: isPassword,
-                controller: _cityController,
-                focusNode: _cityFocus,
-                keyboardType: TextInputType.streetAddress,
-                maxLines: 1,
-                enabled: isEditable,
-                textInputAction: TextInputAction.done,
-                onFieldSubmitted: (term) {
-                  //_fieldFocusChange(context, _cityFocus, _addressFocus);
-                },
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
+            child: Semantics(
+              label: 'City ' + _cityController.text.toString(),
+              child: TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
+                  obscureText: isPassword,
+                  controller: _cityController,
+                  focusNode: _cityFocus,
+                  keyboardType: TextInputType.streetAddress,
+                  maxLines: 1,
+                  enabled: isEditable,
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (term) {
+                    //_fieldFocusChange(context, _cityFocus, _addressFocus);
+                  },
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Colors.white,
+                      filled: true)),
+            ),
           )
         ],
       ),
@@ -641,22 +652,25 @@ class _EditProfileState extends State<EditProfile> {
                 width: 1.0,
               ),
             ),
-            child: TextFormField(
-                textCapitalization: TextCapitalization.sentences,
-                obscureText: isPassword,
-                controller: _countryController,
-                focusNode: _countryFocus,
-                keyboardType: TextInputType.streetAddress,
-                maxLines: 1,
-                enabled: isEditable,
-                textInputAction: TextInputAction.done,
-                onFieldSubmitted: (term) {
-                  //_fieldFocusChange(context, _cityFocus, _addressFocus);
-                },
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
+            child: Semantics(
+              label: 'Country ' + _countryController.text.toString(),
+              child: TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
+                  obscureText: isPassword,
+                  controller: _countryController,
+                  focusNode: _countryFocus,
+                  keyboardType: TextInputType.streetAddress,
+                  maxLines: 1,
+                  enabled: isEditable,
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (term) {
+                    //_fieldFocusChange(context, _cityFocus, _addressFocus);
+                  },
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Colors.white,
+                      filled: true)),
+            ),
           )
         ],
       ),
@@ -690,22 +704,25 @@ class _EditProfileState extends State<EditProfile> {
                 width: 1.0,
               ),
             ),
-            child: TextFormField(
-                textCapitalization: TextCapitalization.sentences,
-                obscureText: isPassword,
-                controller: _postalCodeController,
-                focusNode: _postalFocus,
-                keyboardType: TextInputType.number,
-                maxLines: 1,
-                enabled: isEditable,
-                textInputAction: TextInputAction.done,
-                onFieldSubmitted: (term) {
-                  //_fieldFocusChange(context, _cityFocus, _addressFocus);
-                },
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
+            child: Semantics(
+              label: 'Postal Code ' + _postalCodeController.text.toString(),
+              child: TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
+                  obscureText: isPassword,
+                  controller: _postalCodeController,
+                  focusNode: _postalFocus,
+                  keyboardType: TextInputType.number,
+                  maxLines: 1,
+                  enabled: isEditable,
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (term) {
+                    //_fieldFocusChange(context, _cityFocus, _addressFocus);
+                  },
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Colors.white,
+                      filled: true)),
+            ),
           )
         ],
       ),
@@ -738,22 +755,25 @@ class _EditProfileState extends State<EditProfile> {
                 width: 1.0,
               ),
             ),
-            child: TextFormField(
-                textCapitalization: TextCapitalization.sentences,
-                obscureText: isPassword,
-                controller: _addressController,
-                focusNode: _addressFocus,
-                keyboardType: TextInputType.streetAddress,
-                maxLines: 1,
-                enabled: isEditable,
-                textInputAction: TextInputAction.next,
-                onFieldSubmitted: (term) {
-                  _fieldFocusChange(context, _addressFocus, _cityFocus);
-                },
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
+            child: Semantics(
+              label: 'Address ' + _addressController.text.toString(),
+              child: TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
+                  obscureText: isPassword,
+                  controller: _addressController,
+                  focusNode: _addressFocus,
+                  keyboardType: TextInputType.streetAddress,
+                  maxLines: 1,
+                  enabled: isEditable,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term) {
+                    _fieldFocusChange(context, _addressFocus, _cityFocus);
+                  },
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Colors.white,
+                      filled: true)),
+            ),
           )
         ],
       ),
@@ -787,21 +807,23 @@ class _EditProfileState extends State<EditProfile> {
                 width: 1.0,
               ),
             ),
-            child: TextFormField(
-                controller: _emailController,
-                focusNode: _emailFocus,
-                keyboardType: TextInputType.emailAddress,
-                maxLines: 1,
-                textInputAction: TextInputAction.next,
-                onFieldSubmitted: (term) {
-                  _fieldFocusChange(
-                      context, _emailFocus, _addressFocus);
-                },
-                enabled: isEditable,
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
+            child: Semantics(
+              label: "Email " + _emailController.text.toString(),
+              child: TextFormField(
+                  controller: _emailController,
+                  focusNode: _emailFocus,
+                  keyboardType: TextInputType.emailAddress,
+                  maxLines: 1,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term) {
+                    _fieldFocusChange(context, _emailFocus, _addressFocus);
+                  },
+                  enabled: isEditable,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Colors.white,
+                      filled: true)),
+            ),
           )
         ],
       ),
@@ -910,26 +932,30 @@ class _EditProfileState extends State<EditProfile> {
               )*/
 
                 Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: TextFormField(
-                  controller: _mobileNumberController,
-                  focusNode: _mobileNumberFocus,
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.next,
-                  maxLength: 10,
-                  enabled: false,
-                  onFieldSubmitted: (term) {
-                    /*_fieldFocusChange(
-                                        context, _mobileNumberFocus, _passwordFocus);*/
-                  },
-                  style: TextStyle(
-                    color: textGrey,
-                  ),
-                  maxLines: 1,
-                  decoration: InputDecoration(
-                      counterText: '',
-                      border: InputBorder.none,
-                      filled: false)),
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Semantics(
+                label:
+                    'Mobile number ' + _mobileNumberController.text.toString(),
+                child: TextFormField(
+                    controller: _mobileNumberController,
+                    focusNode: _mobileNumberFocus,
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
+                    maxLength: 10,
+                    enabled: false,
+                    onFieldSubmitted: (term) {
+                      /*_fieldFocusChange(
+                                          context, _mobileNumberFocus, _passwordFocus);*/
+                    },
+                    style: TextStyle(
+                      color: textGrey,
+                    ),
+                    maxLines: 1,
+                    decoration: InputDecoration(
+                        counterText: '',
+                        border: InputBorder.none,
+                        filled: false)),
+              ),
             ),
 
             /*IntlPhoneField(
@@ -1451,29 +1477,32 @@ class _EditProfileState extends State<EditProfile> {
           SizedBox(
             height: 10,
           ),
-          AbsorbPointer(
-              absorbing: !isEditable,
-              child: ToggleSwitch(
-                  minWidth: 120.0,
-                  cornerRadius: 20,
-                  initialLabelIndex: selectedGender == 'Male' ? 0 : 1,
-                  totalSwitches: 2,
-                  activeBgColor: [Colors.green],
-                  inactiveBgColor: Colors.grey,
-                  labels: ['Male', 'Female'],
-                  icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
-                  activeBgColors: [
-                    [Colors.blue],
-                    [Colors.pink]
-                  ],
-                  onToggle: (index) {
-                    debugPrint('switched to: $index');
-                    if (index == 0) {
-                      selectedGender = 'Male';
-                    } else {
-                      selectedGender = 'Female';
-                    }
-                  }))
+          Semantics(
+            label: selectedGender,
+            child: AbsorbPointer(
+                absorbing: !isEditable,
+                child: ToggleSwitch(
+                    minWidth: 120.0,
+                    cornerRadius: 20,
+                    initialLabelIndex: selectedGender == 'Male' ? 0 : 1,
+                    totalSwitches: 2,
+                    activeBgColor: [Colors.green],
+                    inactiveBgColor: Colors.grey,
+                    labels: ['Male', 'Female'],
+                    icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
+                    activeBgColors: [
+                      [Colors.blue],
+                      [Colors.pink]
+                    ],
+                    onToggle: (index) {
+                      debugPrint('switched to: $index');
+                      if (index == 0) {
+                        selectedGender = 'Male';
+                      } else {
+                        selectedGender = 'Female';
+                      }
+                    })),
+          )
         ],
       ),
     );
@@ -1492,7 +1521,8 @@ class _EditProfileState extends State<EditProfile> {
           SizedBox(
             height: 10,
           ),
-          GestureDetector(
+          Semantics(
+            label: dob,
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: 48.0,
@@ -1507,43 +1537,30 @@ class _EditProfileState extends State<EditProfile> {
               ),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        dob,
-                        style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 16,
-                            color: textGrey),
+                child: ExcludeSemantics(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          dob,
+                          style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16,
+                              color: textGrey),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                        height: 32,
-                        width: 32,
-                        child: ImageIcon(
-                            AssetImage('res/images/ic_calender.png'),
-                            color: Colors.black12)),
-                  ],
+                      SizedBox(
+                          height: 32,
+                          width: 32,
+                          child: ImageIcon(
+                              AssetImage('res/images/ic_calender.png'),
+                              color: Colors.black12)),
+                    ],
+                  ),
                 ),
               ),
             ),
-            onTap: () {
-              /*DatePicker.showDatePicker(context,
-                  showTitleActions: true,
-                  minTime: DateTime(1940, 1, 1),
-                  maxTime: DateTime.now().subtract(Duration(days: 1)),
-                  onChanged: (date) {
-                    debugPrint('change $date');
-              }, onConfirm: (date) {
-                    unformatedDOB = date.toIso8601String();
-                setState(() {
-                  dob = dateFormat.format(date);
-                });
-                debugPrint('confirm $date');
-              }, currentTime: DateTime.now(), locale: LocaleType.en);*/
-            },
           ),
         ],
       ),

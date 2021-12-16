@@ -181,6 +181,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   Widget weightFeilds() {
     return Card(
+      semanticContainer: false,
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -234,7 +235,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Weight textfield measures in ' + unit,
+                      label: 'Weight measures in ' + unit,
                       child: TextFormField(
                           controller: _weightController,
                           focusNode: _weightFocus,
@@ -273,6 +274,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   Widget bloodPresureFeilds() {
     return Card(
+      semanticContainer: false,
       elevation: 8,
       child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -348,7 +350,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           border: Border.all(color: primaryColor, width: 1),
                           color: Colors.white),
                       child: Semantics(
-                        label: 'Systolic textfield',
+                        label: 'Systolic measures in mm Hg',
                         child: TextFormField(
                             inputFormatters: [
                               FilteringTextInputFormatter.deny(
@@ -387,7 +389,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           border: Border.all(color: primaryColor, width: 1),
                           color: Colors.white),
                       child: Semantics(
-                        label: 'Diastolic textfield',
+                        label: 'Diastolic measures in mm Hg',
                         child: TextFormField(
                             controller: _diastolicController,
                             focusNode: _diastolicFocus,
@@ -524,6 +526,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   Widget bloodGlucoseFeilds() {
     return Card(
+      semanticContainer: false,
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -577,7 +580,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Blood Glucose textfield',
+                      label: 'Blood Glucose measures in mg/dl',
                       child: TextFormField(
                           focusNode: _bloodGlucoseFocus,
                           controller: _bloodGlucosecontroller,
@@ -614,6 +617,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   Widget bloodOxygenSaturationFeilds() {
     return Card(
+      semanticContainer: false,
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -667,7 +671,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'blood_oxygen_saturation',
+                      label: 'Blood oxygen Saturation messures in % ',
                       child: TextFormField(
                           focusNode: _bloodOxygenSaturationFocus,
                           controller: _bloodOxygenSaturationController,
@@ -704,6 +708,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   Widget pulseRateFeilds() {
     return Card(
+      semanticContainer: false,
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -757,7 +762,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Pulse textfield',
+                      label: 'Pulse measures in bpm',
                       child: TextFormField(
                           focusNode: _pulseRateFocus,
                           controller: _pulseRateController,
@@ -792,6 +797,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   Widget bodyTempratureFeilds() {
     return Card(
+      semanticContainer: false,
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -844,7 +850,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Body Temprature textfield',
+                      label: 'Body Temprature messures in °F',
                       child: TextFormField(
                           focusNode: _bodyTempratureFocus,
                           controller: _bodyTempratureController,

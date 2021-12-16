@@ -401,7 +401,7 @@ class _HomeViewState extends State<HomeView> {
                         backgroundImage:  profileImage == "" ? AssetImage('res/images/profile_placeholder.png') : new NetworkImage(profileImage)),
                   )*/
                       Semantics(
-                    label: 'navigation_drawer',
+                    label: 'Navigation Drawer',
                     child: Container(
                       key: _keyNavigation_drawer,
                       width: 60.0,
@@ -440,18 +440,16 @@ class _HomeViewState extends State<HomeView> {
                     },
                   ),
                 ),*/
-                Semantics(
-                  label: 'FAQ',
-                  child: IconButton(
-                    icon: ImageIcon(
-                      AssetImage('res/images/ic_chat_bot.png'),
-                      size: 32,
-                      color: primaryColor,
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, RoutePaths.FAQ_BOT);
-                    },
+                IconButton(
+                  icon: ImageIcon(
+                    AssetImage('res/images/ic_chat_bot.png'),
+                    size: 32,
+                    color: primaryColor,
+                    semanticLabel: 'FAQ',
                   ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, RoutePaths.FAQ_BOT);
+                  },
                 ),
               ],
             ),

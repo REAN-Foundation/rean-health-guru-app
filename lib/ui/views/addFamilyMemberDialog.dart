@@ -102,45 +102,39 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
   }
 
   Widget _submitButton(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: 'Save',
-      onTap: () {},
-      child: ElevatedButton(
-        onPressed: () {
-          debugPrint(mobileNumber);
-          if (_firstNameController.text == '') {
-            showToastMsg('Enter first name', context);
-          } else if (_lastNameController.text == '') {
-            showToastMsg('Enter last name', context);
-          } else if (mobileNumber == '' || mobileNumber.length != 10) {
-            showToastMsg('Enter mobile number', context);
-          } else if (_descriptionController.text == '') {
-            showToastMsg('Enter relation', context);
-          } else if (selectedGender == '') {
-            showToastMsg('Select gender', context);
-          } else {
-            widget._submitButtonListner(
-                _firstNameController.text,
-                _lastNameController.text,
-                mobileNumber,
-                selectedGender,
-                _descriptionController.text);
-          }
-        },
-        style: ButtonStyle(
-            foregroundColor:
-                MaterialStateProperty.all<Color>(primaryLightColor),
-            backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24),
-                    side: BorderSide(color: primaryColor)))),
-        child: Text(
-          '      Add       ',
-          style: TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-        ),
+    return ElevatedButton(
+      onPressed: () {
+        debugPrint(mobileNumber);
+        if (_firstNameController.text == '') {
+          showToastMsg('Enter first name', context);
+        } else if (_lastNameController.text == '') {
+          showToastMsg('Enter last name', context);
+        } else if (mobileNumber == '' || mobileNumber.length != 10) {
+          showToastMsg('Enter mobile number', context);
+        } else if (_descriptionController.text == '') {
+          showToastMsg('Enter relation', context);
+        } else if (selectedGender == '') {
+          showToastMsg('Select gender', context);
+        } else {
+          widget._submitButtonListner(
+              _firstNameController.text,
+              _lastNameController.text,
+              mobileNumber,
+              selectedGender,
+              _descriptionController.text);
+        }
+      },
+      style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.all<Color>(primaryLightColor),
+          backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                  side: BorderSide(color: primaryColor)))),
+      child: Text(
+        '      Add       ',
+        style: TextStyle(
+            color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -193,25 +187,24 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
   Widget _entryFirstNameField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      child: Semantics(
-        label: 'first name of family member or friend',
-        readOnly: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: primaryColor, width: 1),
-                  color: Colors.white),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(color: primaryColor, width: 1),
+                color: Colors.white),
+            child: Semantics(
+              label: 'first name of family member or friend',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _firstNameController,
@@ -228,9 +221,9 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                       border: InputBorder.none,
                       fillColor: Colors.white,
                       filled: true)),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -238,25 +231,24 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
   Widget _entryLastNameField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      child: Semantics(
-        label: 'last name of family or friend',
-        readOnly: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: primaryColor, width: 1),
-                  color: Colors.white),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(color: primaryColor, width: 1),
+                color: Colors.white),
+            child: Semantics(
+              label: 'last name of family or friend',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _lastNameController,
@@ -274,9 +266,9 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                       border: InputBorder.none,
                       fillColor: Colors.white,
                       filled: true)),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -389,7 +381,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                   autoValidate: true,
                   decoration: InputDecoration(
                       counterText: '',
-                      hintText: 'mobile_number',
+                      hintText: 'mobile number',
                       hintStyle: TextStyle(color: Colors.transparent),
                       border: InputBorder.none,
                       fillColor: Colors.white,
@@ -464,17 +456,20 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                 borderRadius: BorderRadius.circular(8.0),
                 border: Border.all(color: primaryColor, width: 1),
                 color: Colors.white),
-            child: TextFormField(
-                obscureText: isPassword,
-                controller: _descriptionController,
-                focusNode: _descriptionFocus,
-                maxLines: 1,
-                textInputAction: TextInputAction.done,
-                onFieldSubmitted: (term) {},
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
+            child: Semantics(
+              label: 'Relation of family or friend',
+              child: TextFormField(
+                  obscureText: isPassword,
+                  controller: _descriptionController,
+                  focusNode: _descriptionFocus,
+                  maxLines: 1,
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (term) {},
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Colors.white,
+                      filled: true)),
+            ),
           )
         ],
       ),

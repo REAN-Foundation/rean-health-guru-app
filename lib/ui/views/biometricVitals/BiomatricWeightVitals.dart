@@ -157,7 +157,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Weight textfield measures in ' + unit,
+                    label: 'Weight measures in ' + unit,
                     child: TextFormField(
                         controller: _weightController,
                         maxLines: 1,

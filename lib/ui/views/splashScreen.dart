@@ -137,7 +137,9 @@ class _SplashScreenState extends State<SplashScreen> {
                                       Radius.circular(12))
                               ),*/
                           child: Semantics(
-                            label: 'REAN care app logo',
+                            label: getAppType() == 'AHA'
+                                ? 'HF Helper App Logo'
+                                : 'REAN HealthGuru app logo',
                             image: true,
                             child: getAppType() == 'AHA'
                                 ? Image.asset('res/images/aha_logo.png')
@@ -185,7 +187,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         ),
                         //widget.loadingText
                         Semantics(
-                          label: 'display version',
+                          label: 'display',
                           readOnly: true,
                           child: Text(
                               'Version ' +

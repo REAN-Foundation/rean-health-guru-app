@@ -311,30 +311,32 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     )
                   else
                     Semantics(
-                      label: 'emergency_yes',
+                      label: 'Yes, I had an emergency',
                       child: InkWell(
                         onTap: () {
                           _emergencyDetailDialog(false);
                         },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              FontAwesomeIcons.ambulance,
-                              color: primaryColor,
-                              size: 36,
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text('Yes',
-                                style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Montserrat')),
-                          ],
+                        child: ExcludeSemantics(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.ambulance,
+                                color: primaryColor,
+                                size: 36,
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Yes',
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
                         ),
                       ),
                     )
@@ -772,6 +774,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Card(
+            semanticContainer: false,
             elevation: 0,
             child: Stack(
               children: [
@@ -932,6 +935,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Card(
+            semanticContainer: false,
             elevation: 0,
             child: Stack(
               children: [
@@ -1061,12 +1065,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      color: Colors.white,
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
                     ),
-                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -1166,12 +1172,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      color: Colors.white,
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
                     ),
-                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -1231,12 +1239,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      color: Colors.white,
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
                     ),
-                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,

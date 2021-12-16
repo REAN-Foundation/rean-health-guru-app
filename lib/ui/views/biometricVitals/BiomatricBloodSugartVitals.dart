@@ -149,7 +149,7 @@ class _BiometricBloodSugarVitalsViewState
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Blood Glucose textfield',
+                    label: 'Blood Glucose measures in mg/dl',
                     child: TextFormField(
                         controller: _controller,
                         maxLines: 1,
@@ -206,27 +206,29 @@ class _BiometricBloodSugarVitalsViewState
                     addvitals();
                   }
                 },
-                child: Container(
-                    height: 40,
-                    width: 120,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24.0),
-                      border: Border.all(color: primaryColor, width: 1),
-                      color: primaryColor,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Save',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14),
-                        textAlign: TextAlign.center,
+                child: ExcludeSemantics(
+                  child: Container(
+                      height: 40,
+                      width: 120,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.0,
                       ),
-                    )),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24.0),
+                        border: Border.all(color: primaryColor, width: 1),
+                        color: primaryColor,
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Save',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14),
+                          textAlign: TextAlign.center,
+                        ),
+                      )),
+                ),
               ),
             ),
           ),
@@ -320,7 +322,6 @@ class _BiometricBloodSugarVitalsViewState
   Widget _makeWeightList(BuildContext context, int index) {
     final Items record = records.elementAt(index);
     return Semantics(
-      label: 'make blood sugar list',
       readOnly: true,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -348,41 +349,35 @@ class _BiometricBloodSugarVitalsViewState
   Widget graph() {
     return Padding(
       padding: const EdgeInsets.all(0.0),
-      child: Semantics(
-        label: 'making graph of blood glucose',
-        readOnly: true,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [primaryLightColor, colorF6F6FF]),
-                  border: Border.all(color: primaryLightColor),
-                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
-              padding: const EdgeInsets.all(16),
-              height: 200,
-              child: Center(
-                child: SimpleTimeSeriesChart(_createSampleData()),
-              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [primaryLightColor, colorF6F6FF]),
+                border: Border.all(color: primaryLightColor),
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            padding: const EdgeInsets.all(16),
+            height: 200,
+            child: Center(
+              child: SimpleTimeSeriesChart(_createSampleData()),
             ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              'Blood Glucose',
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Text(
+            'Blood Glucose',
+            style: TextStyle(
+                color: primaryColor, fontSize: 14, fontWeight: FontWeight.w700),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }

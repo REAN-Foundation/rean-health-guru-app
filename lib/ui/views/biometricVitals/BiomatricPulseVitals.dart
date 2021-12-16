@@ -148,7 +148,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Pulse textfield',
+                    label: 'Pulse measures in bpm',
                     child: TextFormField(
                         controller: _controller,
                         maxLines: 1,

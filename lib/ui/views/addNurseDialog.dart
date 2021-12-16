@@ -139,25 +139,24 @@ class _MyDialogState extends State<AddNurseDialog> {
   Widget _entryFirstNameField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      child: Semantics(
-        label: 'first name of nurse',
-        readOnly: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: primaryColor, width: 1),
-                  color: Colors.white),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(color: primaryColor, width: 1),
+                color: Colors.white),
+            child: Semantics(
+              label: 'first name of nurse',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _firstNameController,
@@ -174,9 +173,9 @@ class _MyDialogState extends State<AddNurseDialog> {
                       border: InputBorder.none,
                       fillColor: Colors.white,
                       filled: true)),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -184,25 +183,24 @@ class _MyDialogState extends State<AddNurseDialog> {
   Widget _entryLastNameField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      child: Semantics(
-        label: 'last name of nurse',
-        readOnly: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: primaryColor, width: 1),
-                  color: Colors.white),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(color: primaryColor, width: 1),
+                color: Colors.white),
+            child: Semantics(
+              label: 'last name of nurse',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _lastNameController,
@@ -220,9 +218,9 @@ class _MyDialogState extends State<AddNurseDialog> {
                       border: InputBorder.none,
                       fillColor: Colors.white,
                       filled: true)),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -273,117 +271,113 @@ class _MyDialogState extends State<AddNurseDialog> {
   Widget _entryMobileNoField(String title) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      child: Semantics(
-        label: 'Contact number of nurse',
-        readOnly: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-                padding: EdgeInsets.only(right: 8.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(color: primaryColor, width: 1),
-                    color: Colors.white),
-                child:
-                    /*Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0,0,0,0),
-                      child: Text(
-                        "+91",
-                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
-                      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+              padding: EdgeInsets.only(right: 8.0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: primaryColor, width: 1),
+                  color: Colors.white),
+              child:
+                  /*Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0,0,0,0),
+                    child: Text(
+                      "+91",
+                      style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
                     ),
-                    Expanded(
-                      child: TextFormField(
-                          controller: _mobileNumberController,
-                          focusNode: _mobileNumberFocus,
-                          keyboardType: TextInputType.number,
-                          textInputAction: TextInputAction.done,
-                          maxLength: 10,
-                          onFieldSubmitted: (term) {
-                            //_fieldFocusChange(context, _mobileNumberFocus, _descriptionFocus);
-                          },
-                          maxLines: 1,
-                          decoration: InputDecoration(
-                              counterText: "",
-                              border: InputBorder.none,
-                              fillColor: Colors.white,
-                              filled: true)),
-                    )
-                  ],
-                )*/
-                IntlPhoneField(
-                  /*decoration: InputDecoration(
-                      labelText: 'Phone Number',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(),
-                      ),
-                    ),*/
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                  autoValidate: true,
-                  decoration: InputDecoration(
-                      counterText: '',
-                      hintText: 'mobile_number',
-                      hintStyle: TextStyle(color: Colors.transparent),
-                      border: InputBorder.none,
-                      fillColor: Colors.white,
-                      filled: true),
-                  initialCountryCode: getCurrentLocale(),
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                  ],
-                  onChanged: (phone) {
-                    debugPrint(phone.countryCode);
-                    debugPrint(phone.number);
-                    mobileNumber = phone.number;
-                    countryCode = phone.countryCode;
-                    /*if(mobileNumber.length == 10){
-                        _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
-                      }*/
-                  },
-                )
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                        controller: _mobileNumberController,
+                        focusNode: _mobileNumberFocus,
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.done,
+                        maxLength: 10,
+                        onFieldSubmitted: (term) {
+                          //_fieldFocusChange(context, _mobileNumberFocus, _descriptionFocus);
+                        },
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                            counterText: "",
+                            border: InputBorder.none,
+                            fillColor: Colors.white,
+                            filled: true)),
+                  )
+                ],
+              )*/
+                  IntlPhoneField(
+                /*decoration: InputDecoration(
+                    labelText: 'Phone Number',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(),
+                    ),
+                  ),*/
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                autoValidate: true,
+                decoration: InputDecoration(
+                    counterText: '',
+                    hintText: 'mobile number',
+                    hintStyle: TextStyle(color: Colors.transparent),
+                    border: InputBorder.none,
+                    fillColor: Colors.white,
+                    filled: true),
+                initialCountryCode: getCurrentLocale(),
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                ],
+                onChanged: (phone) {
+                  debugPrint(phone.countryCode);
+                  debugPrint(phone.number);
+                  mobileNumber = phone.number;
+                  countryCode = phone.countryCode;
+                  /*if(mobileNumber.length == 10){
+                      _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
+                    }*/
+                },
+              )
               /*InternationalPhoneNumberInput
-                .withCustomDecoration(
-                onInputChanged: (PhoneNumber number) {
-                  mobileNumber = number.toString().trim();
-                  debugPrint(mobileNumber);
+              .withCustomDecoration(
+              onInputChanged: (PhoneNumber number) {
+                mobileNumber = number.toString().trim();
+                debugPrint(mobileNumber);
 
-                  if (mobileNumber != number.parseNumber()) {
+                if (mobileNumber != number.parseNumber()) {
 
-                  } else {
-                    //dismissOtpWidget();
-                  }
+                } else {
+                  //dismissOtpWidget();
+                }
 
-              },
-              textFieldController: _mobileNumberController,
-              focusNode: _mobileNumberFocus,
-              onSubmit: () {
-                _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
-              },
-              keyboardAction: TextInputAction.next,
-              autoValidate: false,
-              formatInput: false,
-              selectorType:
-              PhoneInputSelectorType.BOTTOM_SHEET,
-              initialCountry2LetterCode: 'IN',
-              inputDecoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Colors.white,
-                  filled: true)
-          ),*/
-                ),
-          ],
-        ),
+            },
+            textFieldController: _mobileNumberController,
+            focusNode: _mobileNumberFocus,
+            onSubmit: () {
+              _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
+            },
+            keyboardAction: TextInputAction.next,
+            autoValidate: false,
+            formatInput: false,
+            selectorType:
+            PhoneInputSelectorType.BOTTOM_SHEET,
+            initialCountry2LetterCode: 'IN',
+            inputDecoration: InputDecoration(
+                border: InputBorder.none,
+                fillColor: Colors.white,
+                filled: true)
+        ),*/
+              ),
+        ],
       ),
     );
   }

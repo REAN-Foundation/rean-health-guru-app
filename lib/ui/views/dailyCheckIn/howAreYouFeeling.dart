@@ -56,13 +56,16 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                 height: 20,
               ),
               DelayedAnimation(
-                child: Text(
-                  "How are you feeling?",
-                  semanticsLabel: "How are you feeling?",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.0,
-                      color: Color(0XFF383739)),
+                child: Semantics(
+                  focused: true,
+                  child: Text(
+                    "How are you feeling?",
+                    semanticsLabel: "How are you feeling?",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18.0,
+                        color: Color(0XFF383739)),
+                  ),
                 ),
                 delay: delayedAmount,
               ),

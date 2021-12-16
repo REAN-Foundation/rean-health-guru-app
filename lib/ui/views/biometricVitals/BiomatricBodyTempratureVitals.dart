@@ -282,7 +282,7 @@ class _BiometricBodyTemperatureVitalsViewState
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
-        label: 'graph of body temperature',
+        label: 'making graph of ',
         readOnly: true,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

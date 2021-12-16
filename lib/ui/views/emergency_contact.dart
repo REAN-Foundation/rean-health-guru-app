@@ -610,11 +610,20 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                         fontWeight: FontWeight.w700,
                                         color: primaryColor)),
                               ),
-                              Text('Phone:  ' + details.contactPerson.phone,
-                                  style: TextStyle(
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w300,
-                                      color: primaryColor)),
+                              Semantics(
+                                label: "Phone: " +
+                                    details.contactPerson.phone
+                                        .replaceAllMapped(RegExp(r".{1}"),
+                                            (match) => "${match.group(0)} "),
+                                child: ExcludeSemantics(
+                                  child: Text(
+                                      'Phone:  ' + details.contactPerson.phone,
+                                      style: TextStyle(
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.w300,
+                                          color: primaryColor)),
+                                ),
+                              ),
                               Text("Doctor",
                                   style: TextStyle(
                                       fontSize: 12.0,
@@ -859,11 +868,21 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                           fontWeight: FontWeight.w700,
                                           color: primaryColor)),
                                 ),
-                                Text('Phone:  ' + details.contactPerson.phone,
-                                    style: TextStyle(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w300,
-                                        color: primaryColor)),
+                                Semantics(
+                                  label: "Phone: " +
+                                      details.contactPerson.phone
+                                          .replaceAllMapped(RegExp(r".{1}"),
+                                              (match) => "${match.group(0)} "),
+                                  child: ExcludeSemantics(
+                                    child: Text(
+                                        'Phone:  ' +
+                                            details.contactPerson.phone,
+                                        style: TextStyle(
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.w300,
+                                            color: primaryColor)),
+                                  ),
+                                ),
                                 Text(
                                   details.contactRelation,
                                   style: TextStyle(
@@ -1019,11 +1038,20 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                           fontWeight: FontWeight.w700,
                                           color: primaryColor)),
                                 ),
-                                Text('Phone: ' + details.contactPerson.phone,
-                                    style: TextStyle(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w300,
-                                        color: primaryColor)),
+                                Semantics(
+                                  label: "Phone: " +
+                                      details.contactPerson.phone
+                                          .replaceAllMapped(RegExp(r".{1}"),
+                                              (match) => "${match.group(0)} "),
+                                  child: ExcludeSemantics(
+                                    child: Text(
+                                        'Phone: ' + details.contactPerson.phone,
+                                        style: TextStyle(
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.w300,
+                                            color: primaryColor)),
+                                  ),
+                                ),
                                 Text(
                                   details.contactRelation,
                                   style: TextStyle(

@@ -126,13 +126,15 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                       child: Semantics(
                         label: summary.month,
                         readOnly: true,
-                        child: Text(summary.month,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                                color: textBlack)),
+                        child: ExcludeSemantics(
+                          child: Text(summary.month,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                  color: textBlack)),
+                        ),
                       ),
                     ),
                     Expanded(
@@ -187,82 +189,90 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   for (var item in summary.summaryForMonth) ...[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 6,
-                          child: Semantics(
-                            label: item.drug,
-                            readOnly: true,
-                            child: Text(item.drug,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: textBlack)),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 4,
-                          child: MergeSemantics(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(item.summaryForDrug.taken.toString(),
-                                        semanticsLabel: item
-                                                .summaryForDrug.taken
-                                                .toString() +
-                                            ' drug taken',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(item.summaryForDrug.missed.toString(),
-                                        semanticsLabel: item
-                                                .summaryForDrug.missed
-                                                .toString() +
-                                            ' drug missed',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(item.summaryForDrug.unknown.toString(),
-                                        semanticsLabel: item
-                                                .summaryForDrug.unknown
-                                                .toString() +
-                                            ' drug unknown',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                  ],
-                                ),
-                              ],
+                    MergeSemantics(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 6,
+                            child: Semantics(
+                              label: item.drug,
+                              readOnly: true,
+                              child: ExcludeSemantics(
+                                child: Text(item.drug,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            flex: 4,
+                            child: MergeSemantics(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(item.summaryForDrug.taken.toString(),
+                                          semanticsLabel: item
+                                                  .summaryForDrug.taken
+                                                  .toString() +
+                                              ' drug taken',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: textBlack)),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                          item.summaryForDrug.missed.toString(),
+                                          semanticsLabel: item
+                                                  .summaryForDrug.missed
+                                                  .toString() +
+                                              ' drug missed',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: textBlack)),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                          item.summaryForDrug.unknown
+                                              .toString(),
+                                          semanticsLabel: item
+                                                  .summaryForDrug.unknown
+                                                  .toString() +
+                                              ' drug unknown',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: textBlack)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 8,

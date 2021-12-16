@@ -142,28 +142,30 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                   addTemperatureVitals();
                                 }
                               },
-                              child: Container(
-                                  height: 40,
-                                  width: 200,
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 16.0,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(24.0),
-                                    border: Border.all(
-                                        color: primaryColor, width: 1),
-                                    color: primaryColor,
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Save',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 14),
-                                      textAlign: TextAlign.center,
+                              child: ExcludeSemantics(
+                                child: Container(
+                                    height: 40,
+                                    width: 200,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 16.0,
                                     ),
-                                  )),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      border: Border.all(
+                                          color: primaryColor, width: 1),
+                                      color: primaryColor,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Save',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 14),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    )),
+                              ),
                             ),
                           ),
                   ),

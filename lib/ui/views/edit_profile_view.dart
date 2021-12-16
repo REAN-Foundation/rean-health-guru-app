@@ -603,22 +603,25 @@ class _EditProfileState extends State<EditProfile> {
             ),
             child: Semantics(
               label: 'City ' + _cityController.text.toString(),
-              child: TextFormField(
-                  textCapitalization: TextCapitalization.sentences,
-                  obscureText: isPassword,
-                  controller: _cityController,
-                  focusNode: _cityFocus,
-                  keyboardType: TextInputType.streetAddress,
-                  maxLines: 1,
-                  enabled: isEditable,
-                  textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (term) {
-                    //_fieldFocusChange(context, _cityFocus, _addressFocus);
-                  },
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      fillColor: Colors.white,
-                      filled: true)),
+              textField: isEditable,
+              child: ExcludeSemantics(
+                child: TextFormField(
+                    textCapitalization: TextCapitalization.sentences,
+                    obscureText: isPassword,
+                    controller: _cityController,
+                    focusNode: _cityFocus,
+                    keyboardType: TextInputType.streetAddress,
+                    maxLines: 1,
+                    enabled: isEditable,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (term) {
+                      //_fieldFocusChange(context, _cityFocus, _addressFocus);
+                    },
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        fillColor: Colors.white,
+                        filled: true)),
+              ),
             ),
           )
         ],
@@ -654,22 +657,25 @@ class _EditProfileState extends State<EditProfile> {
             ),
             child: Semantics(
               label: 'Country ' + _countryController.text.toString(),
-              child: TextFormField(
-                  textCapitalization: TextCapitalization.sentences,
-                  obscureText: isPassword,
-                  controller: _countryController,
-                  focusNode: _countryFocus,
-                  keyboardType: TextInputType.streetAddress,
-                  maxLines: 1,
-                  enabled: isEditable,
-                  textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (term) {
-                    //_fieldFocusChange(context, _cityFocus, _addressFocus);
-                  },
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      fillColor: Colors.white,
-                      filled: true)),
+              textField: isEditable,
+              child: ExcludeSemantics(
+                child: TextFormField(
+                    textCapitalization: TextCapitalization.sentences,
+                    obscureText: isPassword,
+                    controller: _countryController,
+                    focusNode: _countryFocus,
+                    keyboardType: TextInputType.streetAddress,
+                    maxLines: 1,
+                    enabled: isEditable,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (term) {
+                      //_fieldFocusChange(context, _cityFocus, _addressFocus);
+                    },
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        fillColor: Colors.white,
+                        filled: true)),
+              ),
             ),
           )
         ],
@@ -705,23 +711,28 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             child: Semantics(
-              label: 'Postal Code ' + _postalCodeController.text.toString(),
-              child: TextFormField(
-                  textCapitalization: TextCapitalization.sentences,
-                  obscureText: isPassword,
-                  controller: _postalCodeController,
-                  focusNode: _postalFocus,
-                  keyboardType: TextInputType.number,
-                  maxLines: 1,
-                  enabled: isEditable,
-                  textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (term) {
-                    //_fieldFocusChange(context, _cityFocus, _addressFocus);
-                  },
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      fillColor: Colors.white,
-                      filled: true)),
+              label: 'Postal Code ' +
+                  _postalCodeController.text.toString().replaceAllMapped(
+                      RegExp(r".{1}"), (match) => "${match.group(0)} "),
+              textField: isEditable,
+              child: ExcludeSemantics(
+                child: TextFormField(
+                    textCapitalization: TextCapitalization.sentences,
+                    obscureText: isPassword,
+                    controller: _postalCodeController,
+                    focusNode: _postalFocus,
+                    keyboardType: TextInputType.number,
+                    maxLines: 1,
+                    enabled: isEditable,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (term) {
+                      //_fieldFocusChange(context, _cityFocus, _addressFocus);
+                    },
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        fillColor: Colors.white,
+                        filled: true)),
+              ),
             ),
           )
         ],
@@ -757,22 +768,25 @@ class _EditProfileState extends State<EditProfile> {
             ),
             child: Semantics(
               label: 'Address ' + _addressController.text.toString(),
-              child: TextFormField(
-                  textCapitalization: TextCapitalization.sentences,
-                  obscureText: isPassword,
-                  controller: _addressController,
-                  focusNode: _addressFocus,
-                  keyboardType: TextInputType.streetAddress,
-                  maxLines: 1,
-                  enabled: isEditable,
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (term) {
-                    _fieldFocusChange(context, _addressFocus, _cityFocus);
-                  },
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      fillColor: Colors.white,
-                      filled: true)),
+              textField: isEditable,
+              child: ExcludeSemantics(
+                child: TextFormField(
+                    textCapitalization: TextCapitalization.sentences,
+                    obscureText: isPassword,
+                    controller: _addressController,
+                    focusNode: _addressFocus,
+                    keyboardType: TextInputType.streetAddress,
+                    maxLines: 1,
+                    enabled: isEditable,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (term) {
+                      _fieldFocusChange(context, _addressFocus, _cityFocus);
+                    },
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        fillColor: Colors.white,
+                        filled: true)),
+              ),
             ),
           )
         ],
@@ -809,20 +823,23 @@ class _EditProfileState extends State<EditProfile> {
             ),
             child: Semantics(
               label: "Email " + _emailController.text.toString(),
-              child: TextFormField(
-                  controller: _emailController,
-                  focusNode: _emailFocus,
-                  keyboardType: TextInputType.emailAddress,
-                  maxLines: 1,
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (term) {
-                    _fieldFocusChange(context, _emailFocus, _addressFocus);
-                  },
-                  enabled: isEditable,
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      fillColor: Colors.white,
-                      filled: true)),
+              textField: isEditable,
+              child: ExcludeSemantics(
+                child: TextFormField(
+                    controller: _emailController,
+                    focusNode: _emailFocus,
+                    keyboardType: TextInputType.emailAddress,
+                    maxLines: 1,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (term) {
+                      _fieldFocusChange(context, _emailFocus, _addressFocus);
+                    },
+                    enabled: isEditable,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        fillColor: Colors.white,
+                        filled: true)),
+              ),
             ),
           )
         ],
@@ -1522,7 +1539,8 @@ class _EditProfileState extends State<EditProfile> {
             height: 10,
           ),
           Semantics(
-            label: dob,
+            label: 'Date Of Birth ' + dob,
+            readOnly: true,
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: 48.0,

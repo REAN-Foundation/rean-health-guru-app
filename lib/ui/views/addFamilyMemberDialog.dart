@@ -276,163 +276,159 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
   Widget _entryMobileNoField(String title) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      child: Semantics(
-        label: 'Contact number of family member or friend',
-        readOnly: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-                padding: EdgeInsets.only(right: 8.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(color: primaryColor, width: 1),
-                    color: Colors.white),
-                child:
-                    /*Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0,0,0,0),
-                      child: Text(
-                        "+91",
-                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
-                      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+              padding: EdgeInsets.only(right: 8.0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: primaryColor, width: 1),
+                  color: Colors.white),
+              child:
+                  /*Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0,0,0,0),
+                    child: Text(
+                      "+91",
+                      style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
                     ),
-                    Expanded(
-                      child: TextFormField(
-                          controller: _mobileNumberController,
-                          focusNode: _mobileNumberFocus,
-                          keyboardType: TextInputType.number,
-                          textInputAction: TextInputAction.next,
-                          maxLength: 10,
-                          onFieldSubmitted: (term) {
-                            _fieldFocusChange(context, _mobileNumberFocus, _descriptionFocus);
-                          },
-                          maxLines: 1,
-                          decoration: InputDecoration(
-                              counterText: "",
-                              border: InputBorder.none,
-                              fillColor: Colors.white,
-                              filled: true)),
-                    )
-                  ],
-                )*/
-
-                /*InternationalPhoneNumberInput(
-                  onInputChanged: (PhoneNumber number) {
-                    mobileNumber = number.parseNumber();
-                    debugPrint(number.parseNumber());
-                    if (mobileNumber.length == 10) {
-                      if(mobileNumber.length == 10){
-                        _fieldFocusChange(context, _mobileNumberFocus, _descriptionFocus);
-                      }
-                      //_fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
-                    }
-                    if (mobileNumber != number.parseNumber()) {
-                    } else {
-                      //dismissOtpWidget();
-                    }
-                  },
-                  keyboardAction: TextInputAction.done,
-                  focusNode: _mobileNumberFocus,
-                  */ /*textStyle:
-                  TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black26),*/ /*
-                  textFieldController: _mobileNumberController,
-                  isEnabled: true,
-                  formatInput: true,
-                  ignoreBlank: true,
-                  onFieldSubmitted: (term) {
-                    //_fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
-                  },
-                  selectorConfig: SelectorConfig(
-                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
-                  initialValue: PhoneNumber(isoCode: details.alpha2Code),
-                  inputDecoration: InputDecoration(
-                    //filled: true,
-                    //fillColor: Color(0xFFFFFFFF),
-
-                  //hintText: 'Mobile Number',
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(0.0)),
-                    borderSide: BorderSide(color: Colors.white),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(0.0)),
-                    borderSide: BorderSide(color: Colors.white),
-                  ),
-                ),
+                  Expanded(
+                    child: TextFormField(
+                        controller: _mobileNumberController,
+                        focusNode: _mobileNumberFocus,
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        maxLength: 10,
+                        onFieldSubmitted: (term) {
+                          _fieldFocusChange(context, _mobileNumberFocus, _descriptionFocus);
+                        },
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                            counterText: "",
+                            border: InputBorder.none,
+                            fillColor: Colors.white,
+                            filled: true)),
+                  )
+                ],
               )*/
-                    IntlPhoneField(
-                  /*decoration: InputDecoration(
-                    labelText: 'Phone Number',
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(),
-                    ),
-                  ),*/
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                  autoValidate: true,
-                  decoration: InputDecoration(
-                      counterText: '',
-                      hintText: 'mobile number',
-                      hintStyle: TextStyle(color: Colors.transparent),
-                      border: InputBorder.none,
-                      fillColor: Colors.white,
-                      filled: true),
-                  initialCountryCode: getCurrentLocale(),
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                  ],
-                  onChanged: (phone) {
-                    debugPrint(phone.countryCode);
-                    debugPrint(phone.number);
-                    mobileNumber = phone.number;
-                    countryCode = phone.countryCode;
-                    /*if(mobileNumber.length == 10){
-                      _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
-                    }*/
-                  },
-                )
 
-                /*InternationalPhoneNumberInput
-              .withCustomDecoration(
-              onInputChanged: (PhoneNumber number) {
-                mobileNumber = number.toString().trim();
-                debugPrint(mobileNumber);
-
+                  /*InternationalPhoneNumberInput(
+                onInputChanged: (PhoneNumber number) {
+                  mobileNumber = number.parseNumber();
+                  debugPrint(number.parseNumber());
+                  if (mobileNumber.length == 10) {
+                    if(mobileNumber.length == 10){
+                      _fieldFocusChange(context, _mobileNumberFocus, _descriptionFocus);
+                    }
+                    //_fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
+                  }
                   if (mobileNumber != number.parseNumber()) {
-
                   } else {
                     //dismissOtpWidget();
                   }
+                },
+                keyboardAction: TextInputAction.done,
+                focusNode: _mobileNumberFocus,
+                */ /*textStyle:
+                TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black26),*/ /*
+                textFieldController: _mobileNumberController,
+                isEnabled: true,
+                formatInput: true,
+                ignoreBlank: true,
+                onFieldSubmitted: (term) {
+                  //_fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
+                },
+                selectorConfig: SelectorConfig(
+                    selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
+                initialValue: PhoneNumber(isoCode: details.alpha2Code),
+                inputDecoration: InputDecoration(
+                  //filled: true,
+                  //fillColor: Color(0xFFFFFFFF),
 
-              },
-              textFieldController: _mobileNumberController,
-              focusNode: _mobileNumberFocus,
-              onSubmit: () {
-                _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
-              },
-              keyboardAction: TextInputAction.next,
-              autoValidate: false,
-              formatInput: false,
-              selectorType:
-              PhoneInputSelectorType.BOTTOM_SHEET,
-              initialCountry2LetterCode: 'IN',
-              inputDecoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Colors.white,
-                  filled: true)
-          ),*/
+                //hintText: 'Mobile Number',
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
+                  borderSide: BorderSide(color: Colors.white),
                 ),
-          ],
-        ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+              ),
+            )*/
+                  IntlPhoneField(
+                /*decoration: InputDecoration(
+                  labelText: 'Phone Number',
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(),
+                  ),
+                ),*/
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                autoValidate: true,
+                decoration: InputDecoration(
+                    counterText: '',
+                    hintText: 'mobile number of family or friend',
+                    hintStyle: TextStyle(color: Colors.transparent),
+                    border: InputBorder.none,
+                    fillColor: Colors.white,
+                    filled: true),
+                initialCountryCode: getCurrentLocale(),
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                ],
+                onChanged: (phone) {
+                  debugPrint(phone.countryCode);
+                  debugPrint(phone.number);
+                  mobileNumber = phone.number;
+                  countryCode = phone.countryCode;
+                  /*if(mobileNumber.length == 10){
+                    _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
+                  }*/
+                },
+              )
+
+              /*InternationalPhoneNumberInput
+            .withCustomDecoration(
+            onInputChanged: (PhoneNumber number) {
+              mobileNumber = number.toString().trim();
+              debugPrint(mobileNumber);
+
+                if (mobileNumber != number.parseNumber()) {
+
+                } else {
+                  //dismissOtpWidget();
+                }
+
+            },
+            textFieldController: _mobileNumberController,
+            focusNode: _mobileNumberFocus,
+            onSubmit: () {
+              _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
+            },
+            keyboardAction: TextInputAction.next,
+            autoValidate: false,
+            formatInput: false,
+            selectorType:
+            PhoneInputSelectorType.BOTTOM_SHEET,
+            initialCountry2LetterCode: 'IN',
+            inputDecoration: InputDecoration(
+                border: InputBorder.none,
+                fillColor: Colors.white,
+                filled: true)
+        ),*/
+              ),
+        ],
       ),
     );
   }

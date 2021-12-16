@@ -148,7 +148,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Pulse measures in bpm',
+                    label: 'Pulse rate measures in bpm',
                     child: TextFormField(
                         controller: _controller,
                         maxLines: 1,
@@ -194,35 +194,41 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
           ),
           Align(
             alignment: Alignment.centerRight,
-            child: InkWell(
-              onTap: () {
-                if (_controller.text.toString().isEmpty) {
-                  showToast('Please enter your Pulse Rate', context);
-                } else {
-                  addvitals();
-                }
-              },
-              child: Container(
-                  height: 40,
-                  width: 120,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24.0),
-                    border: Border.all(color: primaryColor, width: 1),
-                    color: primaryColor,
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Save',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14),
-                      textAlign: TextAlign.center,
-                    ),
-                  )),
+            child: Semantics(
+              label: "Save",
+              button: true,
+              child: InkWell(
+                onTap: () {
+                  if (_controller.text.toString().isEmpty) {
+                    showToast('Please enter your Pulse Rate', context);
+                  } else {
+                    addvitals();
+                  }
+                },
+                child: ExcludeSemantics(
+                  child: Container(
+                      height: 40,
+                      width: 120,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24.0),
+                        border: Border.all(color: primaryColor, width: 1),
+                        color: primaryColor,
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Save',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14),
+                          textAlign: TextAlign.center,
+                        ),
+                      )),
+                ),
+              ),
             ),
           ),
         ],
@@ -339,35 +345,40 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
   Widget graph() {
     return Padding(
       padding: const EdgeInsets.all(0.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [primaryLightColor, colorF6F6FF]),
-                border: Border.all(color: primaryLightColor),
-                borderRadius: BorderRadius.all(Radius.circular(8.0))),
-            padding: const EdgeInsets.all(16),
-            height: 200,
-            child: Center(
-              child: SimpleTimeSeriesChart(_createSampleData()),
+      child: Semantics(
+        label: 'making graph of ',
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [primaryLightColor, colorF6F6FF]),
+                  border: Border.all(color: primaryLightColor),
+                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
+              padding: const EdgeInsets.all(16),
+              height: 200,
+              child: Center(
+                child: SimpleTimeSeriesChart(_createSampleData()),
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(
-            'Pulse Rate',
-            style: TextStyle(
-                color: primaryColor, fontSize: 14, fontWeight: FontWeight.w700),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              'Pulse Rate',
+              style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }

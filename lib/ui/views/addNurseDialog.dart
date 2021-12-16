@@ -328,7 +328,7 @@ class _MyDialogState extends State<AddNurseDialog> {
                 autoValidate: true,
                 decoration: InputDecoration(
                     counterText: '',
-                    hintText: 'mobile number',
+                    hintText: 'mobile number of Nurse',
                     hintStyle: TextStyle(color: Colors.transparent),
                     border: InputBorder.none,
                     fillColor: Colors.white,

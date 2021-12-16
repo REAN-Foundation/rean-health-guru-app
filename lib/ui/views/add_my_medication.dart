@@ -659,13 +659,13 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       selcetedColor = Colors.white;
     }
 
-    String medicationName = images.code
-        .replaceAll(new RegExp("[0-9]"), "")
+    final String medicationName = images.code
+        .replaceAll(RegExp("[0-9]"), "")
         .replaceAll('_', ' ')
         .trimLeft();
 
     debugPrint(
-        'Medication Name ==> ${images.code.replaceAll(new RegExp("[0-9]"), "").replaceAll('_', ' ').trimLeft()}');
+        'Medication Name ==> ${images.code.replaceAll(RegExp("[0-9]"), "").replaceAll('_', ' ').trimLeft()}');
 
     return InkWell(
       child: Container(

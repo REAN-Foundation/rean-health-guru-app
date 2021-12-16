@@ -278,39 +278,45 @@ class _BiometricBloodPresureVitalsViewState
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                InkWell(
-                  onTap: () {
-                    if (_systolicController.text.toString().isEmpty) {
-                      showToast(
-                          'Please enter your systolic blood presure', context);
-                    } else if (_diastolicController.text.toString().isEmpty) {
-                      showToast(
-                          'Please enter your diastolic blood presure', context);
-                    } else {
-                      addvitals();
-                    }
-                  },
-                  child: Container(
-                      height: 40,
-                      width: 120,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24.0),
-                        border: Border.all(color: primaryColor, width: 1),
-                        color: primaryColor,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Save',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14),
-                          textAlign: TextAlign.center,
-                        ),
-                      )),
+                Semantics(
+                  label: "Save",
+                  button: true,
+                  child: InkWell(
+                    onTap: () {
+                      if (_systolicController.text.toString().isEmpty) {
+                        showToast('Please enter your systolic blood presure',
+                            context);
+                      } else if (_diastolicController.text.toString().isEmpty) {
+                        showToast('Please enter your diastolic blood presure',
+                            context);
+                      } else {
+                        addvitals();
+                      }
+                    },
+                    child: ExcludeSemantics(
+                      child: Container(
+                          height: 40,
+                          width: 120,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24.0),
+                            border: Border.all(color: primaryColor, width: 1),
+                            color: primaryColor,
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Save',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14),
+                              textAlign: TextAlign.center,
+                            ),
+                          )),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -483,35 +489,40 @@ class _BiometricBloodPresureVitalsViewState
   Widget _systolicgraph() {
     return Padding(
       padding: const EdgeInsets.all(0.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [primaryLightColor, colorF6F6FF]),
-                border: Border.all(color: primaryLightColor),
-                borderRadius: BorderRadius.all(Radius.circular(8.0))),
-            padding: const EdgeInsets.all(16),
-            height: 200,
-            child: Center(
-              child: SimpleTimeSeriesChart(_createSampleDatasystolic()),
+      child: Semantics(
+        label: 'making graph of ',
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [primaryLightColor, colorF6F6FF]),
+                  border: Border.all(color: primaryLightColor),
+                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
+              padding: const EdgeInsets.all(16),
+              height: 200,
+              child: Center(
+                child: SimpleTimeSeriesChart(_createSampleDatasystolic()),
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(
-            'Systolic Blood Pressure',
-            style: TextStyle(
-                color: primaryColor, fontSize: 14, fontWeight: FontWeight.w700),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              'Systolic Blood Pressure',
+              style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -544,35 +555,40 @@ class _BiometricBloodPresureVitalsViewState
   Widget _diastolicgraph() {
     return Padding(
       padding: const EdgeInsets.all(0.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [primaryLightColor, colorF6F6FF]),
-                border: Border.all(color: primaryLightColor),
-                borderRadius: BorderRadius.all(Radius.circular(8.0))),
-            padding: const EdgeInsets.all(16),
-            height: 200,
-            child: Center(
-              child: SimpleTimeSeriesChart(_createSampleDataDiastolic()),
+      child: Semantics(
+        label: 'making graph of ',
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [primaryLightColor, colorF6F6FF]),
+                  border: Border.all(color: primaryLightColor),
+                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
+              padding: const EdgeInsets.all(16),
+              height: 200,
+              child: Center(
+                child: SimpleTimeSeriesChart(_createSampleDataDiastolic()),
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(
-            'Diastolic Blood Pressure',
-            style: TextStyle(
-                color: primaryColor, fontSize: 14, fontWeight: FontWeight.w700),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              'Diastolic Blood Pressure',
+              style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -107,15 +107,6 @@ platform :ios do
     build(flavor: options[:flavor] , mode: options[:mode], app_identifier: app_identifier, profile_type: profile_type, export_option: export_option)
   end
 
-  lane :upload_build_to_testflight_rf do |options|
-    upload_build_to_testflight(flavorId: options[:flavor] , mode: options[:mode], app_store_app_id:"1569585646", flavor: options[:flavor])
-  end
-
-  lane :upload_build_to_testflight_aha do |options|
-    upload_build_to_testflight(flavorId: options[:flavor].partition('_').last , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor])
-  end
-
-
   desc "Build the ipa file as per the flavor"
   lane :build do |options|
 
@@ -169,6 +160,14 @@ platform :ios do
     )
   end
 
+  lane :upload_build_to_testflight_rf do |options|
+    upload_build_to_testflight(flavorId: options[:flavor] , mode: options[:mode], app_store_app_id:"1569585646", flavor: options[:flavor], changelog : "ReanCare Patient Test Build", description : "REAN Care Patient")
+  end
+
+  lane :upload_build_to_testflight_aha do |options|
+    upload_build_to_testflight(flavorId: options[:flavor].partition('_').last , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog : "HF Helper Test Build", description : "HF Helper")
+  end
+
   desc "Upload Build to TestFlight"
   lane :upload_build_to_testflight do |options|
     if options[:flavorId] == 'uat'
@@ -187,19 +186,19 @@ platform :ios do
         contact_phone: "7798074981",
         demo_account_name: ENV["IOS_DEMO_USER"],
         demo_account_password: ENV["IOS_DEMO_PASSWORD"],
-        notes: "ReanCare Patient Test Build"
+        notes: options[:changelog]
       },
       apple_id:app_store_app_id,
       ipa: "./output/build/RHG-APP-#{options[:mode]}-#{options[:flavor]}.ipa",
       api_key: get_api_key,
       skip_waiting_for_build_processing: true,
-      changelog: "ReanCare Patient Test Build",
+      changelog: options[:changelog],
       distribute_external: true,
       groups: testers_group,
       notify_external_testers: true,
       uses_non_exempt_encryption: true,
       beta_app_feedback_email: "support@reanfoundation.org",
-      beta_app_description: "REAN Care Patient #{options[:flavor]}",
+      beta_app_description: "#{options[:description]}-#{options[:flavor]}",
       demo_account_required: true
     )
   end

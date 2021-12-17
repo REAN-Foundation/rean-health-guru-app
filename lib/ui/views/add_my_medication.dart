@@ -260,7 +260,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
             children: <Widget>[
               Expanded(
                 child: Semantics(
-                  label: 'drug_name',
+                  label: 'Drug Name',
                   child: TypeAheadFormField(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: _typeAheadController,
@@ -280,7 +280,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     },
                     itemBuilder: (context, suggestion) {
                       return ListTile(
-                        title: Text(suggestion),
+                        title: Text(
+                          suggestion,
+                          semanticsLabel: suggestion,
+                        ),
                       );
                     },
                     transitionBuilder: (context, suggestionsBox, controller) {
@@ -308,17 +311,20 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 height: 40.0,
                 width: 40.0,
                 child: Center(
-                  child: InkWell(
-                    onTap: () {
-                      _getDrugsByName();
-                    },
-                    child: searchForDrug
-                        ? CircularProgressIndicator()
-                        : Icon(
-                            Icons.search,
-                            color: primaryColor,
-                            size: 32.0,
-                          ),
+                  child: Semantics(
+                    label: 'Search new drug',
+                    child: InkWell(
+                      onTap: () {
+                        _getDrugsByName();
+                      },
+                      child: searchForDrug
+                          ? CircularProgressIndicator()
+                          : Icon(
+                              Icons.search,
+                              color: primaryColor,
+                              size: 32.0,
+                            ),
+                    ),
                   ),
                 ),
               ),
@@ -327,17 +333,20 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 height: 40.0,
                 width: 40.0,
                 child: Center(
-                  child: InkWell(
-                    onTap: () {
-                      if (_typeAheadController.text.isNotEmpty) {
-                        FocusScope.of(context).unfocus();
-                        _addDrugConfirmDialog(context);
-                      }
-                    },
-                    child: Icon(
-                      Icons.add,
-                      color: primaryColor,
-                      size: 32.0,
+                  child: Semantics(
+                    label: 'Add new drug',
+                    child: InkWell(
+                      onTap: () {
+                        if (_typeAheadController.text.isNotEmpty) {
+                          FocusScope.of(context).unfocus();
+                          _addDrugConfirmDialog(context);
+                        }
+                      },
+                      child: Icon(
+                        Icons.add,
+                        color: primaryColor,
+                        size: 32.0,
+                      ),
                     ),
                   ),
                 ),
@@ -417,7 +426,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     border: Border.all(color: primaryColor, width: 0.80),
                     color: Colors.white),
                 child: Semantics(
-                  label: 'Select_Unit',
+                  label: 'Select Unit',
+                  button: true,
                   child: DropdownButton<String>(
                     isExpanded: true,
                     value: _dosageUnit == '' ? null : _dosageUnit,
@@ -649,23 +659,31 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       selcetedColor = Colors.white;
     }
 
-    return Semantics(
-      label: index.toString(),
-      child: InkWell(
-        child: Container(
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
-              color: selcetedColor,
-              width: 2.0,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+    final String medicationName = images.code
+        .replaceAll(RegExp("[0-9]"), "")
+        .replaceAll('_', ' ')
+        .trimLeft();
+
+    debugPrint(
+        'Medication Name ==> ${images.code.replaceAll(RegExp("[0-9]"), "").replaceAll('_', ' ').trimLeft()}');
+
+    return InkWell(
+      child: Container(
+        height: 50,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color: selcetedColor,
+            width: 2.0,
           ),
-          child: Container(
-            child: Stack(
-              children: [
-                Center(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+        child: Container(
+          child: Stack(
+            children: [
+              Semantics(
+                label: medicationName,
+                child: Center(
                     child: SizedBox(
                   width: 32,
                   height: 32,
@@ -673,8 +691,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     imageUrl: images.publicUrl,
                   ),
                 )),
-                if (images.isSelected)
-                  Align(
+              ),
+              if (images.isSelected)
+                ExcludeSemantics(
+                  child: Align(
                     alignment: Alignment.topRight,
                     child: Container(
                       width: 20,
@@ -694,18 +714,18 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         color: Colors.white,
                       ),
                     ),
-                  )
-                else
-                  Container(),
-              ],
-            ),
+                  ),
+                )
+              else
+                Container(),
+            ],
           ),
         ),
-        onTap: () {
-          selectStockImage(index);
-          //selectTimeSlot(index);
-        },
       ),
+      onTap: () {
+        selectStockImage(index);
+        //selectTimeSlot(index);
+      },
     );
   }
 
@@ -998,106 +1018,126 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: Checkbox(
-                    value: morningCheck,
-                    onChanged: (newValue) {
-                      setState(() {
-                        morningCheck = newValue;
-                      });
-                    }, //  <-- leading Checkbox
+            Semantics(
+              label: 'Morning',
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 32,
+                    height: 32,
+                    child: Checkbox(
+                      value: morningCheck,
+                      onChanged: (newValue) {
+                        setState(() {
+                          morningCheck = newValue;
+                        });
+                      }, //  <-- leading Checkbox
+                    ),
                   ),
-                ),
-                Text('Morning',
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        color: textBlack,
-                        fontWeight: FontWeight.w700))
-              ],
+                  ExcludeSemantics(
+                    child: Text('Morning',
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            color: textBlack,
+                            fontWeight: FontWeight.w700)),
+                  )
+                ],
+              ),
             ),
             SizedBox(
               width: 8,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: Checkbox(
-                    value: afternoonCheck,
-                    onChanged: (newValue) {
-                      setState(() {
-                        afternoonCheck = newValue;
-                      });
-                    }, //  <-- leading Checkbox
+            Semantics(
+              label: "Afteroon",
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 32,
+                    height: 32,
+                    child: Checkbox(
+                      value: afternoonCheck,
+                      onChanged: (newValue) {
+                        setState(() {
+                          afternoonCheck = newValue;
+                        });
+                      }, //  <-- leading Checkbox
+                    ),
                   ),
-                ),
-                Text('Afternoon',
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        color: textBlack,
-                        fontWeight: FontWeight.w700))
-              ],
+                  ExcludeSemantics(
+                    child: Text('Afternoon',
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            color: textBlack,
+                            fontWeight: FontWeight.w700)),
+                  )
+                ],
+              ),
             ),
             SizedBox(
               width: 8,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: Checkbox(
-                    value: eveningCheck,
-                    onChanged: (newValue) {
-                      setState(() {
-                        eveningCheck = newValue;
-                      });
-                    }, //  <-- leading Checkbox
+            Semantics(
+              label: 'Evening',
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 32,
+                    height: 32,
+                    child: Checkbox(
+                      value: eveningCheck,
+                      onChanged: (newValue) {
+                        setState(() {
+                          eveningCheck = newValue;
+                        });
+                      }, //  <-- leading Checkbox
+                    ),
                   ),
-                ),
-                Text('Evening',
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        color: textBlack,
-                        fontWeight: FontWeight.w700))
-              ],
+                  ExcludeSemantics(
+                    child: Text('Evening',
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            color: textBlack,
+                            fontWeight: FontWeight.w700)),
+                  )
+                ],
+              ),
             ),
             SizedBox(
               width: 8,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: Checkbox(
-                    value: nightCheck,
-                    onChanged: (newValue) {
-                      setState(() {
-                        nightCheck = newValue;
-                      });
-                    }, //  <-- leading Checkbox
+            Semantics(
+              label: 'Night',
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 32,
+                    height: 32,
+                    child: Checkbox(
+                      value: nightCheck,
+                      onChanged: (newValue) {
+                        setState(() {
+                          nightCheck = newValue;
+                        });
+                      }, //  <-- leading Checkbox
+                    ),
                   ),
-                ),
-                Text('Night',
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        color: textBlack,
-                        fontWeight: FontWeight.w700))
-              ],
+                  ExcludeSemantics(
+                    child: Text('Night',
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            color: textBlack,
+                            fontWeight: FontWeight.w700)),
+                  )
+                ],
+              ),
             ),
           ],
         ),

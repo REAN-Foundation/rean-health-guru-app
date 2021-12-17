@@ -209,7 +209,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   focusNode: _mobileNumberFocus,
                   decoration: InputDecoration(
                       counterText: '',
-                      hintText: 'mobile_number',
+                      hintText: 'mobile number',
                       hintStyle: TextStyle(color: Colors.transparent),
                       border: InputBorder.none,
                       fillColor: Colors.white,

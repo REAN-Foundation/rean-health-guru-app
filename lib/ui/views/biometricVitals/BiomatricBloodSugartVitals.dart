@@ -148,22 +148,25 @@ class _BiometricBloodSugarVitalsViewState
                       borderRadius: BorderRadius.circular(8.0),
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
-                  child: TextFormField(
-                      controller: _controller,
-                      maxLines: 1,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      onFieldSubmitted: (term) {},
-                      inputFormatters: [
-                        FilteringTextInputFormatter.deny(
-                            RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
-                      ],
-                      decoration: InputDecoration(
-                          hintText: '(100 to 125)',
-                          contentPadding: EdgeInsets.all(0),
-                          border: InputBorder.none,
-                          fillColor: Colors.white,
-                          filled: true)),
+                  child: Semantics(
+                    label: 'Blood Glucose measures in mg/dl',
+                    child: TextFormField(
+                        controller: _controller,
+                        maxLines: 1,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.number,
+                        onFieldSubmitted: (term) {},
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(
+                              RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                        ],
+                        decoration: InputDecoration(
+                            hintText: '(100 to 125)',
+                            contentPadding: EdgeInsets.all(0),
+                            border: InputBorder.none,
+                            fillColor: Colors.white,
+                            filled: true)),
+                  ),
                 ),
               ),
               RichText(
@@ -192,35 +195,41 @@ class _BiometricBloodSugarVitalsViewState
           ),
           Align(
             alignment: Alignment.centerRight,
-            child: InkWell(
-              onTap: () {
-                if (_controller.text.toString().isEmpty) {
-                  showToast('Please enter your blood glucose', context);
-                } else {
-                  addvitals();
-                }
-              },
-              child: Container(
-                  height: 40,
-                  width: 120,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24.0),
-                    border: Border.all(color: primaryColor, width: 1),
-                    color: primaryColor,
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Save',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14),
-                      textAlign: TextAlign.center,
-                    ),
-                  )),
+            child: Semantics(
+              label: 'Save',
+              button: true,
+              child: InkWell(
+                onTap: () {
+                  if (_controller.text.toString().isEmpty) {
+                    showToast('Please enter your blood glucose', context);
+                  } else {
+                    addvitals();
+                  }
+                },
+                child: ExcludeSemantics(
+                  child: Container(
+                      height: 40,
+                      width: 120,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24.0),
+                        border: Border.all(color: primaryColor, width: 1),
+                        color: primaryColor,
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Save',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14),
+                          textAlign: TextAlign.center,
+                        ),
+                      )),
+                ),
+              ),
             ),
           ),
         ],
@@ -229,75 +238,73 @@ class _BiometricBloodSugarVitalsViewState
   }
 
   Widget weightHistoryListFeilds() {
-    return MergeSemantics(
-      child: Container(
-        color: colorF6F6FF,
-        constraints: BoxConstraints(
-            minHeight: 100, minWidth: double.infinity, maxHeight: 160),
-        padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16, bottom: 16),
-        //height: 160,
-        child: model.busy
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : (records.isEmpty
-                ? noHistoryFound()
-                : Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Date',
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Text(
-                              'Blood Glucose',
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Expanded(
-                        child: Scrollbar(
-                          isAlwaysShown: true,
-                          controller: _scrollController,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: ListView.separated(
-                                itemBuilder: (context, index) =>
-                                    _makeWeightList(context, index),
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return SizedBox(
-                                    height: 8,
-                                  );
-                                },
-                                itemCount: records.length,
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true),
+    return Container(
+      color: colorF6F6FF,
+      constraints: BoxConstraints(
+          minHeight: 100, minWidth: double.infinity, maxHeight: 160),
+      padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16, bottom: 16),
+      //height: 160,
+      child: model.busy
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : (records.isEmpty
+              ? noHistoryFound()
+              : Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Date',
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
+                          Text(
+                            'Blood Glucose',
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Expanded(
+                      child: Scrollbar(
+                        isAlwaysShown: true,
+                        controller: _scrollController,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: ListView.separated(
+                              itemBuilder: (context, index) =>
+                                  _makeWeightList(context, index),
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return SizedBox(
+                                  height: 8,
+                                );
+                              },
+                              itemCount: records.length,
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true),
                         ),
                       ),
-                    ],
-                  )),
-      ),
+                    ),
+                  ],
+                )),
     );
   }
 
@@ -315,7 +322,6 @@ class _BiometricBloodSugarVitalsViewState
   Widget _makeWeightList(BuildContext context, int index) {
     final Items record = records.elementAt(index);
     return Semantics(
-      label: 'make blood sugar list',
       readOnly: true,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -344,8 +350,7 @@ class _BiometricBloodSugarVitalsViewState
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
-        label: 'making graph of blood glucose',
-        readOnly: true,
+        label: 'making graph of ',
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,

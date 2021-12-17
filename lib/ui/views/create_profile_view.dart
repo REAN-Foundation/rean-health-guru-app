@@ -296,21 +296,24 @@ class _CreateProfileState extends State<CreateProfile> {
                 width: 1.0,
               ),
             ),
-            child: TextFormField(
-                textCapitalization: TextCapitalization.sentences,
-                obscureText: isPassword,
-                controller: _firstNameController,
-                focusNode: _firstNameFocus,
-                maxLines: 1,
-                keyboardType: TextInputType.name,
-                textInputAction: TextInputAction.next,
-                onFieldSubmitted: (term) {
-                  _fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
-                },
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
+            child: Semantics(
+              label: 'First Name ' + _firstNameController.text.toString(),
+              child: TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
+                  obscureText: isPassword,
+                  controller: _firstNameController,
+                  focusNode: _firstNameFocus,
+                  maxLines: 1,
+                  keyboardType: TextInputType.name,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term) {
+                    _fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
+                  },
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Colors.white,
+                      filled: true)),
+            ),
           )
         ],
       ),
@@ -340,22 +343,25 @@ class _CreateProfileState extends State<CreateProfile> {
                 width: 1.0,
               ),
             ),
-            child: TextFormField(
-                textCapitalization: TextCapitalization.sentences,
-                obscureText: isPassword,
-                controller: _lastNameController,
-                focusNode: _lastNameFocus,
-                keyboardType: TextInputType.name,
-                maxLines: 1,
-                textInputAction: TextInputAction.done,
-                onFieldSubmitted: (term) {
-                  /*_fieldFocusChange(
-                      context, _lastNameFocus, _mobileNumberFocus);*/
-                },
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    fillColor: Colors.white,
-                    filled: true)),
+            child: Semantics(
+              label: 'Last name ' + _lastNameController.text.toString(),
+              child: TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
+                  obscureText: isPassword,
+                  controller: _lastNameController,
+                  focusNode: _lastNameFocus,
+                  keyboardType: TextInputType.name,
+                  maxLines: 1,
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (term) {
+                    /*_fieldFocusChange(
+                        context, _lastNameFocus, _mobileNumberFocus);*/
+                  },
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Colors.white,
+                      filled: true)),
+            ),
           )
         ],
       ),
@@ -660,58 +666,62 @@ class _CreateProfileState extends State<CreateProfile> {
           SizedBox(
             height: 10,
           ),
-          GestureDetector(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 48.0,
-              padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-                border: Border.all(
-                  color: Color(0XFF909CAC),
-                  width: 1.0,
+          Semantics(
+            label: 'Date of Birth ' + dob,
+            button: true,
+            child: GestureDetector(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 48.0,
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  border: Border.all(
+                    color: Color(0XFF909CAC),
+                    width: 1.0,
+                  ),
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        dob,
-                        style: TextStyle(
-                            fontWeight: FontWeight.normal, fontSize: 16),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          dob,
+                          style: TextStyle(
+                              fontWeight: FontWeight.normal, fontSize: 16),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                        height: 32,
-                        width: 32,
-                        child: ImageIcon(
-                            AssetImage('res/images/ic_calender.png'),
-                            color: Colors.black12)),
-                  ],
+                      SizedBox(
+                          height: 32,
+                          width: 32,
+                          child: ImageIcon(
+                              AssetImage('res/images/ic_calender.png'),
+                              color: Colors.black12)),
+                    ],
+                  ),
                 ),
               ),
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                DatePicker.showDatePicker(context,
+                    showTitleActions: true,
+                    minTime: DateTime(1940, 1, 1),
+                    maxTime: DateTime.now().subtract(Duration(days: 1)),
+                    onChanged: (date) {
+                  debugPrint('change $date');
+                }, onConfirm: (date) {
+                  unformatedDOB =
+                      date.toIso8601String().replaceAll("T00:00:00.000", "");
+                  setState(() {
+                    dob = dateFormat.format(date);
+                  });
+                  debugPrint('confirm $date');
+                }, currentTime: DateTime.now(), locale: LocaleType.en);
+              },
             ),
-            onTap: () {
-              FocusScope.of(context).unfocus();
-              DatePicker.showDatePicker(context,
-                  showTitleActions: true,
-                  minTime: DateTime(1940, 1, 1),
-                  maxTime: DateTime.now().subtract(Duration(days: 1)),
-                  onChanged: (date) {
-                    debugPrint('change $date');
-              }, onConfirm: (date) {
-                    unformatedDOB =
-                    date.toIso8601String().replaceAll("T00:00:00.000", "");
-                setState(() {
-                  dob = dateFormat.format(date);
-                });
-                debugPrint('confirm $date');
-              }, currentTime: DateTime.now(), locale: LocaleType.en);
-            },
           ),
         ],
       ),

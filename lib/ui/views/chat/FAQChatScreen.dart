@@ -162,20 +162,21 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                                   hintStyle: TextStyle(color: Colors.black38),
                                   hintText: 'Type your question',
                                   fillColor: Colors.white)),
-                            ),
-                          ),
                         ),
-                        SizedBox(
-                          width: 8,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    IconButton(
+                        icon: Icon(
+                          Icons.send,
+                          color: primaryColor,
+                          size: 32,
+                          semanticLabel: 'Send',
                         ),
-                        IconButton(
-                            icon: Icon(
-                              Icons.send,
-                              color: primaryColor,
-                              size: 32,
-                            ),
-                            onPressed: () {
-                              if (_chatController.text.isNotEmpty) {
+                        onPressed: () {
+                          if (_chatController.text.isNotEmpty) {
                             sendMessageBotApi(_chatController.text);
                             final chatMsg = FAQChatModelPojo(
                                 _chatController.text, DateTime.now(), 'ME');
@@ -193,7 +194,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                             });
                           }
                         }),
-                      ],
+                  ],
                     ),
                   )
                 ],

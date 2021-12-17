@@ -279,35 +279,40 @@ class _BiometricBloodOxygenVitalsViewState
   Widget graph() {
     return Padding(
       padding: const EdgeInsets.all(0.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [primaryLightColor, colorF6F6FF]),
-                border: Border.all(color: primaryLightColor),
-                borderRadius: BorderRadius.all(Radius.circular(8.0))),
-            padding: const EdgeInsets.all(16),
-            height: 200,
-            child: Center(
-              child: SimpleTimeSeriesChart(_createSampleData()),
+      child: Semantics(
+        label: 'making graph of ',
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [primaryLightColor, colorF6F6FF]),
+                  border: Border.all(color: primaryLightColor),
+                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
+              padding: const EdgeInsets.all(16),
+              height: 200,
+              child: Center(
+                child: SimpleTimeSeriesChart(_createSampleData()),
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(
-            'Blood Oxygen Saturation',
-            style: TextStyle(
-                color: primaryColor, fontSize: 14, fontWeight: FontWeight.w700),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              'Blood Oxygen Saturation',
+              style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }

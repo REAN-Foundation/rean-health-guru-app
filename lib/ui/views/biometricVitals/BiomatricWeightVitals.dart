@@ -156,23 +156,26 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                       borderRadius: BorderRadius.circular(8.0),
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
-                  child: TextFormField(
-                      controller: _weightController,
-                      maxLines: 1,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      onFieldSubmitted: (term) {},
-                      inputFormatters: [
-                        FilteringTextInputFormatter.deny(
-                            RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
-                      ],
-                      decoration: InputDecoration(
-                          hintText:
-                              unit == 'lbs' ? '(100 to 200)' : '(50 to 100)',
-                          contentPadding: EdgeInsets.all(0),
-                          border: InputBorder.none,
-                          fillColor: Colors.white,
-                          filled: true)),
+                  child: Semantics(
+                    label: 'Weight measures in ' + unit,
+                    child: TextFormField(
+                        controller: _weightController,
+                        maxLines: 1,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.number,
+                        onFieldSubmitted: (term) {},
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(
+                              RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                        ],
+                        decoration: InputDecoration(
+                            hintText:
+                                unit == 'lbs' ? '(100 to 200)' : '(50 to 100)',
+                            contentPadding: EdgeInsets.all(0),
+                            border: InputBorder.none,
+                            fillColor: Colors.white,
+                            filled: true)),
+                  ),
                 ),
               ),
               RichText(
@@ -201,35 +204,41 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           ),
           Align(
             alignment: Alignment.centerRight,
-            child: InkWell(
-              onTap: () {
-                if (_weightController.text.toString().isEmpty) {
-                  showToast('Please enter your weight', context);
-                } else {
-                  addvitals();
-                }
-              },
-              child: Container(
-                  height: 40,
-                  width: 120,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24.0),
-                    border: Border.all(color: primaryColor, width: 1),
-                    color: primaryColor,
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Save',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14),
-                      textAlign: TextAlign.center,
-                    ),
-                  )),
+            child: Semantics(
+              label: "Save",
+              button: true,
+              child: InkWell(
+                onTap: () {
+                  if (_weightController.text.toString().isEmpty) {
+                    showToast('Please enter your weight', context);
+                  } else {
+                    addvitals();
+                  }
+                },
+                child: ExcludeSemantics(
+                  child: Container(
+                      height: 40,
+                      width: 120,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24.0),
+                        border: Border.all(color: primaryColor, width: 1),
+                        color: primaryColor,
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Save',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14),
+                          textAlign: TextAlign.center,
+                        ),
+                      )),
+                ),
+              ),
             ),
           ),
         ],
@@ -353,7 +362,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
-        label: 'making graph of weight',
+        label: 'making graph of ',
         readOnly: true,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

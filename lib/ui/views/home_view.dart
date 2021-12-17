@@ -277,26 +277,30 @@ class _HomeViewState extends State<HomeView> {
         (targets.length + 1).toString(),
         'Navigation Menu',
         'Update your profile, add vitals and medical information.',
-        CoachMarkContentPosition.bottom));
+        CoachMarkContentPosition.bottom,
+        ShapeLightFocus.Circle));
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyMyTasks,
         (targets.length + 1).toString(),
         'Daily Tasks',
         'Keep a watch on your daily tasks.',
-        CoachMarkContentPosition.top));
+        CoachMarkContentPosition.top,
+        ShapeLightFocus.Circle));
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyUploadReports,
         (targets.length + 1).toString(),
         'Upload Reports',
         'Upload all your reports here.',
-        CoachMarkContentPosition.top));
+        CoachMarkContentPosition.top,
+        ShapeLightFocus.Circle));
     //targets.add(GetTargetFocus.getTargetFocus(_keyViewAppointments, (targets.length + 1).toString(), 'Appointments List', 'View all your Appointments here.', CoachMarkContentPosition.top));
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyEmergencyContacts,
         (targets.length + 1).toString(),
         'Emergency Contacts',
         'Add your emergency contacts here.',
-        CoachMarkContentPosition.top));
+        CoachMarkContentPosition.top,
+        ShapeLightFocus.Circle));
   }
 
   @override
@@ -401,7 +405,7 @@ class _HomeViewState extends State<HomeView> {
                         backgroundImage:  profileImage == "" ? AssetImage('res/images/profile_placeholder.png') : new NetworkImage(profileImage)),
                   )*/
                       Semantics(
-                    label: 'navigation_drawer',
+                    label: 'Navigation Drawer',
                     child: Container(
                       key: _keyNavigation_drawer,
                       width: 60.0,
@@ -445,6 +449,7 @@ class _HomeViewState extends State<HomeView> {
                     AssetImage('res/images/ic_chat_bot.png'),
                     size: 32,
                     color: primaryColor,
+                    semanticLabel: 'FAQ',
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, RoutePaths.FAQ_BOT);
@@ -475,7 +480,7 @@ class _HomeViewState extends State<HomeView> {
                 BottomNavigationBarItem(
                   icon: Semantics(
                     label: 'home page',
-                    readOnly: true,
+                    selected: true,
                     child: ImageIcon(
                       AssetImage('res/images/ic_home_colored.png'),
                       size: 24,
@@ -488,7 +493,7 @@ class _HomeViewState extends State<HomeView> {
                   icon: Semantics(
                     key: _keyMyTasks,
                     label: 'daily task',
-                    readOnly: true,
+                    selected: true,
                     child: ImageIcon(
                       AssetImage('res/images/ic_daily_tasks_colored.png'),
                       size: 24,
@@ -501,7 +506,7 @@ class _HomeViewState extends State<HomeView> {
                   icon: Semantics(
                     key: _keyUploadReports,
                     label: 'upload files',
-                    readOnly: true,
+                    selected: true,
                     child: ImageIcon(
                       AssetImage('res/images/ic_upload_files_colored.png'),
                       size: 24,
@@ -528,7 +533,7 @@ class _HomeViewState extends State<HomeView> {
                   icon: Semantics(
                       key: _keyEmergencyContacts,
                       label: 'emergency contact',
-                      readOnly: true,
+                      selected: true,
                       child: Icon(
                         FontAwesomeIcons.ambulance,
                         color: _currentNav == 3 ? Colors.white : Colors.white54,

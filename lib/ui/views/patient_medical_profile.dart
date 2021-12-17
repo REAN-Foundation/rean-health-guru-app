@@ -46,465 +46,444 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
   Widget build(BuildContext context) {
     return BaseWidget<PatientObservationsViewModel>(
         model: model,
-        builder: (context, model, child) => MergeSemantics(
-              child: Scaffold(
-                  backgroundColor: Colors.white,
-                  appBar: AppBar(
-                    brightness: Brightness.light,
-                    backgroundColor: Colors.white,
-                    title: Text(
-                      'My Medical Profile',
+        builder: (context, model, child) => Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              brightness: Brightness.light,
+              backgroundColor: Colors.white,
+              title: Text(
+                'My Medical Profile',
+                style: TextStyle(
+                    fontSize: 16.0,
+                    color: primaryColor,
+                    fontWeight: FontWeight.w700),
+              ),
+              iconTheme: IconThemeData(color: Colors.black),
+            ),
+            body: model.busy
+                ? Center(child: CircularProgressIndicator())
+                : SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Major Ailment',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: textBlack)),
+                              ),
+                              Text(': ',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text('' + replaceNull(healthProfile.majorAilment),
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Other Conditions',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: textBlack)),
+                              ),
+                              Text(': ',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                  '' +
+                                      replaceNull(
+                                          healthProfile.otherConditions),
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Ethnicity',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: textBlack)),
+                              ),
+                              Text(': ',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text('' + replaceNull(healthProfile.ethnicity),
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Blood Group',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: textBlack)),
+                              ),
+                              Text(':',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text('' + replaceNull(healthProfile.bloodGroup),
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Diabetic',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: textBlack)),
+                              ),
+                              Text(':',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text('' + yesOrNo(healthProfile.isDiabetic),
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Heart Patient',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: textBlack)),
+                              ),
+                              Text(':',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text('' + yesOrNo(healthProfile.hasHeartAilment),
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 24,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Marital Status',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: textBlack)),
+                              ),
+                              Text(':',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Expanded(
+                                child: Text(
+                                    '' +
+                                        replaceNull(healthProfile.maritalStatus
+                                            .replaceAll('Unknown', 'Single')),
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Occupation',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: textBlack)),
+                              ),
+                              Text(':',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Expanded(
+                                child: Text(
+                                    '' + replaceNull(healthProfile.occupation),
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          /*Row(
+                children: <Widget>[
+                  SizedBox(width: 150,
+                    child: Text('Sedentary Occupation',
+                        style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w700,
+                            color: textBlack)),
+                  ),
+                  Text(':',
                       style: TextStyle(
                           fontSize: 16.0,
-                          color: primaryColor,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    iconTheme: IconThemeData(color: Colors.black),
-                  ),
-                  body: model.busy
-                      ? Center(child: CircularProgressIndicator())
-                      : SingleChildScrollView(
-                          child: Padding(
-                            padding: const EdgeInsets.all(24.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Major Ailment',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(': ',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                        '' +
-                                            replaceNull(
-                                                healthProfile.majorAilment),
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Other Conditions',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(': ',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                        '' +
-                                            replaceNull(
-                                                healthProfile.otherConditions),
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Ethnicity',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(': ',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                        '' +
-                                            replaceNull(
-                                                healthProfile.ethnicity),
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Blood Group',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(':',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                        '' +
-                                            replaceNull(
-                                                healthProfile.bloodGroup),
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Diabetic',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(':',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                        '' +
-                                            yesOrNo(healthProfile.isDiabetic),
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Heart Patient',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(':',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                        '' +
-                                            yesOrNo(healthProfile
-                                                .hasHeartAilment),
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 24,
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Marital Status',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(':',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                          '' +
-                                              replaceNull(healthProfile
-                                                  .maritalStatus
-                                                  .replaceAll(
-                                                      'Unknown', 'Single')),
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w500,
-                                              color: textBlack)),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Occupation',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(':',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                          '' +
-                                              replaceNull(
-                                                  healthProfile.occupation),
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w500,
-                                              color: textBlack)),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                /*Row(
-                      children: <Widget>[
-                        SizedBox(width: 150,
-                          child: Text('Sedentary Occupation',
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w700,
-                                  color: textBlack)),
-                        ),
-                        Text(':',
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
-                                color: textBlack)),
-                        SizedBox(width: 8,),
-                        Text('No',
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
-                                color: textBlack)),
-                      ],
-                    ),
-                    SizedBox(height: 8,),*/
-                                Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Nationality',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(':',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                          '' +
-                                              replaceNull(
-                                                  healthProfile.nationality),
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w500,
-                                              color: textBlack)),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 32,
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Is smoker?',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(':',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text('' + yesOrNo(healthProfile.isSmoker),
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Is Drinker?',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(':',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                        '' + yesOrNo(healthProfile.isDrinker),
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                  ],
-                                ),
-                                SizedBox(height: 8,),
-                                Row(
-                                  children: <Widget>[
-                                    SizedBox(
-                                      width: 150,
-                                      child: Text('Procedure History',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w700,
-                                              color: textBlack)),
-                                    ),
-                                    Text(':',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: textBlack)),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                          '' +
-                                              replaceNull(healthProfile
-                                                  .procedureHistory),
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w500,
-                                              color: textBlack)),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-
-                              ],
-                            ),
-                          ),
-                        ),
-                  floatingActionButton: model.busy
-                      ? Container()
-                      : Semantics(
-                          label: 'edit_medical_profile',
-                    child: FloatingActionButton(
-                              elevation: 0.0,
-                              child: Icon(
-                                Icons.edit,
-                                color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          color: textBlack)),
+                  SizedBox(width: 8,),
+                  Text('No',
+                      style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w500,
+                          color: textBlack)),
+                ],
+              ),
+              SizedBox(height: 8,),*/
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Nationality',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: textBlack)),
                               ),
-                              backgroundColor: primaryColor,
-                              onPressed: () {
-                                Navigator.pushNamed(context,
-                                        RoutePaths.Patient_EDIT_MEDIACL_PROFILE,
-                                        arguments: healthProfile)
-                                    .then((value) {
-                                  _getPatientMedicalProfile();
-                                });
-                              }),
-                        )),
-            ));
+                              Text(':',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Expanded(
+                                child: Text(
+                                    '' + replaceNull(healthProfile.nationality),
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 32,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Is smoker?',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: textBlack)),
+                              ),
+                              Text(':',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text('' + yesOrNo(healthProfile.isSmoker),
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Is Drinker?',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: textBlack)),
+                              ),
+                              Text(':',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text('' + yesOrNo(healthProfile.isDrinker),
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Procedure History',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w700,
+                                        color: textBlack)),
+                              ),
+                              Text(':',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Expanded(
+                                child: Text(
+                                    '' +
+                                        replaceNull(
+                                            healthProfile.procedureHistory),
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+            floatingActionButton: model.busy
+                ? Container()
+                : Semantics(
+                    label: 'Edit Medical Profile',
+                    child: FloatingActionButton(
+                        elevation: 0.0,
+                        tooltip: 'Edit Medical Profile',
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: primaryColor,
+                        onPressed: () {
+                          Navigator.pushNamed(context,
+                                  RoutePaths.Patient_EDIT_MEDIACL_PROFILE,
+                                  arguments: healthProfile)
+                              .then((value) {
+                            _getPatientMedicalProfile();
+                          });
+                        }),
+                  )));
   }
 
   String replaceNull(String text) {

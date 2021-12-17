@@ -283,14 +283,16 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(discription,
-                              maxLines: 4,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Montserrat')),
+                          Expanded(
+                            child: Text(discription,
+                                maxLines: 4,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Montserrat')),
+                          ),
                           Semantics(
                             label: 'edit_emergency_text',
                             child: IconButton(
@@ -309,30 +311,32 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     )
                   else
                     Semantics(
-                      label: 'emergency_yes',
+                      label: 'Yes, I had an emergency',
                       child: InkWell(
                         onTap: () {
                           _emergencyDetailDialog(false);
                         },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              FontAwesomeIcons.ambulance,
-                              color: primaryColor,
-                              size: 36,
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text('Yes',
-                                style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Montserrat')),
-                          ],
+                        child: ExcludeSemantics(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.ambulance,
+                                color: primaryColor,
+                                size: 36,
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Yes',
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
                         ),
                       ),
                     )
@@ -426,7 +430,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 ),
                 Expanded(
                   child: Semantics(
-                    label: tittle,
+                    label: 'Add ' + tittle + ' details',
+                    button: true,
                     child: InkWell(
                       onTap: () {
                         //showToast(tittle);
@@ -528,7 +533,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     _removeConfirmation(doctorTeam.elementAt(index));
                   },
                   child: Semantics(
-                    label: 'delete_doctor',
+                    label: 'Delete Doctor',
+                    button: true,
                     child: Align(
                       alignment: Alignment.topRight,
                       child: Padding(
@@ -551,28 +557,32 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                         Expanded(
                           flex: 2,
                           child: Center(
-                            child: InkWell(
-                              onTap: () async {
-                                final String url =
-                                    'tel://' + details.contactPerson.phone;
-                                if (await canLaunch(url)) {
-                                  await launch(url);
-                                } else {
-                                  showToast('Unable to dial number', context);
-                                  debugPrint('Could not launch $url');
-                                  throw 'Could not launch $url';
-                                }
-                              },
-                              child: Container(
-                                height: 80,
-                                width: 80,
-                                child: Lottie.asset(
-                                  'res/lottiefiles/call.json',
-                                  height: 120,
-                                ), /*Image(
-                                  image: AssetImage(
-                                      'res/images/profile_placeholder.png'),
-                                ),*/
+                            child: Semantics(
+                              label: 'Call Doctor',
+                              button: true,
+                              child: InkWell(
+                                onTap: () async {
+                                  final String url =
+                                      'tel://' + details.contactPerson.phone;
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  } else {
+                                    showToast('Unable to dial number', context);
+                                    debugPrint('Could not launch $url');
+                                    throw 'Could not launch $url';
+                                  }
+                                },
+                                child: Container(
+                                  height: 80,
+                                  width: 80,
+                                  child: Lottie.asset(
+                                    'res/lottiefiles/call.json',
+                                    height: 120,
+                                  ), /*Image(
+                                    image: AssetImage(
+                                        'res/images/profile_placeholder.png'),
+                                  ),*/
+                                ),
                               ),
                             ),
                           ),
@@ -593,16 +603,27 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                         details.contactPerson.firstName +
                                         ' ' +
                                         details.contactPerson.lastName,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.w700,
                                         color: primaryColor)),
                               ),
-                              Text('Phone:  ' + details.contactPerson.phone,
-                                  style: TextStyle(
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w300,
-                                      color: primaryColor)),
+                              Semantics(
+                                label: "Phone: " +
+                                    details.contactPerson.phone
+                                        .replaceAllMapped(RegExp(r".{1}"),
+                                            (match) => "${match.group(0)} "),
+                                child: ExcludeSemantics(
+                                  child: Text(
+                                      'Phone:  ' + details.contactPerson.phone,
+                                      style: TextStyle(
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.w300,
+                                          color: primaryColor)),
+                                ),
+                              ),
                               Text("Doctor",
                                   style: TextStyle(
                                       fontSize: 12.0,
@@ -762,6 +783,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Card(
+            semanticContainer: false,
             elevation: 0,
             child: Stack(
               children: [
@@ -770,7 +792,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       _removeConfirmation(socialWorkerTeam.elementAt(index));
                     },
                     child: Semantics(
-                      label: 'delete_nurse',
+                      label: 'Delete Nurse',
+                      button: true,
                       child: Align(
                         alignment: Alignment.topRight,
                         child: Padding(
@@ -793,28 +816,32 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                           Expanded(
                             flex: 2,
                             child: Center(
-                              child: InkWell(
-                                onTap: () async {
-                                  final String url =
-                                      'tel://' + details.contactPerson.phone;
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
-                                  } else {
-                                    showToast('Unable to dial number', context);
-                                    debugPrint('Could not launch $url');
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                child: Container(
-                                  height: 80,
-                                  width: 80,
-                                  child: Lottie.asset(
-                                    'res/lottiefiles/call.json',
-                                    height: 120,
-                                  ), /*Image(
-                                  image: AssetImage(
-                                      'res/images/profile_placeholder.png'),
-                                ),*/
+                              child: Semantics(
+                                label: 'Call Nurse',
+                                child: InkWell(
+                                  onTap: () async {
+                                    final String url =
+                                        'tel://' + details.contactPerson.phone;
+                                    if (await canLaunch(url)) {
+                                      await launch(url);
+                                    } else {
+                                      showToast(
+                                          'Unable to dial number', context);
+                                      debugPrint('Could not launch $url');
+                                      throw 'Could not launch $url';
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 80,
+                                    width: 80,
+                                    child: Lottie.asset(
+                                      'res/lottiefiles/call.json',
+                                      height: 120,
+                                    ), /*Image(
+                                    image: AssetImage(
+                                        'res/images/profile_placeholder.png'),
+                                  ),*/
+                                  ),
                                 ),
                               ),
                             ),
@@ -834,16 +861,28 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                       details.contactPerson.firstName +
                                           ' ' +
                                           details.contactPerson.lastName,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: primaryColor)),
                                 ),
-                                Text('Phone:  ' + details.contactPerson.phone,
-                                    style: TextStyle(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w300,
-                                        color: primaryColor)),
+                                Semantics(
+                                  label: "Phone: " +
+                                      details.contactPerson.phone
+                                          .replaceAllMapped(RegExp(r".{1}"),
+                                              (match) => "${match.group(0)} "),
+                                  child: ExcludeSemantics(
+                                    child: Text(
+                                        'Phone:  ' +
+                                            details.contactPerson.phone,
+                                        style: TextStyle(
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.w300,
+                                            color: primaryColor)),
+                                  ),
+                                ),
                                 Text(
                                   details.contactRelation,
                                   style: TextStyle(
@@ -915,6 +954,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Card(
+            semanticContainer: false,
             elevation: 0,
             child: Stack(
               children: [
@@ -923,7 +963,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       _removeConfirmation(familyTeam.elementAt(index));
                     },
                     child: Semantics(
-                      label: 'delete_family_members',
+                      label: 'Delete Family Members',
                       child: Align(
                         alignment: Alignment.topRight,
                         child: Padding(
@@ -946,28 +986,32 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                           Expanded(
                             flex: 2,
                             child: Center(
-                              child: InkWell(
-                                onTap: () async {
-                                  final String url =
-                                      'tel://' + details.contactPerson.phone;
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
-                                  } else {
-                                    showToast('Unable to dial number', context);
-                                    debugPrint('Could not launch $url');
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                child: Container(
-                                  height: 80,
-                                  width: 80,
-                                  child: Lottie.asset(
-                                    'res/lottiefiles/call.json',
-                                    height: 120,
-                                  ), /*Image(
-                                  image: AssetImage(
-                                      'res/images/profile_placeholder.png'),
-                                ),*/
+                              child: Semantics(
+                                label: 'Call Family Member',
+                                child: InkWell(
+                                  onTap: () async {
+                                    final String url =
+                                        'tel://' + details.contactPerson.phone;
+                                    if (await canLaunch(url)) {
+                                      await launch(url);
+                                    } else {
+                                      showToast(
+                                          'Unable to dial number', context);
+                                      debugPrint('Could not launch $url');
+                                      throw 'Could not launch $url';
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 80,
+                                    width: 80,
+                                    child: Lottie.asset(
+                                      'res/lottiefiles/call.json',
+                                      height: 120,
+                                    ), /*Image(
+                                    image: AssetImage(
+                                        'res/images/profile_placeholder.png'),
+                                  ),*/
+                                  ),
                                 ),
                               ),
                             ),
@@ -987,16 +1031,27 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                       details.contactPerson.firstName +
                                           ' ' +
                                           details.contactPerson.lastName,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700,
                                           color: primaryColor)),
                                 ),
-                                Text('Phone: ' + details.contactPerson.phone,
-                                    style: TextStyle(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w300,
-                                        color: primaryColor)),
+                                Semantics(
+                                  label: "Phone: " +
+                                      details.contactPerson.phone
+                                          .replaceAllMapped(RegExp(r".{1}"),
+                                              (match) => "${match.group(0)} "),
+                                  child: ExcludeSemantics(
+                                    child: Text(
+                                        'Phone: ' + details.contactPerson.phone,
+                                        style: TextStyle(
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.w300,
+                                            color: primaryColor)),
+                                  ),
+                                ),
                                 Text(
                                   details.contactRelation,
                                   style: TextStyle(
@@ -1038,12 +1093,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      color: Colors.white,
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
                     ),
-                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -1143,12 +1200,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      color: Colors.white,
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
                     ),
-                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -1208,12 +1267,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      color: Colors.white,
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
                     ),
-                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,

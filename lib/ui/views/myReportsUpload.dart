@@ -472,7 +472,6 @@ class _MyReportsViewState extends State<MyReportsView> {
                                     width: 4,
                                   ),
                                   Text('Share',
-                                      semanticsLabel: 'share',
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,

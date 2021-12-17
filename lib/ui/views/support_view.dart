@@ -302,7 +302,7 @@ class _SupportViewState extends State<SupportView> {
 
   Widget _backButton() {
     return Semantics(
-      label: 'take to back screen',
+      label: 'Back',
       button: true,
       child: InkWell(
         onTap: () {

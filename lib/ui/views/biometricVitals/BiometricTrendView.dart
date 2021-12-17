@@ -79,6 +79,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
   Widget weightTrends() {
     return Card(
       elevation: 8,
+      semanticContainer: false,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -115,6 +116,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
 
   Widget bloodPresureTrends() {
     return Card(
+      semanticContainer: false,
       elevation: 8,
       child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -153,6 +155,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
 
   Widget bloodGlucoseTrends() {
     return Card(
+      semanticContainer: false,
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -192,6 +195,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
 
   Widget bloodOxygenSaturationTrends() {
     return Card(
+      semanticContainer: false,
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -231,6 +235,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
 
   Widget pulseRateTrends() {
     return Card(
+      semanticContainer: false,
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -270,6 +275,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
 
   Widget bodyTempratureTrends() {
     return Card(
+      semanticContainer: false,
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(16.0),

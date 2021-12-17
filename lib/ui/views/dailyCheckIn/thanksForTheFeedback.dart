@@ -35,42 +35,47 @@ class _ThanksForTheFeedBack extends State<ThanksForTheFeedBack>
     return Container(
         height: 160,
         color: Colors.transparent,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(24.0),
-                topRight: Radius.circular(24.0)),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(
-                height: 20,
+        child: Semantics(
+          label: "Thanks for the feedback!",
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24.0),
+                  topRight: Radius.circular(24.0)),
+            ),
+            child: ExcludeSemantics(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Image.asset(
+                    'res/images/ic_thanks_for_feedback.png',
+                    height: 64,
+                    width: 64,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  DelayedAnimation(
+                    child: Text(
+                      "Thanks for the feedback!",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.0,
+                          color: Color(0XFF383739)),
+                    ),
+                    delay: delayedAmount,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
               ),
-              Image.asset(
-                'res/images/ic_thanks_for_feedback.png',
-                height: 64,
-                width: 64,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              DelayedAnimation(
-                child: Text(
-                  "Thanks for the feedback!",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.0,
-                      color: Color(0XFF383739)),
-                ),
-                delay: delayedAmount,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+            ),
           ),
         ));
   }

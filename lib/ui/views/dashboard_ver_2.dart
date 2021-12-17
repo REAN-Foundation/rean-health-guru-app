@@ -779,16 +779,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  IconButton(
-                      icon: Icon(
-                        Icons.add_circle,
-                        size: 32,
-                        color: iconColor,
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(
-                            context, RoutePaths.ADD_MY_MEDICATION);
-                      })
+                  Semantics(
+                    label: 'Add medication',
+                    child: IconButton(
+                        icon: Icon(
+                          Icons.add_circle,
+                          size: 32,
+                          color: iconColor,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, RoutePaths.ADD_MY_MEDICATION);
+                        }),
+                  )
                 ],
               ),
             ),
@@ -800,7 +803,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Semantics(
-                    label: 'my_medication_yes',
+                    label: 'Yes I have taken my medications',
+                    button: true,
                     child: InkWell(
                       onTap: () {
                         if (currentMedicationList.isEmpty) {
@@ -811,53 +815,58 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           markAllMedicationAsTaken();
                         }
                       },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.thumb_up,
-                            color: Colors.green,
-                            size: 36,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text('Yes',
-                              style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Montserrat')),
-                        ],
+                      child: ExcludeSemantics(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.thumb_up,
+                              color: Colors.green,
+                              size: 36,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text('Yes',
+                                style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'Montserrat')),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                   Semantics(
-                    label: 'my_medication_no',
+                    label: 'No I haven\'t taken my medications',
+                    button: true,
                     child: InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, RoutePaths.My_Medications);
                       },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.thumb_down,
-                            color: primaryColor,
-                            size: 36,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text('No',
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Montserrat')),
-                        ],
+                      child: ExcludeSemantics(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.thumb_down,
+                              color: primaryColor,
+                              size: 36,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text('No',
+                                style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'Montserrat')),
+                          ],
+                        ),
                       ),
                     ),
                   )
@@ -1319,6 +1328,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         Icons.add_circle,
                         size: 32,
                         color: iconColor,
+                        semanticLabel: 'Add Vitals',
                       ),
                       onPressed: () {
                         Navigator.pushNamed(context, RoutePaths.My_Vitals);
@@ -1334,7 +1344,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Semantics(
-                      label: 'Weight',
+                      label: 'Add Weight',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context,
@@ -1342,40 +1353,43 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(8),
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_body_weight.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Weight',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(8),
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_body_weight.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Weight',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                     Semantics(
-                      label: "Blood Pressure",
+                      label: "Add Blood Pressure",
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(
@@ -1385,40 +1399,44 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(8),
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_blood_presure.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Blood\nPressure',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(8),
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage(
+                                        'res/images/ic_blood_presure.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Blood\nPressure',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                     Semantics(
-                      label: 'Blood Glucose',
+                      label: 'Add Blood Glucose',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(
@@ -1428,40 +1446,44 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(12),
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_blood_glucose.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Blood\nGlucose',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(12),
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage(
+                                        'res/images/ic_blood_glucose.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Blood\nGlucose',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                     Semantics(
-                      label: 'Pulse',
+                      label: 'Add Pulse',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context,
@@ -1469,33 +1491,35 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.only(right: 12),
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_pulse.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Pulse',
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.only(right: 12),
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_pulse.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Pulse',
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -1559,6 +1583,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         Icons.add_circle,
                         size: 32,
                         color: iconColor,
+                        semanticLabel: 'Add Nutrition',
                       ),
                       onPressed: () {
                         Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1575,7 +1600,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Semantics(
-                      label: 'Breakfast',
+                      label: 'Add Breakfast',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1583,39 +1609,42 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_breakfast.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Breakfast',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_breakfast.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Breakfast',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                     Semantics(
-                      label: "Lunch",
+                      label: "Add Lunch",
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1623,39 +1652,42 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_lunch.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Lunch',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_lunch.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Lunch',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                     Semantics(
-                      label: 'Dinner',
+                      label: 'Add Dinner',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1663,39 +1695,42 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_dinner.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Dinner',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_dinner.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Dinner',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                     Semantics(
-                      label: 'Snacks',
+                      label: 'Add Snacks',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1703,32 +1738,34 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_snacks.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Snack',
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_snacks.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Snack',
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),

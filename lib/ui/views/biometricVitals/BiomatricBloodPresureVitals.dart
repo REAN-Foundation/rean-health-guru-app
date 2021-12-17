@@ -134,116 +134,116 @@ class _BiometricBloodPresureVitalsViewState
   Widget bloodPresureFeilds() {
     return Padding(
         padding: const EdgeInsets.all(16.0),
-        child: MergeSemantics(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                'Enter your blood pressure:',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  RichText(
-                    text: TextSpan(
-                        text: 'Systolic',
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w700,
-                            color: primaryColor,
-                            fontSize: 14),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: '  mm Hg     ',
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                  color: primaryColor,
-                                  fontFamily: 'Montserrat',
-                                  fontStyle: FontStyle.italic)),
-                        ]),
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(color: primaryColor, width: 1),
-                          color: Colors.white),
-                      child: Semantics(
-                        label: 'between',
-                        readOnly: true,
-                        child: TextFormField(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.deny(
-                                  RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
-                            ],
-                            controller: _systolicController,
-                            focusNode: _systolicFocus,
-                            maxLines: 1,
-                            textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.number,
-                            onFieldSubmitted: (term) {
-                              _fieldFocusChange(
-                                  context, _systolicFocus, _diastolicFocus);
-                            },
-                            decoration: InputDecoration(
-                                hintText: '(80 to 120)',
-                                contentPadding: EdgeInsets.all(0),
-                                border: InputBorder.none,
-                                fillColor: Colors.white,
-                                filled: true)),
-                      ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              'Enter your blood pressure:',
+              style: TextStyle(
+                  color: primaryColor,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                RichText(
+                  text: TextSpan(
+                      text: 'Systolic',
+                      style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          color: primaryColor,
+                          fontSize: 14),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: '  mm Hg     ',
+                            style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: primaryColor,
+                                fontFamily: 'Montserrat',
+                                fontStyle: FontStyle.italic)),
+                      ]),
+                ),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: primaryColor, width: 1),
+                        color: Colors.white),
+                    child: Semantics(
+                      label: 'Systolic measures in mm Hg',
+                      child: TextFormField(
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                          ],
+                          controller: _systolicController,
+                          focusNode: _systolicFocus,
+                          maxLines: 1,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.number,
+                          onFieldSubmitted: (term) {
+                            _fieldFocusChange(
+                                context, _systolicFocus, _diastolicFocus);
+                          },
+                          decoration: InputDecoration(
+                              hintText: '(80 to 120)',
+                              contentPadding: EdgeInsets.all(0),
+                              border: InputBorder.none,
+                              fillColor: Colors.white,
+                              filled: true)),
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  RichText(
-                    text: TextSpan(
-                        text: 'Diastolic',
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w700,
-                            color: primaryColor,
-                            fontSize: 14),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: '  mm Hg  ',
-                              style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                  color: primaryColor,
-                                  fontFamily: 'Montserrat',
-                                  fontStyle: FontStyle.italic)),
-                        ]),
                   ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(color: primaryColor, width: 1),
-                          color: Colors.white),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                RichText(
+                  text: TextSpan(
+                      text: 'Diastolic',
+                      style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          color: primaryColor,
+                          fontSize: 14),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: '  mm Hg  ',
+                            style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: primaryColor,
+                                fontFamily: 'Montserrat',
+                                fontStyle: FontStyle.italic)),
+                      ]),
+                ),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: primaryColor, width: 1),
+                        color: Colors.white),
+                    child: Semantics(
+                      label: 'Diastolic measures in mm Hg',
                       child: TextFormField(
                           controller: _diastolicController,
                           focusNode: _diastolicFocus,
@@ -267,17 +267,21 @@ class _BiometricBloodPresureVitalsViewState
                               fillColor: Colors.white,
                               filled: true)),
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  InkWell(
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Semantics(
+                  label: "Save",
+                  button: true,
+                  child: InkWell(
                     onTap: () {
                       if (_systolicController.text.toString().isEmpty) {
                         showToast('Please enter your systolic blood presure',
@@ -289,129 +293,132 @@ class _BiometricBloodPresureVitalsViewState
                         addvitals();
                       }
                     },
-                    child: Container(
-                        height: 40,
-                        width: 120,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24.0),
-                          border: Border.all(color: primaryColor, width: 1),
-                          color: primaryColor,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Save',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 14),
-                            textAlign: TextAlign.center,
+                    child: ExcludeSemantics(
+                      child: Container(
+                          height: 40,
+                          width: 120,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.0,
                           ),
-                        )),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24.0),
+                            border: Border.all(color: primaryColor, width: 1),
+                            color: primaryColor,
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Save',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14),
+                              textAlign: TextAlign.center,
+                            ),
+                          )),
+                    ),
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ));
   }
 
   Widget historyListFeilds() {
-    return ExcludeSemantics(
-      child: Container(
-        color: colorF6F6FF,
-        constraints: BoxConstraints(
-            minHeight: 100, minWidth: double.infinity, maxHeight: 160),
-        padding: EdgeInsets.only(left: 0.0, right: 0.0, top: 16, bottom: 16),
-        height: 160,
-        child: model.busy
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : (records.isEmpty
-                ? noHistoryFound()
-                : Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Center(
-                                child: Text(
-                                  'Date',
-                                  style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+    return Container(
+      color: colorF6F6FF,
+      constraints: BoxConstraints(
+          minHeight: 100, minWidth: double.infinity, maxHeight: 160),
+      padding: EdgeInsets.only(left: 0.0, right: 0.0, top: 16, bottom: 16),
+      height: 160,
+      child: model.busy
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : (records.isEmpty
+              ? noHistoryFound()
+              : Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Center(
+                              child: Text(
+                                'Date',
+                                semanticsLabel: 'Date',
+                                style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            Expanded(
-                              flex: 1,
-                              child: Center(
-                                child: Text(
-                                  'Systolic',
-                                  style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Center(
-                                child: Text(
-                                  'Diastolic ',
-                                  style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Scrollbar(
-                            isAlwaysShown: true,
-                            controller: _scrollController,
-                            child: ListView.separated(
-                                itemBuilder: (context, index) =>
-                                    _makeWeightList(context, index),
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return SizedBox(
-                                    height: 8,
-                                  );
-                                },
-                                itemCount: records.length,
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true),
                           ),
+                          Expanded(
+                            flex: 1,
+                            child: Center(
+                              child: Text(
+                                'Systolic',
+                                semanticsLabel: 'Systolic',
+                                style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Center(
+                              child: Text(
+                                'Diastolic ',
+                                semanticsLabel: 'Diastolic',
+                                style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Scrollbar(
+                          isAlwaysShown: true,
+                          controller: _scrollController,
+                          child: ListView.separated(
+                              itemBuilder: (context, index) =>
+                                  _makeWeightList(context, index),
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return SizedBox(
+                                  height: 8,
+                                );
+                              },
+                              itemCount: records.length,
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true),
                         ),
                       ),
-                    ],
-                  )),
-      ),
+                    ),
+                  ],
+                )),
     );
   }
 
@@ -482,35 +489,40 @@ class _BiometricBloodPresureVitalsViewState
   Widget _systolicgraph() {
     return Padding(
       padding: const EdgeInsets.all(0.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [primaryLightColor, colorF6F6FF]),
-                border: Border.all(color: primaryLightColor),
-                borderRadius: BorderRadius.all(Radius.circular(8.0))),
-            padding: const EdgeInsets.all(16),
-            height: 200,
-            child: Center(
-              child: SimpleTimeSeriesChart(_createSampleDatasystolic()),
+      child: Semantics(
+        label: 'making graph of ',
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [primaryLightColor, colorF6F6FF]),
+                  border: Border.all(color: primaryLightColor),
+                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
+              padding: const EdgeInsets.all(16),
+              height: 200,
+              child: Center(
+                child: SimpleTimeSeriesChart(_createSampleDatasystolic()),
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(
-            'Systolic Blood Pressure',
-            style: TextStyle(
-                color: primaryColor, fontSize: 14, fontWeight: FontWeight.w700),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              'Systolic Blood Pressure',
+              style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -543,35 +555,40 @@ class _BiometricBloodPresureVitalsViewState
   Widget _diastolicgraph() {
     return Padding(
       padding: const EdgeInsets.all(0.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [primaryLightColor, colorF6F6FF]),
-                border: Border.all(color: primaryLightColor),
-                borderRadius: BorderRadius.all(Radius.circular(8.0))),
-            padding: const EdgeInsets.all(16),
-            height: 200,
-            child: Center(
-              child: SimpleTimeSeriesChart(_createSampleDataDiastolic()),
+      child: Semantics(
+        label: 'making graph of ',
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [primaryLightColor, colorF6F6FF]),
+                  border: Border.all(color: primaryLightColor),
+                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
+              padding: const EdgeInsets.all(16),
+              height: 200,
+              child: Center(
+                child: SimpleTimeSeriesChart(_createSampleDataDiastolic()),
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(
-            'Diastolic Blood Pressure',
-            style: TextStyle(
-                color: primaryColor, fontSize: 14, fontWeight: FontWeight.w700),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              'Diastolic Blood Pressure',
+              style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }

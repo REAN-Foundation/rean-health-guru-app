@@ -296,7 +296,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     List<Schedules> medications,
     String tittle,
   ) {
-    WidgetsBinding.instance.addPostFrameCallback(_layout);
+    //
     return Padding(
       padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
       child: ListView.separated(
@@ -326,6 +326,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     Key _localKey = Key(medication.drugName);
 
     if (globalKeyName == medication.drugName && !alreadyAssign) {
+      WidgetsBinding.instance.addPostFrameCallback(_layout);
       _localKey = _key;
       alreadyAssign = true;
     }

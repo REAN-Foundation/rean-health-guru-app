@@ -147,7 +147,7 @@ jobs:
           path: android/build/app/outputs
 
       - name: Publish to Playstore
-        run: bundle exec fastlane release_alpha_build aab_path:"build/app/outputs/bundle/uatRelease/app-uat-release.aab"
+        run: bundle exec fastlane release_alpha_aha aab_path:"build/app/outputs/bundle/aha_uatRelease/app-aha_uat-release.aab"
         env:
           PLAYSTORE_JSON_KEY_DATA: ${{ secrets.PLAYSTORE_JSON_KEY_DATA }}
 

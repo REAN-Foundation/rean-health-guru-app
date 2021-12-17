@@ -61,21 +61,17 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
         child: Scaffold(
             key: _scaffoldKey,
             backgroundColor: Colors.white,
-            body: Semantics(
-              label: 'Returns no medication found if medical list empty',
-              enabled: true,
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: model.busy
-                    ? Center(
-                        child: SizedBox(
-                            height: 32,
-                            width: 32,
-                            child: CircularProgressIndicator()))
-                    : (currentMedicationList.isEmpty
-                        ? noMedicationFound()
-                        : listWidget()),
-              ),
+            body: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: model.busy
+                  ? Center(
+                      child: SizedBox(
+                          height: 32,
+                          width: 32,
+                          child: CircularProgressIndicator()))
+                  : (currentMedicationList.isEmpty
+                      ? noMedicationFound()
+                      : listWidget()),
             ),
             floatingActionButton: Semantics(
               label: 'Add new medication',
@@ -146,7 +142,6 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Semantics(
-                    label: medication.drugName,
                     child: Text(medication.drugName,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -203,7 +198,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
               Expanded(
                 flex: 1,
                 child: Semantics(
-                  label: 'medication_image',
+                  label: 'Medication ',
                   child: CachedNetworkImage(
                     imageUrl: apiProvider.getBaseUrl() +
                         '/file-resources/' +

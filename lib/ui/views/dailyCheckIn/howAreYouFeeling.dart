@@ -76,197 +76,212 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      selectedFeelings = 1;
-                      setState(() {});
+                  Semantics(
+                    label: 'Better',
+                    child: InkWell(
+                      onTap: () {
+                        selectedFeelings = 1;
+                        setState(() {});
 
-                      Future.delayed(
-                          const Duration(seconds: 1), () => showDailyCheckIn());
-                    },
-                    child: DelayedAnimation(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Stack(
-                            alignment: Alignment.topRight,
+                        Future.delayed(const Duration(seconds: 1),
+                            () => showDailyCheckIn());
+                      },
+                      child: DelayedAnimation(
+                        child: ExcludeSemantics(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Container(
-                                height: 80,
-                                width: 80,
-                                child: Image.asset(
-                                  'res/images/dailyCheckIn/ic_better.png',
-                                  height: 80,
-                                  width: 80,
-                                ),
-                              ),
-                              if (selectedFeelings == 1)
-                                Align(
-                                  alignment: Alignment.topRight,
-                                  child: Container(
-                                    width: 20,
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      border: Border.all(
-                                        color: Colors.green,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(24)),
-                                    ),
-                                    child: Icon(
-                                      Icons.check,
-                                      size: 16,
-                                      color: Colors.white,
+                              Stack(
+                                alignment: Alignment.topRight,
+                                children: [
+                                  Container(
+                                    height: 80,
+                                    width: 80,
+                                    child: Image.asset(
+                                      'res/images/dailyCheckIn/ic_better.png',
+                                      height: 80,
+                                      width: 80,
                                     ),
                                   ),
-                                )
-                              else
-                                Container(),
+                                  if (selectedFeelings == 1)
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          border: Border.all(
+                                            color: Colors.green,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(24)),
+                                        ),
+                                        child: Icon(
+                                          Icons.check,
+                                          size: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    Container(),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Better',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
                             ],
                           ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text('Better',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Montserrat')),
-                        ],
+                        ),
+                        delay: delayedAmount + 1000,
                       ),
-                      delay: delayedAmount + 1000,
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      selectedFeelings = 2;
-                      setState(() {});
-                      Future.delayed(
-                          const Duration(seconds: 1), () => showDailyCheckIn());
-                    },
-                    child: DelayedAnimation(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Stack(
-                            alignment: Alignment.topRight,
+                  Semantics(
+                    label: 'Same',
+                    child: InkWell(
+                      onTap: () {
+                        selectedFeelings = 2;
+                        setState(() {});
+                        Future.delayed(const Duration(seconds: 1),
+                            () => showDailyCheckIn());
+                      },
+                      child: DelayedAnimation(
+                        child: ExcludeSemantics(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Container(
-                                height: 80,
-                                width: 80,
-                                child: Image.asset(
-                                  'res/images/dailyCheckIn/ic_same.png',
-                                  height: 80,
-                                  width: 80,
-                                ),
-                              ),
-                              if (selectedFeelings == 2)
-                                Align(
-                                  alignment: Alignment.topRight,
-                                  child: Container(
-                                    width: 20,
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      border: Border.all(
-                                        color: Colors.green,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(24)),
-                                    ),
-                                    child: Icon(
-                                      Icons.check,
-                                      size: 16,
-                                      color: Colors.white,
+                              Stack(
+                                alignment: Alignment.topRight,
+                                children: [
+                                  Container(
+                                    height: 80,
+                                    width: 80,
+                                    child: Image.asset(
+                                      'res/images/dailyCheckIn/ic_same.png',
+                                      height: 80,
+                                      width: 80,
                                     ),
                                   ),
-                                )
-                              else
-                                Container(),
+                                  if (selectedFeelings == 2)
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          border: Border.all(
+                                            color: Colors.green,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(24)),
+                                        ),
+                                        child: Icon(
+                                          Icons.check,
+                                          size: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    Container(),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Same',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
                             ],
                           ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text('Same',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Montserrat')),
-                        ],
+                        ),
+                        delay: delayedAmount + 1000,
                       ),
-                      delay: delayedAmount + 1000,
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      selectedFeelings = 3;
-                      setState(() {});
-                      Future.delayed(
-                          const Duration(seconds: 1), () => showDailyCheckIn());
-                    },
-                    child: DelayedAnimation(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Stack(
-                            alignment: Alignment.topRight,
+                  Semantics(
+                    label: 'Worse',
+                    child: InkWell(
+                      onTap: () {
+                        selectedFeelings = 3;
+                        setState(() {});
+                        Future.delayed(const Duration(seconds: 1),
+                            () => showDailyCheckIn());
+                      },
+                      child: DelayedAnimation(
+                        child: ExcludeSemantics(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Container(
-                                height: 80,
-                                width: 80,
-                                child: Image.asset(
-                                  'res/images/dailyCheckIn/ic_worse.png',
-                                  height: 80,
-                                  width: 80,
-                                ),
-                              ),
-                              if (selectedFeelings == 3)
-                                Align(
-                                  alignment: Alignment.topRight,
-                                  child: Container(
-                                    width: 20,
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      border: Border.all(
-                                        color: Colors.green,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(24)),
-                                    ),
-                                    child: Icon(
-                                      Icons.check,
-                                      size: 16,
-                                      color: Colors.white,
+                              Stack(
+                                alignment: Alignment.topRight,
+                                children: [
+                                  Container(
+                                    height: 80,
+                                    width: 80,
+                                    child: Image.asset(
+                                      'res/images/dailyCheckIn/ic_worse.png',
+                                      height: 80,
+                                      width: 80,
                                     ),
                                   ),
-                                )
-                              else
-                                Container(),
+                                  if (selectedFeelings == 3)
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          border: Border.all(
+                                            color: Colors.green,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(24)),
+                                        ),
+                                        child: Icon(
+                                          Icons.check,
+                                          size: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    Container(),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Worse',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
                             ],
                           ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text('Worse',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Montserrat')),
-                        ],
+                        ),
+                        delay: delayedAmount + 1000,
                       ),
-                      delay: delayedAmount + 1000,
                     ),
                   ),
                 ],

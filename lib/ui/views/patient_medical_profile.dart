@@ -466,9 +466,10 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
             floatingActionButton: model.busy
                 ? Container()
                 : Semantics(
-                    label: 'edit_medical_profile',
+                    label: 'Edit Medical Profile',
                     child: FloatingActionButton(
                         elevation: 0.0,
+                        tooltip: 'Edit Medical Profile',
                         child: Icon(
                           Icons.edit,
                           color: Colors.white,

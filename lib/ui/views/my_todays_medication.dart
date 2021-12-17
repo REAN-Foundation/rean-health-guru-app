@@ -8,8 +8,12 @@ import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
+import 'package:paitent/utils/CoachMarkUtilities.dart';
 import 'package:paitent/utils/CommonUtils.dart';
+import 'package:paitent/utils/SharedPrefUtils.dart';
+import 'package:paitent/utils/StringConstant.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 class MyTodaysMedicationView extends StatefulWidget {
   @override
@@ -30,11 +34,56 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   List<Schedules> nightMedicationList = <Schedules>[];
   ProgressDialog progressDialog;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  GlobalKey _key;
+  var globalKeyName;
+  TutorialCoachMark tutorialCoachMark;
+  List<TargetFocus> targets = [];
+  CoachMarkUtilites coackMarkUtilites = CoachMarkUtilites();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
 
   @override
   void initState() {
     getMyMedications();
     super.initState();
+  }
+
+  void initTargets() {
+    targets.add(coackMarkUtilites.getTargetFocus(
+        _key,
+        (targets.length + 1).toString(),
+        'Medication List',
+        'swipe right for not taken or left for taken',
+        CoachMarkContentPosition.bottom,
+        ShapeLightFocus.RRect));
+  }
+
+  void showTutorial() {
+    coackMarkUtilites.displayCoachMark(context, targets,
+        onCoachMartkFinish: () {
+      _sharedPrefUtils.saveBoolean(
+          StringConstant.Is_Medication_Remainder_Coach_Mark_Completed, true);
+      debugPrint('Coach Mark Finish');
+    }, onCoachMartkSkip: () {
+      _sharedPrefUtils.saveBoolean(
+          StringConstant.Is_Medication_Remainder_Coach_Mark_Completed, true);
+      debugPrint('Coach Mark Skip');
+    }, onCoachMartkClickTarget: (target) {
+      debugPrint('Coach Mark target click');
+    }, onCoachMartkClickOverlay: () {
+      debugPrint('Coach Mark overlay click');
+    }).show();
+  }
+
+  _layout(_) async {
+    Future.delayed(Duration(milliseconds: 1000));
+    bool isCoachMarkDisplayed = false;
+    isCoachMarkDisplayed = await _sharedPrefUtils.readBoolean(
+        StringConstant.Is_Medication_Remainder_Coach_Mark_Completed);
+    debugPrint('isCoachMarkDisplayed ==> $isCoachMarkDisplayed');
+    if (!isCoachMarkDisplayed || isCoachMarkDisplayed == null) {
+      Future.delayed(const Duration(seconds: 2), () => showTutorial());
+      //showTutorial();
+    }
   }
 
   getMyMedications() async {
@@ -68,6 +117,10 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     afternoonMedicationList.clear();
     eveningMedicationList.clear();
     nightMedicationList.clear();
+
+    _key = GlobalKey(debugLabel: medications.elementAt(0).drugName);
+    globalKeyName = medications.elementAt(0).drugName;
+    initTargets();
 
     medications.forEach((currentMedication) {
       if (currentMedication.details
@@ -215,7 +268,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
           Container(
             width: MediaQuery.of(context).size.width,
             color: colorF6F6FF,
-            child: listWidget(medications),
+            child: listWidget(medications, tittle),
           ),
           SizedBox(
             height: 16,
@@ -239,12 +292,16 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     );
   }
 
-  Widget listWidget(List<Schedules> medications) {
+  Widget listWidget(
+    List<Schedules> medications,
+    String tittle,
+  ) {
+    WidgetsBinding.instance.addPostFrameCallback(_layout);
     return Padding(
       padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
       child: ListView.separated(
           itemBuilder: (context, index) =>
-              _makeMedicineSwipeCard(context, index, medications),
+              _makeMedicineSwipeCard(context, index, medications, tittle),
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(
               height: 0,
@@ -257,29 +314,45 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     );
   }
 
+  bool alreadyAssign = false;
+
   Widget _makeMedicineSwipeCard(
-      BuildContext context, int index, List<Schedules> medications) {
+    BuildContext context,
+    int index,
+    List<Schedules> medications,
+    String tittle,
+  ) {
     final Schedules medication = medications.elementAt(index);
+    Key _localKey = Key(medication.drugName);
+
+    if (globalKeyName == medication.drugName && !alreadyAssign) {
+      _localKey = _key;
+      alreadyAssign = true;
+    }
 
     return Dismissible(
-      key: Key(medication.drugName),
-      child: InkWell(
-          onTap: () {
-            debugPrint('${medication.drugName} clicked');
-          },
-          child: ListTile(
-            /*leading:SizedBox( height: 40, width: 16, child: CachedNetworkImage(
-              imageUrl: symptomTypes.publicImageUrl,
-            ),),*/
-            title: Text(
+      key: _localKey,
+      child: ListTile(
+        /*leading:SizedBox( height: 40, width: 16, child: CachedNetworkImage(
+          imageUrl: symptomTypes.publicImageUrl,
+        ),),*/
+        title: Semantics(
+          label: tittle +
+              " " +
+              medication.drugName +
+              " swipe right for not taken or left for taken",
+          child: ExcludeSemantics(
+            child: Text(
               '        ' + medication.drugName,
               style: TextStyle(
                   fontSize: 14.0,
                   color: primaryColor,
                   fontWeight: FontWeight.w600),
             ),
-            tileColor: index.isEven ? primaryLightColor : colorF6F6FF,
-          )),
+          ),
+        ),
+        tileColor: index.isEven ? primaryLightColor : colorF6F6FF,
+      ),
       background: slideRightBackground(),
       secondaryBackground: slideLeftBackground(),
       confirmDismiss: (direction) async {

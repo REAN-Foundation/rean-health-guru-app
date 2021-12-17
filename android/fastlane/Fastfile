@@ -49,15 +49,26 @@ platform :android do
     )
   end
 
+  desc "Update the package name for AHA"
+  lane :release_alpha_aha do |options|
+    release_alpha_build(package_name: "org.heart.hfpatient.uat", aab_path: options[:aab_path], metadata_path: './fastlane/metadata/android/aha_uat')
+  end
+
+  desc "Update the package name for RF"
+  lane :release_alpha_rf do |options|
+    release_alpha_build(package_name: "org.reanfoundation.patient.uat", aab_path: options[:aab_path], metadata_path: './fastlane/metadata/android/en-US')
+  end
+
   # Alpha Build uses UAT package name and is a different app in the Play Store pointing to UAT backend
   desc "Upload Alpha Build to PlayStore"
   lane :release_alpha_build do |options|
     upload_to_play_store(
       track: "alpha",
       rollout: ENV["ROLLOUT_USER_BASE_PERCENT"],
-      package_name: "org.reanfoundation.patient.uat",
+      package_name: options[:package_name],
       json_key_data: ENV["PLAYSTORE_JSON_KEY_DATA"],
-      aab: "#{options[:aab_path]}"
+      aab: "#{options[:aab_path]}",
+      metadata_path: options[:metadata_path],
     )
   end
   # Beta and Prod share the same prod backend

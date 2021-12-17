@@ -326,7 +326,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     Key _localKey = Key(medication.drugName);
 
     if (globalKeyName == medication.drugName && !alreadyAssign) {
-      WidgetsBinding.instance.addPostFrameCallback(_layout);
+      //WidgetsBinding.instance.addPostFrameCallback(_layout);
       _localKey = _key;
       alreadyAssign = true;
     }

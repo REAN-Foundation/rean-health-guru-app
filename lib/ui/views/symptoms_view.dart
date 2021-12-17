@@ -241,7 +241,7 @@ class _SymptomsViewState extends State<SymptomsView> {
   }
 
   Widget listWidget() {
-    WidgetsBinding.instance.addPostFrameCallback(_layout);
+    //WidgetsBinding.instance.addPostFrameCallback(_layout);
     return ListView.separated(
         itemBuilder: (context, index) => _createSymptomsListUI(context, index),
         separatorBuilder: (BuildContext context, int index) {

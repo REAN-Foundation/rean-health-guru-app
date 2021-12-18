@@ -293,18 +293,16 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                     fontWeight: FontWeight.w500,
                                     fontFamily: 'Montserrat')),
                           ),
-                          Semantics(
-                            label: 'edit_emergency_text',
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.edit,
-                                size: 24,
-                                color: primaryColor,
-                              ),
-                              onPressed: () {
-                                _emergencyDetailDialog(true);
-                              },
+                          IconButton(
+                            icon: Icon(
+                              Icons.edit,
+                              size: 24,
+                              color: primaryColor,
+                              semanticLabel: 'edit emergency text',
                             ),
+                            onPressed: () {
+                              _emergencyDetailDialog(true);
+                            },
                           ),
                         ],
                       ),

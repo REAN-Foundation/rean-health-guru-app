@@ -470,26 +470,31 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
             SizedBox(
               height: 16,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  totalCalories.toStringAsFixed(0),
-                  semanticsLabel: totalCalories.toStringAsFixed(0),
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 28.0,
-                      color: primaryColor),
+            Semantics(
+              label: totalCalories.toStringAsFixed(0) + ' Calories',
+              child: ExcludeSemantics(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      totalCalories.toStringAsFixed(0),
+                      semanticsLabel: totalCalories.toStringAsFixed(0),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 28.0,
+                          color: primaryColor),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      'Cal',
+                      style: TextStyle(fontSize: 14.0, color: Colors.black87),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  'Cal',
-                  style: TextStyle(fontSize: 14.0, color: Colors.black87),
-                ),
-              ],
+              ),
             ),
           ],
         ),
@@ -683,7 +688,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                         Expanded(flex: bmiLeftSideValue, child: Container()),
                         Expanded(
                             flex: 2,
-                          child: ImageIcon(
+                            child: ImageIcon(
                                 AssetImage('res/images/triangle.png'))),
                         Expanded(flex: bmiRightSideValue, child: Container())
                       ],
@@ -691,7 +696,10 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   ),
                   Container(
                       width: MediaQuery.of(context).size.width,
-                      child: Image.asset('res/images/bmi_scale.png')),
+                      child: Image.asset(
+                        'res/images/bmi_scale.png',
+                        semanticLabel: 'BMI scale',
+                      )),
                 ],
               )
             else

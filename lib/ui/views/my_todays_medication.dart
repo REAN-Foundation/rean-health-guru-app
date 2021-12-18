@@ -74,7 +74,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     }).show();
   }
 
-  _layout(_) async {
+/*  _layout(_) async {
     Future.delayed(Duration(milliseconds: 1000));
     bool isCoachMarkDisplayed = false;
     isCoachMarkDisplayed = await _sharedPrefUtils.readBoolean(
@@ -84,7 +84,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
       Future.delayed(const Duration(seconds: 2), () => showTutorial());
       //showTutorial();
     }
-  }
+  }*/
 
   getMyMedications() async {
     try {

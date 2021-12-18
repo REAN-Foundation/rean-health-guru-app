@@ -367,7 +367,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
 
       if (doctorListApiResponse.status == 'success') {
         if (getAppType() == 'AHA') {
-          showToast('Welcome to AHA-CHF', context);
+          showToast('Welcome to HF Helper', context);
         } else {
           showToast('Welcome to REAN HealthGuru', context);
         }

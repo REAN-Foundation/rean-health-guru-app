@@ -466,7 +466,7 @@ class _CreateProfileState extends State<CreateProfile> {
                     if (updateProfileSuccess.status == 'success') {
                       progressDialog.hide();
                       if (getAppType() == 'AHA') {
-                        showToast('Welcome to AHA-CHF', context);
+                        showToast('Welcome to HF Helper', context);
                       } else {
                         showToast('Welcome to REAN HealthGuru', context);
                       }

@@ -96,7 +96,7 @@ class _SymptomsViewState extends State<SymptomsView> {
     }).show();
   }
 
-  _layout(_) async {
+/*  _layout(_) async {
     Future.delayed(Duration(milliseconds: 1000));
     bool isCoachMarkDisplayed = false;
     isCoachMarkDisplayed = await _sharedPrefUtils
@@ -106,7 +106,7 @@ class _SymptomsViewState extends State<SymptomsView> {
       Future.delayed(const Duration(seconds: 2), () => showTutorial());
       //showTutorial();
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {

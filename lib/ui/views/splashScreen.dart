@@ -151,7 +151,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           height: 16,
                         ),
                         getAppType() == 'AHA'
-                            ? Text('American Heart\nAssociation',
+                            ? Text('HF Helper',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 20,

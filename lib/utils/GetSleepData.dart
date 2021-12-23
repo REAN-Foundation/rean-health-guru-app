@@ -28,9 +28,9 @@ class GetSleepData {
     //String startDateString = dateFormat.format(DateTime.now().subtract(Duration(days: 1)))+', 21, 59, 59';
     //startDate = DateTime.parse(startDateString);
     startDate = DateTime(DateTime.now().year, DateTime.now().month,
-        DateTime.now().subtract(Duration(days: 2)).day, 21, 59, 59);
+        DateTime.now().subtract(Duration(days: 1)).day, 21, 59, 59);
     endDate = DateTime(DateTime.now().year, DateTime.now().month,
-        DateTime.now().day, 11, 59, 59);
+        DateTime.now().day, 09, 59, 59);
     debugPrint('Start Sleep Date ==> $startDate');
     debugPrint('End Sleep Date ==> $endDate');
     fetchData();
@@ -186,9 +186,13 @@ class GetSleepData {
   }
 
   String getSleepDuration() {
-    final DateTime startTime = _healthDataList.elementAt(0).dateFrom;
+    debugPrint('Sleep start time ${_healthDataList.elementAt(1).dateFrom}');
+    debugPrint(
+        'Sleep end time ${_healthDataList.elementAt(_healthDataList.length - 1).dateTo}');
+
+    final DateTime startTime = _healthDataList.elementAt(1).dateFrom;
     final DateTime endTime =
-        _healthDataList.elementAt(_healthDataList.length).dateTo;
+        _healthDataList.elementAt(_healthDataList.length - 1).dateTo;
 
     return endTime.difference(startTime).inMinutes.toString();
   }

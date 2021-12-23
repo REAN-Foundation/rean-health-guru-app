@@ -1824,7 +1824,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  IconButton(
+                  /*IconButton(
                       icon: Icon(
                         Icons.add_circle,
                         size: 32,
@@ -1833,7 +1833,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       onPressed: () {
                         Navigator.pushNamed(context, RoutePaths.My_Activity,
                             arguments: '');
-                      })
+                      })*/
                 ],
               ),
             ),
@@ -1844,121 +1844,130 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Semantics(
+                    /* Semantics(
                       label: "Stand",
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Activity);
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(4.0),
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage(
-                                      'res/images/ic_stand_activity.png'),
-                                  size: 24,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Stand',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(4.0),
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage(
+                                        'res/images/ic_stand_activity.png'),
+                                    size: 24,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Stand',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    ),*/
                     Semantics(
                       label: 'Steps',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Activity);
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_steps.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Steps',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_steps.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Steps',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                     Semantics(
                       label: 'Exercise',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Activity);
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_exercise.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Exercise',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_exercise.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Exercise',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -2084,33 +2093,35 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_sleep.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Sleep',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_sleep.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Sleep',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -2123,33 +2134,35 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_medication.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Meditation',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_medication.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Meditation',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),

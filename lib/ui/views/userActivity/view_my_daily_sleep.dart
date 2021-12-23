@@ -47,7 +47,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
     //loadSharedPref();
     if (Platform.isIOS) {
       //fetchData();
-      //sleepData = GetSleepData();
+      sleepData = GetSleepData();
     }
     super.initState();
   }
@@ -64,12 +64,12 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
 
     /// Define the types to get.
     final List<HealthDataType> types = [
-      HealthDataType.STEPS,
-      HealthDataType.WEIGHT,
-      HealthDataType.HEIGHT,
-      HealthDataType.ACTIVE_ENERGY_BURNED,
+      //HealthDataType.STEPS,
+      //HealthDataType.WEIGHT,
+      //HealthDataType.HEIGHT,
+      //HealthDataType.ACTIVE_ENERGY_BURNED,
       HealthDataType.SLEEP_ASLEEP,
-      HealthDataType.SLEEP_AWAKE,
+      //HealthDataType.SLEEP_AWAKE,
       //HealthDataType.HEART_RATE
       //HealthDataType.BASAL_ENERGY_BURNED,
       //HealthDataType.DISTANCE_WALKING_RUNNING,
@@ -225,7 +225,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      '6',
+                      sleepData.getSleepDuration().toString(),
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 28.0,

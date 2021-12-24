@@ -15,7 +15,7 @@ import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/ui/views/create_profile_view.dart';
 import 'package:paitent/ui/views/home_view.dart';
-import 'package:paitent/ui/widgets/bezierContainer.dart';
+import 'package:paitent/ui/widgets/PrimaryLightColorContainer.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:provider/provider.dart';
@@ -55,26 +55,30 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       model: LoginViewModel(authenticationService: Provider.of(context)),
       builder: (context, model, child) => Container(
           child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              backgroundColor: colorF6F6FF,
+            resizeToAvoidBottomInset: false,
+              backgroundColor: primaryColor,
               body: Container(
                 height: height,
-                child: Stack(
-                  children: <Widget>[
-                    Positioned(
-                        top: -height * .20,
-                        right: -MediaQuery.of(context).size.width * .4,
-                        child: BezierContainer()),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: SingleChildScrollView(
+                child: Stack(children: <Widget>[
+                  Positioned(
+                      top: -90,
+                      right: 40,
+                      child: PrimaryLightColorContainer(180)),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 100),
+                      Container(
+                        height: MediaQuery.of(context).size.height - 100,
+                        padding: EdgeInsets.symmetric(horizontal: 12.0),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(12),
+                                topLeft: Radius.circular(12))),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(height: height * .2),
-                            //_title(),
-                            SizedBox(height: 16),
+                          children: [
                             Align(
                                 alignment: Alignment.centerLeft,
                                 child: Padding(
@@ -89,42 +93,20 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                                         color: primaryColor,
                                       )),
                                 )),
-                            //SizedBox(height: 30),
-                            //_emailPasswordWidget(),
                             _textFeild(model),
                             SizedBox(height: 40),
                             if (model.busy)
                               CircularProgressIndicator()
                             else
                               _submitOTPButton(model),
-                            /* model.busy
-                              ? CircularProgressIndicator()
-                              :_submitButton(model),*/
-                            /*Container(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            alignment: Alignment.centerRight,
-                            child: Text('Forgot Password ?',
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w500)),
-                          ),*/
-                            //_divider(),
-                            //_facebookButton(),
-                            //SizedBox(height: height * .099),
-                            //_createAccountLabel(),
                           ],
                         ),
                       ),
-                    ),
-                    Positioned(
-                        bottom: -height * .30,
-                        right: MediaQuery.of(context).size.width * .35,
-                        child: Transform.rotate(
-                            angle: 160, child: BezierContainer())),
-                    //Positioned(top: 40, left: 0, child: _backButton()),
-                  ],
-                ),
-              ))),
-    );
+                    ],
+                  ),
+                ]),
+              ),
+            )));
   }
 
   Widget _textFeild(LoginViewModel model) {

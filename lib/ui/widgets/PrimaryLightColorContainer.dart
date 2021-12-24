@@ -18,7 +18,7 @@ class PrimaryLightColorContainer extends StatelessWidget {
         width: size,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(12)),
-            color: Colors.white.withOpacity(0.1)),
+            color: Colors.white.withOpacity(0.09)),
       ),
     ));
   }

@@ -113,17 +113,17 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                 child: Stack(
                   children: <Widget>[
                     Positioned(
-                        top: -60,
+                        top: -90,
                         right: 40,
                         child: PrimaryLightColorContainer(180)),
                     Positioned(
-                      top: 180,
+                      top: 100,
                       left: 40,
                       child: Text(
                         'Get Started',
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
-                          fontSize: 32,
+                          fontSize: 38,
                           color: Colors.white,
                           fontFamily: "Montserrat",
                           fontStyle: FontStyle.normal,
@@ -131,11 +131,14 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       ),
                     ),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        SizedBox(
+                          height: 80,
+                        ),
                         Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(0.0),
                           child: loginContent(model),
                         ),
                       ],
@@ -156,10 +159,11 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   Widget loginContent(LoginViewModel model) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20),
-      height: 300,
+      height: MediaQuery.of(context).size.height - 160,
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(12))),
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(12), topLeft: Radius.circular(12))),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -178,6 +182,32 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
               CircularProgressIndicator()
             else
               _getOTPButton(model),
+            SizedBox(height: 80),
+            Container(
+              height: 120,
+              width: 120,
+              decoration: BoxDecoration(
+                color: getAppType() == 'AHA' ? primaryLightColor : Colors.white,
+                shape: BoxShape.circle,
+                /*boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: Colors.grey.shade300,
+                            offset: Offset(2, 4),
+                            blurRadius: 3,
+                            spreadRadius: 2)
+                      ],*/
+              ),
+              child: getAppType() == 'AHA'
+                  ? Image.asset(
+                      'res/images/aha_logo.png',
+                      semanticLabel: 'American Heart Association',
+                    )
+                  : Image.asset(
+                      'res/images/app_logo_tranparent.png',
+                      semanticLabel: 'REAN HealthGuru',
+                      color: primaryColor,
+                    ),
+            ),
             /* model.busy
                               ? CircularProgressIndicator()
                               :_submitButton(model),*/
@@ -207,7 +237,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(left: 16.0),
+            padding: const EdgeInsets.only(left: 8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,7 +247,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 24,
-                    color: textBlack,
+                    color: Colors.black,
                     fontFamily: "Montserrat",
                     fontStyle: FontStyle.normal,
                   ),
@@ -230,7 +260,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
-                    color: textBlack,
+                    color: Colors.black,
                     fontFamily: "Montserrat",
                     fontStyle: FontStyle.normal,
                   ),
@@ -305,10 +335,14 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       button: true,
       hint: 'press to get OTP',
       child: SizedBox(
-        width: 320,
-        height: 40,
+        width: 360,
+        height: 50,
         child: ElevatedButton(
-          child: Text('Get OTP', style: TextStyle(fontSize: 14)),
+          child: Text('Get OTP',
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white)),
           style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
               backgroundColor: MaterialStateProperty.all<Color>(primaryColor),

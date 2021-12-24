@@ -116,23 +116,38 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                 SizedBox(
                   height: 100,
                 ),
-                Container(
-                  height: 120,
-                  width: 120,
-                  decoration: BoxDecoration(
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(60.0),
+                  ),
+                  elevation: 8,
+                  child: Container(
+                    height: 120,
+                    width: 120,
+                    decoration: BoxDecoration(
                       color: getAppType() == 'AHA'
                           ? primaryLightColor
-                          : primaryColor,
-                      shape: BoxShape.circle),
-                  child: getAppType() == 'AHA'
-                      ? Image.asset(
-                          'res/images/aha_logo.png',
-                          semanticLabel: 'American Heart Association',
-                        )
-                      : Image.asset(
-                          'res/images/app_logo_tranparent.png',
-                          semanticLabel: 'REAN HealthGuru',
-                        ),
+                          : Colors.white,
+                      shape: BoxShape.circle,
+                      /*boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: Colors.grey.shade300,
+                            offset: Offset(2, 4),
+                            blurRadius: 3,
+                            spreadRadius: 2)
+                      ],*/
+                    ),
+                    child: getAppType() == 'AHA'
+                        ? Image.asset(
+                            'res/images/aha_logo.png',
+                            semanticLabel: 'American Heart Association',
+                          )
+                        : Image.asset(
+                            'res/images/app_logo_tranparent.png',
+                            semanticLabel: 'REAN HealthGuru',
+                            color: primaryColor,
+                          ),
+                  ),
                 ),
               ],
             ),
@@ -155,9 +170,12 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                getAppType() == 'AHA' ? _titleAha() : _title(),
                 SizedBox(
                   height: 20,
+                ),
+                getAppType() == 'AHA' ? _titleAha() : _title(),
+                SizedBox(
+                  height: 0,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -168,8 +186,9 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                       children: [
                         Text(
                           getAppType() == 'AHA' ? textMsg2 : textMsg1,
-                          textAlign: TextAlign.justify,
+                          textAlign: TextAlign.left,
                           style: TextStyle(
+                              height: 1.4,
                               fontWeight: FontWeight.w500,
                               fontSize: getAppType() == 'AHA' ? 14 : 16,
                               fontFamily: 'Montserrat'),
@@ -177,7 +196,19 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                         const SizedBox(
                           height: 16,
                         ),
-                        getAppType() == 'AHA' ? _ahaContent() : Container(),
+                        getAppType() == 'AHA'
+                            ? _ahaContent()
+                            : Container(
+                                child: Text(
+                                  'REAN HealthGuru app helps set your health and wellness goals and achieve them in the comfort of your home. You can create your community including your doctor, family members and other wellness experts. The application helps track your progress and stay motivated.',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      height: 1.4,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: getAppType() == 'AHA' ? 14 : 16,
+                                      fontFamily: 'Montserrat'),
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -200,7 +231,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                         Row(
                           children: [
                             Text(
-                              '',
+                              'Visit: ',
                               style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w200,
@@ -289,46 +320,60 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
   }
 
   Widget _backButton() {
-    return Semantics(
-      label: 'Back',
-      button: true,
-      child: InkWell(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: Container(
-          height: 48,
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(
-            color: primaryColor,
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(16),
-                bottomRight: Radius.circular(16)),
-            /* boxShadow: <BoxShadow>[
-              BoxShadow(
-                  color: Colors.grey.shade200,
-                  offset: Offset(2, 4),
-                  blurRadius: 5,
-                  spreadRadius: 2)
-            ],*/
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                //padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-                child: Icon(
-                  Icons.keyboard_arrow_left,
-                  color: Colors.white,
-                  size: 40,
-                ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Semantics(
+          label: 'Back',
+          button: true,
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(
+              height: 48,
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(16),
+                    bottomRight: Radius.circular(16)),
+                /* boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: Colors.grey.shade200,
+                      offset: Offset(2, 4),
+                      blurRadius: 5,
+                      spreadRadius: 2)
+                ],*/
               ),
-              /*Text('Back',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))*/
-            ],
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    //padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
+                    child: Icon(
+                      Icons.keyboard_arrow_left,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                  ),
+                  /*Text('Back',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))*/
+                ],
+              ),
+            ),
           ),
         ),
-      ),
+        Semantics(
+          header: true,
+          child: Text(
+            getAppType() == 'AHA' ? "About HF Helper" : "About REAN",
+            style: TextStyle(
+                fontSize: 16, color: Colors.white, fontWeight: FontWeight.w700),
+          ),
+        )
+      ],
     );
   }
 
@@ -337,32 +382,51 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
       textAlign: TextAlign.center,
       text: TextSpan(
           text: 'REAN',
-          style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.headline1,
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-            color: primaryColor,
-          ),
+          style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 24,
+              color: Colors.black,
+              fontFamily: 'Montserrat'),
           children: [
             TextSpan(
               text: ' ',
-              style: TextStyle(color: Colors.black, fontSize: 30),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+              ),
             ),
             TextSpan(
               text: 'H',
-              style: TextStyle(color: primaryColor, fontSize: 30),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+              ),
             ),
             TextSpan(
               text: 'ealth',
-              style: TextStyle(color: Colors.black, fontSize: 30),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+              ),
             ),
             TextSpan(
               text: 'G',
-              style: TextStyle(color: primaryColor, fontSize: 30),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+              ),
             ),
             TextSpan(
               text: 'uru',
-              style: TextStyle(color: Colors.black, fontSize: 30),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ]),
     );
@@ -377,16 +441,15 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
           textAlign: TextAlign.center,
           text: TextSpan(
               text: 'HF',
-              style: GoogleFonts.portLligatSans(
-                textStyle: Theme.of(context).textTheme.headline4,
-                fontSize: 26,
-                fontWeight: FontWeight.w700,
-                color: primaryColor,
-              ),
+              style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 24,
+                  color: Colors.black,
+                  fontFamily: 'Montserrat'),
               children: [
                 TextSpan(
                   text: ' Helper',
-                  style: TextStyle(color: Colors.black, fontSize: 26),
+                  style: TextStyle(color: Colors.black, fontSize: 24),
                 ),
               ]),
         ),

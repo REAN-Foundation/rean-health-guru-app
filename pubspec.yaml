@@ -129,6 +129,8 @@ flutter:
         - asset: res/fonts/montserrar-regular.ttf
         - asset: res/fonts/montserrar-semibold.ttf
           weight: 700
+        - asset: res/fonts/montserrat-bold.ttf
+          weight: 500
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

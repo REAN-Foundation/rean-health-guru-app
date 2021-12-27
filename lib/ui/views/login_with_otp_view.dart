@@ -204,13 +204,6 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                         ),
                       ],
                     ),
-                    Positioned(
-                        bottom: 0,
-                        child: Image.asset(
-                          'res/images/red_login_mask.png',
-                          fit: BoxFit.fitWidth,
-                          scale: 0.9,
-                        )),
                     //Positioned(top: 40, left: 0, child: _backButton()),
                   ],
                 ),
@@ -220,33 +213,46 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   Widget loginContent(LoginViewModel model) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
       height: MediaQuery.of(context).size.height - 260,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(12), topLeft: Radius.circular(12))),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            /*getAppType() == 'AHA' ? _titleAha() : _title(),*/
-            /*Semantics(
-                label: 'Mobile number',
-                readOnly: true,
-                child: SizedBox(height: 100)),*/
-            //_emailPasswordWidget(),
-            SizedBox(height: 20),
-            _textFeild('Enter your phone', model),
-            SizedBox(height: 20),
-            if (model.busy)
-              CircularProgressIndicator()
-            else
-              _getOTPButton(model),
-            SizedBox(height: 80),
-          ],
-        ),
+      child: Stack(
+        children: [
+          Positioned(
+              bottom: 0,
+              child: Image.asset(
+                'res/images/red_login_mask.png',
+                fit: BoxFit.fitWidth,
+                scale: 0.9,
+              )),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  /*getAppType() == 'AHA' ? _titleAha() : _title(),*/
+                  /*Semantics(
+                      label: 'Mobile number',
+                      readOnly: true,
+                      child: SizedBox(height: 100)),*/
+                  //_emailPasswordWidget(),
+                  SizedBox(height: 20),
+                  _textFeild('Enter your phone', model),
+                  SizedBox(height: 20),
+                  if (model.busy)
+                    CircularProgressIndicator()
+                  else
+                    _getOTPButton(model),
+                  SizedBox(height: 80),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/startTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';

@@ -104,9 +104,68 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                       ),
                     ],
                   ),
+                  Positioned(top: 40, left: 0, child: _backButton()),
                 ]),
               ),
             )));
+  }
+
+  Widget _backButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Semantics(
+          label: 'Back',
+          button: true,
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(
+              height: 48,
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(16),
+                    bottomRight: Radius.circular(16)),
+                /* boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: Colors.grey.shade200,
+                      offset: Offset(2, 4),
+                      blurRadius: 5,
+                      spreadRadius: 2)
+                ],*/
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    //padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
+                    child: Icon(
+                      Icons.keyboard_arrow_left,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                  ),
+                  /*Text('Back',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))*/
+                ],
+              ),
+            ),
+          ),
+        ),
+        Semantics(
+          header: true,
+          child: Text(
+            'OTP',
+            style: TextStyle(
+                fontSize: 16, color: Colors.white, fontWeight: FontWeight.w700),
+          ),
+        )
+      ],
+    );
   }
 
   Widget _textFeild(LoginViewModel model) {

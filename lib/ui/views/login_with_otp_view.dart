@@ -117,16 +117,77 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                         right: 40,
                         child: PrimaryLightColorContainer(180)),
                     Positioned(
-                      top: 100,
-                      left: 40,
-                      child: Text(
-                        'Get Started',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 38,
-                          color: Colors.white,
-                          fontFamily: "Montserrat",
-                          fontStyle: FontStyle.normal,
+                      top: 80,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(60.0),
+                              ),
+                              elevation: 8,
+                              child: Container(
+                                height: 80,
+                                width: 80,
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  color: getAppType() == 'AHA'
+                                      ? primaryLightColor
+                                      : Colors.white,
+                                  shape: BoxShape.circle,
+                                  /*boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: Colors.grey.shade300,
+                            offset: Offset(2, 4),
+                            blurRadius: 3,
+                            spreadRadius: 2)
+                      ],*/
+                                ),
+                                child: getAppType() == 'AHA'
+                                    ? Image.asset(
+                                        'res/images/aha_logo.png',
+                                        semanticLabel:
+                                            'American Heart Association',
+                                      )
+                                    : Image.asset(
+                                        'res/images/app_logo_tranparent.png',
+                                        semanticLabel: 'REAN HealthGuru',
+                                        color: primaryColor,
+                                      ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              'Create better together',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 24,
+                                color: Colors.white,
+                                fontFamily: "Montserrat",
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Let\’s get started',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontFamily: "Montserrat",
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -135,7 +196,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
-                          height: 80,
+                          height: 160,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(0.0),
@@ -144,11 +205,12 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       ],
                     ),
                     Positioned(
-                        bottom: -30,
-                        left: -50,
-                        child: Transform.rotate(
-                            angle: 160,
-                            child: PrimaryLightColorContainer(180))),
+                        bottom: 0,
+                        child: Image.asset(
+                          'res/images/red_login_mask.png',
+                          fit: BoxFit.fitWidth,
+                          scale: 0.9,
+                        )),
                     //Positioned(top: 40, left: 0, child: _backButton()),
                   ],
                 ),
@@ -159,7 +221,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   Widget loginContent(LoginViewModel model) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20),
-      height: MediaQuery.of(context).size.height - 160,
+      height: MediaQuery.of(context).size.height - 260,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -183,45 +245,6 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
             else
               _getOTPButton(model),
             SizedBox(height: 80),
-            Container(
-              height: 120,
-              width: 120,
-              decoration: BoxDecoration(
-                color: getAppType() == 'AHA' ? primaryLightColor : Colors.white,
-                shape: BoxShape.circle,
-                /*boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: Colors.grey.shade300,
-                            offset: Offset(2, 4),
-                            blurRadius: 3,
-                            spreadRadius: 2)
-                      ],*/
-              ),
-              child: getAppType() == 'AHA'
-                  ? Image.asset(
-                      'res/images/aha_logo.png',
-                      semanticLabel: 'American Heart Association',
-                    )
-                  : Image.asset(
-                      'res/images/app_logo_tranparent.png',
-                      semanticLabel: 'REAN HealthGuru',
-                      color: primaryColor,
-                    ),
-            ),
-            /* model.busy
-                              ? CircularProgressIndicator()
-                              :_submitButton(model),*/
-            /*Container(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            alignment: Alignment.centerRight,
-                            child: Text('Forgot Password ?',
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w500)),
-                          ),*/
-            //_divider(),
-            //_facebookButton(),
-            //SizedBox(height: height * .099),
-            //_createAccountLabel(),
           ],
         ),
       ),

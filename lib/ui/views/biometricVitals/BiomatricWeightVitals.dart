@@ -330,31 +330,49 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
   Widget _makeWeightList(BuildContext context, int index) {
     final Items record = records.elementAt(index);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          dateFormatStandard.format(records.elementAt(index).recordDate == null
-              ? DateTime.now()
-              : DateTime.parse(records.elementAt(index).recordDate)),
-          style: TextStyle(
-              color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+    return Card(
+      semanticContainer: false,
+      elevation: 0,
+      child: Container(
+        color: colorF6F6FF,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Semantics(
+              child: Text(
+                dateFormatStandard.format(
+                    records.elementAt(index).recordDate == null
+                        ? DateTime.now()
+                        : DateTime.parse(records.elementAt(index).recordDate)),
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Semantics(
+              label: 'Weight ',
+              readOnly: true,
+              child: Text(
+                unit == 'lbs'
+                    ? (double.parse(record.bodyWeight.toString()) * 2.20462)
+                            .toStringAsFixed(1) +
+                        ' lbs'
+                    : record.bodyWeight.toString() + ' Kgs',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
         ),
-        Text(
-          unit == 'lbs'
-              ? (double.parse(record.bodyWeight.toString()) * 2.20462)
-                      .toStringAsFixed(1) +
-                  ' lbs'
-              : record.bodyWeight.toString() + ' Kgs',
-          style: TextStyle(
-              color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
+      ),
     );
   }
 

@@ -213,26 +213,23 @@ class _BiometricBloodOxygenVitalsViewState
                       height: 16,
                     ),
                     Expanded(
-                      child: Semantics(
-                        label: 'scrollbar',
-                        child: Scrollbar(
-                          isAlwaysShown: true,
-                          controller: _scrollController,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: ListView.separated(
-                                itemBuilder: (context, index) =>
-                                    _makeWeightList(context, index),
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return SizedBox(
-                                    height: 8,
-                                  );
-                                },
-                                itemCount: records.length,
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true),
-                          ),
+                      child: Scrollbar(
+                        isAlwaysShown: true,
+                        controller: _scrollController,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: ListView.separated(
+                              itemBuilder: (context, index) =>
+                                  _makeWeightList(context, index),
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return SizedBox(
+                                  height: 8,
+                                );
+                              },
+                              itemCount: records.length,
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true),
                         ),
                       ),
                     ),

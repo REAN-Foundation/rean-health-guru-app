@@ -523,6 +523,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   }
 
   _clearFeilds() {
+    mobileNumber = '';
     _mobileNumberController.clear();
     setState(() {});
   }

@@ -268,22 +268,20 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             SizedBox(
                               width: 8,
                             ),
-                            Semantics(
-                              label: 'Add Calories for Breakfast',
-                              child: IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return _addCaloriesConsumedDialog(
-                                            context, 'breakfast');
-                                      });
-                                },
-                                icon: Icon(
-                                  Icons.add_circle,
-                                  color: primaryColor,
-                                  size: 32,
-                                ),
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return _addCaloriesConsumedDialog(
+                                          context, 'breakfast');
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: primaryColor,
+                                semanticLabel: 'Add Calories for Breakfast',
+                                size: 32,
                               ),
                             )
                           ],
@@ -351,22 +349,20 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             SizedBox(
                               width: 8,
                             ),
-                            Semantics(
-                              label: 'Add Calories for lunch',
-                              child: IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return _addCaloriesConsumedDialog(
-                                            context, 'lunch');
-                                      });
-                                },
-                                icon: Icon(
-                                  Icons.add_circle,
-                                  color: primaryColor,
-                                  size: 32,
-                                ),
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return _addCaloriesConsumedDialog(
+                                          context, 'lunch');
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: primaryColor,
+                                size: 32,
+                                semanticLabel: 'Add Calories for lunch',
                               ),
                             )
                           ],
@@ -435,22 +431,20 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             SizedBox(
                               width: 8,
                             ),
-                            Semantics(
-                              label: 'Add Calories for dinner',
-                              child: IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return _addCaloriesConsumedDialog(
-                                            context, 'dinner');
-                                      });
-                                },
-                                icon: Icon(
-                                  Icons.add_circle,
-                                  color: primaryColor,
-                                  size: 32,
-                                ),
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return _addCaloriesConsumedDialog(
+                                          context, 'dinner');
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: primaryColor,
+                                size: 32,
+                                semanticLabel: 'Add Calories for dinner',
                               ),
                             )
                           ],
@@ -520,23 +514,22 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             SizedBox(
                               width: 8,
                             ),
-                            Semantics(
-                                label: 'Add Calories for snack',
-                                child: IconButton(
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (_) {
-                                          return _addCaloriesConsumedDialog(
-                                              context, 'snack');
-                                        });
-                                  },
-                                  icon: Icon(
-                                    Icons.add_circle,
-                                    color: primaryColor,
-                                    size: 32,
-                                  ),
-                                ))
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return _addCaloriesConsumedDialog(
+                                          context, 'snack');
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: primaryColor,
+                                size: 32,
+                                semanticLabel: 'Add Calories for snack',
+                              ),
+                            )
                           ],
                         ),
                       ],

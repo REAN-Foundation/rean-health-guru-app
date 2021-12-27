@@ -194,7 +194,6 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       flex: 1,
                       child: Semantics(
                         label: 'To Do 1 of 2',
-                        selected: true,
                         child: InkWell(
                           onTap: () {
                             query = 'pending';
@@ -223,7 +222,6 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       flex: 1,
                       child: Semantics(
                         label: 'Completed 2 of 2',
-                        selected: true,
                         child: InkWell(
                           onTap: () {
                             query = 'completed';
@@ -651,31 +649,34 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                               onTap: () {
                                 markMedicationsAsTaken(task.actionId);
                               },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: primaryColor,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(4)),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.check,
-                                      size: 24,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(
-                                      height: 0,
-                                    ),
-                                    Text(
-                                      'Mark As\nTaken',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 10),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
+                              child: ExcludeSemantics(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(4)),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.check,
+                                        size: 24,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(
+                                        height: 0,
+                                      ),
+                                      Text(
+                                        'Mark As\nTaken',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 10),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

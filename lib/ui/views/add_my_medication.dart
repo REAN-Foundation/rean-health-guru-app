@@ -261,6 +261,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               Expanded(
                 child: Semantics(
                   label: 'Drug Name',
+                  focusable: true,
                   child: TypeAheadFormField(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: _typeAheadController,
@@ -313,6 +314,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 child: Center(
                   child: Semantics(
                     label: 'Search new drug',
+                    button: true,
                     child: InkWell(
                       onTap: () {
                         _getDrugsByName();
@@ -335,6 +337,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 child: Center(
                   child: Semantics(
                     label: 'Add new drug',
+                    button: true,
                     child: InkWell(
                       onTap: () {
                         if (_typeAheadController.text.isNotEmpty) {
@@ -907,7 +910,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       } else if (_durationController.text == '') {
                         showToast('Please enter duration', context);
                       } else if (_unitController.text == '') {
-                        showToast('Please enter unit qty', context);
+                        showToast('Please enter unit quantity', context);
                       } else if (_dosageUnit == '') {
                         showToast('Please Select dosage unit', context);
                       } else if (startOn == '') {

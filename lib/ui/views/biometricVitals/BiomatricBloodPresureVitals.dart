@@ -437,51 +437,64 @@ class _BiometricBloodPresureVitalsViewState
     final Items record = records.elementAt(index);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            flex: 1,
-            child: Text(
-              dateFormatStandard.format(DateTime.parse(record.recordDate)),
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: Text(
-                record.systolic.toString() + ' mm Hg',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+      child: Card(
+        semanticContainer: false,
+        elevation: 0,
+        child: Container(
+          color: colorF6F6FF,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                flex: 1,
+                child: Text(
+                  dateFormatStandard.format(DateTime.parse(record.recordDate)),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: Text(
-                record.diastolic.toString() + ' mm Hg',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: Semantics(
+                    label: 'Systolic Blood Pressure ',
+                    child: Text(
+                      record.systolic.toString() + ' mm Hg',
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
               ),
-            ),
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: Semantics(
+                    label: 'Diastolic Blood Pressure ',
+                    child: Text(
+                      record.diastolic.toString() + ' mm Hg',
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

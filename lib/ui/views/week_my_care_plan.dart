@@ -131,7 +131,7 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 12,
-                          fontWeight: FontWeight.w700),
+                          fontWeight: FontWeight.w600),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -192,7 +192,7 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 12,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -233,7 +233,7 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 12,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -275,7 +275,7 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 12,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -330,7 +330,7 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 12,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -381,7 +381,7 @@ class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 12,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

@@ -64,7 +64,7 @@ class _SetUpPharmacyForCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -201,9 +201,9 @@ class _SetUpPharmacyForCarePlanViewState
                                   Text(
                                     'Next',
                                     style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.white,
-                                        fontSize: 14),
+                                        fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    fontSize: 14),
                                   ),
                                   Icon(
                                     Icons.arrow_forward_ios,
@@ -250,7 +250,7 @@ class _SetUpPharmacyForCarePlanViewState
       child: Center(
         child: Text(
           'Add Pharmacies',
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
+          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
         ),
       ),
     );
@@ -421,7 +421,7 @@ class _SetUpPharmacyForCarePlanViewState
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'Montserrat',
                                 color: primaryColor)),
                         Row(

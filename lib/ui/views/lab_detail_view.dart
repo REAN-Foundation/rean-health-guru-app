@@ -105,7 +105,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
               ),
               iconTheme: IconThemeData(color: Colors.black),
             ),
@@ -130,7 +130,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                           Text(
                             'About',
                             style: TextStyle(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16,
                                 color: primaryColor),
                           ),
@@ -146,7 +146,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                             height: 16,
                           ),
 
-                          /* Text("Highlights", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),),
+                          /* Text("Highlights", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),),
                   SizedBox(height: 4,),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -189,7 +189,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                           Text(
                             'Address',
                             style: TextStyle(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16,
                                 color: primaryColor),
                           ),
@@ -207,7 +207,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                           Text(
                             'Contact No.',
                             style: TextStyle(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16,
                                 color: primaryColor),
                           ),
@@ -235,7 +235,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                           Text(
                             'Working Hours',
                             style: TextStyle(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16,
                                 color: primaryColor),
                           ),
@@ -262,7 +262,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                                         .toUpperCase() +
                                     ' : ',
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     color: textBlack,
                                     fontSize: 14,
                                     fontFamily: 'Montserrat'),

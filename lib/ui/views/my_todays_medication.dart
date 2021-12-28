@@ -260,7 +260,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         fontFamily: 'Montserrat')),
               ],
             ),
@@ -436,7 +436,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               ' Taken',
               style: TextStyle(
                 color: Colors.white,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.left,
             ),
@@ -468,7 +468,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               ' Not Taken',
               style: TextStyle(
                 color: Colors.white,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.right,
             ),

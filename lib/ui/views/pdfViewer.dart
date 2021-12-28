@@ -30,7 +30,7 @@ class PDFScreen extends StatelessWidget {
             style: TextStyle(
                 fontSize: 16.0,
                 color: primaryColor,
-                fontWeight: FontWeight.w700),
+                fontWeight: FontWeight.w600),
           ),
           actions: <Widget>[
             IconButton(

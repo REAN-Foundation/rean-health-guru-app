@@ -64,7 +64,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                 'Enter Name',
                 style: TextStyle(
                     color: primaryColor,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16),
                 textAlign: TextAlign.center,
               ),
@@ -73,7 +73,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                   text: '',
                   style: TextStyle(
                       fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: primaryColor,
                       fontSize: 14),
                 ),
@@ -134,7 +134,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                 'Calories',
                 style: TextStyle(
                     color: primaryColor,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16),
                 textAlign: TextAlign.center,
               ),
@@ -143,7 +143,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                   text: ' (cal)',
                   style: TextStyle(
                       fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: primaryColor,
                       fontSize: 14),
                 ),

@@ -127,7 +127,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       'Emergency Contact ',
                       style: TextStyle(
                           color: primaryColor,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontSize: 16),
                     ),
                   ),
@@ -243,7 +243,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ],
               ),
@@ -271,7 +271,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                               style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat')),
                         ],
                       ),
@@ -290,7 +290,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w600,
                                     fontFamily: 'Montserrat')),
                           ),
                           IconButton(
@@ -331,7 +331,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 14,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -422,7 +422,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -605,7 +605,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: 14.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                               ),
                               Semantics(
@@ -716,7 +716,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                             child: Text('Sai Medical Stores',
                                 style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     color: primaryColor)),
                           ),
                           Text('Vijayawada, Andhra Pradesh',
@@ -863,7 +863,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize: 14,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           color: primaryColor)),
                                 ),
                                 Semantics(
@@ -1033,7 +1033,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize: 14,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           color: primaryColor)),
                                 ),
                                 Semantics(

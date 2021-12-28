@@ -48,7 +48,7 @@ class _AddWeightGoalsForCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -93,7 +93,7 @@ class _AddWeightGoalsForCarePlanViewState
           Text(
             'Weight loss may help lower your blood pressure and improve both cholesterol and blood sugar. The tips and tools in this website can help you lose 5 to 10 pounds. Your waist circumference also helps determine whether you need to lose weight — all you need is an ordinary measuring tape.',
             style: TextStyle(
-                color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
+                color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
           ),
           const SizedBox(
             height: 16,
@@ -116,7 +116,7 @@ class _AddWeightGoalsForCarePlanViewState
                   child:  Center(
                     child: Text(
                       'View more >>',
-                      style: TextStyle(fontWeight: FontWeight.w700, color: primaryColor, fontSize: 12),
+                      style: TextStyle(fontWeight: FontWeight.w600, color: primaryColor, fontSize: 12),
                     ),
                   ),
                 ),
@@ -137,7 +137,7 @@ class _AddWeightGoalsForCarePlanViewState
                       text: 'Weight',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 14),
                       children: <TextSpan>[
@@ -145,7 +145,7 @@ class _AddWeightGoalsForCarePlanViewState
                             text: '  Kg',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
@@ -192,7 +192,7 @@ class _AddWeightGoalsForCarePlanViewState
                       text: 'Waist',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 14),
                       children: <TextSpan>[
@@ -201,7 +201,7 @@ class _AddWeightGoalsForCarePlanViewState
                             style: TextStyle(
                                 fontSize: 10,
                                 fontWeight:
-                                FontWeight.w700,
+                                FontWeight.w600,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
                                 fontStyle:
@@ -253,7 +253,7 @@ class _AddWeightGoalsForCarePlanViewState
                       text: 'Target Date',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 14),
                       children: <TextSpan>[
@@ -261,7 +261,7 @@ class _AddWeightGoalsForCarePlanViewState
                             text: '          ',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
@@ -356,7 +356,7 @@ class _AddWeightGoalsForCarePlanViewState
                         'Save',
                         style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             fontSize: 14),
                         textAlign: TextAlign.center,
                       ),

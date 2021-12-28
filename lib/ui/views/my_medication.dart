@@ -56,7 +56,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[

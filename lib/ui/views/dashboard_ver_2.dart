@@ -256,7 +256,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ],
               ),
@@ -289,7 +289,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                             style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'Montserrat')),
                       ],
                     ),
@@ -315,7 +315,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                             style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'Montserrat')),
                       ],
                     ),
@@ -341,7 +341,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                             style: TextStyle(
                                 color: Colors.red.shade700,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'Montserrat')),
                       ],
                     ),
@@ -375,7 +375,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     style: TextStyle(
                         color: textColor,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         fontFamily: 'Montserrat')),
                 SizedBox(
                   height: 16,
@@ -407,7 +407,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               'Doctor',
                               style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: textColor),
                             ),
@@ -437,7 +437,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               'Lab',
                               style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: textColor),
                             ),
@@ -467,7 +467,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               'Pharmacy',
                               style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: textColor),
                             ),
@@ -506,7 +506,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               'Ambulance',
                               style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: textColor),
                             ),
@@ -536,7 +536,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               'Nurse',
                               style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: textColor),
                             ),
@@ -566,7 +566,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               'Dietitian',
                               style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: textColor),
                             ),
@@ -618,7 +618,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         style: TextStyle(
                             color: textColor,
                             fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
                             fontFamily: 'Montserrat')),
                   ],
                 ),
@@ -653,7 +653,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                       incompleteTaskCount.toString(),
                                       style: TextStyle(
                                           fontSize: 24,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           fontFamily: 'Montserrat',
                                           color: Colors.orange),
                                     ),
@@ -667,7 +667,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           'Pending',
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat',
                               color: textColor),
                         ),
@@ -703,7 +703,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                       completedTaskCount.toString(),
                                       style: TextStyle(
                                           fontSize: 24,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           fontFamily: 'Montserrat',
                                           color: Colors.green),
                                     ),
@@ -717,7 +717,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           'Completed',
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat',
                               color: textColor),
                         ),
@@ -775,7 +775,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat')),
                     ],
                   ),
@@ -832,7 +832,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                 style: TextStyle(
                                     color: Colors.green,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     fontFamily: 'Montserrat')),
                           ],
                         ),
@@ -863,7 +863,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                 style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     fontFamily: 'Montserrat')),
                           ],
                         ),
@@ -931,7 +931,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ],
               ),
@@ -959,7 +959,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat')),
                         ],
                       ),
@@ -977,7 +977,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat')),
                               Semantics(
                                 label: 'edit_emergency_text',
@@ -1018,7 +1018,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     style: TextStyle(
                                         color: primaryColor,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     fontFamily: 'Montserrat')),
                               ],
                             ),
@@ -1066,7 +1066,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ],
               ),
@@ -1091,7 +1091,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                             '1',
                             style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'Montserrat',
                                 color: textColor),
                           ),
@@ -1104,7 +1104,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         'Pending',
                         style: TextStyle(
                             fontSize: 10,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
                             fontFamily: 'Montserrat',
                             color: textColor),
                       ),
@@ -1130,7 +1130,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                             '3',
                             style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'Montserrat',
                                 color: textColor),
                           ),
@@ -1143,7 +1143,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         'Completed',
                         style: TextStyle(
                             fontSize: 10,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
                             fontFamily: 'Montserrat',
                             color: textColor),
                       ),
@@ -1199,7 +1199,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ],
               ),
@@ -1226,7 +1226,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     text: 'Visit: ',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: Colors.black,
                               fontSize: 16),
                     children: <TextSpan>[
@@ -1236,7 +1236,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           color: Colors.blue,
                                 fontSize: 16.0,
                                 fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                               ),
                       )
                     ],
@@ -1254,17 +1254,17 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   text: topicName.toString(),
                   style: TextStyle(
                       fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black,
-                      fontSize: 14),
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                                fontSize: 14),
                   children: <TextSpan>[
                     TextSpan(
                         text: ' ' + briefInformation.toString(),
                         style: TextStyle(
                             fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                            fontFamily: 'Montserrat')),
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                      fontFamily: 'Montserrat')),
                   ],
                 ),
               ),
@@ -1319,7 +1319,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat')),
                     ],
                   ),
@@ -1379,7 +1379,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
@@ -1426,7 +1426,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
@@ -1473,7 +1473,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
@@ -1516,7 +1516,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
@@ -1574,7 +1574,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat')),
                     ],
                   ),
@@ -1634,7 +1634,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
@@ -1677,7 +1677,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
@@ -1720,7 +1720,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
@@ -1762,7 +1762,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
@@ -1820,7 +1820,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat')),
                     ],
                   ),
@@ -1878,7 +1878,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -1917,7 +1917,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -1956,7 +1956,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -1995,7 +1995,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -2052,7 +2052,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat')),
                     ],
                   ),
@@ -2108,7 +2108,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -2147,7 +2147,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -2186,7 +2186,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -2225,7 +2225,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),

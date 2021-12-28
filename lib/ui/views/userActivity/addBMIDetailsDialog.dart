@@ -94,7 +94,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                 'Enter your weight',
                 style: TextStyle(
                     color: primaryColor,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16),
                 textAlign: TextAlign.center,
               ),
@@ -103,7 +103,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                   text: unit == 'lbs' ? ' (lbs) ' : ' (Kg) ',
                   style: TextStyle(
                       fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: primaryColor,
                       fontSize: 14),
                 ),
@@ -166,7 +166,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                 'Enter your height',
                 style: TextStyle(
                     color: primaryColor,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16),
                 textAlign: TextAlign.center,
               ),
@@ -175,7 +175,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                   text: getCurrentLocale() == 'US' ? ' (Foot) ' : ' (Cm) ',
                   style: TextStyle(
                       fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: primaryColor,
                       fontSize: 14),
                 ),

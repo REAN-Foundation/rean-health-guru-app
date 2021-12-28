@@ -98,7 +98,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   'Weight',
                   style: TextStyle(
                       color: primaryColor,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
@@ -138,7 +138,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                     'Blood Pressure',
                     style: TextStyle(
                         color: primaryColor,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
@@ -177,7 +177,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   'Blood Glucose',
                   style: TextStyle(
                       color: primaryColor,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
@@ -217,7 +217,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   'Blood Oxygen Saturation',
                   style: TextStyle(
                       color: primaryColor,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
@@ -257,7 +257,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   'Pulse Rate',
                   style: TextStyle(
                       color: primaryColor,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
@@ -297,7 +297,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   'Body Temperature',
                   style: TextStyle(
                       color: primaryColor,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),

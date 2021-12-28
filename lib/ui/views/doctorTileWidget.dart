@@ -60,7 +60,7 @@ class _DoctorTileViewState extends State<DoctorTileView> {
                             doctorDetails.lastName,
                         style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             fontFamily: 'Montserrat',
                             color: primaryColor)),
                     Text(
@@ -88,7 +88,7 @@ class _DoctorTileViewState extends State<DoctorTileView> {
                 text: TextSpan(
                   text: '    Consultation Fee :',
                   style: TextStyle(
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       color: textBlack,
                       fontSize: 14,
                       fontFamily: 'Montserrat'),
@@ -96,7 +96,7 @@ class _DoctorTileViewState extends State<DoctorTileView> {
                     TextSpan(
                         text: ' ₹' + doctorDetails.consultationFee.toString(),
                         style: TextStyle(
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 14,
                             fontFamily: 'Montserrat')),

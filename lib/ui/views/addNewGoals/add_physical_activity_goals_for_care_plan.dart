@@ -53,7 +53,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -99,7 +99,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
           Text(
             'Physical activity is important. Just 150 minutes of moderate-intensity aerobic exercise a week is enough to lower both cholesterol and high blood pressure. And there are lots of options: brisk walking, swimming, bicycling or even a dance class can fit the bill.',
             style: TextStyle(
-                color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
+                color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
           ),
           const SizedBox(
             height: 16,
@@ -122,7 +122,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                   child:  Center(
                     child: Text(
                       'View more >>',
-                      style: TextStyle(fontWeight: FontWeight.w700, color: primaryColor, fontSize: 12),
+                      style: TextStyle(fontWeight: FontWeight.w600, color: primaryColor, fontSize: 12),
                     ),
                   ),
                 ),
@@ -143,7 +143,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                       text: 'Activity',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 14),
                       children: <TextSpan>[
@@ -151,7 +151,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                             text: '',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
@@ -222,7 +222,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                       text: 'Duration',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 14),
                       children: <TextSpan>[
@@ -230,7 +230,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                             text: ' ',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
@@ -326,7 +326,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                       text: 'Frequency',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 14),
                       children: <TextSpan>[
@@ -334,7 +334,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                             text: '',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
@@ -432,7 +432,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                       text: 'Start At',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 14),
                       children: <TextSpan>[
@@ -440,7 +440,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                             text: '          ',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
@@ -529,7 +529,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
                         'Save',
                         style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             fontSize: 14),
                         textAlign: TextAlign.center,
                       ),

@@ -102,7 +102,7 @@ class _SupportViewState extends State<SupportView> {
                                       semanticsLabel:
                                           getAppType() == 'AHA' ? msgAHA : msg,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 20,
                                           color: primaryColor)),
                                 ),
@@ -116,7 +116,7 @@ class _SupportViewState extends State<SupportView> {
                                       semanticsLabel: subtitle,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w500,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 16,
                                           color: primaryColor)),
                                 ),
@@ -175,7 +175,7 @@ class _SupportViewState extends State<SupportView> {
                                                           TextAlign.center,
                                                       style: TextStyle(
                                                           fontWeight:
-                                                              FontWeight.w700,
+                                                              FontWeight.w600,
                                                           fontSize: 16,
                                                           color: primaryColor)),
                                                 ],
@@ -277,7 +277,7 @@ class _SupportViewState extends State<SupportView> {
                                                           TextAlign.center,
                                                       style: TextStyle(
                                                           fontWeight:
-                                                              FontWeight.w700,
+                                                              FontWeight.w600,
                                                           fontSize: 16,
                                                           color: primaryColor)),
                                                 ],
@@ -336,7 +336,7 @@ class _SupportViewState extends State<SupportView> {
                 ),
               ),
               /*Text('Back',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))*/
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600))*/
             ],
           ),
         ),

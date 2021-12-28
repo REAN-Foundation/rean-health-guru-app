@@ -62,7 +62,7 @@ class _BiometricBloodPresureVitalsViewState
                     style: TextStyle(
                         fontSize: 16.0,
                         color: primaryColor,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                   ),
                   iconTheme: IconThemeData(color: Colors.black),
                   actions: <Widget>[
@@ -145,7 +145,7 @@ class _BiometricBloodPresureVitalsViewState
               'Enter your blood pressure:',
               style: TextStyle(
                   color: primaryColor,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                   fontSize: 16),
               textAlign: TextAlign.center,
             ),
@@ -161,7 +161,7 @@ class _BiometricBloodPresureVitalsViewState
                       text: 'Systolic',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 14),
                       children: <TextSpan>[
@@ -169,7 +169,7 @@ class _BiometricBloodPresureVitalsViewState
                             text: '  mm Hg     ',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
@@ -221,7 +221,7 @@ class _BiometricBloodPresureVitalsViewState
                       text: 'Diastolic',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 14),
                       children: <TextSpan>[
@@ -229,7 +229,7 @@ class _BiometricBloodPresureVitalsViewState
                             text: '  mm Hg  ',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
@@ -310,7 +310,7 @@ class _BiometricBloodPresureVitalsViewState
                               'Save',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   fontSize: 14),
                               textAlign: TextAlign.center,
                             ),
@@ -354,7 +354,7 @@ class _BiometricBloodPresureVitalsViewState
                                 style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w700),
+                                    fontWeight: FontWeight.w600),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -369,7 +369,7 @@ class _BiometricBloodPresureVitalsViewState
                                 style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w700),
+                                    fontWeight: FontWeight.w600),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -384,7 +384,7 @@ class _BiometricBloodPresureVitalsViewState
                                 style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w700),
+                                    fontWeight: FontWeight.w600),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -475,7 +475,7 @@ class _BiometricBloodPresureVitalsViewState
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -517,7 +517,7 @@ class _BiometricBloodPresureVitalsViewState
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -583,7 +583,7 @@ class _BiometricBloodPresureVitalsViewState
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -642,7 +642,7 @@ class _BiometricBloodPresureVitalsViewState
                 const SizedBox(width: 8,),
                 Text(
                   "Your progress with goals",
-                  style: TextStyle( color: Colors.white,fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis,
+                  style: TextStyle( color: Colors.white,fontSize: 14, fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
@@ -661,7 +661,7 @@ class _BiometricBloodPresureVitalsViewState
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -674,7 +674,7 @@ class _BiometricBloodPresureVitalsViewState
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w700),
+                          fontWeight: FontWeight.w600),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -688,7 +688,7 @@ class _BiometricBloodPresureVitalsViewState
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w700),
+                          fontWeight: FontWeight.w600),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -710,7 +710,7 @@ class _BiometricBloodPresureVitalsViewState
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -723,7 +723,7 @@ class _BiometricBloodPresureVitalsViewState
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w600),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -737,7 +737,7 @@ class _BiometricBloodPresureVitalsViewState
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w600),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -762,7 +762,7 @@ class _BiometricBloodPresureVitalsViewState
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -775,7 +775,7 @@ class _BiometricBloodPresureVitalsViewState
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w600),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -789,7 +789,7 @@ class _BiometricBloodPresureVitalsViewState
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w600),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -814,7 +814,7 @@ class _BiometricBloodPresureVitalsViewState
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -827,7 +827,7 @@ class _BiometricBloodPresureVitalsViewState
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w600),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -841,7 +841,7 @@ class _BiometricBloodPresureVitalsViewState
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w600),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -864,7 +864,7 @@ class _BiometricBloodPresureVitalsViewState
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 16,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -899,7 +899,7 @@ class _BiometricBloodPresureVitalsViewState
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 16,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

@@ -188,7 +188,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               height: 1.4,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontSize: getAppType() == 'AHA' ? 14 : 16,
                               fontFamily: 'Montserrat'),
                         ),
@@ -203,7 +203,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       height: 1.4,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       fontSize: getAppType() == 'AHA' ? 14 : 16,
                                       fontFamily: 'Montserrat'),
                                 ),
@@ -302,7 +302,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
           "With HF Helper you can\n",
           textAlign: TextAlign.left,
           style: TextStyle(
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               fontSize: 16,
               fontFamily: 'Montserrat'),
         ),
@@ -310,7 +310,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
           "Track symptoms, medications and other health metrics.Share health information your doctor in real-time. Connect with other  people living with heart failure.\n\nThe American Heart Association’s National Heart Failure Initiative, IMPLEMENT-HF, is made possible with funding by founding sponsor, Novartis, and national sponsor, Boehringer Ingelheim and Eli Lilly and Company.",
           textAlign: TextAlign.justify,
           style: TextStyle(
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               fontSize: 14,
               fontFamily: 'Montserrat'),
         ),
@@ -358,7 +358,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                     ),
                   ),
                   /*Text('Back',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))*/
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600))*/
                 ],
               ),
             ),
@@ -369,7 +369,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
           child: Text(
             getAppType() == 'AHA' ? "About HF Helper" : "About REAN",
             style: TextStyle(
-                fontSize: 16, color: Colors.white, fontWeight: FontWeight.w700),
+                fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600),
           ),
         )
       ],
@@ -382,7 +382,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
       text: TextSpan(
           text: 'REAN',
           style: TextStyle(
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               fontSize: 24,
               color: Colors.black,
               fontFamily: 'Montserrat'),
@@ -392,7 +392,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 24,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
               ),
             ),
             TextSpan(
@@ -400,7 +400,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 24,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
               ),
             ),
             TextSpan(
@@ -408,7 +408,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 24,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
               ),
             ),
             TextSpan(
@@ -416,7 +416,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 24,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
               ),
             ),
             TextSpan(
@@ -441,7 +441,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
           text: TextSpan(
               text: 'HF',
               style: TextStyle(
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                   fontSize: 24,
                   color: Colors.black,
                   fontFamily: 'Montserrat'),

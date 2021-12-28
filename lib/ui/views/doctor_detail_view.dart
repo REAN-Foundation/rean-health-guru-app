@@ -110,7 +110,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                     fontFamily: 'Montserrat'),
               ),
               iconTheme: IconThemeData(color: Colors.black),
@@ -136,7 +136,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                           Text(
                             'About',
                             style: TextStyle(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16,
                                 fontFamily: 'Montserrat',
                                 color: primaryColor),
@@ -156,7 +156,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                           Text(
                             'Highlights',
                             style: TextStyle(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16,
                                 fontFamily: 'Montserrat',
                                 color: primaryColor),
@@ -198,7 +198,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                           Text(
                             'Address',
                             style: TextStyle(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16,
                                 fontFamily: 'Montserrat',
                                 color: primaryColor),
@@ -218,7 +218,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                           Text(
                             'Contact No.',
                             style: TextStyle(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16,
                                 fontFamily: 'Montserrat',
                                 color: primaryColor),
@@ -247,7 +247,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                           Text(
                             'Working Hours',
                             style: TextStyle(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16,
                                 fontFamily: 'Montserrat',
                                 color: primaryColor),
@@ -275,7 +275,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                                         .toUpperCase() +
                                     ' : ',
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     color: textBlack,
                                     fontSize: 14,
                                     fontFamily: 'Montserrat'),

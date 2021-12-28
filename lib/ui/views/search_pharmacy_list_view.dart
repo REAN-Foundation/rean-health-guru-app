@@ -119,7 +119,7 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
                     style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.black,
-                    fontWeight: FontWeight.w500),),
+                    fontWeight: FontWeight.w600),),
               iconTheme: new IconThemeData(color: Colors.black),
 
             ),
@@ -178,7 +178,7 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
                   ),
                   Text(
                     'Near By',
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                   ),
                   SizedBox(
                     height: 16,

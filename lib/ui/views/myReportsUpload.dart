@@ -172,7 +172,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                   style: TextStyle(
                       fontSize: 16.0,
                       color: primaryColor,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                 ),
                 iconTheme: new IconThemeData(color: Colors.black),
                 actions: <Widget>[
@@ -204,7 +204,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                       style: TextStyle(
                           fontSize: 16,
                           color: primaryColor,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ),
                 SizedBox(
@@ -272,7 +272,7 @@ class _MyReportsViewState extends State<MyReportsView> {
             style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.white,
-                fontWeight: FontWeight.w700),
+                fontWeight: FontWeight.w600),
           ),
           style: ButtonStyle(
               foregroundColor:
@@ -378,7 +378,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontSize: 14,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             color: textBlack)),
                   ),
                   Row(
@@ -406,7 +406,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                                       semanticsLabel: 'rename',
                                       style: TextStyle(
                                           fontSize: 12,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           color: primaryColor)),
                                 ],
                               ),
@@ -438,7 +438,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                                       semanticsLabel: 'delete',
                                       style: TextStyle(
                                           fontSize: 12,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           color: primaryColor)),
                                 ],
                               ),
@@ -474,7 +474,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                                   Text('Share',
                                       style: TextStyle(
                                           fontSize: 12,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           color: primaryColor)),
                                 ],
                               ),

@@ -155,7 +155,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   style: TextStyle(
                       fontSize: 16.0,
                       color: primaryColor,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                 ),
                 iconTheme: IconThemeData(color: Colors.black),
                 actions: <Widget>[
@@ -243,7 +243,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       children: [
         Text('Drug Name',
             style: TextStyle(
-                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w700)),
+                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
         SizedBox(
           height: 8,
         ),
@@ -365,7 +365,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       children: [
         Text('Unit',
             style: TextStyle(
-                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w700)),
+                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
         SizedBox(
           height: 8,
         ),
@@ -458,7 +458,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       children: [
         Text('Frequency',
             style: TextStyle(
-                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w700)),
+                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
         SizedBox(
           height: 8,
         ),
@@ -508,7 +508,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
           text: TextSpan(
             text: 'Duration',
             style: TextStyle(
-                fontSize: 18.0, color: textBlack, fontWeight: FontWeight.w500),
+                fontSize: 18.0, color: textBlack, fontWeight: FontWeight.w600),
             children: <TextSpan>[
               TextSpan(
                   text: ' ' + _frequencyUnit == ''
@@ -529,7 +529,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         ),
         /*Text('Duration'+_frequencyUnit == 'Daily' ? ' (in days)',
             style: TextStyle(
-                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w700)),*/
+                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),*/
         SizedBox(
           height: 8,
         ),
@@ -622,7 +622,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: textBlack,
-                  fontWeight: FontWeight.w700)),
+                  fontWeight: FontWeight.w600)),
         ),
         SizedBox(
           height: 8,
@@ -749,7 +749,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       children: [
         Text('Start On',
             style: TextStyle(
-                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w700)),
+                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
         SizedBox(
           height: 8,
         ),
@@ -870,7 +870,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 ElevatedButton(
                     child: Text("Save",
                         style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w700)),
+                            fontSize: 14, fontWeight: FontWeight.w600)),
                     style: ButtonStyle(
                         foregroundColor:
                             MaterialStateProperty.all<Color>(primaryLightColor),
@@ -954,7 +954,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       children: [
         Text('Additional Comments',
             style: TextStyle(
-                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w700)),
+                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
         SizedBox(
           height: 8,
         ),
@@ -1010,7 +1010,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       children: [
         Text('Time Scheduled',
             style: TextStyle(
-                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w700)),
+                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
         SizedBox(
           height: 8,
         ),
@@ -1041,7 +1041,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         style: TextStyle(
                             fontSize: 14.0,
                             color: textBlack,
-                            fontWeight: FontWeight.w700)),
+                            fontWeight: FontWeight.w600)),
                   )
                 ],
               ),
@@ -1072,7 +1072,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         style: TextStyle(
                             fontSize: 14.0,
                             color: textBlack,
-                            fontWeight: FontWeight.w700)),
+                            fontWeight: FontWeight.w600)),
                   )
                 ],
               ),
@@ -1103,7 +1103,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         style: TextStyle(
                             fontSize: 14.0,
                             color: textBlack,
-                            fontWeight: FontWeight.w700)),
+                            fontWeight: FontWeight.w600)),
                   )
                 ],
               ),
@@ -1134,7 +1134,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         style: TextStyle(
                             fontSize: 14.0,
                             color: textBlack,
-                            fontWeight: FontWeight.w700)),
+                            fontWeight: FontWeight.w600)),
                   )
                 ],
               ),

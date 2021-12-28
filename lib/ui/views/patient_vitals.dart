@@ -112,7 +112,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                 child: Text('Date of Recording',
                     style: TextStyle(
                         fontSize: 16.0,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: primaryColor)),
               ),
               Text(':',
@@ -124,7 +124,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               Text('Today, '+dateFormatForHeader.format(new DateTime.now()),
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
             ],
           ),
@@ -136,7 +136,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                 child: Text('Weight',
                     style: TextStyle(
                         fontSize: 16.0,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: textBlack)),
               ),
               Text(':',
@@ -150,7 +150,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               Text(vital.weight,
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
               SizedBox(
                 width: 8,
@@ -158,7 +158,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               Text('Kg',
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
             ],
           ),
@@ -172,7 +172,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                 child: Text('Temperature',
                     style: TextStyle(
                         fontSize: 16.0,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: textBlack)),
               ),
               Text(':',
@@ -186,7 +186,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               Text(vital.temperature,
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
               SizedBox(
                 width: 8,
@@ -194,7 +194,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               Text('\u2109',
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
             ],
           ),
@@ -208,7 +208,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                 child: Text('Pulse',
                     style: TextStyle(
                         fontSize: 16.0,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: textBlack)),
               ),
               Text(':',
@@ -222,7 +222,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               Text(vital.pulse,
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
               SizedBox(
                 width: 8,
@@ -230,7 +230,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               Text('bpm',
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
             ],
           ),
@@ -244,7 +244,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                 child: Text('Systolic Blood Pressure',
                     style: TextStyle(
                         fontSize: 16.0,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: textBlack)),
               ),
               Text(':',
@@ -258,7 +258,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               Text(vital.systolicBloodPressure,
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
               SizedBox(
                 width: 8,
@@ -266,7 +266,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               Text('mm of Hg',
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
             ],
           ),
@@ -280,7 +280,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                 child: Text('Diastolic Blood Pressure',
                     style: TextStyle(
                         fontSize: 16.0,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: textBlack)),
               ),
               Text(':',
@@ -294,7 +294,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               Text(vital.diastolicBloodPressure,
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
               SizedBox(
                 width: 8,
@@ -302,7 +302,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               Text('mm of Hg',
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
             ],
           ),
@@ -316,7 +316,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                 child: Text('Blood Oxygen Saturation',
                     style: TextStyle(
                         fontSize: 16.0,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: textBlack)),
               ),
               Text(':',
@@ -330,7 +330,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               Text(vital.bloodOxygenSaturation,
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
               SizedBox(
                 width: 8,
@@ -338,7 +338,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               Text('%',
                   style: TextStyle(
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: textBlack)),
             ],
           ),

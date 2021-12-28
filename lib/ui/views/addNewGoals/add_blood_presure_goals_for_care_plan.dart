@@ -50,7 +50,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -95,7 +95,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
           Text(
             'Normal blood pressure is less than 120/80 mm Hg (systolic pressure is less than 120 AND diastolic pressure is less than 80). Elevated is systolic pressure from 120-129 OR diastolic pressure less than 80. High blood pressure is systolic pressure of 130 or higher OR diastolic pressure of 80 or higher.',
             style: TextStyle(
-                color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
+                color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
           ),
           const SizedBox(
             height: 16,
@@ -118,7 +118,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
                   child:  Center(
                     child: Text(
                       'View more >>',
-                      style: TextStyle(fontWeight: FontWeight.w700, color: primaryColor, fontSize: 12),
+                      style: TextStyle(fontWeight: FontWeight.w600, color: primaryColor, fontSize: 12),
                     ),
                   ),
                 ),
@@ -137,7 +137,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
                     text: 'Systolic',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: primaryColor,
                         fontSize: 14),
                     children: <TextSpan>[
@@ -145,7 +145,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
                           text: '  mm Hg     ',
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
@@ -189,7 +189,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
                     text: 'Diastolic',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: primaryColor,
                         fontSize: 14),
                     children: <TextSpan>[
@@ -197,7 +197,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
                           text: '  mm Hg  ',
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
@@ -243,7 +243,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
                     text: 'Target Date',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: primaryColor,
                         fontSize: 14),
                     children: <TextSpan>[
@@ -251,7 +251,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
                           text: '          ',
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
@@ -349,7 +349,7 @@ class _AddBloodPresureeGoalsForCarePlanViewState
                         'Save',
                         style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             fontSize: 14),
                         textAlign: TextAlign.center,
                       ),

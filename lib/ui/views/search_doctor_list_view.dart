@@ -171,7 +171,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
           ),
@@ -241,7 +241,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                   Text(
                     'Near By',
                     style: TextStyle(
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         fontSize: 16,
                         fontFamily: 'Montserrat'),
                   ),
@@ -346,7 +346,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     fontFamily: 'Montserrat',
                                     color: primaryColor)),
                             Row(
@@ -397,7 +397,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                       text: TextSpan(
                         text: 'Consultation Fee :',
                         style: TextStyle(
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
                             color: Colors.black,
                             fontSize: 12,
                             fontFamily: 'Montserrat'),
@@ -406,7 +406,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                               text: ' ₹' +
                                   doctorDetails.consultationFee.toString(),
                               style: TextStyle(
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   color: primaryColor,
                                   fontSize: 12,
                                   fontFamily: 'Montserrat')),
@@ -425,7 +425,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                             color: Colors.white,
                             fontSize: 12,
                             fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w700),
+                            fontWeight: FontWeight.w600),
                       ),
                       onPressed: () {
                         getDoctorDetails(doctorDetails.userId);
@@ -467,7 +467,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                                 color: Colors.white,
                                 fontSize: 12,
                                 fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w600),
                           )),
                         ),
                       ),

@@ -155,7 +155,7 @@ class _SplashScreenState extends State<SplashScreen> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 20,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     color: primaryColor))
                             : Container(),
                         //SizedBox(height: 60,),
@@ -223,7 +223,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  /*Widget _title() {
+/*Widget _title() {
     return Hero(
       tag: "title",
       child: RichText(
@@ -233,7 +233,7 @@ class _SplashScreenState extends State<SplashScreen> {
             style: GoogleFonts.portLligatSans(
               textStyle: Theme.of(context).textTheme.display1,
               fontSize: 30,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               color: primaryColor,
             ),
             children: [

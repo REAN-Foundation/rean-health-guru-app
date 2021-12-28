@@ -57,7 +57,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                     style: TextStyle(
                         fontSize: 16.0,
                         color: primaryColor,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                   ),
                   iconTheme: IconThemeData(color: Colors.black),
                   actions: <Widget>[
@@ -130,7 +130,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
           Text(
             'Enter your pulse rate:',
             style: TextStyle(
-                color: primaryColor, fontWeight: FontWeight.w500, fontSize: 16),
+                color: primaryColor, fontWeight: FontWeight.w600, fontSize: 16),
             textAlign: TextAlign.center,
           ),
           const SizedBox(
@@ -173,7 +173,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                     text: '',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: primaryColor,
                         fontSize: 14),
                     children: <TextSpan>[
@@ -181,7 +181,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                           text: '    bpm    ',
                           style: TextStyle(
                               fontSize: 14,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
@@ -222,7 +222,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                           'Save',
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 14),
                           textAlign: TextAlign.center,
                         ),
@@ -262,7 +262,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -271,7 +271,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -373,7 +373,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -438,7 +438,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -457,7 +457,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -466,7 +466,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -484,7 +484,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -493,7 +493,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -511,7 +511,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -520,7 +520,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

@@ -41,7 +41,7 @@ class _AssessmentFinalCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -90,7 +90,7 @@ class _AssessmentFinalCarePlanViewState
                 'Please enter your\nblood pressure and weight',
                 style: TextStyle(
                     color: primaryColor,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16),
                 textAlign: TextAlign.center,
               ),
@@ -128,7 +128,7 @@ class _AssessmentFinalCarePlanViewState
                                             text: 'Systolic',
                                             style: TextStyle(
                                                 fontFamily: 'Montserrat',
-                                                fontWeight: FontWeight.w700,
+                                                fontWeight: FontWeight.w600,
                                                 color: primaryColor,
                                                 fontSize: 16),
                                             children: <TextSpan>[
@@ -137,7 +137,7 @@ class _AssessmentFinalCarePlanViewState
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
-                                                          FontWeight.w700,
+                                                          FontWeight.w600,
                                                       color: primaryColor,
                                                       fontFamily: 'Montserrat',
                                                       fontStyle:
@@ -187,7 +187,7 @@ class _AssessmentFinalCarePlanViewState
                                             text: 'Diastolic',
                                             style: TextStyle(
                                                 fontFamily: 'Montserrat',
-                                                fontWeight: FontWeight.w700,
+                                                fontWeight: FontWeight.w600,
                                                 color: primaryColor,
                                                 fontSize: 16),
                                             children: <TextSpan>[
@@ -196,7 +196,7 @@ class _AssessmentFinalCarePlanViewState
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
-                                                          FontWeight.w700,
+                                                          FontWeight.w600,
                                                       color: primaryColor,
                                                       fontFamily: 'Montserrat',
                                                       fontStyle:
@@ -265,7 +265,7 @@ class _AssessmentFinalCarePlanViewState
                                             text: 'Weight',
                                             style: TextStyle(
                                                 fontFamily: 'Montserrat',
-                                                fontWeight: FontWeight.w700,
+                                                fontWeight: FontWeight.w600,
                                                 color: primaryColor,
                                                 fontSize: 16),
                                             children: <TextSpan>[
@@ -274,7 +274,7 @@ class _AssessmentFinalCarePlanViewState
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
-                                                          FontWeight.w700,
+                                                          FontWeight.w600,
                                                       color: primaryColor,
                                                       fontFamily: 'Montserrat',
                                                       fontStyle:
@@ -339,7 +339,7 @@ class _AssessmentFinalCarePlanViewState
                                     'Done',
                                     style: TextStyle(
                                         color: Colors.white,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         fontSize: 12),
                                     textAlign: TextAlign.center,
                                   ),
@@ -444,7 +444,7 @@ class _AssessmentFinalCarePlanViewState
                           'Close',
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 12),
                           textAlign: TextAlign.center,
                         ),

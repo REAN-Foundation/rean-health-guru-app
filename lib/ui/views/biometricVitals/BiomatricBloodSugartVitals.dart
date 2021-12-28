@@ -58,7 +58,7 @@ class _BiometricBloodSugarVitalsViewState
                     style: TextStyle(
                         fontSize: 16.0,
                         color: primaryColor,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                   ),
                   iconTheme: IconThemeData(color: Colors.black),
                   actions: <Widget>[
@@ -131,7 +131,7 @@ class _BiometricBloodSugarVitalsViewState
           Text(
             'Enter your blood glucose:',
             style: TextStyle(
-                color: primaryColor, fontWeight: FontWeight.w500, fontSize: 16),
+                color: primaryColor, fontWeight: FontWeight.w600, fontSize: 16),
             textAlign: TextAlign.center,
           ),
           const SizedBox(
@@ -174,7 +174,7 @@ class _BiometricBloodSugarVitalsViewState
                     text: '',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: primaryColor,
                         fontSize: 14),
                     children: <TextSpan>[
@@ -182,7 +182,7 @@ class _BiometricBloodSugarVitalsViewState
                           text: '    mg/dL    ',
                           style: TextStyle(
                               fontSize: 14,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
@@ -223,7 +223,7 @@ class _BiometricBloodSugarVitalsViewState
                           'Save',
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 14),
                           textAlign: TextAlign.center,
                         ),
@@ -263,7 +263,7 @@ class _BiometricBloodSugarVitalsViewState
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -272,7 +272,7 @@ class _BiometricBloodSugarVitalsViewState
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -377,7 +377,7 @@ class _BiometricBloodSugarVitalsViewState
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -444,7 +444,7 @@ class _BiometricBloodSugarVitalsViewState
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -464,7 +464,7 @@ class _BiometricBloodSugarVitalsViewState
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -473,7 +473,7 @@ class _BiometricBloodSugarVitalsViewState
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -491,7 +491,7 @@ class _BiometricBloodSugarVitalsViewState
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -500,7 +500,7 @@ class _BiometricBloodSugarVitalsViewState
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -518,7 +518,7 @@ class _BiometricBloodSugarVitalsViewState
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -527,7 +527,7 @@ class _BiometricBloodSugarVitalsViewState
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

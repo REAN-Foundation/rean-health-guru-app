@@ -121,7 +121,7 @@ class _SignUpViewState extends State<SignUpView> {
               ),
             ),
             /*Text('Back',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))*/
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600))*/
           ],
         ),
       ),
@@ -595,7 +595,7 @@ class _SignUpViewState extends State<SignUpView> {
           child: Text(
             'SignUp',
             style: TextStyle(
-                fontSize: 18, color: Colors.white, fontWeight: FontWeight.w700),
+                fontSize: 18, color: Colors.white, fontWeight: FontWeight.w600),
           ),
         ),
       ),
@@ -610,7 +610,7 @@ class _SignUpViewState extends State<SignUpView> {
           style: GoogleFonts.portLligatSans(
             textStyle: Theme.of(context).textTheme.headline1,
             fontSize: 30,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w600,
             color: primaryColor,
           ),
           children: [

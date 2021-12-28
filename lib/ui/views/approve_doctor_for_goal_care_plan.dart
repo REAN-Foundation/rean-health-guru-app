@@ -36,7 +36,7 @@ class _ApproveDoctorForCarePlanViewState
                   style: TextStyle(
                       fontSize: 16.0,
                       color: primaryColor,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                 ),
               ),
             ),
@@ -106,7 +106,7 @@ class _ApproveDoctorForCarePlanViewState
                                       'Send for Approval',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 14),
                                       textAlign: TextAlign.center,
                                     ),
@@ -139,7 +139,7 @@ class _ApproveDoctorForCarePlanViewState
       child: Center(
         child: Text(
           'Get Goals Approved!',
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
+          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
         ),
       ),
     );
@@ -214,7 +214,7 @@ class _ApproveDoctorForCarePlanViewState
                               child: Text('Dr. Abhijeet Mule',
                                   style: TextStyle(
                                       fontSize: 14,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       color: primaryColor)),
                             ),
                             Text('Cardiologist, MD MBBS',
@@ -299,7 +299,7 @@ class _ApproveDoctorForCarePlanViewState
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'Montserrat',
                                 color: primaryColor)),
                         Row(

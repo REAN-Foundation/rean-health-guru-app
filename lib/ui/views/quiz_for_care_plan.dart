@@ -36,7 +36,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -97,7 +97,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
                   'Do you still feel Angina pain?',
                   style: TextStyle(
                       color: primaryColor,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
@@ -125,7 +125,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
                           'Yes',
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 16),
                           textAlign: TextAlign.center,
                         ),
@@ -152,7 +152,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
                           'No',
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 16),
                           textAlign: TextAlign.center,
                         ),
@@ -221,7 +221,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
                 'How much water do you drink during the day?',
                 style: TextStyle(
                     color: primaryColor,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16),
                 textAlign: TextAlign.center,
               ),

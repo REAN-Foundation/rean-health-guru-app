@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
         /*home: SplashScreen(
             seconds: 3,
             navigateAfterSeconds: AfterSplashScreen(isLogin),
-            title: new Text('REAN Care\n\nDev-Build' , style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700, color: Colors.white)),
+            title: new Text('REAN Care\n\nDev-Build' , style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600, color: Colors.white)),
             image: new Image.asset('res/images/app_logo_tranparent.png'),
             backgroundColor: primaryColor,
             styleTextUnderTheLoader: new TextStyle(),

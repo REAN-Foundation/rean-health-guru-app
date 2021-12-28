@@ -195,7 +195,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -332,7 +332,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                                         details.lastName,
                                     style: TextStyle(
                                         fontSize: 14.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                               ),
                               Text(details.gender,
@@ -462,7 +462,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                                     details.firstName + ' ' + details.lastName,
                                     style: TextStyle(
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                               ),
                               Text('Phone: +91 ' + details.phoneNumber,
@@ -578,7 +578,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                                     details.firstName + ' ' + details.lastName,
                                     style: TextStyle(
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                               ),
                               Text('Phone: +91 ' + details.phoneNumber,
@@ -704,7 +704,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                                     details.firstName + ' ' + details.lastName,
                                     style: TextStyle(
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                               ),
                               Text('Phone: +91 ' + details.phoneNumber,

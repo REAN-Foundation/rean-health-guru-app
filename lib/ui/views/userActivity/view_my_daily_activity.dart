@@ -346,7 +346,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
               ),
               iconTheme: IconThemeData(color: Colors.black),
               actions: <Widget>[
@@ -461,7 +461,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   'Calories',
                   semanticsLabel: 'Calories',
                   style: TextStyle(
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       fontSize: 18.0,
                       color: colorOrange),
                 ),
@@ -481,7 +481,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       totalCalories.toStringAsFixed(0),
                       semanticsLabel: totalCalories.toStringAsFixed(0),
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: 28.0,
                           color: primaryColor),
                     ),
@@ -532,7 +532,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   'Heart Rate',
                   semanticsLabel: 'Heart Rate',
                   style: TextStyle(
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       fontSize: 18.0,
                       color: Colors.red),
                 ),
@@ -549,7 +549,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   heartRateBmp.toString(),
                   semanticsLabel: heartRateBmp.toString(),
                   style: TextStyle(
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       fontSize: 28.0,
                       color: primaryColor),
                 ),
@@ -609,7 +609,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       'BMI',
                       semanticsLabel: 'BMI',
                       style: TextStyle(
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontSize: 18.0,
                           color: colorGreen),
                     ),
@@ -650,7 +650,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                           ? 'Edit yout height & weight for BMI'
                           : bmiValue.toStringAsFixed(2),
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: bmiValue == 0.0 ? 14 : 28.0,
                           color: primaryColor),
                     ),
@@ -669,7 +669,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   style: TextStyle(
                       fontSize: 16.0,
                       color: bmiResultColor,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -742,7 +742,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       'Water',
                       semanticsLabel: 'Water',
                       style: TextStyle(
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontSize: 18.0,
                           color: colorLightBlue),
                     ),
@@ -759,7 +759,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       waterGlass.toString(),
                       semanticsLabel: waterGlass.toString(),
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: 28.0,
                           color: primaryColor),
                     ),
@@ -837,7 +837,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       'Sleep',
                       semanticsLabel: 'Sleep',
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: 18.0,
                           color: primaryColor),
                     ),
@@ -853,7 +853,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                     Text(
                       '6',
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: 28.0,
                           color: primaryColor),
                     ),
@@ -870,7 +870,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                     Text(
                       '32',
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: 28.0,
                           color: primaryColor),
                     ),

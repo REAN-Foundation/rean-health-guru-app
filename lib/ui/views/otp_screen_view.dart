@@ -150,7 +150,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                     ),
                   ),
                   /*Text('Back',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))*/
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600))*/
                 ],
               ),
             ),
@@ -161,7 +161,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
           child: Text(
             'OTP',
             style: TextStyle(
-                fontSize: 16, color: Colors.white, fontWeight: FontWeight.w700),
+                fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600),
           ),
         )
       ],
@@ -176,7 +176,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         children: <Widget>[
           Text(
             ' Enter 6 digit OTP',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
           ),
           SizedBox(
             height: 4,
@@ -197,7 +197,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             fieldWidth: 40,
             keyboardType:
                 TextInputType.numberWithOptions(decimal: false, signed: false),
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
             textFieldAlignment: MainAxisAlignment.spaceAround,
             fieldStyle: FieldStyle.box,
             onCompleted: (pin) {
@@ -230,7 +230,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                     style: TextStyle(
                         fontSize: 14,
                         color: primaryColor,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
             ],

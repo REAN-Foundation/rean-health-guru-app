@@ -210,7 +210,7 @@ class _EditProfileState extends State<EditProfile> {
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
               ),
               iconTheme: IconThemeData(color: Colors.black),
             ),
@@ -1287,7 +1287,7 @@ class _EditProfileState extends State<EditProfile> {
                     style: TextStyle(
                         fontSize: 14.0,
                         color: Colors.white,
-                        fontWeight: FontWeight.w700)),
+                        fontWeight: FontWeight.w600)),
                 onPressed: () async {
                   if (_emailController.text.toString() == '') {
                     showToast('Please enter email', context);

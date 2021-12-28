@@ -101,7 +101,7 @@ class _SelectGoalsForCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -137,7 +137,7 @@ class _SelectGoalsForCarePlanViewState
                           style: TextStyle(
                               color: textBlack,
                               fontSize: 14,
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
                           height: 16,
@@ -181,7 +181,7 @@ class _SelectGoalsForCarePlanViewState
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 32,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                   fontFamily: 'Montserrat',
                 ),
               ),
@@ -193,7 +193,7 @@ class _SelectGoalsForCarePlanViewState
           Text(
             'Set Priorities',
             style: TextStyle(
-                color: primaryColor, fontSize: 20, fontWeight: FontWeight.w700),
+                color: primaryColor, fontSize: 20, fontWeight: FontWeight.w600),
           ),
         ],
       ),
@@ -216,7 +216,7 @@ class _SelectGoalsForCarePlanViewState
           Text(
             'Biometric Goals',
             style: TextStyle(
-                color: primaryColor, fontSize: 16, fontWeight: FontWeight.w700),
+                color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
           ),
           SizedBox(
             height: 16.0,
@@ -263,7 +263,7 @@ class _SelectGoalsForCarePlanViewState
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 16,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
               ),
               SizedBox(
                 height: 16.0,
@@ -340,7 +340,7 @@ class _SelectGoalsForCarePlanViewState
                   Text(
                     'Next',
                     style: TextStyle(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         color: Colors.white,
                         fontSize: 14),
                   ),

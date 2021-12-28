@@ -101,7 +101,7 @@ class _BookingAppoinmentConfirmationViewViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
           ),
@@ -409,7 +409,7 @@ class _BookingAppoinmentConfirmationViewViewState
                   text: '    Consultation Fee :',
                   style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
                   children: <TextSpan>[
-                    TextSpan(text: ' ₹ 500', style: TextStyle(fontWeight: FontWeight.w500, color: primaryColor, fontSize: 16)),
+                    TextSpan(text: ' ₹ 500', style: TextStyle(fontWeight: FontWeight.w600, color: primaryColor, fontSize: 16)),
                   ],
                 ),
               ),
@@ -567,7 +567,7 @@ class _BookingAppoinmentConfirmationViewViewState
                   text: '    Consultation Fee :',
                   style: TextStyle(fontWeight: FontWeight.normal, color: Colors.black, fontSize: 16),
                   children: <TextSpan>[
-                    TextSpan(text: ' ₹ 500', style: TextStyle(fontWeight: FontWeight.w500, color: primaryColor, fontSize: 16)),
+                    TextSpan(text: ' ₹ 500', style: TextStyle(fontWeight: FontWeight.w600, color: primaryColor, fontSize: 16)),
                   ],
                 ),
               ),

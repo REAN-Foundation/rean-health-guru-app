@@ -146,7 +146,7 @@ class _CreateProfileState extends State<CreateProfile> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
           ),
@@ -439,7 +439,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   style: TextStyle(
                       fontSize: 14.0,
                       color: Colors.white,
-                      fontWeight: FontWeight.w700)),
+                      fontWeight: FontWeight.w600)),
               onPressed: () async {
                 if (_firstNameController.text.toString() == '') {
                   showToast('Please enter First Name', context);

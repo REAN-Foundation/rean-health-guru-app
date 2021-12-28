@@ -76,7 +76,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
                                   Text('Appointment Confirmed',
                                       style: TextStyle(
                                           fontSize: 18,
-                                          fontWeight: FontWeight.w700)),
+                                          fontWeight: FontWeight.w600)),
                                   Text('ID: 2359852',
                                       style: TextStyle(
                                           fontSize: 12,
@@ -131,7 +131,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
             height: 24,
           ),
           Text('Appointment Details',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
           SizedBox(
             height: 16,
           ),
@@ -238,14 +238,14 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
             text: TextSpan(
               text: 'Medical Complaint\n',
               style: TextStyle(
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                   color: Colors.black,
                   fontSize: 16),
               children: <TextSpan>[
                 TextSpan(
                     text: 'Fever & Cough',
                     style: TextStyle(
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: primaryColor,
                         fontSize: 16)),
               ],
@@ -266,7 +266,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
             height: 24,
           ),
           Text('Appointment Details',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
           SizedBox(
             height: 16,
           ),

@@ -287,7 +287,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                 Text(
                   'You will receive a 6 digit code for phone number verification ',
                   style: TextStyle(
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     fontSize: 14,
                     color: Colors.black,
                     fontFamily: "Montserrat",
@@ -370,7 +370,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
           child: Text('Get OTP',
               style: TextStyle(
                   fontSize: 14,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                   color: Colors.white)),
           style: ButtonStyle(
               foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
@@ -563,7 +563,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
               style: GoogleFonts.portLligatSans(
                 textStyle: Theme.of(context).textTheme.headline4,
                 fontSize: 30,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
                 color: primaryColor,
               ),
               children: [
@@ -605,7 +605,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
               style: GoogleFonts.portLligatSans(
                 textStyle: Theme.of(context).textTheme.headline4,
                 fontSize: 30,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
                 color: primaryColor,
               ),
               children: [

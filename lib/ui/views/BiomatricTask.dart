@@ -98,7 +98,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
               ),
             ),
             iconTheme: IconThemeData(color: Colors.black),
@@ -158,7 +158,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
             child: Text(
               widget.task.details.subTitle,
               style:
-                  TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
+                  TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
               textAlign: TextAlign.center,
             ),
           ),
@@ -186,7 +186,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                         text: 'Systolic',
                         style: TextStyle(
                             fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 14),
                         children: <TextSpan>[
@@ -194,7 +194,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                               text: '  mm Hg     ',
                               style: TextStyle(
                                   fontSize: 10,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   color: primaryColor,
                                   fontFamily: 'Montserrat',
                                   fontStyle: FontStyle.italic)),
@@ -247,7 +247,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                         text: 'Diastolic',
                         style: TextStyle(
                             fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 14),
                         children: <TextSpan>[
@@ -255,7 +255,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                               text: '  mm Hg  ',
                               style: TextStyle(
                                   fontSize: 10,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   color: primaryColor,
                                   fontFamily: 'Montserrat',
                                   fontStyle: FontStyle.italic)),
@@ -331,7 +331,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                             !widget.task.finished ? 'Save' : 'Done',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 14),
                             textAlign: TextAlign.center,
                           ),
@@ -365,7 +365,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                           text: 'Weight',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: primaryColor,
                               fontSize: 14),
                           children: <TextSpan>[
@@ -375,7 +375,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                                     : '    Kg    ',
                                 style: TextStyle(
                                     fontSize: 10,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     color: primaryColor,
                                     fontFamily: 'Montserrat',
                                     fontStyle: FontStyle.italic)),
@@ -457,7 +457,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                               !widget.task.finished ? 'Save' : 'Done',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   fontSize: 14),
                               textAlign: TextAlign.center,
                             ),
@@ -494,7 +494,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                           text: 'Blood Glucose',
                           style: TextStyle(
                               fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: primaryColor,
                               fontSize: 14),
                           children: <TextSpan>[
@@ -502,7 +502,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                                 text: '  mg / dL     ',
                                 style: TextStyle(
                                     fontSize: 10,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     color: primaryColor,
                                     fontFamily: 'Montserrat',
                                     fontStyle: FontStyle.italic)),
@@ -578,7 +578,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                               !widget.task.finished ? 'Save' : 'Done',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   fontSize: 14),
                               textAlign: TextAlign.center,
                             ),

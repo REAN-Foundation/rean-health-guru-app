@@ -37,7 +37,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
               ),
               iconTheme: IconThemeData(color: Colors.black),
               actions: <Widget>[
@@ -174,7 +174,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 14),
                               textStyle: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500),
+                                  fontSize: 16, fontWeight: FontWeight.w600),
                               primary: primaryColor,
                               shape: BeveledRectangleBorder(
                                 borderRadius: BorderRadius.circular(2),
@@ -198,7 +198,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 50, vertical: 14),
                                 textStyle: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500)),
+                                    fontSize: 16, fontWeight: FontWeight.w600)),
                           ),
                         ),
                       ],

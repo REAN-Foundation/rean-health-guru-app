@@ -209,7 +209,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                     style: TextStyle(
                         color: textColor,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         fontFamily: 'Montserrat')),
                 SizedBox(
                   height: 16,
@@ -241,7 +241,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                               'Doctor',
                               style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: textColor),
                             ),
@@ -271,7 +271,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                               'Lab',
                               style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: textColor),
                             ),
@@ -301,7 +301,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                               'Pharmacy',
                               style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: textColor),
                             ),
@@ -340,7 +340,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                               'Ambulance',
                               style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: textColor),
                             ),
@@ -370,7 +370,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                               'Nurse',
                               style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: textColor),
                             ),
@@ -400,7 +400,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                               'Dietitian',
                               style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: textColor),
                             ),
@@ -452,7 +452,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                         style: TextStyle(
                             color: textColor,
                             fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
                             fontFamily: 'Montserrat')),
                   ],
                 ),
@@ -485,7 +485,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                     incompleteTaskCount.toString(),
                                     style: TextStyle(
                                         fontSize: 24,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         fontFamily: 'Montserrat',
                                         color: Colors.orange),
                                   ),
@@ -498,7 +498,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                           'Pending',
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat',
                               color: textColor),
                         ),
@@ -532,7 +532,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                     completedTaskCount.toString(),
                                     style: TextStyle(
                                         fontSize: 24,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         fontFamily: 'Montserrat',
                                         color: Colors.green),
                                   ),
@@ -545,7 +545,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                           'Completed',
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat',
                               color: textColor),
                         ),
@@ -600,7 +600,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                         style: TextStyle(
                             color: textColor,
                             fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
                             fontFamily: 'Montserrat')),
                   ],
                 ),
@@ -633,7 +633,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                     incompleteMedicationCount.toString(),
                                     style: TextStyle(
                                         fontSize: 24,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         fontFamily: 'Montserrat',
                                         color: Colors.orange),
                                   ),
@@ -646,7 +646,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                           'Pending',
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat',
                               color: textColor),
                         ),
@@ -670,7 +670,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                               '8',
                               style: TextStyle(
                                   fontSize: 18,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: textColor),
                             ),
@@ -681,7 +681,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                           'Completed',
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat',
                               color: textColor),
                         ),
@@ -730,7 +730,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ],
               ),
@@ -755,7 +755,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                             '1',
                             style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'Montserrat',
                                 color: textColor),
                           ),
@@ -768,7 +768,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                         'Pending',
                         style: TextStyle(
                             fontSize: 10,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
                             fontFamily: 'Montserrat',
                             color: textColor),
                       ),
@@ -794,7 +794,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                             '3',
                             style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'Montserrat',
                                 color: textColor),
                           ),
@@ -807,7 +807,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                         'Completed',
                         style: TextStyle(
                             fontSize: 10,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
                             fontFamily: 'Montserrat',
                             color: textColor),
                       ),
@@ -859,7 +859,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ],
               ),
@@ -877,7 +877,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                         text: topicName.toString(),
                         style: TextStyle(
                             fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             color: Colors.black,
                             fontSize: 14),
                         children: <TextSpan>[
@@ -885,7 +885,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                               text: ' ' + briefInformation.toString(),
                               style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                   color: primaryColor,
                                   fontFamily: 'Montserrat')),
                         ],
@@ -933,7 +933,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                             style: TextStyle(
                                 color: textColor,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'Montserrat')),
                       ],
                     ),
@@ -983,7 +983,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                             style: TextStyle(
                                                 color: textColor,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500,
+                                                fontWeight: FontWeight.w600,
                                                 fontFamily: 'Montserrat')),
                                       ),
                                       Container(
@@ -993,7 +993,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                             text: pulse.pulse.toString() + ' ',
                                             style: TextStyle(
                                                 fontFamily: 'Montserrat',
-                                                fontWeight: FontWeight.w700,
+                                                fontWeight: FontWeight.w600,
                                                 color: textColor,
                                                 fontSize: 18),
                                             children: <TextSpan>[
@@ -1002,7 +1002,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                          FontWeight.w600,
                                                       color: textColor,
                                                       fontFamily:
                                                           'Montserrat')),
@@ -1054,7 +1054,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                             style: TextStyle(
                                                 color: textColor,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500,
+                                                fontWeight: FontWeight.w600,
                                                 fontFamily: 'Montserrat')),
                                       ),
                                       Container(
@@ -1071,7 +1071,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                                 ' ',
                                             style: TextStyle(
                                                 fontFamily: 'Montserrat',
-                                                fontWeight: FontWeight.w700,
+                                                fontWeight: FontWeight.w600,
                                                 color: textColor,
                                                 fontSize: 18),
                                             children: <TextSpan>[
@@ -1080,7 +1080,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                          FontWeight.w600,
                                                       color: textColor,
                                                       fontFamily:
                                                           'Montserrat')),
@@ -1132,7 +1132,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                             style: TextStyle(
                                                 color: textColor,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500,
+                                                fontWeight: FontWeight.w600,
                                                 fontFamily: 'Montserrat')),
                                       ),
                                       Container(
@@ -1144,7 +1144,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                                 ' ',
                                             style: TextStyle(
                                                 fontFamily: 'Montserrat',
-                                                fontWeight: FontWeight.w700,
+                                                fontWeight: FontWeight.w600,
                                                 color: textColor,
                                                 fontSize: 18),
                                             children: <TextSpan>[
@@ -1153,7 +1153,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                                   style: TextStyle(
                                                       fontSize: 12,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                          FontWeight.w600,
                                                       color: textColor,
                                                       fontFamily:
                                                           'Montserrat')),
@@ -1205,7 +1205,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                             style: TextStyle(
                                                 color: textColor,
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.w500,
+                                                fontWeight: FontWeight.w600,
                                                 fontFamily: 'Montserrat')),
                                       ),
                                       Container(
@@ -1221,7 +1221,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                             : weight.weight.toString() + ' ',
                                             style: TextStyle(
                                                 fontFamily: 'Montserrat',
-                                                fontWeight: FontWeight.w700,
+                                                fontWeight: FontWeight.w600,
                                                 color: textColor,
                                                 fontSize: 18),
                                             children: <TextSpan>[
@@ -1230,7 +1230,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                                                   unit == 'lbs' ? 'lbs' : 'Kg',
                                               style: TextStyle(
                                                   fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: FontWeight.w600,
                                                   color: textColor,
                                                   fontFamily: 'Montserrat')),
                                             ],

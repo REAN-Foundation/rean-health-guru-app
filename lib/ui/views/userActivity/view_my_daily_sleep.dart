@@ -3,11 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:health/health.dart';
-import 'package:intl/intl.dart';
-import 'package:paitent/core/models/GlassOfWaterConsumption.dart';
+import 'package:get_it/get_it.dart';
 import 'package:paitent/core/viewmodels/views/patients_health_marker.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/GetSleepData.dart';
 
 import '../base_widget.dart';
@@ -20,96 +19,38 @@ class ViewMyDailySleep extends StatefulWidget {
 class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
   var model = PatientHealthMarkerViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  List<HealthDataPoint> _healthDataList = [];
-  var dateFormat = DateFormat('yyyy-MM-dd');
   GetSleepData sleepData;
-  int steps = 0;
-  double weight = 0;
-  double height = 0;
-  double totalActiveCalories = 0;
-  double totalBasalCalories = 0;
-  double totalCalories = 0;
-  double bmiValue = 0;
-  int waterGlass = 0;
-  String bmiResult = '';
-  Color bmiResultColor = Colors.black87;
-  GlassOfWaterConsumption glassOfWaterConsumption;
-  DateTime startDate;
-  DateTime endDate;
-  int heartRateBmp = 0;
+  String sleepHours = '';
+  String sleepMin = '';
 
   @override
   void initState() {
-    startDate = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
-    endDate = DateTime(DateTime.now().year, DateTime.now().month,
-        DateTime.now().day, 23, 59, 59);
-    //loadSharedPref();
     if (Platform.isIOS) {
-      //fetchData();
-      sleepData = GetSleepData();
+      sleepData = GetIt.instance<GetSleepData>();
     }
+    Future.delayed(const Duration(seconds: 3), () => getSleepHours());
     super.initState();
   }
 
-  Future<void> fetchData() async {
-    /// Get everything from midnight until now
-    //DateTime startDate = DateTime(2021, 01, 01, 0, 0, 0);
-    //DateTime endDate = DateTime(2021, 07, 07, 23, 59, 59);
+  getSleepHours() {
+    var msg = sleepData.getSleepDuration();
 
-    /*startDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
-    endDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 23, 59, 59);*/
-
-    final HealthFactory health = HealthFactory();
-
-    /// Define the types to get.
-    final List<HealthDataType> types = [
-      //HealthDataType.STEPS,
-      //HealthDataType.WEIGHT,
-      //HealthDataType.HEIGHT,
-      //HealthDataType.ACTIVE_ENERGY_BURNED,
-      HealthDataType.SLEEP_ASLEEP,
-      //HealthDataType.SLEEP_AWAKE,
-      //HealthDataType.HEART_RATE
-      //HealthDataType.BASAL_ENERGY_BURNED,
-      //HealthDataType.DISTANCE_WALKING_RUNNING,
-    ];
-
-
-    /// You MUST request access to the data types before reading them
-    final bool accessWasGranted = await health.requestAuthorization(types);
-
-    //this.steps = 0;
-    if (accessWasGranted) {
-      try {
-        /// Fetch new data
-        final List<HealthDataPoint> healthData =
-            await health.getHealthDataFromTypes(startDate, endDate, types);
-
-        /// Save all the new data points
-        _healthDataList.addAll(healthData);
-      } catch (e) {
-        debugPrint('Caught exception in getHealthDataFromTypes: $e');
-      }
-
-      /// Filter out duplicates
-      _healthDataList = HealthFactory.removeDuplicates(_healthDataList);
-
-      /// Print the results
-      /*_healthDataList.forEach((x) {
-        debugPrint('Data point:  $x');
-        steps += x.value.round();
-      });*/
-
-      //debugPrint("Steps: $steps");
-
-      //this.steps = steps;
-
-      /// Update the UI to display the results
-
-    } else {
-      debugPrint('Authorization not granted');
+    if (msg == 'No Sleep data available') {
+      showToast(msg, context);
+      Navigator.pop(context);
+      return;
     }
+
+    double sleepTime = double.parse(sleepData.getSleepDuration());
+
+    var time = sleepTime / 60;
+
+    var parts = time.toString().split('.');
+
+    sleepHours = parts[0].trim();
+    sleepMin = parts[1].trim().substring(0, 2);
+
+    setState(() {});
   }
 
   @override
@@ -151,8 +92,21 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    sleep(),
-                    SizedBox(
+                    sleepHours != ''
+                        ? sleep()
+                        : Expanded(
+                            child: Container(
+                            child: Center(
+                              child: Text(
+                                'Wait while sleep data is loading...',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18.0,
+                                    color: primaryColor),
+                              ),
+                            ),
+                          )),
+                    /* SizedBox(
                       height: 16,
                     ),
                     Container(
@@ -167,10 +121,10 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                         padding: const EdgeInsets.all(16),
                         height: 200,
                         child:
-                            Container() /* Center(
+                            Container() */ /* Center(
                         child: SimpleTimeSeriesChart(_createSampleData()),
-                      ),*/
-                        ),
+                      ),*/ /*
+                        ),*/
                   ],
                 ),
               ),
@@ -225,7 +179,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      sleepData.getSleepDuration().toString(),
+                      sleepHours,
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 28.0,
@@ -235,14 +189,14 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                       width: 4,
                     ),
                     Text(
-                      'hrs',
+                      'hr',
                       style: TextStyle(fontSize: 14.0, color: Colors.black87),
                     ),
                     SizedBox(
                       width: 8,
                     ),
                     Text(
-                      '32',
+                      sleepMin,
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 28.0,

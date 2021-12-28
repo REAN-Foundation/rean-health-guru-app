@@ -22,6 +22,7 @@ import 'package:paitent/utils/CoachMarkUtilities.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/GetAllConfigrations.dart';
 import 'package:paitent/utils/GetHealthData.dart';
+import 'package:paitent/utils/GetSleepData.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringConstant.dart';
 import 'package:paitent/utils/StringUtility.dart';
@@ -222,8 +223,6 @@ class _HomeViewState extends State<HomeView> {
       Future.delayed(const Duration(seconds: 2), () => showTutorial());
       //showTutorial();
     } else {
-      /*GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
-      healthData = GetIt.instance<GetHealthData>();*/
       Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
     }
   }
@@ -317,6 +316,9 @@ class _HomeViewState extends State<HomeView> {
 
   showDailyCheckIn() {
     debugPrint('Inside Daily Check In');
+    GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
+    GetIt.instance.registerSingleton<GetSleepData>(GetSleepData());
+    healthData = GetIt.instance<GetHealthData>();
     if (dailyCheckInDate != dateFormat.format(DateTime.now())) {
       showMaterialModalBottomSheet(
           isDismissible: true,

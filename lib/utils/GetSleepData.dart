@@ -186,15 +186,19 @@ class GetSleepData {
   }
 
   String getSleepDuration() {
-    debugPrint('Sleep start time ${_healthDataList.elementAt(1).dateFrom}');
-    debugPrint(
-        'Sleep end time ${_healthDataList.elementAt(_healthDataList.length - 1).dateTo}');
+    try {
+      debugPrint('Sleep start time ${_healthDataList.elementAt(1).dateFrom}');
+      debugPrint(
+          'Sleep end time ${_healthDataList.elementAt(_healthDataList.length - 1).dateTo}');
 
-    final DateTime startTime = _healthDataList.elementAt(1).dateFrom;
-    final DateTime endTime =
-        _healthDataList.elementAt(_healthDataList.length - 1).dateTo;
+      final DateTime startTime = _healthDataList.elementAt(1).dateFrom;
+      final DateTime endTime =
+          _healthDataList.elementAt(_healthDataList.length - 1).dateTo;
 
-    return endTime.difference(startTime).inMinutes.toString();
+      return endTime.difference(startTime).inMinutes.toString();
+    } catch (Exception) {
+      return 'No Sleep data available';
+    }
   }
 
   String getWeight() {

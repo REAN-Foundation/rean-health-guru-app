@@ -280,14 +280,14 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ImageIcon(
                           AssetImage('res/images/ic_better_emoji.png'),
                           size: 48,
-                          color: Colors.green,
+                          color: Color(0XFF007E1A),
                         ),
                         SizedBox(
                           height: 8,
                         ),
                         Text('Better',
                             style: TextStyle(
-                                color: Colors.green,
+                                color: Color(0XFF007E1A),
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Montserrat')),
@@ -332,14 +332,14 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ImageIcon(
                           AssetImage('res/images/ic_worse_emoji.png'),
                           size: 48,
-                          color: Colors.red.shade700,
+                          color: Color(0XFFC10E21),
                         ),
                         SizedBox(
                           height: 8,
                         ),
                         Text('Worse',
                             style: TextStyle(
-                                color: Colors.red.shade700,
+                                color: Color(0XFFC10E21),
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Montserrat')),
@@ -684,7 +684,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           /*height: 32,
                             width: 32,
                             decoration: new BoxDecoration(
-                                color: Colors.green,
+                                color: Color(0XFF007E1A),
                                 border: Border.all(color: Colors.white),
                                 borderRadius: new BorderRadius.all(Radius.circular(16.0))),*/
                           child: Center(
@@ -705,7 +705,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                           fontSize: 24,
                                           fontWeight: FontWeight.w700,
                                           fontFamily: 'Montserrat',
-                                          color: Colors.green),
+                                          color: Color(0XFF007E1A)),
                                     ),
                                   ),
                           ),
@@ -822,7 +822,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           children: [
                             Icon(
                               Icons.thumb_up,
-                              color: Colors.green,
+                              color: Color(0XFFC10E21),
                               size: 36,
                             ),
                             SizedBox(
@@ -830,7 +830,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                             ),
                             Text('Yes',
                                 style: TextStyle(
-                                    color: Colors.green,
+                                    color: Color(0XFFC10E21),
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
                                     fontFamily: 'Montserrat')),
@@ -953,11 +953,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(FontAwesomeIcons.home, color: Colors.green, size: 40,),
+                          Icon(FontAwesomeIcons.home, color: Color(0XFF007E1A), size: 40,),
                           SizedBox(height: 6,),
                           Text('No I am good!',
                               style: TextStyle(
-                                  color: Colors.green,
+                                  color: Color(0XFF007E1A),
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Montserrat')),
@@ -1121,7 +1121,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         height: 32,
                         width: 32,
                         decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: Color(0XFF007E1A),
                             border: Border.all(color: Colors.white),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(16.0))),

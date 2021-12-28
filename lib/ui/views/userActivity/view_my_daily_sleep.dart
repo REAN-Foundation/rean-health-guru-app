@@ -94,18 +94,15 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                   children: [
                     sleepHours != ''
                         ? sleep()
-                        : Expanded(
-                            child: Container(
-                            child: Center(
-                              child: Text(
-                                'Wait while sleep data is loading...',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18.0,
-                                    color: primaryColor),
-                              ),
+                        : Center(
+                            child: Text(
+                              'Wait while sleep data is loading...',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18.0,
+                                  color: primaryColor),
                             ),
-                          )),
+                          ),
                     /* SizedBox(
                       height: 16,
                     ),

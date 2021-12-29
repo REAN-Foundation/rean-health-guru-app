@@ -579,7 +579,6 @@ class _BiometricBloodSugarVitalsViewState
       map['BloodGlucose'] = _controller.text.toString();
       map['PatientUserId'] = "";
       map['Unit'] = "mg|dL";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =

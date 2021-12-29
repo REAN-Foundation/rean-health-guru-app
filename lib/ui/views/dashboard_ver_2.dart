@@ -822,7 +822,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           children: [
                             Icon(
                               Icons.thumb_up,
-                              color: Color(0XFFC10E21),
+                              color: Color(0XFF007E1A),
                               size: 36,
                             ),
                             SizedBox(
@@ -830,7 +830,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                             ),
                             Text('Yes',
                                 style: TextStyle(
-                                    color: Color(0XFFC10E21),
+                                    color: Color(0XFF007E1A),
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
                                     fontFamily: 'Montserrat')),

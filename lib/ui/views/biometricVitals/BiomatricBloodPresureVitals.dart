@@ -958,7 +958,6 @@ class _BiometricBloodPresureVitalsViewState
       map['Diastolic'] = _diastolicController.text.toString();
       map['PatientUserId'] = "";
       map['Unit'] = "mmHg";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
 

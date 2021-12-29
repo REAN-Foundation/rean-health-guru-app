@@ -507,7 +507,6 @@ class _BiometricBodyTemperatureVitalsViewState
       map['BodyTemperature'] = _controller.text.toString();
       map['PatientUserId'] = "";
       map['Unit'] = "Celsius";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =

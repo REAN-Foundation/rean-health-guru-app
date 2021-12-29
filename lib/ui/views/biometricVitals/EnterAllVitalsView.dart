@@ -922,7 +922,6 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       map['Diastolic'] = _diastolicController.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "mmHg";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
@@ -944,7 +943,6 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       map['BloodGlucose'] = _bloodGlucosecontroller.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "mg|dL";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
@@ -967,7 +965,6 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
           _bloodOxygenSaturationController.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "%";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
@@ -989,7 +986,6 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       map['Pulse'] = _pulseRateController.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "bpm";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse = await model.addMyVitals('pulse', map);
@@ -1010,7 +1006,6 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       map['BodyTemperature'] = _bodyTempratureController.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "Celsius";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =

@@ -576,7 +576,6 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
       map['Pulse'] = _controller.text.toString();
       map['PatientUserId'] = "";
       map['Unit'] = "bpm";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse = await model.addMyVitals('pulse', map);

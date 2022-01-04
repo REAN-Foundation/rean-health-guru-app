@@ -105,7 +105,7 @@ class _MyDialogState extends State<AddNurseDialog> {
       button: true,
       child: ElevatedButton(
         onPressed: () async {
-          bool isValidMobileNumber =
+          final bool isValidMobileNumber =
               await isValidPhoneNumber(mobileNumber, countryCode);
           if (_firstNameController.text == '') {
             showToastMsg('Enter first name', context);

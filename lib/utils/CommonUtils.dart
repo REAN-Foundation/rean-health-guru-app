@@ -226,7 +226,7 @@ setDailyCheckInDate(String viewedDate) async {
 Future<bool> isValidPhoneNumber(String phone, String code) async {
   debugPrint(
       "isValidPhoneNumber ${code + '-' + phone}  == ${await plugin.validate(code + phone, code)}");
-  return await plugin.validate(code + phone, code);
+  return plugin.validate(code + phone, code);
 }
 
 enum AppState {

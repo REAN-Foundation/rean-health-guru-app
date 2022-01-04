@@ -77,7 +77,7 @@ dependencies:
   introduction_screen: ^2.1.0
   #dots_indicator: ^1.2.0
   otp_text_field: ^1.1.1
-  health: ^3.1.1+1
+  health: ^3.4.0
   percent_indicator: ^3.0.1
   flutter_dotenv: ^5.0.2
   #permission_handler: 5.0.1

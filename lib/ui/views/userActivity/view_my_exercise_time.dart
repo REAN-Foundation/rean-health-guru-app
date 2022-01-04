@@ -6,50 +6,33 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:paitent/core/viewmodels/views/patients_health_marker.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/GetSleepData.dart';
+import 'package:paitent/utils/GetHealthData.dart';
 
 import '../base_widget.dart';
 
-class ViewMyDailySleep extends StatefulWidget {
+class ViewMyDailyExercise extends StatefulWidget {
   @override
-  _ViewMyDailySleepState createState() => _ViewMyDailySleepState();
+  _ViewMyDailyExerciseState createState() => _ViewMyDailyExerciseState();
 }
 
-class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
+class _ViewMyDailyExerciseState extends State<ViewMyDailyExercise> {
   var model = PatientHealthMarkerViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  GetSleepData sleepData;
+  GetHealthData data;
   String sleepHours = '';
-  String sleepMin = '';
+  String min = '';
 
   @override
   void initState() {
     if (Platform.isIOS) {
-      sleepData = GetIt.instance<GetSleepData>();
+      data = GetIt.instance<GetHealthData>();
     }
-    Future.delayed(const Duration(seconds: 3), () => getSleepHours());
+    Future.delayed(const Duration(seconds: 3), () => getExerciseMin());
     super.initState();
   }
 
-  getSleepHours() {
-    final msg = sleepData.getSleepDuration();
-
-    if (msg == 'No Sleep data available') {
-      showToast(msg, context);
-      Navigator.pop(context);
-      return;
-    }
-
-    final double sleepTime = double.parse(sleepData.getSleepDuration());
-
-    final time = sleepTime / 60;
-
-    final parts = time.toString().split('.');
-
-    sleepHours = parts[0].trim();
-    sleepMin = parts[1].trim().substring(0, 2);
-
+  getExerciseMin() {
+    min = data.getExerciseTimeInMin();
     setState(() {});
   }
 
@@ -65,7 +48,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
               backgroundColor: Colors.white,
               brightness: Brightness.light,
               title: Text(
-                'Sleep',
+                'Exercise',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
@@ -92,8 +75,8 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    sleepHours != ''
-                        ? sleep()
+                    min != ''
+                        ? exercise()
                         : Center(
                             child: SizedBox(
                                 width: 24,
@@ -130,7 +113,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
     );
   }
 
-  Widget sleep() {
+  Widget exercise() {
     return Card(
       semanticContainer: false,
       elevation: 4,
@@ -150,8 +133,8 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    ImageIcon(
-                      AssetImage('res/images/ic_sleep_moon.png'),
+                    Icon(
+                      Icons.directions_run,
                       size: 24,
                       color: primaryColor,
                     ),
@@ -159,8 +142,8 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                       width: 8,
                     ),
                     Text(
-                      'Sleep',
-                      semanticsLabel: 'Sleep',
+                      'Exercise',
+                      semanticsLabel: 'Exercise',
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 18.0,
@@ -175,7 +158,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
+                    /*  Text(
                       sleepHours,
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -188,12 +171,12 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                     Text(
                       'hr',
                       style: TextStyle(fontSize: 14.0, color: Colors.black87),
-                    ),
+                    ),*/
                     SizedBox(
                       width: 8,
                     ),
                     Text(
-                      sleepMin,
+                      min,
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 28.0,
@@ -210,29 +193,6 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                 ),
               ],
             ),
-            Positioned(
-              right: 00,
-              top: 8,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.info,
-                    color: Colors.black87,
-                    size: 24,
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    'You didn’t have\nenough sleep.\nIts better to sleep\n7-9 hours every day',
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(fontSize: 12.0, color: Colors.black87),
-                  ),
-                ],
-              ),
-            )
           ],
         ),
       ),

@@ -25,6 +25,7 @@ class GetHealthData {
   DateTime startDate;
   DateTime endDate;
   double totalSleepInMin = 0;
+  double totalExerciseMin = 0;
 
   GetHealthData() {
     startDate = DateTime(
@@ -62,6 +63,7 @@ class GetHealthData {
       HealthDataType.ACTIVE_ENERGY_BURNED,
       HealthDataType.SLEEP_ASLEEP,
       HealthDataType.SLEEP_AWAKE,
+      HealthDataType.EXERCISE_TIME,
       //HealthDataType.BASAL_ENERGY_BURNED,
       //HealthDataType.DISTANCE_WALKING_RUNNING,
     ];
@@ -139,6 +141,8 @@ class GetHealthData {
         totalBasalCalories = totalBasalCalories + p.value.toDouble();
       } else if (p.typeString == 'SLEEP_ASLEEP') {
         totalSleepInMin = totalSleepInMin + p.value.toDouble();
+      } else if (p.typeString == 'EXERCISE_TIME') {
+        totalExerciseMin = totalExerciseMin + p.value.toDouble();
       }
     }
 
@@ -156,6 +160,7 @@ class GetHealthData {
     debugPrint('WEIGHT : $weight');
     debugPrint('Height : $height');
     debugPrint('SLEEP_ASLEEP : $totalSleepInMin');
+    debugPrint('EXERCISE_TIME : $totalExerciseMin');
     debugPrint(
         '========================############################=============================');
   }
@@ -184,6 +189,10 @@ class GetHealthData {
       bmiResult = 'Severely Obese';
       bmiResultColor = Colors.red;
     }
+  }
+
+  String getExerciseTimeInMin() {
+    return totalExerciseMin.toString();
   }
 
   String getWeight() {

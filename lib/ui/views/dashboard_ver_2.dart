@@ -1935,7 +1935,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       button: true,
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity);
+                          Navigator.pushNamed(
+                              context, RoutePaths.MyExcersiceData);
                         },
                         child: Container(
                           height: 96,

@@ -386,6 +386,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Semantics(
+                        button: true,
                         child: InkWell(
                             onTap: () {
                               _renameDialog(document);
@@ -418,6 +419,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                         color: primaryColor,
                       ),
                       Semantics(
+                        button: true,
                         child: InkWell(
                             onTap: () {
                               _removeConfirmation(document);
@@ -450,6 +452,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                         color: primaryColor,
                       ),
                       Semantics(
+                        button: true,
                         child: InkWell(
                             onTap: () {
                               if (document.mimeType != null) {

@@ -340,13 +340,14 @@ class _BiometricBodyTemperatureVitalsViewState
     ];*/
 
     for (int i = 0; i < records.length; i++) {
-      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(
+          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
           double.parse(records.elementAt(i).bodyTemperature.toString())));
     }
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'vitals',
+        id: 'BT',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,

@@ -83,7 +83,10 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                         selectedFeelings = 1;
                         setState(() {});
 
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(
+                            const Duration(
+                              milliseconds: 300,
+                            ),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -152,7 +155,10 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                       onTap: () {
                         selectedFeelings = 2;
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(
+                            const Duration(
+                              milliseconds: 300,
+                            ),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -221,7 +227,10 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                       onTap: () {
                         selectedFeelings = 3;
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(
+                            const Duration(
+                              milliseconds: 300,
+                            ),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -292,7 +301,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  //Future.delayed(const Duration(seconds: 1), () => showDailyCheckIn());
+                  //Future.delayed(const Duration(seconds: 0), () => showDailyCheckIn());
                 },
                 child: Text(
                   "Skip",

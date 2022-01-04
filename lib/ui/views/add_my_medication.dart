@@ -28,6 +28,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   final _instructionController = TextEditingController();
   final _instructionFocus = FocusNode();
   final _unitFocus = FocusNode();
+  final _durationFocus = FocusNode();
   final _sharedPrefUtils = SharedPrefUtils();
 
   String _dosageUnit = '';
@@ -489,6 +490,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       setState(() {
                         _frequencyUnit = data;
                       });
+                      _durationFocus.requestFocus();
                       setState(() {});
                     },
                   ),
@@ -554,6 +556,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   label: 'Duration of dose',
                   child: TextFormField(
                       controller: _durationController,
+                      focusNode: _durationFocus,
                       maxLines: 1,
                       enabled: true,
                       style: TextStyle(

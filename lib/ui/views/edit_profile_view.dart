@@ -432,23 +432,28 @@ class _EditProfileState extends State<EditProfile> {
                   alignment: Alignment.topRight,
                   child: Visibility(
                     visible: isEditable,
-                    child: InkWell(
-                        onTap: () {
-                          showMaterialModalBottomSheet(
-                              isDismissible: true,
-                              backgroundColor: Colors.transparent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(25.0)),
-                              ),
-                              context: context,
-                              builder: (context) => _uploadImageSelector());
-                          //getFile();
-                        },
-                        child: SizedBox(
+                    child: Semantics(
+                      label: 'Add profile picture',
+                      button: true,
+                      child: InkWell(
+                          onTap: () {
+                            showMaterialModalBottomSheet(
+                                isDismissible: true,
+                                backgroundColor: Colors.transparent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(25.0)),
+                                ),
+                                context: context,
+                                builder: (context) => _uploadImageSelector());
+                            //getFile();
+                          },
+                          child: Image.asset(
+                            'res/images/ic_camera.png',
                             height: 32,
                             width: 32,
-                            child: Image.asset('res/images/ic_camera.png'))),
+                          )),
+                    ),
                   ),
                 )
               ],

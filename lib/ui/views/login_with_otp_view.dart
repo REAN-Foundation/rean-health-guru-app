@@ -19,6 +19,7 @@ import 'package:paitent/ui/views/home_view.dart';
 import 'package:paitent/ui/widgets/bezierContainer.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 import 'base_widget.dart';
@@ -38,9 +39,11 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   //String _fcmToken ="";
   final TextEditingController _mobileNumberController = TextEditingController();
   final _mobileNumberFocus = FocusNode();
+  ProgressDialog progressDialog;
 
   @override
   void initState() {
+    progressDialog = ProgressDialog(context, isDismissible: false);
     getKnowdledgeLinkLastViewDate();
     permissionDialog();
     //if(apiProvider.getBaseUrl().contains('dev')) {
@@ -202,8 +205,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   autoValidate: true,
                   inputFormatters: [
-                    FilteringTextInputFormatter.deny(
-                        RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                   ],
                   controller: _mobileNumberController,
                   focusNode: _mobileNumberFocus,
@@ -240,9 +242,9 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   Widget _getOTPButton(LoginViewModel model) {
     return Semantics(
-      label: 'getOTP',
+      label: 'Get OTP',
       button: true,
-      hint: 'press to get OTP',
+      //hint: 'press to get OTP',
       child: SizedBox(
         width: 160,
         height: 40,
@@ -297,6 +299,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         if (checkUserExistOrNotResonse.message == 'User not found.') {
           generateOTP(model);
         } else {
+          progressDialog.hide();
           showToast(checkUserExistOrNotResonse.message, context);
         }
         model.setBusy(false);
@@ -330,6 +333,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
           BaseResponse.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
+        progressDialog.hide();
         showToast(
             'OTP has been successfully sent on your mobile number', context);
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,
@@ -337,11 +341,13 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         _clearFeilds();
         model.setBusy(false);
       } else {
+        progressDialog.hide();
         model.setBusy(false);
         showToast(doctorListApiResponse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
+      progressDialog.hide();
       debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});
@@ -366,6 +372,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
       if (doctorListApiResponse.status == 'success') {
+        progressDialog.hide();
         showToast(
             'OTP has been successfully sent on your mobile number', context);
         _sharedPrefUtils.save(
@@ -375,11 +382,13 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         _clearFeilds();
         model.setBusy(false);
       } else {
+        progressDialog.hide();
         model.setBusy(false);
         showToast(doctorListApiResponse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
+      progressDialog.hide();
       debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});
@@ -523,6 +532,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   }
 
   _clearFeilds() {
+    progressDialog.hide();
     mobileNumber = '';
     _mobileNumberController.clear();
     setState(() {});

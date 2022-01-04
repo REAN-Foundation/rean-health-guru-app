@@ -73,7 +73,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                       onTap: () {
                         selectedFeelings = 1;
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -142,7 +142,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                       onTap: () {
                         selectedFeelings = 2;
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -211,7 +211,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                       onTap: () {
                         selectedFeelings = 3;
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -289,7 +289,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                       onTap: () {
                         selectedFeelings = 4;
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -358,7 +358,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                       onTap: () {
                         selectedFeelings = 5;
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -427,7 +427,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                       onTap: () {
                         selectedFeelings = 6;
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -505,7 +505,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                       onTap: () {
                         selectedFeelings = 7;
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -574,7 +574,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                       onTap: () {
                         selectedFeelings = 8;
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(

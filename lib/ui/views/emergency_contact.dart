@@ -598,9 +598,11 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 padding: const EdgeInsets.only(right: 18.0),
                                 child: Text(
                                     'Dr. ' +
-                                        details.contactPerson.firstName +
+                                        details.contactPerson.firstName
+                                            .toString() +
                                         ' ' +
-                                        details.contactPerson.lastName,
+                                        details.contactPerson.lastName
+                                            .toString(),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -856,9 +858,11 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 18.0),
                                   child: Text(
-                                      details.contactPerson.firstName +
+                                      details.contactPerson.firstName
+                                              .toString() +
                                           ' ' +
-                                          details.contactPerson.lastName,
+                                          details.contactPerson.lastName
+                                              .toString(),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -1026,9 +1030,11 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 18.0),
                                   child: Text(
-                                      details.contactPerson.firstName +
+                                      details.contactPerson.firstName
+                                              .toString() +
                                           ' ' +
-                                          details.contactPerson.lastName,
+                                          details.contactPerson.lastName
+                                              .toString(),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(

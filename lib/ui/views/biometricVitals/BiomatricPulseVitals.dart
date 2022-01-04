@@ -407,13 +407,14 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
     ];*/
 
     for (int i = 0; i < records.length; i++) {
-      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(
+          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
           double.parse(records.elementAt(i).pulse.toString())));
     }
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'vitals',
+        id: 'PULSE',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,

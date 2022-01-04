@@ -761,6 +761,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.0"
+  phone_number:
+    dependency: "direct main"
+    description:
+      name: phone_number
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.12.0+1"
   photo_view:
     dependency: "direct main"
     description:

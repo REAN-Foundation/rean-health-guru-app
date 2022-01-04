@@ -95,18 +95,23 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
 
   Widget _submitButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
+      onPressed: () async {
+        bool isValidMobileNumber =
+            await isValidPhoneNumber(mobileNumber, countryCode);
         if (_firstNameController.text == '') {
           showToastMsg('Enter first name', context);
         } else if (_lastNameController.text == '') {
           showToastMsg('Enter last name', context);
-        } else if (mobileNumber == '' || mobileNumber.length != 10) {
+        } else if (isValidMobileNumber) {
           showToastMsg('Enter mobile number', context);
         } else if (selectedGender == '') {
           showToastMsg('Select gender', context);
         } else {
-          widget._submitButtonListner(_firstNameController.text,
-              _lastNameController.text, mobileNumber, selectedGender);
+          widget._submitButtonListner(
+              _firstNameController.text,
+              _lastNameController.text,
+              countryCode + '-' + mobileNumber,
+              selectedGender);
         }
       },
       child: Text(
@@ -363,8 +368,8 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                     borderSide: BorderSide(),
                   ),
                 ),*/
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                autoValidate: true,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                autoValidate: false,
                 decoration: InputDecoration(
                     counterText: '',
                     hintText: 'mobile number of doctor',

@@ -207,6 +207,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
   Widget _submitOTPButton(LoginViewModel model) {
     return Semantics(
       label: 'Submit',
+      button: true,
       child: SizedBox(
         width: 160,
         height: 40,

@@ -75,6 +75,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
             ),
             floatingActionButton: Semantics(
               label: 'Add new medication',
+              button: true,
               container: true,
               child: FloatingActionButton(
                   elevation: 0.0,

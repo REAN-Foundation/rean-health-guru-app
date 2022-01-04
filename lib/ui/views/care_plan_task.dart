@@ -644,6 +644,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         child: Expanded(
                           flex: 2,
                           child: Semantics(
+                            button: true,
                             label: 'Mark as Taken',
                             child: InkWell(
                               onTap: () {
@@ -659,7 +660,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    CrossAxisAlignment.center,
                                     children: [
                                       Icon(
                                         Icons.check,

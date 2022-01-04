@@ -324,7 +324,8 @@ class _BiometricBloodOxygenVitalsViewState
     ];*/
 
     for (int i = 0; i < records.length; i++) {
-      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(
+          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
           double.parse(records.elementAt(i).bloodOxygenSaturation.toString())));
     }
 

@@ -550,13 +550,14 @@ class _BiometricBloodPresureVitalsViewState
     ];*/
 
     for (int i = 0; i < records.length; i++) {
-      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(
+          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
           double.parse(records.elementAt(i).systolic.toString())));
     }
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'vitals',
+        id: 'BPS',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -617,14 +618,13 @@ class _BiometricBloodPresureVitalsViewState
 
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate),
-          double.parse(
-              records.elementAt(i).diastolic.toString())));
+          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
+          double.parse(records.elementAt(i).diastolic.toString())));
     }
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'vitals',
+        id: 'BPD',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,

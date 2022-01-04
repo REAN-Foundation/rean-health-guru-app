@@ -374,7 +374,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             children: <Widget>[
                               SizedBox(
                                 width: 150,
-                                child: Text('Is smoker?',
+                                child: Text('Is Smoker?',
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w700,
@@ -466,7 +466,8 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
             floatingActionButton: model.busy
                 ? Container()
                 : Semantics(
-                    label: 'Edit Medical Profile',
+              label: 'Edit Medical Profile',
+                    button: true,
                     child: FloatingActionButton(
                         elevation: 0.0,
                         tooltip: 'Edit Medical Profile',

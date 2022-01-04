@@ -104,18 +104,23 @@ class _MyDialogState extends State<AddNurseDialog> {
       label: 'Save',
       button: true,
       child: ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
+          bool isValidMobileNumber =
+              await isValidPhoneNumber(mobileNumber, countryCode);
           if (_firstNameController.text == '') {
             showToastMsg('Enter first name', context);
           } else if (_lastNameController.text == '') {
             showToastMsg('Enter last name', context);
-          } else if (mobileNumber == '' || mobileNumber.length != 10) {
+          } else if (isValidMobileNumber) {
             showToastMsg('Enter mobile number', context);
           } else if (selectedGender == '') {
             showToastMsg('Select gender', context);
           } else {
-            widget._submitButtonListner(_firstNameController.text,
-                _lastNameController.text, mobileNumber, selectedGender);
+            widget._submitButtonListner(
+                _firstNameController.text,
+                _lastNameController.text,
+                countryCode + '-' + mobileNumber,
+                selectedGender);
           }
         },
         style: ButtonStyle(
@@ -348,6 +353,7 @@ class _MyDialogState extends State<AddNurseDialog> {
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/
                 },
+                onCountryChanged: (phone) {},
               )
               /*InternationalPhoneNumberInput
               .withCustomDecoration(

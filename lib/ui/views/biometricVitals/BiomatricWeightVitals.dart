@@ -395,7 +395,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                   border: Border.all(color: primaryLightColor),
                   borderRadius: BorderRadius.all(Radius.circular(8.0))),
               padding: const EdgeInsets.all(16),
-              height: 200,
+              height: 250,
               child: Center(
                 child: SimpleTimeSeriesChart(_createSampleData()),
               ),
@@ -432,7 +432,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           ? (double.parse(records.elementAt(i).bodyWeight.toString()) * 2.20462)
               .toStringAsFixed(1)
           : records.elementAt(i).bodyWeight.toString();
-      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(
+          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
           double.parse(receivedWeight)));
     }
 
@@ -440,7 +441,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'vitals',
+        id: 'WT',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,

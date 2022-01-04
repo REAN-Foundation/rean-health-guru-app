@@ -248,11 +248,11 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
         onPressed: () {
           if (_weightController.text.isEmpty) {
             showToastMsg("Please enter your weight", context);
-          } else if (double.parse(_weightController.text) < 999) {
+          } else if (double.parse(_weightController.text) > 999) {
             showToastMsg("Please enter valid weight", context);
           } else if (_heightController.text.isEmpty) {
             showToastMsg("Please enter your height", context);
-          } else if (_heightController.text.length > 4) {
+          } else if (_heightController.text.length > 300) {
             showToastMsg("Please enter valid height", context);
           } else {
             widget._submitButtonListner(

@@ -6,6 +6,7 @@ import 'package:paitent/core/models/FAQChatModelPojo.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:phone_number/phone_number.dart';
 
 import 'SharedPrefUtils.dart';
 
@@ -34,6 +35,7 @@ String knowledgeLinkDisplayedDate = '';
 String dailyCheckInDate = '';
 var chatList = <FAQChatModelPojo>[];
 var dateFormatGraphStandard = DateFormat('MMM dd, yyyy');
+PhoneNumberUtil plugin = PhoneNumberUtil();
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');
@@ -219,6 +221,12 @@ setDailyCheckInDate(String viewedDate) async {
     // do something
   }
   //return knowledgeLinkDisplayedDate ?? '';
+}
+
+Future<bool> isValidPhoneNumber(String phone, String code) async {
+  debugPrint(
+      "isValidPhoneNumber ${code + '-' + phone}  == ${await plugin.validate(code + phone, code)}");
+  return await plugin.validate(code + phone, code);
 }
 
 enum AppState {

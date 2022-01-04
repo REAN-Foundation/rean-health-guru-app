@@ -103,13 +103,14 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
 
   Widget _submitButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        debugPrint(mobileNumber);
+      onPressed: () async {
+        bool isValidMobileNumber =
+            await isValidPhoneNumber(mobileNumber, countryCode);
         if (_firstNameController.text == '') {
           showToastMsg('Enter first name', context);
         } else if (_lastNameController.text == '') {
           showToastMsg('Enter last name', context);
-        } else if (mobileNumber == '' || mobileNumber.length != 10) {
+        } else if (isValidMobileNumber) {
           showToastMsg('Enter mobile number', context);
         } else if (_descriptionController.text == '') {
           showToastMsg('Enter relation', context);
@@ -119,7 +120,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
           widget._submitButtonListner(
               _firstNameController.text,
               _lastNameController.text,
-              mobileNumber,
+              countryCode + '-' + mobileNumber,
               selectedGender,
               _descriptionController.text);
         }

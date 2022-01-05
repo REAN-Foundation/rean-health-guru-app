@@ -555,7 +555,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   Future getFile(String type) async {
     String result;
     try {
-      FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
+      final FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
         allowedMimeTypes: [
           'application/pdf',
           'application/docs',
@@ -913,11 +913,10 @@ class _MyReportsViewState extends State<MyReportsView> {
                       Container(
                         height: 60,
                         width: 60,
-                        decoration: new BoxDecoration(
+                        decoration: BoxDecoration(
                           color: primaryLightColor,
-                          borderRadius:
-                          new BorderRadius.all(new Radius.circular(50.0)),
-                          border: new Border.all(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          border: Border.all(
                             color: primaryColor,
                             width: 1.0,
                           ),

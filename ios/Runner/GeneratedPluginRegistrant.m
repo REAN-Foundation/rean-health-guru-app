@@ -52,6 +52,12 @@
 @import flutter_keyboard_visibility;
 #endif
 
+#if __has_include(<flutter_sim_country_code/FlutterSimCountryCodePlugin.h>)
+#import <flutter_sim_country_code/FlutterSimCountryCodePlugin.h>
+#else
+@import flutter_sim_country_code;
+#endif
+
 #if __has_include(<fluttertoast/FluttertoastPlugin.h>)
 #import <fluttertoast/FluttertoastPlugin.h>
 #else
@@ -129,6 +135,7 @@
   [FlutterDocumentPickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterDocumentPickerPlugin"]];
   [InAppWebViewFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"InAppWebViewFlutterPlugin"]];
   [FlutterKeyboardVisibilityPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterKeyboardVisibilityPlugin"]];
+  [FlutterSimCountryCodePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterSimCountryCodePlugin"]];
   [FluttertoastPlugin registerWithRegistrar:[registry registrarForPlugin:@"FluttertoastPlugin"]];
   [HealthPlugin registerWithRegistrar:[registry registrarForPlugin:@"HealthPlugin"]];
   [FLTImagePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImagePickerPlugin"]];

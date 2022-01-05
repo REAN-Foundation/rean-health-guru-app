@@ -34,7 +34,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-
+  final TextEditingController _mobileNumberController = TextEditingController();
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _mobileNumberFocus = FocusNode();
@@ -377,6 +377,8 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                     borderSide: BorderSide(),
                   ),
                 ),*/
+                controller: _mobileNumberController,
+                focusNode: _mobileNumberFocus,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 autoValidate: true,
                 decoration: InputDecoration(
@@ -388,7 +390,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                     filled: true),
                 initialCountryCode: getCurrentLocale(),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                 ],
                 onChanged: (phone) {
                   debugPrint(phone.countryCode);
@@ -398,6 +400,10 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                   /*if(mobileNumber.length == 10){
                     _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                   }*/
+                },
+                onCountryChanged: (phone) {
+                  _mobileNumberController.clear();
+                  setState(() {});
                 },
               )
 

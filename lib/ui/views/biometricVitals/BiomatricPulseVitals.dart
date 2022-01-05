@@ -155,9 +155,8 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.number,
                         onFieldSubmitted: (term) {},
-                        inputFormatters: [
-                          FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                         ],
                         decoration: InputDecoration(
                             hintText: '(65 to 95)',

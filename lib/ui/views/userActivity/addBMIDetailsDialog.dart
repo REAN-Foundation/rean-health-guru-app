@@ -246,11 +246,11 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
       alignment: Alignment.center,
       child: ElevatedButton(
         onPressed: () {
-          if (_weightController.text.isEmpty) {
+          if (_weightController.text.trim().isEmpty) {
             showToastMsg("Please enter your weight", context);
           } else if (double.parse(_weightController.text) > 999) {
             showToastMsg("Please enter valid weight", context);
-          } else if (_heightController.text.isEmpty) {
+          } else if (_heightController.text.trim().isEmpty) {
             showToastMsg("Please enter your height", context);
           } else if (_heightController.text.length > 300) {
             showToastMsg("Please enter valid height", context);

@@ -33,7 +33,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
   var model = PatientCarePlanViewModel();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-
+  final TextEditingController _mobileNumberController = TextEditingController();
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _mobileNumberFocus = FocusNode();
@@ -98,9 +98,9 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
       onPressed: () async {
         final bool isValidMobileNumber =
             await isValidPhoneNumber(mobileNumber, countryCode);
-        if (_firstNameController.text == '') {
+        if (_firstNameController.text.trim() == '') {
           showToastMsg('Enter first name', context);
-        } else if (_lastNameController.text == '') {
+        } else if (_lastNameController.text.trim() == '') {
           showToastMsg('Enter last name', context);
         } else if (isValidMobileNumber) {
           showToastMsg('Enter mobile number', context);
@@ -368,7 +368,9 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                     borderSide: BorderSide(),
                   ),
                 ),*/
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                controller: _mobileNumberController,
+                focusNode: _mobileNumberFocus,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 autoValidate: false,
                 decoration: InputDecoration(
                     counterText: '',
@@ -379,7 +381,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                     filled: true),
                 initialCountryCode: getCurrentLocale(),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                 ],
                 onChanged: (phone) {
                   debugPrint(phone.countryCode);
@@ -389,6 +391,10 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                   /*if(mobileNumber.length == 10){
                     _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                   }*/
+                },
+                onCountryChanged: (phone) {
+                  _mobileNumberController.clear();
+                  setState(() {});
                 },
               )
               /*InternationalPhoneNumberInput

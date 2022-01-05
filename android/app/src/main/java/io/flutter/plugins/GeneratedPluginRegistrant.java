@@ -22,6 +22,7 @@ public final class GeneratedPluginRegistrant {
     flutterEngine.getPlugins().add(new com.pichillilorenzo.flutter_inappwebview.InAppWebViewFlutterPlugin());
     flutterEngine.getPlugins().add(new com.jrai.flutter_keyboard_visibility.FlutterKeyboardVisibilityPlugin());
     flutterEngine.getPlugins().add(new io.flutter.plugins.flutter_plugin_android_lifecycle.FlutterAndroidLifecyclePlugin());
+    flutterEngine.getPlugins().add(new com.example.flutter_sim_country_code.FlutterSimCountryCodePlugin());
     flutterEngine.getPlugins().add(new io.github.ponnamkarthik.toast.fluttertoast.FlutterToastPlugin());
     flutterEngine.getPlugins().add(new cachet.plugins.health.HealthPlugin());
     flutterEngine.getPlugins().add(new io.flutter.plugins.imagepicker.ImagePickerPlugin());

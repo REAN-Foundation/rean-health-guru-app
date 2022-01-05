@@ -33,7 +33,7 @@ class _MyDialogState extends State<AddNurseDialog> {
   var model = PatientCarePlanViewModel();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-
+  final TextEditingController _mobileNumberController = TextEditingController();
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _mobileNumberFocus = FocusNode();
@@ -331,6 +331,8 @@ class _MyDialogState extends State<AddNurseDialog> {
                       borderSide: BorderSide(),
                     ),
                   ),*/
+                controller: _mobileNumberController,
+                focusNode: _mobileNumberFocus,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 autoValidate: true,
                 decoration: InputDecoration(
@@ -342,7 +344,7 @@ class _MyDialogState extends State<AddNurseDialog> {
                     filled: true),
                 initialCountryCode: getCurrentLocale(),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                 ],
                 onChanged: (phone) {
                   debugPrint(phone.countryCode);
@@ -353,7 +355,10 @@ class _MyDialogState extends State<AddNurseDialog> {
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/
                 },
-                onCountryChanged: (phone) {},
+                onCountryChanged: (phone) {
+                  _mobileNumberController.clear();
+                  setState(() {});
+                },
               )
               /*InternationalPhoneNumberInput
               .withCustomDecoration(

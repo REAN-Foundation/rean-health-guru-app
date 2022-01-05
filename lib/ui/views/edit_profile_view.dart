@@ -1296,11 +1296,13 @@ class _EditProfileState extends State<EditProfile> {
                 onPressed: () async {
                   if (_emailController.text.toString() == '') {
                     showToast('Please enter email', context);
-                  } else if (_addressController.text.toString() == '') {
+                  } else if (!_emailController.text.toString().isValidEmail()) {
+                    showToast('Please enter valid email', context);
+                  } else if (_addressController.text.toString().trim() == '') {
                     showToast('Please enter address', context);
-                  } else if (_cityController.text.toString() == '') {
+                  } else if (_cityController.text.toString().trim() == '') {
                     showToast('Please enter city', context);
-                  } else if (_countryController.text.toString() == '') {
+                  } else if (_countryController.text.toString().trim() == '') {
                     showToast('Please enter country', context);
                   }
                   /*else if (_postalCodeController.text.toString() == '') {
@@ -1778,7 +1780,15 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   openGallery() async {
-    getFile();
+    //getFile();
+    final picture = await _picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    final File file = File(picture.path);
+    debugPrint(picture.path);
+    final String fileName = file.path.split('/').last;
+    debugPrint('File Name ==> $fileName');
+    uploadProfilePicture(file);
   }
 
   openCamera() async {

@@ -387,8 +387,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
           TextButton(
               child: const Text('Submit'),
               onPressed: () {
-                if (emergencyDetailsTextControler.text.isEmpty) {
-                  showToast('Please enter emergency details', context);
+                if (emergencyDetailsTextControler.text.trim().isEmpty) {
+                  showToastMsg('Please enter emergency details', context);
                 } else {
                   addMedicalEmergencyEvent(emergencyDetailsTextControler.text);
                   Navigator.of(context, rootNavigator: true).pop();

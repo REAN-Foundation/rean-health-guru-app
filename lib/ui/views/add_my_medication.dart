@@ -400,8 +400,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         color: primaryColor),
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.deny(RegExp('[\\,|\\+|\\-]')),
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                     ],
                     decoration: InputDecoration(
                       hintStyle: TextStyle(
@@ -565,9 +565,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                           color: primaryColor),
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.deny(
-                            RegExp('[\\,|\\+|\\-]')),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                       ],
                       decoration: InputDecoration(
                         hintStyle: TextStyle(
@@ -910,9 +909,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         showToast('Please select frequency', context);
                       } else if (_frequencyUnit == 'Daily' && frequency == 0) {
                         showToast('Please select daily time schedule', context);
-                      } else if (_durationController.text == '') {
+                      } else if (_durationController.text.trim() == '') {
                         showToast('Please enter duration', context);
-                      } else if (_unitController.text == '') {
+                      } else if (_unitController.text.trim() == '') {
                         showToast('Please enter unit quantity', context);
                       } else if (_dosageUnit == '') {
                         showToast('Please Select dosage unit', context);

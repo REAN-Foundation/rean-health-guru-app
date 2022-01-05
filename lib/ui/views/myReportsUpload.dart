@@ -335,7 +335,7 @@ class _MyReportsViewState extends State<MyReportsView> {
             //getDocumentPublicLink(document, true);
 
           } else {
-            showToast('Opps, something wents wrong!', context);
+            showToast('Opps, something went wrong!', context);
           }
         },
         child: Container(
@@ -459,7 +459,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                                 getDocumentPublicLink(document, false);
                               } else {
                                 showToast(
-                                    'Opps, something wents wrong!', context);
+                                    'Opps, something went wrong!', context);
                               }
                             },
                             child: Container(
@@ -555,7 +555,15 @@ class _MyReportsViewState extends State<MyReportsView> {
   Future getFile(String type) async {
     String result;
     try {
-      result = await FlutterDocumentPicker.openDocument();
+      FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
+        allowedMimeTypes: [
+          'application/pdf',
+          'application/docs',
+          'application/ppt'
+        ],
+      );
+
+      result = await FlutterDocumentPicker.openDocument(params: params);
       debugPrint('File Result ==> $result');
 
       if (result != '') {
@@ -673,12 +681,12 @@ class _MyReportsViewState extends State<MyReportsView> {
             getAllRecords();
             showToast(uploadResponse.message, context);
           } else {
-            showToast('Opps, something wents wrong!', context);
+            showToast('Opps, something went wrong!', context);
           }
         } else {
           final respStr = await response.stream.bytesToString();
           progressDialog.hide();
-          showToast('Opps, something wents wrong!', context);
+          showToast('Opps, something went wrong!', context);
           debugPrint('Upload Faild ! ==> $respStr');
         }
       }); // debugPrint("3");
@@ -884,11 +892,18 @@ class _MyReportsViewState extends State<MyReportsView> {
                 ),
               ),
             ),
-            /*Semantics(
-              label: 'Cancel',
+            Semantics(
+              label: 'Files',
               child: InkWell(
-                onTap: (){
-
+                onTap: () async {
+                  Navigator.pop(context);
+                  final String type = await _askForDocsType();
+                  debugPrint('File Type $type');
+                  if (type != null) {
+                    getFile(type);
+                  } else {
+                    showToast('Please select document type', context);
+                  }
                 },
                 child: Container(
                   child: Column(
@@ -908,16 +923,25 @@ class _MyReportsViewState extends State<MyReportsView> {
                           ),
                         ),
                         child: Center(
-                          child: Icon(Icons.close, color: primaryColor, size: 24,),
+                          child: Icon(
+                            Icons.file_copy,
+                            color: primaryColor,
+                            size: 24,
+                          ),
                         ),
                       ),
-                      SizedBox(height: 8,),
-                      Text('Cancel', style: TextStyle(fontSize: 12),),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        'Files',
+                        style: TextStyle(fontSize: 12),
+                      ),
                     ],
                   ),
                 ),
               ),
-            ),*/
+            ),
           ],
         ),
       ),
@@ -928,7 +952,14 @@ class _MyReportsViewState extends State<MyReportsView> {
     final String type = await _askForDocsType();
     debugPrint('File Type $type');
     if (type != null) {
-      getFile(type);
+      final picture = await _picker.pickImage(
+        source: ImageSource.gallery,
+      );
+      final File file = File(picture.path);
+      debugPrint(picture.path);
+      final String fileName = file.path.split('/').last;
+      debugPrint('File Name ==> $fileName');
+      uploadProfilePicture(file, type);
     } else {
       showToast('Please select document type', context);
     }

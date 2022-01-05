@@ -185,9 +185,8 @@ class _BiometricBloodPresureVitalsViewState
                     child: Semantics(
                       label: 'Systolic measures in mm Hg',
                       child: TextFormField(
-                          inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
                           controller: _systolicController,
                           focusNode: _systolicFocus,

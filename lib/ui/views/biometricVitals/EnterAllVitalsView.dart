@@ -907,7 +907,9 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {}
+      } else {
+        showToast(baseResponse.message, context);
+      }
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -929,7 +931,9 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {}
+      } else {
+        showToast(baseResponse.message, context);
+      }
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -950,7 +954,9 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {}
+      } else {
+        showToast(baseResponse.message, context);
+      }
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -972,7 +978,9 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {}
+      } else {
+        showToast(baseResponse.message, context);
+      }
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -992,7 +1000,9 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {}
+      } else {
+        showToast(baseResponse.message, context);
+      }
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -1014,7 +1024,9 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         //showToast('Record added successfully');
         clearAllFeilds();
-      } else {}
+      } else {
+        showToast(baseResponse.message, context);
+      }
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);

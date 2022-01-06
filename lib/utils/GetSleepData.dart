@@ -191,9 +191,9 @@ class GetSleepData {
       debugPrint(
           'Sleep end time ${_healthDataList.elementAt(_healthDataList.length - 1).dateTo}');
 
-      final DateTime startTime = _healthDataList.elementAt(0).dateFrom;
-      final DateTime endTime =
+      final DateTime startTime =
           _healthDataList.elementAt(_healthDataList.length - 1).dateTo;
+      final DateTime endTime = _healthDataList.elementAt(0).dateFrom;
 
       return endTime.difference(startTime).inMinutes.toString();
     } catch (Exception) {

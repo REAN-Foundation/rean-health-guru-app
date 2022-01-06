@@ -63,12 +63,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final String locale = await FlutterSimCountryCode.simCountryCode;
     if (locale.trim().isNotEmpty) {
-      setCurrentLocale(locale);
-      debugPrint('Country Local ==> $locale');
+      setCurrentLocale(locale.toUpperCase());
+      debugPrint('Country Local ==> ${locale.toUpperCase()}');
     } else {
       final Locale countryLocale = await Devicelocale.currentAsLocale;
-      setCurrentLocale(countryLocale.countryCode);
-      debugPrint('Country Local ==> ${countryLocale.countryCode}');
+      setCurrentLocale(countryLocale.countryCode.toUpperCase());
+      debugPrint(
+          'Country Local ==> ${countryLocale.countryCode.toUpperCase()}');
     }
   }
 

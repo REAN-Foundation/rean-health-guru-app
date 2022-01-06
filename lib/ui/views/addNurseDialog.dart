@@ -117,8 +117,8 @@ class _MyDialogState extends State<AddNurseDialog> {
             showToastMsg('Select gender', context);
           } else {
             widget._submitButtonListner(
-                _firstNameController.text,
-                _lastNameController.text,
+                _firstNameController.text.trim(),
+                _lastNameController.text.trim(),
                 countryCode + '-' + mobileNumber,
                 selectedGender);
           }
@@ -356,6 +356,7 @@ class _MyDialogState extends State<AddNurseDialog> {
                     }*/
                 },
                 onCountryChanged: (phone) {
+                  mobileNumber = '';
                   _mobileNumberController.clear();
                   setState(() {});
                 },

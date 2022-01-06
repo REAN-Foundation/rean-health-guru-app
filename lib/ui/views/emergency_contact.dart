@@ -390,7 +390,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 if (emergencyDetailsTextControler.text.trim().isEmpty) {
                   showToastMsg('Please enter emergency details', context);
                 } else {
-                  addMedicalEmergencyEvent(emergencyDetailsTextControler.text);
+                  addMedicalEmergencyEvent(
+                      emergencyDetailsTextControler.text.trim());
                   Navigator.of(context, rootNavigator: true).pop();
                   emergencyDetailsTextControler.clear();
                 }

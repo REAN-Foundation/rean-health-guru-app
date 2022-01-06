@@ -252,7 +252,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
             showToastMsg("Please enter valid weight", context);
           } else if (_heightController.text.trim().isEmpty) {
             showToastMsg("Please enter your height", context);
-          } else if (_heightController.text.length > 300) {
+          } else if (double.parse(_heightController.text) > 300) {
             showToastMsg("Please enter valid height", context);
           } else {
             widget._submitButtonListner(

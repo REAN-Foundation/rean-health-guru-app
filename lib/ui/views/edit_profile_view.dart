@@ -1319,13 +1319,12 @@ class _EditProfileState extends State<EditProfile> {
                     map['MiddleName'] = _middleNameController.text;
                     map['LastName'] = _lastNameController.text;
                     final address = <String, String>{};
-                    address['AddressLine'] = _addressController.text;
-                    address['City'] = _cityController.text;
-                    address['Country'] = _countryController.text;
-                    address['PostalCode'] =
-                        _postalCodeController.text.isEmpty
+                    address['AddressLine'] = _addressController.text.trim();
+                    address['City'] = _cityController.text.trim();
+                    address['Country'] = _countryController.text.trim();
+                    address['PostalCode'] = _postalCodeController.text.isEmpty
                         ? null
-                            : _postalCodeController.text;
+                        : _postalCodeController.text.trim();
                     map['Address'] = address;
 
                     //map['Locality'] = _cityController.text;

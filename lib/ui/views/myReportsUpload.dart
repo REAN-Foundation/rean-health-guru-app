@@ -773,9 +773,20 @@ class _MyReportsViewState extends State<MyReportsView> {
           TextButton(
               child: const Text('Ok'),
               onPressed: () {
+                String enteredFileName = renameControler.text;
+                String fileExtention = enteredFileName.split('.').last;
+                String newFileName =
+                    renameControler.text.replaceAll('.' + fileExtention, '');
+
+                debugPrint('New FileName ==> $newFileName');
+                debugPrint('fileExtention ==> $fileExtention');
+                debugPrint('enteredFileName ==> $enteredFileName');
+
                 if (document.fileName == renameControler.text) {
-                  showToast('Document renamed successfully ', context);
+                  showToastMsg('Document renamed successfully ', context);
                   Navigator.of(context, rootNavigator: true).pop();
+                } else if (newFileName == '') {
+                  showToastMsg('Please enter valid file name', context);
                 } else {
                   renameDocument(document.id, renameControler.text);
                   Navigator.of(context, rootNavigator: true).pop();

@@ -249,8 +249,7 @@ class _BiometricBloodPresureVitalsViewState
                           maxLines: 1,
                           textInputAction: TextInputAction.done,
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {

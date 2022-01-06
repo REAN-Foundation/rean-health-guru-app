@@ -108,8 +108,8 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
           showToastMsg('Select gender', context);
         } else {
           widget._submitButtonListner(
-              _firstNameController.text,
-              _lastNameController.text,
+              _firstNameController.text.trim(),
+              _lastNameController.text.trim(),
               countryCode + '-' + mobileNumber,
               selectedGender);
         }
@@ -393,6 +393,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                   }*/
                 },
                 onCountryChanged: (phone) {
+                  mobileNumber = '';
                   _mobileNumberController.clear();
                   setState(() {});
                 },

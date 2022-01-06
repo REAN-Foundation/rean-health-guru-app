@@ -177,7 +177,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                           semanticLabel: 'Send',
                         ),
                         onPressed: () {
-                          if (_chatController.text.isNotEmpty) {
+                          if (_chatController.text.trim().isNotEmpty) {
                             sendMessageBotApi(_chatController.text);
                             final chatMsg = FAQChatModelPojo(
                                 _chatController.text, DateTime.now(), 'ME');
@@ -193,6 +193,8 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                                   duration: Duration(milliseconds: 200),
                                   curve: Curves.easeInOut);
                             });
+                          } else {
+                            _chatController.clear();
                           }
                         }),
                   ],
@@ -326,7 +328,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
       final map = <String, String>{};
       map['phoneNumber'] = phoneNumber;
       map['type'] = 'text';
-      map['message'] = msg;
+      map['message'] = msg.trim();
 
       final ChatApiResponse baseResponse = await model.sendMsgApi(map);
       debugPrint('Base Response ==> ${baseResponse.toJson()}');

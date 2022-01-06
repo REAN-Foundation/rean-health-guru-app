@@ -773,9 +773,9 @@ class _MyReportsViewState extends State<MyReportsView> {
           TextButton(
               child: const Text('Ok'),
               onPressed: () {
-                String enteredFileName = renameControler.text;
-                String fileExtention = enteredFileName.split('.').last;
-                String newFileName =
+                final String enteredFileName = renameControler.text;
+                final String fileExtention = enteredFileName.split('.').last;
+                final String newFileName =
                     renameControler.text.replaceAll('.' + fileExtention, '');
 
                 debugPrint('New FileName ==> $newFileName');

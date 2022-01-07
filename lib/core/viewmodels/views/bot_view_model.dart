@@ -16,9 +16,10 @@ class BotViewModel extends BaseModel {
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
+    map['authentication'] = dotenv.env['BOT_HEADER_TOKEN'];
 
     final response = await apiProvider.post(
-        '/REAN_SUPPORT/' + dotenv.env['BOT_API_TOKEN'] + '/receive',
+        '/REAN_BOT/REAN_SUPPORT/' + dotenv.env['BOT_URL_TOKEN'] + '/receive',
         header: map,
         body: body);
 

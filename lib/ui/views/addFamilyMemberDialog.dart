@@ -104,8 +104,11 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
   Widget _submitButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
-        final bool isValidMobileNumber =
-            await isValidPhoneNumber(mobileNumber, countryCode);
+        bool isValidMobileNumber;
+        if (mobileNumber.isNotEmpty) {
+          isValidMobileNumber =
+              await isValidPhoneNumber(mobileNumber, countryCode);
+        }
         if (_firstNameController.text == '') {
           showToastMsg('Enter first name', context);
         } else if (_lastNameController.text == '') {

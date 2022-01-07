@@ -140,7 +140,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                         },
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\+|\\-]')),
+                              RegExp('[\\,|\\+|\\-|\\ ]')),
                         ],
                         decoration: InputDecoration(
                             hintText:
@@ -209,7 +209,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                         onFieldSubmitted: (term) {},
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\+|\\-]')),
+                              RegExp('[\\,|\\+|\\-|\\ ]')),
                         ],
                         decoration: InputDecoration(
                             hintText:

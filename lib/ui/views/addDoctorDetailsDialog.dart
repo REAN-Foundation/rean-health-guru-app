@@ -96,8 +96,11 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
   Widget _submitButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
-        final bool isValidMobileNumber =
-            await isValidPhoneNumber(mobileNumber, countryCode);
+        bool isValidMobileNumber;
+        if (mobileNumber.isNotEmpty) {
+          isValidMobileNumber =
+              await isValidPhoneNumber(mobileNumber, countryCode);
+        }
         if (_firstNameController.text.trim() == '') {
           showToastMsg('Enter first name', context);
         } else if (_lastNameController.text.trim() == '') {

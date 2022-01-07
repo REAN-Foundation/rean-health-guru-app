@@ -166,7 +166,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                         onFieldSubmitted: (term) {},
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                              RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                         ],
                         decoration: InputDecoration(
                             hintText:

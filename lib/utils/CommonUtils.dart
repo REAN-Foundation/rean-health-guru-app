@@ -36,6 +36,9 @@ String dailyCheckInDate = '';
 var chatList = <FAQChatModelPojo>[];
 var dateFormatGraphStandard = DateFormat('MMM dd, yyyy');
 PhoneNumberUtil plugin = PhoneNumberUtil();
+String dailyMood = '';
+String dailyFeeling = '';
+List<String> dailyEnergyLevels = [];
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');

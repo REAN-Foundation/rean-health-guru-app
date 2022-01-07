@@ -81,6 +81,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 1;
+                        dailyFeeling = 'Better';
                         setState(() {});
 
                         Future.delayed(
@@ -154,6 +155,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 2;
+                        dailyFeeling = 'Same';
                         setState(() {});
                         Future.delayed(
                             const Duration(
@@ -226,6 +228,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 3;
+                        dailyFeeling = 'Worse';
                         setState(() {});
                         Future.delayed(
                             const Duration(

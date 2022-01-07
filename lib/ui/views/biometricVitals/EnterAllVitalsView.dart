@@ -250,7 +250,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-]')),
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
                               hintText: unit == 'lbs'
@@ -356,7 +356,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         child: TextFormField(
                             inputFormatters: [
                               FilteringTextInputFormatter.deny(
-                                  RegExp('[\\,|\\+|\\-]')),
+                                  RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                             ],
                             controller: _systolicController,
                             focusNode: _systolicFocus,
@@ -399,7 +399,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                             textInputAction: TextInputAction.next,
                             inputFormatters: [
                               FilteringTextInputFormatter.deny(
-                                  RegExp('[\\,|\\+|\\-]')),
+                                  RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                             ],
                             keyboardType: TextInputType.number,
                             onFieldSubmitted: (term) {
@@ -595,7 +595,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-]')),
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
                               hintText: '(100 to 125)',
@@ -686,7 +686,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-]')),
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
                               hintText: '(92 to 100)',
@@ -777,7 +777,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-]')),
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
                               hintText: '(65 to 95)',
@@ -862,7 +862,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           onFieldSubmitted: (term) {},
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-]')),
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
                               hintText: '(95 to 100)',
@@ -908,7 +908,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        showToast(baseResponse.message, context);
+        //showToast(baseResponse.message, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -932,7 +932,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        showToast(baseResponse.message, context);
+        //showToast(baseResponse.message, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -955,7 +955,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        showToast(baseResponse.message, context);
+        //showToast(baseResponse.message, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -979,7 +979,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        showToast(baseResponse.message, context);
+        //showToast(baseResponse.message, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -1001,7 +1001,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        showToast(baseResponse.message, context);
+        //showToast(baseResponse.message, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -1025,7 +1025,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
         //showToast('Record added successfully');
         clearAllFeilds();
       } else {
-        showToast(baseResponse.message, context);
+        //showToast(baseResponse.message, context);
       }
     } catch (e) {
       model.setBusy(false);

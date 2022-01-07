@@ -113,8 +113,10 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
           showToastMsg('Enter first name', context);
         } else if (_lastNameController.text == '') {
           showToastMsg('Enter last name', context);
-        } else if (isValidMobileNumber) {
+        } else if (mobileNumber.isEmpty) {
           showToastMsg('Enter mobile number', context);
+        } else if (isValidMobileNumber) {
+          showToastMsg('Enter valid mobile number', context);
         } else if (_descriptionController.text == '') {
           showToastMsg('Enter relation', context);
         } else if (selectedGender == '') {

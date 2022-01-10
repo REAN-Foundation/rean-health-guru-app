@@ -26,7 +26,6 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _initPackageInfo();
   }

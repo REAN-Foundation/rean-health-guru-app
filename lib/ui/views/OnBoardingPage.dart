@@ -26,7 +26,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _initPackageInfo();
   }

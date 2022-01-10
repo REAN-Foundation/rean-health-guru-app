@@ -908,7 +908,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        //showToast(baseResponse.message, context);
+        showToast(baseResponse.message, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -932,7 +932,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        //showToast(baseResponse.message, context);
+        showToast(baseResponse.message, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -955,7 +955,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        //showToast(baseResponse.message, context);
+        showToast(baseResponse.message, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -979,7 +979,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        //showToast(baseResponse.message, context);
+        showToast(baseResponse.message, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -1001,7 +1001,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        //showToast(baseResponse.message, context);
+        showToast(baseResponse.message, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -1025,7 +1025,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
         //showToast('Record added successfully');
         clearAllFeilds();
       } else {
-        //showToast(baseResponse.message, context);
+        showToast(baseResponse.message, context);
       }
     } catch (e) {
       model.setBusy(false);

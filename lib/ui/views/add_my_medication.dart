@@ -911,6 +911,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         showToast('Please select daily time schedule', context);
                       } else if (_durationController.text.trim() == '') {
                         showToast('Please enter duration', context);
+                      } else if (validationForDuration()) {
+                        showToast(
+                            'Please valid duration 6 months / 26 weeks / 180 days',
+                            context);
                       } else if (_unitController.text.trim() == '') {
                         showToast('Please enter unit quantity', context);
                       } else if (_dosageUnit == '') {
@@ -925,6 +929,21 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         ),
       ],
     );
+  }
+
+  bool validationForDuration() {
+    if (_frequencyUnit == 'Daily' &&
+        double.parse(_durationController.text.toString()) > 180) {
+      return true;
+    } else if (_frequencyUnit == 'Weekly' &&
+        double.parse(_durationController.text.toString()) > 26) {
+      return true;
+    } else if (_frequencyUnit == 'Monthly' &&
+        double.parse(_durationController.text.toString()) > 6) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /*Widget _textFeilds(String hint, TextEditingController editingController, FocusNode focusNode, FocusNode nextFocusNode){

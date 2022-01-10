@@ -280,6 +280,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   checkUserExistsOrNot(LoginViewModel model) async {
     try {
+      progressDialog.show();
       debugPrint('Mobile = $mobileNumber');
 
       final response = await apiProvider.get('/users/by-phone/' +

@@ -912,9 +912,22 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       } else if (_durationController.text.trim() == '') {
                         showToast('Please enter duration', context);
                       } else if (validationForDuration()) {
-                        showToast(
-                            'Please valid duration 6 months / 26 weeks / 180 days',
-                            context);
+                        if (_frequencyUnit == 'Daily') {
+                          showToast(
+                              'You can add medication for the next 180 days',
+                              context);
+                        } else if (_frequencyUnit == 'Weekly') {
+                          showToast(
+                              'You can add medication for the next 6 months',
+                              context);
+                        } else if (_frequencyUnit == 'Monthly') {
+                          showToast(
+                              'You can add medication for the next 26 weeks',
+                              context);
+                        }
+                        /*showToast(
+                            'Please enter valid duration 6 months / 26 weeks / 180 days',
+                            context);*/
                       } else if (_unitController.text.trim() == '') {
                         showToast('Please enter unit quantity', context);
                       } else if (_dosageUnit == '') {

@@ -50,6 +50,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   @override
   void initState() {
     _api_key = dotenv.env['Patient_API_KEY'];
+    progressDialog = ProgressDialog(context, isDismissible: false);
     getAllRecords();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
@@ -157,7 +158,6 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
     return BaseWidget<CommonConfigModel>(
       model: model,
       builder: (context, model, child) => Container(

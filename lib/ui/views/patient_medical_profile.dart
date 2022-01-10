@@ -72,7 +72,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             height: 8,
                           ),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               SizedBox(
                                 width: 150,
@@ -90,11 +90,15 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               SizedBox(
                                 width: 8,
                               ),
-                              Text('' + replaceNull(healthProfile.majorAilment),
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: textBlack)),
+                              Expanded(
+                                child: Text(
+                                    '' +
+                                        replaceNull(healthProfile.majorAilment),
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
                             ],
                           ),
                           SizedBox(

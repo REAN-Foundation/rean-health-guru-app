@@ -441,9 +441,9 @@ class _CreateProfileState extends State<CreateProfile> {
                       color: Colors.white,
                       fontWeight: FontWeight.w700)),
               onPressed: () async {
-                if (_firstNameController.text.toString() == '') {
+                if (_firstNameController.text.toString().trim() == '') {
                   showToast('Please enter First Name', context);
-                } else if (_lastNameController.text.toString() == '') {
+                } else if (_lastNameController.text.toString().trim() == '') {
                   showToast('Please enter Last Name', context);
                 } else if (unformatedDOB == '') {
                   showToast('Please select your date of birth', context);
@@ -452,8 +452,9 @@ class _CreateProfileState extends State<CreateProfile> {
                 } else {
                   progressDialog.show();
                   final map = <String, String>{};
-                  map['FirstName'] = _firstNameController.text;
-                  map['LastName'] = _lastNameController.text;
+                  map['FirstName'] =
+                      _firstNameController.text.toString().trim();
+                  map['LastName'] = _lastNameController.text.toString().trim();
                   map['BirthDate'] = unformatedDOB;
                   map['Gender'] = selectedGender;
                   map['DefaultTimeZone'] =

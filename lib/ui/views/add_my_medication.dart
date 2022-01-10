@@ -918,11 +918,11 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                               context);
                         } else if (_frequencyUnit == 'Weekly') {
                           showToast(
-                              'You can add medication for the next 6 months',
+                              'You can add medication for the next 26 weeks',
                               context);
                         } else if (_frequencyUnit == 'Monthly') {
                           showToast(
-                              'You can add medication for the next 26 weeks',
+                              'You can add medication for the next 6 months',
                               context);
                         }
                         /*showToast(

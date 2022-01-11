@@ -33,9 +33,11 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
   var model = PatientCarePlanViewModel();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileNumberController = TextEditingController();
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
+  final _emailFocus = FocusNode();
   final _mobileNumberFocus = FocusNode();
   String profileImage = '';
   String profileImagePath = '';
@@ -78,6 +80,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                   //_profileIcon(),
                   _entryFirstNameField('First Name'),
                   _entryLastNameField('Last Name'),
+                  _entryEmailField('Email'),
                   _entryMobileNoField('Phone'),
                   _genderWidget(),
                   const SizedBox(
@@ -93,6 +96,16 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
     );
   }
 
+  bool emailValidation() {
+    if (_emailController.text.toString() == '') {
+      return true;
+    } else if (!_emailController.text.toString().isValidEmail()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Widget _submitButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
@@ -105,6 +118,8 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
           showToastMsg('Enter first name', context);
         } else if (_lastNameController.text.trim() == '') {
           showToastMsg('Enter last name', context);
+        } else if (emailValidation()) {
+          showToastMsg('Enter valid email', context);
         } else if (mobileNumber.isEmpty) {
           showToastMsg('Enter mobile number', context);
         } else if (isValidMobileNumber) {
@@ -115,6 +130,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
           widget._submitButtonListner(
               _firstNameController.text.trim(),
               _lastNameController.text.trim(),
+              _emailController.text.trim(),
               countryCode + '-' + mobileNumber,
               selectedGender);
         }
@@ -209,8 +225,55 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                   ],
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (term) {
-                    _fieldFocusChange(
-                        context, _lastNameFocus, _mobileNumberFocus);
+                    _fieldFocusChange(context, _lastNameFocus, _emailFocus);
+                  },
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Colors.white,
+                      filled: true)),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _entryEmailField(String title) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+                color: Colors.black87),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              border: Border.all(
+                color: primaryColor,
+                width: 1.0,
+              ),
+            ),
+            child: Semantics(
+              label: "Email of Doctor",
+              child: TextFormField(
+                  controller: _emailController,
+                  focusNode: _emailFocus,
+                  keyboardType: TextInputType.emailAddress,
+                  maxLines: 1,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term) {
+                    _fieldFocusChange(context, _emailFocus, _mobileNumberFocus);
                   },
                   decoration: InputDecoration(
                       border: InputBorder.none,

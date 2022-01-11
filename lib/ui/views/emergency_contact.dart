@@ -1092,7 +1092,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         //child: addOrEditAllergiesDialog(context),
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: 580,
+          height: MediaQuery.of(context).size.height - 120,
           child: Column(
             children: [
               Row(
@@ -1137,11 +1137,12 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
               ),
               Expanded(
                 child: AddDoctorDetailsDialog(submitButtonListner:
-                    (String firstName, String lastName, String phoneNumber,
-                        String gender) {
-                      debugPrint('Team Member ==> $firstName');
+                    (String firstName, String lastName, String email,
+                        String phoneNumber, String gender) {
+                  debugPrint('Team Member ==> $firstName');
                   addTeamMembers(
-                      firstName, lastName, phoneNumber, gender, '', 'Doctor');
+                      firstName, lastName, phoneNumber, gender, '', 'Doctor',
+                      email: email);
                   Navigator.of(context, rootNavigator: true).pop();
                 }),
               )
@@ -1325,7 +1326,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   addTeamMembers(String firstName, String lastName, String phoneNumber,
-      String gender, String relation, String type) async {
+      String gender, String relation, String type,
+      {String email}) async {
     try {
       model.setBusy(true);
       //progressDialog.show();
@@ -1339,6 +1341,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       final contactPerson = <String, dynamic>{};
       contactPerson['FirstName'] = firstName;
       contactPerson['LastName'] = lastName;
+      contactPerson['Email'] = email;
       contactPerson['Prefix'] = ' ';
       contactPerson['Phone'] = phoneNumber;
 

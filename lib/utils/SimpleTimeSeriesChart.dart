@@ -22,10 +22,36 @@ class SimpleTimeSeriesChart extends StatelessWidget {
     return charts.TimeSeriesChart(
       seriesList,
       animate: animate,
+      defaultRenderer: charts.LineRendererConfig(),
+      // Custom renderer configuration for the point series.
+      customSeriesRenderers: [
+        charts.PointRendererConfig(
+            // ID used to link series to this renderer.
+            customRendererId: 'customPoint')
+      ],
+      /*primaryMeasureAxis: charts.NumericAxisSpec(
+          tickProviderSpec:
+          charts.BasicNumericTickProviderSpec(desiredTickCount: 3)),
+      domainAxis: charts.DateTimeAxisSpec(
+        tickProviderSpec: charts.DayTickProviderSpec(increments: [3]),
+        tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
+          day: charts.TimeFormatterSpec(
+              format: 'dd', transitionFormat: 'dd MMM', noonFormat: 'dd MMM'),
+        ),
+        showAxisLine: false,
+      ),*/
       // Optionally pass in a [DateTimeFactory] used by the chart. The factory
       // should create the same type of [DateTime] as the data provided. If none
       // specified, the default creates local date time.
-      dateTimeFactory: const charts.LocalDateTimeFactory(),
+      //dateTimeFactory: const charts.LocalDateTimeFactory(),
+      /* domainAxis: charts.DateTimeAxisSpec(
+        tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
+          day: charts.TimeFormatterSpec(
+            format: 'dd',
+            transitionFormat: 'dd MMM',
+          ),
+        ),
+      ),*/
     );
   }
 }

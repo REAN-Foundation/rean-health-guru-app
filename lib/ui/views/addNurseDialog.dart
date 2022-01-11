@@ -33,7 +33,7 @@ class _MyDialogState extends State<AddNurseDialog> {
   var model = PatientCarePlanViewModel();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-
+  final TextEditingController _mobileNumberController = TextEditingController();
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _mobileNumberFocus = FocusNode();
@@ -104,18 +104,28 @@ class _MyDialogState extends State<AddNurseDialog> {
       label: 'Save',
       button: true,
       child: ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
+          bool isValidMobileNumber;
+          if (mobileNumber.isNotEmpty) {
+            isValidMobileNumber =
+                await isValidPhoneNumber(mobileNumber, countryCode);
+          }
           if (_firstNameController.text == '') {
             showToastMsg('Enter first name', context);
           } else if (_lastNameController.text == '') {
             showToastMsg('Enter last name', context);
-          } else if (mobileNumber == '' || mobileNumber.length != 10) {
+          } else if (mobileNumber.isEmpty) {
             showToastMsg('Enter mobile number', context);
+          } else if (isValidMobileNumber) {
+            showToastMsg('Enter valid mobile number', context);
           } else if (selectedGender == '') {
             showToastMsg('Select gender', context);
           } else {
-            widget._submitButtonListner(_firstNameController.text,
-                _lastNameController.text, mobileNumber, selectedGender);
+            widget._submitButtonListner(
+                _firstNameController.text.trim(),
+                _lastNameController.text.trim(),
+                countryCode + '-' + mobileNumber,
+                selectedGender);
           }
         },
         style: ButtonStyle(
@@ -326,6 +336,8 @@ class _MyDialogState extends State<AddNurseDialog> {
                       borderSide: BorderSide(),
                     ),
                   ),*/
+                controller: _mobileNumberController,
+                focusNode: _mobileNumberFocus,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 autoValidate: true,
                 decoration: InputDecoration(
@@ -337,7 +349,7 @@ class _MyDialogState extends State<AddNurseDialog> {
                     filled: true),
                 initialCountryCode: getCurrentLocale(),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                 ],
                 onChanged: (phone) {
                   debugPrint(phone.countryCode);
@@ -347,6 +359,11 @@ class _MyDialogState extends State<AddNurseDialog> {
                   /*if(mobileNumber.length == 10){
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/
+                },
+                onCountryChanged: (phone) {
+                  mobileNumber = '';
+                  _mobileNumberController.clear();
+                  setState(() {});
                 },
               )
               /*InternationalPhoneNumberInput

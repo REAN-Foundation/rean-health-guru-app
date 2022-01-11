@@ -94,11 +94,12 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                         ? Image.asset(
                                             'res/images/aha_logo.png',
                                             semanticLabel:
-                                                'American Heart Association',
+                                                'American Heart Association logo',
                                           )
                                         : Image.asset(
-                                            'res/images/app_logo_tranparent.png',
-                                            semanticLabel: 'REAN HealthGuru',
+                                      'res/images/app_logo_tranparent.png',
+                                            semanticLabel:
+                                                'REAN HealthGuru logo',
                                           ),
                                   ),
                                   SizedBox(

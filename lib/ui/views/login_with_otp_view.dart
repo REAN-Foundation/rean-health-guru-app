@@ -236,9 +236,6 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   onCountryChanged: (phone) {
                     _clearFeilds();
                   },
-                  onTap: () {
-                    debugPrint("=========Tapped=======");
-                  },
                 )),
           ),
         ],

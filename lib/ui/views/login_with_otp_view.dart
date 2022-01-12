@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
@@ -40,6 +41,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   final TextEditingController _mobileNumberController = TextEditingController();
   final _mobileNumberFocus = FocusNode();
   ProgressDialog progressDialog;
+  int maxLengthOfPhone = 0;
 
   @override
   void initState() {
@@ -223,6 +225,10 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                     debugPrint(phone.number);
                     mobileNumber = phone.number;
                     countryCode = phone.countryCode;
+                    debugPrint(
+                        'Country max length ==> ${countries.firstWhere((element) => element['code'] == phone.countryISOCode)['max_length']}');
+                    maxLengthOfPhone = countries.firstWhere((element) =>
+                        element['code'] == phone.countryISOCode)['max_length'];
                     /*if(mobileNumber.length == 10){
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/
@@ -258,7 +264,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       borderRadius: BorderRadius.all(Radius.circular(24)),
                       side: BorderSide(color: primaryColor)))),
           onPressed: () {
-            if (mobileNumber.length == 10) {
+            if (mobileNumber.length == maxLengthOfPhone) {
               countryCodeGlobe = countryCode;
               model.setBusy(true);
               if (dummyNumberList.contains(mobileNumber)) {

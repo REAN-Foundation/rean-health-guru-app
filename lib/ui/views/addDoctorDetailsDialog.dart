@@ -97,9 +97,8 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
   }
 
   bool emailValidation() {
-    if (_emailController.text.toString() == '') {
-      return true;
-    } else if (!_emailController.text.toString().isValidEmail()) {
+     if (_emailController.text.toString().trim() != '' &&
+        !_emailController.text.toString().isValidEmail()) {
       return true;
     } else {
       return false;

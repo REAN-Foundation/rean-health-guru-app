@@ -625,6 +625,17 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                           color: primaryColor)),
                                 ),
                               ),
+                              if (details.email != null)
+                                Semantics(
+                                  label: "Email: " + details.email,
+                                  child: ExcludeSemantics(
+                                    child: Text('Email:  ' + details.email,
+                                        style: TextStyle(
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.w300,
+                                            color: primaryColor)),
+                                  ),
+                                ),
                               Text("Doctor",
                                   style: TextStyle(
                                       fontSize: 12.0,
@@ -1341,7 +1352,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       final contactPerson = <String, dynamic>{};
       contactPerson['FirstName'] = firstName;
       contactPerson['LastName'] = lastName;
-      contactPerson['Email'] = email;
+
       contactPerson['Prefix'] = ' ';
       contactPerson['Phone'] = phoneNumber;
 
@@ -1350,6 +1361,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       map['ContactRelation'] = type;
       map['ContactPerson'] = contactPerson;
       map['IsAvailableForEmergency'] = true;
+      map['Email'] = email;
 
       final BaseResponse addTeamMemberResponse =
           await model.addTeamMembers(map);

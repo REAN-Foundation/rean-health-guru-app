@@ -1427,7 +1427,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       final contactPerson = <String, dynamic>{};
       contactPerson['FirstName'] = firstName;
       contactPerson['LastName'] = lastName;
-      if (email.isNotEmpty) {
+      if (email != null && email.isNotEmpty) {
         contactPerson['Email'] = email;
       }
       contactPerson['Prefix'] = ' ';

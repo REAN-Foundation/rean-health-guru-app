@@ -246,7 +246,7 @@ jobs:
           path: ios/output
 
       - name: Publish to Appstore
-        run: bundle exec fastlane upload_build_to_testflight flavor:uat mode:release
+        run: bundle exec fastlane upload_build_to_testflight_rf flavor:uat mode:release
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}

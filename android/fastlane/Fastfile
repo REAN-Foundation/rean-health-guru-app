@@ -56,7 +56,7 @@ platform :android do
 
   desc "Update the package name for RF"
   lane :release_alpha_rf do |options|
-    release_alpha_build(package_name: "org.reanfoundation.patient.uat", aab_path: options[:aab_path], metadata_path: './fastlane/metadata/android/en-US')
+    release_alpha_build(package_name: "org.reanfoundation.patient.uat", aab_path: options[:aab_path], metadata_path: './fastlane/metadata/android/rf_uat')
   end
 
   # Alpha Build uses UAT package name and is a different app in the Play Store pointing to UAT backend

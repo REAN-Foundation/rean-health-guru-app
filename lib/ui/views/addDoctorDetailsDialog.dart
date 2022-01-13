@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paitent/core/models/UploadImageResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
@@ -33,15 +34,18 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
   var model = PatientCarePlanViewModel();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileNumberController = TextEditingController();
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
+  final _emailFocus = FocusNode();
   final _mobileNumberFocus = FocusNode();
   String profileImage = '';
   String profileImagePath = '';
   String selectedGender = 'Male';
   String mobileNumber = '';
   String countryCode = '';
+  int maxLengthOfPhone = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +80,10 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   //_profileIcon(),
-                  _entryFirstNameField('First Name'),
-                  _entryLastNameField('Last Name'),
-                  _entryMobileNoField('Phone'),
+                  _entryFirstNameField('First Name*'),
+                  _entryLastNameField('Last Name*'),
+                  _entryEmailField('Email'),
+                  _entryMobileNoField('Phone*'),
                   _genderWidget(),
                   const SizedBox(
                     height: 32,
@@ -93,21 +98,27 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
     );
   }
 
+  bool emailValidation() {
+     if (_emailController.text.toString().trim() != '' &&
+        !_emailController.text.toString().isValidEmail()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Widget _submitButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
-        bool isValidMobileNumber;
-        if (mobileNumber.isNotEmpty) {
-          isValidMobileNumber =
-              await isValidPhoneNumber(mobileNumber, countryCode);
-        }
         if (_firstNameController.text.trim() == '') {
           showToastMsg('Enter first name', context);
         } else if (_lastNameController.text.trim() == '') {
           showToastMsg('Enter last name', context);
+        } else if (emailValidation()) {
+          showToastMsg('Enter valid email', context);
         } else if (mobileNumber.isEmpty) {
           showToastMsg('Enter mobile number', context);
-        } else if (isValidMobileNumber) {
+        } else if (mobileNumber.length != maxLengthOfPhone) {
           showToastMsg('Enter valid mobile number', context);
         } else if (selectedGender == '') {
           showToastMsg('Select gender', context);
@@ -115,6 +126,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
           widget._submitButtonListner(
               _firstNameController.text.trim(),
               _lastNameController.text.trim(),
+              _emailController.text.trim(),
               countryCode + '-' + mobileNumber,
               selectedGender);
         }
@@ -209,8 +221,55 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                   ],
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (term) {
-                    _fieldFocusChange(
-                        context, _lastNameFocus, _mobileNumberFocus);
+                    _fieldFocusChange(context, _lastNameFocus, _emailFocus);
+                  },
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      fillColor: Colors.white,
+                      filled: true)),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _entryEmailField(String title) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+                color: Colors.black87),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              border: Border.all(
+                color: primaryColor,
+                width: 1.0,
+              ),
+            ),
+            child: Semantics(
+              label: "Email of Doctor",
+              child: TextFormField(
+                  controller: _emailController,
+                  focusNode: _emailFocus,
+                  keyboardType: TextInputType.emailAddress,
+                  maxLines: 1,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term) {
+                    _fieldFocusChange(context, _emailFocus, _mobileNumberFocus);
                   },
                   decoration: InputDecoration(
                       border: InputBorder.none,
@@ -235,7 +294,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
             ExcludeSemantics(
               excluding: true,
               child: Text(
-                'Gender',
+                'Gender*',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
@@ -393,6 +452,10 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                   debugPrint(phone.number);
                   mobileNumber = phone.number;
                   countryCode = phone.countryCode;
+                  debugPrint(
+                      'Country max length ==> ${countries.firstWhere((element) => element['code'] == phone.countryISOCode)['max_length']}');
+                  maxLengthOfPhone = countries.firstWhere((element) =>
+                      element['code'] == phone.countryISOCode)['max_length'];
                   /*if(mobileNumber.length == 10){
                     _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                   }*/

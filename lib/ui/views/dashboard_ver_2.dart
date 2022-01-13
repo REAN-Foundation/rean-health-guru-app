@@ -306,14 +306,14 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ImageIcon(
                           AssetImage('res/images/ic_same_emoji.png'),
                           size: 48,
-                          color: Colors.grey,
+                          color: textGrey,
                         ),
                         SizedBox(
                           height: 8,
                         ),
                         Text('Same',
                             style: TextStyle(
-                                color: Colors.grey,
+                                color: textGrey,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Montserrat')),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paitent/core/models/UploadImageResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
@@ -41,8 +42,8 @@ class _MyDialogState extends State<AddNurseDialog> {
   String profileImagePath = '';
   String selectedGender = 'Male';
   String mobileNumber = '';
-
   String countryCode = '';
+  int maxLengthOfPhone = 0;
 
   @override
   void initState() {
@@ -82,9 +83,9 @@ class _MyDialogState extends State<AddNurseDialog> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   //_profileIcon(),
-                  _entryFirstNameField('First Name'),
-                  _entryLastNameField('Last Name'),
-                  _entryMobileNoField('Phone'),
+                  _entryFirstNameField('First Name*'),
+                  _entryLastNameField('Last Name*'),
+                  _entryMobileNoField('Phone*'),
                   _genderWidget(),
                   const SizedBox(
                     height: 32,
@@ -105,18 +106,13 @@ class _MyDialogState extends State<AddNurseDialog> {
       button: true,
       child: ElevatedButton(
         onPressed: () async {
-          bool isValidMobileNumber;
-          if (mobileNumber.isNotEmpty) {
-            isValidMobileNumber =
-                await isValidPhoneNumber(mobileNumber, countryCode);
-          }
           if (_firstNameController.text == '') {
             showToastMsg('Enter first name', context);
           } else if (_lastNameController.text == '') {
             showToastMsg('Enter last name', context);
           } else if (mobileNumber.isEmpty) {
             showToastMsg('Enter mobile number', context);
-          } else if (isValidMobileNumber) {
+          } else if (mobileNumber.length != maxLengthOfPhone) {
             showToastMsg('Enter valid mobile number', context);
           } else if (selectedGender == '') {
             showToastMsg('Select gender', context);
@@ -246,7 +242,7 @@ class _MyDialogState extends State<AddNurseDialog> {
           children: <Widget>[
             ExcludeSemantics(
               child: Text(
-                'Gender',
+                'Gender*',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
@@ -356,6 +352,10 @@ class _MyDialogState extends State<AddNurseDialog> {
                   debugPrint(phone.number);
                   mobileNumber = phone.number;
                   countryCode = phone.countryCode;
+                  debugPrint(
+                      'Country max length ==> ${countries.firstWhere((element) => element['code'] == phone.countryISOCode)['max_length']}');
+                  maxLengthOfPhone = countries.firstWhere((element) =>
+                      element['code'] == phone.countryISOCode)['max_length'];
                   /*if(mobileNumber.length == 10){
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/

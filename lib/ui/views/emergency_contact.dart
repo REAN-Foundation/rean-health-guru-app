@@ -515,7 +515,6 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   Widget _makeDoctorListCard(BuildContext context, int index) {
     final Items details = doctorTeam.elementAt(index);
     return Container(
-      height: 80,
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
@@ -547,94 +546,136 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     ),
                   )),
               Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Expanded(
-                    flex: 3,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: Center(
-                            child: Semantics(
-                              label: 'Call Doctor',
-                              button: true,
-                              child: InkWell(
-                                onTap: () async {
-                                  final String url =
-                                      'tel://' + details.contactPerson.phone;
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
-                                  } else {
-                                    showToast('Unable to dial number', context);
-                                    debugPrint('Could not launch $url');
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                child: Container(
-                                  height: 80,
-                                  width: 80,
-                                  child: Lottie.asset(
-                                    'res/lottiefiles/call.json',
-                                    height: 120,
-                                  ), /*Image(
-                                    image: AssetImage(
-                                        'res/images/profile_placeholder.png'),
-                                  ),*/
-                                ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 2,
+                        child: Center(
+                          child: Semantics(
+                            label: 'Call Doctor',
+                            button: true,
+                            child: InkWell(
+                              onTap: () async {
+                                final String url =
+                                    'tel://' + details.contactPerson.phone;
+                                if (await canLaunch(url)) {
+                                  await launch(url);
+                                } else {
+                                  showToast('Unable to dial number', context);
+                                  debugPrint('Could not launch $url');
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                              child: Container(
+                                height: 80,
+                                width: 80,
+                                child: Lottie.asset(
+                                  'res/lottiefiles/call.json',
+                                  height: 120,
+                                ), /*Image(
+                                  image: AssetImage(
+                                      'res/images/profile_placeholder.png'),
+                                ),*/
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Expanded(
-                          flex: 8,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(right: 18.0),
-                                child: Text(
-                                    'Dr. ' +
-                                        details.contactPerson.firstName
-                                            .toString() +
-                                        ' ' +
-                                        details.contactPerson.lastName
-                                            .toString(),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        flex: 8,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(right: 18.0),
+                              child: Text(
+                                  'Dr. ' +
+                                      details.contactPerson.firstName
+                                          .toString() +
+                                      ' ' +
+                                      details.contactPerson.lastName.toString(),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w700,
+                                      color: primaryColor)),
+                            ),
+                            SizedBox(
+                              height: 4,
+                            ),
+                            Semantics(
+                              label: "Phone: " +
+                                  details.contactPerson.phone.replaceAllMapped(
+                                      RegExp(r".{1}"),
+                                      (match) => "${match.group(0)} "),
+                              child: ExcludeSemantics(
+                                child: Text(details.contactPerson.phone,
                                     style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w300,
                                         color: primaryColor)),
                               ),
+                            ),
+                            SizedBox(
+                              height: 4,
+                            ),
+                            if (details.contactPerson.email != null)
                               Semantics(
-                                label: "Phone: " +
-                                    details.contactPerson.phone
-                                        .replaceAllMapped(RegExp(r".{1}"),
-                                            (match) => "${match.group(0)} "),
+                                label: "Email: " + details.contactPerson.email,
                                 child: ExcludeSemantics(
-                                  child: Text(
-                                      'Phone:  ' + details.contactPerson.phone,
-                                      style: TextStyle(
-                                          fontSize: 12.0,
-                                          fontWeight: FontWeight.w300,
-                                          color: primaryColor)),
+                                  child: Column(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Container(
+                                          width: 250,
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              /*Text(
+                                                  'Email:  ',
+                                                  style: TextStyle(
+                                                      fontSize: 12.0,
+                                                      fontWeight: FontWeight.w300,
+                                                      color: primaryColor)),*/
+                                              Expanded(
+                                                child: Text(
+                                                    details.contactPerson.email,
+                                                    style: TextStyle(
+                                                        fontSize: 12.0,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        color: primaryColor)),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                              Text("Doctor",
-                                  style: TextStyle(
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w300,
-                                      color: Color(0XFF909CAC))),
-                            ],
-                          ),
+                            Text("Doctor",
+                                style: TextStyle(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w300,
+                                    color: textGrey)),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -644,6 +685,42 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       ),
     );
   }
+
+  /*sendMail(String email) async{
+
+    final link = 'mailto:' +
+        email +
+        '?subject=Emergency';
+    if (await canLaunch(
+    link.toString())) {
+    await launch(link.toString());
+    } else {
+    final Uri _emailLaunchUri = Uri(
+    scheme: 'mailto',
+    path: email,
+    queryParameters: {
+    'subject':
+    appName.replaceAll(
+    '%20', ' ') +
+    ' app query',
+    'body': ''
+    '' +
+    name +
+    ' wants to get in touch with you. ---- '
+    'Contact Number:' +
+    userPhone +
+    ''
+    '',
+    });
+    await launch(_emailLaunchUri
+        .toString()
+        .replaceAll('+', '%20'));
+
+    debugPrint(
+    'Could not launch ${link.toString()}');
+    throw 'Could not launch ${link.toString()}';
+    }
+  }*/
 
   Widget noPharmacyFound() {
     return Container(
@@ -726,7 +803,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                               style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w300,
-                                  color: Color(0XFF909CAC))),
+                                  color: textGrey)),
                         ],
                       ),
                     ),
@@ -871,27 +948,31 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                           fontWeight: FontWeight.w700,
                                           color: primaryColor)),
                                 ),
+                                SizedBox(
+                                  height: 4,
+                                ),
                                 Semantics(
                                   label: "Phone: " +
                                       details.contactPerson.phone
                                           .replaceAllMapped(RegExp(r".{1}"),
                                               (match) => "${match.group(0)} "),
                                   child: ExcludeSemantics(
-                                    child: Text(
-                                        'Phone:  ' +
-                                            details.contactPerson.phone,
+                                    child: Text(details.contactPerson.phone,
                                         style: TextStyle(
                                             fontSize: 12.0,
                                             fontWeight: FontWeight.w300,
                                             color: primaryColor)),
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 4,
+                                ),
                                 Text(
                                   details.contactRelation,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w200,
-                                      color: Color(0XFF909CAC)),
+                                      color: textGrey),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -1043,26 +1124,31 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                           fontWeight: FontWeight.w700,
                                           color: primaryColor)),
                                 ),
+                                SizedBox(
+                                  height: 4,
+                                ),
                                 Semantics(
                                   label: "Phone: " +
                                       details.contactPerson.phone
                                           .replaceAllMapped(RegExp(r".{1}"),
                                               (match) => "${match.group(0)} "),
                                   child: ExcludeSemantics(
-                                    child: Text(
-                                        'Phone: ' + details.contactPerson.phone,
+                                    child: Text(details.contactPerson.phone,
                                         style: TextStyle(
                                             fontSize: 12.0,
                                             fontWeight: FontWeight.w300,
                                             color: primaryColor)),
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 4,
+                                ),
                                 Text(
                                   details.contactRelation,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w200,
-                                      color: Color(0XFF909CAC)),
+                                      color: textGrey),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -1092,7 +1178,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         //child: addOrEditAllergiesDialog(context),
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: 580,
+          height: MediaQuery.of(context).size.height - 120,
           child: Column(
             children: [
               Row(
@@ -1137,11 +1223,12 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
               ),
               Expanded(
                 child: AddDoctorDetailsDialog(submitButtonListner:
-                    (String firstName, String lastName, String phoneNumber,
-                        String gender) {
-                      debugPrint('Team Member ==> $firstName');
+                    (String firstName, String lastName, String email,
+                        String phoneNumber, String gender) {
+                  debugPrint('Team Member ==> $firstName');
                   addTeamMembers(
-                      firstName, lastName, phoneNumber, gender, '', 'Doctor');
+                      firstName, lastName, phoneNumber, gender, '', 'Doctor',
+                      email: email);
                   Navigator.of(context, rootNavigator: true).pop();
                 }),
               )
@@ -1325,7 +1412,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   addTeamMembers(String firstName, String lastName, String phoneNumber,
-      String gender, String relation, String type) async {
+      String gender, String relation, String type,
+      {String email}) async {
     try {
       model.setBusy(true);
       //progressDialog.show();
@@ -1339,6 +1427,9 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       final contactPerson = <String, dynamic>{};
       contactPerson['FirstName'] = firstName;
       contactPerson['LastName'] = lastName;
+      if (email.isNotEmpty) {
+        contactPerson['Email'] = email;
+      }
       contactPerson['Prefix'] = ' ';
       contactPerson['Phone'] = phoneNumber;
 
@@ -1347,6 +1438,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       map['ContactRelation'] = type;
       map['ContactPerson'] = contactPerson;
       map['IsAvailableForEmergency'] = true;
+      //map['Email'] = email;
 
       final BaseResponse addTeamMemberResponse =
           await model.addTeamMembers(map);

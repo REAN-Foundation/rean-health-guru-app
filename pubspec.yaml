@@ -12,11 +12,8 @@ description: A new Flutter application.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-<<<<<<< HEAD
 version: 1.7.5+74
-=======
-version: 1.6.12+63
->>>>>>> main
+
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
@@ -68,11 +65,7 @@ dependencies:
   flutter_document_picker: ^5.0.1-nullsafety.0
   photo_view: ^0.12.0
   #country_codes: ^2.0.1
-<<<<<<< HEAD
   devicelocale: ^0.5.0
-=======
-  devicelocale: ^0.4.2
->>>>>>> main
   check_radio_group: 2.0.2
   package_info: ^2.0.2
   image_picker: ^0.8.3+3
@@ -91,11 +84,8 @@ dependencies:
   #permission_handler: 5.0.1
   get: ^4.3.8
   pausable_timer: ^1.0.0+2
-<<<<<<< HEAD
   phone_number: ^0.12.0+1
   flutter_sim_country_code: ^0.1.2
-=======
->>>>>>> main
 
 dev_dependencies:
   #test: any

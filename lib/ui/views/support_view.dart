@@ -134,7 +134,7 @@ class _SupportViewState extends State<SupportView> {
                                     Expanded(
                                       flex: 1,
                                       child: Semantics(
-                                        label: 'tap to dial number',
+                                        label: 'Call Us',
                                         button: true,
                                         child: InkWell(
                                           onTap: () async {
@@ -149,36 +149,39 @@ class _SupportViewState extends State<SupportView> {
                                               throw 'Could not launch $url';
                                             }
                                           },
-                                          child: Card(
-                                            semanticContainer: true,
-                                            elevation: 8.0,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                            color: colorF6F6FF,
-                                            shadowColor: colorF6F6FF,
-                                            child: Container(
-                                              height: 160,
-                                              child: Column(
-                                                children: [
-                                                  getAppType() == 'AHA'
-                                                      ? Image.asset(
-                                                          'res/images/ic_call_aha.png',
-                                                          width: 120)
-                                                      : Lottie.asset(
-                                                          'res/lottiefiles/call.json',
-                                                          height: 120,
-                                                        ),
-                                                  Text('Call us',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          fontSize: 16,
-                                                          color: primaryColor)),
-                                                ],
+                                          child: ExcludeSemantics(
+                                            child: Card(
+                                              semanticContainer: true,
+                                              elevation: 8.0,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                              ),
+                                              color: colorF6F6FF,
+                                              shadowColor: colorF6F6FF,
+                                              child: Container(
+                                                height: 160,
+                                                child: Column(
+                                                  children: [
+                                                    getAppType() == 'AHA'
+                                                        ? Image.asset(
+                                                            'res/images/ic_call_aha.png',
+                                                            width: 120)
+                                                        : Lottie.asset(
+                                                            'res/lottiefiles/call.json',
+                                                            height: 120,
+                                                          ),
+                                                    Text('Call us',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 16,
+                                                            color:
+                                                                primaryColor)),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -191,8 +194,7 @@ class _SupportViewState extends State<SupportView> {
                                     Expanded(
                                       flex: 1,
                                       child: Semantics(
-                                        label:
-                                            'on tap prepare an email for contact to rean',
+                                        label: 'Email us',
                                         button: true,
                                         child: InkWell(
                                           onTap: () async {
@@ -251,36 +253,39 @@ class _SupportViewState extends State<SupportView> {
                                               throw 'Could not launch ${link.toString()}';
                                             }
                                           },
-                                          child: Card(
-                                            semanticContainer: true,
-                                            elevation: 8.0,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                            color: colorF6F6FF,
-                                            shadowColor: colorF6F6FF,
-                                            child: Container(
-                                              height: 160,
-                                              child: Column(
-                                                children: [
-                                                  getAppType() == 'AHA'
-                                                      ? Image.asset(
-                                                          'res/images/ic_mail_aha.png',
-                                                          width: 120)
-                                                      : Lottie.asset(
-                                                          'res/lottiefiles/mail.json',
-                                                          height: 120,
-                                                        ),
-                                                  Text('Email us',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          fontSize: 16,
-                                                          color: primaryColor)),
-                                                ],
+                                          child: ExcludeSemantics(
+                                            child: Card(
+                                              semanticContainer: true,
+                                              elevation: 8.0,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                              ),
+                                              color: colorF6F6FF,
+                                              shadowColor: colorF6F6FF,
+                                              child: Container(
+                                                height: 160,
+                                                child: Column(
+                                                  children: [
+                                                    getAppType() == 'AHA'
+                                                        ? Image.asset(
+                                                            'res/images/ic_mail_aha.png',
+                                                            width: 120)
+                                                        : Lottie.asset(
+                                                            'res/lottiefiles/mail.json',
+                                                            height: 120,
+                                                          ),
+                                                    Text('Email us',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 16,
+                                                            color:
+                                                                primaryColor)),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -302,7 +307,7 @@ class _SupportViewState extends State<SupportView> {
 
   Widget _backButton() {
     return Semantics(
-      label: 'take to back screen',
+      label: 'Back',
       button: true,
       child: InkWell(
         onTap: () {

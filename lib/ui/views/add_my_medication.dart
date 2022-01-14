@@ -28,6 +28,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   final _instructionController = TextEditingController();
   final _instructionFocus = FocusNode();
   final _unitFocus = FocusNode();
+  final _durationFocus = FocusNode();
   final _sharedPrefUtils = SharedPrefUtils();
 
   String _dosageUnit = '';
@@ -260,7 +261,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
             children: <Widget>[
               Expanded(
                 child: Semantics(
-                  label: 'drug_name',
+                  label: 'Drug Name',
+                  focusable: true,
                   child: TypeAheadFormField(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: _typeAheadController,
@@ -280,7 +282,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     },
                     itemBuilder: (context, suggestion) {
                       return ListTile(
-                        title: Text(suggestion),
+                        title: Text(
+                          suggestion,
+                          semanticsLabel: suggestion,
+                        ),
                       );
                     },
                     transitionBuilder: (context, suggestionsBox, controller) {
@@ -308,17 +313,21 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 height: 40.0,
                 width: 40.0,
                 child: Center(
-                  child: InkWell(
-                    onTap: () {
-                      _getDrugsByName();
-                    },
-                    child: searchForDrug
-                        ? CircularProgressIndicator()
-                        : Icon(
-                            Icons.search,
-                            color: primaryColor,
-                            size: 32.0,
-                          ),
+                  child: Semantics(
+                    label: 'Search new drug',
+                    button: true,
+                    child: InkWell(
+                      onTap: () {
+                        _getDrugsByName();
+                      },
+                      child: searchForDrug
+                          ? CircularProgressIndicator()
+                          : Icon(
+                              Icons.search,
+                              color: primaryColor,
+                              size: 32.0,
+                            ),
+                    ),
                   ),
                 ),
               ),
@@ -327,17 +336,21 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 height: 40.0,
                 width: 40.0,
                 child: Center(
-                  child: InkWell(
-                    onTap: () {
-                      if (_typeAheadController.text.isNotEmpty) {
-                        FocusScope.of(context).unfocus();
-                        _addDrugConfirmDialog(context);
-                      }
-                    },
-                    child: Icon(
-                      Icons.add,
-                      color: primaryColor,
-                      size: 32.0,
+                  child: Semantics(
+                    label: 'Add new drug',
+                    button: true,
+                    child: InkWell(
+                      onTap: () {
+                        if (_typeAheadController.text.isNotEmpty) {
+                          FocusScope.of(context).unfocus();
+                          _addDrugConfirmDialog(context);
+                        }
+                      },
+                      child: Icon(
+                        Icons.add,
+                        color: primaryColor,
+                        size: 32.0,
+                      ),
                     ),
                   ),
                 ),
@@ -387,8 +400,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         color: primaryColor),
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.deny(RegExp('[\\,|\\+|\\-]')),
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                     ],
                     decoration: InputDecoration(
                       hintStyle: TextStyle(
@@ -417,7 +430,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     border: Border.all(color: primaryColor, width: 0.80),
                     color: Colors.white),
                 child: Semantics(
-                  label: 'Select_Unit',
+                  label: 'Select Unit',
+                  button: true,
                   child: DropdownButton<String>(
                     isExpanded: true,
                     value: _dosageUnit == '' ? null : _dosageUnit,
@@ -476,6 +490,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       setState(() {
                         _frequencyUnit = data;
                       });
+                      _durationFocus.requestFocus();
                       setState(() {});
                     },
                   ),
@@ -541,6 +556,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   label: 'Duration of dose',
                   child: TextFormField(
                       controller: _durationController,
+                      focusNode: _durationFocus,
                       maxLines: 1,
                       enabled: true,
                       style: TextStyle(
@@ -549,9 +565,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                           color: primaryColor),
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.deny(
-                            RegExp('[\\,|\\+|\\-]')),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                       ],
                       decoration: InputDecoration(
                         hintStyle: TextStyle(
@@ -649,23 +664,31 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       selcetedColor = Colors.white;
     }
 
-    return Semantics(
-      label: index.toString(),
-      child: InkWell(
-        child: Container(
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
-              color: selcetedColor,
-              width: 2.0,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+    final String medicationName = images.code
+        .replaceAll(RegExp("[0-9]"), "")
+        .replaceAll('_', ' ')
+        .trimLeft();
+
+    debugPrint(
+        'Medication Name ==> ${images.code.replaceAll(RegExp("[0-9]"), "").replaceAll('_', ' ').trimLeft()}');
+
+    return InkWell(
+      child: Container(
+        height: 50,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            color: selcetedColor,
+            width: 2.0,
           ),
-          child: Container(
-            child: Stack(
-              children: [
-                Center(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+        child: Container(
+          child: Stack(
+            children: [
+              Semantics(
+                label: medicationName,
+                child: Center(
                     child: SizedBox(
                   width: 32,
                   height: 32,
@@ -673,8 +696,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     imageUrl: images.publicUrl,
                   ),
                 )),
-                if (images.isSelected)
-                  Align(
+              ),
+              if (images.isSelected)
+                ExcludeSemantics(
+                  child: Align(
                     alignment: Alignment.topRight,
                     child: Container(
                       width: 20,
@@ -694,18 +719,18 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         color: Colors.white,
                       ),
                     ),
-                  )
-                else
-                  Container(),
-              ],
-            ),
+                  ),
+                )
+              else
+                Container(),
+            ],
           ),
         ),
-        onTap: () {
-          selectStockImage(index);
-          //selectTimeSlot(index);
-        },
       ),
+      onTap: () {
+        selectStockImage(index);
+        //selectTimeSlot(index);
+      },
     );
   }
 
@@ -862,16 +887,51 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                                     borderRadius: BorderRadius.circular(24),
                                     side: BorderSide(color: primaryColor)))),
                     onPressed: () {
+                      int frequency = 0;
+
+                      if (_frequencyUnit == 'Daily') {
+                        if (morningCheck) {
+                          frequency = frequency + 1;
+                        }
+                        if (afternoonCheck) {
+                          frequency = frequency + 1;
+                        }
+                        if (eveningCheck) {
+                          frequency = frequency + 1;
+                        }
+                        if (nightCheck) {
+                          frequency = frequency + 1;
+                        }
+                      }
                       if (_typeAheadController.text == '') {
                         showToast('Please select drug', context);
-                      } else if (_unitController == '') {
-                        showToast('Please enter unit qty', context);
-                      } else if (_dosageUnit == '') {
-                        showToast('Please Select dosage unit', context);
                       } else if (_frequencyUnit == '') {
                         showToast('Please select frequency', context);
-                      } else if (_durationController.text == '') {
+                      } else if (_frequencyUnit == 'Daily' && frequency == 0) {
+                        showToast('Please select daily time schedule', context);
+                      } else if (_durationController.text.trim() == '') {
                         showToast('Please enter duration', context);
+                      } else if (validationForDuration()) {
+                        if (_frequencyUnit == 'Daily') {
+                          showToast(
+                              'You can add medication for the next 180 days',
+                              context);
+                        } else if (_frequencyUnit == 'Weekly') {
+                          showToast(
+                              'You can add medication for the next 26 weeks',
+                              context);
+                        } else if (_frequencyUnit == 'Monthly') {
+                          showToast(
+                              'You can add medication for the next 6 months',
+                              context);
+                        }
+                        /*showToast(
+                            'Please enter valid duration 6 months / 26 weeks / 180 days',
+                            context);*/
+                      } else if (_unitController.text.trim() == '') {
+                        showToast('Please enter unit quantity', context);
+                      } else if (_dosageUnit == '') {
+                        showToast('Please Select dosage unit', context);
                       } else if (startOn == '') {
                         showToast('Please select start date', context);
                       } else {
@@ -882,6 +942,21 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         ),
       ],
     );
+  }
+
+  bool validationForDuration() {
+    if (_frequencyUnit == 'Daily' &&
+        double.parse(_durationController.text.toString()) > 180) {
+      return true;
+    } else if (_frequencyUnit == 'Weekly' &&
+        double.parse(_durationController.text.toString()) > 26) {
+      return true;
+    } else if (_frequencyUnit == 'Monthly' &&
+        double.parse(_durationController.text.toString()) > 6) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /*Widget _textFeilds(String hint, TextEditingController editingController, FocusNode focusNode, FocusNode nextFocusNode){
@@ -980,106 +1055,126 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: Checkbox(
-                    value: morningCheck,
-                    onChanged: (newValue) {
-                      setState(() {
-                        morningCheck = newValue;
-                      });
-                    }, //  <-- leading Checkbox
+            Semantics(
+              label: 'Morning',
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 32,
+                    height: 32,
+                    child: Checkbox(
+                      value: morningCheck,
+                      onChanged: (newValue) {
+                        setState(() {
+                          morningCheck = newValue;
+                        });
+                      }, //  <-- leading Checkbox
+                    ),
                   ),
-                ),
-                Text('Morning',
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        color: textBlack,
-                        fontWeight: FontWeight.w700))
-              ],
+                  ExcludeSemantics(
+                    child: Text('Morning',
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            color: textBlack,
+                            fontWeight: FontWeight.w700)),
+                  )
+                ],
+              ),
             ),
             SizedBox(
               width: 8,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: Checkbox(
-                    value: afternoonCheck,
-                    onChanged: (newValue) {
-                      setState(() {
-                        afternoonCheck = newValue;
-                      });
-                    }, //  <-- leading Checkbox
+            Semantics(
+              label: "Afteroon",
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 32,
+                    height: 32,
+                    child: Checkbox(
+                      value: afternoonCheck,
+                      onChanged: (newValue) {
+                        setState(() {
+                          afternoonCheck = newValue;
+                        });
+                      }, //  <-- leading Checkbox
+                    ),
                   ),
-                ),
-                Text('Afternoon',
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        color: textBlack,
-                        fontWeight: FontWeight.w700))
-              ],
+                  ExcludeSemantics(
+                    child: Text('Afternoon',
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            color: textBlack,
+                            fontWeight: FontWeight.w700)),
+                  )
+                ],
+              ),
             ),
             SizedBox(
               width: 8,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: Checkbox(
-                    value: eveningCheck,
-                    onChanged: (newValue) {
-                      setState(() {
-                        eveningCheck = newValue;
-                      });
-                    }, //  <-- leading Checkbox
+            Semantics(
+              label: 'Evening',
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 32,
+                    height: 32,
+                    child: Checkbox(
+                      value: eveningCheck,
+                      onChanged: (newValue) {
+                        setState(() {
+                          eveningCheck = newValue;
+                        });
+                      }, //  <-- leading Checkbox
+                    ),
                   ),
-                ),
-                Text('Evening',
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        color: textBlack,
-                        fontWeight: FontWeight.w700))
-              ],
+                  ExcludeSemantics(
+                    child: Text('Evening',
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            color: textBlack,
+                            fontWeight: FontWeight.w700)),
+                  )
+                ],
+              ),
             ),
             SizedBox(
               width: 8,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: Checkbox(
-                    value: nightCheck,
-                    onChanged: (newValue) {
-                      setState(() {
-                        nightCheck = newValue;
-                      });
-                    }, //  <-- leading Checkbox
+            Semantics(
+              label: 'Night',
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 32,
+                    height: 32,
+                    child: Checkbox(
+                      value: nightCheck,
+                      onChanged: (newValue) {
+                        setState(() {
+                          nightCheck = newValue;
+                        });
+                      }, //  <-- leading Checkbox
+                    ),
                   ),
-                ),
-                Text('Night',
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        color: textBlack,
-                        fontWeight: FontWeight.w700))
-              ],
+                  ExcludeSemantics(
+                    child: Text('Night',
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            color: textBlack,
+                            fontWeight: FontWeight.w700)),
+                  )
+                ],
+              ),
             ),
           ],
         ),

@@ -10,8 +10,12 @@ import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/home_view.dart';
+import 'package:paitent/utils/CoachMarkUtilities.dart';
 import 'package:paitent/utils/CommonUtils.dart';
+import 'package:paitent/utils/SharedPrefUtils.dart';
+import 'package:paitent/utils/StringConstant.dart';
 import 'package:paitent/utils/StringUtility.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import 'base_widget.dart';
 
@@ -32,15 +36,21 @@ class _SymptomsViewState extends State<SymptomsView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   SymptomAssessmentTemplate assessmentTemplate;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
 
   //List symptomList = new List<SymptomsPojo>();
   var dateFormat = DateFormat('yyyy-MM-dd');
   String myAssesssmentId = '';
+  final GlobalKey _keySymptoms = GlobalKey();
+  TutorialCoachMark tutorialCoachMark;
+  List<TargetFocus> targets = [];
+  CoachMarkUtilites coackMarkUtilites = CoachMarkUtilites();
 
   @override
   void initState() {
     //prepareSymptomsList();
     getAssesmentTemplateById();
+    initTargets();
     super.initState();
   }
 
@@ -57,6 +67,45 @@ class _SymptomsViewState extends State<SymptomsView> {
     symptomList.add(new SymptomsPojo('res/images/ic_symptoms_9.png','Frequent urination'));
     symptomList.add(new SymptomsPojo('res/images/ic_symptoms_10.png','Extreme thirst'));
     symptomList.add(new SymptomsPojo('res/images/ic_symptoms_11.png','Tingling or numbness in feet'));
+  }*/
+
+  void initTargets() {
+    targets.add(coackMarkUtilites.getTargetFocus(
+        _keySymptoms,
+        (targets.length + 1).toString(),
+        'Symptoms List',
+        'swipe right for better or left for worse',
+        CoachMarkContentPosition.bottom,
+        ShapeLightFocus.RRect));
+  }
+
+  void showTutorial() {
+    coackMarkUtilites.displayCoachMark(context, targets,
+        onCoachMartkFinish: () {
+      _sharedPrefUtils.saveBoolean(
+          StringConstant.Is_Symptoms_View_Coach_Mark_Completed, true);
+      debugPrint('Coach Mark Finish');
+    }, onCoachMartkSkip: () {
+      _sharedPrefUtils.saveBoolean(
+          StringConstant.Is_Home_View_Coach_Mark_Completed, true);
+      debugPrint('Coach Mark Skip');
+    }, onCoachMartkClickTarget: (target) {
+      debugPrint('Coach Mark target click');
+    }, onCoachMartkClickOverlay: () {
+      debugPrint('Coach Mark overlay click');
+    }).show();
+  }
+
+/*  _layout(_) async {
+    Future.delayed(Duration(milliseconds: 1000));
+    bool isCoachMarkDisplayed = false;
+    isCoachMarkDisplayed = await _sharedPrefUtils
+        .readBoolean(StringConstant.Is_Symptoms_View_Coach_Mark_Completed);
+    debugPrint('isCoachMarkDisplayed ==> $isCoachMarkDisplayed');
+    if (!isCoachMarkDisplayed || isCoachMarkDisplayed == null) {
+      Future.delayed(const Duration(seconds: 2), () => showTutorial());
+      //showTutorial();
+    }
   }*/
 
   @override
@@ -192,6 +241,7 @@ class _SymptomsViewState extends State<SymptomsView> {
   }
 
   Widget listWidget() {
+    //WidgetsBinding.instance.addPostFrameCallback(_layout);
     return ListView.separated(
         itemBuilder: (context, index) => _createSymptomsListUI(context, index),
         separatorBuilder: (BuildContext context, int index) {
@@ -277,7 +327,7 @@ class _SymptomsViewState extends State<SymptomsView> {
         assessmentTemplate.templateSymptomTypes.elementAt(index);
 
     return Dismissible(
-      key: Key(symptomTypes.symptom),
+      key: index == 1 ? _keySymptoms : Key(symptomTypes.symptom),
       child: InkWell(
           onTap: () {
             debugPrint('${symptomTypes.symptom} clicked');

@@ -145,18 +145,18 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                         Container(
                           height: 40,
                           width: 10,
-                          color: Colors.grey,
+                          color: textGrey,
                         ),
                         SizedBox(
                           width: 8,
                         ),
                         Text(
                           'Total Calories',
-                          semanticsLabel: 'Calories',
+                          semanticsLabel: 'Total Calories',
                           style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 24.0,
-                              color: Colors.grey),
+                              color: textGrey),
                         ),
                       ],
                     ),
@@ -173,37 +173,40 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 18.0,
-                              color: Colors.grey),
+                              color: textGrey),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              totalTodayCal.toStringAsFixed(0),
-                              semanticsLabel: totalTodayCal.toStringAsFixed(0),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 24.0,
-                                  color: Colors.grey),
+                        Semantics(
+                          label: totalTodayCal.toStringAsFixed(0) + ' Calories',
+                          child: ExcludeSemantics(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  totalTodayCal.toStringAsFixed(0),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 24.0,
+                                      color: textGrey),
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  'cals',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16.0,
+                                      color: textGrey),
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              'cals',
-                              semanticsLabel: 'cals',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.0,
-                                  color: Colors.grey),
-                            ),
-                          ],
+                          ),
                         ),
                       ],
                     ),
                     Divider(
-                      color: Colors.grey,
+                      color: textGrey,
                       thickness: 2,
                     ),
                     SizedBox(
@@ -219,30 +222,40 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 16.0,
-                              color: Colors.grey),
+                              color: textGrey),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              totalBreakfastCal.toStringAsFixed(0),
-                              semanticsLabel: '',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18.0,
-                                  color: Colors.grey),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              'cals',
-                              semanticsLabel: 'cals',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.0,
-                                  color: Colors.grey),
+                            Semantics(
+                              label: totalBreakfastCal.toStringAsFixed(0) +
+                                  ' Calories',
+                              child: ExcludeSemantics(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      totalBreakfastCal.toStringAsFixed(0),
+                                      semanticsLabel: '',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18.0,
+                                          color: textGrey),
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      'cals',
+                                      semanticsLabel: 'cals',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16.0,
+                                          color: textGrey),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                             SizedBox(
                               width: 8,
@@ -250,31 +263,33 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             Container(
                               height: 30,
                               width: 2,
-                              color: Colors.grey,
+                              color: textGrey,
                             ),
                             SizedBox(
                               width: 8,
                             ),
-                            InkWell(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return _addCaloriesConsumedDialog(
-                                            context, 'breakfast');
-                                      });
-                                },
-                                child: Icon(
-                                  Icons.add_circle,
-                                  color: primaryColor,
-                                  size: 32,
-                                ))
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return _addCaloriesConsumedDialog(
+                                          context, 'breakfast');
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: primaryColor,
+                                semanticLabel: 'Add Calories for Breakfast',
+                                size: 32,
+                              ),
+                            )
                           ],
                         ),
                       ],
                     ),
                     Divider(
-                      color: Colors.grey,
+                      color: textGrey,
                       thickness: 2,
                     ),
                     SizedBox(
@@ -290,30 +305,38 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 16.0,
-                              color: Colors.grey),
+                              color: textGrey),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              totalLunchCal.toStringAsFixed(0),
-                              semanticsLabel: '',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18.0,
-                                  color: Colors.grey),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              'cals',
-                              semanticsLabel: 'cals',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.0,
-                                  color: Colors.grey),
+                            Semantics(
+                              label: totalLunchCal.toStringAsFixed(0) +
+                                  ' Calories',
+                              child: ExcludeSemantics(
+                                child: Row(children: [
+                                  Text(
+                                    totalLunchCal.toStringAsFixed(0),
+                                    semanticsLabel: '',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 18.0,
+                                        color: textGrey),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    'cals',
+                                    semanticsLabel: 'cals',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16.0,
+                                        color: textGrey),
+                                  ),
+                                ]),
+                              ),
                             ),
                             SizedBox(
                               width: 8,
@@ -321,31 +344,33 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             Container(
                               height: 30,
                               width: 2,
-                              color: Colors.grey,
+                              color: textGrey,
                             ),
                             SizedBox(
                               width: 8,
                             ),
-                            InkWell(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return _addCaloriesConsumedDialog(
-                                            context, 'lunch');
-                                      });
-                                },
-                                child: Icon(
-                                  Icons.add_circle,
-                                  color: primaryColor,
-                                  size: 32,
-                                ))
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return _addCaloriesConsumedDialog(
+                                          context, 'lunch');
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: primaryColor,
+                                size: 32,
+                                semanticLabel: 'Add Calories for lunch',
+                              ),
+                            )
                           ],
                         ),
                       ],
                     ),
                     Divider(
-                      color: Colors.grey,
+                      color: textGrey,
                       thickness: 2,
                     ),
                     SizedBox(
@@ -361,30 +386,39 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 16.0,
-                              color: Colors.grey),
+                              color: textGrey),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              totalDinnerCal.toStringAsFixed(0),
-                              semanticsLabel: '',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18.0,
-                                  color: Colors.grey),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              'cals',
-                              semanticsLabel: 'cals',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.0,
-                                  color: Colors.grey),
+                            Semantics(
+                              label: totalDinnerCal.toStringAsFixed(0) +
+                                  ' Calories',
+                              child: ExcludeSemantics(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      totalDinnerCal.toStringAsFixed(0),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18.0,
+                                          color: textGrey),
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      'cals',
+                                      semanticsLabel: 'cals',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16.0,
+                                          color: textGrey),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                             SizedBox(
                               width: 8,
@@ -392,31 +426,33 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             Container(
                               height: 30,
                               width: 2,
-                              color: Colors.grey,
+                              color: textGrey,
                             ),
                             SizedBox(
                               width: 8,
                             ),
-                            InkWell(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return _addCaloriesConsumedDialog(
-                                            context, 'dinner');
-                                      });
-                                },
-                                child: Icon(
-                                  Icons.add_circle,
-                                  color: primaryColor,
-                                  size: 32,
-                                ))
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return _addCaloriesConsumedDialog(
+                                          context, 'dinner');
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: primaryColor,
+                                size: 32,
+                                semanticLabel: 'Add Calories for dinner',
+                              ),
+                            )
                           ],
                         ),
                       ],
                     ),
                     Divider(
-                      color: Colors.grey,
+                      color: textGrey,
                       thickness: 2,
                     ),
                     SizedBox(
@@ -432,30 +468,40 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 16.0,
-                              color: Colors.grey),
+                              color: textGrey),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              totalMorningSnackCal.toStringAsFixed(0),
-                              semanticsLabel: '',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18.0,
-                                  color: Colors.grey),
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              'cals',
-                              semanticsLabel: 'cals',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.0,
-                                  color: Colors.grey),
+                            Semantics(
+                              label: totalMorningSnackCal.toStringAsFixed(0) +
+                                  ' Calories',
+                              child: ExcludeSemantics(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      totalMorningSnackCal.toStringAsFixed(0),
+                                      semanticsLabel: '',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18.0,
+                                          color: textGrey),
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      'cals',
+                                      semanticsLabel: 'cals',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16.0,
+                                          color: textGrey),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                             SizedBox(
                               width: 8,
@@ -463,31 +509,33 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             Container(
                               height: 30,
                               width: 2,
-                              color: Colors.grey,
+                              color: textGrey,
                             ),
                             SizedBox(
                               width: 8,
                             ),
-                            InkWell(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return _addCaloriesConsumedDialog(
-                                            context, 'snack');
-                                      });
-                                },
-                                child: Icon(
-                                  Icons.add_circle,
-                                  color: primaryColor,
-                                  size: 32,
-                                ))
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return _addCaloriesConsumedDialog(
+                                          context, 'snack');
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: primaryColor,
+                                size: 32,
+                                semanticLabel: 'Add Calories for snack',
+                              ),
+                            )
                           ],
                         ),
                       ],
                     ),
                     Divider(
-                      color: Colors.grey,
+                      color: textGrey,
                       thickness: 2,
                     ),
                     SizedBox(
@@ -507,7 +555,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 16.0,
-                                    color: Colors.grey),
+                                    color: textGrey),
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -519,7 +567,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 18.0,
-                                        color: Colors.grey),
+                                        color: textGrey),
                                   ),
                                   SizedBox(
                                     width: 8,
@@ -530,7 +578,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 16.0,
-                                        color: Colors.grey),
+                                        color: textGrey),
                                   ),
                                   SizedBox(
                                     width: 8,
@@ -538,7 +586,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                   Container(
                                     height: 30,
                                     width: 2,
-                                    color: Colors.grey,
+                                    color: textGrey,
                                   ),
                                   SizedBox(
                                     width: 8,
@@ -562,7 +610,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             ],
                           ),
                           Divider(
-                            color: Colors.grey,
+                            color: textGrey,
                             thickness: 2,
                           ),
                           SizedBox(
@@ -578,7 +626,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 16.0,
-                                    color: Colors.grey),
+                                    color: textGrey),
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -590,7 +638,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 18.0,
-                                        color: Colors.grey),
+                                        color: textGrey),
                                   ),
                                   SizedBox(
                                     width: 8,
@@ -601,7 +649,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 16.0,
-                                        color: Colors.grey),
+                                        color: textGrey),
                                   ),
                                   SizedBox(
                                     width: 8,
@@ -609,7 +657,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                   Container(
                                     height: 30,
                                     width: 2,
-                                    color: Colors.grey,
+                                    color: textGrey,
                                   ),
                                   SizedBox(
                                     width: 8,
@@ -633,7 +681,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             ],
                           ),
                           Divider(
-                            color: Colors.grey,
+                            color: textGrey,
                             thickness: 2,
                           ),
                         ],

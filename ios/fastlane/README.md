@@ -26,6 +26,26 @@ Re-recreate development,adhoc and appstore profiles and necessary certificates i
 fastlane ios get_signing_profiles
 ```
 Install App Store Certificates and Profiles
+### ios build_rf
+```
+fastlane ios build_rf
+```
+
+### ios build_aha
+```
+fastlane ios build_aha
+```
+
+### ios upload_build_to_testflight_rf
+```
+fastlane ios upload_build_to_testflight_rf
+```
+
+### ios upload_build_to_testflight_aha
+```
+fastlane ios upload_build_to_testflight_aha
+```
+
 ### ios build
 ```
 fastlane ios build
@@ -55,10 +75,10 @@ Upload Build to TestFlight
 ```
 fastlane ios submit_beta_to_app_store
 ```
-
+Submit to App Store
 
 ----
 
-This README.md is auto-generated and will be re-generated every time [fastlane](https://fastlane.tools) is run.
+This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
 More information about fastlane can be found on [fastlane.tools](https://fastlane.tools).
 The documentation of fastlane can be found on [docs.fastlane.tools](https://docs.fastlane.tools).

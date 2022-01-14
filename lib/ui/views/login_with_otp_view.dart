@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
@@ -18,6 +20,7 @@ import 'package:paitent/ui/views/home_view.dart';
 import 'package:paitent/ui/widgets/bezierContainer.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 import 'base_widget.dart';
@@ -33,10 +36,16 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+
   //String _fcmToken ="";
+  final TextEditingController _mobileNumberController = TextEditingController();
+  final _mobileNumberFocus = FocusNode();
+  ProgressDialog progressDialog;
+  int maxLengthOfPhone = 0;
 
   @override
   void initState() {
+    progressDialog = ProgressDialog(context, isDismissible: false);
     getKnowdledgeLinkLastViewDate();
     permissionDialog();
     //if(apiProvider.getBaseUrl().contains('dev')) {
@@ -127,7 +136,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                                 readOnly: true,
                                 child: SizedBox(height: 100)),
                             //_emailPasswordWidget(),
-                            _textFeild('Mobile Number'),
+                            _textFeild('Mobile Number', model),
                             SizedBox(height: 40),
                             if (model.busy)
                               CircularProgressIndicator()
@@ -164,7 +173,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   }
 
 
-  Widget _textFeild(String title) {
+  Widget _textFeild(String title, LoginViewModel model) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -197,22 +206,35 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   ),*/
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   autoValidate: true,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                  ],
+                  controller: _mobileNumberController,
+                  focusNode: _mobileNumberFocus,
                   decoration: InputDecoration(
                       counterText: '',
-                      hintText: 'mobile_number',
+                      hintText: 'mobile number',
                       hintStyle: TextStyle(color: Colors.transparent),
                       border: InputBorder.none,
                       fillColor: Colors.white,
                       filled: true),
                   initialCountryCode: getCurrentLocale(),
+                  readOnly: model.busy,
                   onChanged: (phone) {
                     debugPrint(phone.countryCode);
                     debugPrint(phone.number);
                     mobileNumber = phone.number;
                     countryCode = phone.countryCode;
+                    debugPrint(
+                        'Country max length ==> ${countries.firstWhere((element) => element['code'] == phone.countryISOCode)['max_length']}');
+                    maxLengthOfPhone = countries.firstWhere((element) =>
+                        element['code'] == phone.countryISOCode)['max_length'];
                     /*if(mobileNumber.length == 10){
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/
+                  },
+                  onCountryChanged: (phone) {
+                    _clearFeilds();
                   },
                 )),
           ),
@@ -223,9 +245,9 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   Widget _getOTPButton(LoginViewModel model) {
     return Semantics(
-      label: 'getOTP',
+      label: 'Get OTP',
       button: true,
-      hint: 'press to get OTP',
+      //hint: 'press to get OTP',
       child: SizedBox(
         width: 160,
         height: 40,
@@ -239,7 +261,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       borderRadius: BorderRadius.all(Radius.circular(24)),
                       side: BorderSide(color: primaryColor)))),
           onPressed: () {
-            if (mobileNumber.length == 10) {
+            if (mobileNumber.length == maxLengthOfPhone) {
               countryCodeGlobe = countryCode;
               model.setBusy(true);
               if (dummyNumberList.contains(mobileNumber)) {
@@ -261,6 +283,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   checkUserExistsOrNot(LoginViewModel model) async {
     try {
+      progressDialog.show();
       debugPrint('Mobile = $mobileNumber');
 
       final response = await apiProvider.get('/users/by-phone/' +
@@ -280,6 +303,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         if (checkUserExistOrNotResonse.message == 'User not found.') {
           generateOTP(model);
         } else {
+          progressDialog.hide();
           showToast(checkUserExistOrNotResonse.message, context);
         }
         model.setBusy(false);
@@ -313,17 +337,21 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
           BaseResponse.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
+        progressDialog.hide();
         showToast(
             'OTP has been successfully sent on your mobile number', context);
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,
             arguments: mobileNumber);
+        _clearFeilds();
         model.setBusy(false);
       } else {
+        progressDialog.hide();
         model.setBusy(false);
         showToast(doctorListApiResponse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
+      progressDialog.hide();
       debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});
@@ -348,19 +376,23 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
       if (doctorListApiResponse.status == 'success') {
+        progressDialog.hide();
         showToast(
             'OTP has been successfully sent on your mobile number', context);
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data.patient.toJson());
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,
             arguments: mobileNumber);
+        _clearFeilds();
         model.setBusy(false);
       } else {
+        progressDialog.hide();
         model.setBusy(false);
         showToast(doctorListApiResponse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
+      progressDialog.hide();
       debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});
@@ -389,6 +421,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data.patient.toJson());
         _sharedPrefUtils.saveBoolean('login1.5', true);
+        _clearFeilds();
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);
@@ -500,6 +533,13 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     } on SocketException catch (_) {
       debugPrint('not connected');
     }
+  }
+
+  _clearFeilds() {
+    progressDialog.hide();
+    mobileNumber = '';
+    _mobileNumberController.clear();
+    setState(() {});
   }
 
   void firebase() {

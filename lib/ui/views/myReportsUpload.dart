@@ -50,6 +50,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   @override
   void initState() {
     _api_key = dotenv.env['Patient_API_KEY'];
+    progressDialog = ProgressDialog(context, isDismissible: false);
     getAllRecords();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
@@ -157,7 +158,6 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
     return BaseWidget<CommonConfigModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -335,7 +335,7 @@ class _MyReportsViewState extends State<MyReportsView> {
             //getDocumentPublicLink(document, true);
 
           } else {
-            showToast('Opps, something wents wrong!', context);
+            showToast('Opps, something went wrong!', context);
           }
         },
         child: Container(
@@ -386,6 +386,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Semantics(
+                        button: true,
                         child: InkWell(
                             onTap: () {
                               _renameDialog(document);
@@ -418,6 +419,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                         color: primaryColor,
                       ),
                       Semantics(
+                        button: true,
                         child: InkWell(
                             onTap: () {
                               _removeConfirmation(document);
@@ -450,13 +452,14 @@ class _MyReportsViewState extends State<MyReportsView> {
                         color: primaryColor,
                       ),
                       Semantics(
+                        button: true,
                         child: InkWell(
                             onTap: () {
                               if (document.mimeType != null) {
                                 getDocumentPublicLink(document, false);
                               } else {
                                 showToast(
-                                    'Opps, something wents wrong!', context);
+                                    'Opps, something went wrong!', context);
                               }
                             },
                             child: Container(
@@ -472,7 +475,6 @@ class _MyReportsViewState extends State<MyReportsView> {
                                     width: 4,
                                   ),
                                   Text('Share',
-                                      semanticsLabel: 'share',
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
@@ -553,7 +555,15 @@ class _MyReportsViewState extends State<MyReportsView> {
   Future getFile(String type) async {
     String result;
     try {
-      result = await FlutterDocumentPicker.openDocument();
+      final FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
+        allowedMimeTypes: [
+          'application/pdf',
+          'application/docs',
+          'application/ppt'
+        ],
+      );
+
+      result = await FlutterDocumentPicker.openDocument(params: params);
       debugPrint('File Result ==> $result');
 
       if (result != '') {
@@ -671,12 +681,12 @@ class _MyReportsViewState extends State<MyReportsView> {
             getAllRecords();
             showToast(uploadResponse.message, context);
           } else {
-            showToast('Opps, something wents wrong!', context);
+            showToast('Opps, something went wrong!', context);
           }
         } else {
           final respStr = await response.stream.bytesToString();
           progressDialog.hide();
-          showToast('Opps, something wents wrong!', context);
+          showToast('Opps, something went wrong!', context);
           debugPrint('Upload Faild ! ==> $respStr');
         }
       }); // debugPrint("3");
@@ -763,9 +773,20 @@ class _MyReportsViewState extends State<MyReportsView> {
           TextButton(
               child: const Text('Ok'),
               onPressed: () {
+                final String enteredFileName = renameControler.text;
+                final String fileExtention = enteredFileName.split('.').last;
+                final String newFileName =
+                    renameControler.text.replaceAll('.' + fileExtention, '');
+
+                debugPrint('New FileName ==> $newFileName');
+                debugPrint('fileExtention ==> $fileExtention');
+                debugPrint('enteredFileName ==> $enteredFileName');
+
                 if (document.fileName == renameControler.text) {
-                  showToast('Document renamed successfully ', context);
+                  showToastMsg('Document renamed successfully ', context);
                   Navigator.of(context, rootNavigator: true).pop();
+                } else if (newFileName == '') {
+                  showToastMsg('Please enter valid file name', context);
                 } else {
                   renameDocument(document.id, renameControler.text);
                   Navigator.of(context, rootNavigator: true).pop();
@@ -798,37 +819,40 @@ class _MyReportsViewState extends State<MyReportsView> {
                   openCamera();
                 },
                 child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          color: primaryLightColor,
-                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                          border: Border.all(
-                            color: primaryColor,
-                            width: 1.0,
+                  child: ExcludeSemantics(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            color: primaryLightColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
+                            border: Border.all(
+                              color: primaryColor,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.camera_alt,
+                              color: primaryColor,
+                              size: 24,
+                            ),
                           ),
                         ),
-                        child: Center(
-                          child: Icon(
-                            Icons.camera_alt,
-                            color: primaryColor,
-                            size: 24,
-                          ),
+                        SizedBox(
+                          height: 8,
                         ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        'Camera',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ],
+                        Text(
+                          'Camera',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -841,6 +865,58 @@ class _MyReportsViewState extends State<MyReportsView> {
                   openGallery();
                 },
                 child: Container(
+                  child: ExcludeSemantics(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            color: primaryLightColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
+                            border: Border.all(
+                              color: primaryColor,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.image,
+                              color: primaryColor,
+                              size: 24,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          'Gallery',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Semantics(
+              label: 'Files',
+              child: InkWell(
+                onTap: () async {
+                  Navigator.pop(context);
+                  final String type = await _askForDocsType();
+                  debugPrint('File Type $type');
+                  if (type != null) {
+                    getFile(type);
+                  } else {
+                    showToast('Please select document type', context);
+                  }
+                },
+                child: Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -858,7 +934,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                         ),
                         child: Center(
                           child: Icon(
-                            Icons.image,
+                            Icons.file_copy,
                             color: primaryColor,
                             size: 24,
                           ),
@@ -868,7 +944,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                         height: 8,
                       ),
                       Text(
-                        'Gallery',
+                        'Files',
                         style: TextStyle(fontSize: 12),
                       ),
                     ],
@@ -876,40 +952,6 @@ class _MyReportsViewState extends State<MyReportsView> {
                 ),
               ),
             ),
-            /*Semantics(
-              label: 'Cancel',
-              child: InkWell(
-                onTap: (){
-
-                },
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: new BoxDecoration(
-                          color: primaryLightColor,
-                          borderRadius:
-                          new BorderRadius.all(new Radius.circular(50.0)),
-                          border: new Border.all(
-                            color: primaryColor,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Center(
-                          child: Icon(Icons.close, color: primaryColor, size: 24,),
-                        ),
-                      ),
-                      SizedBox(height: 8,),
-                      Text('Cancel', style: TextStyle(fontSize: 12),),
-                    ],
-                  ),
-                ),
-              ),
-            ),*/
           ],
         ),
       ),
@@ -920,7 +962,14 @@ class _MyReportsViewState extends State<MyReportsView> {
     final String type = await _askForDocsType();
     debugPrint('File Type $type');
     if (type != null) {
-      getFile(type);
+      final picture = await _picker.pickImage(
+        source: ImageSource.gallery,
+      );
+      final File file = File(picture.path);
+      debugPrint(picture.path);
+      final String fileName = file.path.split('/').last;
+      debugPrint('File Name ==> $fileName');
+      uploadProfilePicture(file, type);
     } else {
       showToast('Please select document type', context);
     }

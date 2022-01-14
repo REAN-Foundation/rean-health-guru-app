@@ -145,7 +145,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                 (dummyNumberList.contains(mobileNumber)
                     ? mobileNumber
                     : countryCodeGlobe + '-' + mobileNumber),
-            style: TextStyle(fontSize: 14, color: Colors.grey),
+            style: TextStyle(fontSize: 14, color: textGrey),
           ),
           SizedBox(
             height: 8,
@@ -173,7 +173,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             children: [
               Text(
                 '  Didn’t received OTP?',
-                style: TextStyle(fontSize: 14, color: Colors.grey),
+                style: TextStyle(fontSize: 14, color: textGrey),
               ),
               if (loginOTP)
                 SizedBox(
@@ -183,12 +183,18 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                   onTap: () {
                     generateOTPForExistingUser(model);
                   },
-                  child: Text(
-                    'Resend OTP?',
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: primaryColor,
-                        fontWeight: FontWeight.w700),
+                  child: Semantics(
+                    label: 'Resend OTP?',
+                    button: true,
+                    child: ExcludeSemantics(
+                      child: Text(
+                        'Resend OTP?',
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: primaryColor,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
                   ),
                 ),
             ],
@@ -200,7 +206,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
 
   Widget _submitOTPButton(LoginViewModel model) {
     return Semantics(
-      label: 'getOTP',
+      label: 'Submit',
+      button: true,
       child: SizedBox(
         width: 160,
         height: 40,
@@ -366,7 +373,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
 
       if (doctorListApiResponse.status == 'success') {
         if (getAppType() == 'AHA') {
-          showToast('Welcome to AHA-CHF', context);
+          showToast('Welcome to HF Helper', context);
         } else {
           showToast('Welcome to REAN HealthGuru', context);
         }

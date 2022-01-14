@@ -4,9 +4,9 @@ inputs:
   ruby-version:
     description: "Ruby version to install"
     required: false
-    default: "2.7"
+    default: "3.0.3"
   bundler-version:
-    description: "Ruby version to install"
+    description: "Bundler version to install"
     required: false
     default: "2.2.26"
   fastlane-dir:

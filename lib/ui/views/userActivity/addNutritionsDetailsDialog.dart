@@ -96,7 +96,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'name',
+                    label: 'Name textfield',
                     child: TextFormField(
                         controller: _nutritionNameController,
                         focusNode: _nutritionNameFocus,
@@ -166,7 +166,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'cal',
+                    label: 'Calories textfield',
                     child: TextFormField(
                         controller: _consumedCaloriesController,
                         focusNode: __consumedCaloriesFocus,
@@ -177,7 +177,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                         onFieldSubmitted: (term) {},
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\+|\\-]')),
+                              RegExp('[\\,|\\+|\\-|\\ ]')),
                         ],
                         decoration: InputDecoration(
                             hintText: '100',
@@ -219,7 +219,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
             showToast("Please enter calories", context);
           } else {
             widget._submitButtonListner(
-                _nutritionNameController.text.toString(),
+                _nutritionNameController.text.toString().trim(),
                 double.parse(_consumedCaloriesController.text),
                 widget._nutritionName);
           }

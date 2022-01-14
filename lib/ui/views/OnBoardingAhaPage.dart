@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 import 'package:devicelocale/devicelocale.dart';
+=======
+>>>>>>> main
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
+<<<<<<< HEAD
 import 'package:paitent/utils/CommonUtils.dart';
+=======
+>>>>>>> main
 
 class OnBoardingAhaPage extends StatefulWidget {
   @override
@@ -15,6 +21,7 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
 
   static const Color primaryColorLocal = Color(0XFFc10e21);
 
+<<<<<<< HEAD
   Future<void> _initPackageInfo() async {
     if (getCurrentLocale() == '') {
       final Locale countryLocale = await Devicelocale.currentAsLocale;
@@ -30,6 +37,8 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
     _initPackageInfo();
   }
 
+=======
+>>>>>>> main
   void _onIntroEnd(context) {
     Navigator.popAndPushNamed(context, RoutePaths.Login);
   }
@@ -113,7 +122,11 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
       ),
       done: const Text('Done',
           style:
+<<<<<<< HEAD
           TextStyle(fontWeight: FontWeight.w600, color: primaryColorLocal)),
+=======
+              TextStyle(fontWeight: FontWeight.w600, color: primaryColorLocal)),
+>>>>>>> main
       curve: Curves.fastLinearToSlowEaseIn,
       //controlsMargin: const EdgeInsets.all(16),
       /*controlsPadding: kIsWeb

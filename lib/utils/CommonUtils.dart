@@ -1,12 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+<<<<<<< HEAD
 import 'package:intl/intl.dart';
+=======
+>>>>>>> main
 import 'package:paitent/core/models/FAQChatModelPojo.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
+<<<<<<< HEAD
 import 'package:phone_number/phone_number.dart';
+=======
+>>>>>>> main
 
 import 'SharedPrefUtils.dart';
 
@@ -34,11 +40,14 @@ final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
 String knowledgeLinkDisplayedDate = '';
 String dailyCheckInDate = '';
 var chatList = <FAQChatModelPojo>[];
+<<<<<<< HEAD
 var dateFormatGraphStandard = DateFormat('MMM dd, yyyy');
 PhoneNumberUtil plugin = PhoneNumberUtil();
 String dailyMood = '';
 String dailyFeeling = '';
 List<String> dailyEnergyLevels = [];
+=======
+>>>>>>> main
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');
@@ -226,6 +235,7 @@ setDailyCheckInDate(String viewedDate) async {
   //return knowledgeLinkDisplayedDate ?? '';
 }
 
+<<<<<<< HEAD
 Future<bool> isValidPhoneNumber(String phone, String code) async {
   debugPrint(
       "isValidPhoneNumber ${code + '-' + phone}  == ${await plugin.validate(code + phone, code)}");
@@ -240,6 +250,8 @@ extension EmailValidator on String {
   }
 }
 
+=======
+>>>>>>> main
 enum AppState {
   DATA_NOT_FETCHED,
   FETCHING_DATA,

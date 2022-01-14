@@ -147,6 +147,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                       borderRadius: BorderRadius.circular(8.0),
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
+<<<<<<< HEAD
                   child: Semantics(
                     label: 'Pulse rate measures in bpm',
                     child: TextFormField(
@@ -165,6 +166,24 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                             fillColor: Colors.white,
                             filled: true)),
                   ),
+=======
+                  child: TextFormField(
+                      controller: _controller,
+                      maxLines: 1,
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.number,
+                      onFieldSubmitted: (term) {},
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(
+                            RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                      ],
+                      decoration: InputDecoration(
+                          hintText: '(65 to 95)',
+                          contentPadding: EdgeInsets.all(0),
+                          border: InputBorder.none,
+                          fillColor: Colors.white,
+                          filled: true)),
+>>>>>>> main
                 ),
               ),
               RichText(
@@ -193,6 +212,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
           ),
           Align(
             alignment: Alignment.centerRight,
+<<<<<<< HEAD
             child: Semantics(
               label: "Save",
               button: true,
@@ -228,6 +248,37 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                       )),
                 ),
               ),
+=======
+            child: InkWell(
+              onTap: () {
+                if (_controller.text.toString().isEmpty) {
+                  showToast('Please enter your Pulse Rate', context);
+                } else {
+                  addvitals();
+                }
+              },
+              child: Container(
+                  height: 40,
+                  width: 120,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24.0),
+                    border: Border.all(color: primaryColor, width: 1),
+                    color: primaryColor,
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Save',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                  )),
+>>>>>>> main
             ),
           ),
         ],
@@ -319,6 +370,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
 
   Widget _makeWeightList(BuildContext context, int index) {
     final Items record = records.elementAt(index);
+<<<<<<< HEAD
     return Card(
       semanticContainer: false,
       elevation: 0,
@@ -352,12 +404,34 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
           ],
         ),
       ),
+=======
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          dateFormatStandard.format(DateTime.parse(record.recordDate)),
+          style: TextStyle(
+              color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        Text(
+          record.pulse.toString() + ' bpm',
+          style: TextStyle(
+              color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
+>>>>>>> main
     );
   }
 
   Widget graph() {
     return Padding(
       padding: const EdgeInsets.all(0.0),
+<<<<<<< HEAD
       child: Semantics(
         label: 'making graph of ',
         child: Column(
@@ -392,6 +466,37 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
             ),
           ],
         ),
+=======
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [primaryLightColor, colorF6F6FF]),
+                border: Border.all(color: primaryLightColor),
+                borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            padding: const EdgeInsets.all(16),
+            height: 200,
+            child: Center(
+              child: SimpleTimeSeriesChart(_createSampleData()),
+            ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Text(
+            'Pulse Rate',
+            style: TextStyle(
+                color: primaryColor, fontSize: 14, fontWeight: FontWeight.w700),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+>>>>>>> main
       ),
     );
   }
@@ -406,14 +511,22 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
     ];*/
 
     for (int i = 0; i < records.length; i++) {
+<<<<<<< HEAD
       data.add(TimeSeriesSales(
           DateTime.parse(records.elementAt(i).recordDate).toLocal(),
+=======
+      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
+>>>>>>> main
           double.parse(records.elementAt(i).pulse.toString())));
     }
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
+<<<<<<< HEAD
         id: 'PULSE',
+=======
+        id: 'vitals',
+>>>>>>> main
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -576,6 +689,10 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
       map['Pulse'] = _controller.text.toString();
       map['PatientUserId'] = "";
       map['Unit'] = "bpm";
+<<<<<<< HEAD
+=======
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+>>>>>>> main
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse = await model.addMyVitals('pulse', map);

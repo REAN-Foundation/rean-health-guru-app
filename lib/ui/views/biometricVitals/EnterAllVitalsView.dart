@@ -99,7 +99,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                             child: CircularProgressIndicator())
                         : Semantics(
                             label: 'Save',
+<<<<<<< HEAD
                             button: true,
+=======
+>>>>>>> main
                             child: InkWell(
                               onTap: () {
                                 toastDisplay = true;
@@ -142,6 +145,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                   addTemperatureVitals();
                                 }
                               },
+<<<<<<< HEAD
                               child: ExcludeSemantics(
                                 child: Container(
                                     height: 40,
@@ -166,6 +170,30 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                       ),
                                     )),
                               ),
+=======
+                              child: Container(
+                                  height: 40,
+                                  width: 200,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(24.0),
+                                    border: Border.all(
+                                        color: primaryColor, width: 1),
+                                    color: primaryColor,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Save',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 14),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )),
+>>>>>>> main
                             ),
                           ),
                   ),
@@ -183,7 +211,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   Widget weightFeilds() {
     return Card(
+<<<<<<< HEAD
       semanticContainer: false,
+=======
+>>>>>>> main
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -237,7 +268,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
+<<<<<<< HEAD
                       label: 'Weight measures in ' + unit,
+=======
+                      label: 'weight',
+>>>>>>> main
                       child: TextFormField(
                           controller: _weightController,
                           focusNode: _weightFocus,
@@ -250,7 +285,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
+<<<<<<< HEAD
                                 RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+=======
+                                RegExp('[\\,|\\+|\\-]')),
+>>>>>>> main
                           ],
                           decoration: InputDecoration(
                               hintText: unit == 'lbs'
@@ -276,7 +315,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   Widget bloodPresureFeilds() {
     return Card(
+<<<<<<< HEAD
       semanticContainer: false,
+=======
+>>>>>>> main
       elevation: 8,
       child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -352,11 +394,19 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           border: Border.all(color: primaryColor, width: 1),
                           color: Colors.white),
                       child: Semantics(
+<<<<<<< HEAD
                         label: 'Systolic measures in mm Hg',
                         child: TextFormField(
                             inputFormatters: [
                               FilteringTextInputFormatter.deny(
                                   RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+=======
+                        label: 'Systolic',
+                        child: TextFormField(
+                            inputFormatters: [
+                              FilteringTextInputFormatter.deny(
+                                  RegExp('[\\,|\\+|\\-]')),
+>>>>>>> main
                             ],
                             controller: _systolicController,
                             focusNode: _systolicFocus,
@@ -391,7 +441,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           border: Border.all(color: primaryColor, width: 1),
                           color: Colors.white),
                       child: Semantics(
+<<<<<<< HEAD
                         label: 'Diastolic measures in mm Hg',
+=======
+                        label: 'diastolic',
+>>>>>>> main
                         child: TextFormField(
                             controller: _diastolicController,
                             focusNode: _diastolicFocus,
@@ -399,7 +453,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                             textInputAction: TextInputAction.next,
                             inputFormatters: [
                               FilteringTextInputFormatter.deny(
+<<<<<<< HEAD
                                   RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+=======
+                                  RegExp('[\\,|\\+|\\-]')),
+>>>>>>> main
                             ],
                             keyboardType: TextInputType.number,
                             onFieldSubmitted: (term) {
@@ -528,7 +586,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   Widget bloodGlucoseFeilds() {
     return Card(
+<<<<<<< HEAD
       semanticContainer: false,
+=======
+>>>>>>> main
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -582,7 +643,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
+<<<<<<< HEAD
                       label: 'Blood Glucose measures in mg/dl',
+=======
+                      label: 'blood_glucose',
+>>>>>>> main
                       child: TextFormField(
                           focusNode: _bloodGlucoseFocus,
                           controller: _bloodGlucosecontroller,
@@ -595,7 +660,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
+<<<<<<< HEAD
                                 RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+=======
+                                RegExp('[\\,|\\+|\\-]')),
+>>>>>>> main
                           ],
                           decoration: InputDecoration(
                               hintText: '(100 to 125)',
@@ -619,7 +688,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   Widget bloodOxygenSaturationFeilds() {
     return Card(
+<<<<<<< HEAD
       semanticContainer: false,
+=======
+>>>>>>> main
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -673,7 +745,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
+<<<<<<< HEAD
                       label: 'Blood oxygen Saturation messures in % ',
+=======
+                      label: 'blood_oxygen_saturation',
+>>>>>>> main
                       child: TextFormField(
                           focusNode: _bloodOxygenSaturationFocus,
                           controller: _bloodOxygenSaturationController,
@@ -686,7 +762,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
+<<<<<<< HEAD
                                 RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+=======
+                                RegExp('[\\,|\\+|\\-]')),
+>>>>>>> main
                           ],
                           decoration: InputDecoration(
                               hintText: '(92 to 100)',
@@ -710,7 +790,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   Widget pulseRateFeilds() {
     return Card(
+<<<<<<< HEAD
       semanticContainer: false,
+=======
+>>>>>>> main
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -764,7 +847,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
+<<<<<<< HEAD
                       label: 'Pulse rate measures in bpm',
+=======
+                      label: 'pulse_rate',
+>>>>>>> main
                       child: TextFormField(
                           focusNode: _pulseRateFocus,
                           controller: _pulseRateController,
@@ -777,7 +864,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
+<<<<<<< HEAD
                                 RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+=======
+                                RegExp('[\\,|\\+|\\-]')),
+>>>>>>> main
                           ],
                           decoration: InputDecoration(
                               hintText: '(65 to 95)',
@@ -799,7 +890,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   Widget bodyTempratureFeilds() {
     return Card(
+<<<<<<< HEAD
       semanticContainer: false,
+=======
+>>>>>>> main
       elevation: 8,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -852,7 +946,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: Semantics(
+<<<<<<< HEAD
                       label: 'Body Temprature messures in °F',
+=======
+                      label: 'body_temperature',
+>>>>>>> main
                       child: TextFormField(
                           focusNode: _bodyTempratureFocus,
                           controller: _bodyTempratureController,
@@ -862,7 +960,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           onFieldSubmitted: (term) {},
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
+<<<<<<< HEAD
                                 RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+=======
+                                RegExp('[\\,|\\+|\\-]')),
+>>>>>>> main
                           ],
                           decoration: InputDecoration(
                               hintText: '(95 to 100)',
@@ -907,9 +1009,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
+<<<<<<< HEAD
       } else {
         showToast(baseResponse.message, context);
       }
+=======
+      } else {}
+>>>>>>> main
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -924,6 +1030,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       map['Diastolic'] = _diastolicController.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "mmHg";
+<<<<<<< HEAD
+=======
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+>>>>>>> main
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
@@ -931,9 +1041,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
+<<<<<<< HEAD
       } else {
         showToast(baseResponse.message, context);
       }
+=======
+      } else {}
+>>>>>>> main
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -947,6 +1061,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       map['BloodGlucose'] = _bloodGlucosecontroller.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "mg|dL";
+<<<<<<< HEAD
+=======
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+>>>>>>> main
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
@@ -954,9 +1072,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
+<<<<<<< HEAD
       } else {
         showToast(baseResponse.message, context);
       }
+=======
+      } else {}
+>>>>>>> main
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -971,6 +1093,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
           _bloodOxygenSaturationController.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "%";
+<<<<<<< HEAD
+=======
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+>>>>>>> main
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
@@ -978,9 +1104,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
+<<<<<<< HEAD
       } else {
         showToast(baseResponse.message, context);
       }
+=======
+      } else {}
+>>>>>>> main
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -994,15 +1124,23 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       map['Pulse'] = _pulseRateController.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "bpm";
+<<<<<<< HEAD
+=======
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+>>>>>>> main
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse = await model.addMyVitals('pulse', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
+<<<<<<< HEAD
       } else {
         showToast(baseResponse.message, context);
       }
+=======
+      } else {}
+>>>>>>> main
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -1016,6 +1154,10 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       map['BodyTemperature'] = _bodyTempratureController.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "Celsius";
+<<<<<<< HEAD
+=======
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+>>>>>>> main
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
@@ -1024,9 +1166,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         //showToast('Record added successfully');
         clearAllFeilds();
+<<<<<<< HEAD
       } else {
         showToast(baseResponse.message, context);
       }
+=======
+      } else {}
+>>>>>>> main
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);

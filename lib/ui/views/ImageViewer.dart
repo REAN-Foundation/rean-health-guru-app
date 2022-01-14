@@ -34,10 +34,14 @@ class ImageViewer extends StatelessWidget {
         actions: <Widget>[
           if (Platform.isAndroid)
             IconButton(
+<<<<<<< HEAD
               icon: Icon(
                 Icons.share,
                 semanticLabel: 'Share',
               ),
+=======
+              icon: Icon(Icons.share),
+>>>>>>> main
               onPressed: () {
                 urlFileShare();
               },
@@ -48,10 +52,14 @@ class ImageViewer extends StatelessWidget {
       ),
       body: Container(
           child: PhotoView.customChild(
+<<<<<<< HEAD
         child: Image.file(
           file,
           semanticLabel: fileName,
         ),
+=======
+        child: Image.file(file),
+>>>>>>> main
         //imageProvider: NetworkImage(path),
       )),
     );

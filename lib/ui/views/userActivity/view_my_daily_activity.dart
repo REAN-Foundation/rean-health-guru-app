@@ -470,6 +470,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
             SizedBox(
               height: 16,
             ),
+<<<<<<< HEAD
             Semantics(
               label: totalCalories.toStringAsFixed(0) + ' Calories',
               child: ExcludeSemantics(
@@ -495,6 +496,28 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   ],
                 ),
               ),
+=======
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  totalCalories.toStringAsFixed(0),
+                  semanticsLabel: totalCalories.toStringAsFixed(0),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 28.0,
+                      color: primaryColor),
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  'Cal',
+                  style: TextStyle(fontSize: 14.0, color: Colors.black87),
+                ),
+              ],
+>>>>>>> main
             ),
           ],
         ),
@@ -688,7 +711,11 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                         Expanded(flex: bmiLeftSideValue, child: Container()),
                         Expanded(
                             flex: 2,
+<<<<<<< HEAD
                             child: ImageIcon(
+=======
+                          child: ImageIcon(
+>>>>>>> main
                                 AssetImage('res/images/triangle.png'))),
                         Expanded(flex: bmiRightSideValue, child: Container())
                       ],
@@ -696,10 +723,14 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   ),
                   Container(
                       width: MediaQuery.of(context).size.width,
+<<<<<<< HEAD
                       child: Image.asset(
                         'res/images/bmi_scale.png',
                         semanticLabel: 'BMI scale',
                       )),
+=======
+                      child: Image.asset('res/images/bmi_scale.png')),
+>>>>>>> main
                 ],
               )
             else
@@ -930,6 +961,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+<<<<<<< HEAD
                   ExcludeSemantics(
                     child: IconButton(
                       icon: Icon(
@@ -938,6 +970,14 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       ),
                       onPressed: () {},
                     ),
+=======
+                  IconButton(
+                    icon: Icon(
+                      Icons.close,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {},
+>>>>>>> main
                   ),
                   Expanded(
                     flex: 8,
@@ -955,6 +995,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       ),
                     ),
                   ),
+<<<<<<< HEAD
                   IconButton(
                     alignment: Alignment.topRight,
                     icon: Icon(
@@ -965,6 +1006,21 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                     onPressed: () {
                       Navigator.of(context, rootNavigator: true).pop();
                     },
+=======
+                  Semantics(
+                    label: 'Close',
+                    child: IconButton(
+                      alignment: Alignment.topRight,
+                      icon: Icon(
+                        Icons.close,
+                        color: primaryColor,
+                      ),
+                      tooltip: 'Close',
+                      onPressed: () {
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
+                    ),
+>>>>>>> main
                   ),
                 ],
               ),

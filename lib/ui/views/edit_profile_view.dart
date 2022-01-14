@@ -205,8 +205,12 @@ class _EditProfileState extends State<EditProfile> {
               brightness: Brightness.light,
               backgroundColor: Colors.white,
               title: Text(
+<<<<<<< HEAD
                 isEditable ? 'Edit Profile' : 'View Profile',
                 semanticsLabel: isEditable ? 'Edit Profile' : 'View Profile',
+=======
+                'Edit Profile',
+>>>>>>> main
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
@@ -241,12 +245,19 @@ class _EditProfileState extends State<EditProfile> {
             floatingActionButton: Visibility(
               visible: !isEditable,
               child: Semantics(
+<<<<<<< HEAD
                 label: 'Edit profile',
                 button: true,
                 child: FloatingActionButton(
                   backgroundColor: primaryColor,
                   foregroundColor: Colors.white,
                   tooltip: 'Edit profile',
+=======
+                label: 'edit_profile',
+                child: FloatingActionButton(
+                  backgroundColor: primaryColor,
+                  foregroundColor: Colors.white,
+>>>>>>> main
                   mini: false,
                   onPressed: () {
                     isEditable = true;
@@ -432,6 +443,7 @@ class _EditProfileState extends State<EditProfile> {
                   alignment: Alignment.topRight,
                   child: Visibility(
                     visible: isEditable,
+<<<<<<< HEAD
                     child: Semantics(
                       label: 'Add profile picture',
                       button: true,
@@ -454,6 +466,25 @@ class _EditProfileState extends State<EditProfile> {
                             width: 32,
                           )),
                     ),
+=======
+                    child: InkWell(
+                        onTap: () {
+                          showMaterialModalBottomSheet(
+                              isDismissible: true,
+                              backgroundColor: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(25.0)),
+                              ),
+                              context: context,
+                              builder: (context) => _uploadImageSelector());
+                          //getFile();
+                        },
+                        child: SizedBox(
+                            height: 32,
+                            width: 32,
+                            child: Image.asset('res/images/ic_camera.png'))),
+>>>>>>> main
                   ),
                 )
               ],
@@ -496,6 +527,7 @@ class _EditProfileState extends State<EditProfile> {
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(8)),
               border: Border.all(
+<<<<<<< HEAD
                 color: textGrey,
                 width: 1.0,
               ),
@@ -522,6 +554,31 @@ class _EditProfileState extends State<EditProfile> {
                       fillColor: Colors.white,
                       filled: true)),
             ),
+=======
+                color: Colors.black26,
+                width: 1.0,
+              ),
+            ),
+            child: TextFormField(
+                textCapitalization: TextCapitalization.sentences,
+                obscureText: isPassword,
+                controller: _firstNameController,
+                focusNode: _firstNameFocus,
+                maxLines: 1,
+                keyboardType: TextInputType.name,
+                enabled: false,
+                style: TextStyle(
+                  color: Colors.black26,
+                ),
+                textInputAction: TextInputAction.next,
+                onFieldSubmitted: (term) {
+                  _fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
+                },
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Colors.white,
+                    filled: true)),
+>>>>>>> main
           )
         ],
       ),
@@ -547,6 +604,7 @@ class _EditProfileState extends State<EditProfile> {
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(8)),
               border: Border.all(
+<<<<<<< HEAD
                 color: textGrey,
                 width: 1.0,
               ),
@@ -574,6 +632,32 @@ class _EditProfileState extends State<EditProfile> {
                       fillColor: Colors.white,
                       filled: true)),
             ),
+=======
+                color: Colors.black26,
+                width: 1.0,
+              ),
+            ),
+            child: TextFormField(
+                textCapitalization: TextCapitalization.sentences,
+                obscureText: isPassword,
+                controller: _lastNameController,
+                focusNode: _lastNameFocus,
+                keyboardType: TextInputType.name,
+                enabled: false,
+                style: TextStyle(
+                  color: Colors.black26,
+                ),
+                maxLines: 1,
+                textInputAction: TextInputAction.next,
+                onFieldSubmitted: (term) {
+                  _fieldFocusChange(
+                      context, _lastNameFocus, _mobileNumberFocus);
+                },
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Colors.white,
+                    filled: true)),
+>>>>>>> main
           )
         ],
       ),
@@ -606,6 +690,7 @@ class _EditProfileState extends State<EditProfile> {
                 width: 1.0,
               ),
             ),
+<<<<<<< HEAD
             child: Semantics(
               label: 'City ' + _cityController.text.toString(),
               textField: isEditable,
@@ -628,6 +713,24 @@ class _EditProfileState extends State<EditProfile> {
                         filled: true)),
               ),
             ),
+=======
+            child: TextFormField(
+                textCapitalization: TextCapitalization.sentences,
+                obscureText: isPassword,
+                controller: _cityController,
+                focusNode: _cityFocus,
+                keyboardType: TextInputType.streetAddress,
+                maxLines: 1,
+                enabled: isEditable,
+                textInputAction: TextInputAction.done,
+                onFieldSubmitted: (term) {
+                  //_fieldFocusChange(context, _cityFocus, _addressFocus);
+                },
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Colors.white,
+                    filled: true)),
+>>>>>>> main
           )
         ],
       ),
@@ -660,6 +763,7 @@ class _EditProfileState extends State<EditProfile> {
                 width: 1.0,
               ),
             ),
+<<<<<<< HEAD
             child: Semantics(
               label: 'Country ' + _countryController.text.toString(),
               textField: isEditable,
@@ -682,6 +786,24 @@ class _EditProfileState extends State<EditProfile> {
                         filled: true)),
               ),
             ),
+=======
+            child: TextFormField(
+                textCapitalization: TextCapitalization.sentences,
+                obscureText: isPassword,
+                controller: _countryController,
+                focusNode: _countryFocus,
+                keyboardType: TextInputType.streetAddress,
+                maxLines: 1,
+                enabled: isEditable,
+                textInputAction: TextInputAction.done,
+                onFieldSubmitted: (term) {
+                  //_fieldFocusChange(context, _cityFocus, _addressFocus);
+                },
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Colors.white,
+                    filled: true)),
+>>>>>>> main
           )
         ],
       ),
@@ -715,6 +837,7 @@ class _EditProfileState extends State<EditProfile> {
                 width: 1.0,
               ),
             ),
+<<<<<<< HEAD
             child: Semantics(
               label: 'Postal Code ' +
                   _postalCodeController.text.toString().replaceAllMapped(
@@ -739,6 +862,24 @@ class _EditProfileState extends State<EditProfile> {
                         filled: true)),
               ),
             ),
+=======
+            child: TextFormField(
+                textCapitalization: TextCapitalization.sentences,
+                obscureText: isPassword,
+                controller: _postalCodeController,
+                focusNode: _postalFocus,
+                keyboardType: TextInputType.number,
+                maxLines: 1,
+                enabled: isEditable,
+                textInputAction: TextInputAction.done,
+                onFieldSubmitted: (term) {
+                  //_fieldFocusChange(context, _cityFocus, _addressFocus);
+                },
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Colors.white,
+                    filled: true)),
+>>>>>>> main
           )
         ],
       ),
@@ -771,6 +912,7 @@ class _EditProfileState extends State<EditProfile> {
                 width: 1.0,
               ),
             ),
+<<<<<<< HEAD
             child: Semantics(
               label: 'Address ' + _addressController.text.toString(),
               textField: isEditable,
@@ -793,6 +935,24 @@ class _EditProfileState extends State<EditProfile> {
                         filled: true)),
               ),
             ),
+=======
+            child: TextFormField(
+                textCapitalization: TextCapitalization.sentences,
+                obscureText: isPassword,
+                controller: _addressController,
+                focusNode: _addressFocus,
+                keyboardType: TextInputType.streetAddress,
+                maxLines: 1,
+                enabled: isEditable,
+                textInputAction: TextInputAction.next,
+                onFieldSubmitted: (term) {
+                  _fieldFocusChange(context, _addressFocus, _cityFocus);
+                },
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Colors.white,
+                    filled: true)),
+>>>>>>> main
           )
         ],
       ),
@@ -826,6 +986,7 @@ class _EditProfileState extends State<EditProfile> {
                 width: 1.0,
               ),
             ),
+<<<<<<< HEAD
             child: Semantics(
               label: "Email " + _emailController.text.toString(),
               textField: isEditable,
@@ -846,6 +1007,23 @@ class _EditProfileState extends State<EditProfile> {
                         filled: true)),
               ),
             ),
+=======
+            child: TextFormField(
+                controller: _emailController,
+                focusNode: _emailFocus,
+                keyboardType: TextInputType.emailAddress,
+                maxLines: 1,
+                textInputAction: TextInputAction.next,
+                onFieldSubmitted: (term) {
+                  _fieldFocusChange(
+                      context, _emailFocus, _addressFocus);
+                },
+                enabled: isEditable,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Colors.white,
+                    filled: true)),
+>>>>>>> main
           )
         ],
       ),
@@ -872,12 +1050,20 @@ class _EditProfileState extends State<EditProfile> {
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(8)),
               border: Border.all(
+<<<<<<< HEAD
                 color: textGrey,
+=======
+                color: Colors.black26,
+>>>>>>> main
                 width: 1.0,
               ),
             ),
             child:
+<<<<<<< HEAD
             /*Row(
+=======
+                /*Row(
+>>>>>>> main
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
@@ -885,7 +1071,11 @@ class _EditProfileState extends State<EditProfile> {
                     child: Text(
                       "+91",
                       style: TextStyle(
+<<<<<<< HEAD
                           fontWeight: FontWeight.normal, fontSize: 16, color: textGrey,),
+=======
+                          fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black26,),
+>>>>>>> main
                     ),
                   ),
                   SizedBox(width: 8,),
@@ -901,7 +1091,11 @@ class _EditProfileState extends State<EditProfile> {
                           */ /*_fieldFocusChange(
                               context, _mobileNumberFocus, _passwordFocus);*/ /*
                         },
+<<<<<<< HEAD
                         style: TextStyle(color: textGrey,),
+=======
+                        style: TextStyle(color: Colors.black26,),
+>>>>>>> main
                         maxLines: 1,
                         decoration: InputDecoration(
                             counterText: "",
@@ -926,7 +1120,11 @@ class _EditProfileState extends State<EditProfile> {
                 keyboardAction: TextInputAction.next,
                 focusNode: _mobileNumberFocus,
                 textStyle:
+<<<<<<< HEAD
                     TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: textGrey),
+=======
+                    TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black26),
+>>>>>>> main
                 textFieldController: _mobileNumberController,
                 isEnabled: false,
                 formatInput: true,
@@ -954,6 +1152,7 @@ class _EditProfileState extends State<EditProfile> {
               )*/
 
                 Padding(
+<<<<<<< HEAD
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Semantics(
                 label:
@@ -978,6 +1177,28 @@ class _EditProfileState extends State<EditProfile> {
                         border: InputBorder.none,
                         filled: false)),
               ),
+=======
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: TextFormField(
+                  controller: _mobileNumberController,
+                  focusNode: _mobileNumberFocus,
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.next,
+                  maxLength: 10,
+                  enabled: false,
+                  onFieldSubmitted: (term) {
+                    /*_fieldFocusChange(
+                                        context, _mobileNumberFocus, _passwordFocus);*/
+                  },
+                  style: TextStyle(
+                    color: Colors.black26,
+                  ),
+                  maxLines: 1,
+                  decoration: InputDecoration(
+                      counterText: '',
+                      border: InputBorder.none,
+                      filled: false)),
+>>>>>>> main
             ),
 
             /*IntlPhoneField(
@@ -988,7 +1209,11 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ),*/ /*
                 readOnly: true,
+<<<<<<< HEAD
                 style: TextStyle(fontSize: 16, color: textGrey),
+=======
+                style: TextStyle(fontSize: 16, color: Colors.black26),
+>>>>>>> main
                 autoValidate: true,
                 enabled: false,
                 controller: _mobileNumberController,
@@ -1296,6 +1521,7 @@ class _EditProfileState extends State<EditProfile> {
                 onPressed: () async {
                   if (_emailController.text.toString() == '') {
                     showToast('Please enter email', context);
+<<<<<<< HEAD
                   } else if (!_emailController.text.toString().isValidEmail()) {
                     showToast('Please enter valid email', context);
                   } else if (_addressController.text.toString().trim() == '') {
@@ -1303,6 +1529,13 @@ class _EditProfileState extends State<EditProfile> {
                   } else if (_cityController.text.toString().trim() == '') {
                     showToast('Please enter city', context);
                   } else if (_countryController.text.toString().trim() == '') {
+=======
+                  } else if (_addressController.text.toString() == '') {
+                    showToast('Please enter address', context);
+                  } else if (_cityController.text.toString() == '') {
+                    showToast('Please enter city', context);
+                  } else if (_countryController.text.toString() == '') {
+>>>>>>> main
                     showToast('Please enter country', context);
                   }
                   /*else if (_postalCodeController.text.toString() == '') {
@@ -1319,12 +1552,22 @@ class _EditProfileState extends State<EditProfile> {
                     map['MiddleName'] = _middleNameController.text;
                     map['LastName'] = _lastNameController.text;
                     final address = <String, String>{};
+<<<<<<< HEAD
                     address['AddressLine'] = _addressController.text.trim();
                     address['City'] = _cityController.text.trim();
                     address['Country'] = _countryController.text.trim();
                     address['PostalCode'] = _postalCodeController.text.isEmpty
                         ? null
                         : _postalCodeController.text.trim();
+=======
+                    address['AddressLine'] = _addressController.text;
+                    address['City'] = _cityController.text;
+                    address['Country'] = _countryController.text;
+                    address['PostalCode'] =
+                        _postalCodeController.text.isEmpty
+                        ? null
+                            : _postalCodeController.text;
+>>>>>>> main
                     map['Address'] = address;
 
                     //map['Locality'] = _cityController.text;
@@ -1500,6 +1743,7 @@ class _EditProfileState extends State<EditProfile> {
           SizedBox(
             height: 10,
           ),
+<<<<<<< HEAD
           Semantics(
             label: selectedGender,
             child: AbsorbPointer(
@@ -1526,6 +1770,31 @@ class _EditProfileState extends State<EditProfile> {
                       }
                     })),
           )
+=======
+          AbsorbPointer(
+              absorbing: !isEditable,
+              child: ToggleSwitch(
+                  minWidth: 120.0,
+                  cornerRadius: 20,
+                  initialLabelIndex: selectedGender == 'Male' ? 0 : 1,
+                  totalSwitches: 2,
+                  activeBgColor: [Colors.green],
+                  inactiveBgColor: Colors.grey,
+                  labels: ['Male', 'Female'],
+                  icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
+                  activeBgColors: [
+                    [Colors.blue],
+                    [Colors.pink]
+                  ],
+                  onToggle: (index) {
+                    debugPrint('switched to: $index');
+                    if (index == 0) {
+                      selectedGender = 'Male';
+                    } else {
+                      selectedGender = 'Female';
+                    }
+                  }))
+>>>>>>> main
         ],
       ),
     );
@@ -1544,9 +1813,13 @@ class _EditProfileState extends State<EditProfile> {
           SizedBox(
             height: 10,
           ),
+<<<<<<< HEAD
           Semantics(
             label: 'Date Of Birth ' + dob,
             readOnly: true,
+=======
+          GestureDetector(
+>>>>>>> main
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: 48.0,
@@ -1561,6 +1834,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+<<<<<<< HEAD
                 child: ExcludeSemantics(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -1585,6 +1859,45 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               ),
             ),
+=======
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        dob,
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16,
+                            color: Colors.black26),
+                      ),
+                    ),
+                    SizedBox(
+                        height: 32,
+                        width: 32,
+                        child: ImageIcon(
+                            AssetImage('res/images/ic_calender.png'),
+                            color: Colors.black12)),
+                  ],
+                ),
+              ),
+            ),
+            onTap: () {
+              /*DatePicker.showDatePicker(context,
+                  showTitleActions: true,
+                  minTime: DateTime(1940, 1, 1),
+                  maxTime: DateTime.now().subtract(Duration(days: 1)),
+                  onChanged: (date) {
+                    debugPrint('change $date');
+              }, onConfirm: (date) {
+                    unformatedDOB = date.toIso8601String();
+                setState(() {
+                  dob = dateFormat.format(date);
+                });
+                debugPrint('confirm $date');
+              }, currentTime: DateTime.now(), locale: LocaleType.en);*/
+            },
+>>>>>>> main
           ),
         ],
       ),
@@ -1779,6 +2092,7 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   openGallery() async {
+<<<<<<< HEAD
     //getFile();
     final picture = await _picker.pickImage(
       source: ImageSource.gallery,
@@ -1788,6 +2102,9 @@ class _EditProfileState extends State<EditProfile> {
     final String fileName = file.path.split('/').last;
     debugPrint('File Name ==> $fileName');
     uploadProfilePicture(file);
+=======
+    getFile();
+>>>>>>> main
   }
 
   openCamera() async {

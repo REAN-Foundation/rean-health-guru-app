@@ -145,7 +145,11 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                 (dummyNumberList.contains(mobileNumber)
                     ? mobileNumber
                     : countryCodeGlobe + '-' + mobileNumber),
+<<<<<<< HEAD
             style: TextStyle(fontSize: 14, color: textGrey),
+=======
+            style: TextStyle(fontSize: 14, color: Colors.grey),
+>>>>>>> main
           ),
           SizedBox(
             height: 8,
@@ -173,7 +177,11 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             children: [
               Text(
                 '  Didn’t received OTP?',
+<<<<<<< HEAD
                 style: TextStyle(fontSize: 14, color: textGrey),
+=======
+                style: TextStyle(fontSize: 14, color: Colors.grey),
+>>>>>>> main
               ),
               if (loginOTP)
                 SizedBox(
@@ -183,6 +191,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                   onTap: () {
                     generateOTPForExistingUser(model);
                   },
+<<<<<<< HEAD
                   child: Semantics(
                     label: 'Resend OTP?',
                     button: true,
@@ -195,6 +204,14 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                             fontWeight: FontWeight.w700),
                       ),
                     ),
+=======
+                  child: Text(
+                    'Resend OTP?',
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: primaryColor,
+                        fontWeight: FontWeight.w700),
+>>>>>>> main
                   ),
                 ),
             ],
@@ -206,8 +223,12 @@ class _OTPScreenViewState extends State<OTPScreenView> {
 
   Widget _submitOTPButton(LoginViewModel model) {
     return Semantics(
+<<<<<<< HEAD
       label: 'Submit',
       button: true,
+=======
+      label: 'getOTP',
+>>>>>>> main
       child: SizedBox(
         width: 160,
         height: 40,
@@ -373,7 +394,11 @@ class _OTPScreenViewState extends State<OTPScreenView> {
 
       if (doctorListApiResponse.status == 'success') {
         if (getAppType() == 'AHA') {
+<<<<<<< HEAD
           showToast('Welcome to HF Helper', context);
+=======
+          showToast('Welcome to AHA-CHF', context);
+>>>>>>> main
         } else {
           showToast('Welcome to REAN HealthGuru', context);
         }

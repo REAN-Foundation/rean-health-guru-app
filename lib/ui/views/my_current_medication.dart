@@ -24,7 +24,11 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   var timeFormat = DateFormat('hh:mm a');
+<<<<<<< HEAD
   List<Items> currentMedicationList = <Items>[];
+=======
+  List<CurrentMedications> currentMedicationList = <CurrentMedications>[];
+>>>>>>> main
   ProgressDialog progressDialog;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
@@ -41,8 +45,12 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       debugPrint('Medication ==> ${currentMedication.toJson()}');
       if (currentMedication.status == 'success') {
         currentMedicationList.clear();
+<<<<<<< HEAD
         filterData(currentMedication.data.medications.items);
         //currentMedicationList.addAll(currentMedication.data.medications.items);
+=======
+        currentMedicationList.addAll(currentMedication.data.currentMedications);
+>>>>>>> main
       } else {
         showToast(currentMedication.message, context);
       }
@@ -53,6 +61,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
     }
   }
 
+<<<<<<< HEAD
   filterData(List<Items> medicationList) {
     for (int i = 0; i < medicationList.length; i++) {
       if (medicationList.elementAt(i).endDate.isAfter(DateTime.now())) {
@@ -63,6 +72,8 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
     setState(() {});
   }
 
+=======
+>>>>>>> main
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context);
@@ -72,6 +83,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
         child: Scaffold(
             key: _scaffoldKey,
             backgroundColor: Colors.white,
+<<<<<<< HEAD
             body: Padding(
               padding: EdgeInsets.all(16.0),
               child: model.busy
@@ -91,6 +103,30 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
               child: FloatingActionButton(
                   elevation: 0.0,
                   tooltip: 'Add new medication',
+=======
+            body: Semantics(
+              label: 'Returns no medication found if medical list empty',
+              enabled: true,
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: model.busy
+                    ? Center(
+                        child: SizedBox(
+                            height: 32,
+                            width: 32,
+                            child: CircularProgressIndicator()))
+                    : (currentMedicationList.isEmpty
+                        ? noMedicationFound()
+                        : listWidget()),
+              ),
+            ),
+            floatingActionButton: Semantics(
+              label: 'add_my_medication',
+              container: true,
+              child: FloatingActionButton(
+                  elevation: 0.0,
+                  tooltip: 'add_my_medication',
+>>>>>>> main
                   child: Icon(
                     Icons.add,
                     color: Colors.white,
@@ -132,7 +168,12 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   }
 
   Widget _makeMedicineCard(BuildContext context, int index) {
+<<<<<<< HEAD
     final Items medication = currentMedicationList.elementAt(index);
+=======
+    final CurrentMedications medication =
+        currentMedicationList.elementAt(index);
+>>>>>>> main
 
     return Card(
       semanticContainer: false,
@@ -153,6 +194,10 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Semantics(
+<<<<<<< HEAD
+=======
+                    label: medication.drugName,
+>>>>>>> main
                     child: Text(medication.drugName,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -209,7 +254,11 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
               Expanded(
                 flex: 1,
                 child: Semantics(
+<<<<<<< HEAD
                   label: 'Medication ',
+=======
+                  label: 'medication_image',
+>>>>>>> main
                   child: CachedNetworkImage(
                     imageUrl: apiProvider.getBaseUrl() +
                         '/file-resources/' +

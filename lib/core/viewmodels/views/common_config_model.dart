@@ -148,6 +148,7 @@ class CommonConfigModel extends BaseModel {
     // Convert and return
     return BaseResponse.fromJson(response);
   }
+<<<<<<< HEAD
 
   Future<BaseResponse> recordDailyCheckIn(Map body) async {
     // Get user profile for id
@@ -164,4 +165,6 @@ class CommonConfigModel extends BaseModel {
     // Convert and return
     return BaseResponse.fromJson(response);
   }
+=======
+>>>>>>> main
 }

@@ -2,10 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl_phone_field/countries.dart';
+=======
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
+>>>>>>> main
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paitent/core/models/UploadImageResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
@@ -34,18 +39,27 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
   var model = PatientCarePlanViewModel();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
+<<<<<<< HEAD
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileNumberController = TextEditingController();
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _emailFocus = FocusNode();
+=======
+
+  final _firstNameFocus = FocusNode();
+  final _lastNameFocus = FocusNode();
+>>>>>>> main
   final _mobileNumberFocus = FocusNode();
   String profileImage = '';
   String profileImagePath = '';
   String selectedGender = 'Male';
   String mobileNumber = '';
   String countryCode = '';
+<<<<<<< HEAD
   int maxLengthOfPhone = 0;
+=======
+>>>>>>> main
 
   @override
   Widget build(BuildContext context) {
@@ -80,10 +94,16 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   //_profileIcon(),
+<<<<<<< HEAD
                   _entryFirstNameField('First Name*'),
                   _entryLastNameField('Last Name*'),
                   _entryEmailField('Email'),
                   _entryMobileNoField('Phone*'),
+=======
+                  _entryFirstNameField('First Name'),
+                  _entryLastNameField('Last Name'),
+                  _entryMobileNoField('Phone'),
+>>>>>>> main
                   _genderWidget(),
                   const SizedBox(
                     height: 32,
@@ -98,6 +118,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
     );
   }
 
+<<<<<<< HEAD
   bool emailValidation() {
      if (_emailController.text.toString().trim() != '' &&
         !_emailController.text.toString().isValidEmail()) {
@@ -143,12 +164,49 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
               RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
                   side: BorderSide(color: primaryColor)))),
+=======
+  Widget _submitButton(BuildContext context) {
+    return Semantics(
+      label: 'save doctor contacts button',
+      button: true,
+      onTap: () {},
+      child: ElevatedButton(
+        onPressed: () {
+          if (_firstNameController.text == '') {
+            showToast('Enter first name', context);
+          } else if (_lastNameController.text == '') {
+            showToast('Enter last name', context);
+          } else if (mobileNumber == '' || mobileNumber.length != 10) {
+            showToast('Enter mobile number', context);
+          } else if (selectedGender == '') {
+            showToast('Select gender', context);
+          } else {
+            widget._submitButtonListner(_firstNameController.text,
+                _lastNameController.text, mobileNumber, selectedGender);
+          }
+        },
+        child: Text(
+          '      Add       ',
+          style: TextStyle(
+              color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        style: ButtonStyle(
+            foregroundColor:
+                MaterialStateProperty.all<Color>(primaryLightColor),
+            backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                    side: BorderSide(color: primaryColor)))),
+      ),
+>>>>>>> main
     );
   }
 
   Widget _entryFirstNameField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
+<<<<<<< HEAD
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -167,14 +225,38 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                 color: Colors.white),
             child: Semantics(
               label: 'first name of doctor',
+=======
+      child: Semantics(
+        label: 'first name of doctor',
+        readOnly: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              title,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: primaryColor, width: 1),
+                  color: Colors.white),
+>>>>>>> main
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _firstNameController,
                   focusNode: _firstNameFocus,
                   maxLines: 1,
+<<<<<<< HEAD
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
                   ],
+=======
+>>>>>>> main
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (term) {
                     _fieldFocusChange(context, _firstNameFocus, _lastNameFocus);
@@ -183,9 +265,15 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                       border: InputBorder.none,
                       fillColor: Colors.white,
                       filled: true)),
+<<<<<<< HEAD
             ),
           )
         ],
+=======
+            )
+          ],
+        ),
+>>>>>>> main
       ),
     );
   }
@@ -193,6 +281,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
   Widget _entryLastNameField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
+<<<<<<< HEAD
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -211,22 +300,51 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                 color: Colors.white),
             child: Semantics(
               label: 'last name of doctor',
+=======
+      child: Semantics(
+        label: 'last name of doctor',
+        readOnly: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              title,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: primaryColor, width: 1),
+                  color: Colors.white),
+>>>>>>> main
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _lastNameController,
                   focusNode: _lastNameFocus,
                   maxLines: 1,
+<<<<<<< HEAD
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
                   ],
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (term) {
                     _fieldFocusChange(context, _lastNameFocus, _emailFocus);
+=======
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term) {
+                    _fieldFocusChange(
+                        context, _lastNameFocus, _mobileNumberFocus);
+>>>>>>> main
                   },
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       fillColor: Colors.white,
                       filled: true)),
+<<<<<<< HEAD
             ),
           )
         ],
@@ -278,6 +396,11 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
             ),
           )
         ],
+=======
+            )
+          ],
+        ),
+>>>>>>> main
       ),
     );
   }
@@ -294,7 +417,11 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
             ExcludeSemantics(
               excluding: true,
               child: Text(
+<<<<<<< HEAD
                 'Gender*',
+=======
+                'Gender',
+>>>>>>> main
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
@@ -331,6 +458,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
   Widget _entryMobileNoField(String title) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
+<<<<<<< HEAD
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -497,6 +625,164 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
         ),*/
               ),
         ],
+=======
+      child: Semantics(
+        label: 'Contact number of doctor',
+        readOnly: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              title,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+                padding: EdgeInsets.only(right: 8.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(color: primaryColor, width: 1),
+                    color: Colors.white),
+                child:
+                    /*Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0,0,0,0),
+                      child: Text(
+                        "+91",
+                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
+                      ),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                          controller: _mobileNumberController,
+                          focusNode: _mobileNumberFocus,
+                          keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.done,
+                          maxLength: 10,
+                          onFieldSubmitted: (term) {
+                            //_fieldFocusChange(context, _mobileNumberFocus, _descriptionFocus);
+                          },
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                              counterText: "",
+                              border: InputBorder.none,
+                              fillColor: Colors.white,
+                              filled: true)),
+                    )
+                  ],
+                )*/
+                    /*InternationalPhoneNumberInput(
+                  onInputChanged: (PhoneNumber number) {
+                    mobileNumber = number.parseNumber();
+                    debugPrint(number.parseNumber());
+                    if (mobileNumber.length == 10) {
+                      if(mobileNumber.length == 10){
+                        FocusScope.of(context).requestFocus(FocusNode());
+                      }
+                      //_fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
+                    }
+                    if (mobileNumber != number.parseNumber()) {
+                    } else {
+                      //dismissOtpWidget();
+                    }
+                  },
+                  keyboardAction: TextInputAction.next,
+                  focusNode: _mobileNumberFocus,
+                  */ /*textStyle:
+                  TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black26),*/ /*
+                  textFieldController: _mobileNumberController,
+                  isEnabled: true,
+                  formatInput: true,
+                  ignoreBlank: true,
+                  onFieldSubmitted: (term) {
+                    //_fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
+                  },
+                  selectorConfig: SelectorConfig(
+                      useEmoji: true,
+                      showFlags: true,
+                      backgroundColor: Colors.white,
+                      setSelectorButtonAsPrefixIcon: true,
+                      selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
+                  initialValue: PhoneNumber(isoCode: details.alpha2Code),
+                  inputDecoration: InputDecoration(
+                    //filled: true,
+                    //fillColor: Color(0xFFFFFFFF),
+
+                  //hintText: 'Mobile Number',
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(0.0)),
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(0.0)),
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                ),
+              )*/
+                    IntlPhoneField(
+                  /*decoration: InputDecoration(
+                    labelText: 'Phone Number',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(),
+                    ),
+                  ),*/
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  autoValidate: true,
+                  decoration: InputDecoration(
+                      counterText: '',
+                      hintText: 'mobile_number',
+                      hintStyle: TextStyle(color: Colors.transparent),
+                      border: InputBorder.none,
+                      fillColor: Colors.white,
+                      filled: true),
+                  initialCountryCode: getCurrentLocale(),
+                  onChanged: (phone) {
+                    debugPrint(phone.countryCode);
+                    debugPrint(phone.number);
+                    mobileNumber = phone.number;
+                    countryCode = phone.countryCode;
+                    /*if(mobileNumber.length == 10){
+                      _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
+                    }*/
+                  },
+                )
+                /*InternationalPhoneNumberInput
+              .withCustomDecoration(
+              onInputChanged: (PhoneNumber number) {
+                mobileNumber = number.toString().trim();
+                debugPrint(mobileNumber);
+
+                  if (mobileNumber != number.parseNumber()) {
+
+                  } else {
+                    //dismissOtpWidget();
+                  }
+
+              },
+              textFieldController: _mobileNumberController,
+              focusNode: _mobileNumberFocus,
+              onSubmit: () {
+                _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
+              },
+              keyboardAction: TextInputAction.next,
+              autoValidate: false,
+              formatInput: false,
+              selectorType:
+              PhoneInputSelectorType.BOTTOM_SHEET,
+              initialCountry2LetterCode: 'IN',
+              inputDecoration: InputDecoration(
+                  border: InputBorder.none,
+                  fillColor: Colors.white,
+                  filled: true)
+          ),*/
+                ),
+          ],
+        ),
+>>>>>>> main
       ),
     );
   }
@@ -546,9 +832,15 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
           if (uploadResponse.status == 'success') {
             profileImagePath = uploadResponse.data.details.elementAt(0).url;
             profileImage = uploadResponse.data.details.elementAt(0).url;
+<<<<<<< HEAD
             showToastMsg(uploadResponse.message, context);
           } else {
             showToastMsg('Opps, something wents wrong!', context);
+=======
+            showToast(uploadResponse.message, context);
+          } else {
+            showToast('Opps, something wents wrong!', context);
+>>>>>>> main
           }
         } else {
           debugPrint('Upload Faild !');
@@ -557,7 +849,11 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
 
     } catch (CustomException) {
       debugPrint('4');
+<<<<<<< HEAD
       showToastMsg(CustomException.toString(), context);
+=======
+      showToast(CustomException.toString(), context);
+>>>>>>> main
       debugPrint('Error ' + CustomException.toString());
     }
   }

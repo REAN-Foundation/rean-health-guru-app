@@ -5,6 +5,7 @@ import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 enum CoachMarkContentPosition { top, bottom }
 
 class CoachMarkUtilites {
+<<<<<<< HEAD
   TargetFocus getTargetFocus(
       GlobalKey key,
       String sequence,
@@ -12,6 +13,10 @@ class CoachMarkUtilites {
       String description,
       CoachMarkContentPosition coachMarkContentPosition,
       ShapeLightFocus shapeLightFocus) {
+=======
+  TargetFocus getTargetFocus(GlobalKey key, String sequence, String heading,
+      String description, CoachMarkContentPosition coachMarkContentPosition) {
+>>>>>>> main
     debugPrint('Target Sequence ==> ${'Target ' + sequence}');
     debugPrint('Coach Mark Content Position ==> $coachMarkContentPosition');
     return TargetFocus(
@@ -30,7 +35,10 @@ class CoachMarkUtilites {
                   padding: const EdgeInsets.only(bottom: 20.0),
                   child: Text(
                     heading,
+<<<<<<< HEAD
                     semanticsLabel: heading,
+=======
+>>>>>>> main
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -40,7 +48,10 @@ class CoachMarkUtilites {
                 Container(
                   child: Text(
                     description,
+<<<<<<< HEAD
                     semanticsLabel: description,
+=======
+>>>>>>> main
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.w100),
                   ),
@@ -48,7 +59,11 @@ class CoachMarkUtilites {
               ],
             )),
       ],
+<<<<<<< HEAD
       shape: shapeLightFocus,
+=======
+      shape: ShapeLightFocus.Circle,
+>>>>>>> main
     );
   }
 

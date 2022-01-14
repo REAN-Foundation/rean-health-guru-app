@@ -206,12 +206,20 @@ class _EditPatientMedicalProfileViewState
                       _sizedBoxHeight(),
 
                       _textFeilds(
+<<<<<<< HEAD
                           'Procedure History',
+=======
+                          'Procedure history',
+>>>>>>> main
                           _procedureHistoryController,
                           _procedureHistoryFocus,
                           _obstetricHistoryFocus),
                       _sizedBoxHeight(),
+<<<<<<< HEAD
                       Text('Marital Status',
+=======
+                      Text('Marital status',
+>>>>>>> main
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w700,
@@ -261,7 +269,11 @@ class _EditPatientMedicalProfileViewState
                     debugPrint(item.title);
                   },
                 ),*/
+<<<<<<< HEAD
                       Text('Is Smoker?',
+=======
+                      Text('Is smoker?',
+>>>>>>> main
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w700,

@@ -11,10 +11,16 @@ platform :ios do
     app_store_connect_api_key(
       key_id: ENV["APP_STORE_CONNECT_KEY_ID"],
       issuer_id: ENV["APP_STORE_CONNECT_ISSUER_ID"],
+<<<<<<< HEAD
       # key_filepath: "AuthKey_7RT93VJT72.p8"
       key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
       is_key_content_base64: true,
       duration: 200
+=======
+      key_content: ENV["APP_STORE_CONNECT_API_KEY_B64"],
+      is_key_content_base64: true,
+      in_house: false
+>>>>>>> main
     )
   end
 
@@ -60,11 +66,19 @@ platform :ios do
 
   desc "Install App Store Certificates and Profiles"
   lane :get_signing_profiles do |options|
+<<<<<<< HEAD
     # register_devices(
     #   devices_file: "./ios-devices.txt",
     #   api_key: get_api_key,
     #   platform: 'ios'
     # )
+=======
+    register_devices(
+      devices_file: "./ios-devices.txt",
+      api_key: get_api_key,
+      platform: 'ios'
+    )
+>>>>>>> main
     match(
       app_identifier: options[:identifier],
       api_key: get_api_key,
@@ -73,12 +87,24 @@ platform :ios do
     )
   end
 
+<<<<<<< HEAD
   lane :build_rf do |options|
     app_identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+=======
+  desc "Build the ipa file as per the flavor"
+  lane :build do |options|
+    app_identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+
+    # Choosing the app_identifier (App Store Bundle ID) based on the flavor type
+>>>>>>> main
     if(options[:flavor] != "prod")
       app_identifier = app_identifier + ".#{options[:flavor]}"
     end
 
+<<<<<<< HEAD
+=======
+    # Defining the Provisioning Profile type and the IPA export method based
+>>>>>>> main
     if(options[:flavor] == "prod" or (options[:flavor] == "uat" and options[:mode] == "release"))
       profile_type = "appstore"
       export_option = "app-store"
@@ -87,6 +113,7 @@ platform :ios do
       export_option = "ad-hoc"
     end
 
+<<<<<<< HEAD
     build(flavor: options[:flavor] , mode: options[:mode], app_identifier: app_identifier, profile_type: profile_type, export_option: export_option)
   end
 
@@ -110,6 +137,8 @@ platform :ios do
   desc "Build the ipa file as per the flavor"
   lane :build do |options|
 
+=======
+>>>>>>> main
     # Defning the XCode Configuration Profile type (ex: Debug-dev, Debug-uat, Release-uat, Release-prod)
     if(options[:mode] == "debug")
       config = "Debug-#{options[:flavor]}"
@@ -117,12 +146,20 @@ platform :ios do
       config = "Release-#{options[:flavor]}"
     end
 
+<<<<<<< HEAD
     get_signing_profiles(type: options[:profile_type] , identifier: options[:app_identifier])
+=======
+    get_signing_profiles(type: profile_type , identifier: app_identifier)
+>>>>>>> main
     gym(
       scheme: "#{options[:flavor]}",
       configuration: config,
       output_name: "RHG-APP-#{options[:mode]}-#{options[:flavor]}",
+<<<<<<< HEAD
       export_method: options[:export_option]
+=======
+      export_method: export_option
+>>>>>>> main
     )
   end
 
@@ -160,6 +197,7 @@ platform :ios do
     )
   end
 
+<<<<<<< HEAD
   lane :upload_build_to_testflight_rf do |options|
     upload_build_to_testflight(flavorId: options[:flavor] , mode: options[:mode], app_store_app_id:"1569585646", flavor: options[:flavor], changelog: "ReanCare Patient Test Build", description: "REAN Care Patient")
   end
@@ -175,6 +213,15 @@ platform :ios do
       testers_group = [ "Alpha Testers" ]
     else
       app_store_app_id = options[:app_store_app_id]
+=======
+  desc "Upload Build to TestFlight"
+  lane :upload_build_to_testflight do |options|
+    if options[:flavor] == 'uat'
+      app_store_app_id = '1569585646'
+      testers_group = [ "Alpha Testers" ]
+    else
+      app_store_app_id = '1567923095'
+>>>>>>> main
       testers_group = [ "Beta Testers" ]
     end
 
@@ -186,25 +233,48 @@ platform :ios do
         contact_phone: "7798074981",
         demo_account_name: ENV["IOS_DEMO_USER"],
         demo_account_password: ENV["IOS_DEMO_PASSWORD"],
+<<<<<<< HEAD
         notes: options[:changelog]
+=======
+        notes: "ReanCare Patient Test Build"
+>>>>>>> main
       },
       apple_id:app_store_app_id,
       ipa: "./output/build/RHG-APP-#{options[:mode]}-#{options[:flavor]}.ipa",
       api_key: get_api_key,
       skip_waiting_for_build_processing: true,
+<<<<<<< HEAD
       changelog: options[:changelog],
+=======
+      changelog: "ReanCare Patient Test Build",
+>>>>>>> main
       distribute_external: true,
       groups: testers_group,
       notify_external_testers: true,
       uses_non_exempt_encryption: true,
       beta_app_feedback_email: "support@reanfoundation.org",
+<<<<<<< HEAD
       beta_app_description: "#{options[:description]}-#{options[:flavor]}",
+=======
+      beta_app_description: "REAN Care Patient #{options[:flavor]}",
+>>>>>>> main
       demo_account_required: true
     )
   end
 
   desc "Submit to App Store"
   lane :submit_beta_to_app_store do
+<<<<<<< HEAD
+=======
+    current_version = get_version_number(
+      xcodeproj: "Runner.xcodeproj",
+      configuration: "Release",
+      target: "Runner"
+    )
+    current_build_number = get_build_number(
+      xcodeproj: "Runner.xcodeproj"
+    )
+>>>>>>> main
     upload_to_app_store(
       app_identifier: "org.reanfoundation.patient",
       precheck_include_in_app_purchases: false,
@@ -219,7 +289,13 @@ platform :ios do
         add_id_info_tracks_action: false,
         add_id_info_limits_tracking: false
       },
+<<<<<<< HEAD
       api_key: get_api_key
+=======
+      api_key: get_api_key,
+      app_version: current_version,
+      build_number: current_build_number
+>>>>>>> main
     )
   end
 

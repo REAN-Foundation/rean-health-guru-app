@@ -140,7 +140,11 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                         },
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(
+<<<<<<< HEAD
                               RegExp('[\\,|\\+|\\-|\\ ]')),
+=======
+                              RegExp('[\\,|\\+|\\-]')),
+>>>>>>> main
                         ],
                         decoration: InputDecoration(
                             hintText:
@@ -209,7 +213,11 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                         onFieldSubmitted: (term) {},
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(
+<<<<<<< HEAD
                               RegExp('[\\,|\\+|\\-|\\ ]')),
+=======
+                              RegExp('[\\,|\\+|\\-]')),
+>>>>>>> main
                         ],
                         decoration: InputDecoration(
                             hintText:
@@ -246,6 +254,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
       alignment: Alignment.center,
       child: ElevatedButton(
         onPressed: () {
+<<<<<<< HEAD
           if (_weightController.text.trim().isEmpty) {
             showToastMsg("Please enter your weight", context);
           } else if (double.parse(_weightController.text) > 999) {
@@ -253,6 +262,15 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
           } else if (_heightController.text.trim().isEmpty) {
             showToastMsg("Please enter your height", context);
           } else if (double.parse(_heightController.text) > 300) {
+=======
+          if (_weightController.text.isEmpty) {
+            showToastMsg("Please enter your weight", context);
+          } else if (_weightController.text.length > 4) {
+            showToastMsg("Please enter valid weight", context);
+          } else if (_heightController.text.isEmpty) {
+            showToastMsg("Please enter your height", context);
+          } else if (_heightController.text.length > 4) {
+>>>>>>> main
             showToastMsg("Please enter valid height", context);
           } else {
             widget._submitButtonListner(

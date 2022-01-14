@@ -252,6 +252,7 @@ class _BiometricBodyTemperatureVitalsViewState
 
   Widget _makeWeightList(BuildContext context, int index) {
     final Items record = records.elementAt(index);
+<<<<<<< HEAD
     return Card(
       semanticContainer: false,
       elevation: 0,
@@ -284,6 +285,30 @@ class _BiometricBodyTemperatureVitalsViewState
             ),
           ],
         ),
+=======
+    return Semantics(
+      label: 'making list of body temperature',
+      readOnly: true,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            dateFormatStandard.format(DateTime.parse(record.recordDate)),
+            style: TextStyle(
+                color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            record.bodyTemperature.toString() + ' °F',
+            style: TextStyle(
+                color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+>>>>>>> main
       ),
     );
   }
@@ -292,7 +317,11 @@ class _BiometricBodyTemperatureVitalsViewState
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
+<<<<<<< HEAD
         label: 'making graph of ',
+=======
+        label: 'graph of body temperature',
+>>>>>>> main
         readOnly: true,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -340,14 +369,22 @@ class _BiometricBodyTemperatureVitalsViewState
     ];*/
 
     for (int i = 0; i < records.length; i++) {
+<<<<<<< HEAD
       data.add(TimeSeriesSales(
           DateTime.parse(records.elementAt(i).recordDate).toLocal(),
+=======
+      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
+>>>>>>> main
           double.parse(records.elementAt(i).bodyTemperature.toString())));
     }
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
+<<<<<<< HEAD
         id: 'BT',
+=======
+        id: 'vitals',
+>>>>>>> main
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -508,6 +545,10 @@ class _BiometricBodyTemperatureVitalsViewState
       map['BodyTemperature'] = _controller.text.toString();
       map['PatientUserId'] = "";
       map['Unit'] = "Celsius";
+<<<<<<< HEAD
+=======
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
+>>>>>>> main
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =

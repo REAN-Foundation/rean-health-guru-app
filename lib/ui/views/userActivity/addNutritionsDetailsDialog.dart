@@ -96,7 +96,11 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: Semantics(
+<<<<<<< HEAD
                     label: 'Name textfield',
+=======
+                    label: 'name',
+>>>>>>> main
                     child: TextFormField(
                         controller: _nutritionNameController,
                         focusNode: _nutritionNameFocus,
@@ -166,7 +170,11 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: Semantics(
+<<<<<<< HEAD
                     label: 'Calories textfield',
+=======
+                    label: 'cal',
+>>>>>>> main
                     child: TextFormField(
                         controller: _consumedCaloriesController,
                         focusNode: __consumedCaloriesFocus,
@@ -177,7 +185,11 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                         onFieldSubmitted: (term) {},
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(
+<<<<<<< HEAD
                               RegExp('[\\,|\\+|\\-|\\ ]')),
+=======
+                              RegExp('[\\,|\\+|\\-]')),
+>>>>>>> main
                         ],
                         decoration: InputDecoration(
                             hintText: '100',
@@ -219,7 +231,11 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
             showToast("Please enter calories", context);
           } else {
             widget._submitButtonListner(
+<<<<<<< HEAD
                 _nutritionNameController.text.toString().trim(),
+=======
+                _nutritionNameController.text.toString(),
+>>>>>>> main
                 double.parse(_consumedCaloriesController.text),
                 widget._nutritionName);
           }

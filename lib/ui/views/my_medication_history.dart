@@ -98,6 +98,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
 
   Widget _makeMedicinePrescriptionCard(BuildContext context, int index) {
     final MedicationConsumptionSummary summary = summarys.elementAt(index);
+<<<<<<< HEAD
     return Card(
       semanticContainer: false,
       elevation: 0,
@@ -128,10 +129,109 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                         readOnly: true,
                         child: ExcludeSemantics(
                           child: Text(summary.month,
+=======
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: primaryLightColor),
+          borderRadius: BorderRadius.all(Radius.circular(4.0))),
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: 40,
+            decoration: BoxDecoration(
+                color: colorF6F6FF,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(4.0),
+                    topRight: Radius.circular(4.0))),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    flex: 6,
+                    child: Semantics(
+                      label: summary.month,
+                      readOnly: true,
+                      child: Text(summary.month,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: textBlack)),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 16,
+                              height: 16,
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Container(
+                              width: 16,
+                              height: 16,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.red),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Icon(
+                              Icons.help_outline,
+                              size: 16,
+                              color: primaryColor,
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                for (var item in summary.summaryForMonth) ...[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 6,
+                        child: Semantics(
+                          label: item.drug,
+                          readOnly: true,
+                          child: Text(item.drug,
+>>>>>>> main
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontSize: 12,
+<<<<<<< HEAD
                                   fontWeight: FontWeight.w700,
                                   color: textBlack)),
                         ),
@@ -283,6 +383,67 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
             ),
           ],
         ),
+=======
+                                  fontWeight: FontWeight.w500,
+                                  color: textBlack)),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: MergeSemantics(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(item.summaryForDrug.taken.toString(),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: textBlack)),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(item.summaryForDrug.missed.toString(),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: textBlack)),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(item.summaryForDrug.unknown.toString(),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: textBlack)),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+>>>>>>> main
       ),
     );
   }

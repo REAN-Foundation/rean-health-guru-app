@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter/rendering.dart';
+=======
+>>>>>>> main
 import 'package:paitent/core/models/ChatApiResponse.dart';
 import 'package:paitent/core/models/FAQChatModelPojo.dart';
 import 'package:paitent/core/models/user_data.dart';
@@ -163,6 +166,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                                   hintStyle: TextStyle(color: Colors.black38),
                                   hintText: 'Type your question',
                                   fillColor: Colors.white)),
+<<<<<<< HEAD
                         ),
                       ),
                     ),
@@ -178,6 +182,22 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                         ),
                         onPressed: () {
                           if (_chatController.text.trim().isNotEmpty) {
+=======
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        IconButton(
+                            icon: Icon(
+                              Icons.send,
+                              color: primaryColor,
+                              size: 32,
+                            ),
+                            onPressed: () {
+                              if (_chatController.text.isNotEmpty) {
+>>>>>>> main
                             sendMessageBotApi(_chatController.text);
                             final chatMsg = FAQChatModelPojo(
                                 _chatController.text, DateTime.now(), 'ME');
@@ -193,11 +213,17 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                                   duration: Duration(milliseconds: 200),
                                   curve: Curves.easeInOut);
                             });
+<<<<<<< HEAD
                           } else {
                             _chatController.clear();
                           }
                         }),
                   ],
+=======
+                          }
+                        }),
+                      ],
+>>>>>>> main
                     ),
                   )
                 ],
@@ -275,7 +301,10 @@ class FAQChatScreenState extends State<FAQChatScreen> {
   }
 
   _senderChatMsg(FAQChatModelPojo chatModelPojo) {
+<<<<<<< HEAD
     announceText();
+=======
+>>>>>>> main
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -316,6 +345,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
     );
   }
 
+<<<<<<< HEAD
   announceText() {
     if (!chatList.elementAt(0).hasAnnounced) {
       SemanticsService.announce(chatList.elementAt(0).text, TextDirection.ltr);
@@ -323,12 +353,18 @@ class FAQChatScreenState extends State<FAQChatScreen> {
     }
   }
 
+=======
+>>>>>>> main
   sendMessageBotApi(String msg) async {
     try {
       final map = <String, String>{};
       map['phoneNumber'] = phoneNumber;
       map['type'] = 'text';
+<<<<<<< HEAD
       map['message'] = msg.trim();
+=======
+      map['message'] = msg;
+>>>>>>> main
 
       final ChatApiResponse baseResponse = await model.sendMsgApi(map);
       debugPrint('Base Response ==> ${baseResponse.toJson()}');

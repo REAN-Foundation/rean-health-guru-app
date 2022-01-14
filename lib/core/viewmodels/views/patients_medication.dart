@@ -25,9 +25,14 @@ class PatientMedicationViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth;
 
+<<<<<<< HEAD
     final response = await apiProvider.get(
         '/clinical/medications/search?patientUserId=' + patientUserId,
         header: map);
+=======
+    final response = await apiProvider
+        .get('/clinical/medications/current/' + patientUserId, header: map);
+>>>>>>> main
 
     setBusy(false);
     // Convert and return

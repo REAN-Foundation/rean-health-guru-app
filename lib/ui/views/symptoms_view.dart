@@ -10,12 +10,17 @@ import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/home_view.dart';
+<<<<<<< HEAD
 import 'package:paitent/utils/CoachMarkUtilities.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringConstant.dart';
 import 'package:paitent/utils/StringUtility.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+=======
+import 'package:paitent/utils/CommonUtils.dart';
+import 'package:paitent/utils/StringUtility.dart';
+>>>>>>> main
 
 import 'base_widget.dart';
 
@@ -36,21 +41,30 @@ class _SymptomsViewState extends State<SymptomsView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   SymptomAssessmentTemplate assessmentTemplate;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+<<<<<<< HEAD
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+=======
+>>>>>>> main
 
   //List symptomList = new List<SymptomsPojo>();
   var dateFormat = DateFormat('yyyy-MM-dd');
   String myAssesssmentId = '';
+<<<<<<< HEAD
   final GlobalKey _keySymptoms = GlobalKey();
   TutorialCoachMark tutorialCoachMark;
   List<TargetFocus> targets = [];
   CoachMarkUtilites coackMarkUtilites = CoachMarkUtilites();
+=======
+>>>>>>> main
 
   @override
   void initState() {
     //prepareSymptomsList();
     getAssesmentTemplateById();
+<<<<<<< HEAD
     initTargets();
+=======
+>>>>>>> main
     super.initState();
   }
 
@@ -69,6 +83,7 @@ class _SymptomsViewState extends State<SymptomsView> {
     symptomList.add(new SymptomsPojo('res/images/ic_symptoms_11.png','Tingling or numbness in feet'));
   }*/
 
+<<<<<<< HEAD
   void initTargets() {
     targets.add(coackMarkUtilites.getTargetFocus(
         _keySymptoms,
@@ -108,6 +123,8 @@ class _SymptomsViewState extends State<SymptomsView> {
     }
   }*/
 
+=======
+>>>>>>> main
   @override
   Widget build(BuildContext context) {
     return BaseWidget<DashboardSummaryModel>(
@@ -241,7 +258,10 @@ class _SymptomsViewState extends State<SymptomsView> {
   }
 
   Widget listWidget() {
+<<<<<<< HEAD
     //WidgetsBinding.instance.addPostFrameCallback(_layout);
+=======
+>>>>>>> main
     return ListView.separated(
         itemBuilder: (context, index) => _createSymptomsListUI(context, index),
         separatorBuilder: (BuildContext context, int index) {
@@ -327,7 +347,11 @@ class _SymptomsViewState extends State<SymptomsView> {
         assessmentTemplate.templateSymptomTypes.elementAt(index);
 
     return Dismissible(
+<<<<<<< HEAD
       key: index == 1 ? _keySymptoms : Key(symptomTypes.symptom),
+=======
+      key: Key(symptomTypes.symptom),
+>>>>>>> main
       child: InkWell(
           onTap: () {
             debugPrint('${symptomTypes.symptom} clicked');

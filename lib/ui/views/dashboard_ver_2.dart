@@ -280,14 +280,22 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ImageIcon(
                           AssetImage('res/images/ic_better_emoji.png'),
                           size: 48,
+<<<<<<< HEAD
                           color: Color(0XFF007E1A),
+=======
+                          color: Colors.green,
+>>>>>>> main
                         ),
                         SizedBox(
                           height: 8,
                         ),
                         Text('Better',
                             style: TextStyle(
+<<<<<<< HEAD
                                 color: Color(0XFF007E1A),
+=======
+                                color: Colors.green,
+>>>>>>> main
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Montserrat')),
@@ -306,14 +314,22 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ImageIcon(
                           AssetImage('res/images/ic_same_emoji.png'),
                           size: 48,
+<<<<<<< HEAD
                           color: textGrey,
+=======
+                          color: Colors.grey,
+>>>>>>> main
                         ),
                         SizedBox(
                           height: 8,
                         ),
                         Text('Same',
                             style: TextStyle(
+<<<<<<< HEAD
                                 color: textGrey,
+=======
+                                color: Colors.grey,
+>>>>>>> main
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Montserrat')),
@@ -332,14 +348,22 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         ImageIcon(
                           AssetImage('res/images/ic_worse_emoji.png'),
                           size: 48,
+<<<<<<< HEAD
                           color: Color(0XFFC10E21),
+=======
+                          color: Colors.red.shade700,
+>>>>>>> main
                         ),
                         SizedBox(
                           height: 8,
                         ),
                         Text('Worse',
                             style: TextStyle(
+<<<<<<< HEAD
                                 color: Color(0XFFC10E21),
+=======
+                                color: Colors.red.shade700,
+>>>>>>> main
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Montserrat')),
@@ -684,7 +708,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           /*height: 32,
                             width: 32,
                             decoration: new BoxDecoration(
+<<<<<<< HEAD
                                 color: Color(0XFF007E1A),
+=======
+                                color: Colors.green,
+>>>>>>> main
                                 border: Border.all(color: Colors.white),
                                 borderRadius: new BorderRadius.all(Radius.circular(16.0))),*/
                           child: Center(
@@ -705,7 +733,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                           fontSize: 24,
                                           fontWeight: FontWeight.w700,
                                           fontFamily: 'Montserrat',
+<<<<<<< HEAD
                                           color: Color(0XFF007E1A)),
+=======
+                                          color: Colors.green),
+>>>>>>> main
                                     ),
                                   ),
                           ),
@@ -779,6 +811,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               fontFamily: 'Montserrat')),
                     ],
                   ),
+<<<<<<< HEAD
                   Semantics(
                     label: 'Add medication',
                     child: IconButton(
@@ -792,6 +825,18 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               context, RoutePaths.ADD_MY_MEDICATION);
                         }),
                   )
+=======
+                  IconButton(
+                      icon: Icon(
+                        Icons.add_circle,
+                        size: 32,
+                        color: iconColor,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, RoutePaths.ADD_MY_MEDICATION);
+                      })
+>>>>>>> main
                 ],
               ),
             ),
@@ -803,8 +848,12 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Semantics(
+<<<<<<< HEAD
                     label: 'Yes I have taken my medications',
                     button: true,
+=======
+                    label: 'my_medication_yes',
+>>>>>>> main
                     child: InkWell(
                       onTap: () {
                         if (currentMedicationList.isEmpty) {
@@ -815,6 +864,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           markAllMedicationAsTaken();
                         }
                       },
+<<<<<<< HEAD
                       child: ExcludeSemantics(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -836,16 +886,42 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     fontFamily: 'Montserrat')),
                           ],
                         ),
+=======
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.thumb_up,
+                            color: Colors.green,
+                            size: 36,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Text('Yes',
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'Montserrat')),
+                        ],
+>>>>>>> main
                       ),
                     ),
                   ),
                   Semantics(
+<<<<<<< HEAD
                     label: 'No I haven\'t taken my medications',
                     button: true,
+=======
+                    label: 'my_medication_no',
+>>>>>>> main
                     child: InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, RoutePaths.My_Medications);
                       },
+<<<<<<< HEAD
                       child: ExcludeSemantics(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -867,6 +943,27 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                     fontFamily: 'Montserrat')),
                           ],
                         ),
+=======
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.thumb_down,
+                            color: primaryColor,
+                            size: 36,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Text('No',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'Montserrat')),
+                        ],
+>>>>>>> main
                       ),
                     ),
                   )
@@ -953,11 +1050,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+<<<<<<< HEAD
                           Icon(FontAwesomeIcons.home, color: Color(0XFF007E1A), size: 40,),
                           SizedBox(height: 6,),
                           Text('No I am good!',
                               style: TextStyle(
                                   color: Color(0XFF007E1A),
+=======
+                          Icon(FontAwesomeIcons.home, color: Colors.green, size: 40,),
+                          SizedBox(height: 6,),
+                          Text('No I am good!',
+                              style: TextStyle(
+                                  color: Colors.green,
+>>>>>>> main
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'Montserrat')),
@@ -1121,7 +1226,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         height: 32,
                         width: 32,
                         decoration: BoxDecoration(
+<<<<<<< HEAD
                             color: Color(0XFF007E1A),
+=======
+                            color: Colors.green,
+>>>>>>> main
                             border: Border.all(color: Colors.white),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(16.0))),
@@ -1328,7 +1437,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         Icons.add_circle,
                         size: 32,
                         color: iconColor,
+<<<<<<< HEAD
                         semanticLabel: 'Add Vitals',
+=======
+>>>>>>> main
                       ),
                       onPressed: () {
                         Navigator.pushNamed(context, RoutePaths.My_Vitals);
@@ -1344,8 +1456,12 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Semantics(
+<<<<<<< HEAD
                       label: 'Add Weight',
                       button: true,
+=======
+                      label: 'Weight',
+>>>>>>> main
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context,
@@ -1353,6 +1469,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
+<<<<<<< HEAD
                           child: ExcludeSemantics(
                             child: Column(
                               children: [
@@ -1383,13 +1500,47 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
+=======
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_body_weight.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Weight',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+>>>>>>> main
                           ),
                         ),
                       ),
                     ),
                     Semantics(
+<<<<<<< HEAD
                       label: "Add Blood Pressure",
                       button: true,
+=======
+                      label: "Blood Pressure",
+>>>>>>> main
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(
@@ -1399,6 +1550,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
+<<<<<<< HEAD
                           child: ExcludeSemantics(
                             child: Column(
                               children: [
@@ -1430,13 +1582,47 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
+=======
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_blood_presure.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Blood\nPressure',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+>>>>>>> main
                           ),
                         ),
                       ),
                     ),
                     Semantics(
+<<<<<<< HEAD
                       label: 'Add Blood Glucose',
                       button: true,
+=======
+                      label: 'Blood Glucose',
+>>>>>>> main
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(
@@ -1446,6 +1632,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
+<<<<<<< HEAD
                           child: ExcludeSemantics(
                             child: Column(
                               children: [
@@ -1477,13 +1664,47 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
+=======
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(12),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_blood_glucose.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Blood\nGlucose',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+>>>>>>> main
                           ),
                         ),
                       ),
                     ),
                     Semantics(
+<<<<<<< HEAD
                       label: 'Add Pulse',
                       button: true,
+=======
+                      label: 'Pulse',
+>>>>>>> main
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context,
@@ -1491,6 +1712,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
+<<<<<<< HEAD
                           child: ExcludeSemantics(
                             child: Column(
                               children: [
@@ -1520,6 +1742,35 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
+=======
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(right: 12),
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_pulse.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Pulse',
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+>>>>>>> main
                           ),
                         ),
                       ),
@@ -1583,7 +1834,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         Icons.add_circle,
                         size: 32,
                         color: iconColor,
+<<<<<<< HEAD
                         semanticLabel: 'Add Nutrition',
+=======
+>>>>>>> main
                       ),
                       onPressed: () {
                         Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1600,8 +1854,12 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Semantics(
+<<<<<<< HEAD
                       label: 'Add Breakfast',
                       button: true,
+=======
+                      label: 'Breakfast',
+>>>>>>> main
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1609,6 +1867,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
+<<<<<<< HEAD
                           child: ExcludeSemantics(
                             child: Column(
                               children: [
@@ -1638,13 +1897,46 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
+=======
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_breakfast.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Breakfast',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+>>>>>>> main
                           ),
                         ),
                       ),
                     ),
                     Semantics(
+<<<<<<< HEAD
                       label: "Add Lunch",
                       button: true,
+=======
+                      label: "Lunch",
+>>>>>>> main
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1652,6 +1944,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
+<<<<<<< HEAD
                           child: ExcludeSemantics(
                             child: Column(
                               children: [
@@ -1681,13 +1974,46 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
+=======
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_lunch.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Lunch',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+>>>>>>> main
                           ),
                         ),
                       ),
                     ),
                     Semantics(
+<<<<<<< HEAD
                       label: 'Add Dinner',
                       button: true,
+=======
+                      label: 'Dinner',
+>>>>>>> main
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1695,6 +2021,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
+<<<<<<< HEAD
                           child: ExcludeSemantics(
                             child: Column(
                               children: [
@@ -1724,13 +2051,46 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
+=======
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_dinner.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Dinner',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+>>>>>>> main
                           ),
                         ),
                       ),
                     ),
                     Semantics(
+<<<<<<< HEAD
                       label: 'Add Snacks',
                       button: true,
+=======
+                      label: 'Snacks',
+>>>>>>> main
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Nutrition,
@@ -1738,6 +2098,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                         },
                         child: Container(
                           height: 96,
+<<<<<<< HEAD
                           child: ExcludeSemantics(
                             child: Column(
                               children: [
@@ -1766,6 +2127,34 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                         fontFamily: 'Montserrat')),
                               ],
                             ),
+=======
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 56,
+                                width: 56,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    border: Border.all(color: primaryColor),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: ImageIcon(
+                                  AssetImage('res/images/ic_snacks.png'),
+                                  size: 32,
+                                  color: iconColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Snack',
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Montserrat')),
+                            ],
+>>>>>>> main
                           ),
                         ),
                       ),

@@ -2,10 +2,15 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/countries.dart';
+=======
+import 'package:get_it/get_it.dart';
+import 'package:google_fonts/google_fonts.dart';
+>>>>>>> main
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
@@ -20,7 +25,10 @@ import 'package:paitent/ui/views/home_view.dart';
 import 'package:paitent/ui/widgets/bezierContainer.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
+<<<<<<< HEAD
 import 'package:progress_dialog/progress_dialog.dart';
+=======
+>>>>>>> main
 import 'package:provider/provider.dart';
 
 import 'base_widget.dart';
@@ -36,6 +44,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+<<<<<<< HEAD
 
   //String _fcmToken ="";
   final TextEditingController _mobileNumberController = TextEditingController();
@@ -46,6 +55,12 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   @override
   void initState() {
     progressDialog = ProgressDialog(context, isDismissible: false);
+=======
+  //String _fcmToken ="";
+
+  @override
+  void initState() {
+>>>>>>> main
     getKnowdledgeLinkLastViewDate();
     permissionDialog();
     //if(apiProvider.getBaseUrl().contains('dev')) {
@@ -136,7 +151,11 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                                 readOnly: true,
                                 child: SizedBox(height: 100)),
                             //_emailPasswordWidget(),
+<<<<<<< HEAD
                             _textFeild('Mobile Number', model),
+=======
+                            _textFeild('Mobile Number'),
+>>>>>>> main
                             SizedBox(height: 40),
                             if (model.busy)
                               CircularProgressIndicator()
@@ -173,7 +192,11 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   }
 
 
+<<<<<<< HEAD
   Widget _textFeild(String title, LoginViewModel model) {
+=======
+  Widget _textFeild(String title) {
+>>>>>>> main
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -206,6 +229,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   ),*/
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   autoValidate: true,
+<<<<<<< HEAD
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                   ],
@@ -214,28 +238,42 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   decoration: InputDecoration(
                       counterText: '',
                       hintText: 'mobile number',
+=======
+                  decoration: InputDecoration(
+                      counterText: '',
+                      hintText: 'mobile_number',
+>>>>>>> main
                       hintStyle: TextStyle(color: Colors.transparent),
                       border: InputBorder.none,
                       fillColor: Colors.white,
                       filled: true),
                   initialCountryCode: getCurrentLocale(),
+<<<<<<< HEAD
                   readOnly: model.busy,
+=======
+>>>>>>> main
                   onChanged: (phone) {
                     debugPrint(phone.countryCode);
                     debugPrint(phone.number);
                     mobileNumber = phone.number;
                     countryCode = phone.countryCode;
+<<<<<<< HEAD
                     debugPrint(
                         'Country max length ==> ${countries.firstWhere((element) => element['code'] == phone.countryISOCode)['max_length']}');
                     maxLengthOfPhone = countries.firstWhere((element) =>
                         element['code'] == phone.countryISOCode)['max_length'];
+=======
+>>>>>>> main
                     /*if(mobileNumber.length == 10){
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/
                   },
+<<<<<<< HEAD
                   onCountryChanged: (phone) {
                     _clearFeilds();
                   },
+=======
+>>>>>>> main
                 )),
           ),
         ],
@@ -245,9 +283,15 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   Widget _getOTPButton(LoginViewModel model) {
     return Semantics(
+<<<<<<< HEAD
       label: 'Get OTP',
       button: true,
       //hint: 'press to get OTP',
+=======
+      label: 'getOTP',
+      button: true,
+      hint: 'press to get OTP',
+>>>>>>> main
       child: SizedBox(
         width: 160,
         height: 40,
@@ -261,7 +305,11 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       borderRadius: BorderRadius.all(Radius.circular(24)),
                       side: BorderSide(color: primaryColor)))),
           onPressed: () {
+<<<<<<< HEAD
             if (mobileNumber.length == maxLengthOfPhone) {
+=======
+            if (mobileNumber.length == 10) {
+>>>>>>> main
               countryCodeGlobe = countryCode;
               model.setBusy(true);
               if (dummyNumberList.contains(mobileNumber)) {
@@ -283,7 +331,10 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   checkUserExistsOrNot(LoginViewModel model) async {
     try {
+<<<<<<< HEAD
       progressDialog.show();
+=======
+>>>>>>> main
       debugPrint('Mobile = $mobileNumber');
 
       final response = await apiProvider.get('/users/by-phone/' +
@@ -303,7 +354,10 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         if (checkUserExistOrNotResonse.message == 'User not found.') {
           generateOTP(model);
         } else {
+<<<<<<< HEAD
           progressDialog.hide();
+=======
+>>>>>>> main
           showToast(checkUserExistOrNotResonse.message, context);
         }
         model.setBusy(false);
@@ -337,21 +391,32 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
           BaseResponse.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
+<<<<<<< HEAD
         progressDialog.hide();
+=======
+>>>>>>> main
         showToast(
             'OTP has been successfully sent on your mobile number', context);
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,
             arguments: mobileNumber);
+<<<<<<< HEAD
         _clearFeilds();
         model.setBusy(false);
       } else {
         progressDialog.hide();
+=======
+        model.setBusy(false);
+      } else {
+>>>>>>> main
         model.setBusy(false);
         showToast(doctorListApiResponse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
+<<<<<<< HEAD
       progressDialog.hide();
+=======
+>>>>>>> main
       debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});
@@ -376,23 +441,34 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
       if (doctorListApiResponse.status == 'success') {
+<<<<<<< HEAD
         progressDialog.hide();
+=======
+>>>>>>> main
         showToast(
             'OTP has been successfully sent on your mobile number', context);
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data.patient.toJson());
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,
             arguments: mobileNumber);
+<<<<<<< HEAD
         _clearFeilds();
         model.setBusy(false);
       } else {
         progressDialog.hide();
+=======
+        model.setBusy(false);
+      } else {
+>>>>>>> main
         model.setBusy(false);
         showToast(doctorListApiResponse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
+<<<<<<< HEAD
       progressDialog.hide();
+=======
+>>>>>>> main
       debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});
@@ -421,7 +497,10 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data.patient.toJson());
         _sharedPrefUtils.saveBoolean('login1.5', true);
+<<<<<<< HEAD
         _clearFeilds();
+=======
+>>>>>>> main
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);
@@ -535,6 +614,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     }
   }
 
+<<<<<<< HEAD
   _clearFeilds() {
     progressDialog.hide();
     mobileNumber = '';
@@ -542,6 +622,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     setState(() {});
   }
 
+=======
+>>>>>>> main
   void firebase() {
     _fcm.getToken().then((String token) async {
       assert(token != null);

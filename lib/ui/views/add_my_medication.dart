@@ -28,7 +28,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   final _instructionController = TextEditingController();
   final _instructionFocus = FocusNode();
   final _unitFocus = FocusNode();
+<<<<<<< HEAD
   final _durationFocus = FocusNode();
+=======
+>>>>>>> main
   final _sharedPrefUtils = SharedPrefUtils();
 
   String _dosageUnit = '';
@@ -261,8 +264,12 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
             children: <Widget>[
               Expanded(
                 child: Semantics(
+<<<<<<< HEAD
                   label: 'Drug Name',
                   focusable: true,
+=======
+                  label: 'drug_name',
+>>>>>>> main
                   child: TypeAheadFormField(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: _typeAheadController,
@@ -282,10 +289,14 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     },
                     itemBuilder: (context, suggestion) {
                       return ListTile(
+<<<<<<< HEAD
                         title: Text(
                           suggestion,
                           semanticsLabel: suggestion,
                         ),
+=======
+                        title: Text(suggestion),
+>>>>>>> main
                       );
                     },
                     transitionBuilder: (context, suggestionsBox, controller) {
@@ -313,6 +324,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 height: 40.0,
                 width: 40.0,
                 child: Center(
+<<<<<<< HEAD
                   child: Semantics(
                     label: 'Search new drug',
                     button: true,
@@ -328,6 +340,19 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                               size: 32.0,
                             ),
                     ),
+=======
+                  child: InkWell(
+                    onTap: () {
+                      _getDrugsByName();
+                    },
+                    child: searchForDrug
+                        ? CircularProgressIndicator()
+                        : Icon(
+                            Icons.search,
+                            color: primaryColor,
+                            size: 32.0,
+                          ),
+>>>>>>> main
                   ),
                 ),
               ),
@@ -336,6 +361,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 height: 40.0,
                 width: 40.0,
                 child: Center(
+<<<<<<< HEAD
                   child: Semantics(
                     label: 'Add new drug',
                     button: true,
@@ -351,6 +377,19 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         color: primaryColor,
                         size: 32.0,
                       ),
+=======
+                  child: InkWell(
+                    onTap: () {
+                      if (_typeAheadController.text.isNotEmpty) {
+                        FocusScope.of(context).unfocus();
+                        _addDrugConfirmDialog(context);
+                      }
+                    },
+                    child: Icon(
+                      Icons.add,
+                      color: primaryColor,
+                      size: 32.0,
+>>>>>>> main
                     ),
                   ),
                 ),
@@ -400,8 +439,13 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         color: primaryColor),
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
+<<<<<<< HEAD
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+=======
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp('[\\,|\\+|\\-]')),
+>>>>>>> main
                     ],
                     decoration: InputDecoration(
                       hintStyle: TextStyle(
@@ -430,8 +474,12 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     border: Border.all(color: primaryColor, width: 0.80),
                     color: Colors.white),
                 child: Semantics(
+<<<<<<< HEAD
                   label: 'Select Unit',
                   button: true,
+=======
+                  label: 'Select_Unit',
+>>>>>>> main
                   child: DropdownButton<String>(
                     isExpanded: true,
                     value: _dosageUnit == '' ? null : _dosageUnit,
@@ -490,7 +538,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       setState(() {
                         _frequencyUnit = data;
                       });
+<<<<<<< HEAD
                       _durationFocus.requestFocus();
+=======
+>>>>>>> main
                       setState(() {});
                     },
                   ),
@@ -556,7 +607,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   label: 'Duration of dose',
                   child: TextFormField(
                       controller: _durationController,
+<<<<<<< HEAD
                       focusNode: _durationFocus,
+=======
+>>>>>>> main
                       maxLines: 1,
                       enabled: true,
                       style: TextStyle(
@@ -565,8 +619,14 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                           color: primaryColor),
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
+<<<<<<< HEAD
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+=======
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(
+                            RegExp('[\\,|\\+|\\-]')),
+>>>>>>> main
                       ],
                       decoration: InputDecoration(
                         hintStyle: TextStyle(
@@ -664,6 +724,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       selcetedColor = Colors.white;
     }
 
+<<<<<<< HEAD
     final String medicationName = images.code
         .replaceAll(RegExp("[0-9]"), "")
         .replaceAll('_', ' ')
@@ -689,6 +750,25 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               Semantics(
                 label: medicationName,
                 child: Center(
+=======
+    return Semantics(
+      label: index.toString(),
+      child: InkWell(
+        child: Container(
+          height: 50,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              color: selcetedColor,
+              width: 2.0,
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+          ),
+          child: Container(
+            child: Stack(
+              children: [
+                Center(
+>>>>>>> main
                     child: SizedBox(
                   width: 32,
                   height: 32,
@@ -696,10 +776,15 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     imageUrl: images.publicUrl,
                   ),
                 )),
+<<<<<<< HEAD
               ),
               if (images.isSelected)
                 ExcludeSemantics(
                   child: Align(
+=======
+                if (images.isSelected)
+                  Align(
+>>>>>>> main
                     alignment: Alignment.topRight,
                     child: Container(
                       width: 20,
@@ -719,6 +804,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         color: Colors.white,
                       ),
                     ),
+<<<<<<< HEAD
                   ),
                 )
               else
@@ -731,6 +817,20 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         selectStockImage(index);
         //selectTimeSlot(index);
       },
+=======
+                  )
+                else
+                  Container(),
+              ],
+            ),
+          ),
+        ),
+        onTap: () {
+          selectStockImage(index);
+          //selectTimeSlot(index);
+        },
+      ),
+>>>>>>> main
     );
   }
 
@@ -887,6 +987,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                                     borderRadius: BorderRadius.circular(24),
                                     side: BorderSide(color: primaryColor)))),
                     onPressed: () {
+<<<<<<< HEAD
                       int frequency = 0;
 
                       if (_frequencyUnit == 'Daily') {
@@ -932,6 +1033,18 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         showToast('Please enter unit quantity', context);
                       } else if (_dosageUnit == '') {
                         showToast('Please Select dosage unit', context);
+=======
+                      if (_typeAheadController.text == '') {
+                        showToast('Please select drug', context);
+                      } else if (_unitController == '') {
+                        showToast('Please enter unit qty', context);
+                      } else if (_dosageUnit == '') {
+                        showToast('Please Select dosage unit', context);
+                      } else if (_frequencyUnit == '') {
+                        showToast('Please select frequency', context);
+                      } else if (_durationController.text == '') {
+                        showToast('Please enter duration', context);
+>>>>>>> main
                       } else if (startOn == '') {
                         showToast('Please select start date', context);
                       } else {
@@ -944,6 +1057,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     );
   }
 
+<<<<<<< HEAD
   bool validationForDuration() {
     if (_frequencyUnit == 'Daily' &&
         double.parse(_durationController.text.toString()) > 180) {
@@ -959,6 +1073,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     }
   }
 
+=======
+>>>>>>> main
   /*Widget _textFeilds(String hint, TextEditingController editingController, FocusNode focusNode, FocusNode nextFocusNode){
     return TextFormField(
       controller: editingController,
@@ -1055,6 +1171,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+<<<<<<< HEAD
             Semantics(
               label: 'Morning',
               child: Column(
@@ -1082,10 +1199,35 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   )
                 ],
               ),
+=======
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 32,
+                  height: 32,
+                  child: Checkbox(
+                    value: morningCheck,
+                    onChanged: (newValue) {
+                      setState(() {
+                        morningCheck = newValue;
+                      });
+                    }, //  <-- leading Checkbox
+                  ),
+                ),
+                Text('Morning',
+                    style: TextStyle(
+                        fontSize: 14.0,
+                        color: textBlack,
+                        fontWeight: FontWeight.w700))
+              ],
+>>>>>>> main
             ),
             SizedBox(
               width: 8,
             ),
+<<<<<<< HEAD
             Semantics(
               label: "Afteroon",
               child: Column(
@@ -1113,10 +1255,35 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   )
                 ],
               ),
+=======
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 32,
+                  height: 32,
+                  child: Checkbox(
+                    value: afternoonCheck,
+                    onChanged: (newValue) {
+                      setState(() {
+                        afternoonCheck = newValue;
+                      });
+                    }, //  <-- leading Checkbox
+                  ),
+                ),
+                Text('Afternoon',
+                    style: TextStyle(
+                        fontSize: 14.0,
+                        color: textBlack,
+                        fontWeight: FontWeight.w700))
+              ],
+>>>>>>> main
             ),
             SizedBox(
               width: 8,
             ),
+<<<<<<< HEAD
             Semantics(
               label: 'Evening',
               child: Column(
@@ -1144,10 +1311,35 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   )
                 ],
               ),
+=======
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 32,
+                  height: 32,
+                  child: Checkbox(
+                    value: eveningCheck,
+                    onChanged: (newValue) {
+                      setState(() {
+                        eveningCheck = newValue;
+                      });
+                    }, //  <-- leading Checkbox
+                  ),
+                ),
+                Text('Evening',
+                    style: TextStyle(
+                        fontSize: 14.0,
+                        color: textBlack,
+                        fontWeight: FontWeight.w700))
+              ],
+>>>>>>> main
             ),
             SizedBox(
               width: 8,
             ),
+<<<<<<< HEAD
             Semantics(
               label: 'Night',
               child: Column(
@@ -1175,6 +1367,30 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   )
                 ],
               ),
+=======
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 32,
+                  height: 32,
+                  child: Checkbox(
+                    value: nightCheck,
+                    onChanged: (newValue) {
+                      setState(() {
+                        nightCheck = newValue;
+                      });
+                    }, //  <-- leading Checkbox
+                  ),
+                ),
+                Text('Night',
+                    style: TextStyle(
+                        fontSize: 14.0,
+                        color: textBlack,
+                        fontWeight: FontWeight.w700))
+              ],
+>>>>>>> main
             ),
           ],
         ),

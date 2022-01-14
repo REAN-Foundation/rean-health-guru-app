@@ -8,12 +8,17 @@ import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
+<<<<<<< HEAD
 import 'package:paitent/utils/CoachMarkUtilities.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringConstant.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+=======
+import 'package:paitent/utils/CommonUtils.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+>>>>>>> main
 
 class MyTodaysMedicationView extends StatefulWidget {
   @override
@@ -34,12 +39,15 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   List<Schedules> nightMedicationList = <Schedules>[];
   ProgressDialog progressDialog;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+<<<<<<< HEAD
   GlobalKey _key;
   var globalKeyName;
   TutorialCoachMark tutorialCoachMark;
   List<TargetFocus> targets = [];
   CoachMarkUtilites coackMarkUtilites = CoachMarkUtilites();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+=======
+>>>>>>> main
 
   @override
   void initState() {
@@ -47,6 +55,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     super.initState();
   }
 
+<<<<<<< HEAD
   void initTargets() {
     targets.add(coackMarkUtilites.getTargetFocus(
         _key,
@@ -86,6 +95,8 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     }
   }*/
 
+=======
+>>>>>>> main
   getMyMedications() async {
     try {
       currentMedicationList.clear();
@@ -118,10 +129,13 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     eveningMedicationList.clear();
     nightMedicationList.clear();
 
+<<<<<<< HEAD
     _key = GlobalKey(debugLabel: medications.elementAt(0).drugName);
     globalKeyName = medications.elementAt(0).drugName;
     initTargets();
 
+=======
+>>>>>>> main
     medications.forEach((currentMedication) {
       if (currentMedication.details
           .toUpperCase()
@@ -268,7 +282,11 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
           Container(
             width: MediaQuery.of(context).size.width,
             color: colorF6F6FF,
+<<<<<<< HEAD
             child: listWidget(medications, tittle),
+=======
+            child: listWidget(medications),
+>>>>>>> main
           ),
           SizedBox(
             height: 16,
@@ -292,16 +310,24 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     );
   }
 
+<<<<<<< HEAD
   Widget listWidget(
     List<Schedules> medications,
     String tittle,
   ) {
     //
+=======
+  Widget listWidget(List<Schedules> medications) {
+>>>>>>> main
     return Padding(
       padding: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
       child: ListView.separated(
           itemBuilder: (context, index) =>
+<<<<<<< HEAD
               _makeMedicineSwipeCard(context, index, medications, tittle),
+=======
+              _makeMedicineSwipeCard(context, index, medications),
+>>>>>>> main
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(
               height: 0,
@@ -314,6 +340,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     );
   }
 
+<<<<<<< HEAD
   bool alreadyAssign = false;
 
   Widget _makeMedicineSwipeCard(
@@ -344,16 +371,38 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               " swipe right for not taken or left for taken",
           child: ExcludeSemantics(
             child: Text(
+=======
+  Widget _makeMedicineSwipeCard(
+      BuildContext context, int index, List<Schedules> medications) {
+    final Schedules medication = medications.elementAt(index);
+
+    return Dismissible(
+      key: Key(medication.drugName),
+      child: InkWell(
+          onTap: () {
+            debugPrint('${medication.drugName} clicked');
+          },
+          child: ListTile(
+            /*leading:SizedBox( height: 40, width: 16, child: CachedNetworkImage(
+              imageUrl: symptomTypes.publicImageUrl,
+            ),),*/
+            title: Text(
+>>>>>>> main
               '        ' + medication.drugName,
               style: TextStyle(
                   fontSize: 14.0,
                   color: primaryColor,
                   fontWeight: FontWeight.w600),
             ),
+<<<<<<< HEAD
           ),
         ),
         tileColor: index.isEven ? primaryLightColor : colorF6F6FF,
       ),
+=======
+            tileColor: index.isEven ? primaryLightColor : colorF6F6FF,
+          )),
+>>>>>>> main
       background: slideRightBackground(),
       secondaryBackground: slideLeftBackground(),
       confirmDismiss: (direction) async {

@@ -85,6 +85,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+<<<<<<< HEAD
           Expanded(
             flex: 1,
             child: Semantics(
@@ -157,6 +158,60 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
                   ),
                 ),
               ),
+=======
+          InkWell(
+            onTap: () {
+              setState(() {
+                _currentIndex = 0;
+              });
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ImageIcon(
+                  AssetImage('res/images/ic_heart_biometric.png'),
+                  size: 24,
+                  color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  'Vitals',
+                  style: TextStyle(
+                      color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                      fontSize: 10),
+                ),
+              ],
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              setState(() {
+                _currentIndex = 1;
+              });
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ImageIcon(
+                  AssetImage('res/images/ic_trends.png'),
+                  size: 28,
+                  color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  'Trends',
+                  style: TextStyle(
+                      color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                      fontSize: 10),
+                ),
+              ],
+>>>>>>> main
             ),
           ),
         ],

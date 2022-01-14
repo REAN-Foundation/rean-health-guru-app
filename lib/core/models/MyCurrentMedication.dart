@@ -26,6 +26,7 @@ class MyCurrentMedication {
 }
 
 class Data {
+<<<<<<< HEAD
   Medications medications;
 
   Data({this.medications});
@@ -74,12 +75,24 @@ class Medications {
       items = <Items>[];
       json['Items'].forEach((v) {
         items.add(Items.fromJson(v));
+=======
+  List<CurrentMedications> currentMedications;
+
+  Data({this.currentMedications});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    if (json['CurrentMedications'] != null) {
+      currentMedications = <CurrentMedications>[];
+      json['CurrentMedications'].forEach((v) {
+        currentMedications.add(CurrentMedications.fromJson(v));
+>>>>>>> main
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+<<<<<<< HEAD
     data['TotalCount'] = totalCount;
     data['RetrievedCount'] = retrievedCount;
     data['PageIndex'] = pageIndex;
@@ -88,12 +101,21 @@ class Medications {
     data['OrderedBy'] = orderedBy;
     if (items != null) {
       data['Items'] = items.map((v) => v.toJson()).toList();
+=======
+    if (currentMedications != null) {
+      data['CurrentMedications'] =
+          currentMedications.map((v) => v.toJson()).toList();
+>>>>>>> main
     }
     return data;
   }
 }
 
+<<<<<<< HEAD
 class Items {
+=======
+class CurrentMedications {
+>>>>>>> main
   String id;
   String ehrId;
   String patientUserId;
@@ -111,7 +133,11 @@ class Items {
   int duration;
   String durationUnit;
   DateTime startDate;
+<<<<<<< HEAD
   DateTime endDate;
+=======
+  String endDate;
+>>>>>>> main
   bool refillNeeded;
   int refillCount;
   String instructions;
@@ -121,7 +147,11 @@ class Items {
   int toBeTakenForNextNDays;
   bool isCancelled;
 
+<<<<<<< HEAD
   Items(
+=======
+  CurrentMedications(
+>>>>>>> main
       {this.id,
       this.ehrId,
       this.patientUserId,
@@ -149,7 +179,11 @@ class Items {
       this.toBeTakenForNextNDays,
       this.isCancelled});
 
+<<<<<<< HEAD
   Items.fromJson(Map<String, dynamic> json) {
+=======
+  CurrentMedications.fromJson(Map<String, dynamic> json) {
+>>>>>>> main
     id = json['id'];
     ehrId = json['EhrId'];
     patientUserId = json['PatientUserId'];
@@ -167,7 +201,11 @@ class Items {
     duration = json['Duration'];
     durationUnit = json['DurationUnit'];
     startDate = DateTime.parse(json['StartDate']);
+<<<<<<< HEAD
     endDate = DateTime.parse(json['EndDate']);
+=======
+    endDate = json['EndDate'];
+>>>>>>> main
     refillNeeded = json['RefillNeeded'];
     refillCount = json['RefillCount'];
     instructions = json['Instructions'];
@@ -196,8 +234,13 @@ class Items {
     data['Route'] = route;
     data['Duration'] = duration;
     data['DurationUnit'] = durationUnit;
+<<<<<<< HEAD
     data['StartDate'] = startDate.toIso8601String();
     data['EndDate'] = endDate.toIso8601String();
+=======
+    data['StartDate'] = startDate;
+    data['EndDate'] = endDate;
+>>>>>>> main
     data['RefillNeeded'] = refillNeeded;
     data['RefillCount'] = refillCount;
     data['Instructions'] = instructions;

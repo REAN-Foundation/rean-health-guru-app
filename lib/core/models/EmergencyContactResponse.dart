@@ -101,7 +101,10 @@ class Items {
   ContactPerson contactPerson;
   String contactRelation;
   String addressId;
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
   //String address;
   String organizationId;
   String organization;
@@ -109,6 +112,7 @@ class Items {
   String timeOfAvailability;
   String description;
   String additionalPhoneNumbers;
+<<<<<<< HEAD
   String email;
 
   Items(
@@ -125,6 +129,23 @@ class Items {
       this.timeOfAvailability,
       this.description,
       this.additionalPhoneNumbers});
+=======
+
+  Items(
+      {this.id,
+        this.patientUserId,
+        this.contactPersonId,
+        this.contactPerson,
+        this.contactRelation,
+        this.addressId,
+        //this.address,
+      this.organizationId,
+        this.organization,
+        this.isAvailableForEmergency,
+        this.timeOfAvailability,
+        this.description,
+        this.additionalPhoneNumbers});
+>>>>>>> main
 
   Items.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -135,7 +156,10 @@ class Items {
         : null;
     contactRelation = json['ContactRelation'];
     addressId = json['AddressId'];
+<<<<<<< HEAD
     email = json['Email'];
+=======
+>>>>>>> main
     //address = json['Address'];
     organizationId = json['OrganizationId'];
     organization = json['Organization'];
@@ -155,7 +179,10 @@ class Items {
     }
     data['ContactRelation'] = contactRelation;
     data['AddressId'] = addressId;
+<<<<<<< HEAD
     data['Email'] = email;
+=======
+>>>>>>> main
     //data['Address'] = address;
     data['OrganizationId'] = organizationId;
     data['Organization'] = organization;

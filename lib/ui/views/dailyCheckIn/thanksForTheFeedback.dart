@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/viewmodels/views/common_config_model.dart';
 import 'package:paitent/utils/CommonUtils.dart';
@@ -7,6 +8,10 @@ import 'package:paitent/widgets/delayed_animation.dart';
 
 import '../base_widget.dart';
 
+=======
+import 'package:paitent/widgets/delayed_animation.dart';
+
+>>>>>>> main
 class ThanksForTheFeedBack extends StatefulWidget {
   @override
   _ThanksForTheFeedBack createState() => _ThanksForTheFeedBack();
@@ -18,7 +23,10 @@ class _ThanksForTheFeedBack extends State<ThanksForTheFeedBack>
   AnimationController _controller;
   List<int> selectedList = [];
   int selectedFeelings = 0;
+<<<<<<< HEAD
   var model = CommonConfigModel();
+=======
+>>>>>>> main
 
   @override
   void initState() {
@@ -39,6 +47,7 @@ class _ThanksForTheFeedBack extends State<ThanksForTheFeedBack>
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     recordHowAreYouFeeling();
     return BaseWidget<CommonConfigModel>(
         model: model,
@@ -108,5 +117,48 @@ class _ThanksForTheFeedBack extends State<ThanksForTheFeedBack>
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
     }
+=======
+    return Container(
+        height: 160,
+        color: Colors.transparent,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(24.0),
+                topRight: Radius.circular(24.0)),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const SizedBox(
+                height: 20,
+              ),
+              Image.asset(
+                'res/images/ic_thanks_for_feedback.png',
+                height: 64,
+                width: 64,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              DelayedAnimation(
+                child: Text(
+                  "Thanks for the feedback!",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18.0,
+                      color: Color(0XFF383739)),
+                ),
+                delay: delayedAmount,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        ));
+>>>>>>> main
   }
 }

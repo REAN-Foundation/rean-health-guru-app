@@ -14,7 +14,7 @@ on:
     branches:
       - 'release/**'
       - '!release/aha**'
-      
+
 jobs:
   gitguardian-scanning:
     name: GitGuardian Scan
@@ -109,7 +109,7 @@ jobs:
           echo $FIREBASE_CONFIG > ./android/app/src/uat/google-services.json
           echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
           # echo $FLUTTER_DOTENV > ./res/.env
-          
+
       - name: Flutter Build
         run: flutter build appbundle --release --flavor uat -t "lib/main_uat.dart"
 
@@ -154,7 +154,7 @@ jobs:
         run: bundle exec fastlane release_alpha_rf aab_path:"build/app/outputs/bundle/uatRelease/app-uat-release.aab"
         env:
           PLAYSTORE_JSON_KEY_DATA: ${{ secrets.PLAYSTORE_JSON_KEY_DATA }}
-          
+
 
   iOS-BuildApp:
     environment: uat

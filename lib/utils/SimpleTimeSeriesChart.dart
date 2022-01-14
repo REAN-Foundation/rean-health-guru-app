@@ -22,6 +22,7 @@ class SimpleTimeSeriesChart extends StatelessWidget {
     return charts.TimeSeriesChart(
       seriesList,
       animate: animate,
+<<<<<<< HEAD
       defaultRenderer: charts.LineRendererConfig(),
       // Custom renderer configuration for the point series.
       customSeriesRenderers: [
@@ -52,6 +53,12 @@ class SimpleTimeSeriesChart extends StatelessWidget {
           ),
         ),
       ),*/
+=======
+      // Optionally pass in a [DateTimeFactory] used by the chart. The factory
+      // should create the same type of [DateTime] as the data provided. If none
+      // specified, the default creates local date time.
+      dateTimeFactory: const charts.LocalDateTimeFactory(),
+>>>>>>> main
     );
   }
 }

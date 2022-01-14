@@ -3,7 +3,10 @@ import 'dart:core';
 
 import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
+=======
+>>>>>>> main
 import 'package:package_info/package_info.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
@@ -61,6 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     }
 
+<<<<<<< HEAD
     final String locale = await FlutterSimCountryCode.simCountryCode;
     if (locale.trim().isNotEmpty) {
       setCurrentLocale(locale.toUpperCase());
@@ -71,6 +75,12 @@ class _SplashScreenState extends State<SplashScreen> {
       debugPrint(
           'Country Local ==> ${countryLocale.countryCode.toUpperCase()}');
     }
+=======
+    final Locale locale = await Devicelocale.currentAsLocale;
+    setCurrentLocale(locale.countryCode);
+
+    debugPrint('Country Local ==> ${locale.countryCode}');
+>>>>>>> main
   }
 
   @override
@@ -144,9 +154,13 @@ class _SplashScreenState extends State<SplashScreen> {
                                       Radius.circular(12))
                               ),*/
                           child: Semantics(
+<<<<<<< HEAD
                             label: getAppType() == 'AHA'
                                 ? 'HF Helper App Logo'
                                 : 'REAN HealthGuru app logo',
+=======
+                            label: 'REAN care app logo',
+>>>>>>> main
                             image: true,
                             child: getAppType() == 'AHA'
                                 ? Image.asset('res/images/aha_logo.png')
@@ -194,7 +208,11 @@ class _SplashScreenState extends State<SplashScreen> {
                         ),
                         //widget.loadingText
                         Semantics(
+<<<<<<< HEAD
                           label: 'display',
+=======
+                          label: 'display version',
+>>>>>>> main
                           readOnly: true,
                           child: Text(
                               'Version ' +

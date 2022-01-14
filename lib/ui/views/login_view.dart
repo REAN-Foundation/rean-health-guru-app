@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter/services.dart';
+=======
+>>>>>>> main
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -267,10 +270,13 @@ class _LoginViewState extends State<LoginView> {
                     fillColor: Colors.white,
                     filled: true),
                 initialCountryCode: getCurrentLocale(),
+<<<<<<< HEAD
                 inputFormatters: [
                   FilteringTextInputFormatter.deny(
                       RegExp('[\\,|\\+|\\-|\\a-zA-Z]|\\ ')),
                 ],
+=======
+>>>>>>> main
                 onChanged: (phone) {
                       debugPrint(phone.countryCode);
                       debugPrint(phone.number);

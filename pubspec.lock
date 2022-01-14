@@ -238,7 +238,11 @@ packages:
       name: devicelocale
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.5.0"
+=======
+    version: "0.4.2"
+>>>>>>> main
   dots_indicator:
     dependency: transitive
     description:
@@ -445,6 +449,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.3"
+<<<<<<< HEAD
   flutter_sim_country_code:
     dependency: "direct main"
     description:
@@ -452,6 +457,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
+=======
+>>>>>>> main
   flutter_test:
     dependency: transitive
     description: flutter
@@ -571,7 +578,11 @@ packages:
       name: intl_phone_field
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.1.0"
+=======
+    version: "2.0.1"
+>>>>>>> main
   introduction_screen:
     dependency: "direct main"
     description:
@@ -768,6 +779,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.0"
+<<<<<<< HEAD
   phone_number:
     dependency: "direct main"
     description:
@@ -775,6 +787,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.0+1"
+=======
+>>>>>>> main
   photo_view:
     dependency: "direct main"
     description:

@@ -91,6 +91,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(12))),
                                     child: getAppType() == 'AHA'
+<<<<<<< HEAD
                                         ? Image.asset(
                                             'res/images/aha_logo.png',
                                             semanticLabel:
@@ -101,6 +102,11 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                             semanticLabel:
                                                 'REAN HealthGuru logo',
                                           ),
+=======
+                                        ? Image.asset('res/images/aha_logo.png')
+                                        : Image.asset(
+                                            'res/images/app_logo_tranparent.png'),
+>>>>>>> main
                                   ),
                                   SizedBox(
                                     height: 16,
@@ -240,6 +246,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
   }
 
   Widget _backButton() {
+<<<<<<< HEAD
     return Semantics(
       label: 'Back',
       button: true,
@@ -278,6 +285,41 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))*/
             ],
           ),
+=======
+    return InkWell(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: Container(
+        height: 48,
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+          color: primaryColor,
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(16), bottomRight: Radius.circular(16)),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: Colors.grey.shade200,
+                offset: Offset(2, 4),
+                blurRadius: 5,
+                spreadRadius: 2)
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              //padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
+              child: Icon(
+                Icons.keyboard_arrow_left,
+                color: Colors.white,
+                size: 40,
+              ),
+            ),
+            /*Text('Back',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))*/
+          ],
+>>>>>>> main
         ),
       ),
     );

@@ -13,7 +13,7 @@ description: A new Flutter application.
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
 
-version: 1.7.5+74
+version: 1.7.8+78
 
 
 environment:

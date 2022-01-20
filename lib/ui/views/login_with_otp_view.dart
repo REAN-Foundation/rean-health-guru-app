@@ -261,7 +261,9 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       borderRadius: BorderRadius.all(Radius.circular(24)),
                       side: BorderSide(color: primaryColor)))),
           onPressed: () {
-            if (mobileNumber.length == maxLengthOfPhone) {
+            if (mobileNumber.trim().isEmpty) {
+              showToast('Please enter phone number', context);
+            } else if (mobileNumber.length == maxLengthOfPhone) {
               countryCodeGlobe = countryCode;
               model.setBusy(true);
               if (dummyNumberList.contains(mobileNumber)) {
@@ -485,7 +487,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   Widget _titleAha() {
     return MergeSemantics(
       child: Semantics(
-        label: 'App name',
+        //label: 'App name',
         readOnly: true,
         child: RichText(
           textAlign: TextAlign.center,

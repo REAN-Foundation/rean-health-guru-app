@@ -61,7 +61,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
           Row(
             children: [
               Text(
-                'Enter Name',
+                'Enter food name',
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w500,
@@ -96,7 +96,9 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Name textfield',
+                    label: 'Food name',
+                    //textField: true,
+                    //hint: 'Example Banana',
                     child: TextFormField(
                         controller: _nutritionNameController,
                         focusNode: _nutritionNameFocus,
@@ -112,7 +114,6 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                               RegExp('[\\,|\\+|\\-]')),
                         ],
                         decoration: InputDecoration(
-                            hintText: 'ex. Banana',
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),
@@ -180,7 +181,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                               RegExp('[\\,|\\+|\\-|\\ ]')),
                         ],
                         decoration: InputDecoration(
-                            hintText: '100',
+                          //hintText: '100',
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),
@@ -214,9 +215,12 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
       child: ElevatedButton(
         onPressed: () {
           if (_nutritionNameController.text.isEmpty) {
-            showToast("Please enter item name", context);
+            showToastMsg("Please enter item name", context);
           } else if (_consumedCaloriesController.text.isEmpty) {
-            showToast("Please enter calories", context);
+            showToastMsg("Please enter calories", context);
+          } else if (double.parse(_consumedCaloriesController.text.toString()) >
+              999) {
+            showToastMsg("Please enter calories", context);
           } else {
             widget._submitButtonListner(
                 _nutritionNameController.text.toString().trim(),

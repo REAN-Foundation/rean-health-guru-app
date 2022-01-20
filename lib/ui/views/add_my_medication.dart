@@ -1009,7 +1009,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     ),
                     color: Colors.white),
                 child: Semantics(
-                  label: 'Additioal Comments ',
+                  label: 'Additional Comments ',
                   child: TextFormField(
                       controller: _instructionController,
                       focusNode: _instructionFocus,

@@ -487,7 +487,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   Widget _titleAha() {
     return MergeSemantics(
       child: Semantics(
-        label: 'App name',
+        //label: 'App name',
         readOnly: true,
         child: RichText(
           textAlign: TextAlign.center,

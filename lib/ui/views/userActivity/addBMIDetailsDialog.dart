@@ -126,7 +126,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'weight',
+                    label: 'Weight measures in ' + unit,
                     child: TextFormField(
                         controller: _weightController,
                         focusNode: _weightFocus,
@@ -198,7 +198,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'height',
+                    label: 'Height measures in ',
                     child: TextFormField(
                         controller: _heightController,
                         focusNode: _heightFocus,

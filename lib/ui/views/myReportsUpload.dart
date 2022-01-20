@@ -917,37 +917,40 @@ class _MyReportsViewState extends State<MyReportsView> {
                   }
                 },
                 child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          color: primaryLightColor,
-                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                          border: Border.all(
-                            color: primaryColor,
-                            width: 1.0,
+                  child: ExcludeSemantics(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            color: primaryLightColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
+                            border: Border.all(
+                              color: primaryColor,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.file_copy,
+                              color: primaryColor,
+                              size: 24,
+                            ),
                           ),
                         ),
-                        child: Center(
-                          child: Icon(
-                            Icons.file_copy,
-                            color: primaryColor,
-                            size: 24,
-                          ),
+                        SizedBox(
+                          height: 8,
                         ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        'Files',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ],
+                        Text(
+                          'Files',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

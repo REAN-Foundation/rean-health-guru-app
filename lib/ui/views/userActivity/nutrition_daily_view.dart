@@ -712,12 +712,15 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      color: Colors.white,
+                  ExcludeSemantics(
+                    excluding: true,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
                     ),
-                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,

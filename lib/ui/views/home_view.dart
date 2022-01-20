@@ -382,6 +382,8 @@ class _HomeViewState extends State<HomeView> {
               backgroundColor: Colors.white,
               brightness: Brightness.light,
               title: RichText(
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 text: TextSpan(
                   text: 'Hi, ',
                   style: TextStyle(

@@ -181,7 +181,6 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                               RegExp('[\\,|\\+|\\-|\\ ]')),
                         ],
                         decoration: InputDecoration(
-                          //hintText: '100',
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),
@@ -221,6 +220,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
           } else if (double.parse(_consumedCaloriesController.text.toString()) >
               999) {
             showToastMsg("Please enter calories", context);
+
           } else {
             widget._submitButtonListner(
                 _nutritionNameController.text.toString().trim(),

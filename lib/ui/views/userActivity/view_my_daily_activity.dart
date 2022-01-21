@@ -648,6 +648,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                           : bmiValue.toStringAsFixed(2),
                       semanticsLabel: bmiValue == 0.0
                           ? 'Edit your height & weight for BMI'
+
                           : bmiValue.toStringAsFixed(2),
                       style: TextStyle(
                           fontWeight: FontWeight.w500,

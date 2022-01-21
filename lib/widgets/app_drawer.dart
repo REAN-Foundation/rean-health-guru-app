@@ -511,6 +511,7 @@ class _AppDrawerState extends State<AppDrawer> {
         child:*/
         Container(
           padding: const EdgeInsets.all(16.0),
+
       height: 300,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -572,6 +573,7 @@ class _AppDrawerState extends State<AppDrawer> {
           SizedBox(
             height: 4,
           ),
+
           Text(
             mobileNumber,
             style: TextStyle(
@@ -580,6 +582,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
         ],
           ),
+
       // )
     );
   }

@@ -322,7 +322,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
   Widget _titleAha() {
     return MergeSemantics(
       child: Semantics(
-        label: 'App name',
+        //label: 'App name',
         readOnly: true,
         child: RichText(
           textAlign: TextAlign.center,

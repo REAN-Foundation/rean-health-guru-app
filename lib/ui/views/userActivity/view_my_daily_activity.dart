@@ -644,10 +644,11 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   children: [
                     Text(
                       bmiValue == 0.0
-                          ? 'Edit yout height & weight for BMI'
+                          ? 'Edit your height & weight for BMI'
                           : bmiValue.toStringAsFixed(2),
                       semanticsLabel: bmiValue == 0.0
-                          ? 'Edit yout height & weight for BMI'
+                          ? 'Edit your height & weight for BMI'
+
                           : bmiValue.toStringAsFixed(2),
                       style: TextStyle(
                           fontWeight: FontWeight.w500,

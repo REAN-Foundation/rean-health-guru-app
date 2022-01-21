@@ -1008,30 +1008,33 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       Radius.circular(4),
                     ),
                     color: Colors.white),
-                child: TextFormField(
-                    controller: _instructionController,
-                    focusNode: _instructionFocus,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    enabled: true,
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 14,
-                        color: primaryColor),
-                    textInputAction: TextInputAction.done,
-                    decoration: InputDecoration(
-                      hintStyle: TextStyle(
+                child: Semantics(
+                  label: 'Additional Comments ',
+                  child: TextFormField(
+                      controller: _instructionController,
+                      focusNode: _instructionFocus,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      enabled: true,
+                      style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 14,
                           color: primaryColor),
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      contentPadding: EdgeInsets.only(
-                          left: 15, bottom: 14, top: 11, right: 0),
-                    )),
+                      textInputAction: TextInputAction.done,
+                      decoration: InputDecoration(
+                        hintStyle: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 14,
+                            color: primaryColor),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 14, top: 11, right: 0),
+                      )),
+                ),
               ),
             ),
           ],

@@ -205,13 +205,20 @@ platform :ios do
 
   desc "Submit to App Store"
   lane :submit_beta_to_app_store do
+    latest_testflight_build_number(
+      api_key: get_api_key,
+      app_identifier: "org.reanfoundation.patient"
+    )
     upload_to_app_store(
       app_identifier: "org.reanfoundation.patient",
       precheck_include_in_app_purchases: false,
       submit_for_review: true,
+      skip_binary_upload: true,
       automatic_release: true,
+      skip_metadata: false,
       force: true, # Skip HTMl report verification
       skip_screenshots: true,
+      platform: "ios",
       submission_information: {
         add_id_info_uses_idfa: false,
         add_id_info_serves_ads: false,
@@ -219,7 +226,8 @@ platform :ios do
         add_id_info_tracks_action: false,
         add_id_info_limits_tracking: false
       },
-      api_key: get_api_key
+      api_key: get_api_key,
+      app_version: lane_context[SharedValues::LATEST_TESTFLIGHT_VERSION],
     )
   end
 

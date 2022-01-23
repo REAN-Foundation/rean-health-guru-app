@@ -71,15 +71,28 @@ platform :android do
       metadata_path: options[:metadata_path],
     )
   end
+
+
+  desc "Update the package name for AHA"
+  lane :release_beta_aha do |options|
+    release_beta_build(package_name: "org.heart.hfpatient.uat", aab_path: options[:aab_path], metadata_path: './fastlane/metadata/android/aha_prod')
+  end
+
+  desc "Update the package name for RF"
+  lane :release_beta_rf do |options|
+    release_beta_build(package_name: "org.reanfoundation.patient", aab_path: options[:aab_path], metadata_path: './fastlane/metadata/android/rf_prod')
+  end
+
   # Beta and Prod share the same prod backend
   desc "Upload Beta Build to PlayStore"
   lane :release_beta_build do |options|
     upload_to_play_store(
       track: "beta",
       rollout: ENV["ROLLOUT_USER_BASE_PERCENT"],
-      package_name: "org.reanfoundation.patient",
+      package_name: options[:package_name],
       json_key_data: ENV["PLAYSTORE_JSON_KEY_DATA"],
-      aab: "#{options[:aab_path]}"
+      aab: "#{options[:aab_path]}",
+      metadata_path: options[:metadata_path],
     )
   end
 

@@ -101,6 +101,7 @@ platform :android do
     upload_to_play_store(
       track: 'beta',
       track_promote_to: 'production',
+      skip_upload_changelogs: true,
       package_name: "org.reanfoundation.patient",
       json_key_data: ENV["PLAYSTORE_JSON_KEY_DATA"],
       metadata_path: './fastlane/metadata/android/rf_prod'

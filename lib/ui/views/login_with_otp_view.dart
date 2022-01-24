@@ -116,8 +116,21 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                         top: -90,
                         right: 40,
                         child: PrimaryLightColorContainer(180)),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 60,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: loginContent(model),
+                        ),
+                      ],
+                    ),
                     Positioned(
-                      top: 80,
+                      top: 60,
                       child: Container(
                         width: MediaQuery.of(context).size.width,
                         child: Column(
@@ -159,7 +172,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                                       ),
                               ),
                             ),
-                            SizedBox(
+                            /*    SizedBox(
                               height: 16,
                             ),
                             Text(
@@ -186,23 +199,10 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                                 fontFamily: "Montserrat",
                                 fontStyle: FontStyle.normal,
                               ),
-                            ),
+                            ),*/
                           ],
                         ),
                       ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 160,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(0.0),
-                          child: loginContent(model),
-                        ),
-                      ],
                     ),
                     //Positioned(top: 40, left: 0, child: _backButton()),
                   ],
@@ -213,7 +213,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   Widget loginContent(LoginViewModel model) {
     return Container(
-      height: MediaQuery.of(context).size.height - 260,
+      height: MediaQuery.of(context).size.height - 100,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -222,8 +222,32 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         children: [
           Positioned(
               bottom: 0,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      getAppType() == 'AHA'
+                          ? 'Powered by\nREAN Foundation (Innovator\'s Network)'
+                          : 'Powered by\nREAN Foundation',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w200,
+                          color: primaryColor),
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                  ],
+                ),
+              )),
+          Positioned(
+              bottom: 0,
               child: Image.asset(
-                'res/images/red_login_mask.png',
+                'res/images/grey_login_mask.png',
                 fit: BoxFit.fitWidth,
                 scale: 0.9,
               )),
@@ -240,6 +264,17 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                       readOnly: true,
                       child: SizedBox(height: 100)),*/
                   //_emailPasswordWidget(),
+                  SizedBox(height: 60),
+                  Text(
+                    'Let\’s get started',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: primaryColor,
+                      fontFamily: "Montserrat",
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                   SizedBox(height: 20),
                   _textFeild('Enter your phone', model),
                   SizedBox(height: 20),
@@ -274,22 +309,22 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                 Text(
                   title,
                   style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
                     color: Colors.black,
                     fontFamily: "Montserrat",
                     fontStyle: FontStyle.normal,
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 16,
                 ),
                 Text(
                   'You will receive a 6 digit code for phone number verification ',
                   style: TextStyle(
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                     fontSize: 14,
-                    color: Colors.black,
+                    color: textGrey,
                     fontFamily: "Montserrat",
                     fontStyle: FontStyle.normal,
                   ),
@@ -298,7 +333,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
             ),
           ),
           const SizedBox(
-            height: 16,
+            height: 32,
           ),
           Card(
             elevation: 0,

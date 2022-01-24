@@ -102,7 +102,8 @@ platform :android do
       track: 'beta',
       track_promote_to: 'production',
       package_name: "org.reanfoundation.patient",
-      json_key_data: ENV["PLAYSTORE_JSON_KEY_DATA"]
+      json_key_data: ENV["PLAYSTORE_JSON_KEY_DATA"],
+      metadata_path: './fastlane/metadata/android/rf_prod'
     )
   end
 

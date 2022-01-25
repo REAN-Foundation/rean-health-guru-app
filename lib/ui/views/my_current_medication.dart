@@ -24,7 +24,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   var timeFormat = DateFormat('hh:mm a');
-  List<CurrentMedications> currentMedicationList = <CurrentMedications>[];
+  List<Items> currentMedicationList = <Items>[];
   ProgressDialog progressDialog;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
@@ -41,7 +41,8 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       debugPrint('Medication ==> ${currentMedication.toJson()}');
       if (currentMedication.status == 'success') {
         currentMedicationList.clear();
-        currentMedicationList.addAll(currentMedication.data.currentMedications);
+        filterData(currentMedication.data.medications.items);
+        //currentMedicationList.addAll(currentMedication.data.medications.items);
       } else {
         showToast(currentMedication.message, context);
       }
@@ -50,6 +51,16 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
     }
+  }
+
+  filterData(List<Items> medicationList) {
+    for (int i = 0; i < medicationList.length; i++) {
+      if (medicationList.elementAt(i).endDate.isAfter(DateTime.now())) {
+        currentMedicationList.add(medicationList.elementAt(i));
+        debugPrint('End Data ==> ${medicationList.elementAt(i).endDate}');
+      }
+    }
+    setState(() {});
   }
 
   @override
@@ -75,6 +86,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
             ),
             floatingActionButton: Semantics(
               label: 'Add new medication',
+              button: true,
               container: true,
               child: FloatingActionButton(
                   elevation: 0.0,
@@ -120,8 +132,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   }
 
   Widget _makeMedicineCard(BuildContext context, int index) {
-    final CurrentMedications medication =
-        currentMedicationList.elementAt(index);
+    final Items medication = currentMedicationList.elementAt(index);
 
     return Card(
       semanticContainer: false,

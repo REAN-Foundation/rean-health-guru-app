@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/models/FAQChatModelPojo.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:phone_number/phone_number.dart';
 
 import 'SharedPrefUtils.dart';
 
@@ -34,6 +37,10 @@ String knowledgeLinkDisplayedDate = '';
 String dailyCheckInDate = '';
 var chatList = <FAQChatModelPojo>[];
 var dateFormatGraphStandard = DateFormat('MMM dd, yyyy');
+PhoneNumberUtil plugin = PhoneNumberUtil();
+String dailyMood = '';
+String dailyFeeling = '';
+List<String> dailyEnergyLevels = [];
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');
@@ -219,6 +226,20 @@ setDailyCheckInDate(String viewedDate) async {
     // do something
   }
   //return knowledgeLinkDisplayedDate ?? '';
+}
+
+Future<bool> isValidPhoneNumber(String phone, String code) async {
+  debugPrint(
+      "isValidPhoneNumber ${code + '-' + phone}  == ${await plugin.validate(code + phone, code)}");
+  return plugin.validate(code + '-' + phone, code);
+}
+
+extension EmailValidator on String {
+  bool isValidEmail() {
+    return RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(this);
+  }
 }
 
 enum AppState {

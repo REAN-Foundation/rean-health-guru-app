@@ -103,7 +103,6 @@ class _MyMedicationViewState extends State<MyMedicationView> {
               flex: 1,
               child: Semantics(
                 label: 'Medication Reminder 1 of 3',
-                selected: true,
                 child: InkWell(
                   onTap: () {
                     setState(() {
@@ -143,7 +142,6 @@ class _MyMedicationViewState extends State<MyMedicationView> {
               flex: 1,
               child: Semantics(
                 label: 'Current Medication 2 of 3',
-                selected: true,
                 child: InkWell(
                   onTap: () {
                     setState(() {
@@ -182,7 +180,6 @@ class _MyMedicationViewState extends State<MyMedicationView> {
               flex: 1,
               child: Semantics(
                 label: 'Medication History 3 of 3',
-                selected: true,
                 child: InkWell(
                   onTap: () {
                     setState(() {

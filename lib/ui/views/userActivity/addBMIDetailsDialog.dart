@@ -126,7 +126,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'weight',
+                    label: 'Weight measures in ' + unit,
                     child: TextFormField(
                         controller: _weightController,
                         focusNode: _weightFocus,
@@ -140,7 +140,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                         },
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\+|\\-]')),
+                              RegExp('[\\,|\\+|\\-|\\ ]')),
                         ],
                         decoration: InputDecoration(
                             hintText:
@@ -198,7 +198,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                       border: Border.all(color: primaryColor, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'height',
+                    label: 'Height measures in ',
                     child: TextFormField(
                         controller: _heightController,
                         focusNode: _heightFocus,
@@ -209,7 +209,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                         onFieldSubmitted: (term) {},
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\+|\\-]')),
+                              RegExp('[\\,|\\+|\\-|\\ ]')),
                         ],
                         decoration: InputDecoration(
                             hintText:
@@ -246,13 +246,13 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
       alignment: Alignment.center,
       child: ElevatedButton(
         onPressed: () {
-          if (_weightController.text.isEmpty) {
+          if (_weightController.text.trim().isEmpty) {
             showToastMsg("Please enter your weight", context);
-          } else if (_weightController.text.length > 4) {
+          } else if (double.parse(_weightController.text) > 999) {
             showToastMsg("Please enter valid weight", context);
-          } else if (_heightController.text.isEmpty) {
+          } else if (_heightController.text.trim().isEmpty) {
             showToastMsg("Please enter your height", context);
-          } else if (_heightController.text.length > 4) {
+          } else if (double.parse(_heightController.text) > 300) {
             showToastMsg("Please enter valid height", context);
           } else {
             widget._submitButtonListner(

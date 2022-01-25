@@ -250,7 +250,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-]')),
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
                               hintText: unit == 'lbs'
@@ -356,7 +356,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         child: TextFormField(
                             inputFormatters: [
                               FilteringTextInputFormatter.deny(
-                                  RegExp('[\\,|\\+|\\-]')),
+                                  RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                             ],
                             controller: _systolicController,
                             focusNode: _systolicFocus,
@@ -399,7 +399,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                             textInputAction: TextInputAction.next,
                             inputFormatters: [
                               FilteringTextInputFormatter.deny(
-                                  RegExp('[\\,|\\+|\\-]')),
+                                  RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                             ],
                             keyboardType: TextInputType.number,
                             onFieldSubmitted: (term) {
@@ -595,7 +595,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-]')),
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
                               hintText: '(100 to 125)',
@@ -686,7 +686,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-]')),
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
                               hintText: '(92 to 100)',
@@ -777,7 +777,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-]')),
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
                               hintText: '(65 to 95)',
@@ -862,7 +862,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           onFieldSubmitted: (term) {},
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-]')),
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
                               hintText: '(95 to 100)',
@@ -907,7 +907,9 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {}
+      } else {
+        showToast(baseResponse.message, context);
+      }
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -922,7 +924,6 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       map['Diastolic'] = _diastolicController.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "mmHg";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
@@ -930,7 +931,9 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {}
+      } else {
+        showToast(baseResponse.message, context);
+      }
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -944,7 +947,6 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       map['BloodGlucose'] = _bloodGlucosecontroller.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "mg|dL";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
@@ -952,7 +954,9 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {}
+      } else {
+        showToast(baseResponse.message, context);
+      }
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -967,7 +971,6 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
           _bloodOxygenSaturationController.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "%";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
@@ -975,7 +978,9 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {}
+      } else {
+        showToast(baseResponse.message, context);
+      }
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -989,14 +994,15 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       map['Pulse'] = _pulseRateController.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "bpm";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse = await model.addMyVitals('pulse', map);
 
       if (baseResponse.status == 'success') {
         clearAllFeilds();
-      } else {}
+      } else {
+        showToast(baseResponse.message, context);
+      }
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -1010,7 +1016,6 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       map['BodyTemperature'] = _bodyTempratureController.text.toString();
       map['PatientUserId'] = patientUserId;
       map['Unit'] = "Celsius";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
@@ -1019,7 +1024,9 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         //showToast('Record added successfully');
         clearAllFeilds();
-      } else {}
+      } else {
+        showToast(baseResponse.message, context);
+      }
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);

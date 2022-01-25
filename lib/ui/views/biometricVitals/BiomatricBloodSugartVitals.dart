@@ -156,9 +156,8 @@ class _BiometricBloodSugarVitalsViewState
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.number,
                         onFieldSubmitted: (term) {},
-                        inputFormatters: [
-                          FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                         ],
                         decoration: InputDecoration(
                             hintText: '(100 to 125)',
@@ -321,27 +320,38 @@ class _BiometricBloodSugarVitalsViewState
 
   Widget _makeWeightList(BuildContext context, int index) {
     final Items record = records.elementAt(index);
-    return Semantics(
-      readOnly: true,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            dateFormatStandard.format(DateTime.parse(record.recordDate)),
-            style: TextStyle(
-                color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          Text(
-            record.bloodGlucose.toString() + ' mg/dl',
-            style: TextStyle(
-                color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+    return Card(
+      semanticContainer: false,
+      elevation: 0,
+      child: Container(
+        color: colorF6F6FF,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              dateFormatStandard.format(DateTime.parse(record.recordDate)),
+              style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w300),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Semantics(
+              label: 'Blood Glucose ',
+              child: Text(
+                record.bloodGlucose.toString() + ' mg/dl',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -396,14 +406,18 @@ class _BiometricBloodSugarVitalsViewState
       new TimeSeriesSales(new DateTime(2017, 10, 10), 75),
     ];*/
 
+    //2022-01-03T10:14:05.000Z
+    //2022-01-03T10:10:37.000Z
+
     for (int i = 0; i < records.length; i++) {
-      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(
+          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
           double.parse(records.elementAt(i).bloodGlucose.toString())));
     }
-
+    debugPrint('Biometric Blood Glucose Date ==> ${data.elementAt(0).time}');
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'vitals',
+        id: 'BGS',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -568,7 +582,6 @@ class _BiometricBloodSugarVitalsViewState
       map['BloodGlucose'] = _controller.text.toString();
       map['PatientUserId'] = "";
       map['Unit'] = "mg|dL";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =

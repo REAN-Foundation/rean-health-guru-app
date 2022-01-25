@@ -1,7 +1,9 @@
+import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/utils/CommonUtils.dart';
 
 class OnBoardingPage extends StatefulWidget {
   @override
@@ -12,6 +14,21 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   static const Color primaryColorLocal = Color(0XFF6541A5);
+
+  Future<void> _initPackageInfo() async {
+    if (getCurrentLocale() == '') {
+      final Locale countryLocale = await Devicelocale.currentAsLocale;
+      setCurrentLocale(countryLocale.countryCode.toUpperCase());
+      debugPrint(
+          'Country Local ==> ${countryLocale.countryCode.toUpperCase()}');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initPackageInfo();
+  }
 
   void _onIntroEnd(context) {
     Navigator.popAndPushNamed(context, RoutePaths.Login);
@@ -96,7 +113,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       ),
       done: const Text('Done',
           style:
-              TextStyle(fontWeight: FontWeight.w600, color: primaryColorLocal)),
+          TextStyle(fontWeight: FontWeight.w600, color: primaryColorLocal)),
       curve: Curves.fastLinearToSlowEaseIn,
       //controlsMargin: const EdgeInsets.all(16),
       /*controlsPadding: kIsWeb

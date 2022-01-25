@@ -3,6 +3,7 @@ import 'dart:core';
 
 import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:package_info/package_info.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
@@ -60,10 +61,16 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     }
 
-    final Locale locale = await Devicelocale.currentAsLocale;
-    setCurrentLocale(locale.countryCode);
-
-    debugPrint('Country Local ==> ${locale.countryCode}');
+    final String locale = await FlutterSimCountryCode.simCountryCode;
+    if (locale.trim().isNotEmpty) {
+      setCurrentLocale(locale.toUpperCase());
+      debugPrint('Country Local ==> ${locale.toUpperCase()}');
+    } else {
+      final Locale countryLocale = await Devicelocale.currentAsLocale;
+      setCurrentLocale(countryLocale.countryCode.toUpperCase());
+      debugPrint(
+          'Country Local ==> ${countryLocale.countryCode.toUpperCase()}');
+    }
   }
 
   @override

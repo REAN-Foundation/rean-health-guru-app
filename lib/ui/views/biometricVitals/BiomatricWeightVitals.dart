@@ -166,7 +166,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                         onFieldSubmitted: (term) {},
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                              RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                         ],
                         decoration: InputDecoration(
                             hintText:
@@ -330,31 +330,49 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
   Widget _makeWeightList(BuildContext context, int index) {
     final Items record = records.elementAt(index);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          dateFormatStandard.format(records.elementAt(index).recordDate == null
-              ? DateTime.now()
-              : DateTime.parse(records.elementAt(index).recordDate)),
-          style: TextStyle(
-              color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+    return Card(
+      semanticContainer: false,
+      elevation: 0,
+      child: Container(
+        color: colorF6F6FF,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Semantics(
+              child: Text(
+                dateFormatStandard.format(
+                    records.elementAt(index).recordDate == null
+                        ? DateTime.now()
+                        : DateTime.parse(records.elementAt(index).recordDate)),
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Semantics(
+              label: 'Weight ',
+              readOnly: true,
+              child: Text(
+                unit == 'lbs'
+                    ? (double.parse(record.bodyWeight.toString()) * 2.20462)
+                            .toStringAsFixed(1) +
+                        ' lbs'
+                    : record.bodyWeight.toString() + ' Kgs',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
         ),
-        Text(
-          unit == 'lbs'
-              ? (double.parse(record.bodyWeight.toString()) * 2.20462)
-                      .toStringAsFixed(1) +
-                  ' lbs'
-              : record.bodyWeight.toString() + ' Kgs',
-          style: TextStyle(
-              color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
+      ),
     );
   }
 
@@ -377,7 +395,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                   border: Border.all(color: primaryLightColor),
                   borderRadius: BorderRadius.all(Radius.circular(8.0))),
               padding: const EdgeInsets.all(16),
-              height: 200,
+              height: 250,
               child: Center(
                 child: SimpleTimeSeriesChart(_createSampleData()),
               ),
@@ -414,7 +432,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           ? (double.parse(records.elementAt(i).bodyWeight.toString()) * 2.20462)
               .toStringAsFixed(1)
           : records.elementAt(i).bodyWeight.toString();
-      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(
+          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
           double.parse(receivedWeight)));
     }
 
@@ -422,7 +441,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'vitals',
+        id: 'WT',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,

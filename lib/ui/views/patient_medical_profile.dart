@@ -72,7 +72,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             height: 8,
                           ),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               SizedBox(
                                 width: 150,
@@ -90,18 +90,22 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               SizedBox(
                                 width: 8,
                               ),
-                              Text('' + replaceNull(healthProfile.majorAilment),
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: textBlack)),
+                              Expanded(
+                                child: Text(
+                                    '' +
+                                        replaceNull(healthProfile.majorAilment),
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
                             ],
                           ),
                           SizedBox(
                             height: 8,
                           ),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               SizedBox(
                                 width: 150,
@@ -119,21 +123,23 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               SizedBox(
                                 width: 8,
                               ),
-                              Text(
-                                  '' +
-                                      replaceNull(
-                                          healthProfile.otherConditions),
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: textBlack)),
+                              Expanded(
+                                child: Text(
+                                    '' +
+                                        replaceNull(
+                                            healthProfile.otherConditions),
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
                             ],
                           ),
                           SizedBox(
                             height: 8,
                           ),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               SizedBox(
                                 width: 150,
@@ -151,11 +157,14 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               SizedBox(
                                 width: 8,
                               ),
-                              Text('' + replaceNull(healthProfile.ethnicity),
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: textBlack)),
+                              Expanded(
+                                child: Text(
+                                    '' + replaceNull(healthProfile.ethnicity),
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
                             ],
                           ),
                           SizedBox(
@@ -374,7 +383,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             children: <Widget>[
                               SizedBox(
                                 width: 150,
-                                child: Text('Is smoker?',
+                                child: Text('Is Smoker?',
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w600,
@@ -466,7 +475,8 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
             floatingActionButton: model.busy
                 ? Container()
                 : Semantics(
-                    label: 'Edit Medical Profile',
+              label: 'Edit Medical Profile',
+                    button: true,
                     child: FloatingActionButton(
                         elevation: 0.0,
                         tooltip: 'Edit Medical Profile',

@@ -156,14 +156,14 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             ),
           ),
         ),
-        Semantics(
+        /*Semantics(
           header: true,
           child: Text(
             'OTP',
             style: TextStyle(
                 fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600),
           ),
-        )
+        )*/
       ],
     );
   }

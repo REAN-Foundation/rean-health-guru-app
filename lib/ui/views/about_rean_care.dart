@@ -93,10 +93,10 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
-              height: 160,
+              height: 150,
             ),
             Container(
-              height: MediaQuery.of(context).size.height - 160,
+              height: MediaQuery.of(context).size.height - 150,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(24),
@@ -121,8 +121,9 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                   ),
                   elevation: 8,
                   child: Container(
-                    height: 120,
-                    width: 120,
+                    height: 100,
+                    width: 100,
+                    padding: EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       color: getAppType() == 'AHA'
                           ? primaryLightColor
@@ -171,7 +172,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 20,
+                    height: 8,
                   ),
                   getAppType() == 'AHA' ? _titleAha() : _title(),
                   SizedBox(

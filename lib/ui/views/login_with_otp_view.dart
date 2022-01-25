@@ -4,7 +4,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
@@ -252,10 +251,12 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
               )),
           Positioned(
               bottom: 0,
-              child: Image.asset(
-                'res/images/grey_login_mask.png',
-                fit: BoxFit.fitWidth,
-                scale: 0.9,
+              child: ExcludeSemantics(
+                child: Image.asset(
+                  'res/images/grey_login_mask.png',
+                  fit: BoxFit.fitWidth,
+                  scale: 0.9,
+                ),
               )),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -407,37 +408,39 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       child: SizedBox(
         width: 360,
         height: 50,
-        child: ElevatedButton(
-          child: Text('Get OTP',
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white)),
-          style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      side: BorderSide(color: primaryColor)))),
-          onPressed: () {
-            if (mobileNumber.trim().isEmpty) {
-              showToast('Please enter phone number', context);
-            } else if (mobileNumber.length == maxLengthOfPhone) {
-              countryCodeGlobe = countryCode;
-              model.setBusy(true);
-              if (dummyNumberList.contains(mobileNumber)) {
-                Navigator.pushNamed(context, RoutePaths.OTP_Screen,
-                    arguments: mobileNumber);
-                model.setBusy(false);
+        child: ExcludeSemantics(
+          child: ElevatedButton(
+            child: Text('Get OTP',
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white)),
+            style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        side: BorderSide(color: primaryColor)))),
+            onPressed: () {
+              if (mobileNumber.trim().isEmpty) {
+                showToast('Please enter phone number', context);
+              } else if (mobileNumber.length == maxLengthOfPhone) {
+                countryCodeGlobe = countryCode;
+                model.setBusy(true);
+                if (dummyNumberList.contains(mobileNumber)) {
+                  Navigator.pushNamed(context, RoutePaths.OTP_Screen,
+                      arguments: mobileNumber);
+                  model.setBusy(false);
+                } else {
+                  checkUserExistsOrNot(model);
+                }
               } else {
-                checkUserExistsOrNot(model);
+                debugPrint('Please enter valid number');
+                showToast('Please enter valid number', context);
               }
-            } else {
-              debugPrint('Please enter valid number');
-              showToast('Please enter valid number', context);
-            }
-          },
+            },
+          ),
         ),
       ),
     );

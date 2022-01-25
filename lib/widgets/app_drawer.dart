@@ -577,7 +577,7 @@ class _AppDrawerState extends State<AppDrawer> {
           Text(
             mobileNumber,
             style: TextStyle(
-                fontSize: 14, fontWeight: FontWeight.w600, color: textBlack),
+                fontSize: 14, fontWeight: FontWeight.w500, color: textBlack),
             semanticsLabel: mobileNumber,
           ),
         ],

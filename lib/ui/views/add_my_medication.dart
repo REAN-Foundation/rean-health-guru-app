@@ -28,6 +28,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   final _instructionController = TextEditingController();
   final _instructionFocus = FocusNode();
   final _unitFocus = FocusNode();
+  final _durationFocus = FocusNode();
   final _sharedPrefUtils = SharedPrefUtils();
 
   String _dosageUnit = '';
@@ -261,6 +262,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               Expanded(
                 child: Semantics(
                   label: 'Drug Name',
+                  focusable: true,
                   child: TypeAheadFormField(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: _typeAheadController,
@@ -313,6 +315,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 child: Center(
                   child: Semantics(
                     label: 'Search new drug',
+                    button: true,
                     child: InkWell(
                       onTap: () {
                         _getDrugsByName();
@@ -335,6 +338,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 child: Center(
                   child: Semantics(
                     label: 'Add new drug',
+                    button: true,
                     child: InkWell(
                       onTap: () {
                         if (_typeAheadController.text.isNotEmpty) {
@@ -396,8 +400,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         color: primaryColor),
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.deny(RegExp('[\\,|\\+|\\-]')),
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                     ],
                     decoration: InputDecoration(
                       hintStyle: TextStyle(
@@ -486,6 +490,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       setState(() {
                         _frequencyUnit = data;
                       });
+                      _durationFocus.requestFocus();
                       setState(() {});
                     },
                   ),
@@ -551,6 +556,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   label: 'Duration of dose',
                   child: TextFormField(
                       controller: _durationController,
+                      focusNode: _durationFocus,
                       maxLines: 1,
                       enabled: true,
                       style: TextStyle(
@@ -559,9 +565,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                           color: primaryColor),
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.deny(
-                            RegExp('[\\,|\\+|\\-]')),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                       ],
                       decoration: InputDecoration(
                         hintStyle: TextStyle(
@@ -904,10 +909,27 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         showToast('Please select frequency', context);
                       } else if (_frequencyUnit == 'Daily' && frequency == 0) {
                         showToast('Please select daily time schedule', context);
-                      } else if (_durationController.text == '') {
+                      } else if (_durationController.text.trim() == '') {
                         showToast('Please enter duration', context);
-                      } else if (_unitController.text == '') {
-                        showToast('Please enter unit qty', context);
+                      } else if (validationForDuration()) {
+                        if (_frequencyUnit == 'Daily') {
+                          showToast(
+                              'You can add medication for the next 180 days',
+                              context);
+                        } else if (_frequencyUnit == 'Weekly') {
+                          showToast(
+                              'You can add medication for the next 26 weeks',
+                              context);
+                        } else if (_frequencyUnit == 'Monthly') {
+                          showToast(
+                              'You can add medication for the next 6 months',
+                              context);
+                        }
+                        /*showToast(
+                            'Please enter valid duration 6 months / 26 weeks / 180 days',
+                            context);*/
+                      } else if (_unitController.text.trim() == '') {
+                        showToast('Please enter unit quantity', context);
                       } else if (_dosageUnit == '') {
                         showToast('Please Select dosage unit', context);
                       } else if (startOn == '') {
@@ -920,6 +942,21 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         ),
       ],
     );
+  }
+
+  bool validationForDuration() {
+    if (_frequencyUnit == 'Daily' &&
+        double.parse(_durationController.text.toString()) > 180) {
+      return true;
+    } else if (_frequencyUnit == 'Weekly' &&
+        double.parse(_durationController.text.toString()) > 26) {
+      return true;
+    } else if (_frequencyUnit == 'Monthly' &&
+        double.parse(_durationController.text.toString()) > 6) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /*Widget _textFeilds(String hint, TextEditingController editingController, FocusNode focusNode, FocusNode nextFocusNode){
@@ -971,30 +1008,33 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       Radius.circular(4),
                     ),
                     color: Colors.white),
-                child: TextFormField(
-                    controller: _instructionController,
-                    focusNode: _instructionFocus,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    enabled: true,
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 14,
-                        color: primaryColor),
-                    textInputAction: TextInputAction.done,
-                    decoration: InputDecoration(
-                      hintStyle: TextStyle(
+                child: Semantics(
+                  label: 'Additional Comments ',
+                  child: TextFormField(
+                      controller: _instructionController,
+                      focusNode: _instructionFocus,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      enabled: true,
+                      style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 14,
                           color: primaryColor),
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      contentPadding: EdgeInsets.only(
-                          left: 15, bottom: 14, top: 11, right: 0),
-                    )),
+                      textInputAction: TextInputAction.done,
+                      decoration: InputDecoration(
+                        hintStyle: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 14,
+                            color: primaryColor),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 14, top: 11, right: 0),
+                      )),
+                ),
               ),
             ),
           ],

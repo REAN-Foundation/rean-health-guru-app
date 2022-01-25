@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:paitent/core/models/ChatApiResponse.dart';
 import 'package:paitent/core/models/FAQChatModelPojo.dart';
 import 'package:paitent/core/models/user_data.dart';
@@ -176,7 +177,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                           semanticLabel: 'Send',
                         ),
                         onPressed: () {
-                          if (_chatController.text.isNotEmpty) {
+                          if (_chatController.text.trim().isNotEmpty) {
                             sendMessageBotApi(_chatController.text);
                             final chatMsg = FAQChatModelPojo(
                                 _chatController.text, DateTime.now(), 'ME');
@@ -192,6 +193,8 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                                   duration: Duration(milliseconds: 200),
                                   curve: Curves.easeInOut);
                             });
+                          } else {
+                            _chatController.clear();
                           }
                         }),
                   ],
@@ -272,6 +275,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
   }
 
   _senderChatMsg(FAQChatModelPojo chatModelPojo) {
+    announceText();
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -312,12 +316,19 @@ class FAQChatScreenState extends State<FAQChatScreen> {
     );
   }
 
+  announceText() {
+    if (!chatList.elementAt(0).hasAnnounced) {
+      SemanticsService.announce(chatList.elementAt(0).text, TextDirection.ltr);
+      chatList.elementAt(0).hasAnnounced = true;
+    }
+  }
+
   sendMessageBotApi(String msg) async {
     try {
       final map = <String, String>{};
       map['phoneNumber'] = phoneNumber;
       map['type'] = 'text';
-      map['message'] = msg;
+      map['message'] = msg.trim();
 
       final ChatApiResponse baseResponse = await model.sendMsgApi(map);
       debugPrint('Base Response ==> ${baseResponse.toJson()}');

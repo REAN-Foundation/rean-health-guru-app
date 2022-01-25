@@ -183,13 +183,18 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                   onTap: () {
                     generateOTPForExistingUser(model);
                   },
-                  child: Text(
-                    'Resend OTP?',
-                    semanticsLabel: 'Resend OTP?',
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: primaryColor,
-                        fontWeight: FontWeight.w700),
+                  child: Semantics(
+                    label: 'Resend OTP?',
+                    button: true,
+                    child: ExcludeSemantics(
+                      child: Text(
+                        'Resend OTP?',
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: primaryColor,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
                   ),
                 ),
             ],
@@ -202,6 +207,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
   Widget _submitOTPButton(LoginViewModel model) {
     return Semantics(
       label: 'Submit',
+      button: true,
       child: SizedBox(
         width: 160,
         height: 40,

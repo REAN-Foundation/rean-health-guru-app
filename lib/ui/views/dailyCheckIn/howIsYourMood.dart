@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/dailyCheckIn/howIsYourEnergyLevel.dart';
+import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/widgets/delayed_animation.dart';
 
 class HowIsYourMood extends StatefulWidget {
@@ -72,8 +73,9 @@ class _HowIsYourMood extends State<HowIsYourMood>
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 1;
+                        dailyMood = 'Happy';
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -141,8 +143,9 @@ class _HowIsYourMood extends State<HowIsYourMood>
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 2;
+                        dailyMood = 'Lonely';
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -210,8 +213,9 @@ class _HowIsYourMood extends State<HowIsYourMood>
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 3;
+                        dailyMood = 'Angry';
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -288,8 +292,9 @@ class _HowIsYourMood extends State<HowIsYourMood>
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 4;
+                        dailyMood = 'Stressed';
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -357,8 +362,9 @@ class _HowIsYourMood extends State<HowIsYourMood>
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 5;
+                        dailyMood = 'Anxious';
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -426,8 +432,9 @@ class _HowIsYourMood extends State<HowIsYourMood>
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 6;
+                        dailyMood = 'Fearfull';
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -504,8 +511,9 @@ class _HowIsYourMood extends State<HowIsYourMood>
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 7;
+                        dailyMood = 'Sad';
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -573,8 +581,9 @@ class _HowIsYourMood extends State<HowIsYourMood>
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 8;
+                        dailyMood = 'Hopefull';
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(const Duration(milliseconds: 300),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(

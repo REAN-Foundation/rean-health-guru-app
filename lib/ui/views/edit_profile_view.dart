@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -266,7 +266,11 @@ class _EditProfileState extends State<EditProfile> {
     return showDialog(
       context: context,
           builder: (context) => AlertDialog(
-            title: Text('Alert!'),
+            title: Semantics(
+              child: Text('Alert!'),
+              header: true,
+              readOnly: true,
+            ),
             content: Text('Are you sure you want to discard the changes?'),
             actions: <Widget>[
               TextButton(
@@ -432,23 +436,28 @@ class _EditProfileState extends State<EditProfile> {
                   alignment: Alignment.topRight,
                   child: Visibility(
                     visible: isEditable,
-                    child: InkWell(
-                        onTap: () {
-                          showMaterialModalBottomSheet(
-                              isDismissible: true,
-                              backgroundColor: Colors.transparent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(25.0)),
-                              ),
-                              context: context,
-                              builder: (context) => _uploadImageSelector());
-                          //getFile();
-                        },
-                        child: SizedBox(
+                    child: Semantics(
+                      label: 'Add profile picture',
+                      button: true,
+                      child: InkWell(
+                          onTap: () {
+                            showMaterialModalBottomSheet(
+                                isDismissible: true,
+                                backgroundColor: Colors.transparent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(25.0)),
+                                ),
+                                context: context,
+                                builder: (context) => _uploadImageSelector());
+                            //getFile();
+                          },
+                          child: Image.asset(
+                            'res/images/ic_camera.png',
                             height: 32,
                             width: 32,
-                            child: Image.asset('res/images/ic_camera.png'))),
+                          )),
+                    ),
                   ),
                 )
               ],
@@ -458,10 +467,16 @@ class _EditProfileState extends State<EditProfile> {
             height: 8,
           ),
           Text(fullName,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: primaryColor)),
+          SizedBox(
+            height: 4,
+          ),
           Text(mobileNumber,
               style: TextStyle(
                   fontSize: 14,
@@ -1291,11 +1306,13 @@ class _EditProfileState extends State<EditProfile> {
                 onPressed: () async {
                   if (_emailController.text.toString() == '') {
                     showToast('Please enter email', context);
-                  } else if (_addressController.text.toString() == '') {
+                  } else if (!_emailController.text.toString().isValidEmail()) {
+                    showToast('Please enter valid email', context);
+                  } else if (_addressController.text.toString().trim() == '') {
                     showToast('Please enter address', context);
-                  } else if (_cityController.text.toString() == '') {
+                  } else if (_cityController.text.toString().trim() == '') {
                     showToast('Please enter city', context);
-                  } else if (_countryController.text.toString() == '') {
+                  } else if (_countryController.text.toString().trim() == '') {
                     showToast('Please enter country', context);
                   }
                   /*else if (_postalCodeController.text.toString() == '') {
@@ -1312,13 +1329,12 @@ class _EditProfileState extends State<EditProfile> {
                     map['MiddleName'] = _middleNameController.text;
                     map['LastName'] = _lastNameController.text;
                     final address = <String, String>{};
-                    address['AddressLine'] = _addressController.text;
-                    address['City'] = _cityController.text;
-                    address['Country'] = _countryController.text;
-                    address['PostalCode'] =
-                        _postalCodeController.text.isEmpty
+                    address['AddressLine'] = _addressController.text.trim();
+                    address['City'] = _cityController.text.trim();
+                    address['Country'] = _countryController.text.trim();
+                    address['PostalCode'] = _postalCodeController.text.isEmpty
                         ? null
-                            : _postalCodeController.text;
+                        : _postalCodeController.text.trim();
                     map['Address'] = address;
 
                     //map['Locality'] = _cityController.text;
@@ -1641,38 +1657,41 @@ class _EditProfileState extends State<EditProfile> {
                   Navigator.pop(context);
                   openCamera();
                 },
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          color: primaryLightColor,
-                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                          border: Border.all(
-                            color: primaryColor,
-                            width: 1.0,
+                child: ExcludeSemantics(
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            color: primaryLightColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
+                            border: Border.all(
+                              color: primaryColor,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.camera_alt,
+                              color: primaryColor,
+                              size: 24,
+                            ),
                           ),
                         ),
-                        child: Center(
-                          child: Icon(
-                            Icons.camera_alt,
-                            color: primaryColor,
-                            size: 24,
-                          ),
+                        SizedBox(
+                          height: 8,
                         ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        'Camera\n   ',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ],
+                        Text(
+                          'Camera\n   ',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -1684,38 +1703,41 @@ class _EditProfileState extends State<EditProfile> {
                   Navigator.pop(context);
                   openGallery();
                 },
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          color: primaryLightColor,
-                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                          border: Border.all(
-                            color: primaryColor,
-                            width: 1.0,
+                child: ExcludeSemantics(
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            color: primaryLightColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
+                            border: Border.all(
+                              color: primaryColor,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.image,
+                              color: primaryColor,
+                              size: 24,
+                            ),
                           ),
                         ),
-                        child: Center(
-                          child: Icon(
-                            Icons.image,
-                            color: primaryColor,
-                            size: 24,
-                          ),
+                        SizedBox(
+                          height: 8,
                         ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        'Gallery\n   ',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ],
+                        Text(
+                          'Gallery\n   ',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -1773,7 +1795,15 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   openGallery() async {
-    getFile();
+    //getFile();
+    final picture = await _picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    final File file = File(picture.path);
+    debugPrint(picture.path);
+    final String fileName = file.path.split('/').last;
+    debugPrint('File Name ==> $fileName');
+    uploadProfilePicture(file);
   }
 
   openCamera() async {

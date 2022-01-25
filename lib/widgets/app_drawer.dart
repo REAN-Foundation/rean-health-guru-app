@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:package_info/package_info.dart';
@@ -509,6 +510,8 @@ class _AppDrawerState extends State<AppDrawer> {
                 image: AssetImage('res/images/drawer_header_background.png'))),
         child:*/
         Container(
+          padding: const EdgeInsets.all(16.0),
+
       height: 300,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -526,37 +529,40 @@ class _AppDrawerState extends State<AppDrawer> {
                           radius: 88,
                           backgroundImage:  profileImage == "" ? AssetImage('res/images/profile_placeholder.png') : new NetworkImage(profileImage)),
                     ),*/
-                Container(
-                  width: 120.0,
-                  height: 120.0,
-                  decoration: BoxDecoration(
-                    color: const Color(0xff7c94b6),
-                    image: DecorationImage(
-                      image: profileImage == ''
-                          ? AssetImage('res/images/profile_placeholder.png')
-                          : CachedNetworkImageProvider(profileImage),
-                      fit: BoxFit.cover,
+                    Container(
+                      width: 120.0,
+                      height: 120.0,
+                      decoration: BoxDecoration(
+                        color: const Color(0xff7c94b6),
+                        image: DecorationImage(
+                          image: profileImage == ''
+                              ? AssetImage('res/images/profile_placeholder.png')
+                              : CachedNetworkImageProvider(profileImage),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                        border: Border.all(
+                          color: primaryColor,
+                          width: 2.0,
+                        ),
+                      ),
                     ),
-                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                    border: Border.all(
-                      color: primaryColor,
-                      width: 2.0,
-                    ),
-                  ),
-                ),
-                /*Align(
+                    /*Align(
                       alignment: Alignment.topRight,
                       child: InkWell( onTap: (){ }, child: SizedBox( height: 32, width: 32, child: new Image.asset('res/images/ic_camera.png'))),
                     )*/
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Semantics(
-            child: Text(
-              name,
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Semantics(
+                child: Text(
+                  name,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
@@ -564,6 +570,10 @@ class _AppDrawerState extends State<AppDrawer> {
               semanticsLabel: name,
             ),
           ),
+          SizedBox(
+            height: 4,
+          ),
+
           Text(
             mobileNumber,
             style: TextStyle(
@@ -571,7 +581,8 @@ class _AppDrawerState extends State<AppDrawer> {
             semanticsLabel: mobileNumber,
           ),
         ],
-      ),
+          ),
+
       // )
     );
   }

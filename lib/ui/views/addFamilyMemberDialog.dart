@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paitent/core/models/UploadImageResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
@@ -34,7 +35,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-
+  final TextEditingController _mobileNumberController = TextEditingController();
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _mobileNumberFocus = FocusNode();
@@ -44,6 +45,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
   String selectedGender = 'Male';
   String mobileNumber = '';
   String countryCode = '';
+  int maxLengthOfPhone = 0;
 
   @override
   void initState() {
@@ -83,10 +85,10 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   //_profileIcon(),
-                  _entryFirstNameField('First Name'),
-                  _entryLastNameField('Last Name'),
-                  _entryMobileNoField('Phone'),
-                  _entryDecriptionNameField('Relation'),
+                  _entryFirstNameField('First Name*'),
+                  _entryLastNameField('Last Name*'),
+                  _entryMobileNoField('Phone*'),
+                  _entryDecriptionNameField('Relation*'),
                   _genderWidget(),
                   const SizedBox(
                     height: 16,
@@ -103,23 +105,24 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
 
   Widget _submitButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        debugPrint(mobileNumber);
+      onPressed: () async {
         if (_firstNameController.text == '') {
           showToastMsg('Enter first name', context);
         } else if (_lastNameController.text == '') {
           showToastMsg('Enter last name', context);
-        } else if (mobileNumber == '' || mobileNumber.length != 10) {
+        } else if (mobileNumber.isEmpty) {
           showToastMsg('Enter mobile number', context);
+        } else if (mobileNumber.length != maxLengthOfPhone) {
+          showToastMsg('Enter valid mobile number', context);
         } else if (_descriptionController.text == '') {
           showToastMsg('Enter relation', context);
         } else if (selectedGender == '') {
           showToastMsg('Select gender', context);
         } else {
           widget._submitButtonListner(
-              _firstNameController.text,
-              _lastNameController.text,
-              mobileNumber,
+              _firstNameController.text.trim(),
+              _lastNameController.text.trim(),
+              countryCode + '-' + mobileNumber,
               selectedGender,
               _descriptionController.text);
         }
@@ -151,7 +154,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
           children: <Widget>[
             ExcludeSemantics(
               child: Text(
-                'Gender',
+                'Gender*',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
@@ -376,6 +379,8 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                     borderSide: BorderSide(),
                   ),
                 ),*/
+                controller: _mobileNumberController,
+                focusNode: _mobileNumberFocus,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 autoValidate: true,
                 decoration: InputDecoration(
@@ -387,16 +392,25 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                     filled: true),
                 initialCountryCode: getCurrentLocale(),
                 inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                 ],
                 onChanged: (phone) {
                   debugPrint(phone.countryCode);
                   debugPrint(phone.number);
                   mobileNumber = phone.number;
                   countryCode = phone.countryCode;
+                  debugPrint(
+                      'Country max length ==> ${countries.firstWhere((element) => element['code'] == phone.countryISOCode)['max_length']}');
+                  maxLengthOfPhone = countries.firstWhere((element) =>
+                      element['code'] == phone.countryISOCode)['max_length'];
                   /*if(mobileNumber.length == 10){
                     _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                   }*/
+                },
+                onCountryChanged: (phone) {
+                  mobileNumber = '';
+                  _mobileNumberController.clear();
+                  setState(() {});
                 },
               )
 

@@ -644,10 +644,11 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   children: [
                     Text(
                       bmiValue == 0.0
-                          ? 'Edit yout height & weight for BMI'
+                          ? 'Edit your height & weight for BMI'
                           : bmiValue.toStringAsFixed(2),
                       semanticsLabel: bmiValue == 0.0
-                          ? 'Edit yout height & weight for BMI'
+                          ? 'Edit your height & weight for BMI'
+
                           : bmiValue.toStringAsFixed(2),
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -930,12 +931,14 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      color: Colors.white,
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
                     ),
-                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -953,19 +956,16 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       ),
                     ),
                   ),
-                  Semantics(
-                    label: 'Close',
-                    child: IconButton(
-                      alignment: Alignment.topRight,
-                      icon: Icon(
-                        Icons.close,
-                        color: primaryColor,
-                      ),
-                      tooltip: 'Close',
-                      onPressed: () {
-                        Navigator.of(context, rootNavigator: true).pop();
-                      },
+                  IconButton(
+                    alignment: Alignment.topRight,
+                    icon: Icon(
+                      Icons.close,
+                      color: primaryColor,
+                      semanticLabel: 'Close',
                     ),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
                   ),
                 ],
               ),

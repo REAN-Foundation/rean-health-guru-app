@@ -396,7 +396,7 @@ class _HomeViewState extends State<HomeView> {
                         text: name,
                         style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontFamily: 'Montserrat')),
                   ],

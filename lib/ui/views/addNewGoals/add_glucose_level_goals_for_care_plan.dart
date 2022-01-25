@@ -48,7 +48,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -93,7 +93,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
           Text(
             'Normal fasting blood glucose level should be less than 100 mg/dL. If you are diabetic, a HbA1c (glycosylated hemoglobin) below 7 percent is recommended, but your safe range may be lower or higher. Managing diabetes is important to your long-term health, especially if you have heart disease. Diabetes is best controlled by diet, weight loss, ',
             style: TextStyle(
-                color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
+                color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
           ),
           const SizedBox(
             height: 16,
@@ -116,7 +116,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
                   child:  Center(
                     child: Text(
                       'View more >>',
-                      style: TextStyle(fontWeight: FontWeight.w700, color: primaryColor, fontSize: 12),
+                      style: TextStyle(fontWeight: FontWeight.w600, color: primaryColor, fontSize: 12),
                     ),
                   ),
                 ),
@@ -130,7 +130,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
                 text: 'Fasting Blood Glucose',
                 style: TextStyle(
                     fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                     color: primaryColor,
                     fontSize: 14),
                 children: <TextSpan>[
@@ -138,7 +138,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
                       text: '  mg / dL     ',
                       style: TextStyle(
                           fontSize: 10,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.italic)),
@@ -174,7 +174,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
                     text: 'Postprandial Blood Glucose',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: primaryColor,
                         fontSize: 14),
                     children: <TextSpan>[
@@ -183,7 +183,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight:
-                              FontWeight.w700,
+                              FontWeight.w600,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
                               fontStyle:
@@ -232,7 +232,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
                     text: 'Target Date',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: primaryColor,
                         fontSize: 14),
                     children: <TextSpan>[
@@ -240,7 +240,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
                           text: '          ',
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
@@ -334,7 +334,7 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
                         'Save',
                         style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             fontSize: 14),
                         textAlign: TextAlign.center,
                       ),

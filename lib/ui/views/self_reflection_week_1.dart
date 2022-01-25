@@ -62,7 +62,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -153,7 +153,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor)),
                 ],
               ),
@@ -273,7 +273,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor)),
                 ],
               ),
@@ -334,7 +334,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor)),
                 ],
               ),
@@ -395,7 +395,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor)),
                 ],
               ),
@@ -456,7 +456,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor)),
                 ],
               ),
@@ -517,7 +517,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor)),
                 ],
               ),
@@ -578,7 +578,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor)),
                 ],
               ),
@@ -678,7 +678,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor)),
                 ],
               ),
@@ -821,7 +821,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
                   Text(
                     'Done',
                     style: TextStyle(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         color: Colors.white,
                         fontSize: 14),
                   ),

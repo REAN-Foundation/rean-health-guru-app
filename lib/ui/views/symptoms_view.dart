@@ -124,7 +124,7 @@ class _SymptomsViewState extends State<SymptomsView> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -167,7 +167,7 @@ class _SymptomsViewState extends State<SymptomsView> {
                               'Are symptoms getting Better or Worse?',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w700),
+                                  fontWeight: FontWeight.w600),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -225,7 +225,7 @@ class _SymptomsViewState extends State<SymptomsView> {
             style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.white,
-                fontWeight: FontWeight.w700),
+                fontWeight: FontWeight.w600),
           ),
         ),
         style: ButtonStyle(
@@ -282,7 +282,7 @@ class _SymptomsViewState extends State<SymptomsView> {
               ' Better',
               style: TextStyle(
                 color: Colors.white,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.left,
             ),
@@ -308,7 +308,7 @@ class _SymptomsViewState extends State<SymptomsView> {
               ' Worse',
               style: TextStyle(
                 color: Colors.white,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.right,
             ),

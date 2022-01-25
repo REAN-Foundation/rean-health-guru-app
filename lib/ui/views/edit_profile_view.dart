@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
@@ -210,7 +211,7 @@ class _EditProfileState extends State<EditProfile> {
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
               ),
               iconTheme: IconThemeData(color: Colors.black),
             ),
@@ -495,7 +496,7 @@ class _EditProfileState extends State<EditProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -546,7 +547,7 @@ class _EditProfileState extends State<EditProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -599,7 +600,7 @@ class _EditProfileState extends State<EditProfile> {
           Text(
             title,
             style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 fontSize: 15,
                 color: Colors.black87),
           ),
@@ -653,7 +654,7 @@ class _EditProfileState extends State<EditProfile> {
           Text(
             title,
             style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 fontSize: 15,
                 color: Colors.black87),
           ),
@@ -708,7 +709,7 @@ class _EditProfileState extends State<EditProfile> {
           Text(
             title,
             style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 fontSize: 15,
                 color: Colors.black87),
           ),
@@ -764,7 +765,7 @@ class _EditProfileState extends State<EditProfile> {
           Text(
             title,
             style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 fontSize: 15,
                 color: Colors.black87),
           ),
@@ -819,7 +820,7 @@ class _EditProfileState extends State<EditProfile> {
           Text(
             title,
             style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 fontSize: 15,
                 color: Colors.black87),
           ),
@@ -870,7 +871,7 @@ class _EditProfileState extends State<EditProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -1065,7 +1066,7 @@ class _EditProfileState extends State<EditProfile> {
           Text(
             title,
             style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 fontSize: 15,
                 color: Colors.black87),
           ),
@@ -1238,7 +1239,7 @@ class _EditProfileState extends State<EditProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -1302,7 +1303,7 @@ class _EditProfileState extends State<EditProfile> {
                     style: TextStyle(
                         fontSize: 14.0,
                         color: Colors.white,
-                        fontWeight: FontWeight.w700)),
+                        fontWeight: FontWeight.w600)),
                 onPressed: () async {
                   if (_emailController.text.toString() == '') {
                     showToast('Please enter email', context);
@@ -1505,7 +1506,7 @@ class _EditProfileState extends State<EditProfile> {
         children: <Widget>[
           Text(
             'Gender',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -1549,7 +1550,7 @@ class _EditProfileState extends State<EditProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,

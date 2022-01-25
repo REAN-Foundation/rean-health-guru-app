@@ -171,7 +171,7 @@ class _MyDialogState extends State<AddDoctorDialog> {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 14,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat',
                                       color: primaryColor)),
                             ),

@@ -31,7 +31,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -78,7 +78,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                               'Done',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   fontSize: 14),
                               textAlign: TextAlign.center,
                             ),
@@ -114,7 +114,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
             Text(
               "You can add your time-bound measurable goals around Life's Simple 7 as defined by the American Heart Association. These are 7 risk factors that people can improve through lifestyle changes to help achieve ideal cardiovascular health.",
               style: TextStyle(
-                  color: textBlack, fontWeight: FontWeight.w500, fontSize: 16),
+                  color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
             ),
             SizedBox(
               height: 32,
@@ -167,7 +167,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 14,
-                            fontWeight: FontWeight.w700),
+                            fontWeight: FontWeight.w600),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -221,7 +221,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -230,7 +230,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -248,7 +248,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -257,7 +257,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -275,7 +275,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -284,7 +284,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -302,7 +302,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -311,7 +311,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -355,7 +355,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 14,
-                            fontWeight: FontWeight.w700),
+                            fontWeight: FontWeight.w600),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -411,7 +411,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                       style: TextStyle(
                           color: textBlack,
                           fontSize: 14,
-                          fontWeight: FontWeight.w700),
+                          fontWeight: FontWeight.w600),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -421,7 +421,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -430,7 +430,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -439,7 +439,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -459,7 +459,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                       style: TextStyle(
                           color: textBlack,
                           fontSize: 14,
-                          fontWeight: FontWeight.w700),
+                          fontWeight: FontWeight.w600),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -469,7 +469,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -478,7 +478,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -487,7 +487,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -531,7 +531,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                         style: TextStyle(
                             color: primaryColor,
                             fontSize: 14,
-                            fontWeight: FontWeight.w700),
+                            fontWeight: FontWeight.w600),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -585,7 +585,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -594,7 +594,7 @@ class _SetGoalPlanCarePlanViewState extends State<SetGoalPlanCarePlanView> {
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

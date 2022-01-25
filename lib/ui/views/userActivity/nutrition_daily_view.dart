@@ -112,7 +112,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
               ),
               iconTheme: IconThemeData(color: Colors.black),
               actions: <Widget>[
@@ -154,7 +154,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           'Total Calories',
                           semanticsLabel: 'Total Calories',
                           style: TextStyle(
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 24.0,
                               color: textGrey),
                         ),
@@ -731,7 +731,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             nutritionName.replaceAll('snack', ' snack'),
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 18.0),
                         textAlign: TextAlign.center,

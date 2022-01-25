@@ -68,7 +68,7 @@ class _SetUpFamilyMemberForCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -155,9 +155,9 @@ class _SetUpFamilyMemberForCarePlanViewState
                                     Text(
                                       'Next',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
-                                          fontSize: 14),
+                                          fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                      fontSize: 14),
                                     ),
                                     Icon(
                                       Icons.arrow_forward_ios,
@@ -205,7 +205,7 @@ class _SetUpFamilyMemberForCarePlanViewState
       child: Center(
         child: Text(
           'Add Family Member / Friend',
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
+          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
         ),
       ),
     );
@@ -283,7 +283,7 @@ class _SetUpFamilyMemberForCarePlanViewState
                                       teamMember.details.lastName,
                                   style: TextStyle(
                                       fontSize: 14,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       color: primaryColor)),
                             ),
                             Text('+91 ' + teamMember.details.phoneNumber,
@@ -371,7 +371,7 @@ class _SetUpFamilyMemberForCarePlanViewState
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'Montserrat',
                                 color: primaryColor)),
                         Row(
@@ -443,7 +443,7 @@ class _SetUpFamilyMemberForCarePlanViewState
                         'Add FamilyMember \n/ Friends',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 16.0),
                         textAlign: TextAlign.center,

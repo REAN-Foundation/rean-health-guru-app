@@ -77,7 +77,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -131,7 +131,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
       child: Center(
         child: Text(
           'AHA Heart Failure Care Plan\nAHAHF',
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
+          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
       ),
@@ -203,9 +203,9 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
                               Text(
                                 assrotedUICount != 3 ? 'Next' : 'Done',
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                    fontSize: 14),
+                                    fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                                fontSize: 14),
                               ),
                               Icon(
                             Icons.arrow_forward_ios,
@@ -258,7 +258,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
                         Icon(Icons.arrow_back_ios, color: primaryColor, size: 16,),
                         Text(
                           'Skip All',
-                          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14, fontStyle: FontStyle.italic),
+                          style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white, fontSize: 14, fontStyle: FontStyle.italic),
                         ),
                         Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16,),
                       ],
@@ -271,7 +271,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
                           Text(
                             'Done',
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                                 color: Colors.white,
                                 fontSize: 14),
                           ),
@@ -331,7 +331,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
                         Icon(Icons.arrow_back_ios, color: primaryColor, size: 16,),
                         Text(
                           'Skip All',
-                          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14, fontStyle: FontStyle.italic),
+                          style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white, fontSize: 14, fontStyle: FontStyle.italic),
                         ),
                         Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16,),
                       ],
@@ -344,7 +344,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
                           Text(
                             'Play Audio',
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                                 color: Colors.white,
                                 fontSize: 14),
                           ),

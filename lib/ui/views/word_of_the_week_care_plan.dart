@@ -43,7 +43,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -83,7 +83,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
         child: Text(
           'Flip the card to understand\nthe word!',
           style: TextStyle(
-              color: primaryColor, fontWeight: FontWeight.w700, fontSize: 18),
+              color: primaryColor, fontWeight: FontWeight.w600, fontSize: 18),
           textAlign: TextAlign.center,
         ),
       ),
@@ -118,7 +118,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                       widget.assortedViewConfigs.task.details.concreteTask.word,
                       style: TextStyle(
                           color: primaryColor,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
@@ -145,7 +145,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                       widget.assortedViewConfigs.task.details.concreteTask.word,
                       style: TextStyle(
                           color: primaryColor,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
@@ -190,7 +190,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
@@ -215,7 +215,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
             //       children: [
             //         Text(
             //           "Ejection Fraction",
-            //           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700, fontSize: 16),
+            //           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600, fontSize: 16),
             //           textAlign: TextAlign.center,
             //         ),
             //         new Image.asset(
@@ -240,7 +240,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
             //       children: [
             //         Text(
             //           "Ejection fraction",
-            //           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700, fontSize: 16),
+            //           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600, fontSize: 16),
             //           textAlign: TextAlign.center,
             //         ),
             //         Text(
@@ -269,7 +269,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
             //       children: [
             //         Text(
             //           "Dyspnea",
-            //           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700, fontSize: 16),
+            //           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600, fontSize: 16),
             //           textAlign: TextAlign.center,
             //         ),
             //         new Image.asset(
@@ -294,7 +294,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
             //       children: [
             //         Text(
             //           "Dyspnea",
-            //           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700, fontSize: 16),
+            //           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600, fontSize: 16),
             //           textAlign: TextAlign.center,
             //         ),
             //         Text(

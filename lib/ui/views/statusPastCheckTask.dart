@@ -67,7 +67,7 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -157,7 +157,7 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
                     Text(
                       'Done',
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           color: Colors.white,
                           fontSize: 14),
                     ),
@@ -194,7 +194,7 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor)),
                 ],
               ),
@@ -243,7 +243,7 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
         child: Center(
           child: Text(
             'In the past 4 weeks',
-            style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
+            style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
             textAlign: TextAlign.center,
           ),
         ),

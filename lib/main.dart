@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
           title: Text('REAN Care',
               style: TextStyle(
                   fontSize: 28,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                   color: Colors.white)),
           image: Image.asset('res/images/app_logo_tranparent.png'),
           backgroundColor: Colors.deepPurple,

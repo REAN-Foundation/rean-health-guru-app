@@ -45,7 +45,7 @@ class _AddNutritionGoalsForCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -90,7 +90,7 @@ class _AddNutritionGoalsForCarePlanViewState
           Text(
             'Eating healthy doesn’t have to mean dieting or giving up all the foods you love. Learn how to ditch the junk, give your body the nutrient-dense fuel it needs, and love every minute of it!',
             style: TextStyle(
-                color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
+                color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
           ),
           const SizedBox(
             height: 16,
@@ -113,7 +113,7 @@ class _AddNutritionGoalsForCarePlanViewState
                   child:  Center(
                     child: Text(
                       'View more >>',
-                      style: TextStyle(fontWeight: FontWeight.w700, color: primaryColor, fontSize: 12),
+                      style: TextStyle(fontWeight: FontWeight.w600, color: primaryColor, fontSize: 12),
                     ),
                   ),
                 ),
@@ -132,7 +132,7 @@ class _AddNutritionGoalsForCarePlanViewState
                     text: 'I Will Avoid Processed Foods',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: primaryColor,
                         fontSize: 14),
                     children: <TextSpan>[
@@ -140,7 +140,7 @@ class _AddNutritionGoalsForCarePlanViewState
                           text: '',
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
@@ -171,7 +171,7 @@ class _AddNutritionGoalsForCarePlanViewState
                     text: 'I Will Avoid Added Sugar',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: primaryColor,
                         fontSize: 14),
                     children: <TextSpan>[
@@ -179,7 +179,7 @@ class _AddNutritionGoalsForCarePlanViewState
                           text: '',
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
@@ -210,7 +210,7 @@ class _AddNutritionGoalsForCarePlanViewState
                     text: 'I Will Avoid Added Salt',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: primaryColor,
                         fontSize: 14),
                     children: <TextSpan>[
@@ -218,7 +218,7 @@ class _AddNutritionGoalsForCarePlanViewState
                           text: '',
                           style: TextStyle(
                               fontSize: 10,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: primaryColor,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
@@ -242,7 +242,7 @@ class _AddNutritionGoalsForCarePlanViewState
                 text: 'My Own Custom Nutrition / Dietary Goal',
                 style: TextStyle(
                     fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                     color: primaryColor,
                     fontSize: 14),
                 children: <TextSpan>[
@@ -250,7 +250,7 @@ class _AddNutritionGoalsForCarePlanViewState
                       text: '  ',
                       style: TextStyle(
                           fontSize: 10,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.italic)),
@@ -286,7 +286,7 @@ class _AddNutritionGoalsForCarePlanViewState
                 text: '* I will take boiled greens and fish twice a week.',
                 style: TextStyle(
                     fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     color: Colors.grey,
                     fontSize: 12),
                 children: <TextSpan>[
@@ -294,7 +294,7 @@ class _AddNutritionGoalsForCarePlanViewState
                       text: '  ',
                       style: TextStyle(
                           fontSize: 10,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontFamily: 'Montserrat',
                           fontStyle: FontStyle.italic)),
@@ -328,7 +328,7 @@ class _AddNutritionGoalsForCarePlanViewState
                         'Save',
                         style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             fontSize: 14),
                         textAlign: TextAlign.center,
                       ),

@@ -81,7 +81,7 @@ class _AssessmentQuestionCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -135,7 +135,7 @@ class _AssessmentQuestionCarePlanViewState
                 widget.assesment.question.questionText,
                 style: TextStyle(
                     color: primaryColor,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16),
                 textAlign: TextAlign.center,
               ),
@@ -183,7 +183,7 @@ class _AssessmentQuestionCarePlanViewState
                     'Next',
                     style: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         fontSize: 12),
                     textAlign: TextAlign.center,
                   ),

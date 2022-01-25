@@ -197,7 +197,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -261,7 +261,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
                               color: isAmSelected
                                   ? primaryColor
                                   : Color(0XFF303030),
-                              fontWeight: FontWeight.w700),
+                              fontWeight: FontWeight.w600),
                         )),
                     InkWell(
                         onTap: () {
@@ -275,7 +275,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
                                 color: isAmSelected
                                     ? Color(0XFF303030)
                                     : primaryColor,
-                                fontWeight: FontWeight.w700))),
+                                fontWeight: FontWeight.w600))),
                     Text(
                       'Cm',
                       style: TextStyle(fontSize: 16, color: Colors.white),
@@ -428,7 +428,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
               //+" - "+timeFormat.format(slot.slotEnd.toLocal())
               style: TextStyle(
                   fontSize: 12.0,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                   color: slot.isSelected ? Colors.white : primaryColor)),
         ),
       ),
@@ -604,12 +604,12 @@ class _DateAndTimeForLabsBookAppoinmentViewState
           normalTextStyle: TextStyle(
               fontFamily: 'Montserrat',
               color: textBlack,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               fontSize: 14),
           selectedTextStyle: TextStyle(
               fontFamily: 'Montserrat',
               color: primaryColor,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               fontSize: 14),
           onMonthChanged: (v) {
             setState(() {

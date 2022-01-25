@@ -157,7 +157,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor)),
                   ),
                   const SizedBox(
@@ -261,7 +261,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700, color: primaryColor)),
+                                fontWeight: FontWeight.w600, color: primaryColor)),
                       ),
                     ],
                   ),
@@ -272,7 +272,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontSize: 12,
-                              fontWeight: FontWeight.w700, color: primaryColor)),
+                              fontWeight: FontWeight.w600, color: primaryColor)),
                       SizedBox(width: 8,),
                     ],
                   ),

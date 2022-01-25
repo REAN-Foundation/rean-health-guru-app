@@ -33,7 +33,7 @@ class CoachMarkUtilites {
                     semanticsLabel: heading,
                     style: TextStyle(
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                         fontSize: 20.0),
                   ),
                 ),

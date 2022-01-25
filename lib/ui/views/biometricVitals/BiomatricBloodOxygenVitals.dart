@@ -69,7 +69,7 @@ class _BiometricBloodOxygenVitalsViewState
           Text(
             'Enter your blood oxygen saturation:',
             style: TextStyle(
-                color: primaryColor, fontWeight: FontWeight.w600, fontSize: 16),
+                color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
             textAlign: TextAlign.center,
           ),
           const SizedBox(
@@ -84,7 +84,7 @@ class _BiometricBloodOxygenVitalsViewState
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: primaryColor, width: 1),
+                      border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: TextFormField(
                       controller: _controller,
@@ -118,7 +118,7 @@ class _BiometricBloodOxygenVitalsViewState
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: primaryColor,
+                              color: textBlack,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
                     ]),

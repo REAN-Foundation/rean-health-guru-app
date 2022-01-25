@@ -867,7 +867,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.w600),
               ),
               textColor: Colors.white,
               color: primaryColor,

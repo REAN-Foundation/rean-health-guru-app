@@ -377,7 +377,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                   'Add Vitals',
                   style: TextStyle(
                       fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       color: primaryColor,
                       fontSize: 24.0),
                   textAlign: TextAlign.center,
@@ -522,7 +522,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
       label: Text(
         'Submit',
         style: TextStyle(
-            color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+            color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
       ),
       icon: Icon(
         Icons.done,
@@ -571,7 +571,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -606,7 +606,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -640,7 +640,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -674,7 +674,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -708,7 +708,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -742,7 +742,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -776,7 +776,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,

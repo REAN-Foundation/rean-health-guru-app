@@ -443,7 +443,7 @@ class _SetUpFamilyMemberForCarePlanViewState
                         'Add FamilyMember \n/ Friends',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 16.0),
                         textAlign: TextAlign.center,

@@ -706,7 +706,7 @@ class _MyReportsViewState extends State<MyReportsView> {
           title: Text(
             'Alert!',
             style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 fontStyle: FontStyle.normal,
                 fontSize: 18.0,
                 color: Colors.black),

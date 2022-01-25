@@ -95,7 +95,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'My Profile',
+                        'Profile',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),
@@ -116,7 +116,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'My Vitals',
+                        'Vitals',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),
@@ -153,7 +153,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'My Medical Profile',
+                        'Medical Profile',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),
@@ -174,7 +174,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'My Medications',
+                        'Medications',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),
@@ -195,7 +195,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'My Activity',
+                        'Activity',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),
@@ -217,7 +217,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'My Nutrition',
+                        'Nutrition',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),
@@ -246,7 +246,7 @@ class _AppDrawerState extends State<AppDrawer> {
                           width: 40,
                         ),
                         Text(
-                          'My Care Plan',
+                          'Care Plan',
                           style: TextStyle(
                               color: primaryColor, fontWeight: FontWeight.w600),
                         ),
@@ -311,7 +311,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(width: 40,),
-                      Text("My Care Plan", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),),
+                      Text("Care Plan", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),),
                     ],
                   ),
                 ),
@@ -346,7 +346,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        getAppType() == 'AHA' ? 'About AHA' : 'About REAN',
+                        getAppType() == 'AHA' ? 'About Us' : 'About REAN',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),
@@ -461,7 +461,7 @@ class _AppDrawerState extends State<AppDrawer> {
           title: Text(
             'Logout',
             style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 fontStyle: FontStyle.normal,
                 fontSize: 24.0,
                 color: Colors.black),

@@ -404,7 +404,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
               steps.toString(),
               semanticsLabel: steps.toString(),
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                   fontSize: 20.0,
                   color: primaryColor),
             ),
@@ -419,7 +419,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
               'Steps',
               semanticsLabel: 'Steps',
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                   fontSize: 18.0,
                   color: primaryColor),
             ),
@@ -481,7 +481,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       totalCalories.toStringAsFixed(0),
                       semanticsLabel: totalCalories.toStringAsFixed(0),
                       style: TextStyle(
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           fontSize: 28.0,
                           color: primaryColor),
                     ),
@@ -549,7 +549,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   heartRateBmp.toString(),
                   semanticsLabel: heartRateBmp.toString(),
                   style: TextStyle(
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                       fontSize: 28.0,
                       color: primaryColor),
                 ),
@@ -651,7 +651,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
 
                           : bmiValue.toStringAsFixed(2),
                       style: TextStyle(
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           fontSize: bmiValue == 0.0 ? 14 : 28.0,
                           color: primaryColor),
                     ),
@@ -760,7 +760,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       waterGlass.toString(),
                       semanticsLabel: waterGlass.toString(),
                       style: TextStyle(
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           fontSize: 28.0,
                           color: primaryColor),
                     ),
@@ -871,7 +871,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                     Text(
                       '32',
                       style: TextStyle(
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           fontSize: 28.0,
                           color: primaryColor),
                     ),
@@ -949,7 +949,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                         semanticsLabel: 'Biometrics',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 18.0),
                         textAlign: TextAlign.center,

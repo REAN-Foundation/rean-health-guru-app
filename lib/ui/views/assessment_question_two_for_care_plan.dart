@@ -195,7 +195,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                       'Good Job!',
                       style: TextStyle(
                           fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 16.0),
                       textAlign: TextAlign.center,
@@ -221,7 +221,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                 'Taking your medications is\nan important part of\nstaying healthy!',
                 style: TextStyle(
                     fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     color: primaryColor,
                     fontSize: 16.0),
                 textAlign: TextAlign.center,
@@ -282,7 +282,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                       'Please Report This!',
                       style: TextStyle(
                           fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 16.0),
                       textAlign: TextAlign.center,
@@ -308,7 +308,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                 'You need to discuss these\nsymptoms with your doctor',
                 style: TextStyle(
                     fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     color: primaryColor,
                     fontSize: 16.0),
                 textAlign: TextAlign.center,

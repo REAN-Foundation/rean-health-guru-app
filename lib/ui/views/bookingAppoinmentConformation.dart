@@ -205,7 +205,7 @@ class _BookingAppoinmentConfirmationViewViewState
             ),
             Text(
               'Patient Details',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
             ),
             SizedBox(
               height: 16,
@@ -338,7 +338,7 @@ class _BookingAppoinmentConfirmationViewViewState
           ),
           Text(
             '        Doctor Details',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           SizedBox(
             height: 16,
@@ -499,7 +499,7 @@ class _BookingAppoinmentConfirmationViewViewState
           ),
           Text(
             '        Lab Details',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           SizedBox(
             height: 16,
@@ -657,7 +657,7 @@ class _BookingAppoinmentConfirmationViewViewState
         children: <Widget>[
           Text('Appointment On',
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                   color: Colors.white,
                   fontSize: 16)),
           SizedBox(
@@ -668,7 +668,7 @@ class _BookingAppoinmentConfirmationViewViewState
               text: dateFormat.format(
                   DateTime.parse(bookingAppoinmentsDetails.selectedDate)),
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                   color: Colors.white,
                   fontSize: 20),
               children: <TextSpan>[
@@ -678,7 +678,7 @@ class _BookingAppoinmentConfirmationViewViewState
                             DateTime.parse(bookingAppoinmentsDetails.slotStart)
                                 .toLocal()),
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                         color: Colors.white,
                         fontSize: 20)),
               ],

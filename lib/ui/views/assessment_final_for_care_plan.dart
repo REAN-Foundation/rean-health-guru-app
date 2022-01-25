@@ -385,7 +385,7 @@ class _AssessmentFinalCarePlanViewState
                         'Thanks!',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 16.0),
                         textAlign: TextAlign.center,
@@ -411,7 +411,7 @@ class _AssessmentFinalCarePlanViewState
                   'Thanks for completing\nassessment!',
                   style: TextStyle(
                       fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       color: primaryColor,
                       fontSize: 16.0),
                   textAlign: TextAlign.center,

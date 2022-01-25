@@ -360,7 +360,7 @@ class _AssesmentTaskNavigatorViewState
                       '',
                       style: TextStyle(
                           fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 16.0),
                       textAlign: TextAlign.center,
@@ -386,7 +386,7 @@ class _AssesmentTaskNavigatorViewState
                 assessmment.question.questionText,
                 style: TextStyle(
                     fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     color: primaryColor,
                     fontSize: 16.0),
                 textAlign: TextAlign.center,

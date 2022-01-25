@@ -205,7 +205,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
                                         color: textBlack)),
                               ),
                             ),
@@ -232,7 +232,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                               fontSize: 12,
-                                              fontWeight: FontWeight.w600,
+                                              fontWeight: FontWeight.w500,
                                               color: textBlack)),
                                       SizedBox(
                                         width: 8,
@@ -247,7 +247,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                               fontSize: 12,
-                                              fontWeight: FontWeight.w600,
+                                              fontWeight: FontWeight.w500,
                                               color: textBlack)),
                                       SizedBox(
                                         width: 8,
@@ -263,7 +263,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                               fontSize: 12,
-                                              fontWeight: FontWeight.w600,
+                                              fontWeight: FontWeight.w500,
                                               color: textBlack)),
                                     ],
                                   ),

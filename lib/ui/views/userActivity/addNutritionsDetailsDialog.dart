@@ -63,7 +63,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
               Text(
                 'Enter food name',
                 style: TextStyle(
-                    color: primaryColor,
+                    color: textBlack,
                     fontWeight: FontWeight.w600,
                     fontSize: 16),
                 textAlign: TextAlign.center,
@@ -93,7 +93,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: primaryColor, width: 1),
+                      border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
                     label: 'Food name',
@@ -134,7 +134,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
               Text(
                 'Calories',
                 style: TextStyle(
-                    color: primaryColor,
+                    color: textBlack,
                     fontWeight: FontWeight.w600,
                     fontSize: 16),
                 textAlign: TextAlign.center,
@@ -145,7 +145,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                   style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w600,
-                      color: primaryColor,
+                      color: textBlack,
                       fontSize: 14),
                 ),
               ),
@@ -164,7 +164,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: primaryColor, width: 1),
+                      border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
                     label: 'Calories textfield',
@@ -219,8 +219,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
             showToastMsg("Please enter calories", context);
           } else if (double.parse(_consumedCaloriesController.text.toString()) >
               999) {
-            showToastMsg("Please enter calories", context);
-
+            showToastMsg("Please enter valid calories", context);
           } else {
             widget._submitButtonListner(
                 _nutritionNameController.text.toString().trim(),
@@ -239,7 +238,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
         child: Text(
           '      Add       ',
           style: TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
     );

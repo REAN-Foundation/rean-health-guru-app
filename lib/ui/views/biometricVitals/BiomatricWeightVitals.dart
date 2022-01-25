@@ -139,7 +139,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           Text(
             'Enter your weight:',
             style: TextStyle(
-                color: primaryColor, fontWeight: FontWeight.w600, fontSize: 16),
+                color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
             textAlign: TextAlign.center,
           ),
           const SizedBox(
@@ -154,7 +154,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: primaryColor, width: 1),
+                      border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
                     label: 'Weight measures in ' + unit,
@@ -192,7 +192,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: primaryColor,
+                              color: textBlack,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
                     ]),

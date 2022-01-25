@@ -34,7 +34,7 @@ class SplashScreen extends StatefulWidget {
       this.title = const Text(''),
       this.backgroundColor = Colors.white,
       this.styleTextUnderTheLoader = const TextStyle(
-          fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
+          fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black),
       this.image,
       this.loadingText = const Text(''),
       this.imageBackground,

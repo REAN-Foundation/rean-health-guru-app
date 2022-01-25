@@ -52,7 +52,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
               brightness: Brightness.light,
               backgroundColor: Colors.white,
               title: Text(
-                'My Medical Profile',
+                'Medical Profile',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
@@ -191,7 +191,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               Text('' + replaceNull(healthProfile.bloodGroup),
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w500,
                                       color: textBlack)),
                             ],
                           ),
@@ -220,7 +220,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               Text('' + yesOrNo(healthProfile.isDiabetic),
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w500,
                                       color: textBlack)),
                             ],
                           ),
@@ -248,7 +248,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               Text('' + yesOrNo(healthProfile.hasHeartAilment),
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w500,
                                       color: textBlack)),
                             ],
                           ),
@@ -283,7 +283,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                             .replaceAll('Unknown', 'Single')),
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
                                         color: textBlack)),
                               ),
                             ],
@@ -314,7 +314,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                     '' + replaceNull(healthProfile.occupation),
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
                                         color: textBlack)),
                               ),
                             ],
@@ -368,7 +368,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                     '' + replaceNull(healthProfile.nationality),
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
                                         color: textBlack)),
                               ),
                             ],
@@ -400,7 +400,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               Text('' + yesOrNo(healthProfile.isSmoker),
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w500,
                                       color: textBlack)),
                             ],
                           ),
@@ -428,7 +428,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               Text('' + yesOrNo(healthProfile.isDrinker),
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w500,
                                       color: textBlack)),
                             ],
                           ),
@@ -460,7 +460,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                             healthProfile.procedureHistory),
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
                                         color: textBlack)),
                               ),
                             ],
@@ -544,7 +544,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                 'Medical Profile',
                 style: TextStyle(
                     fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     color: primaryColor,
                     fontSize: 24.0),
                 textAlign: TextAlign.center,

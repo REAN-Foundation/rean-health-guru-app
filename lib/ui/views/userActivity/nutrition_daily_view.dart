@@ -171,7 +171,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           'Today',
                           semanticsLabel: 'Today',
                           style: TextStyle(
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               fontSize: 18.0,
                               color: textGrey),
                         ),
@@ -185,7 +185,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                 Text(
                                   totalTodayCal.toStringAsFixed(0),
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w500,
                                       fontSize: 24.0,
                                       color: textGrey),
                                 ),
@@ -195,7 +195,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                 Text(
                                   'cals',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w500,
                                       fontSize: 16.0,
                                       color: textGrey),
                                 ),
@@ -220,7 +220,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           'Breakfast',
                           semanticsLabel: 'Breakfast',
                           style: TextStyle(
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               fontSize: 16.0,
                               color: textGrey),
                         ),
@@ -238,7 +238,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                       totalBreakfastCal.toStringAsFixed(0),
                                       semanticsLabel: '',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w500,
                                           fontSize: 18.0,
                                           color: textGrey),
                                     ),
@@ -249,7 +249,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                       'cals',
                                       semanticsLabel: 'cals',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w500,
                                           fontSize: 16.0,
                                           color: textGrey),
                                     ),
@@ -303,7 +303,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           'Lunch',
                           semanticsLabel: 'Lunch',
                           style: TextStyle(
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               fontSize: 16.0,
                               color: textGrey),
                         ),
@@ -320,7 +320,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                     totalLunchCal.toStringAsFixed(0),
                                     semanticsLabel: '',
                                     style: TextStyle(
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
                                         fontSize: 18.0,
                                         color: textGrey),
                                   ),
@@ -331,7 +331,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                     'cals',
                                     semanticsLabel: 'cals',
                                     style: TextStyle(
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
                                         fontSize: 16.0,
                                         color: textGrey),
                                   ),
@@ -384,7 +384,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           'Dinner',
                           semanticsLabel: 'Dinner',
                           style: TextStyle(
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               fontSize: 16.0,
                               color: textGrey),
                         ),
@@ -401,7 +401,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                     Text(
                                       totalDinnerCal.toStringAsFixed(0),
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w500,
                                           fontSize: 18.0,
                                           color: textGrey),
                                     ),
@@ -412,7 +412,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                       'cals',
                                       semanticsLabel: 'cals',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w500,
                                           fontSize: 16.0,
                                           color: textGrey),
                                     ),
@@ -466,7 +466,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           'Snack',
                           semanticsLabel: 'snack',
                           style: TextStyle(
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               fontSize: 16.0,
                               color: textGrey),
                         ),
@@ -484,7 +484,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                       totalMorningSnackCal.toStringAsFixed(0),
                                       semanticsLabel: '',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w500,
                                           fontSize: 18.0,
                                           color: textGrey),
                                     ),
@@ -495,7 +495,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                       'cals',
                                       semanticsLabel: 'cals',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w500,
                                           fontSize: 16.0,
                                           color: textGrey),
                                     ),
@@ -553,7 +553,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                 'Afternoon Snack',
                                 semanticsLabel: 'Afternoon Snack',
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 16.0,
                                     color: textGrey),
                               ),
@@ -565,7 +565,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                     totalAfernoonSnackCal.toStringAsFixed(0),
                                     semanticsLabel: '',
                                     style: TextStyle(
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
                                         fontSize: 18.0,
                                         color: textGrey),
                                   ),
@@ -576,7 +576,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                     'cals',
                                     semanticsLabel: 'cals',
                                     style: TextStyle(
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
                                         fontSize: 16.0,
                                         color: textGrey),
                                   ),
@@ -624,7 +624,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                 'Evening Snack',
                                 semanticsLabel: 'Evening Snack',
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 16.0,
                                     color: textGrey),
                               ),
@@ -636,7 +636,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                     totalEveningSncakCal.toStringAsFixed(0),
                                     semanticsLabel: '',
                                     style: TextStyle(
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
                                         fontSize: 18.0,
                                         color: textGrey),
                                   ),
@@ -647,7 +647,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                     'cals',
                                     semanticsLabel: 'cals',
                                     style: TextStyle(
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
                                         fontSize: 16.0,
                                         color: textGrey),
                                   ),
@@ -731,7 +731,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             nutritionName.replaceAll('snack', ' snack'),
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 18.0),
                         textAlign: TextAlign.center,

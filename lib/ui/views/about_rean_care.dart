@@ -304,7 +304,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
           "With HF Helper you can\n",
           textAlign: TextAlign.left,
           style: TextStyle(
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               fontSize: 16,
               fontFamily: 'Montserrat'),
         ),
@@ -382,7 +382,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
         Semantics(
           header: true,
           child: Text(
-            getAppType() == 'AHA' ? "About HF Helper" : "About REAN",
+            getAppType() == 'AHA' ? "About Us" : "About REAN",
             style: TextStyle(
                 fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600),
           ),
@@ -439,7 +439,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 24,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ]),

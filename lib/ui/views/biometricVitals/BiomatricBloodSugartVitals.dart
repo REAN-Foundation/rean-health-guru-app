@@ -131,7 +131,7 @@ class _BiometricBloodSugarVitalsViewState
           Text(
             'Enter your blood glucose:',
             style: TextStyle(
-                color: primaryColor, fontWeight: FontWeight.w600, fontSize: 16),
+                color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
             textAlign: TextAlign.center,
           ),
           const SizedBox(
@@ -146,7 +146,7 @@ class _BiometricBloodSugarVitalsViewState
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: primaryColor, width: 1),
+                      border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
                     label: 'Blood Glucose measures in mg/dl',
@@ -182,7 +182,7 @@ class _BiometricBloodSugarVitalsViewState
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: primaryColor,
+                              color: textGrey,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
                     ]),

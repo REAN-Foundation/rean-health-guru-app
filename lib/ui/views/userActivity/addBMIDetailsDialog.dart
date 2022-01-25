@@ -93,7 +93,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
               Text(
                 'Enter your weight',
                 style: TextStyle(
-                    color: primaryColor,
+                    color: textBlack,
                     fontWeight: FontWeight.w600,
                     fontSize: 16),
                 textAlign: TextAlign.center,
@@ -104,7 +104,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                   style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w600,
-                      color: primaryColor,
+                      color: textBlack,
                       fontSize: 14),
                 ),
               ),
@@ -123,7 +123,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: primaryColor, width: 1),
+                      border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
                     label: 'Weight measures in ' + unit,
@@ -165,7 +165,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
               Text(
                 'Enter your height',
                 style: TextStyle(
-                    color: primaryColor,
+                    color: textBlack,
                     fontWeight: FontWeight.w600,
                     fontSize: 16),
                 textAlign: TextAlign.center,
@@ -176,7 +176,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                   style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w600,
-                      color: primaryColor,
+                      color: textBlack,
                       fontSize: 14),
                 ),
               ),
@@ -195,7 +195,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: primaryColor, width: 1),
+                      border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
                     label: 'Height measures in ',
@@ -276,7 +276,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
           '      Add       ',
           semanticsLabel: 'Add',
           style: TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
     );

@@ -131,7 +131,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                           fontSize: 16),
                     ),
                   ),
-                  sectionHeader('Doctor'),
+                  sectionHeader('Doctors'),
                   if (model.busy)
                     Container(
                       height: 80,
@@ -243,7 +243,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           fontFamily: 'Montserrat')),
                 ],
               ),
@@ -434,7 +434,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     child: InkWell(
                       onTap: () {
                         //showToast(tittle);
-                        if (tittle == 'Doctor') {
+                        if (tittle == 'Doctors') {
                           showDialog(
                               context: context,
                               builder: (_) {
@@ -605,7 +605,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 14.0,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       color: primaryColor)),
                             ),
                             SizedBox(
@@ -1198,10 +1198,10 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        'Doctors',
+                        'Doctor',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 16.0),
                         textAlign: TextAlign.center,
@@ -1309,7 +1309,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                         'Add Nurse / Social Health Worker',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 16.0),
                         textAlign: TextAlign.center,
@@ -1373,10 +1373,10 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        'Add Family Member \n/ Friends',
+                        'Add Family Member \n/ Friend',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 16.0),
                         textAlign: TextAlign.center,
@@ -1465,7 +1465,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
           title: Text(
             'Alert!',
             style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 fontStyle: FontStyle.normal,
                 fontSize: 18.0,
                 color: Colors.black),

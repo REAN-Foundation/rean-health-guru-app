@@ -109,7 +109,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                     "Start",
                                     style: TextStyle(
                                         color: primaryColor,
-                                        fontWeight: FontWeight.bold,
+                                        fontWeight: FontWeight.w600,
                                         fontSize: 20),
                                     textAlign: TextAlign.center,
                                   ),
@@ -119,7 +119,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                               "Start",
                               style: TextStyle(
                                   color: primaryColor,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w600,
                                   fontSize: 20),
                               textAlign: TextAlign.center,
                             ),
@@ -228,7 +228,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                     minutes.toString().padLeft(2, '0'),
                     style: TextStyle(
                         color: primaryColor,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                         fontSize: 60),
                     textAlign: TextAlign.center,
                   ),
@@ -241,7 +241,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                     ":",
                     style: TextStyle(
                         color: primaryColor,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                         fontSize: 40),
                     textAlign: TextAlign.center,
                   ),
@@ -254,7 +254,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                     seconds.toString().padLeft(2, '0'),
                     style: TextStyle(
                         color: primaryColor,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                         fontSize: 60),
                     textAlign: TextAlign.center,
                   ),

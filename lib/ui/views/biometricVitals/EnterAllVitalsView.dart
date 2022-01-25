@@ -204,7 +204,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 Text(
                   'Enter your weight',
                   style: TextStyle(
-                      color: primaryColor,
+                      color: textBlack,
                       fontWeight: FontWeight.w600,
                       fontSize: 14),
                   textAlign: TextAlign.center,
@@ -215,7 +215,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
-                        color: primaryColor,
+                        color: textBlack,
                         fontSize: 12),
                   ),
                 ),
@@ -234,7 +234,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(color: primaryColor, width: 1),
+                        border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
                       label: 'Weight measures in ' + unit,
@@ -297,7 +297,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   Text(
                     'Enter your blood pressure',
                     style: TextStyle(
-                        color: primaryColor,
+                        color: textBlack,
                         fontWeight: FontWeight.w600,
                         fontSize: 14),
                     textAlign: TextAlign.center,
@@ -314,8 +314,8 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     child: Text(
                       'Systolic (mmHg)',
                       style: TextStyle(
-                          color: primaryColor,
-                          fontWeight: FontWeight.w600,
+                          color: textBlack,
+                          fontWeight: FontWeight.w500,
                           fontSize: 12),
                       textAlign: TextAlign.left,
                     ),
@@ -328,8 +328,8 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     child: Text(
                       'Diastolic (mmHg)',
                       style: TextStyle(
-                          color: primaryColor,
-                          fontWeight: FontWeight.w600,
+                          color: textBlack,
+                          fontWeight: FontWeight.w500,
                           fontSize: 12),
                       textAlign: TextAlign.left,
                     ),
@@ -349,7 +349,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                       padding: EdgeInsets.symmetric(horizontal: 8.0),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(color: primaryColor, width: 1),
+                          border: Border.all(color: textGrey, width: 1),
                           color: Colors.white),
                       child: Semantics(
                         label: 'Systolic measures in mm Hg',
@@ -388,7 +388,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                       padding: EdgeInsets.symmetric(horizontal: 8.0),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(color: primaryColor, width: 1),
+                          border: Border.all(color: textBlack, width: 1),
                           color: Colors.white),
                       child: Semantics(
                         label: 'Diastolic measures in mm Hg',
@@ -549,7 +549,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 Text(
                   'Enter your blood glucose',
                   style: TextStyle(
-                      color: primaryColor,
+                      color: textBlack,
                       fontWeight: FontWeight.w600,
                       fontSize: 14),
                   textAlign: TextAlign.center,
@@ -560,7 +560,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
-                        color: primaryColor,
+                        color: textBlack,
                         fontSize: 12),
                   ),
                 ),
@@ -579,7 +579,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(color: primaryColor, width: 1),
+                        border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
                       label: 'Blood Glucose measures in mg/dl',
@@ -640,7 +640,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 Text(
                   'Enter your blood oxygen saturation',
                   style: TextStyle(
-                      color: primaryColor,
+                      color: textBlack,
                       fontWeight: FontWeight.w600,
                       fontSize: 14),
                   textAlign: TextAlign.center,
@@ -651,7 +651,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
-                        color: primaryColor,
+                        color: textBlack,
                         fontSize: 12),
                   ),
                 ),
@@ -670,7 +670,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(color: primaryColor, width: 1),
+                        border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
                       label: 'Blood oxygen Saturation messures in % ',
@@ -731,7 +731,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 Text(
                   'Enter your pulse rate',
                   style: TextStyle(
-                      color: primaryColor,
+                      color: textBlack,
                       fontWeight: FontWeight.w600,
                       fontSize: 14),
                   textAlign: TextAlign.center,
@@ -742,7 +742,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
-                        color: primaryColor,
+                        color: textBlack,
                         fontSize: 12),
                   ),
                 ),
@@ -761,7 +761,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(color: primaryColor, width: 1),
+                        border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
                       label: 'Pulse rate measures in bpm',
@@ -819,7 +819,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 Text(
                   'Enter your body temperature',
                   style: TextStyle(
-                      color: primaryColor,
+                      color: textBlack,
                       fontWeight: FontWeight.w600,
                       fontSize: 14),
                   textAlign: TextAlign.center,
@@ -830,7 +830,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
-                        color: primaryColor,
+                        color: textBlack,
                         fontSize: 12),
                   ),
                 ),
@@ -849,7 +849,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(color: primaryColor, width: 1),
+                        border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
                       label: 'Body Temprature messures in °F',

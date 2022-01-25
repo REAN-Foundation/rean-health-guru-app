@@ -243,7 +243,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
           ),
           Text(
             'Name of the cardholder',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
           ),
           SizedBox(
             height: 8,
@@ -277,7 +277,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
           ),
           Text(
             'Card Number',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
           ),
           SizedBox(
             height: 8,
@@ -328,7 +328,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                       Text(
                         'Expiry Date',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14),
+                            fontWeight: FontWeight.w600, fontSize: 14),
                       ),
                       SizedBox(
                         height: 8,
@@ -383,7 +383,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                       Text(
                         'Security Code (CVV)',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14),
+                            fontWeight: FontWeight.w600, fontSize: 14),
                       ),
                       SizedBox(
                         height: 8,

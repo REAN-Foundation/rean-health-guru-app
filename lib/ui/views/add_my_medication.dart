@@ -152,7 +152,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 backgroundColor: Colors.white,
                 brightness: Brightness.light,
                 title: Text(
-                  'My Medication',
+                  'Medication',
                   style: TextStyle(
                       fontSize: 16.0,
                       color: primaryColor,

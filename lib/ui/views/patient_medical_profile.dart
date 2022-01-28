@@ -52,11 +52,11 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
               brightness: Brightness.light,
               backgroundColor: Colors.white,
               title: Text(
-                'My Medical Profile',
+                'Medical Profile',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
               ),
               iconTheme: IconThemeData(color: Colors.black),
             ),
@@ -79,13 +79,13 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text('Major Ailment',
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: textBlack)),
                               ),
                               Text(': ',
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
                                 width: 8,
@@ -112,13 +112,13 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text('Other Conditions',
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: textBlack)),
                               ),
                               Text(': ',
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
                                 width: 8,
@@ -146,13 +146,13 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text('Ethnicity',
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: textBlack)),
                               ),
                               Text(': ',
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
                                 width: 8,
@@ -177,13 +177,13 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text('Blood Group',
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: textBlack)),
                               ),
                               Text(':',
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
                                 width: 8,
@@ -206,13 +206,13 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text('Diabetic',
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: textBlack)),
                               ),
                               Text(':',
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
                                 width: 8,
@@ -234,13 +234,13 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text('Heart Patient',
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: textBlack)),
                               ),
                               Text(':',
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
                                 width: 8,
@@ -265,13 +265,13 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text('Marital Status',
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: textBlack)),
                               ),
                               Text(':',
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
                                 width: 8,
@@ -298,13 +298,13 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text('Occupation',
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: textBlack)),
                               ),
                               Text(':',
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
                                 width: 8,
@@ -328,19 +328,19 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                     child: Text('Sedentary Occupation',
                         style: TextStyle(
                             fontSize: 16.0,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             color: textBlack)),
                   ),
                   Text(':',
                       style: TextStyle(
                           fontSize: 16.0,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           color: textBlack)),
                   SizedBox(width: 8,),
                   Text('No',
                       style: TextStyle(
                           fontSize: 16.0,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           color: textBlack)),
                 ],
               ),
@@ -352,13 +352,13 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text('Nationality',
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: textBlack)),
                               ),
                               Text(':',
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
                                 width: 8,
@@ -386,13 +386,13 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text('Is Smoker?',
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: textBlack)),
                               ),
                               Text(':',
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
                                 width: 8,
@@ -414,13 +414,13 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text('Is Drinker?',
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: textBlack)),
                               ),
                               Text(':',
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
                                 width: 8,
@@ -442,13 +442,13 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text('Procedure History',
                                     style: TextStyle(
                                         fontSize: 16.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: textBlack)),
                               ),
                               Text(':',
                                   style: TextStyle(
                                       fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
                                 width: 8,
@@ -544,7 +544,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                 'Medical Profile',
                 style: TextStyle(
                     fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     color: primaryColor,
                     fontSize: 24.0),
                 textAlign: TextAlign.center,

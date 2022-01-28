@@ -68,7 +68,7 @@ class _DeterminActionPlansForCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -100,7 +100,7 @@ class _DeterminActionPlansForCarePlanViewState
                     style: TextStyle(
                         color: textBlack,
                         fontSize: 14,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(
                     height: 16,
@@ -133,7 +133,7 @@ class _DeterminActionPlansForCarePlanViewState
           Text(
             'Select your action for goal plan',
             style: TextStyle(
-                color: primaryColor, fontSize: 16, fontWeight: FontWeight.w700),
+                color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
           ),
           const SizedBox(
             height: 16,
@@ -193,7 +193,7 @@ class _DeterminActionPlansForCarePlanViewState
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 32,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                   fontFamily: 'Montserrat',
                 ),
               ),
@@ -205,7 +205,7 @@ class _DeterminActionPlansForCarePlanViewState
           Text(
             'Determine Your Action Plan',
             style: TextStyle(
-                color: primaryColor, fontSize: 18, fontWeight: FontWeight.w700),
+                color: primaryColor, fontSize: 18, fontWeight: FontWeight.w600),
           ),
         ],
       ),
@@ -246,7 +246,7 @@ class _DeterminActionPlansForCarePlanViewState
             Text(
               'Next',
               style: TextStyle(
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                   color: Colors.white,
                   fontSize: 14),
             ),
@@ -327,7 +327,7 @@ class _DeterminActionPlansForCarePlanViewState
                         'Done!',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 16.0),
                         textAlign: TextAlign.center,
@@ -353,7 +353,7 @@ class _DeterminActionPlansForCarePlanViewState
                   'You are all set to Go!',
                   style: TextStyle(
                       fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       color: primaryColor,
                       fontSize: 16.0),
                   textAlign: TextAlign.center,
@@ -382,7 +382,7 @@ class _DeterminActionPlansForCarePlanViewState
                           'Close',
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 12),
                           textAlign: TextAlign.center,
                         ),

@@ -59,7 +59,7 @@ class _SuccessfullySetupCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -94,7 +94,7 @@ class _SuccessfullySetupCarePlanViewState
                             'Plan ID: ' +
                                 startCarePlanResponse.data.carePlan.displayId,
                             style: TextStyle(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor),
                           ),
                           Image.asset(
@@ -105,7 +105,7 @@ class _SuccessfullySetupCarePlanViewState
                           Text(
                             'Done!',
                             style: TextStyle(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: textBlack,
                                 fontSize: 16),
                           ),
@@ -114,7 +114,7 @@ class _SuccessfullySetupCarePlanViewState
                                 startCarePlanResponse
                                     .data.carePlan.carePlanName,
                             style: TextStyle(
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: textBlack,
                                 fontSize: 16),
                             textAlign: TextAlign.center,
@@ -142,7 +142,7 @@ class _SuccessfullySetupCarePlanViewState
                     child: Text(
                       "Let's get familiar with your plan",
                       style: TextStyle(
-                          color: textBlack, fontWeight: FontWeight.w700),
+                          color: textBlack, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
@@ -195,7 +195,7 @@ class _SuccessfullySetupCarePlanViewState
                                 Text(
                                   'Done',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w600,
                                       color: Colors.white,
                                       fontSize: 14),
                                 ),

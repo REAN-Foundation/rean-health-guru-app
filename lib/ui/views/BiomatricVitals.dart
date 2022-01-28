@@ -30,7 +30,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -85,7 +85,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                                   style: TextStyle(
                                       color: primaryColor,
                                       fontSize: 14,
-                                      fontWeight: FontWeight.w700),
+                                      fontWeight: FontWeight.w600),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -137,7 +137,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w700),
+                                        fontWeight: FontWeight.w600),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -191,7 +191,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w700),
+                                        fontWeight: FontWeight.w600),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -245,7 +245,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w700),
+                                        fontWeight: FontWeight.w600),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -296,7 +296,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w700),
+                                        fontWeight: FontWeight.w600),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -350,7 +350,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
                                     style: TextStyle(
                                         color: primaryColor,
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w700),
+                                        fontWeight: FontWeight.w600),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),

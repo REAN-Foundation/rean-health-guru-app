@@ -40,7 +40,7 @@ class _AssessmentQuestionTwoCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -90,7 +90,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                   'Are these symptoms new\nor worsening?',
                   style: TextStyle(
                       color: primaryColor,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
@@ -128,7 +128,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                           'Yes',
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 14),
                           textAlign: TextAlign.center,
                         ),
@@ -162,7 +162,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                           'No',
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 14),
                           textAlign: TextAlign.center,
                         ),
@@ -195,7 +195,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                       'Good Job!',
                       style: TextStyle(
                           fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 16.0),
                       textAlign: TextAlign.center,
@@ -221,7 +221,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                 'Taking your medications is\nan important part of\nstaying healthy!',
                 style: TextStyle(
                     fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     color: primaryColor,
                     fontSize: 16.0),
                 textAlign: TextAlign.center,
@@ -250,7 +250,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                         'Next',
                         style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             fontSize: 12),
                         textAlign: TextAlign.center,
                       ),
@@ -282,7 +282,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                       'Please Report This!',
                       style: TextStyle(
                           fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 16.0),
                       textAlign: TextAlign.center,
@@ -308,7 +308,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                 'You need to discuss these\nsymptoms with your doctor',
                 style: TextStyle(
                     fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     color: primaryColor,
                     fontSize: 16.0),
                 textAlign: TextAlign.center,
@@ -337,7 +337,7 @@ class _AssessmentQuestionTwoCarePlanViewState
                         'Next',
                         style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             fontSize: 12),
                         textAlign: TextAlign.center,
                       ),

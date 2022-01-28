@@ -34,7 +34,7 @@ class SplashScreen extends StatefulWidget {
       this.title = const Text(''),
       this.backgroundColor = Colors.white,
       this.styleTextUnderTheLoader = const TextStyle(
-          fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
+          fontSize: 18.0, fontWeight: FontWeight.w600, color: Colors.black),
       this.image,
       this.loadingText = const Text(''),
       this.imageBackground,
@@ -158,11 +158,11 @@ class _SplashScreenState extends State<SplashScreen> {
                           height: 16,
                         ),
                         getAppType() == 'AHA'
-                            ? Text('American Heart\nAssociation',
+                            ? Text('HF Helper',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 20,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     color: primaryColor))
                             : Container(),
                         //SizedBox(height: 60,),
@@ -230,7 +230,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  /*Widget _title() {
+/*Widget _title() {
     return Hero(
       tag: "title",
       child: RichText(
@@ -240,7 +240,7 @@ class _SplashScreenState extends State<SplashScreen> {
             style: GoogleFonts.portLligatSans(
               textStyle: Theme.of(context).textTheme.display1,
               fontSize: 30,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               color: primaryColor,
             ),
             children: [

@@ -65,7 +65,7 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -152,9 +152,9 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
                                     Text(
                                       'Next',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
-                                          fontSize: 14),
+                                          fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                      fontSize: 14),
                                     ),
                                     Icon(
                                       Icons.arrow_forward_ios,
@@ -202,7 +202,7 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
       child: Center(
         child: Text(
           'Add Nurse / Social Health Worker',
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
+          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
         ),
       ),
     );
@@ -280,7 +280,7 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
                                       teamMember.details.lastName,
                                   style: TextStyle(
                                       fontSize: 14,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       color: primaryColor)),
                             ),
                             Text(teamMember.details.phoneNumber,
@@ -368,7 +368,7 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'Montserrat',
                                 color: primaryColor)),
                         Row(
@@ -440,7 +440,7 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
                         'Add Nurse / Social Health Worker',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 16.0),
                         textAlign: TextAlign.center,

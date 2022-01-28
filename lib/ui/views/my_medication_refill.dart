@@ -90,7 +90,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 14,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       color: primaryColor)),
                             ],
                           ),
@@ -101,7 +101,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 12,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       color: primaryColor)),
                               SizedBox(
                                 width: 8,
@@ -217,7 +217,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 14,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       color: primaryColor)),
                             ],
                           ),

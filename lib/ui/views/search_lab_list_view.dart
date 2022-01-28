@@ -171,7 +171,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
           ),
@@ -238,7 +238,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                   ),
                   Text(
                     'Near By',
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                   ),
                   SizedBox(
                     height: 16,
@@ -337,7 +337,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     fontFamily: 'Montserrat',
                                     color: primaryColor)),
                             Text(labDetails.locality,
@@ -386,14 +386,14 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                             )),
                         child: Center(
                             child: Text(
-                          'Book Now',
+                              'Book Now',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,
                               fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w700),
+                              fontWeight: FontWeight.w600),
                         )),
                       ),
                     ),

@@ -128,7 +128,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
               ),
               iconTheme: IconThemeData(color: Colors.black),
               actions: <Widget>[
@@ -211,7 +211,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                       'Sleep',
                       semanticsLabel: 'Sleep',
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: 18.0,
                           color: primaryColor),
                     ),
@@ -227,7 +227,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                     Text(
                       '6',
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: 28.0,
                           color: primaryColor),
                     ),
@@ -244,7 +244,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
                     Text(
                       '32',
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: 28.0,
                           color: primaryColor),
                     ),

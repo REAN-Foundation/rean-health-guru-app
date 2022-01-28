@@ -132,7 +132,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontSize: 12,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   color: textBlack)),
                         ),
                       ),

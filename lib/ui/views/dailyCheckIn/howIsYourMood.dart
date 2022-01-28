@@ -55,7 +55,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                 child: Text(
                   "How is your mood?",
                   style: TextStyle(
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       fontSize: 18.0,
                       color: Color(0XFF383739)),
                 ),
@@ -129,7 +129,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -199,7 +199,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -269,7 +269,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -348,7 +348,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -418,7 +418,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -488,7 +488,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -567,7 +567,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -637,7 +637,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),

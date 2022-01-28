@@ -121,7 +121,7 @@ class _SignUpViewState extends State<SignUpView> {
               ),
             ),
             /*Text('Back',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))*/
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600))*/
           ],
         ),
       ),
@@ -136,7 +136,7 @@ class _SignUpViewState extends State<SignUpView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -171,7 +171,7 @@ class _SignUpViewState extends State<SignUpView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -206,7 +206,7 @@ class _SignUpViewState extends State<SignUpView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -239,7 +239,7 @@ class _SignUpViewState extends State<SignUpView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -304,7 +304,7 @@ class _SignUpViewState extends State<SignUpView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -480,7 +480,7 @@ class _SignUpViewState extends State<SignUpView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -595,7 +595,7 @@ class _SignUpViewState extends State<SignUpView> {
           child: Text(
             'SignUp',
             style: TextStyle(
-                fontSize: 18, color: Colors.white, fontWeight: FontWeight.w700),
+                fontSize: 18, color: Colors.white, fontWeight: FontWeight.w600),
           ),
         ),
       ),
@@ -610,7 +610,7 @@ class _SignUpViewState extends State<SignUpView> {
           style: GoogleFonts.portLligatSans(
             textStyle: Theme.of(context).textTheme.headline1,
             fontSize: 30,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w600,
             color: primaryColor,
           ),
           children: [
@@ -639,7 +639,7 @@ class _SignUpViewState extends State<SignUpView> {
         children: <Widget>[
           Text(
             'Gender',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,

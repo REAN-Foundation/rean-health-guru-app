@@ -169,7 +169,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       'Tasks ',
                       style: TextStyle(
                           color: primaryColor,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontSize: 16),
                     ),
                     SizedBox(
@@ -209,7 +209,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                         ? primaryColor
                                         : textBlack,
                                     fontWeight: isUpCommingSelected
-                                        ? FontWeight.w700
+                                        ? FontWeight.w600
                                         : FontWeight.w300,
                                     fontSize: 16),
                               ),
@@ -238,7 +238,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                         : primaryColor,
                                     fontWeight: isUpCommingSelected
                                         ? FontWeight.w300
-                                        : FontWeight.w700,
+                                        : FontWeight.w600,
                                     fontSize: 16),
                               ),
                             ),
@@ -371,7 +371,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize: 14,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           color: primaryColor)),
                                 ),
                               ],
@@ -392,7 +392,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                                 SizedBox(
                                   width: 8,
@@ -539,7 +539,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor)),
                       ],
                     ),
@@ -556,7 +556,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 12,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor)),
                         SizedBox(
                           width: 8,
@@ -839,7 +839,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                     child: Text(task.details.businessNodeName,
                                         style: TextStyle(
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             color: primaryColor)),
                                   ),
                                   Text(task.details.businessUserName,
@@ -860,7 +860,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                               .toLocal()),
                                           style: TextStyle(
                                               fontSize: 14.0,
-                                              fontWeight: FontWeight.w500)),
+                                              fontWeight: FontWeight.w600)),
                                       Text('ID: ' + task.displayId,
                                           style: TextStyle(
                                               fontSize: 12.0,

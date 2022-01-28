@@ -84,7 +84,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -124,7 +124,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
                               style: TextStyle(
                                   fontSize: 16.0,
                                   color: Colors.grey,
-                                  fontWeight: FontWeight.w700),
+                                  fontWeight: FontWeight.w600),
                             ),
                           ],
                         ),

@@ -56,7 +56,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                 child: Text(
                   "How is your energy level?",
                   style: TextStyle(
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       fontSize: 18.0,
                       color: Color(0XFF383739)),
                 ),
@@ -69,7 +69,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                 child: Text(
                   "You are able to:",
                   style: TextStyle(
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       fontSize: 16.0,
                       color: Color(0XFF383739)),
                 ),
@@ -139,7 +139,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontFamily: 'Montserrat')),
                                   ],
                                 ),
@@ -241,7 +241,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontFamily: 'Montserrat')),
                                   ],
                                 ),
@@ -334,7 +334,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontFamily: 'Montserrat')),
                                   ],
                                 ),
@@ -427,7 +427,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontFamily: 'Montserrat')),
                                   ],
                                 ),
@@ -529,7 +529,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontFamily: 'Montserrat')),
                                   ],
                                 ),
@@ -622,7 +622,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontFamily: 'Montserrat')),
                                   ],
                                 ),
@@ -724,7 +724,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                       style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.black,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           fontFamily: 'Montserrat')),
                                 ],
                               ),
@@ -774,7 +774,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                   child: Text(
                     "Done",
                     style: TextStyle(
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         fontSize: 18.0,
                         color: Colors.white),
                   ),

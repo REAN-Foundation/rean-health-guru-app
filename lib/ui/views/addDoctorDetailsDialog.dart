@@ -134,7 +134,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
       child: Text(
         '      Add       ',
         style: TextStyle(
-            color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+            color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
       ),
       style: ButtonStyle(
           foregroundColor: MaterialStateProperty.all<Color>(primaryLightColor),
@@ -154,7 +154,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
           ),
           SizedBox(
             height: 10,
@@ -198,7 +198,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
           ),
           SizedBox(
             height: 10,
@@ -243,7 +243,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
           Text(
             title,
             style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 fontSize: 15,
                 color: Colors.black87),
           ),
@@ -295,7 +295,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
               excluding: true,
               child: Text(
                 'Gender*',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
               ),
             ),
             SizedBox(
@@ -336,7 +336,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
           ),
           SizedBox(
             height: 10,

@@ -29,7 +29,7 @@ class ImageViewer extends StatelessWidget {
         title: Text(
           'Reports',
           style: TextStyle(
-              fontSize: 16.0, color: primaryColor, fontWeight: FontWeight.w700),
+              fontSize: 16.0, color: primaryColor, fontWeight: FontWeight.w600),
         ),
         actions: <Widget>[
           if (Platform.isAndroid)

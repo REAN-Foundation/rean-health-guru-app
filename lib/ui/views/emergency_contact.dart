@@ -594,7 +594,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.only(right: 18.0),
+                              padding: const EdgeInsets.only(right: 24.0),
                               child: Text(
                                   'Dr. ' +
                                       details.contactPerson.firstName
@@ -934,7 +934,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Padding(
-                                  padding: const EdgeInsets.only(right: 18.0),
+                                  padding: const EdgeInsets.only(right: 24.0),
                                   child: Text(
                                       details.contactPerson.firstName
                                               .toString() +
@@ -1110,7 +1110,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Padding(
-                                  padding: const EdgeInsets.only(right: 18.0),
+                                  padding: const EdgeInsets.only(right: 24.0),
                                   child: Text(
                                       details.contactPerson.firstName
                                               .toString() +
@@ -1178,7 +1178,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         //child: addOrEditAllergiesDialog(context),
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height - 120,
+          height: 640,
           child: Column(
             children: [
               Row(

@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' as date;
 import 'package:paitent/core/models/FAQChatModelPojo.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
@@ -36,7 +36,7 @@ final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
 String knowledgeLinkDisplayedDate = '';
 String dailyCheckInDate = '';
 var chatList = <FAQChatModelPojo>[];
-var dateFormatGraphStandard = DateFormat('MMM dd, yyyy');
+var dateFormatGraphStandard = date.DateFormat('MMM dd, yyyy');
 PhoneNumberUtil plugin = PhoneNumberUtil();
 String dailyMood = '';
 String dailyFeeling = '';
@@ -141,6 +141,11 @@ void showToast(String msg, BuildContext context) {
 }
 
 void showToastMsg(String msg, BuildContext context) {
+  bool read = true;
+  if (read) {
+    SemanticsService.announce('', TextDirection.ltr);
+    read = false;
+  }
   FocusManager.instance.primaryFocus.unfocus();
   Fluttertoast.showToast(
     msg: msg,

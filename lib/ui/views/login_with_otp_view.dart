@@ -168,7 +168,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                                     ? Image.asset(
                                         'res/images/aha_logo.png',
                                         semanticLabel:
-                                            'American Heart Association',
+                                            'American Heart Association logo',
                                       )
                                     : Image.asset(
                                         'res/images/app_logo_tranparent.png',

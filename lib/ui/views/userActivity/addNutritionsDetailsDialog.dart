@@ -213,7 +213,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
       alignment: Alignment.center,
       child: ElevatedButton(
         onPressed: () {
-          if (_nutritionNameController.text.isEmpty) {
+          if (_nutritionNameController.text.trim().isEmpty) {
             showToastMsg("Please enter food name", context);
           } else if (_consumedCaloriesController.text.isEmpty) {
             showToastMsg("Please enter calories", context);

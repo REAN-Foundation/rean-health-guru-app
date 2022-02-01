@@ -145,7 +145,7 @@ class _SplashScreenState extends State<SplashScreen> {
                               ),*/
                           child: Semantics(
                             label: getAppType() == 'AHA'
-                                ? 'HF Helper App Logo'
+                                ? 'American Heart Association Logo'
                                 : 'REAN HealthGuru app logo',
                             image: true,
                             child: getAppType() == 'AHA'

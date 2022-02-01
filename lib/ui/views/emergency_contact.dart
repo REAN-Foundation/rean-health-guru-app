@@ -896,6 +896,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                             child: Center(
                               child: Semantics(
                                 label: 'Call Nurse',
+                                button: true,
                                 child: InkWell(
                                   onTap: () async {
                                     final String url =
@@ -1072,6 +1073,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                             child: Center(
                               child: Semantics(
                                 label: 'Call Family Member',
+                                button: true,
                                 child: InkWell(
                                   onTap: () async {
                                     final String url =

@@ -463,16 +463,16 @@ class _AppDrawerState extends State<AppDrawer> {
             style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontStyle: FontStyle.normal,
-                fontSize: 24.0,
+                fontSize: 18.0,
                 color: Colors.black),
           ),
           contentPadding: EdgeInsets.all(4.0),
           subtitle: Text(
             'Are you sure you want to logout?',
             style: TextStyle(
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w500,
                 fontStyle: FontStyle.normal,
-                fontSize: 20.0,
+                fontSize: 16.0,
                 color: Colors.black),
           ),
         ),

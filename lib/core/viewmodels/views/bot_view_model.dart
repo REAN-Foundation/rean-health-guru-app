@@ -2,6 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:paitent/core/models/ChatApiResponse.dart';
 import 'package:paitent/networking/ChatApiProvider.dart';
+import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
 
 import '../base_model.dart';
@@ -11,7 +12,13 @@ class BotViewModel extends BaseModel {
 
   ChatApiProvider apiProvider = GetIt.instance<ChatApiProvider>();
 
+  String clientName = 'REAN_BOT';
+
   Future<ChatApiResponse> sendMsgApi(Map body) async {
+    if (getAppType() == 'AHA') {
+      clientName = getAppType();
+    }
+
     setBusy(true);
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
@@ -19,7 +26,11 @@ class BotViewModel extends BaseModel {
     map['authentication'] = dotenv.env['BOT_HEADER_TOKEN'];
 
     final response = await apiProvider.post(
-        '/REAN_BOT/REAN_SUPPORT/' + dotenv.env['BOT_URL_TOKEN'] + '/receive',
+        '/' +
+            clientName +
+            '/REAN_SUPPORT/' +
+            dotenv.env['BOT_URL_TOKEN'] +
+            '/receive',
         header: map,
         body: body);
 

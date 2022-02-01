@@ -140,7 +140,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                     child: getAppType() == 'AHA'
                         ? Image.asset(
                             'res/images/aha_logo.png',
-                            semanticLabel: 'American Heart Association',
+                            semanticLabel: 'American Heart Association Logo',
                           )
                         : Image.asset(
                             'res/images/app_logo_tranparent.png',

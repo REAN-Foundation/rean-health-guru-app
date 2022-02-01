@@ -1,9 +1,11 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' as date;
 import 'package:paitent/core/models/FAQChatModelPojo.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
@@ -36,7 +38,7 @@ final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
 String knowledgeLinkDisplayedDate = '';
 String dailyCheckInDate = '';
 var chatList = <FAQChatModelPojo>[];
-var dateFormatGraphStandard = DateFormat('MMM dd, yyyy');
+var dateFormatGraphStandard = date.DateFormat('MMM dd, yyyy');
 PhoneNumberUtil plugin = PhoneNumberUtil();
 String dailyMood = '';
 String dailyFeeling = '';
@@ -141,6 +143,13 @@ void showToast(String msg, BuildContext context) {
 }
 
 void showToastMsg(String msg, BuildContext context) {
+  if (Platform.isAndroid) {
+    SemanticsService.announce('', TextDirection.ltr);
+  } else {
+    Future.delayed(const Duration(milliseconds: 500), () {
+      SemanticsService.announce(msg, TextDirection.ltr);
+    });
+  }
   FocusManager.instance.primaryFocus.unfocus();
   Fluttertoast.showToast(
     msg: msg,
@@ -154,7 +163,7 @@ void showToastMsg(String msg, BuildContext context) {
 setImage(String url) {
   CachedNetworkImage(
     imageUrl:
-        'https://lh3.googleusercontent.com/a-/AOh14GhzcCR4O6GwUKtpzxuls_PRvD7mgvcuCrse5l4O1w=s88-c-k-c0x00ffffff-no-rj-mo',
+    'https://lh3.googleusercontent.com/a-/AOh14GhzcCR4O6GwUKtpzxuls_PRvD7mgvcuCrse5l4O1w=s88-c-k-c0x00ffffff-no-rj-mo',
     placeholder: (context, url) => CircularProgressIndicator(),
     errorWidget: (context, url, error) => Icon(Icons.error),
   );
@@ -192,7 +201,7 @@ String calculateAge(DateTime birthDate) {
 getKnowdledgeLinkLastViewDate() async {
   try {
     knowledgeLinkDisplayedDate =
-        await _sharedPrefUtils.read("knowledgeLinkDisplayedDate");
+    await _sharedPrefUtils.read("knowledgeLinkDisplayedDate");
     debugPrint('knowledgeLinkDisplayedDate ==> $knowledgeLinkDisplayedDate ');
   } catch (Excepetion) {
     // do something
@@ -237,7 +246,7 @@ Future<bool> isValidPhoneNumber(String phone, String code) async {
 extension EmailValidator on String {
   bool isValidEmail() {
     return RegExp(
-            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
         .hasMatch(this);
   }
 }

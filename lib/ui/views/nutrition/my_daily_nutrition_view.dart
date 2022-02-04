@@ -176,15 +176,15 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
               children: [
                 Container(
                   color: primaryColor,
-                  height: 160,
+                  height: 140,
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Today',
-                        semanticsLabel: 'Today',
+                        'Today\'s total calories',
+                        semanticsLabel: 'Today\'s total calories',
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 14.0,
@@ -221,17 +221,17 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      /*SizedBox(
                         height: 16,
                       ),
                       Text(
-                        'Total Calories',
+                        '',
                         semanticsLabel: 'Total Calories',
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 14.0,
                             color: Colors.white),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),

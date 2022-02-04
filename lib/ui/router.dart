@@ -52,6 +52,7 @@ import 'package:paitent/ui/views/mind_full_moment_care_plan.dart';
 import 'package:paitent/ui/views/myReportsUpload.dart';
 import 'package:paitent/ui/views/my_care_plan.dart';
 import 'package:paitent/ui/views/my_medication.dart';
+import 'package:paitent/ui/views/nutrition/my_daily_nutrition_view.dart';
 import 'package:paitent/ui/views/otp_screen_view.dart';
 import 'package:paitent/ui/views/patient_medical_profile.dart';
 import 'package:paitent/ui/views/payment_conformation.dart';
@@ -73,7 +74,6 @@ import 'package:paitent/ui/views/successfully_setup_care_plan.dart';
 import 'package:paitent/ui/views/support_view.dart';
 import 'package:paitent/ui/views/symptoms_view.dart';
 import 'package:paitent/ui/views/userActivity/MeditationTimmerView.dart';
-import 'package:paitent/ui/views/userActivity/nutrition_daily_view.dart';
 import 'package:paitent/ui/views/userActivity/view_my_daily_activity.dart';
 import 'package:paitent/ui/views/userActivity/view_my_daily_sleep.dart';
 import 'package:paitent/ui/views/video_more_care_plan.dart';
@@ -162,7 +162,7 @@ class Routers {
         return MaterialPageRoute(builder: (_) => ViewMyDailySleep());
       case RoutePaths.My_Nutrition:
         return MaterialPageRoute(
-            builder: (_) => NutritionDailyView(settings.arguments));
+            builder: (_) => MyDailyNutritionView(settings.arguments));
       case RoutePaths.Meditation:
         return MaterialPageRoute(builder: (_) => MeditationTimmerView());
       /*case RoutePaths.My_Vitals_By_Device_Framework:

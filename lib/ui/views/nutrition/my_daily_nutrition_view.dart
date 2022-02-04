@@ -1,0 +1,1014 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:paitent/core/dbUtils/DatabaseHelper.dart';
+import 'package:paitent/core/models/BaseResponse.dart';
+import 'package:paitent/core/models/GlassOfWaterConsumption.dart';
+import 'package:paitent/core/models/NutritionResponseStore.dart';
+import 'package:paitent/core/viewmodels/views/patients_health_marker.dart';
+import 'package:paitent/networking/CustomException.dart';
+import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/ui/views/base_widget.dart';
+import 'package:paitent/utils/CommonUtils.dart';
+import 'package:paitent/utils/SharedPrefUtils.dart';
+import 'package:paitent/utils/StringUtility.dart';
+
+import 'add_daily_nutrition_view.dart';
+
+//ignore: must_be_immutable
+class MyDailyNutritionView extends StatefulWidget {
+  String mode;
+
+  MyDailyNutritionView(this.mode);
+
+  @override
+  _MyDailyNutritionViewState createState() => _MyDailyNutritionViewState();
+}
+
+class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
+  var model = PatientHealthMarkerViewModel();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  var dateFormat = DateFormat('yyyy-MM-dd');
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  double totalTodayCal = 0.0;
+  double totalBreakfastCal = 0.0;
+  double totalLunchCal = 0.0;
+  double totalDinnerCal = 0.0;
+  double totalMorningSnackCal = 0.0;
+  double totalAfernoonSnackCal = 0.0;
+  double totalEveningSncakCal = 0.0;
+  Color buttonColor = primaryLightColor;
+  int waterGlass = 0;
+  GlassOfWaterConsumption glassOfWaterConsumption;
+  NutritionResponseStore nutritionResponseStore;
+  DateTime startDate;
+  final dbHelper = DatabaseHelper.instance;
+
+  loadSharedPref() async {
+    try {
+      nutritionResponseStore = NutritionResponseStore.fromJson(
+          await _sharedPrefUtils.read('nutrition'));
+      debugPrint('Nutrition Date ==> ${nutritionResponseStore.date}');
+      setUpData();
+    } catch (e) {
+      saveData();
+      debugPrint('error caught: $e');
+    }
+  }
+
+  loadWaterConsuption() async {
+    final waterConsuption = await _sharedPrefUtils.read('waterConsumption');
+
+    if (waterConsuption != null) {
+      glassOfWaterConsumption =
+          GlassOfWaterConsumption.fromJson(waterConsuption);
+    }
+
+    if (glassOfWaterConsumption != null) {
+      if (startDate == glassOfWaterConsumption.date) {
+        waterGlass = glassOfWaterConsumption.count;
+      }
+    }
+  }
+
+  setUpData() {
+    debugPrint('Todays Date ==> ${dateFormat.format(DateTime.now())}');
+    if (dateFormat.format(DateTime.now()) == nutritionResponseStore.date) {
+      totalTodayCal = nutritionResponseStore.totalTodayCal;
+      totalBreakfastCal = nutritionResponseStore.totalBreakfastCal;
+      totalLunchCal = nutritionResponseStore.totalLunchCal;
+      totalDinnerCal = nutritionResponseStore.totalDinnerCal;
+      totalMorningSnackCal = nutritionResponseStore.totalMorningSnackCal;
+      totalAfernoonSnackCal = nutritionResponseStore.totalAfernoonSnackCal;
+      totalEveningSncakCal = nutritionResponseStore.totalEveningSncakCal;
+      setState(() {});
+    } else {
+      saveData();
+    }
+  }
+
+  saveData() {
+    debugPrint('Test');
+    nutritionResponseStore = NutritionResponseStore();
+    nutritionResponseStore.totalTodayCal = totalTodayCal;
+    nutritionResponseStore.totalBreakfastCal = totalBreakfastCal;
+    nutritionResponseStore.totalLunchCal = totalLunchCal;
+    nutritionResponseStore.totalDinnerCal = totalDinnerCal;
+    nutritionResponseStore.totalMorningSnackCal = totalMorningSnackCal;
+    nutritionResponseStore.totalAfernoonSnackCal = totalAfernoonSnackCal;
+    nutritionResponseStore.totalEveningSncakCal = totalEveningSncakCal;
+    nutritionResponseStore.date = dateFormat.format(DateTime.now());
+    _sharedPrefUtils.save('nutrition', nutritionResponseStore.toJson());
+  }
+
+  addCaloriesDialog() {
+    if (widget.mode != '') {
+      Navigator.push(
+        context,
+        CupertinoPageRoute(
+            fullscreenDialog: true,
+            builder: (context) => AddDailyNutritionView(
+                submitButtonListner: (name, caloriesConsumed, nutritionType) {
+                  debugPrint(nutritionType);
+                  recordMyCaloriesConsumed(
+                      name, nutritionType, caloriesConsumed);
+                  addNutrition(nutritionType, caloriesConsumed);
+                  Navigator.of(context, rootNavigator: true).pop();
+                },
+                nutritionName: widget.mode)),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    startDate = DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
+
+    loadSharedPref();
+    loadWaterConsuption();
+
+    if (getAppType() == 'AHA') {
+      buttonColor = redLightAha;
+    }
+
+    Future.delayed(
+        const Duration(milliseconds: 200), () => addCaloriesDialog());
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BaseWidget<PatientHealthMarkerViewModel>(
+      model: model,
+      builder: (context, model, child) => Container(
+        child: Scaffold(
+            key: _scaffoldKey,
+            backgroundColor: primaryColor,
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: primaryColor,
+              brightness: Brightness.dark,
+              title: Text(
+                'Nutrition',
+                style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600),
+              ),
+              iconTheme: IconThemeData(color: Colors.white),
+              actions: <Widget>[
+                /*IconButton(
+                icon: Icon(
+                  Icons.person_pin,
+                  color: Colors.black,
+                  size: 32.0,
+                ),
+                onPressed: () {
+                  debugPrint("Clicked on profile icon");
+                },
+              )*/
+              ],
+            ),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  color: primaryColor,
+                  height: 160,
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Today',
+                        semanticsLabel: 'Today',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14.0,
+                            color: Colors.white),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Semantics(
+                        label: totalTodayCal.toStringAsFixed(0) + ' Calories',
+                        child: ExcludeSemantics(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                totalTodayCal.toStringAsFixed(0),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 34.0,
+                                    color: Colors.white),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                'cals',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 34.0,
+                                    color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                        'Total Calories',
+                        semanticsLabel: 'Total Calories',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14.0,
+                            color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(12),
+                            topLeft: Radius.circular(12))),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Breakfast',
+                            semanticsLabel: 'Breakfast',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16.0,
+                                color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Container(
+                            height: 56,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Semantics(
+                                    label:
+                                        totalBreakfastCal.toStringAsFixed(0) +
+                                            ' Calories',
+                                    child: ExcludeSemantics(
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(
+                                            totalBreakfastCal
+                                                .toStringAsFixed(0),
+                                            semanticsLabel: '',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            'cals',
+                                            semanticsLabel: 'cals',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 48,
+                                    width: 48,
+                                    decoration: BoxDecoration(
+                                        color: buttonColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12))),
+                                    child: Center(
+                                      child: IconButton(
+                                        onPressed: () async {
+                                          /*showDialog(
+                                              context: context,
+                                              builder: (_) {
+                                                return _addCaloriesConsumedDialog(
+                                                    context, 'breakfast');
+                                              });*/
+                                          Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                                fullscreenDialog: true,
+                                                builder: (context) =>
+                                                    AddDailyNutritionView(
+                                                        submitButtonListner:
+                                                            (name,
+                                                                caloriesConsumed,
+                                                                nutritionType) {
+                                                          debugPrint(
+                                                              nutritionType);
+                                                          recordMyCaloriesConsumed(
+                                                              name,
+                                                              nutritionType,
+                                                              caloriesConsumed);
+                                                          addNutrition(
+                                                              nutritionType,
+                                                              caloriesConsumed);
+                                                          Navigator.of(context,
+                                                                  rootNavigator:
+                                                                      true)
+                                                              .pop();
+                                                        },
+                                                        nutritionName:
+                                                            'breakfast')),
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: primaryColor,
+                                          semanticLabel:
+                                              'Add Calories for Breakfast',
+                                          size: 32,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            'Lunch',
+                            semanticsLabel: 'Lunch',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16.0,
+                                color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Container(
+                            height: 56,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Semantics(
+                                    label: totalLunchCal.toStringAsFixed(0) +
+                                        ' Calories',
+                                    child: ExcludeSemantics(
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(
+                                            totalLunchCal.toStringAsFixed(0),
+                                            semanticsLabel: '',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            'cals',
+                                            semanticsLabel: 'cals',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 48,
+                                    width: 48,
+                                    decoration: BoxDecoration(
+                                        color: buttonColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12))),
+                                    child: Center(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          /*showDialog(
+                                              context: context,
+                                              builder: (_) {
+                                                return _addCaloriesConsumedDialog(
+                                                    context, 'lunch');
+                                              });*/
+                                          Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                                fullscreenDialog: true,
+                                                builder: (context) =>
+                                                    AddDailyNutritionView(
+                                                        submitButtonListner:
+                                                            (name,
+                                                                caloriesConsumed,
+                                                                nutritionType) {
+                                                          debugPrint(
+                                                              nutritionType);
+                                                          recordMyCaloriesConsumed(
+                                                              name,
+                                                              nutritionType,
+                                                              caloriesConsumed);
+                                                          addNutrition(
+                                                              nutritionType,
+                                                              caloriesConsumed);
+                                                          Navigator.of(context,
+                                                                  rootNavigator:
+                                                                      true)
+                                                              .pop();
+                                                        },
+                                                        nutritionName:
+                                                            'lunch')),
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: primaryColor,
+                                          semanticLabel:
+                                              'Add Calories for lunch',
+                                          size: 32,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            'Dinner',
+                            semanticsLabel: 'Dinner',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16.0,
+                                color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Container(
+                            height: 56,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Semantics(
+                                    label: totalDinnerCal.toStringAsFixed(0) +
+                                        ' Calories',
+                                    child: ExcludeSemantics(
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(
+                                            totalDinnerCal.toStringAsFixed(0),
+                                            semanticsLabel: '',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            'cals',
+                                            semanticsLabel: 'cals',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 48,
+                                    width: 48,
+                                    decoration: BoxDecoration(
+                                        color: buttonColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12))),
+                                    child: Center(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          /*showDialog(
+                                              context: context,
+                                              builder: (_) {
+                                                return _addCaloriesConsumedDialog(
+                                                    context, 'dinner');
+                                              });*/
+                                          Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                                fullscreenDialog: true,
+                                                builder: (context) =>
+                                                    AddDailyNutritionView(
+                                                        submitButtonListner:
+                                                            (name,
+                                                                caloriesConsumed,
+                                                                nutritionType) {
+                                                          debugPrint(
+                                                              nutritionType);
+                                                          recordMyCaloriesConsumed(
+                                                              name,
+                                                              nutritionType,
+                                                              caloriesConsumed);
+                                                          addNutrition(
+                                                              nutritionType,
+                                                              caloriesConsumed);
+                                                          Navigator.of(context,
+                                                                  rootNavigator:
+                                                                      true)
+                                                              .pop();
+                                                        },
+                                                        nutritionName:
+                                                            'dinner')),
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: primaryColor,
+                                          semanticLabel:
+                                              'Add Calories for dinner',
+                                          size: 32,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            'Snack',
+                            semanticsLabel: 'Snack',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16.0,
+                                color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Container(
+                            height: 56,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Semantics(
+                                    label: totalMorningSnackCal
+                                            .toStringAsFixed(0) +
+                                        ' Calories',
+                                    child: ExcludeSemantics(
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(
+                                            totalMorningSnackCal
+                                                .toStringAsFixed(0),
+                                            semanticsLabel: '',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            'cals',
+                                            semanticsLabel: 'cals',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 48,
+                                    width: 48,
+                                    decoration: BoxDecoration(
+                                        color: buttonColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12))),
+                                    child: Center(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          /*showDialog(
+                                              context: context,
+                                              builder: (_) {
+                                                return _addCaloriesConsumedDialog(
+                                                    context, 'snack');
+                                              });*/
+                                          Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                                fullscreenDialog: true,
+                                                builder: (context) =>
+                                                    AddDailyNutritionView(
+                                                        submitButtonListner:
+                                                            (name,
+                                                                caloriesConsumed,
+                                                                nutritionType) {
+                                                          debugPrint(
+                                                              nutritionType);
+                                                          recordMyCaloriesConsumed(
+                                                              name,
+                                                              nutritionType,
+                                                              caloriesConsumed);
+                                                          addNutrition(
+                                                              nutritionType,
+                                                              caloriesConsumed);
+                                                          Navigator.of(context,
+                                                                  rootNavigator:
+                                                                      true)
+                                                              .pop();
+                                                        },
+                                                        nutritionName:
+                                                            'snack')),
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: primaryColor,
+                                          semanticLabel:
+                                              'Add Calories for snack',
+                                          size: 32,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            'Water',
+                            semanticsLabel: 'Water',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16.0,
+                                color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Container(
+                            height: 56,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Semantics(
+                                    label: totalMorningSnackCal
+                                            .toStringAsFixed(0) +
+                                        ' glasses',
+                                    child: ExcludeSemantics(
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(
+                                            waterGlass.toString(),
+                                            semanticsLabel: '',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            'glasses',
+                                            semanticsLabel: 'glasses',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 48,
+                                    width: 48,
+                                    decoration: BoxDecoration(
+                                        color: buttonColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12))),
+                                    child: Center(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          recordMyWaterConsumptions();
+                                        },
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: primaryColor,
+                                          semanticLabel: 'Add water glass',
+                                          size: 32,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            )),
+      ),
+    );
+  }
+
+/*  Widget _addCaloriesConsumedDialog(
+      BuildContext context, String nutritionName) {
+    return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        //child: addOrEditAllergiesDialog(context),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 380,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ExcludeSemantics(
+                    excluding: true,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Calories Intake ' +
+                            nutritionName.replaceAll('snack', ' snack'),
+                        style: TextStyle(
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                            fontSize: 18.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    alignment: Alignment.topRight,
+                    icon: Icon(
+                      Icons.close,
+                      color: primaryColor,
+                    ),
+                    tooltip: 'Close',
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: AddNutritionDetailsDialog(
+                    submitButtonListner:
+                        (name, caloriesConsumed, nutritionType) {
+                      debugPrint(nutritionType);
+                      recordMyCaloriesConsumed(name, nutritionType, caloriesConsumed);
+                      addNutrition(nutritionType, caloriesConsumed);
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                    nutritionName: nutritionName),
+              )
+            ],
+          ),
+        ));
+  }*/
+
+  addNutrition(String type, double caloriesConsumed) {
+    if (type == 'breakfast') {
+      totalBreakfastCal = totalBreakfastCal + caloriesConsumed;
+    } else if (type == 'lunch') {
+      totalLunchCal = totalLunchCal + caloriesConsumed;
+    } else if (type == 'dinner') {
+      totalDinnerCal = totalDinnerCal + caloriesConsumed;
+    } else if (type == 'snack') {
+      totalMorningSnackCal = totalMorningSnackCal + caloriesConsumed;
+    } else if (type == 'afternoonSnacks') {
+      totalAfernoonSnackCal = totalAfernoonSnackCal + caloriesConsumed;
+    } else if (type == 'eveningSnacks') {
+      totalEveningSncakCal = totalEveningSncakCal + caloriesConsumed;
+    }
+
+    totalTodayCal = totalBreakfastCal +
+        totalLunchCal +
+        totalDinnerCal +
+        totalMorningSnackCal +
+        totalAfernoonSnackCal +
+        totalEveningSncakCal;
+
+    setState(() {});
+
+    nutritionResponseStore.totalTodayCal = totalTodayCal;
+    nutritionResponseStore.totalBreakfastCal = totalBreakfastCal;
+    nutritionResponseStore.totalLunchCal = totalLunchCal;
+    nutritionResponseStore.totalDinnerCal = totalDinnerCal;
+    nutritionResponseStore.totalMorningSnackCal = totalMorningSnackCal;
+    nutritionResponseStore.totalAfernoonSnackCal = totalAfernoonSnackCal;
+    nutritionResponseStore.totalEveningSncakCal = totalEveningSncakCal;
+    nutritionResponseStore.date = dateFormat.format(DateTime.now());
+    debugPrint('Saved Data ==> ${nutritionResponseStore.toJson()}');
+    _sharedPrefUtils.save('nutrition', nutritionResponseStore.toJson());
+  }
+
+  recordMyCaloriesConsumed(String nutritionName, String nutritionType,
+      double caloriesConsumed) async {
+    try {
+      final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['ConsumedAs'] =
+          nutritionType[0].toUpperCase() + nutritionType.substring(1);
+      map['Food'] = nutritionName;
+      map['Calories'] = caloriesConsumed.toString();
+      map['StartTime'] = dateFormat.format(DateTime.now());
+      map['EndTime'] = dateFormat.format(DateTime.now());
+
+      final BaseResponse baseResponse =
+          await model.recordMyCaloriesConsumed(map);
+      if (baseResponse.status == 'success') {
+        showToast(baseResponse.message, context);
+        recordNutririonEntry(nutritionName, nutritionType, caloriesConsumed);
+      } else {}
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+    /*catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ==> ' + CustomException.toString());
+    }*/
+  }
+
+  recordNutririonEntry(String nutritionName, String nutritionType,
+      double caloriesConsumed) async {
+    final allRows = await dbHelper.querySelectWhereFoodName(nutritionName);
+    print('Query first row: ${allRows.length}');
+    allRows.forEach((row) => print(row));
+
+    if (allRows.isEmpty) {
+      final Map<String, dynamic> row = {
+        DatabaseHelper.columnNutritionFoodItemName: nutritionName.trim(),
+        DatabaseHelper.columnNutritionFoodItemCalories: caloriesConsumed,
+        DatabaseHelper.columnNutritionFoodConsumedTag: nutritionType.trim(),
+        DatabaseHelper.columnNutritionFoodConsumedQuantity: 1,
+      };
+      final id = await dbHelper.insert(row);
+      //showToast('Data saved offline');
+      print('inserted row id: $id');
+    } else {
+      final row = allRows.elementAt(0);
+      final int consumedCount =
+          row[DatabaseHelper.columnNutritionFoodConsumedQuantity] + 1;
+
+      final Map<String, dynamic> updateRow = {
+        DatabaseHelper.columnNutritionFoodItemName: nutritionName.trim(),
+        DatabaseHelper.columnNutritionFoodItemCalories: caloriesConsumed,
+        DatabaseHelper.columnNutritionFoodConsumedTag: nutritionType.trim(),
+        DatabaseHelper.columnNutritionFoodConsumedQuantity: consumedCount,
+      };
+      final id = await dbHelper.update(updateRow);
+      //showToast('Data saved offline');
+      print('Updated row id: $id');
+    }
+  }
+
+  recordMyWaterConsumptions() async {
+    try {
+      waterGlass = waterGlass + 1;
+
+      _sharedPrefUtils.save('waterConsumption',
+          GlassOfWaterConsumption(startDate, waterGlass, '').toJson());
+
+      final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['Volume'] = waterGlass;
+      map['Time'] = dateFormat.format(DateTime.now());
+
+      final BaseResponse baseResponse = await model.recordMyWaterCount(map);
+      if (baseResponse.status == 'success') {
+      } else {}
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+}

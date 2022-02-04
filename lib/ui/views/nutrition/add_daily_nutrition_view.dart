@@ -41,7 +41,8 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
   int selectedIndex = 30000;
 
   getNutririonEntry() async {
-    nutritionList = await dbHelper.querySelectOrderByConsumedQuantity();
+    nutritionList = await dbHelper
+        .querySelectOrderByConsumedQuantity(widget._nutritionName);
     print('Query row: ${nutritionList.length}');
     allNutritionCount = nutritionList.length;
 
@@ -126,10 +127,16 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                               fontSize: 14),
                           textAlign: TextAlign.center,
                         ),
-                        frequentlyUsedFoodListView(),
+                        allNutritionCount == 0
+                            ? frequentlyUsedFoodListViewPlaceHoleder()
+                            : frequentlyUsedFoodListView(),
                         selectedIndex != 30000
                             ? addBottomUIPart()
                             : Container(),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        _submitButton()
                       ],
                     ),
                   ),
@@ -141,17 +148,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
   }
 
   Widget addBottomUIPart() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _makeUndoListCard(),
-        SizedBox(
-          height: 8,
-        ),
-        _submitButton()
-      ],
-    );
+    return _makeUndoListCard();
   }
 
   Widget textFeilds() {
@@ -371,6 +368,17 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
         ),
       ),
     );
+  }
+
+  Widget frequentlyUsedFoodListViewPlaceHoleder() {
+    return Expanded(
+        child: Center(
+      child: Image.asset(
+        'res/images/ic_nutition_dummy.png',
+        height: 160,
+        width: 160,
+      ),
+    ));
   }
 
   Widget frequentlyUsedFoodListView() {

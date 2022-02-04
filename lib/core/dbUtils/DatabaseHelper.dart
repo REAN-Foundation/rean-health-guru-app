@@ -96,11 +96,12 @@ class DatabaseHelper {
         [foodName]);
   }
 
-  Future<List<Map<String, dynamic>>>
-      querySelectOrderByConsumedQuantity() async {
+  Future<List<Map<String, dynamic>>> querySelectOrderByConsumedQuantity(
+      String nutritionType) async {
     final Database db = await instance.database;
     return db.rawQuery(
-        'SELECT * FROM $table ORDER BY $columnNutritionFoodConsumedQuantity DESC');
+        'SELECT * FROM $table WHERE $columnNutritionFoodConsumedTag = ? ORDER BY $columnNutritionFoodConsumedQuantity DESC',
+        [nutritionType]);
   }
 
   // All of the methods (insert, query, update, delete) can also be done using

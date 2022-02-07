@@ -67,13 +67,14 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
       builder: (context, model, child) => Container(
         child: Scaffold(
             key: _scaffoldKey,
-            backgroundColor: primaryColor,
+            backgroundColor: Colors.white,
             appBar: AppBar(
               elevation: 0,
               backgroundColor: primaryColor,
               brightness: Brightness.dark,
               title: Text(
-                '',
+                widget._nutritionName.substring(0, 1).toUpperCase() +
+                    widget._nutritionName.substring(1),
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,
@@ -93,54 +94,58 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
               )*/
               ],
             ),
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            body: Stack(
               children: [
-                Container(
-                  color: primaryColor,
-                  height: 0,
-                  width: MediaQuery.of(context).size.width,
-                ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(12),
-                            topLeft: Radius.circular(12))),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        textFeilds(),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Text(
-                          'Daily breakfast foods',
-                          style: TextStyle(
-                              color: textBlack,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14),
-                          textAlign: TextAlign.center,
-                        ),
-                        allNutritionCount == 0
-                            ? frequentlyUsedFoodListViewPlaceHoleder()
-                            : frequentlyUsedFoodListView(),
-                        selectedIndex != 30000
-                            ? addBottomUIPart()
-                            : Container(),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        _submitButton()
-                      ],
+                Positioned(
+                    top: 0,
+                    right: 0,
+                    child: Container(
+                      color: primaryColor,
+                      height: 100,
+                      width: MediaQuery.of(context).size.width,
+                    )),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      color: primaryColor,
+                      height: 0,
+                      width: MediaQuery.of(context).size.width,
                     ),
-                  ),
-                )
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(16.0),
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(12),
+                                topLeft: Radius.circular(12))),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            textFeilds(),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            allNutritionCount == 0
+                                ? frequentlyUsedFoodListViewPlaceHoleder()
+                                : frequentlyUsedFoodListView(),
+                            selectedIndex != 30000
+                                ? addBottomUIPart()
+                                : Container(),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            _submitButton()
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ],
             )),
       ),
@@ -174,7 +179,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                 border: Border.all(color: textGrey, width: 1),
                 color: Colors.white),
             child: Semantics(
-              label: 'Food name',
+              label: 'Add your food ',
               //textField: true,
               //hint: 'Example Banana',
               child: TextFormField(
@@ -191,9 +196,9 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                     FilteringTextInputFormatter.deny(RegExp('[\\,|\\+|\\-]')),
                   ],
                   decoration: InputDecoration(
-                      hintStyle: TextStyle(
-                        fontSize: 14,
-                      ),
+                      hintStyle:
+                          TextStyle(fontSize: 14, color: Colors.grey[400]),
+                      hintText: 'i.e. 1 bowl of rice',
                       contentPadding: EdgeInsets.all(0),
                       border: InputBorder.none,
                       fillColor: Colors.white,
@@ -256,8 +261,8 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                         ],
                         decoration: InputDecoration(
                             hintStyle: TextStyle(
-                              fontSize: 14,
-                            ),
+                                fontSize: 14, color: Colors.grey[400]),
+                            hintText: 'i.e. 44 calories',
                             contentPadding: EdgeInsets.all(0),
                             border: InputBorder.none,
                             fillColor: Colors.white,
@@ -276,6 +281,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
     final row = nutritionList.elementAt(selectedIndex);
     return Container(
       height: 60,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: primaryLightColor),
@@ -286,42 +292,46 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(row[DatabaseHelper.columnNutritionFoodItemName],
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black)),
+              Expanded(
+                child: Text(row[DatabaseHelper.columnNutritionFoodItemName],
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black)),
+              ),
               Semantics(
                 label: "Undo",
                 button: true,
-                child: InkWell(
-                  onTap: () {
-                    selectedIndex = 30000;
-                    _nutritionNameController.text = '';
-                    _nutritionNameController.selection =
-                        TextSelection.fromPosition(
-                      TextPosition(
-                          offset: _nutritionNameController.text.length),
-                    );
+                child: ExcludeSemantics(
+                  child: InkWell(
+                    onTap: () {
+                      selectedIndex = 30000;
+                      _nutritionNameController.text = '';
+                      _nutritionNameController.selection =
+                          TextSelection.fromPosition(
+                        TextPosition(
+                            offset: _nutritionNameController.text.length),
+                      );
 
-                    _consumedCaloriesController.text = '';
-                    _consumedCaloriesController.selection =
-                        TextSelection.fromPosition(
-                      TextPosition(
-                          offset: _consumedCaloriesController.text.length),
-                    );
+                      _consumedCaloriesController.text = '';
+                      _consumedCaloriesController.selection =
+                          TextSelection.fromPosition(
+                        TextPosition(
+                            offset: _consumedCaloriesController.text.length),
+                      );
 
-                    setState(() {});
-                  },
-                  child: Text('Undo',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: primaryColor)),
+                      setState(() {});
+                    },
+                    child: Text('Undo',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor)),
+                  ),
                 ),
               )
             ],
@@ -338,7 +348,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
         child: ElevatedButton(
           onPressed: () {
             if (_nutritionNameController.text.trim().isEmpty) {
-              showToastMsg("Please enter food name", context);
+              showToastMsg("Please add your food", context);
             } else if (_consumedCaloriesController.text.isEmpty) {
               showToastMsg("Please enter calories", context);
             } else if (double.parse(
@@ -372,27 +382,43 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
 
   Widget frequentlyUsedFoodListViewPlaceHoleder() {
     return Expanded(
-        child: Center(
-      child: Image.asset(
-        'res/images/ic_nutition_dummy.png',
-        height: 160,
-        width: 160,
+        child: ExcludeSemantics(
+      child: Center(
+        child: Image.asset(
+          'res/images/ic_nutition_dummy.png',
+          height: 160,
+          width: 160,
+        ),
       ),
     ));
   }
 
   Widget frequentlyUsedFoodListView() {
     return Expanded(
-      child: ListView.separated(
-          itemBuilder: (context, index) => _makeFoodListCard(context, index),
-          separatorBuilder: (BuildContext context, int index) {
-            return SizedBox(
-              height: 4,
-            );
-          },
-          itemCount: allNutritionCount,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Daily ' + widget._nutritionName + ' foods',
+            style: TextStyle(
+                color: textBlack, fontWeight: FontWeight.w600, fontSize: 14),
+            textAlign: TextAlign.center,
+          ),
+          Expanded(
+            child: ListView.separated(
+                itemBuilder: (context, index) =>
+                    _makeFoodListCard(context, index),
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    height: 4,
+                  );
+                },
+                itemCount: allNutritionCount,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true),
+          ),
+        ],
+      ),
     );
   }
 
@@ -416,7 +442,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                   Padding(
                     padding: const EdgeInsets.only(right: 24.0),
                     child: Text(row[DatabaseHelper.columnNutritionFoodItemName],
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontSize: 14,
@@ -508,7 +534,9 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                   icon: Icon(
                     index == selectedIndex ? Icons.check : Icons.add,
                     color: index == selectedIndex ? Colors.white : primaryColor,
-                    semanticLabel: '',
+                    semanticLabel: 'Add ' +
+                        row[DatabaseHelper.columnNutritionFoodItemName] +
+                        ' in food name',
                     size: 32,
                   ),
                 ),

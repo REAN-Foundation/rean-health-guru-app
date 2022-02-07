@@ -183,11 +183,11 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Today\'s total calories',
-                        semanticsLabel: 'Today\'s total calories',
+                        'Today\'s total consumed calories',
+                        semanticsLabel: 'Today\'s total consumed calories',
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 14.0,
+                            fontSize: 16.0,
                             color: Colors.white),
                       ),
                       SizedBox(
@@ -223,7 +223,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                       ),
                       /*SizedBox(
                         height: 16,
-                      ),
+                      ),*/
                       Text(
                         '',
                         semanticsLabel: 'Total Calories',
@@ -231,7 +231,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                             fontWeight: FontWeight.w600,
                             fontSize: 14.0,
                             color: Colors.white),
-                      ),*/
+                      ),
                     ],
                   ),
                 ),
@@ -297,8 +297,8 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                             width: 8,
                                           ),
                                           Text(
-                                            'cals',
-                                            semanticsLabel: 'cals',
+                                            'calories',
+                                            semanticsLabel: 'calories',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 16.0,
@@ -415,8 +415,8 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                             width: 8,
                                           ),
                                           Text(
-                                            'cals',
-                                            semanticsLabel: 'cals',
+                                            'calories',
+                                            semanticsLabel: 'calories',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 16.0,
@@ -533,8 +533,8 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                             width: 8,
                                           ),
                                           Text(
-                                            'cals',
-                                            semanticsLabel: 'cals',
+                                            'calories',
+                                            semanticsLabel: 'calories',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 16.0,
@@ -653,8 +653,8 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                             width: 8,
                                           ),
                                           Text(
-                                            'cals',
-                                            semanticsLabel: 'cals',
+                                            'calories',
+                                            semanticsLabel: 'calories',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 16.0,
@@ -751,9 +751,9 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Semantics(
-                                    label: totalMorningSnackCal
-                                            .toStringAsFixed(0) +
-                                        ' glasses',
+                                    label: waterGlass.toStringAsFixed(0) +
+                                        (waterGlass > 1 ? 'glasses' : 'glass')
+                                            .toString(),
                                     child: ExcludeSemantics(
                                       child: Row(
                                         children: [
@@ -772,8 +772,12 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                             width: 8,
                                           ),
                                           Text(
-                                            'glasses',
-                                            semanticsLabel: 'glasses',
+                                            waterGlass > 1
+                                                ? 'glasses'
+                                                : 'glass',
+                                            semanticsLabel: waterGlass > 1
+                                                ? 'glasses'
+                                                : 'glass',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 16.0,

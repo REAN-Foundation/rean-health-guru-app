@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -19,6 +22,7 @@ import 'package:paitent/ui/views/home_view.dart';
 import 'package:paitent/ui/widgets/PrimaryLightColorContainer.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
+import 'package:paitent/utils/WebViewBrowser.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
@@ -289,7 +293,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                     CircularProgressIndicator()
                   else
                     _getOTPButton(model),
-                  SizedBox(height: 80),
+                  SizedBox(height: 16),
+                  privacyPolicy(),
                 ],
               ),
             ),
@@ -444,6 +449,53 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         ),
       ),
     );
+  }
+
+  Widget privacyPolicy() {
+    final String appName =
+        getAppType() == 'AHA' ? 'HF Helper\'s' : 'REAN HealthGuru\'s';
+
+    final TextStyle defaultStyle = TextStyle(
+        color: textGrey,
+        fontSize: 12.0,
+        fontFamily: "Montserrat",
+        fontWeight: FontWeight.w500);
+    final TextStyle linkStyle = TextStyle(
+        color: primaryColor,
+        fontFamily: "Montserrat",
+        fontWeight: FontWeight.w600);
+    return RichText(
+      text: TextSpan(
+        style: defaultStyle,
+        children: <TextSpan>[
+          TextSpan(text: 'By registering, I agree to $appName '),
+          TextSpan(
+              text: 'Privacy Policy',
+              style: linkStyle,
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  print('Privacy Policy"');
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                        fullscreenDialog: true,
+                        builder: (context) => WebViewBrowser(
+                            tittle: 'Privacy policy',
+                            url: dotenv.env['PRIVACY_POLICY_URL'])),
+                  );
+                }),
+        ],
+      ),
+    );
+/*
+    TextSpan(
+        text: 'Terms of Service',
+        style: linkStyle,
+        recognizer: TapGestureRecognizer()
+          ..onTap = () {
+            print('Terms of Service"');
+          }),
+    TextSpan(text: ' and that you have read our '),*/
   }
 
   checkUserExistsOrNot(LoginViewModel model) async {

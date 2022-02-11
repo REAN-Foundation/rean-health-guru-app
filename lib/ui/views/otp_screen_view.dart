@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
@@ -34,6 +35,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
   String otp = '';
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  var dateFormat = DateFormat('yyyy-MM-dd');
 
   //String _fcmToken = '';
   bool loginOTP = false;
@@ -421,6 +423,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data.patient.toJson());
         _sharedPrefUtils.saveBoolean('login1.5', true);
+        _sharedPrefUtils.save('loggedOn', dateFormat.format(DateTime.now()));
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);

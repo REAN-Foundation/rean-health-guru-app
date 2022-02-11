@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
@@ -39,6 +40,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  var dateFormat = DateFormat('yyyy-MM-dd');
 
   //String _fcmToken ="";
   final TextEditingController _mobileNumberController = TextEditingController();
@@ -598,6 +600,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
             'OTP has been successfully sent on your mobile number', context);
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data.patient.toJson());
+        _sharedPrefUtils.save('loggedOn', dateFormat.format(DateTime.now()));
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,
             arguments: mobileNumber);
         _clearFeilds();
@@ -638,6 +641,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data.patient.toJson());
         _sharedPrefUtils.saveBoolean('login1.5', true);
+        _sharedPrefUtils.save('loggedOn', dateFormat.format(DateTime.now()));
         _clearFeilds();
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {

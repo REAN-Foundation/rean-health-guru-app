@@ -32,6 +32,8 @@ import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'base_widget.dart';
 import 'care_plan_task.dart';
 import 'dashboard_ver_2.dart';
+import 'login_with_otp_view.dart';
+
 //ignore: must_be_immutable
 class HomeView extends StatefulWidget {
   int screenPosition = 0;
@@ -313,8 +315,29 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
+  void _autoLogoutAfter90Days() async {
+    try {
+      DateTime dateLoggedOn =
+          DateTime.parse(await _sharedPrefUtils.read('loggedOn'));
+      debugPrint(
+          'Days remaining ==> ${(dateLoggedOn.difference(DateTime.now())).inDays}');
+      if ((dateLoggedOn.difference(DateTime.now())).inDays > 89) {
+        startCarePlanResponseGlob = null;
+        _sharedPrefUtils.save('CarePlan', null);
+        _sharedPrefUtils.saveBoolean('login', null);
+        _sharedPrefUtils.clearAll();
+        chatList.clear();
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (context) {
+          return LoginWithOTPView();
+        }), (Route<dynamic> route) => false);
+      }
+    } catch (Exception) {}
+  }
+
   @override
   void initState() {
+    _autoLogoutAfter90Days();
     _initPackageInfo();
     getDailyCheckInDate();
     loadSharedPrefs();

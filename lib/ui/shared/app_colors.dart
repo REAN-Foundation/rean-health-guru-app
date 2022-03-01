@@ -15,3 +15,4 @@ const Color colorBlue = Color(0XFF2277F1);
 const Color colorLightBlue = Color(0XFF0D75CE);
 const Color colorGreen = Color(0XFF007E1A);
 const Color colorVoilet = Color(0XFFC891D6);
+const Color redLightAha = Color(0XFFF9E6E8);

@@ -580,7 +580,7 @@ class _MyReportsViewState extends State<MyReportsView> {
         showToast('Please select valid document', context);
       }
     } catch (e) {
-      showToast('Please select document', context);
+      showToast('Please select correct document', context);
       debugPrint(e);
       result = 'Error: $e';
     }
@@ -994,7 +994,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       debugPrint('File Name ==> $fileName');
       uploadProfilePicture(file, type);
     } else {
-      showToast('Please select document type', context);
+      showToast('Please select correct document type', context);
     }
   }
 

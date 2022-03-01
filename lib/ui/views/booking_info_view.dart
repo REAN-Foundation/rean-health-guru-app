@@ -142,7 +142,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
           ),
@@ -335,7 +335,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
         children: <Widget>[
           Text(
             'Gender',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -430,7 +430,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -498,7 +498,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
             text: TextSpan(
               text: 'Email',
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                   fontSize: 15,
                   color: Colors.black87),
               children: <TextSpan>[
@@ -555,7 +555,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -601,7 +601,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -648,7 +648,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -745,7 +745,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -873,7 +873,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
               children: <Widget>[
                 Text(
                   'Attachment',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
                 ),
                 SizedBox(
                   width: 4,

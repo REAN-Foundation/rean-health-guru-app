@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -302,8 +303,18 @@ class _HomeViewState extends State<HomeView> {
         ShapeLightFocus.Circle));
   }
 
+  Future<void> _initPackageInfo() async {
+    if (getCurrentLocale() == '') {
+      final Locale countryLocale = await Devicelocale.currentAsLocale;
+      setCurrentLocale(countryLocale.countryCode.toUpperCase());
+      debugPrint(
+          'Country Local ==> ${countryLocale.countryCode.toUpperCase()}');
+    }
+  }
+
   @override
   void initState() {
+    _initPackageInfo();
     getDailyCheckInDate();
     loadSharedPrefs();
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
@@ -373,6 +384,8 @@ class _HomeViewState extends State<HomeView> {
               backgroundColor: Colors.white,
               brightness: Brightness.light,
               title: RichText(
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 text: TextSpan(
                   text: 'Hi, ',
                   style: TextStyle(
@@ -385,7 +398,7 @@ class _HomeViewState extends State<HomeView> {
                         text: name,
                         style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontFamily: 'Montserrat')),
                   ],

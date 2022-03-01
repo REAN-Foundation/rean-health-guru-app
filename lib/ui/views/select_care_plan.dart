@@ -89,7 +89,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -151,7 +151,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       child: Center(
         child: Text(
           'You do not have any registered care plan.',
-          style: TextStyle(color: textBlack, fontWeight: FontWeight.w700),
+          style: TextStyle(color: textBlack, fontWeight: FontWeight.w600),
         ),
       ),
     );
@@ -334,7 +334,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     child: Text(
                       'View more >>',
                       style: TextStyle(
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 12),
                     ),
@@ -413,7 +413,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     child: Text(
                       'Get Recommendation',
                       style: TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           color: Colors.white,
                           fontSize: 14),
                     ),
@@ -460,7 +460,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                   child: Text(
                     'Register',
                     style: TextStyle(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         color: Colors.white,
                         fontSize: 14),
                   ),

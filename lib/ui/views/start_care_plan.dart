@@ -47,7 +47,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
               ),
               iconTheme: IconThemeData(color: Colors.black),
               actions: <Widget>[
@@ -84,14 +84,14 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                       Text(
                         'Congratulations!',
                         style: TextStyle(
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             color: textBlack,
                             fontSize: 16),
                       ),
                       Text(
                         'Select Date & lets start care plan',
                         style: TextStyle(
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             color: textBlack,
                             fontSize: 16),
                         textAlign: TextAlign.center,
@@ -99,7 +99,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                       Text(
                         'Your selected plan is : ' + widget.selectedCarePlan,
                         style: TextStyle(
-                            fontWeight: FontWeight.w700, color: primaryColor),
+                            fontWeight: FontWeight.w600, color: primaryColor),
                       ),
                       Container(
                         height: 60,
@@ -111,7 +111,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                           child: Text(
                             "Let's Set up Your Plan",
                             style: TextStyle(
-                                color: textBlack, fontWeight: FontWeight.w700),
+                                color: textBlack, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ),
@@ -244,7 +244,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                                       Text(
                                         'Next',
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w500,
+                                            fontWeight: FontWeight.w600,
                                             color: Colors.white,
                                             fontSize: 14),
                                       ),

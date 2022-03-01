@@ -48,7 +48,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                   child: Text('Search Near Me',
                       style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ),
                 //_buildTabDesign(),
@@ -123,7 +123,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                     quotes.elementAt(i - 1),
                     style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         fontFamily: 'Montserrat',
                         color: primaryColor),
                     textAlign: TextAlign.center,
@@ -189,7 +189,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                       'My Reports',
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat',
                           color: primaryColor),
                       maxLines: 1,
@@ -233,7 +233,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                       'My Prescriptions',
                       style: TextStyle(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat',
                           color: primaryColor),
                       maxLines: 1,
@@ -286,7 +286,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                           'Doctor',
                           style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat',
                               color: primaryColor),
                         ),
@@ -352,7 +352,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                           'Lab',
                           style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat',
                               color: primaryColor),
                         ),
@@ -419,7 +419,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                           'Pharmacy',
                           style: TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat',
                               color: primaryColor),
                         ),
@@ -493,7 +493,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                               'Nurse',
                               style: TextStyle(
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: primaryColor),
                             ),
@@ -575,7 +575,7 @@ class _DashBoardViewState extends State<DashBoardView> {
                               'Ambulance',
                               style: TextStyle(
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat',
                                   color: primaryColor),
                             ),

@@ -112,7 +112,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                 style: TextStyle(
                     fontSize: 16.0,
                     color: primaryColor,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
               ),
               iconTheme: IconThemeData(color: Colors.black),
               actions: <Widget>[
@@ -154,7 +154,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           'Total Calories',
                           semanticsLabel: 'Total Calories',
                           style: TextStyle(
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 24.0,
                               color: textGrey),
                         ),
@@ -268,22 +268,20 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             SizedBox(
                               width: 8,
                             ),
-                            Semantics(
-                              label: 'Add Calories for Breakfast',
-                              child: IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return _addCaloriesConsumedDialog(
-                                            context, 'breakfast');
-                                      });
-                                },
-                                icon: Icon(
-                                  Icons.add_circle,
-                                  color: primaryColor,
-                                  size: 32,
-                                ),
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return _addCaloriesConsumedDialog(
+                                          context, 'breakfast');
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: primaryColor,
+                                semanticLabel: 'Add Calories for Breakfast',
+                                size: 32,
                               ),
                             )
                           ],
@@ -351,22 +349,20 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             SizedBox(
                               width: 8,
                             ),
-                            Semantics(
-                              label: 'Add Calories for lunch',
-                              child: IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return _addCaloriesConsumedDialog(
-                                            context, 'lunch');
-                                      });
-                                },
-                                icon: Icon(
-                                  Icons.add_circle,
-                                  color: primaryColor,
-                                  size: 32,
-                                ),
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return _addCaloriesConsumedDialog(
+                                          context, 'lunch');
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: primaryColor,
+                                size: 32,
+                                semanticLabel: 'Add Calories for lunch',
                               ),
                             )
                           ],
@@ -435,22 +431,20 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             SizedBox(
                               width: 8,
                             ),
-                            Semantics(
-                              label: 'Add Calories for dinner',
-                              child: IconButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return _addCaloriesConsumedDialog(
-                                            context, 'dinner');
-                                      });
-                                },
-                                icon: Icon(
-                                  Icons.add_circle,
-                                  color: primaryColor,
-                                  size: 32,
-                                ),
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return _addCaloriesConsumedDialog(
+                                          context, 'dinner');
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: primaryColor,
+                                size: 32,
+                                semanticLabel: 'Add Calories for dinner',
                               ),
                             )
                           ],
@@ -520,23 +514,22 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             SizedBox(
                               width: 8,
                             ),
-                            Semantics(
-                                label: 'Add Calories for snack',
-                                child: IconButton(
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (_) {
-                                          return _addCaloriesConsumedDialog(
-                                              context, 'snack');
-                                        });
-                                  },
-                                  icon: Icon(
-                                    Icons.add_circle,
-                                    color: primaryColor,
-                                    size: 32,
-                                  ),
-                                ))
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return _addCaloriesConsumedDialog(
+                                          context, 'snack');
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.add_circle,
+                                color: primaryColor,
+                                size: 32,
+                                semanticLabel: 'Add Calories for snack',
+                              ),
+                            )
                           ],
                         ),
                       ],
@@ -719,12 +712,15 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      color: Colors.white,
+                  ExcludeSemantics(
+                    excluding: true,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
                     ),
-                    onPressed: () {},
                   ),
                   Expanded(
                     flex: 8,
@@ -735,7 +731,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             nutritionName.replaceAll('snack', ' snack'),
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 18.0),
                         textAlign: TextAlign.center,

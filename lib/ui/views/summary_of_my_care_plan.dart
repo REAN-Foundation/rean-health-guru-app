@@ -169,7 +169,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
           Text(
             'Week',
             style: TextStyle(
-                color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w500),
+                color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ],
       ),
@@ -218,7 +218,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                                         ? Colors.white
                                         : primaryColor,
                                 fontSize: 16,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w600),
                           ),
                         ),
                         const SizedBox(
@@ -267,7 +267,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                                         ? Colors.white
                                         : primaryColor,
                                 fontSize: 16,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w600),
                           ),
                         ),
                         const SizedBox(
@@ -313,7 +313,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
-                              fontWeight: FontWeight.w700),
+                              fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
                           width: 8,
@@ -358,7 +358,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
-                              fontWeight: FontWeight.w700),
+                              fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
                           width: 8,
@@ -403,7 +403,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
-                              fontWeight: FontWeight.w700),
+                              fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
                           width: 8,
@@ -448,7 +448,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
-                              fontWeight: FontWeight.w700),
+                              fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
                           width: 8,
@@ -493,7 +493,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
-                              fontWeight: FontWeight.w700),
+                              fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
                           width: 8,
@@ -538,7 +538,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
-                              fontWeight: FontWeight.w700),
+                              fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
                           width: 8,
@@ -583,7 +583,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
-                              fontWeight: FontWeight.w700),
+                              fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
                           width: 8,
@@ -628,7 +628,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
-                              fontWeight: FontWeight.w700),
+                              fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
                           width: 8,
@@ -673,7 +673,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
-                              fontWeight: FontWeight.w700),
+                              fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
                           width: 8,
@@ -720,7 +720,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             style: TextStyle(
                                 color: primaryLightColor,
                                 fontSize: 12,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w600),
                           ),
                         ),
                         Text(
@@ -732,7 +732,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
-                              fontWeight: FontWeight.w700),
+                              fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
                           width: 8,

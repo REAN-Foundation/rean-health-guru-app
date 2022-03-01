@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:package_info/package_info.dart';
@@ -94,9 +95,9 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'My Profile',
+                        'Profile',
                         style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w700),
+                            color: primaryColor, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -115,9 +116,9 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'My Vitals',
+                        'Vitals',
                         style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w700),
+                            color: primaryColor, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -133,7 +134,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(width: 40,),
-                      Text("Health Kit", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),),
+                      Text("Health Kit", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),),
                     ],
                   ),
                 ),
@@ -152,9 +153,9 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'My Medical Profile',
+                        'Medical Profile',
                         style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w700),
+                            color: primaryColor, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -173,9 +174,9 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'My Medications',
+                        'Medications',
                         style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w700),
+                            color: primaryColor, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -194,9 +195,9 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'My Activity',
+                        'Activity',
                         style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w700),
+                            color: primaryColor, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -216,9 +217,9 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'My Nutrition',
+                        'Nutrition',
                         style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w700),
+                            color: primaryColor, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -245,9 +246,9 @@ class _AppDrawerState extends State<AppDrawer> {
                           width: 40,
                         ),
                         Text(
-                          'My Care Plan',
+                          'Care Plan',
                           style: TextStyle(
-                              color: primaryColor, fontWeight: FontWeight.w700),
+                              color: primaryColor, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -265,7 +266,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(width: 40,),
-                      Text("Self Reflection", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),),
+                      Text("Self Reflection", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),),
                     ],
                   ),
                 ),
@@ -280,7 +281,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(width: 40,),
-                      Text("Quiz", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),),
+                      Text("Quiz", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),),
                     ],
                   ),
                 ),
@@ -295,7 +296,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(width: 40,),
-                      Text("Assessment", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),),
+                      Text("Assessment", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),),
                     ],
                   ),
                 ),
@@ -310,7 +311,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(width: 40,),
-                      Text("My Care Plan", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),),
+                      Text("Care Plan", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),),
                     ],
                   ),
                 ),
@@ -326,7 +327,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(width: 40,),
-                      Text("Helpdesk", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),),
+                      Text("Helpdesk", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),),
                     ],
                   ),
                 ),
@@ -345,9 +346,9 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        getAppType() == 'AHA' ? 'About AHA' : 'About REAN',
+                        getAppType() == 'AHA' ? 'About Us' : 'About REAN',
                         style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w700),
+                            color: primaryColor, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -368,7 +369,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       Text(
                         'Contact Us',
                         style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w700),
+                            color: primaryColor, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -394,7 +395,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         Text(
                           'Logout',
                           style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w700),
+                              color: Colors.white, fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),
@@ -460,18 +461,18 @@ class _AppDrawerState extends State<AppDrawer> {
           title: Text(
             'Logout',
             style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 fontStyle: FontStyle.normal,
-                fontSize: 24.0,
+                fontSize: 18.0,
                 color: Colors.black),
           ),
           contentPadding: EdgeInsets.all(4.0),
           subtitle: Text(
             'Are you sure you want to logout?',
             style: TextStyle(
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w500,
                 fontStyle: FontStyle.normal,
-                fontSize: 20.0,
+                fontSize: 16.0,
                 color: Colors.black),
           ),
         ),
@@ -509,6 +510,8 @@ class _AppDrawerState extends State<AppDrawer> {
                 image: AssetImage('res/images/drawer_header_background.png'))),
         child:*/
         Container(
+          padding: const EdgeInsets.all(16.0),
+
       height: 300,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -526,44 +529,51 @@ class _AppDrawerState extends State<AppDrawer> {
                           radius: 88,
                           backgroundImage:  profileImage == "" ? AssetImage('res/images/profile_placeholder.png') : new NetworkImage(profileImage)),
                     ),*/
-                Container(
-                  width: 120.0,
-                  height: 120.0,
-                  decoration: BoxDecoration(
-                    color: const Color(0xff7c94b6),
-                    image: DecorationImage(
-                      image: profileImage == ''
-                          ? AssetImage('res/images/profile_placeholder.png')
-                          : CachedNetworkImageProvider(profileImage),
-                      fit: BoxFit.cover,
+                    Container(
+                      width: 120.0,
+                      height: 120.0,
+                      decoration: BoxDecoration(
+                        color: const Color(0xff7c94b6),
+                        image: DecorationImage(
+                          image: profileImage == ''
+                              ? AssetImage('res/images/profile_placeholder.png')
+                              : CachedNetworkImageProvider(profileImage),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                        border: Border.all(
+                          color: primaryColor,
+                          width: 2.0,
+                        ),
+                      ),
                     ),
-                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                    border: Border.all(
-                      color: primaryColor,
-                      width: 2.0,
-                    ),
-                  ),
-                ),
-                /*Align(
+                    /*Align(
                       alignment: Alignment.topRight,
                       child: InkWell( onTap: (){ }, child: SizedBox( height: 32, width: 32, child: new Image.asset('res/images/ic_camera.png'))),
                     )*/
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Semantics(
-            child: Text(
-              name,
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Semantics(
+                child: Text(
+                  name,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                   color: primaryColor),
               semanticsLabel: name,
             ),
           ),
+          SizedBox(
+            height: 4,
+          ),
+
           Text(
             mobileNumber,
             style: TextStyle(
@@ -571,7 +581,8 @@ class _AppDrawerState extends State<AppDrawer> {
             semanticsLabel: mobileNumber,
           ),
         ],
-      ),
+          ),
+
       // )
     );
   }

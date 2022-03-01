@@ -151,7 +151,7 @@ jobs:
           path: android/build/app/outputs
 
       - name: Publish to Playstore
-        run: bundle exec fastlane release_alpha_build aab_path:"build/app/outputs/bundle/uatRelease/app-uat-release.aab"
+        run: bundle exec fastlane release_alpha_rf aab_path:"build/app/outputs/bundle/uatRelease/app-uat-release.aab"
         env:
           PLAYSTORE_JSON_KEY_DATA: ${{ secrets.PLAYSTORE_JSON_KEY_DATA }}
           
@@ -199,7 +199,7 @@ jobs:
         run: flutter build ios --release --no-codesign --flavor uat -t "lib/main_uat.dart"
 
       - name: Generate Signed Build
-        run: bundle exec fastlane build flavor:uat mode:release
+        run: bundle exec fastlane build_rf flavor:uat mode:release
         working-directory: ios
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
@@ -246,7 +246,7 @@ jobs:
           path: ios/output
 
       - name: Publish to Appstore
-        run: bundle exec fastlane upload_build_to_testflight flavor:uat mode:release
+        run: bundle exec fastlane upload_build_to_testflight_rf flavor:uat mode:release
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}

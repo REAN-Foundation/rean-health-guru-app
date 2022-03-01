@@ -169,7 +169,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       'Tasks ',
                       style: TextStyle(
                           color: primaryColor,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontSize: 16),
                     ),
                     SizedBox(
@@ -194,7 +194,6 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       flex: 1,
                       child: Semantics(
                         label: 'To Do 1 of 2',
-                        selected: true,
                         child: InkWell(
                           onTap: () {
                             query = 'pending';
@@ -210,7 +209,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                         ? primaryColor
                                         : textBlack,
                                     fontWeight: isUpCommingSelected
-                                        ? FontWeight.w700
+                                        ? FontWeight.w600
                                         : FontWeight.w300,
                                     fontSize: 16),
                               ),
@@ -223,7 +222,6 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       flex: 1,
                       child: Semantics(
                         label: 'Completed 2 of 2',
-                        selected: true,
                         child: InkWell(
                           onTap: () {
                             query = 'completed';
@@ -240,7 +238,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                         : primaryColor,
                                     fontWeight: isUpCommingSelected
                                         ? FontWeight.w300
-                                        : FontWeight.w700,
+                                        : FontWeight.w600,
                                     fontSize: 16),
                               ),
                             ),
@@ -373,7 +371,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize: 14,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           color: primaryColor)),
                                 ),
                               ],
@@ -394,7 +392,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: 12,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                                 SizedBox(
                                   width: 8,
@@ -541,7 +539,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor)),
                       ],
                     ),
@@ -558,7 +556,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 12,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor)),
                         SizedBox(
                           width: 8,
@@ -636,46 +634,48 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                     SizedBox(
                       width: 8,
                     ),
-                    if (!task.actionDto.isTaken &&
-                        !task.actionDto.isMissed) ...[
+                    if (!task.action.isTaken && !task.action.isMissed) ...[
                       Visibility(
-                        visible:
-                            !(DateTime.parse(task.actionDto.timeScheduleStart)
-                                    .toLocal())
-                                .isAfter(DateTime.now()),
+                        visible: !(DateTime.parse(task.action.timeScheduleStart)
+                                .toLocal())
+                            .isAfter(DateTime.now()),
                         child: Expanded(
                           flex: 2,
                           child: Semantics(
+                            button: true,
                             label: 'Mark as Taken',
                             child: InkWell(
                               onTap: () {
                                 markMedicationsAsTaken(task.actionId);
                               },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: primaryColor,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(4)),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.check,
-                                      size: 24,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(
-                                      height: 0,
-                                    ),
-                                    Text(
-                                      'Mark As\nTaken',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 10),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
+                              child: ExcludeSemantics(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(4)),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.check,
+                                        size: 24,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(
+                                        height: 0,
+                                      ),
+                                      Text(
+                                        'Mark As\nTaken',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 10),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -683,7 +683,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         ),
                       ),
                     ],
-                    if (task.actionDto.isTaken) ...[
+                    if (task.action.isTaken) ...[
                       Expanded(
                         flex: 2,
                         child: Semantics(
@@ -709,7 +709,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         ),
                       ),
                     ],
-                    if (task.actionDto.isMissed) ...[
+                    if (task.action.isMissed) ...[
                       Expanded(
                         flex: 2,
                         child: Semantics(
@@ -837,7 +837,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                     child: Text(task.details.businessNodeName,
                                         style: TextStyle(
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             color: primaryColor)),
                                   ),
                                   Text(task.details.businessUserName,
@@ -858,7 +858,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                               .toLocal()),
                                           style: TextStyle(
                                               fontSize: 14.0,
-                                              fontWeight: FontWeight.w500)),
+                                              fontWeight: FontWeight.w600)),
                                       Text('ID: ' + task.displayId,
                                           style: TextStyle(
                                               fontSize: 12.0,

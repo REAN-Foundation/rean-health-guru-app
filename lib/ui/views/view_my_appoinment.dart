@@ -75,7 +75,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                       'Appointments ',
                       style: TextStyle(
                           color: primaryColor,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontSize: 16),
                     ),
                   ),
@@ -99,7 +99,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                         ? primaryColor
                                         : textBlack,
                                     fontWeight: isUpCommingSelected
-                                        ? FontWeight.w700
+                                        ? FontWeight.w600
                                         : FontWeight.w300,
                                     fontSize: 16),
                               ),
@@ -122,7 +122,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                         : primaryColor,
                                     fontWeight: isUpCommingSelected
                                         ? FontWeight.w300
-                                        : FontWeight.w700,
+                                        : FontWeight.w600,
                                     fontSize: 16),
                               ),
                             ),
@@ -257,7 +257,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                     child: Text(appointment.businessNodeName,
                                         style: TextStyle(
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             color: primaryColor)),
                                   ),
                                   Text(appointment.businessUserName,
@@ -278,7 +278,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                               .toLocal()),
                                           style: TextStyle(
                                               fontSize: 14.0,
-                                              fontWeight: FontWeight.w500)),
+                                              fontWeight: FontWeight.w600)),
                                       Text(
                                           'ID: ' +
                                               appointment.displayId
@@ -369,7 +369,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 14,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       color: primaryColor)),
                               Text('',
                                   maxLines: 1,

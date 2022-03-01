@@ -69,7 +69,7 @@ class _BiometricBloodOxygenVitalsViewState
           Text(
             'Enter your blood oxygen saturation:',
             style: TextStyle(
-                color: primaryColor, fontWeight: FontWeight.w500, fontSize: 16),
+                color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
             textAlign: TextAlign.center,
           ),
           const SizedBox(
@@ -84,7 +84,7 @@ class _BiometricBloodOxygenVitalsViewState
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: primaryColor, width: 1),
+                      border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: TextFormField(
                       controller: _controller,
@@ -109,7 +109,7 @@ class _BiometricBloodOxygenVitalsViewState
                     text: '',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: primaryColor,
                         fontSize: 14),
                     children: <TextSpan>[
@@ -117,8 +117,8 @@ class _BiometricBloodOxygenVitalsViewState
                           text: '    %    ',
                           style: TextStyle(
                               fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: primaryColor,
+                              fontWeight: FontWeight.w600,
+                              color: textBlack,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
                     ]),
@@ -155,7 +155,7 @@ class _BiometricBloodOxygenVitalsViewState
                       'Save',
                       style: TextStyle(
                           color: Colors.white,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontSize: 14),
                       textAlign: TextAlign.center,
                     ),
@@ -193,7 +193,7 @@ class _BiometricBloodOxygenVitalsViewState
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -202,7 +202,7 @@ class _BiometricBloodOxygenVitalsViewState
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -213,26 +213,23 @@ class _BiometricBloodOxygenVitalsViewState
                       height: 16,
                     ),
                     Expanded(
-                      child: Semantics(
-                        label: 'scrollbar',
-                        child: Scrollbar(
-                          isAlwaysShown: true,
-                          controller: _scrollController,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: ListView.separated(
-                                itemBuilder: (context, index) =>
-                                    _makeWeightList(context, index),
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return SizedBox(
-                                    height: 8,
-                                  );
-                                },
-                                itemCount: records.length,
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true),
-                          ),
+                      child: Scrollbar(
+                        isAlwaysShown: true,
+                        controller: _scrollController,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: ListView.separated(
+                              itemBuilder: (context, index) =>
+                                  _makeWeightList(context, index),
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return SizedBox(
+                                  height: 8,
+                                );
+                              },
+                              itemCount: records.length,
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true),
                         ),
                       ),
                     ),
@@ -254,25 +251,39 @@ class _BiometricBloodOxygenVitalsViewState
 
   Widget _makeWeightList(BuildContext context, int index) {
     final Items record = records.elementAt(index);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          dateFormatStandard.format(DateTime.parse(record.recordDate)),
-          style: TextStyle(
-              color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+    return Card(
+      semanticContainer: false,
+      elevation: 0,
+      child: Container(
+        color: colorF6F6FF,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              dateFormatStandard.format(DateTime.parse(record.recordDate)),
+              style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w300),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Semantics(
+              label: 'Blood Oxygen ',
+              child: Text(
+                record.bloodOxygenSaturation.toString() + ' %',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
         ),
-        Text(
-          record.bloodOxygenSaturation.toString() + ' %',
-          style: TextStyle(
-              color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
+      ),
     );
   }
 
@@ -307,7 +318,7 @@ class _BiometricBloodOxygenVitalsViewState
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -327,7 +338,8 @@ class _BiometricBloodOxygenVitalsViewState
     ];*/
 
     for (int i = 0; i < records.length; i++) {
-      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(
+          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
           double.parse(records.elementAt(i).bloodOxygenSaturation.toString())));
     }
 
@@ -371,7 +383,7 @@ class _BiometricBloodOxygenVitalsViewState
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -390,7 +402,7 @@ class _BiometricBloodOxygenVitalsViewState
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -399,7 +411,7 @@ class _BiometricBloodOxygenVitalsViewState
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -417,7 +429,7 @@ class _BiometricBloodOxygenVitalsViewState
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -426,7 +438,7 @@ class _BiometricBloodOxygenVitalsViewState
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -444,7 +456,7 @@ class _BiometricBloodOxygenVitalsViewState
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w700),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -453,7 +465,7 @@ class _BiometricBloodOxygenVitalsViewState
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

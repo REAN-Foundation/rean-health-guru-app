@@ -61,7 +61,7 @@ class _MindFullMomentCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -104,7 +104,7 @@ class _MindFullMomentCarePlanViewState
       child: Center(
         child: Text(
           'Heart Meditation',
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
+          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
       ),

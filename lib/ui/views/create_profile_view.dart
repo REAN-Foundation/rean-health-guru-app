@@ -146,7 +146,7 @@ class _CreateProfileState extends State<CreateProfile> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
           ),
@@ -281,7 +281,7 @@ class _CreateProfileState extends State<CreateProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -328,7 +328,7 @@ class _CreateProfileState extends State<CreateProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -377,7 +377,7 @@ class _CreateProfileState extends State<CreateProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -439,11 +439,11 @@ class _CreateProfileState extends State<CreateProfile> {
                   style: TextStyle(
                       fontSize: 14.0,
                       color: Colors.white,
-                      fontWeight: FontWeight.w700)),
+                      fontWeight: FontWeight.w600)),
               onPressed: () async {
-                if (_firstNameController.text.toString() == '') {
+                if (_firstNameController.text.toString().trim() == '') {
                   showToast('Please enter First Name', context);
-                } else if (_lastNameController.text.toString() == '') {
+                } else if (_lastNameController.text.toString().trim() == '') {
                   showToast('Please enter Last Name', context);
                 } else if (unformatedDOB == '') {
                   showToast('Please select your date of birth', context);
@@ -452,8 +452,9 @@ class _CreateProfileState extends State<CreateProfile> {
                 } else {
                   progressDialog.show();
                   final map = <String, String>{};
-                  map['FirstName'] = _firstNameController.text;
-                  map['LastName'] = _lastNameController.text;
+                  map['FirstName'] =
+                      _firstNameController.text.toString().trim();
+                  map['LastName'] = _lastNameController.text.toString().trim();
                   map['BirthDate'] = unformatedDOB;
                   map['Gender'] = selectedGender;
                   map['DefaultTimeZone'] =
@@ -622,7 +623,7 @@ class _CreateProfileState extends State<CreateProfile> {
         children: <Widget>[
           Text(
             'Gender',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -661,7 +662,7 @@ class _CreateProfileState extends State<CreateProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,

@@ -50,7 +50,7 @@ class _AddCholesterolGoalsForCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -95,7 +95,7 @@ class _AddCholesterolGoalsForCarePlanViewState
           Text(
             'Low-density lipoprotein (LDL) cholesterol is often called the “bad” kind. When you have too much LDL cholesterol in your blood, it can join with fats and other substances to build up in the inner walls of your arteries, creating a thick, hard substance called plaque. ',
             style: TextStyle(
-                color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
+                color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
           ),
           const SizedBox(
             height: 16,
@@ -117,7 +117,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                     child: Text(
                       'View more >>',
                       style: TextStyle(
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 12),
                     ),
@@ -140,7 +140,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                       text: 'LDL <',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 14),
                       children: <TextSpan>[
@@ -148,7 +148,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                             text: '  mg / dL',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
@@ -194,7 +194,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                       text: 'HDL <',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 14),
                       children: <TextSpan>[
@@ -202,7 +202,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                             text: '  mg / dL',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
@@ -248,7 +248,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                       text: 'Total  ',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 14),
                       children: <TextSpan>[
@@ -256,7 +256,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                             text: '  mg / dL',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
@@ -303,7 +303,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                       text: 'Triglycerides  ',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 14),
                       children: <TextSpan>[
@@ -311,7 +311,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                             text: '',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
@@ -355,7 +355,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                       text: 'Target Date',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 14),
                       children: <TextSpan>[
@@ -363,7 +363,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                             text: '          ',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
@@ -451,7 +451,7 @@ class _AddCholesterolGoalsForCarePlanViewState
                         'Save',
                         style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             fontSize: 14),
                         textAlign: TextAlign.center,
                       ),

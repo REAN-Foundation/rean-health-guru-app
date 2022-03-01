@@ -43,7 +43,7 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -124,7 +124,7 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
                                 'Save',
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     fontSize: 14),
                                 textAlign: TextAlign.center,
                               ),
@@ -153,7 +153,7 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
         child: Center(
           child: Text(
             'Enter ' + widget.assessmment.biometricName,
-            style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
+            style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
             textAlign: TextAlign.center,
           ),
         ),

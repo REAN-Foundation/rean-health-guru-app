@@ -57,7 +57,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                     style: TextStyle(
                         fontSize: 16.0,
                         color: primaryColor,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                   ),
                   iconTheme: IconThemeData(color: Colors.black),
                   actions: <Widget>[
@@ -130,7 +130,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
           Text(
             'Enter your pulse rate:',
             style: TextStyle(
-                color: primaryColor, fontWeight: FontWeight.w500, fontSize: 16),
+                color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
             textAlign: TextAlign.center,
           ),
           const SizedBox(
@@ -145,7 +145,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: primaryColor, width: 1),
+                      border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
                     label: 'Pulse rate measures in bpm',
@@ -155,9 +155,8 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.number,
                         onFieldSubmitted: (term) {},
-                        inputFormatters: [
-                          FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                         ],
                         decoration: InputDecoration(
                             hintText: '(65 to 95)',
@@ -173,7 +172,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                     text: '',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: primaryColor,
                         fontSize: 14),
                     children: <TextSpan>[
@@ -181,8 +180,8 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                           text: '    bpm    ',
                           style: TextStyle(
                               fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: primaryColor,
+                              fontWeight: FontWeight.w600,
+                              color: textBlack,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
                     ]),
@@ -222,7 +221,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                           'Save',
                           style: TextStyle(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               fontSize: 14),
                           textAlign: TextAlign.center,
                         ),
@@ -262,7 +261,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -271,7 +270,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700),
+                                fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -320,25 +319,39 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
 
   Widget _makeWeightList(BuildContext context, int index) {
     final Items record = records.elementAt(index);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          dateFormatStandard.format(DateTime.parse(record.recordDate)),
-          style: TextStyle(
-              color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+    return Card(
+      semanticContainer: false,
+      elevation: 0,
+      child: Container(
+        color: colorF6F6FF,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              dateFormatStandard.format(DateTime.parse(record.recordDate)),
+              style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w300),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Semantics(
+              label: 'Pulse Rate ',
+              child: Text(
+                record.pulse.toString() + ' bpm',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
         ),
-        Text(
-          record.pulse.toString() + ' bpm',
-          style: TextStyle(
-              color: primaryColor, fontSize: 14, fontWeight: FontWeight.w300),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
+      ),
     );
   }
 
@@ -373,7 +386,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -393,13 +406,14 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
     ];*/
 
     for (int i = 0; i < records.length; i++) {
-      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(
+          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
           double.parse(records.elementAt(i).pulse.toString())));
     }
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'vitals',
+        id: 'PULSE',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -438,7 +452,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -457,7 +471,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -466,7 +480,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -484,7 +498,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -493,7 +507,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -511,7 +525,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -520,7 +534,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -562,7 +576,6 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
       map['Pulse'] = _controller.text.toString();
       map['PatientUserId'] = "";
       map['Unit'] = "bpm";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse = await model.addMyVitals('pulse', map);

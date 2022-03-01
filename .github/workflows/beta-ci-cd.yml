@@ -10,13 +10,9 @@ name: BETA Workflow
 # Controls when the workflow will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  # push:
-  #   branches: [feature/uat-workflow]
-  # pull_request:
-  #   branches: [master]
-
+  push:
+    branches: [main]
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
 
 jobs:
   gitguardian-scanning:
@@ -59,12 +55,6 @@ jobs:
       - name: Create env file
         run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
 
-      # - name: Create env
-      #   env:
-      #     FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
-      #   run: |
-      #     echo $FLUTTER_DOTENV > ./res/.env
-
       - name: Run Flutter Analyze
         run: |
           flutter clean
@@ -72,7 +62,6 @@ jobs:
 
   Android-BuildApp:
     environment: prod
-    # needs: [Code-Scan]
     runs-on: ubuntu-latest
     steps:
       # Checkout Code
@@ -163,10 +152,9 @@ jobs:
           path: android/build/app/outputs
 
       - name: Publish to Playstore
-        run: bundle exec fastlane release_beta_build aab_path:"build/app/outputs/bundle/prodRelease/app-prod-release.aab"
+        run: bundle exec fastlane release_beta_rf aab_path:"build/app/outputs/bundle/prodRelease/app-prod-release.aab"
         env:
           PLAYSTORE_JSON_KEY_DATA: ${{ secrets.PLAYSTORE_JSON_KEY_DATA }}
-          
 
   iOS-BuildApp:
     environment: prod
@@ -200,7 +188,6 @@ jobs:
       - name: Import Build Environment Dependencies
         env:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_PLIST }}
-          # FLUTTER_DOTENV: ${{ secrets.FLUTTER_DOTENV}}
         run: |
           mkdir -p ./ios/config/prod/
           echo $FIREBASE_CONFIG > ./ios/config/prod/GoogleService-Info.plist
@@ -211,7 +198,7 @@ jobs:
         run: flutter build ios --release --no-codesign --flavor prod -t "lib/main_prod.dart"
 
       - name: Generate Signed Build
-        run: bundle exec fastlane build flavor:prod mode:release
+        run: bundle exec fastlane build_rf flavor:prod mode:release
         working-directory: ios
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
@@ -258,7 +245,7 @@ jobs:
           path: ios/output
 
       - name: Publish to Appstore
-        run: bundle exec fastlane upload_build_to_testflight flavor:prod mode:release
+        run: bundle exec fastlane upload_build_to_testflight_rf flavor:prod mode:release
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}

@@ -171,7 +171,7 @@ class _EditPatientMedicalProfileViewState
                   style: TextStyle(
                       fontSize: 16.0,
                       color: primaryColor,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                 ),
                 iconTheme: IconThemeData(color: Colors.black),
               ),
@@ -206,15 +206,15 @@ class _EditPatientMedicalProfileViewState
                       _sizedBoxHeight(),
 
                       _textFeilds(
-                          'Procedure history',
+                          'Procedure History',
                           _procedureHistoryController,
                           _procedureHistoryFocus,
                           _obstetricHistoryFocus),
                       _sizedBoxHeight(),
-                      Text('Marital status',
+                      Text('Marital Status',
                           style: TextStyle(
                               fontSize: 16.0,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: textBlack)),
                       RadioGroup(
                         items: maritalStatusItems,
@@ -227,7 +227,7 @@ class _EditPatientMedicalProfileViewState
                       Text('Diabetic',
                           style: TextStyle(
                               fontSize: 16.0,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: textBlack)),
                       RadioGroup(
                         items: radioItems,
@@ -240,7 +240,7 @@ class _EditPatientMedicalProfileViewState
                       Text('Heart Patient',
                           style: TextStyle(
                               fontSize: 16.0,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: textBlack)),
                       RadioGroup(
                         items: radioItems,
@@ -253,7 +253,7 @@ class _EditPatientMedicalProfileViewState
                       /*Text('Sedentary Occupation',
                     style: TextStyle(
                         fontSize: 16.0,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         color: textBlack)),
                 RadioGroup(
                   items: radioItems,
@@ -261,10 +261,10 @@ class _EditPatientMedicalProfileViewState
                     debugPrint(item.title);
                   },
                 ),*/
-                      Text('Is smoker?',
+                      Text('Is Smoker?',
                           style: TextStyle(
                               fontSize: 16.0,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: textBlack)),
                       RadioGroup(
                         items: radioItems,
@@ -277,7 +277,7 @@ class _EditPatientMedicalProfileViewState
                       Text('Is Drinker?',
                           style: TextStyle(
                               fontSize: 16.0,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: textBlack)),
                       RadioGroup(
                         items: radioItems,
@@ -320,7 +320,7 @@ class _EditPatientMedicalProfileViewState
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
-                                    fontWeight: FontWeight.bold),
+                                    fontWeight: FontWeight.w600),
                               ),
                             ),
                           ),

@@ -80,7 +80,7 @@ class _LoginViewState extends State<LoginView> {
                             alignment: Alignment.centerRight,
                             child: Text('Forgot Password ?',
                                 style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w500)),
+                                    fontSize: 14, fontWeight: FontWeight.w600)),
                           ),*/
                             //_divider(),
                             //_facebookButton(),
@@ -106,7 +106,7 @@ class _LoginViewState extends State<LoginView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -138,7 +138,7 @@ class _LoginViewState extends State<LoginView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
@@ -347,7 +347,7 @@ class _LoginViewState extends State<LoginView> {
           child: Text(
             'Login',
             style: TextStyle(
-                fontSize: 18, color: Colors.white, fontWeight: FontWeight.w700),
+                fontSize: 18, color: Colors.white, fontWeight: FontWeight.w600),
           ),
         ),
       ),
@@ -438,7 +438,7 @@ class _LoginViewState extends State<LoginView> {
           style: GoogleFonts.portLligatSans(
             textStyle: Theme.of(context).textTheme.headline1,
             fontSize: 30,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w600,
             color: primaryColor,
           ),
           children: [

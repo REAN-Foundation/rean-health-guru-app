@@ -62,7 +62,7 @@ class _BiometricBloodPresureVitalsViewState
                     style: TextStyle(
                         fontSize: 16.0,
                         color: primaryColor,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                   ),
                   iconTheme: IconThemeData(color: Colors.black),
                   actions: <Widget>[
@@ -144,9 +144,7 @@ class _BiometricBloodPresureVitalsViewState
             Text(
               'Enter your blood pressure:',
               style: TextStyle(
-                  color: primaryColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16),
+                  color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
               textAlign: TextAlign.center,
             ),
             const SizedBox(
@@ -161,16 +159,16 @@ class _BiometricBloodPresureVitalsViewState
                       text: 'Systolic',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
-                          color: primaryColor,
+                          fontWeight: FontWeight.w600,
+                          color: textBlack,
                           fontSize: 14),
                       children: <TextSpan>[
                         TextSpan(
                             text: '  mm Hg     ',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
-                                color: primaryColor,
+                                fontWeight: FontWeight.w600,
+                                color: textBlack,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
                       ]),
@@ -180,14 +178,13 @@ class _BiometricBloodPresureVitalsViewState
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(color: primaryColor, width: 1),
+                        border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
                       label: 'Systolic measures in mm Hg',
                       child: TextFormField(
-                          inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
                           controller: _systolicController,
                           focusNode: _systolicFocus,
@@ -221,16 +218,16 @@ class _BiometricBloodPresureVitalsViewState
                       text: 'Diastolic',
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w700,
-                          color: primaryColor,
+                          fontWeight: FontWeight.w600,
+                          color: textBlack,
                           fontSize: 14),
                       children: <TextSpan>[
                         TextSpan(
                             text: '  mm Hg  ',
                             style: TextStyle(
                                 fontSize: 10,
-                                fontWeight: FontWeight.w700,
-                                color: primaryColor,
+                                fontWeight: FontWeight.w600,
+                                color: textBlack,
                                 fontFamily: 'Montserrat',
                                 fontStyle: FontStyle.italic)),
                       ]),
@@ -240,7 +237,7 @@ class _BiometricBloodPresureVitalsViewState
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(color: primaryColor, width: 1),
+                        border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
                       label: 'Diastolic measures in mm Hg',
@@ -250,8 +247,7 @@ class _BiometricBloodPresureVitalsViewState
                           maxLines: 1,
                           textInputAction: TextInputAction.done,
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {
@@ -310,7 +306,7 @@ class _BiometricBloodPresureVitalsViewState
                               'Save',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   fontSize: 14),
                               textAlign: TextAlign.center,
                             ),
@@ -354,7 +350,7 @@ class _BiometricBloodPresureVitalsViewState
                                 style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w700),
+                                    fontWeight: FontWeight.w600),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -369,7 +365,7 @@ class _BiometricBloodPresureVitalsViewState
                                 style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w700),
+                                    fontWeight: FontWeight.w600),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -384,7 +380,7 @@ class _BiometricBloodPresureVitalsViewState
                                 style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 14,
-                                    fontWeight: FontWeight.w700),
+                                    fontWeight: FontWeight.w600),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -437,51 +433,64 @@ class _BiometricBloodPresureVitalsViewState
     final Items record = records.elementAt(index);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            flex: 1,
-            child: Text(
-              dateFormatStandard.format(DateTime.parse(record.recordDate)),
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: Text(
-                record.systolic.toString() + ' mm Hg',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+      child: Card(
+        semanticContainer: false,
+        elevation: 0,
+        child: Container(
+          color: colorF6F6FF,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                flex: 1,
+                child: Text(
+                  dateFormatStandard.format(DateTime.parse(record.recordDate)),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: Text(
-                record.diastolic.toString() + ' mm Hg',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: Semantics(
+                    label: 'Systolic Blood Pressure ',
+                    child: Text(
+                      record.systolic.toString() + ' mm Hg',
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
               ),
-            ),
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: Semantics(
+                    label: 'Diastolic Blood Pressure ',
+                    child: Text(
+                      record.diastolic.toString() + ' mm Hg',
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -517,7 +526,7 @@ class _BiometricBloodPresureVitalsViewState
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -537,13 +546,14 @@ class _BiometricBloodPresureVitalsViewState
     ];*/
 
     for (int i = 0; i < records.length; i++) {
-      data.add(TimeSeriesSales(DateTime.parse(records.elementAt(i).recordDate),
+      data.add(TimeSeriesSales(
+          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
           double.parse(records.elementAt(i).systolic.toString())));
     }
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'vitals',
+        id: 'BPS',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -583,7 +593,7 @@ class _BiometricBloodPresureVitalsViewState
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -604,14 +614,13 @@ class _BiometricBloodPresureVitalsViewState
 
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate),
-          double.parse(
-              records.elementAt(i).diastolic.toString())));
+          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
+          double.parse(records.elementAt(i).diastolic.toString())));
     }
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'vitals',
+        id: 'BPD',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -642,7 +651,7 @@ class _BiometricBloodPresureVitalsViewState
                 const SizedBox(width: 8,),
                 Text(
                   "Your progress with goals",
-                  style: TextStyle( color: Colors.white,fontSize: 14, fontWeight: FontWeight.w700), maxLines: 1, overflow: TextOverflow.ellipsis,
+                  style: TextStyle( color: Colors.white,fontSize: 14, fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
@@ -661,7 +670,7 @@ class _BiometricBloodPresureVitalsViewState
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -674,7 +683,7 @@ class _BiometricBloodPresureVitalsViewState
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w700),
+                          fontWeight: FontWeight.w600),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -688,7 +697,7 @@ class _BiometricBloodPresureVitalsViewState
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w700),
+                          fontWeight: FontWeight.w600),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -710,7 +719,7 @@ class _BiometricBloodPresureVitalsViewState
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -762,7 +771,7 @@ class _BiometricBloodPresureVitalsViewState
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -814,7 +823,7 @@ class _BiometricBloodPresureVitalsViewState
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -864,7 +873,7 @@ class _BiometricBloodPresureVitalsViewState
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 16,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -899,7 +908,7 @@ class _BiometricBloodPresureVitalsViewState
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 16,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -945,7 +954,6 @@ class _BiometricBloodPresureVitalsViewState
       map['Diastolic'] = _diastolicController.text.toString();
       map['PatientUserId'] = "";
       map['Unit'] = "mmHg";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
 

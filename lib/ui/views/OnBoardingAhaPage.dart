@@ -1,7 +1,9 @@
+import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/utils/CommonUtils.dart';
 
 class OnBoardingAhaPage extends StatefulWidget {
   @override
@@ -12,6 +14,21 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   static const Color primaryColorLocal = Color(0XFFc10e21);
+
+  Future<void> _initPackageInfo() async {
+    if (getCurrentLocale() == '') {
+      final Locale countryLocale = await Devicelocale.currentAsLocale;
+      setCurrentLocale(countryLocale.countryCode.toUpperCase());
+      debugPrint(
+          'Country Local ==> ${countryLocale.countryCode.toUpperCase()}');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initPackageInfo();
+  }
 
   void _onIntroEnd(context) {
     Navigator.popAndPushNamed(context, RoutePaths.Login);
@@ -24,12 +41,12 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
   @override
   Widget build(BuildContext context) {
     const bodyStyle = TextStyle(
-        fontSize: 18.0, fontWeight: FontWeight.w500, color: primaryColorLocal);
+        fontSize: 18.0, fontWeight: FontWeight.w600, color: primaryColorLocal);
 
     const pageDecoration = PageDecoration(
       titleTextStyle: TextStyle(
           fontSize: 22.0,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w600,
           color: primaryColorLocal),
       bodyTextStyle: bodyStyle,
       descriptionPadding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
@@ -55,7 +72,7 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
         child: ElevatedButton(
           child: const Text(
             'Let\s go right away!',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600),
           ),
           onPressed: () => _onIntroEnd(context),
         ),
@@ -96,7 +113,7 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
       ),
       done: const Text('Done',
           style:
-              TextStyle(fontWeight: FontWeight.w600, color: primaryColorLocal)),
+          TextStyle(fontWeight: FontWeight.w600, color: primaryColorLocal)),
       curve: Curves.fastLinearToSlowEaseIn,
       //controlsMargin: const EdgeInsets.all(16),
       /*controlsPadding: kIsWeb

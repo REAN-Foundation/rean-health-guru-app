@@ -61,10 +61,10 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
           Row(
             children: [
               Text(
-                'Enter Name',
+                'Enter food name',
                 style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.w500,
+                    color: textBlack,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16),
                 textAlign: TextAlign.center,
               ),
@@ -73,7 +73,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                   text: '',
                   style: TextStyle(
                       fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                       color: primaryColor,
                       fontSize: 14),
                 ),
@@ -93,10 +93,12 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: primaryColor, width: 1),
+                      border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Name textfield',
+                    label: 'Food name',
+                    //textField: true,
+                    //hint: 'Example Banana',
                     child: TextFormField(
                         controller: _nutritionNameController,
                         focusNode: _nutritionNameFocus,
@@ -112,7 +114,6 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                               RegExp('[\\,|\\+|\\-]')),
                         ],
                         decoration: InputDecoration(
-                            hintText: 'ex. Banana',
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),
@@ -133,8 +134,8 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
               Text(
                 'Calories',
                 style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.w500,
+                    color: textBlack,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16),
                 textAlign: TextAlign.center,
               ),
@@ -143,8 +144,8 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                   text: ' (cal)',
                   style: TextStyle(
                       fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
-                      color: primaryColor,
+                      fontWeight: FontWeight.w600,
+                      color: textBlack,
                       fontSize: 14),
                 ),
               ),
@@ -163,7 +164,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: primaryColor, width: 1),
+                      border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
                     label: 'Calories textfield',
@@ -177,10 +178,9 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
                         onFieldSubmitted: (term) {},
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\+|\\-]')),
+                              RegExp('[\\,|\\+|\\-|\\ ]')),
                         ],
                         decoration: InputDecoration(
-                            hintText: '100',
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),
@@ -213,13 +213,16 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
       alignment: Alignment.center,
       child: ElevatedButton(
         onPressed: () {
-          if (_nutritionNameController.text.isEmpty) {
-            showToast("Please enter item name", context);
+          if (_nutritionNameController.text.trim().isEmpty) {
+            showToastMsg("Please enter food name", context);
           } else if (_consumedCaloriesController.text.isEmpty) {
-            showToast("Please enter calories", context);
+            showToastMsg("Please enter calories", context);
+          } else if (double.parse(_consumedCaloriesController.text.toString()) >
+              999) {
+            showToastMsg("Please enter valid calories", context);
           } else {
             widget._submitButtonListner(
-                _nutritionNameController.text.toString(),
+                _nutritionNameController.text.toString().trim(),
                 double.parse(_consumedCaloriesController.text),
                 widget._nutritionName);
           }
@@ -235,7 +238,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
         child: Text(
           '      Add       ',
           style: TextStyle(
-              color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
     );

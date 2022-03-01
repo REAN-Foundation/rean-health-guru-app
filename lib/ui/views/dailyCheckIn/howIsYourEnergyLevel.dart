@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/dailyCheckIn/thanksForTheFeedback.dart';
+import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/widgets/delayed_animation.dart';
 
 class HowIsYourEnergyLevel extends StatefulWidget {
@@ -55,7 +56,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                 child: Text(
                   "How is your energy level?",
                   style: TextStyle(
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       fontSize: 18.0,
                       color: Color(0XFF383739)),
                 ),
@@ -68,7 +69,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                 child: Text(
                   "You are able to:",
                   style: TextStyle(
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                       fontSize: 16.0,
                       color: Color(0XFF383739)),
                 ),
@@ -87,7 +88,9 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                       onTap: () {
                         if (selectedList.contains(1)) {
                           selectedList.remove(1);
+                          dailyEnergyLevels.remove('Get off the bed');
                         } else {
+                          dailyEnergyLevels.add('Get off the bed');
                           selectedList.add(1);
                         }
                         setState(() {});
@@ -136,7 +139,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontFamily: 'Montserrat')),
                                   ],
                                 ),
@@ -187,7 +190,9 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                       onTap: () {
                         if (selectedList.contains(5)) {
                           selectedList.remove(5);
+                          dailyEnergyLevels.remove('Stand');
                         } else {
+                          dailyEnergyLevels.add('Stand');
                           selectedList.add(5);
                         }
                         setState(() {});
@@ -236,7 +241,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontFamily: 'Montserrat')),
                                   ],
                                 ),
@@ -278,8 +283,10 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                       onTap: () {
                         if (selectedList.contains(4)) {
                           selectedList.remove(4);
+                          dailyEnergyLevels.remove('Walk');
                         } else {
                           selectedList.add(4);
+                          dailyEnergyLevels.add('Walk');
                         }
                         setState(() {});
                       },
@@ -327,7 +334,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontFamily: 'Montserrat')),
                                   ],
                                 ),
@@ -369,7 +376,9 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                       onTap: () {
                         if (selectedList.contains(6)) {
                           selectedList.remove(6);
+                          dailyEnergyLevels.remove('Eat');
                         } else {
+                          dailyEnergyLevels.add('Eat');
                           selectedList.add(6);
                         }
                         setState(() {});
@@ -418,7 +427,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontFamily: 'Montserrat')),
                                   ],
                                 ),
@@ -468,8 +477,10 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                     child: InkWell(
                       onTap: () {
                         if (selectedList.contains(2)) {
+                          dailyEnergyLevels.remove('Climb Stairs');
                           selectedList.remove(2);
                         } else {
+                          dailyEnergyLevels.add('Climb Stairs');
                           selectedList.add(2);
                         }
                         setState(() {});
@@ -518,7 +529,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontFamily: 'Montserrat')),
                                   ],
                                 ),
@@ -559,8 +570,10 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                     child: InkWell(
                       onTap: () {
                         if (selectedList.contains(3)) {
+                          dailyEnergyLevels.remove('Exercise');
                           selectedList.remove(3);
                         } else {
+                          dailyEnergyLevels.add('Exercise');
                           selectedList.add(3);
                         }
                         setState(() {});
@@ -609,7 +622,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w600,
                                             fontFamily: 'Montserrat')),
                                   ],
                                 ),
@@ -657,8 +670,12 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                   child: InkWell(
                     onTap: () {
                       if (selectedList.contains(7)) {
+                        dailyEnergyLevels
+                            .remove('Get through the day without a nap');
                         selectedList.remove(7);
                       } else {
+                        dailyEnergyLevels
+                            .add('Get through the day without a nap');
                         selectedList.add(7);
                       }
                       setState(() {});
@@ -707,7 +724,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                                       style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.black,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           fontFamily: 'Montserrat')),
                                 ],
                               ),
@@ -757,7 +774,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
                   child: Text(
                     "Done",
                     style: TextStyle(
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         fontSize: 18.0,
                         color: Colors.white),
                   ),

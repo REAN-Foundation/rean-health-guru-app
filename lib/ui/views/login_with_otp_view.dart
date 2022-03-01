@@ -4,7 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
@@ -16,9 +16,10 @@ import 'package:paitent/networking/ApiProvider.dart';
 import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/ui/views/home_view.dart';
-import 'package:paitent/ui/widgets/bezierContainer.dart';
+import 'package:paitent/ui/widgets/PrimaryLightColorContainer.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/SharedPrefUtils.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 import 'base_widget.dart';
@@ -38,9 +39,12 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   //String _fcmToken ="";
   final TextEditingController _mobileNumberController = TextEditingController();
   final _mobileNumberFocus = FocusNode();
+  ProgressDialog progressDialog;
+  int maxLengthOfPhone = 0;
 
   @override
   void initState() {
+    progressDialog = ProgressDialog(context, isDismissible: false);
     getKnowdledgeLinkLastViewDate();
     permissionDialog();
     //if(apiProvider.getBaseUrl().contains('dev')) {
@@ -108,62 +112,190 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       builder: (context, model, child) => Container(
           child: Scaffold(
               resizeToAvoidBottomInset: false,
-              backgroundColor: colorF6F6FF,
+              backgroundColor: primaryColor,
               body: Container(
                 height: height,
                 child: Stack(
                   children: <Widget>[
                     Positioned(
-                        top: -height * .20,
-                        right: -MediaQuery.of(context).size.width * .4,
-                        child: BezierContainer()),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: SingleChildScrollView(
+                        top: -90,
+                        right: 40,
+                        child: PrimaryLightColorContainer(180)),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 60,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: loginContent(model),
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      top: 60,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(height: height * .2),
-                            getAppType() == 'AHA' ? _titleAha() : _title(),
-                            Semantics(
-                                label: 'Mobile number',
-                                readOnly: true,
-                                child: SizedBox(height: 100)),
-                            //_emailPasswordWidget(),
-                            _textFeild('Mobile Number', model),
-                            SizedBox(height: 40),
-                            if (model.busy)
-                              CircularProgressIndicator()
-                            else
-                              _getOTPButton(model),
-                            /* model.busy
-                              ? CircularProgressIndicator()
-                              :_submitButton(model),*/
-                            /*Container(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            alignment: Alignment.centerRight,
-                            child: Text('Forgot Password ?',
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w500)),
-                          ),*/
-                            //_divider(),
-                            //_facebookButton(),
-                            //SizedBox(height: height * .099),
-                            //_createAccountLabel(),
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(60.0),
+                              ),
+                              elevation: 8,
+                              child: Container(
+                                height: 80,
+                                width: 80,
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  color: getAppType() == 'AHA'
+                                      ? primaryLightColor
+                                      : Colors.white,
+                                  shape: BoxShape.circle,
+                                  /*boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: Colors.grey.shade300,
+                            offset: Offset(2, 4),
+                            blurRadius: 3,
+                            spreadRadius: 2)
+                      ],*/
+                                ),
+                                child: getAppType() == 'AHA'
+                                    ? Image.asset(
+                                        'res/images/aha_logo.png',
+                                        semanticLabel:
+                                            'American Heart Association logo',
+                                      )
+                                    : Image.asset(
+                                        'res/images/app_logo_tranparent.png',
+                                        semanticLabel: 'REAN HealthGuru',
+                                        color: primaryColor,
+                                      ),
+                              ),
+                            ),
+                            /*    SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              'Create better together',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 24,
+                                color: Colors.white,
+                                fontFamily: "Montserrat",
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Let\’s get started',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontFamily: "Montserrat",
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),*/
                           ],
                         ),
                       ),
                     ),
-                    Positioned(
-                        bottom: -height * .30,
-                        right: MediaQuery.of(context).size.width * .35,
-                        child: Transform.rotate(
-                            angle: 160, child: BezierContainer())),
                     //Positioned(top: 40, left: 0, child: _backButton()),
                   ],
                 ),
               ))),
+    );
+  }
+
+  Widget loginContent(LoginViewModel model) {
+    return Container(
+      height: MediaQuery.of(context).size.height - 100,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(12), topLeft: Radius.circular(12))),
+      child: Stack(
+        children: [
+          Positioned(
+              bottom: 0,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      getAppType() == 'AHA'
+                          ? 'Powered by\nREAN Foundation (Innovator\'s Network)'
+                          : 'Powered by\nREAN Foundation',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w200,
+                          color: primaryColor),
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                  ],
+                ),
+              )),
+          Positioned(
+              bottom: 0,
+              child: ExcludeSemantics(
+                child: Image.asset(
+                  'res/images/grey_login_mask.png',
+                  fit: BoxFit.fitWidth,
+                  scale: 0.9,
+                ),
+              )),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  /*getAppType() == 'AHA' ? _titleAha() : _title(),*/
+                  /*Semantics(
+                      label: 'Mobile number',
+                      readOnly: true,
+                      child: SizedBox(height: 100)),*/
+                  //_emailPasswordWidget(),
+                  SizedBox(height: 60),
+                  Text(
+                    'Let\’s get started',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: primaryColor,
+                      fontFamily: "Montserrat",
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  _textFeild('Enter your phone', model),
+                  SizedBox(height: 20),
+                  if (model.busy)
+                    CircularProgressIndicator()
+                  else
+                    _getOTPButton(model),
+                  SizedBox(height: 80),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -173,16 +305,45 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            '  ' + title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  'You will receive a 6 digit code for phone number verification ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: textGrey,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                  ),
+                ),
+              ],
+            ),
           ),
-          SizedBox(
-            height: 10,
+          const SizedBox(
+            height: 32,
           ),
           Card(
-            elevation: 4,
+            elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
@@ -191,6 +352,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
                     color: Colors.white,
+                    border: Border.all(color: textGrey),
                     borderRadius: BorderRadius.all(Radius.circular(12.0))),
                 child: IntlPhoneField(
                   /*decoration: InputDecoration(
@@ -202,8 +364,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   autoValidate: true,
                   inputFormatters: [
-                    FilteringTextInputFormatter.deny(
-                        RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                   ],
                   controller: _mobileNumberController,
                   focusNode: _mobileNumberFocus,
@@ -221,15 +382,16 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                     debugPrint(phone.number);
                     mobileNumber = phone.number;
                     countryCode = phone.countryCode;
+                    debugPrint(
+                        'Country max length ==> ${countries.firstWhere((element) => element['code'] == phone.countryISOCode)['max_length']}');
+                    maxLengthOfPhone = countries.firstWhere((element) =>
+                        element['code'] == phone.countryISOCode)['max_length'];
                     /*if(mobileNumber.length == 10){
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/
                   },
                   onCountryChanged: (phone) {
                     _clearFeilds();
-                  },
-                  onTap: () {
-                    debugPrint("=========Tapped=======");
                   },
                 )),
           ),
@@ -240,37 +402,45 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   Widget _getOTPButton(LoginViewModel model) {
     return Semantics(
-      label: 'getOTP',
+      label: 'Get OTP',
       button: true,
-      hint: 'press to get OTP',
+      //hint: 'press to get OTP',
       child: SizedBox(
-        width: 160,
-        height: 40,
-        child: ElevatedButton(
-          child: Text('Get OTP', style: TextStyle(fontSize: 14)),
-          style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(24)),
-                      side: BorderSide(color: primaryColor)))),
-          onPressed: () {
-            if (mobileNumber.length == 10) {
-              countryCodeGlobe = countryCode;
-              model.setBusy(true);
-              if (dummyNumberList.contains(mobileNumber)) {
-                Navigator.pushNamed(context, RoutePaths.OTP_Screen,
-                    arguments: mobileNumber);
-                model.setBusy(false);
+        width: 360,
+        height: 50,
+        child: ExcludeSemantics(
+          child: ElevatedButton(
+            child: Text('Get OTP',
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white)),
+            style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        side: BorderSide(color: primaryColor)))),
+            onPressed: () {
+              if (mobileNumber.trim().isEmpty) {
+                showToast('Please enter phone number', context);
+              } else if (mobileNumber.length == maxLengthOfPhone) {
+                countryCodeGlobe = countryCode;
+                model.setBusy(true);
+                if (dummyNumberList.contains(mobileNumber)) {
+                  Navigator.pushNamed(context, RoutePaths.OTP_Screen,
+                      arguments: mobileNumber);
+                  model.setBusy(false);
+                } else {
+                  checkUserExistsOrNot(model);
+                }
               } else {
-                checkUserExistsOrNot(model);
+                debugPrint('Please enter valid number');
+                showToast('Please enter valid number', context);
               }
-            } else {
-              debugPrint('Please enter valid number');
-              showToast('Please enter valid number', context);
-            }
-          },
+            },
+          ),
         ),
       ),
     );
@@ -278,6 +448,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   checkUserExistsOrNot(LoginViewModel model) async {
     try {
+      progressDialog.show();
       debugPrint('Mobile = $mobileNumber');
 
       final response = await apiProvider.get('/users/by-phone/' +
@@ -297,6 +468,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         if (checkUserExistOrNotResonse.message == 'User not found.') {
           generateOTP(model);
         } else {
+          progressDialog.hide();
           showToast(checkUserExistOrNotResonse.message, context);
         }
         model.setBusy(false);
@@ -330,6 +502,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
           BaseResponse.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
+        progressDialog.hide();
         showToast(
             'OTP has been successfully sent on your mobile number', context);
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,
@@ -337,11 +510,13 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         _clearFeilds();
         model.setBusy(false);
       } else {
+        progressDialog.hide();
         model.setBusy(false);
         showToast(doctorListApiResponse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
+      progressDialog.hide();
       debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});
@@ -366,6 +541,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
       if (doctorListApiResponse.status == 'success') {
+        progressDialog.hide();
         showToast(
             'OTP has been successfully sent on your mobile number', context);
         _sharedPrefUtils.save(
@@ -375,11 +551,13 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         _clearFeilds();
         model.setBusy(false);
       } else {
+        progressDialog.hide();
         model.setBusy(false);
         showToast(doctorListApiResponse.message, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
+      progressDialog.hide();
       debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});
@@ -427,7 +605,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     }
   }
 
-  Widget _title() {
+  /*Widget _title() {
     return MergeSemantics(
       child: Semantics(
         label: 'App name',
@@ -439,7 +617,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
               style: GoogleFonts.portLligatSans(
                 textStyle: Theme.of(context).textTheme.headline4,
                 fontSize: 30,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
                 color: primaryColor,
               ),
               children: [
@@ -472,7 +650,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   Widget _titleAha() {
     return MergeSemantics(
       child: Semantics(
-        label: 'App name',
+        //label: 'App name',
         readOnly: true,
         child: RichText(
           textAlign: TextAlign.center,
@@ -481,7 +659,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
               style: GoogleFonts.portLligatSans(
                 textStyle: Theme.of(context).textTheme.headline4,
                 fontSize: 30,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
                 color: primaryColor,
               ),
               children: [
@@ -509,7 +687,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         ),
       ),
     );
-  }
+  }*/
 
   checkItenetConnection() async {
     try {
@@ -523,6 +701,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   }
 
   _clearFeilds() {
+    progressDialog.hide();
+    mobileNumber = '';
     _mobileNumberController.clear();
     setState(() {});
   }

@@ -140,7 +140,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 14,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: primaryColor)),
                       ),
                     ],
@@ -154,7 +154,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontSize: 12,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: primaryColor)),
                       SizedBox(
                         width: 8,

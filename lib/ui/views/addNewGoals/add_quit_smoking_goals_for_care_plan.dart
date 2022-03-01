@@ -50,7 +50,7 @@ class _AddQuitSmokingGoalsForCarePlanViewState
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -95,7 +95,7 @@ class _AddQuitSmokingGoalsForCarePlanViewState
           Text(
             'Smoking is the leading preventable cause of death and disability in the United States. Cigarette smoking results in a much higher risk of dying of coronary heart disease. Smoking robs the heart of oxygen-rich blood and increases the effects of other risk factors, including blood pressure, blood cholesterol levels and physical inactivity.',
             style: TextStyle(
-                color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
+                color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
           ),
           const SizedBox(
             height: 16,
@@ -118,7 +118,7 @@ class _AddQuitSmokingGoalsForCarePlanViewState
                   child:  Center(
                     child: Text(
                       'View more >>',
-                      style: TextStyle(fontWeight: FontWeight.w700, color: primaryColor, fontSize: 12),
+                      style: TextStyle(fontWeight: FontWeight.w600, color: primaryColor, fontSize: 12),
                     ),
                   ),
                 ),
@@ -277,7 +277,7 @@ class _AddQuitSmokingGoalsForCarePlanViewState
                         'Save',
                         style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             fontSize: 14),
                         textAlign: TextAlign.center,
                       ),

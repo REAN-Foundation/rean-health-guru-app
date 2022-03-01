@@ -50,6 +50,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   @override
   void initState() {
     _api_key = dotenv.env['Patient_API_KEY'];
+    progressDialog = ProgressDialog(context, isDismissible: false);
     getAllRecords();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
@@ -157,7 +158,6 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
     return BaseWidget<CommonConfigModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -172,7 +172,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                   style: TextStyle(
                       fontSize: 16.0,
                       color: primaryColor,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                 ),
                 iconTheme: new IconThemeData(color: Colors.black),
                 actions: <Widget>[
@@ -204,7 +204,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                       style: TextStyle(
                           fontSize: 16,
                           color: primaryColor,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ),
                 SizedBox(
@@ -272,7 +272,7 @@ class _MyReportsViewState extends State<MyReportsView> {
             style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.white,
-                fontWeight: FontWeight.w700),
+                fontWeight: FontWeight.w600),
           ),
           style: ButtonStyle(
               foregroundColor:
@@ -335,7 +335,7 @@ class _MyReportsViewState extends State<MyReportsView> {
             //getDocumentPublicLink(document, true);
 
           } else {
-            showToast('Opps, something wents wrong!', context);
+            showToast('Opps, something went wrong!', context);
           }
         },
         child: Container(
@@ -378,7 +378,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontSize: 14,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             color: textBlack)),
                   ),
                   Row(
@@ -386,6 +386,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Semantics(
+                        button: true,
                         child: InkWell(
                             onTap: () {
                               _renameDialog(document);
@@ -406,7 +407,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                                       semanticsLabel: 'rename',
                                       style: TextStyle(
                                           fontSize: 12,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           color: primaryColor)),
                                 ],
                               ),
@@ -418,6 +419,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                         color: primaryColor,
                       ),
                       Semantics(
+                        button: true,
                         child: InkWell(
                             onTap: () {
                               _removeConfirmation(document);
@@ -438,7 +440,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                                       semanticsLabel: 'delete',
                                       style: TextStyle(
                                           fontSize: 12,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           color: primaryColor)),
                                 ],
                               ),
@@ -450,13 +452,14 @@ class _MyReportsViewState extends State<MyReportsView> {
                         color: primaryColor,
                       ),
                       Semantics(
+                        button: true,
                         child: InkWell(
                             onTap: () {
                               if (document.mimeType != null) {
                                 getDocumentPublicLink(document, false);
                               } else {
                                 showToast(
-                                    'Opps, something wents wrong!', context);
+                                    'Opps, something went wrong!', context);
                               }
                             },
                             child: Container(
@@ -474,7 +477,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                                   Text('Share',
                                       style: TextStyle(
                                           fontSize: 12,
-                                          fontWeight: FontWeight.w700,
+                                          fontWeight: FontWeight.w600,
                                           color: primaryColor)),
                                 ],
                               ),
@@ -552,7 +555,19 @@ class _MyReportsViewState extends State<MyReportsView> {
   Future getFile(String type) async {
     String result;
     try {
-      result = await FlutterDocumentPicker.openDocument();
+      final FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
+        allowedMimeTypes: [
+            'application/pdf',
+            'application/docs',
+            'application/ppt'
+          ],
+          allowedFileExtensions: [
+            'pdf',
+            'docs',
+            'ppt'
+          ]);
+
+      result = await FlutterDocumentPicker.openDocument(params: params);
       debugPrint('File Result ==> $result');
 
       if (result != '') {
@@ -562,10 +577,10 @@ class _MyReportsViewState extends State<MyReportsView> {
         debugPrint('File Name ==> $fileName');
         uploadProfilePicture(file, type);
       } else {
-        showToast('Please select document', context);
+        showToast('Please select valid document', context);
       }
     } catch (e) {
-      showToast('Please select document', context);
+      showToast('Please select correct document', context);
       debugPrint(e);
       result = 'Error: $e';
     }
@@ -670,12 +685,12 @@ class _MyReportsViewState extends State<MyReportsView> {
             getAllRecords();
             showToast(uploadResponse.message, context);
           } else {
-            showToast('Opps, something wents wrong!', context);
+            showToast('Opps, something went wrong!', context);
           }
         } else {
           final respStr = await response.stream.bytesToString();
           progressDialog.hide();
-          showToast('Opps, something wents wrong!', context);
+          showToast('Opps, something went wrong!', context);
           debugPrint('Upload Faild ! ==> $respStr');
         }
       }); // debugPrint("3");
@@ -695,7 +710,7 @@ class _MyReportsViewState extends State<MyReportsView> {
           title: Text(
             'Alert!',
             style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 fontStyle: FontStyle.normal,
                 fontSize: 18.0,
                 color: Colors.black),
@@ -762,9 +777,20 @@ class _MyReportsViewState extends State<MyReportsView> {
           TextButton(
               child: const Text('Ok'),
               onPressed: () {
+                final String enteredFileName = renameControler.text;
+                final String fileExtention = enteredFileName.split('.').last;
+                final String newFileName =
+                    renameControler.text.replaceAll('.' + fileExtention, '');
+
+                debugPrint('New FileName ==> $newFileName');
+                debugPrint('fileExtention ==> $fileExtention');
+                debugPrint('enteredFileName ==> $enteredFileName');
+
                 if (document.fileName == renameControler.text) {
-                  showToast('Document renamed successfully ', context);
+                  showToastMsg('Document renamed successfully ', context);
                   Navigator.of(context, rootNavigator: true).pop();
+                } else if (newFileName == '') {
+                  showToastMsg('Please enter valid file name', context);
                 } else {
                   renameDocument(document.id, renameControler.text);
                   Navigator.of(context, rootNavigator: true).pop();
@@ -777,7 +803,7 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   Widget _uploadImageSelector() {
     return Container(
-      height: 160,
+      height: 180,
       color: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
@@ -785,136 +811,170 @@ class _MyReportsViewState extends State<MyReportsView> {
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
         ),
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Semantics(
-              label: 'Camera',
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                  openCamera();
-                },
-                child: Container(
-                  child: ExcludeSemantics(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: primaryLightColor,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(50.0)),
-                            border: Border.all(
-                              color: primaryColor,
-                              width: 1.0,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Semantics(
+                  label: 'Camera',
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      openCamera();
+                    },
+                    child: Container(
+                      child: ExcludeSemantics(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                color: primaryLightColor,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0)),
+                                border: Border.all(
+                                  color: primaryColor,
+                                  width: 1.0,
+                                ),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.camera_alt,
+                                  color: primaryColor,
+                                  size: 24,
+                                ),
+                              ),
                             ),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.camera_alt,
-                              color: primaryColor,
-                              size: 24,
+                            SizedBox(
+                              height: 8,
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          'Camera',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Semantics(
-              label: 'Gallery',
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                  openGallery();
-                },
-                child: Container(
-                  child: ExcludeSemantics(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 60,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: primaryLightColor,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(50.0)),
-                            border: Border.all(
-                              color: primaryColor,
-                              width: 1.0,
+                            Text(
+                              'Camera',
+                              style: TextStyle(fontSize: 12),
                             ),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.image,
-                              color: primaryColor,
-                              size: 24,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          'Gallery',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            /*Semantics(
-              label: 'Cancel',
-              child: InkWell(
-                onTap: (){
-
-                },
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: new BoxDecoration(
-                          color: primaryLightColor,
-                          borderRadius:
-                          new BorderRadius.all(new Radius.circular(50.0)),
-                          border: new Border.all(
-                            color: primaryColor,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Center(
-                          child: Icon(Icons.close, color: primaryColor, size: 24,),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 8,),
-                      Text('Cancel', style: TextStyle(fontSize: 12),),
-                    ],
+                    ),
                   ),
                 ),
+                Semantics(
+                  label: 'Gallery',
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      openGallery();
+                    },
+                    child: Container(
+                      child: ExcludeSemantics(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                color: primaryLightColor,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0)),
+                                border: Border.all(
+                                  color: primaryColor,
+                                  width: 1.0,
+                                ),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.image,
+                                  color: primaryColor,
+                                  size: 24,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Gallery',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Semantics(
+                  label: 'Files',
+                  child: InkWell(
+                    onTap: () async {
+                      Navigator.pop(context);
+                      final String type = await _askForDocsType();
+                      debugPrint('File Type $type');
+                      if (type != null) {
+                        getFile(type);
+                      } else {
+                        showToast('Please select document type', context);
+                      }
+                    },
+                    child: Container(
+                      child: ExcludeSemantics(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                color: primaryLightColor,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0)),
+                                border: Border.all(
+                                  color: primaryColor,
+                                  width: 1.0,
+                                ),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.file_copy,
+                                  color: primaryColor,
+                                  size: 24,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Files',
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  'Note: Files formats supported include  .docx, .pdf, .ppt.',
+                  style: TextStyle(fontSize: 12, color: textGrey),
+                ),
               ),
-            ),*/
+            ),
           ],
         ),
       ),
@@ -925,9 +985,16 @@ class _MyReportsViewState extends State<MyReportsView> {
     final String type = await _askForDocsType();
     debugPrint('File Type $type');
     if (type != null) {
-      getFile(type);
+      final picture = await _picker.pickImage(
+        source: ImageSource.gallery,
+      );
+      final File file = File(picture.path);
+      debugPrint(picture.path);
+      final String fileName = file.path.split('/').last;
+      debugPrint('File Name ==> $fileName');
+      uploadProfilePicture(file, type);
     } else {
-      showToast('Please select document type', context);
+      showToast('Please select correct document type', context);
     }
   }
 

@@ -195,7 +195,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.w700),
+                      fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -332,7 +332,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                                         details.lastName,
                                     style: TextStyle(
                                         fontSize: 14.0,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                               ),
                               Text(details.gender,
@@ -462,7 +462,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                                     details.firstName + ' ' + details.lastName,
                                     style: TextStyle(
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                               ),
                               Text('Phone: +91 ' + details.phoneNumber,
@@ -578,7 +578,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                                     details.firstName + ' ' + details.lastName,
                                     style: TextStyle(
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                               ),
                               Text('Phone: +91 ' + details.phoneNumber,
@@ -704,7 +704,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                                     details.firstName + ' ' + details.lastName,
                                     style: TextStyle(
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                               ),
                               Text('Phone: +91 ' + details.phoneNumber,
@@ -781,7 +781,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                         'Select Doctors',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 16.0),
                         textAlign: TextAlign.center,
@@ -877,7 +877,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                         'Select Pharmacy',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 16.0),
                         textAlign: TextAlign.center,
@@ -981,7 +981,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                         'Add Nurse / Social Health Worker',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 16.0),
                         textAlign: TextAlign.center,
@@ -1046,7 +1046,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                         'Add FamilyMember \n/ Friends',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                             color: primaryColor,
                             fontSize: 16.0),
                         textAlign: TextAlign.center,
@@ -1125,7 +1125,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
           title: Text(
             'Alert!',
             style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 fontStyle: FontStyle.normal,
                 fontSize: 18.0,
                 color: Colors.black),

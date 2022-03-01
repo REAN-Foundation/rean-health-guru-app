@@ -62,7 +62,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                     "How are you feeling?",
                     semanticsLabel: "How are you feeling?",
                     style: TextStyle(
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w600,
                         fontSize: 18.0,
                         color: Color(0XFF383739)),
                   ),
@@ -81,9 +81,13 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 1;
+                        dailyFeeling = 'Better';
                         setState(() {});
 
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(
+                            const Duration(
+                              milliseconds: 300,
+                            ),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -137,7 +141,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -151,8 +155,12 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 2;
+                        dailyFeeling = 'Same';
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(
+                            const Duration(
+                              milliseconds: 300,
+                            ),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -206,7 +214,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -220,8 +228,12 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                     child: InkWell(
                       onTap: () {
                         selectedFeelings = 3;
+                        dailyFeeling = 'Worse';
                         setState(() {});
-                        Future.delayed(const Duration(seconds: 1),
+                        Future.delayed(
+                            const Duration(
+                              milliseconds: 300,
+                            ),
                             () => showDailyCheckIn());
                       },
                       child: DelayedAnimation(
@@ -275,7 +287,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
                             ],
                           ),
@@ -292,7 +304,7 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  //Future.delayed(const Duration(seconds: 1), () => showDailyCheckIn());
+                  //Future.delayed(const Duration(seconds: 0), () => showDailyCheckIn());
                 },
                 child: Text(
                   "Skip",

@@ -74,7 +74,7 @@ class _AssesmentTaskNavigatorViewState
                     style: TextStyle(
                         fontSize: 16.0,
                         color: primaryColor,
-                        fontWeight: FontWeight.w700),
+                        fontWeight: FontWeight.w600),
                   ),
                   iconTheme: IconThemeData(color: Colors.black),
                   actions: <Widget>[
@@ -360,7 +360,7 @@ class _AssesmentTaskNavigatorViewState
                       '',
                       style: TextStyle(
                           fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                           color: primaryColor,
                           fontSize: 16.0),
                       textAlign: TextAlign.center,
@@ -386,7 +386,7 @@ class _AssesmentTaskNavigatorViewState
                 assessmment.question.questionText,
                 style: TextStyle(
                     fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     color: primaryColor,
                     fontSize: 16.0),
                 textAlign: TextAlign.center,
@@ -424,7 +424,7 @@ class _AssesmentTaskNavigatorViewState
                         'Ok',
                         style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             fontSize: 12),
                         textAlign: TextAlign.center,
                       ),

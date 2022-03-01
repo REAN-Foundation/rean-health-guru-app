@@ -54,7 +54,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
-                  fontWeight: FontWeight.w700),
+                  fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.black),
             actions: <Widget>[
@@ -97,7 +97,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
       child: Center(
         child: Text(
           widget.task.details.challengeText,
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
+          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
       ),
@@ -116,7 +116,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
         child: Center(
           child: Text(
             widget.task.details.subTitle,
-            style: TextStyle(color: primaryColor, fontWeight: FontWeight.w700),
+            style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
             textAlign: TextAlign.center,
           ),
         ),

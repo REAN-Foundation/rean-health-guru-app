@@ -114,7 +114,7 @@ class Items {
   String cancellationReason;
   bool isRecurrent;
   String recurrenceScheduleId;
-  ActionDto actionDto;
+  Action action;
 
   Items(
       {this.id,
@@ -137,7 +137,7 @@ class Items {
       this.cancellationReason,
       this.isRecurrent,
       this.recurrenceScheduleId,
-      this.actionDto});
+      this.action});
 
   Items.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -160,9 +160,7 @@ class Items {
     cancellationReason = json['CancellationReason'];
     isRecurrent = json['IsRecurrent'];
     recurrenceScheduleId = json['RecurrenceScheduleId'];
-    actionDto = json['ActionDto'] != null
-        ? ActionDto.fromJson(json['ActionDto'])
-        : null;
+    action = json['Action'] != null ? Action.fromJson(json['Action']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -187,14 +185,14 @@ class Items {
     data['CancellationReason'] = cancellationReason;
     data['IsRecurrent'] = isRecurrent;
     data['RecurrenceScheduleId'] = recurrenceScheduleId;
-    if (actionDto != null) {
-      data['ActionDto'] = actionDto.toJson();
+    if (action != null) {
+      data['Action'] = action.toJson();
     }
     return data;
   }
 }
 
-class ActionDto {
+class Action {
   String id;
   String ehrId;
   String patientUserId;
@@ -213,7 +211,7 @@ class ActionDto {
   String note;
   String status;
 
-  ActionDto(
+  Action(
       {this.id,
       this.ehrId,
       this.patientUserId,
@@ -232,7 +230,7 @@ class ActionDto {
       this.note,
       this.status});
 
-  ActionDto.fromJson(Map<String, dynamic> json) {
+  Action.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     ehrId = json['EhrId'];
     patientUserId = json['PatientUserId'];

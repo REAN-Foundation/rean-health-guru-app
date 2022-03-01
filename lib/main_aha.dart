@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: providers,
       child: MaterialApp(
-        title: 'AHA',
+        title: 'HF Helper',
         showSemanticsDebugger: false,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(primarySwatch: colorCustom, fontFamily: 'Montserrat'),

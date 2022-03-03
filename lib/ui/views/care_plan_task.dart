@@ -634,13 +634,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                     SizedBox(
                       width: 8,
                     ),
-                    if (!task.actionDto.isTaken &&
-                        !task.actionDto.isMissed) ...[
+                    if (!task.action.isTaken && !task.action.isMissed) ...[
                       Visibility(
-                        visible:
-                            !(DateTime.parse(task.actionDto.timeScheduleStart)
-                                    .toLocal())
-                                .isAfter(DateTime.now()),
+                        visible: !(DateTime.parse(task.action.timeScheduleStart)
+                                .toLocal())
+                            .isAfter(DateTime.now()),
                         child: Expanded(
                           flex: 2,
                           child: Semantics(
@@ -685,7 +683,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         ),
                       ),
                     ],
-                    if (task.actionDto.isTaken) ...[
+                    if (task.action.isTaken) ...[
                       Expanded(
                         flex: 2,
                         child: Semantics(
@@ -711,7 +709,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                         ),
                       ),
                     ],
-                    if (task.actionDto.isMissed) ...[
+                    if (task.action.isMissed) ...[
                       Expanded(
                         flex: 2,
                         child: Semantics(

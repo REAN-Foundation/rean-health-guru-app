@@ -368,7 +368,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [_content(), bmi(), glassForWater()],
+                  children: [_content(), bmi()], //, glassForWater()
                 ),
               ),
             )),

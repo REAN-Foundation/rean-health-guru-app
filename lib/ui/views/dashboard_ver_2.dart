@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -82,7 +84,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     model.setBusy(true);
     Future.delayed(
       Duration(seconds: 4),
-      () {
+          () {
         getTodaysKnowledgeTopic();
         //getTaskPlanSummary();
         getMyMedications();
@@ -100,7 +102,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   getTaskPlanSummary() async {
     try {
       final TaskSummaryResponse taskSummaryResponse =
-          await model.getTaskPlanSummary();
+      await model.getTaskPlanSummary();
       debugPrint('Task Summary ==> ${taskSummaryResponse.toJson()}');
       if (taskSummaryResponse.status == 'success') {
         completedTaskCount =
@@ -121,7 +123,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
 
   sortMyMedication(GetMyMedicationsResponse response) {
     for (final medSummary
-        in response.data.medicationSchedulesForDay.schedules) {
+    in response.data.medicationSchedulesForDay.schedules) {
       if (medSummary.status == 'Unknown' ||
           medSummary.status == 'Upcoming' ||
           medSummary.status == 'Overdue') {
@@ -138,7 +140,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   getMedicationSummary() async {
     try {
       final TaskSummaryResponse taskSummaryResponse =
-          await model.getMedicationSummary(dateFormat.format(DateTime.now()));
+      await model.getMedicationSummary(dateFormat.format(DateTime.now()));
       debugPrint('Medication Summary ==> ${taskSummaryResponse.toJson()}');
       if (taskSummaryResponse.status == 'success') {
         completedMedicationCount = taskSummaryResponse.data.summary.taken +
@@ -204,8 +206,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                 //   Container(),
                 myBiometrics(),
                 myNutrition(),
-                myActivity(),
-                myStress(),
+                if (Platform.isIOS) ...[
+                  myActivity(),
+                  myStress(),
+                ],
                 knowledgeTree(),
                 //myTasks(),
                 //searchNearMe(),
@@ -640,24 +644,24 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           child: Center(
                             child: model.busy
                                 ? SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      valueColor:
-                                      AlwaysStoppedAnimation<Color>(
-                                          iconColor),
-                                    ))
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  valueColor:
+                                  AlwaysStoppedAnimation<Color>(
+                                      iconColor),
+                                ))
                                 : Semantics(
-                                    label: 'pendingTask',
-                                    child: Text(
-                                      incompleteTaskCount.toString(),
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'Montserrat',
-                                          color: Colors.orange),
-                                    ),
-                                  ),
+                              label: 'pendingTask',
+                              child: Text(
+                                incompleteTaskCount.toString(),
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.orange),
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -690,24 +694,24 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                           child: Center(
                             child: model.busy
                                 ? SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      valueColor:
-                                      AlwaysStoppedAnimation<Color>(
-                                          iconColor),
-                                    ))
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  valueColor:
+                                  AlwaysStoppedAnimation<Color>(
+                                      iconColor),
+                                ))
                                 : Semantics(
-                                    label: 'completedTask',
-                                    child: Text(
-                                      completedTaskCount.toString(),
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'Montserrat',
-                                          color: Color(0XFF007E1A)),
-                                    ),
-                                  ),
+                              label: 'completedTask',
+                              child: Text(
+                                completedTaskCount.toString(),
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Montserrat',
+                                    color: Color(0XFF007E1A)),
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -979,11 +983,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat')),
-                              Semantics(
-                                label: 'edit_emergency_text',
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.edit,
+                          Semantics(
+                            label: 'edit_emergency_text',
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.edit,
                                 size: 24,
                                 color: primaryColor,
                               ),
@@ -1011,19 +1015,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                               color: primaryColor,
                               size: 36,
                             ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Yes',
-                                    style: TextStyle(
-                                        color: primaryColor,
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text('Yes',
+                                style: TextStyle(
+                                    color: primaryColor,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
                                     fontFamily: 'Montserrat')),
-                              ],
-                            ),
-                          ),
-                        )
+                          ],
+                        ),
+                      ),
+                    )
                 ],
               ),
             ),
@@ -1085,7 +1089,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                             color: Colors.orange,
                             border: Border.all(color: Colors.white),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(16.0))),
+                            BorderRadius.all(Radius.circular(16.0))),
                         child: Center(
                           child: Text(
                             '1',
@@ -1124,7 +1128,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                             color: Color(0XFF007E1A),
                             border: Border.all(color: Colors.white),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(16.0))),
+                            BorderRadius.all(Radius.circular(16.0))),
                         child: Center(
                           child: Text(
                             '3',
@@ -1226,18 +1230,18 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                     text: 'Visit: ',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontSize: 16),
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 16),
                     children: <TextSpan>[
                       TextSpan(
                         text: 'https://supportnetwork.heart.org/s/',
                         style: TextStyle(
                           color: Colors.blue,
-                                fontSize: 16.0,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w500,
-                              ),
+                          fontSize: 16.0,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
+                        ),
                       )
                     ],
                   ),
@@ -1254,17 +1258,17 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   text: topicName.toString(),
                   style: TextStyle(
                       fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                                fontSize: 14),
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontSize: 14),
                   children: <TextSpan>[
                     TextSpan(
                         text: ' ' + briefInformation.toString(),
                         style: TextStyle(
                             fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                      fontFamily: 'Montserrat')),
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                            fontFamily: 'Montserrat')),
                   ],
                 ),
               ),
@@ -1893,7 +1897,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       button: true,
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity);
+                          Navigator.pushNamed(context, RoutePaths.My_Activity,
+                              arguments: 'Steps');
                         },
                         child: Container(
                           height: 96,
@@ -1935,8 +1940,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       button: true,
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(
-                              context, RoutePaths.MyExcersiceData);
+                          Navigator.pushNamed(context, RoutePaths.My_Activity,
+                              arguments: 'Exercise');
                         },
                         child: Container(
                           height: 96,
@@ -2090,7 +2095,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       label: 'Sleep',
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.MySleepData);
+                          Navigator.pushNamed(context, RoutePaths.My_Activity,
+                              arguments: 'Sleep');
                         },
                         child: Container(
                           height: 96,
@@ -2310,12 +2316,12 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   getTodaysKnowledgeTopic() async {
     try {
       final KnowledgeTopicResponse knowledgeTopicResponse =
-          await model.getTodaysKnowledgeTopic();
+      await model.getTodaysKnowledgeTopic();
       debugPrint(
           'Today Knowledge Topic ==> ${knowledgeTopicResponse.toJson()}');
       if (knowledgeTopicResponse.status == 'success') {
         //final Items topic =
-         //knowledgeTopicResponse.data.knowledgeNuggetRecords.items.elementAt(0);
+        //knowledgeTopicResponse.data.knowledgeNuggetRecords.items.elementAt(0);
         topicId = knowledgeTopicResponse.data.knowledgeNugget.id;
         topicName = knowledgeTopicResponse.data.knowledgeNugget.topicName;
         briefInformation = knowledgeTopicResponse.data.knowledgeNugget.briefInformation;
@@ -2338,7 +2344,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       map['EmergencyDate'] = dateFormat.format(DateTime.now());
 
       final BaseResponse baseResponse =
-          await model.addMedicalEmergencyEvent(map);
+      await model.addMedicalEmergencyEvent(map);
       debugPrint('Base Response ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         _sharedPrefUtils.save(
@@ -2362,7 +2368,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     try {
       currentMedicationList.clear();
       final GetMyMedicationsResponse getMyMedicationsResponse =
-          await model.getMyMedications(dateFormat.format(DateTime.now()));
+      await model.getMyMedications(dateFormat.format(DateTime.now()));
       debugPrint('Medication ==> ${getMyMedicationsResponse.toJson()}');
       if (getMyMedicationsResponse.status == 'success') {
         debugPrint(
@@ -2401,7 +2407,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
         body['MedicationConsumptionIds'] = medicationIds;
 
         final BaseResponse baseResponse =
-            await model.markAllMedicationsAsTaken(body);
+        await model.markAllMedicationsAsTaken(body);
         debugPrint('Medication ==> ${baseResponse.toJson()}');
         if (baseResponse.status == 'success') {
           //progressDialog.hide();
@@ -2433,7 +2439,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
       body['SymptomAssessmentId'] = '';
 
       final BaseResponse baseResponse =
-          await model.recordHowAreYouFeeling(body);
+      await model.recordHowAreYouFeeling(body);
       debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         //progressDialog.hide();
@@ -2461,8 +2467,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
   getSymptomAssesmentTemplete() async {
     try {
       final SearchSymptomAssesmentTempleteResponse
-          searchSymptomAssesmentTempleteResponse =
-          await model.searchSymptomAssesmentTemplete('heart');
+      searchSymptomAssesmentTempleteResponse =
+      await model.searchSymptomAssesmentTemplete('heart');
       debugPrint(
           'Search Symptom Assesment Templete Response ==> ${searchSymptomAssesmentTempleteResponse.toJson()}');
       if (searchSymptomAssesmentTempleteResponse.status == 'success') {

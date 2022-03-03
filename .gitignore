@@ -50,6 +50,9 @@ ios/config/*.plist
 # Exclude backend env files
 res/*.env
 
+# Exclude Keystore file
+android/key.properties
+
 ios/Flutter/fluttter_export_environments.sh
 ios/Flutter/Generated.xcconfig
 

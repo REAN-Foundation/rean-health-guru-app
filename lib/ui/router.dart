@@ -74,7 +74,7 @@ import 'package:paitent/ui/views/successfully_setup_care_plan.dart';
 import 'package:paitent/ui/views/support_view.dart';
 import 'package:paitent/ui/views/symptoms_view.dart';
 import 'package:paitent/ui/views/userActivity/MeditationTimmerView.dart';
-import 'package:paitent/ui/views/userActivity/view_my_daily_activity.dart';
+import 'package:paitent/ui/views/userActivity/view_my_all_daily_activity.dart';
 import 'package:paitent/ui/views/userActivity/view_my_daily_sleep.dart';
 import 'package:paitent/ui/views/userActivity/view_my_exercise_time.dart';
 import 'package:paitent/ui/views/video_more_care_plan.dart';
@@ -158,7 +158,8 @@ class Routers {
         //return MaterialPageRoute(builder: (_) => BiometricVitalsView());
         return MaterialPageRoute(builder: (_) => BiometricVitalsTrendsView());
       case RoutePaths.My_Activity:
-        return MaterialPageRoute(builder: (_) => ViewMyDailyActivity());
+        return MaterialPageRoute(
+            builder: (_) => ViewMyAllDailyActivity(settings.arguments));
       case RoutePaths.MySleepData:
         return MaterialPageRoute(builder: (_) => ViewMyDailySleep());
       case RoutePaths.MyExcersiceData:

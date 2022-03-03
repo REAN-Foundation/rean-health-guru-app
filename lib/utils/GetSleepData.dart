@@ -58,7 +58,7 @@ class GetSleepData {
       //HealthDataType.WEIGHT,
       //HealthDataType.HEIGHT,
       //HealthDataType.ACTIVE_ENERGY_BURNED,
-      HealthDataType.SLEEP_ASLEEP,
+      HealthDataType.SLEEP_IN_BED
       //HealthDataType.SLEEP_AWAKE,
       //HealthDataType.BASAL_ENERGY_BURNED,
       //HealthDataType.DISTANCE_WALKING_RUNNING,
@@ -185,7 +185,7 @@ class GetSleepData {
     }
   }
 
-  String getSleepDuration() {
+  int getSleepDuration() {
     try {
       debugPrint('Sleep start time ${_healthDataList.elementAt(0).dateFrom}');
       debugPrint(
@@ -195,9 +195,9 @@ class GetSleepData {
           _healthDataList.elementAt(_healthDataList.length - 1).dateTo;
       final DateTime endTime = _healthDataList.elementAt(0).dateFrom;
 
-      return endTime.difference(startTime).inMinutes.toString();
+      return endTime.difference(startTime).inMinutes;
     } catch (Exception) {
-      return 'No Sleep data available';
+      return 0;
     }
   }
 

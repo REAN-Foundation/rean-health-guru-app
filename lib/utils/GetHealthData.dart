@@ -191,8 +191,8 @@ class GetHealthData {
     }
   }
 
-  String getExerciseTimeInMin() {
-    return totalExerciseMin.toString();
+  int getExerciseTimeInMin() {
+    return totalExerciseMin.toInt();
   }
 
   String getWeight() {

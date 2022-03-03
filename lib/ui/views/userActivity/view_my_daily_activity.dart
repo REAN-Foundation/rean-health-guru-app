@@ -84,10 +84,10 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
         DateTime.now().day, 23, 59, 59);
     loadSharedPref();
     loadWaterConsuption();
-    if (Platform.isIOS) {
-      fetchData();
+    //if (Platform.isIOS) {
+    fetchData();
       sleepData = GetSleepData();
-    }
+    //}
     super.initState();
   }
 
@@ -161,10 +161,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-            padding: EdgeInsets.all(20),
-            child: CircularProgressIndicator(
-              strokeWidth: 10,
-            )),
+            padding: EdgeInsets.all(20), child: CircularProgressIndicator()),
         Text('Fetching data...')
       ],
     );

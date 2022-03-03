@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +36,7 @@ class _AppDrawerState extends State<AppDrawer> {
   loadSharedPrefs() async {
     try {
       final Patient patient =
-          Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
+      Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       //debugPrint(user.toJson().toString());
       setState(() {
         name =
@@ -44,9 +46,9 @@ class _AppDrawerState extends State<AppDrawer> {
         imageResourceId = patient.user.person.imageResourceId ?? '';
         profileImage = imageResourceId != ''
             ? apiProvider.getBaseUrl() +
-                '/file-resources/' +
-                imageResourceId +
-                '/download'
+            '/file-resources/' +
+            imageResourceId +
+            '/download'
             : '';
       });
       _baseUrl = apiProvider.getBaseUrl();
@@ -182,27 +184,29 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
-                },
-                child: Container(
-                  height: 48,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 40,
-                      ),
-                      Text(
-                        'Activity',
-                        style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w600),
-                      ),
-                    ],
+              if (Platform.isIOS) ...[
+                InkWell(
+                  onTap: () {
+                    Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
+                  },
+                  child: Container(
+                    height: 48,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Text(
+                          'Activity',
+                          style: TextStyle(
+                              color: primaryColor, fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
+              ],
               InkWell(
                 onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.My_Nutrition,
@@ -416,8 +420,8 @@ class _AppDrawerState extends State<AppDrawer> {
                             (_baseUrl.contains('dev')
                                 ? 'Dev_'
                                 : _baseUrl.contains('uat')
-                                    ? 'Alpha_'
-                                    : '') +
+                                ? 'Alpha_'
+                                : '') +
                             _packageInfo.version,
                         style: TextStyle(
                             fontSize: 12,
@@ -487,8 +491,8 @@ class _AppDrawerState extends State<AppDrawer> {
               chatList.clear();
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (context) {
-                return LoginWithOTPView();
-              }), (Route<dynamic> route) => false);
+                    return LoginWithOTPView();
+                  }), (Route<dynamic> route) => false);
             },
           ),
           TextButton(
@@ -509,81 +513,81 @@ class _AppDrawerState extends State<AppDrawer> {
                 fit: BoxFit.fill,
                 image: AssetImage('res/images/drawer_header_background.png'))),
         child:*/
-        Container(
-          padding: const EdgeInsets.all(16.0),
+      Container(
+        padding: const EdgeInsets.all(16.0),
 
-      height: 300,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            height: 88,
-            width: 88,
-            child: Stack(
-              children: <Widget>[
-                /*CircleAvatar(
+        height: 300,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              height: 88,
+              width: 88,
+              child: Stack(
+                children: <Widget>[
+                  /*CircleAvatar(
                       radius: 88,
                       backgroundColor: Colors.white,
                       child: CircleAvatar(
                           radius: 88,
                           backgroundImage:  profileImage == "" ? AssetImage('res/images/profile_placeholder.png') : new NetworkImage(profileImage)),
                     ),*/
-                    Container(
-                      width: 120.0,
-                      height: 120.0,
-                      decoration: BoxDecoration(
-                        color: const Color(0xff7c94b6),
-                        image: DecorationImage(
-                          image: profileImage == ''
-                              ? AssetImage('res/images/profile_placeholder.png')
-                              : CachedNetworkImageProvider(profileImage),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                        border: Border.all(
-                          color: primaryColor,
-                          width: 2.0,
-                        ),
+                  Container(
+                    width: 120.0,
+                    height: 120.0,
+                    decoration: BoxDecoration(
+                      color: const Color(0xff7c94b6),
+                      image: DecorationImage(
+                        image: profileImage == ''
+                            ? AssetImage('res/images/profile_placeholder.png')
+                            : CachedNetworkImageProvider(profileImage),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                      border: Border.all(
+                        color: primaryColor,
+                        width: 2.0,
                       ),
                     ),
-                    /*Align(
+                  ),
+                  /*Align(
                       alignment: Alignment.topRight,
                       child: InkWell( onTap: (){ }, child: SizedBox( height: 32, width: 32, child: new Image.asset('res/images/ic_camera.png'))),
                     )*/
-                  ],
-                ),
+                ],
               ),
-              SizedBox(
-                height: 8,
-              ),
-              Semantics(
-                child: Text(
-                  name,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: primaryColor),
-              semanticsLabel: name,
             ),
-          ),
-          SizedBox(
-            height: 4,
-          ),
+            SizedBox(
+              height: 8,
+            ),
+            Semantics(
+              child: Text(
+                name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: primaryColor),
+                semanticsLabel: name,
+              ),
+            ),
+            SizedBox(
+              height: 4,
+            ),
 
-          Text(
-            mobileNumber,
-            style: TextStyle(
-                fontSize: 14, fontWeight: FontWeight.w500, color: textBlack),
-            semanticsLabel: mobileNumber,
-          ),
-        ],
-          ),
+            Text(
+              mobileNumber,
+              style: TextStyle(
+                  fontSize: 14, fontWeight: FontWeight.w500, color: textBlack),
+              semanticsLabel: mobileNumber,
+            ),
+          ],
+        ),
 
-      // )
-    );
+        // )
+      );
   }
 }

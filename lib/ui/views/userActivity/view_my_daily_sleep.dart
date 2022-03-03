@@ -35,13 +35,14 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
   getSleepHours() {
     final msg = sleepData.getSleepDuration();
 
-    if (msg == 'No Sleep data available') {
-      showToast(msg, context);
+    if (msg == 0) {
+      showToast('No Sleep data available', context);
       Navigator.pop(context);
       return;
     }
 
-    final double sleepTime = double.parse(sleepData.getSleepDuration());
+    final double sleepTime =
+        double.parse(sleepData.getSleepDuration().toString());
 
     final time = sleepTime / 60;
 

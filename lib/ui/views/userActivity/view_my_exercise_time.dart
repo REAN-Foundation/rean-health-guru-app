@@ -32,7 +32,7 @@ class _ViewMyDailyExerciseState extends State<ViewMyDailyExercise> {
   }
 
   getExerciseMin() {
-    min = data.getExerciseTimeInMin();
+    min = data.getExerciseTimeInMin().toString();
     setState(() {});
   }
 

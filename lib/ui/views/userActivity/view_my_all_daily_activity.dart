@@ -540,9 +540,9 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
             SizedBox(
               height: 16,
             ),
-            Text(Conversion.durationToString(data.getExerciseTimeInMin()),
-                semanticsLabel:
-                    Conversion.durationToString(data.getExerciseTimeInMin()),
+            Text(Conversion.durationToString(data.getExerciseTimeInMin().abs()),
+                semanticsLabel: Conversion.durationToString(
+                    data.getExerciseTimeInMin().abs()),
                 style: const TextStyle(
                     color: textBlack,
                     fontWeight: FontWeight.w700,
@@ -630,6 +630,46 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
                   fontWeight: FontWeight.w600,
                   fontStyle: FontStyle.normal,
                 )),
+            SizedBox(
+              height: 8,
+            ),
+            if (sleepData.getSleepDuration().abs() < 360)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Container(
+                  height: 48,
+                  decoration: BoxDecoration(
+                      color: primaryLightColor,
+                      borderRadius: BorderRadius.all(Radius.circular(12))),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.info_outline_rounded,
+                        color: primaryColor,
+                        size: 32,
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Text(
+                          "You didn’t have enough sleep.\nIts better to sleep 7-9 hours everyday.",
+                          semanticsLabel:
+                              'You didn’tt have enough sleep. Its better to sleep 7-9 hours everyday.',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: primaryColor,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                            fontStyle: FontStyle.normal,
+                          )),
+                    ],
+                  ),
+                ),
+              )
           ],
         ),
       ),

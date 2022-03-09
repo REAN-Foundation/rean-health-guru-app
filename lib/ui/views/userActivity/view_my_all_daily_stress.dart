@@ -1,38 +1,35 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
+import 'package:paitent/core/constants/app_contstants.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
+import 'package:paitent/core/models/DashboardTile.dart';
 import 'package:paitent/core/models/GlassOfWaterConsumption.dart';
 import 'package:paitent/core/viewmodels/views/patients_health_marker.dart';
+import 'package:paitent/networking/CustomException.dart';
 import 'package:paitent/ui/shared/app_colors.dart';
 import 'package:paitent/utils/CommonUtils.dart';
 import 'package:paitent/utils/Conversion.dart';
 import 'package:paitent/utils/GetHealthData.dart';
 import 'package:paitent/utils/GetSleepData.dart';
+import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:paitent/utils/StringUtility.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../base_widget.dart';
 
 //ignore: must_be_immutable
-class ViewMyAllDailyActivity extends StatefulWidget {
-  String _path = '';
-
-  ViewMyAllDailyActivity(String path) {
-    _path = path;
-  }
-
+class ViewMyAllDailyStress extends StatefulWidget {
   @override
-  _ViewMyAllDailyActivityState createState() => _ViewMyAllDailyActivityState();
+  _ViewMyAllDailyStressState createState() => _ViewMyAllDailyStressState();
 }
 
-class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
+class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
   var model = PatientHealthMarkerViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   List<HealthDataPoint> _healthDataList = [];
   AppState _state = AppState.DATA_NOT_FETCHED;
   var dateFormat = DateFormat('yyyy-MM-dd');
@@ -53,6 +50,25 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
   int heartRateBmp = 0;
   ScrollController _scrollController;
   GetHealthData data;
+  DashboardTile mindfulnessTimeDashboardTile;
+  int oldStoreSec = 0;
+
+  loadSharedPrefs() async {
+    try {
+      mindfulnessTimeDashboardTile = DashboardTile.fromJson(
+          await _sharedPrefUtils.read('mindfulnessTime'));
+      if (mindfulnessTimeDashboardTile.date.difference(DateTime.now()).inDays ==
+          0) {
+        oldStoreSec = int.parse(mindfulnessTimeDashboardTile.discription);
+      }
+
+      setState(() {
+        debugPrint('MindfulnessTime Dashboard Tile ==> $oldStoreSec');
+      });
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+    }
+  }
 
   @override
   void initState() {
@@ -61,12 +77,12 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     endDate = DateTime(DateTime.now().year, DateTime.now().month,
         DateTime.now().day, 23, 59, 59);
-    //loadSharedPref();
+    loadSharedPrefs();
     //loadWaterConsuption();
     //if (Platform.isIOS) {
     fetchData();
     sleepData = GetSleepData();
-    data = GetHealthData();
+    //data = GetHealthData();
     //}
     super.initState();
   }
@@ -156,52 +172,16 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        sleepTime(),
         SizedBox(
           height: 16,
         ),
-        stepCounter(),
-        SizedBox(
-          height: 16,
-        ),
-        exerciseTime(),
-        SizedBox(
-          height: 16,
-        ),
-       /* sleepTime(),
-        SizedBox(
-          height: 16,
-        ),*/
-        burnedCalories(),
+        mindfulnessTime(),
         SizedBox(
           height: 16,
         ),
       ],
     );
-  }
-
-  movetoPosition() {
-    switch (widget._path) {
-      case "Steps":
-        _scrollController.animateTo(0,
-            duration: Duration(seconds: 0), curve: Curves.ease);
-        break;
-      case "Exercise":
-        _scrollController.animateTo(340,
-            duration: Duration(seconds: 1), curve: Curves.ease);
-        break;
-      case "Sleep":
-        _scrollController.animateTo(680,
-            duration: Duration(seconds: 2), curve: Curves.ease);
-        break;
-      case "Calories":
-        _scrollController.animateTo(1020,
-            duration: Duration(seconds: 2), curve: Curves.ease);
-        break;
-      default:
-        _scrollController.animateTo(0,
-            duration: Duration(seconds: 2), curve: Curves.ease);
-        break;
-    }
   }
 
   Widget _contentNotFetched() {
@@ -255,11 +235,6 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
       }
     }
 
-    if (height == 0.0 || weight == 0.0) {
-    } else {
-      calculetBMI();
-    }
-
     totalCalories = totalActiveCalories + totalBasalCalories;
 
     debugPrint('STEPS : $steps');
@@ -270,42 +245,6 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
     debugPrint('Height : $height');
     //recordMySteps();
     //recordMyCalories();
-  }
-
-  calculetBMI() {
-    final double heightInMeters = height / 100;
-    final double heightInMetersSquare = heightInMeters * heightInMeters;
-
-    bmiValue = weight / heightInMetersSquare;
-
-    if (bmiValue == 0.0) {
-      bmiResult = '';
-    } else if (bmiValue < 18.5) {
-      bmiResult = 'Underweight';
-      bmiResultColor = Colors.indigoAccent;
-    } else if (bmiValue > 18.6 && bmiValue < 24.9) {
-      bmiResult = 'Healthy';
-      bmiResultColor = Colors.green;
-    } else if (bmiValue > 25 && bmiValue < 29.9) {
-      bmiResult = 'Overweight';
-      bmiResultColor = Colors.orange;
-    } else if (bmiValue > 30 && bmiValue < 39.9) {
-      bmiResult = 'Obese';
-      bmiResultColor = Colors.deepOrange;
-    } else {
-      bmiResult = 'Severely Obese';
-      bmiResultColor = Colors.red;
-    }
-
-    if (Platform.isAndroid) {
-      setState(() {});
-    }
-
-    /*new Timer(const Duration(milliseconds: 3000), () {
-      setState(() {
-      });
-    });
-*/
   }
 
   clearAllRecords() {
@@ -331,7 +270,7 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
               backgroundColor: primaryColor,
               brightness: Brightness.dark,
               title: Text(
-                'Activity',
+                'Stress',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,
@@ -404,12 +343,7 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
     );
   }
 
-  Widget stepCounter() {
-    double stepPercent = steps / 10000;
-    if (stepPercent > 1.0) {
-      stepPercent = 1.0;
-    }
-    debugPrint('Step % : $stepPercent');
+  Widget sleepTime() {
     return Container(
       height: 240,
       decoration: BoxDecoration(
@@ -417,172 +351,21 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
           borderRadius: BorderRadius.all(Radius.circular(12))),
       child: Align(
         alignment: Alignment.center,
-        child: CircularPercentIndicator(
-          radius: 160.0,
-          lineWidth: 13.0,
-          animation: true,
-          percent: stepPercent,
-          header: Column(
-            children: [
-              Text(
-                'Steps',
-                semanticsLabel: 'Steps',
-                style: TextStyle(
-                    fontFamily: "Montserrat",
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18.0,
-                    color: textBlack),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-            ],
-          ),
-          center: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 32,
-              ),
-              ImageIcon(
-                AssetImage('res/images/ic_steps_count.png'),
-                size: 32,
-                color: primaryColor,
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Text(
-                steps.toString(),
-                semanticsLabel: steps.toString(),
-                style: TextStyle(
-                    fontFamily: "Montserrat",
-                    fontWeight: FontWeight.w700,
-                    fontSize: 22.0,
-                    color: textBlack),
-              ),
-              SizedBox(
-                height: 2,
-              ),
-              Text(
-                'Steps',
-                semanticsLabel: 'Steps',
-                style: TextStyle(
-                    fontFamily: "Montserrat",
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12.0,
-                    color: textGrey),
-              ),
-            ],
-          ),
-          circularStrokeCap: CircularStrokeCap.round,
-          progressColor: primaryColor,
-        ),
-      ),
-    );
-  }
-
-  Widget exerciseTime() {
-    return Container(
-      height: 100,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(12))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Exercise',
-                  semanticsLabel: 'Exercise',
-                  style: TextStyle(
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.0,
-                      color: textBlack),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Text(
-                    Conversion.durationFromMinToHrsToString(
-                        data.getExerciseTimeInMin().abs()),
-                    semanticsLabel: Conversion.durationFromMinToHrsToString(
-                        data.getExerciseTimeInMin().abs()),
-                    style: const TextStyle(
-                        color: textBlack,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: "Montserrat",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 22.0),
-                    textAlign: TextAlign.center),
-                Text("Duration",
-                    semanticsLabel: 'Duration',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color: Color(0xffa8a8a8),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.normal,
-                    )),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: ImageIcon(
-              AssetImage('res/images/ic_exercise_person.png'),
-              size: 48,
-              color: primaryColor,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget sleepTime() {
-    return Container(
-      height: 320,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(12))),
-      child: Align(
-        alignment: Alignment.center,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 32,
-            ),
             Text(
               'Sleep',
               semanticsLabel: 'Sleep',
               style: TextStyle(
                   fontFamily: "Montserrat",
                   fontWeight: FontWeight.w700,
-                  fontSize: 24.0,
+                  fontSize: 18.0,
                   color: textBlack),
             ),
             SizedBox(
               height: 16,
-            ),
-            Text(
-              'Here is your sleep details',
-              semanticsLabel: 'Here is your sleep details',
-              style: TextStyle(
-                  fontFamily: "Montserrat",
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16.0,
-                  color: textBlack),
-            ),
-            SizedBox(
-              height: 32,
             ),
             ImageIcon(
               AssetImage('res/images/ic_sleep_2.png'),
@@ -602,14 +385,14 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
                     fontWeight: FontWeight.w700,
                     fontFamily: "Montserrat",
                     fontStyle: FontStyle.normal,
-                    fontSize: 34.0),
+                    fontSize: 22.0),
                 textAlign: TextAlign.center),
             Text("Duration",
                 semanticsLabel: 'Duration',
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   color: Color(0xffa8a8a8),
-                  fontSize: 16,
+                  fontSize: 12,
                   fontWeight: FontWeight.w600,
                   fontStyle: FontStyle.normal,
                 )),
@@ -628,27 +411,35 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      SizedBox(
+                        width: 16,
+                      ),
                       Icon(
                         Icons.info_outline_rounded,
                         color: primaryColor,
                         size: 32,
                       ),
                       SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: Text(
+                            "You didn’t have enough sleep. Its better to sleep 7-9 hours everyday.",
+                            semanticsLabel:
+                                'You didn’tt have enough sleep. Its better to sleep 7-9 hours everyday.',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: primaryColor,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                              fontStyle: FontStyle.normal,
+                            )),
+                      ),
+                      SizedBox(
                         width: 16,
                       ),
-                      Text(
-                          "You didn’t have enough sleep.\nIts better to sleep 7-9 hours everyday.",
-                          semanticsLabel:
-                              'You didn’tt have enough sleep. Its better to sleep 7-9 hours everyday.',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: primaryColor,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
-                            fontStyle: FontStyle.normal,
-                          )),
                     ],
                   ),
                 ),
@@ -659,63 +450,83 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
     );
   }
 
-  Widget burnedCalories() {
+  Widget mindfulnessTime() {
+    debugPrint('MindfulnessTime Dashboard Tile inisde ==> $oldStoreSec');
     return Container(
-      height: 100,
+      height: 240,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(12))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Calories',
-                  semanticsLabel: 'Calories',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.0,
-                      color: textBlack),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Text(totalCalories.toStringAsFixed(0),
-                    semanticsLabel: totalCalories.toStringAsFixed(0),
-                    style: const TextStyle(
-                        color: textBlack,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: "Montserrat",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 22.0),
-                    textAlign: TextAlign.center),
-                Text("Cal",
-                    semanticsLabel: 'Cal',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color: Color(0xffa8a8a8),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.normal,
-                    )),
-              ],
+      child: Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Mindfulness',
+              semanticsLabel: 'Mindfulness',
+              style: TextStyle(
+                  fontFamily: "Montserrat",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18.0,
+                  color: textBlack),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: ImageIcon(
-              AssetImage('res/images/ic_calories_burned.png'),
+            SizedBox(
+              height: 16,
+            ),
+            ImageIcon(
+              AssetImage('res/images/ic_mindfulness.png'),
               size: 48,
               color: primaryColor,
             ),
-          ),
-        ],
+            SizedBox(
+              height: 16,
+            ),
+            Text(Conversion.durationFromSecToMinToString(oldStoreSec),
+                semanticsLabel:
+                    Conversion.durationFromSecToMinToString(oldStoreSec),
+                style: const TextStyle(
+                    color: textBlack,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 22.0),
+                textAlign: TextAlign.center),
+            Text("Duration",
+                semanticsLabel: 'Duration',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Color(0xffa8a8a8),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FontStyle.normal,
+                )),
+            SizedBox(
+              height: 8,
+            ),
+            SizedBox(
+              child: OutlinedButton(
+                child: Text('Start'),
+                onPressed: () {
+                  Navigator.pushNamed(context, RoutePaths.Meditation).then((_) {
+                    loadSharedPrefs();
+                  });
+                },
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(width: 1.0, color: primaryColor),
+                  padding: EdgeInsets.symmetric(horizontal: 64, vertical: 8),
+                  textStyle:
+                      TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  primary: primaryColor,
+                  shape: BeveledRectangleBorder(
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

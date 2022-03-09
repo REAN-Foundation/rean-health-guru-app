@@ -2095,8 +2095,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       label: 'Sleep',
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity,
-                              arguments: 'Sleep');
+                          Navigator.pushNamed(context, RoutePaths.MY_STRESS);
                         },
                         child: Container(
                           height: 96,
@@ -2137,7 +2136,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       label: "Meditation",
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.Meditation);
+                          Navigator.pushNamed(context, RoutePaths.MY_STRESS);
                         },
                         child: Container(
                           height: 96,

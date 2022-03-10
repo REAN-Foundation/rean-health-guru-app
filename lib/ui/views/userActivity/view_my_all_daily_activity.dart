@@ -53,6 +53,7 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
   int heartRateBmp = 0;
   ScrollController _scrollController;
   GetHealthData data;
+  final durationInMin = Duration(minutes: 5);
 
   @override
   void initState() {
@@ -63,11 +64,12 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
         DateTime.now().day, 23, 59, 59);
     //loadSharedPref();
     //loadWaterConsuption();
-    //if (Platform.isIOS) {
-    fetchData();
-    sleepData = GetSleepData();
-    data = GetHealthData();
-    //}
+    if (Platform.isIOS) {
+      fetchData();
+      sleepData = GetSleepData();
+      data = GetHealthData();
+      Timer.periodic(durationInMin, (Timer t) => fetchData());
+    }
     super.initState();
   }
 

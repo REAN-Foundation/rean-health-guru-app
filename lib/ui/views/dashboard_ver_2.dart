@@ -2093,6 +2093,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                   children: [
                     Semantics(
                       label: 'Sleep',
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.MY_STRESS);
@@ -2133,7 +2134,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                       ),
                     ),
                     Semantics(
-                      label: "Meditation",
+                      label: "Mindfulness",
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.MY_STRESS);
@@ -2160,7 +2162,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                                 SizedBox(
                                   height: 8,
                                 ),
-                                Text('Meditation',
+                                Text('Mindfulness',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: primaryColor,

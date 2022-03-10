@@ -399,7 +399,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
             SizedBox(
               height: 8,
             ),
-            if (sleepData.getSleepDuration().abs() < 360)
+            if (sleepData.getSleepDuration().abs() < 420)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(

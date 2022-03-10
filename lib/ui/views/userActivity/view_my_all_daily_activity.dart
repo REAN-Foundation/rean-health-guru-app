@@ -407,6 +407,62 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
   }
 
   Widget stepCounter() {
+    return Container(
+      height: 200,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(12))),
+      child: Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Steps',
+              semanticsLabel: 'Steps',
+              style: TextStyle(
+                  fontFamily: "Montserrat",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18.0,
+                  color: textBlack),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            ImageIcon(
+              AssetImage('res/images/ic_steps_count.png'),
+              size: 48,
+              color: primaryColor,
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Text(steps.toString(),
+                semanticsLabel: steps.toString(),
+                style: const TextStyle(
+                    color: textBlack,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 22.0),
+                textAlign: TextAlign.center),
+            Text("Steps",
+                semanticsLabel: 'Steps',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Color(0xffa8a8a8),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FontStyle.normal,
+                )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget stepCounterOld() {
     double stepPercent = steps / 10000;
     if (stepPercent > 1.0) {
       stepPercent = 1.0;
@@ -485,6 +541,65 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
   }
 
   Widget exerciseTime() {
+    return Container(
+      height: 200,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(12))),
+      child: Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Exercise',
+              semanticsLabel: 'Exercise',
+              style: TextStyle(
+                  fontFamily: "Montserrat",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18.0,
+                  color: textBlack),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            ImageIcon(
+              AssetImage('res/images/ic_exercise_person.png'),
+              size: 48,
+              color: primaryColor,
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Text(
+                Conversion.durationFromMinToHrsToString(
+                    data.getExerciseTimeInMin().abs()),
+                semanticsLabel: Conversion.durationFromMinToHrsToString(
+                    data.getExerciseTimeInMin().abs()),
+                style: const TextStyle(
+                    color: textBlack,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 22.0),
+                textAlign: TextAlign.center),
+            Text("Duration",
+                semanticsLabel: 'Duration',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Color(0xffa8a8a8),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FontStyle.normal,
+                )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget exerciseTimeOld() {
     return Container(
       height: 100,
       decoration: BoxDecoration(
@@ -662,6 +777,62 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
   }
 
   Widget burnedCalories() {
+    return Container(
+      height: 200,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(12))),
+      child: Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Calories',
+              semanticsLabel: 'Calories',
+              style: TextStyle(
+                  fontFamily: "Montserrat",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18.0,
+                  color: textBlack),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            ImageIcon(
+              AssetImage('res/images/ic_calories_burned.png'),
+              size: 48,
+              color: primaryColor,
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Text(totalCalories.toStringAsFixed(0),
+                semanticsLabel: totalCalories.toStringAsFixed(0),
+                style: const TextStyle(
+                    color: textBlack,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 22.0),
+                textAlign: TextAlign.center),
+            Text("Cal",
+                semanticsLabel: 'Cal',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Color(0xffa8a8a8),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FontStyle.normal,
+                )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget burnedCaloriesOld() {
     return Container(
       height: 100,
       decoration: BoxDecoration(

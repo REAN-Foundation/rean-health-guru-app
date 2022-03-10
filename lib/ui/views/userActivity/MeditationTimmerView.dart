@@ -208,41 +208,43 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                                 label: 'Play',
                                                                 button: true,
                                                                 child:
-                                                                    Container(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .all(
-                                                                          0.0),
-                                                                  height: 120,
-                                                                  width: 120,
-                                                                  decoration: BoxDecoration(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      border: Border.all(
+                                                                    ExcludeSemantics(
+                                                                  child:
+                                                                      Container(
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            0.0),
+                                                                    height: 120,
+                                                                    width: 120,
+                                                                    decoration: BoxDecoration(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        border: Border.all(
+                                                                            color:
+                                                                                primaryColor,
+                                                                            width:
+                                                                                2.0),
+                                                                        borderRadius:
+                                                                            BorderRadius.all(Radius.circular(60.0))),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Icon(
+                                                                          Icons
+                                                                              .play_arrow,
                                                                           color:
                                                                               primaryColor,
-                                                                          width:
-                                                                              2.0),
-                                                                      borderRadius:
-                                                                          BorderRadius.all(
-                                                                              Radius.circular(60.0))),
-                                                                  child: Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .center,
-                                                                    children: [
-                                                                      Icon(
-                                                                        Icons
-                                                                            .play_arrow,
-                                                                        color:
-                                                                            primaryColor,
-                                                                        size:
-                                                                            64,
-                                                                      ),
-                                                                    ],
+                                                                          size:
+                                                                              64,
+                                                                        ),
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               )
@@ -269,32 +271,35 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                 child: Semantics(
                                                   label: 'Pause',
                                                   button: true,
-                                                  child: Container(
-                                                    height: 100,
-                                                    width: 100,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        border: Border.all(
+                                                  child: ExcludeSemantics(
+                                                    child: Container(
+                                                      height: 100,
+                                                      width: 100,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border.all(
+                                                              color:
+                                                                  primaryColor,
+                                                              width: 2.0),
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(
+                                                                      60.0))),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                            Icons.pause,
                                                             color: primaryColor,
-                                                            width: 2.0),
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    60.0))),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Icon(
-                                                          Icons.pause,
-                                                          color: primaryColor,
-                                                          size: 64,
-                                                        ),
-                                                      ],
+                                                            size: 64,
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -361,19 +366,23 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
     return Semantics(
       label: 'Start',
       button: true,
-      child: Container(
-        padding: const EdgeInsets.all(0.0),
-        height: 116,
-        width: 116,
-        decoration: BoxDecoration(
-            color: primaryColor,
-            borderRadius: BorderRadius.all(Radius.circular(60.0))),
-        child: Center(
-          child: Text(
-            "Start",
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.w600, fontSize: 20),
-            textAlign: TextAlign.center,
+      child: ExcludeSemantics(
+        child: Container(
+          padding: const EdgeInsets.all(0.0),
+          height: 116,
+          width: 116,
+          decoration: BoxDecoration(
+              color: primaryColor,
+              borderRadius: BorderRadius.all(Radius.circular(60.0))),
+          child: Center(
+            child: Text(
+              "Start",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20),
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ),

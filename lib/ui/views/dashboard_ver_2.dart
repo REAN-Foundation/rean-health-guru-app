@@ -247,12 +247,14 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  /*SizedBox(width: 8,),
+                  SizedBox(
+                    width: 8,
+                  ),
                   ImageIcon(
-                    AssetImage('res/images/ic_tree.png'),
+                    AssetImage('res/images/ic_symptoms.png'),
                     size: 28,
                     color: iconColor,
-                  ),*/
+                  ),
                   SizedBox(
                     width: 8,
                   ),

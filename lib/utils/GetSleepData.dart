@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
@@ -35,9 +34,9 @@ class GetSleepData {
         DateTime.now().day, 09, 59, 59);
     debugPrint('Start Sleep Date ==> $startDate');
     debugPrint('End Sleep Date ==> $endDate');
-    if (Platform.isIOS) {
-      fetchData();
-    }
+    //if (Platform.isIOS) {
+    fetchData();
+    //}
     loadHeightAndWeight();
   }
 

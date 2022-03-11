@@ -64,12 +64,12 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
         DateTime.now().day, 23, 59, 59);
     //loadSharedPref();
     //loadWaterConsuption();
-    if (Platform.isIOS) {
-      fetchData();
+    //if (Platform.isIOS) {
+    fetchData();
       sleepData = GetSleepData();
       data = GetHealthData();
       Timer.periodic(durationInMin, (Timer t) => fetchData());
-    }
+    //}
     super.initState();
   }
 

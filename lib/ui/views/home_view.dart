@@ -216,6 +216,8 @@ class _HomeViewState extends State<HomeView> {
     Future.delayed(Duration(milliseconds: 1000));
     bool isCoachMarkDisplayed = false;
 
+    //var result = await _permissionHandler.requestPermissions([PermissionGroup.unknown]);
+
     isCoachMarkDisplayed = await _sharedPrefUtils
         .readBoolean(StringConstant.Is_Home_View_Coach_Mark_Completed);
 

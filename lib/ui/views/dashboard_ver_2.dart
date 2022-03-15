@@ -1,3 +1,4 @@
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -205,10 +206,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
                 //   Container(),
                 myBiometrics(),
                 myNutrition(),
-                //if (Platform.isIOS) ...[
-                myActivity(),
+                if (Platform.isIOS) ...[
+                  myActivity(),
                   myStress(),
-                //],
+                ],
                 knowledgeTree(),
                 //myTasks(),
                 //searchNearMe(),

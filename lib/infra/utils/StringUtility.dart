@@ -1,6 +1,6 @@
-import 'package:paitent/core/models/AddTeamMemberResponse.dart';
-import 'package:paitent/core/models/doctorListApiResponse.dart';
-import 'package:paitent/core/models/pharmacyListApiResponse.dart';
+import 'package:paitent/features/common/appoinment_booking/models/doctorListApiResponse.dart';
+import 'package:paitent/features/common/appoinment_booking/models/pharmacyListApiResponse.dart';
+import 'package:paitent/features/common/careplan/models/AddTeamMemberResponse.dart';
 
 String auth = '';
 String patientUserId = '';

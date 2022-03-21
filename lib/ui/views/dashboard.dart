@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
+import 'package:paitent/features/common/appoinment_booking/view_models/book_appoinment_view_model.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/ui/views/base_widget.dart';

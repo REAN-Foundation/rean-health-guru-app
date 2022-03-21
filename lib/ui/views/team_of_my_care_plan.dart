@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paitent/core/models/AddTeamMemberResponse.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/TeamCarePlanReesponse.dart';
-import 'package:paitent/core/models/doctorListApiResponse.dart';
-import 'package:paitent/core/models/pharmacyListApiResponse.dart';
-import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
+import 'package:paitent/features/common/appoinment_booking/models/doctorListApiResponse.dart';
+import 'package:paitent/features/common/appoinment_booking/models/pharmacyListApiResponse.dart';
+import 'package:paitent/features/common/careplan/models/AddTeamMemberResponse.dart';
+import 'package:paitent/features/common/careplan/models/TeamCarePlanReesponse.dart';
+import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/ui/views/addFamilyMemberDialog.dart';
 import 'package:paitent/ui/views/addNurseDialog.dart';
 import 'package:paitent/ui/views/addPharmaDialog.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
 
 import 'addDoctorDialog.dart';
 

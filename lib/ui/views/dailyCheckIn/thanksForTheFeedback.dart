@@ -3,7 +3,7 @@ import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/viewmodels/views/common_config_model.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:paitent/widgets/delayed_animation.dart';
+import 'package:paitent/infra/widgets/delayed_animation.dart';
 
 import '../base_widget.dart';
 

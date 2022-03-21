@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:paitent/core/models/doctorListApiResponse.dart';
-import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
+import 'package:paitent/features/common/appoinment_booking/models/doctorListApiResponse.dart';
+import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';

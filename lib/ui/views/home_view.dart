@@ -10,9 +10,9 @@ import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
-import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/common_config_model.dart';
+import 'package:paitent/features/common/careplan/models/StartCarePlanResponse.dart';
 import 'package:paitent/infra/networking/ApiProvider.dart';
 import 'package:paitent/infra/networking/CustomException.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
@@ -23,14 +23,14 @@ import 'package:paitent/infra/utils/GetHealthData.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/infra/utils/StringConstant.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:paitent/infra/widgets/app_drawer.dart';
 import 'package:paitent/ui/views/dailyCheckIn/howAreYouFeeling.dart';
 import 'package:paitent/ui/views/emergency_contact.dart';
 import 'package:paitent/ui/views/myReportsUpload.dart';
-import 'package:paitent/widgets/app_drawer.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
+import '../../features/common/careplan/ui/care_plan_task.dart';
 import 'base_widget.dart';
-import 'care_plan_task.dart';
 import 'dashboard_ver_2.dart';
 
 //ignore: must_be_immutable

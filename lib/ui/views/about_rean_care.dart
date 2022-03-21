@@ -1,17 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
-import 'package:paitent/core/models/startTaskOfAHACarePlanResponse.dart';
-import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
+import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
 import 'package:paitent/infra/networking/ApiProvider.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'home_view.dart';
 
 class AboutREANCareView extends StatefulWidget {
   @override
@@ -469,30 +464,5 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
         ),
       ),
     );
-  }
-
-  completeMessageTaskOfAHACarePlan(Task task) async {
-    try {
-      final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
-          await model.completeMessageTaskOfAHACarePlan(
-              startCarePlanResponseGlob.data.carePlan.id.toString(),
-              task.details.id);
-
-      if (_startTaskOfAHACarePlanResponse.status == 'success') {
-        assrotedUICount = 0;
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) {
-          return HomeView(1);
-        }), (Route<dynamic> route) => false);
-        debugPrint(
-            'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
-      } else {
-        showToast(_startTaskOfAHACarePlanResponse.message, context);
-      }
-    } catch (CustomException) {
-      model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint(CustomException.toString());
-    }
   }
 }

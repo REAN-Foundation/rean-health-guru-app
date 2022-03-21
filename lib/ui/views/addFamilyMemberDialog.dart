@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paitent/core/models/UploadImageResponse.dart';
-import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
+import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';

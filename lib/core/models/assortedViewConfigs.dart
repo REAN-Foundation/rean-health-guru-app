@@ -1,4 +1,4 @@
-import 'GetTaskOfAHACarePlanResponse.dart';
+import 'package:paitent/features/common/careplan/models/GetTaskOfAHACarePlanResponse.dart';
 
 class AssortedViewConfigs {
   //toShow

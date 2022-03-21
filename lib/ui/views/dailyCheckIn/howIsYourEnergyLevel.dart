@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/widgets/delayed_animation.dart';
 import 'package:paitent/ui/views/dailyCheckIn/thanksForTheFeedback.dart';
-import 'package:paitent/widgets/delayed_animation.dart';
 
 class HowIsYourEnergyLevel extends StatefulWidget {
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_autolink_text/flutter_autolink_text.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
+import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/core/models/DoctorAppoinmentBookedSuccessfully.dart';
 import 'package:paitent/core/models/DoctorBookingAppoinmentPojo.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
@@ -9,12 +9,14 @@ import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/models/labsListApiResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/utils/CommonUtils.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+
 //import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'base_widget.dart';
+
 //ignore: must_be_immutable
 class BookingAppoinmentConfirmationView extends StatefulWidget {
   DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;

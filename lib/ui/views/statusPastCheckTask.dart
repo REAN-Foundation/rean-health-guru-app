@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/utils/CommonUtils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import 'addNewGoals/select_goal_set_care_plan_goals.dart';

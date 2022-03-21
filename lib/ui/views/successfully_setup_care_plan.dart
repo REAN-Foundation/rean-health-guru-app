@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/utils/CommonUtils.dart';
 
 import 'home_view.dart';
 

@@ -7,7 +7,7 @@ import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/comment.dart';
 import 'package:paitent/core/models/post.dart';
 import 'package:paitent/core/models/user_data.dart';
-import 'package:paitent/networking/ApiProvider.dart';
+import 'package:paitent/infra/networking/ApiProvider.dart';
 
 /// The service responsible for networking requests
 class Api {

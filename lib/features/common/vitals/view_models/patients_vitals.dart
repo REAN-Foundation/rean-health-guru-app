@@ -1,10 +1,10 @@
 import 'package:get_it/get_it.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/GetMyVitalsHistory.dart';
-import 'package:paitent/networking/ApiProvider.dart';
-import 'package:paitent/utils/StringUtility.dart';
+import 'package:paitent/features/common/vitals/models/GetMyVitalsHistory.dart';
+import 'package:paitent/infra/networking/ApiProvider.dart';
+import 'package:paitent/infra/utils/StringUtility.dart';
 
-import '../base_model.dart';
+import '../../../../core/viewmodels/base_model.dart';
 
 class PatientVitalsViewModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();

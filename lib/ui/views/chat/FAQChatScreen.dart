@@ -7,14 +7,13 @@ import 'package:paitent/core/models/ChatApiResponse.dart';
 import 'package:paitent/core/models/FAQChatModelPojo.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/bot_view_model.dart';
-import 'package:paitent/networking/CustomException.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/SharedPrefUtils.dart';
-import 'package:paitent/utils/TimeAgo.dart';
+import 'package:paitent/infra/networking/CustomException.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/SharedPrefUtils.dart';
+import 'package:paitent/infra/utils/TimeAgo.dart';
 
 import '../base_widget.dart';
-
 
 class FAQChatScreen extends StatefulWidget {
   @override

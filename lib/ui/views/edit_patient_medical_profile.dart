@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/PatientMedicalProfilePojo.dart';
 import 'package:paitent/core/viewmodels/views/patients_observation.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/utils/CommonUtils.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import 'base_widget.dart';
+
 //ignore: must_be_immutable
 class EditPatientMedicalProfileView extends StatefulWidget {
   HealthProfile healthProfile;

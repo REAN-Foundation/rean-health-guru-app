@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
-import 'package:paitent/core/viewmodels/views/patients_vitals.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/core/constants/route_paths.dart';
+import 'package:paitent/features/common/vitals/view_models/patients_vitals.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 
 import 'base_widget.dart';
 

@@ -8,7 +8,7 @@ import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
+import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/core/models/DoctorAppoinmentBookedSuccessfully.dart';
 import 'package:paitent/core/models/DoctorBookingAppoinmentPojo.dart';
 import 'package:paitent/core/models/UploadImageResponse.dart';
@@ -17,15 +17,16 @@ import 'package:paitent/core/models/labsListApiResponse.dart';
 import 'package:paitent/core/models/time_slot.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
-import 'package:paitent/networking/ApiProvider.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/networking/ApiProvider.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/ui/views/doctorTileWidget.dart';
 import 'package:paitent/ui/views/labTileWidget.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import 'base_widget.dart';
+
 //ignore: must_be_immutable
 class BookingInfoView extends StatefulWidget {
   DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;

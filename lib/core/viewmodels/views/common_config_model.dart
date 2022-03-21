@@ -7,8 +7,8 @@ import 'package:paitent/core/models/EmergencyContactResponse.dart';
 import 'package:paitent/core/models/GetAllRecordResponse.dart';
 import 'package:paitent/core/models/GetSharablePublicLink.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
-import 'package:paitent/networking/ApiProvider.dart';
-import 'package:paitent/utils/StringUtility.dart';
+import 'package:paitent/infra/networking/ApiProvider.dart';
+import 'package:paitent/infra/utils/StringUtility.dart';
 
 import '../base_model.dart';
 

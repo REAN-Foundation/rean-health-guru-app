@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:paitent/core/viewmodels/views/patients_vitals.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/ui/views/biometricVitals/BiomatricBloodOxygenVitals.dart';
-import 'package:paitent/ui/views/biometricVitals/BiomatricBloodPresureVitals.dart';
-import 'package:paitent/ui/views/biometricVitals/BiomatricBloodSugartVitals.dart';
-import 'package:paitent/ui/views/biometricVitals/BiomatricBodyTempratureVitals.dart';
-import 'package:paitent/ui/views/biometricVitals/BiomatricPulseVitals.dart';
-import 'package:paitent/ui/views/biometricVitals/BiomatricWeightVitals.dart';
+import 'package:paitent/features/common/vitals/view_models/patients_vitals.dart';
+import 'package:paitent/features/common/vitals/ui/BiomatricBloodPresureVitals.dart';
+import 'package:paitent/features/common/vitals/ui/BiomatricBodyTempratureVitals.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/features/common/vitals/ui/BiomatricBloodOxygenVitals.dart';
+import 'package:paitent/features/common/vitals/ui/BiomatricBloodSugartVitals.dart';
+import 'package:paitent/features/common/vitals/ui/BiomatricPulseVitals.dart';
+import 'package:paitent/features/common/vitals/ui/BiomatricWeightVitals.dart';
 
-import '../base_widget.dart';
+import '../../../../ui/views/base_widget.dart';
 
 class BiometricTrendView extends StatefulWidget {
   @override

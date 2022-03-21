@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:masked_text_input_formatter/masked_text_input_formatter.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
+import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/core/viewmodels/views/appoinment_view_model.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 
 import 'base_widget.dart';
 

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:paitent/core/viewmodels/views/patients_health_marker.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 
 import '../base_widget.dart';
 

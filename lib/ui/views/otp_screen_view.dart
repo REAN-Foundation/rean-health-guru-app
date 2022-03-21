@@ -9,16 +9,17 @@ import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/login_view_model.dart';
-import 'package:paitent/networking/ApiProvider.dart';
-import 'package:paitent/networking/CustomException.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/networking/ApiProvider.dart';
+import 'package:paitent/infra/networking/CustomException.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/SharedPrefUtils.dart';
+import 'package:paitent/infra/widgets/PrimaryLightColorContainer.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/ui/views/create_profile_view.dart';
 import 'package:paitent/ui/views/home_view.dart';
-import 'package:paitent/ui/widgets/PrimaryLightColorContainer.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:provider/provider.dart';
+
 //ignore: must_be_immutable
 class OTPScreenView extends StatefulWidget {
   String mobileNumber = '';

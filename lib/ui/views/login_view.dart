@@ -9,13 +9,13 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/login_view_model.dart';
-import 'package:paitent/networking/ApiProvider.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/networking/ApiProvider.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/ui/views/home_view.dart';
 import 'package:paitent/ui/views/signup_view.dart';
-import 'package:paitent/ui/widgets/bezierContainer.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/SharedPrefUtils.dart';
+import 'package:paitent/infra/widgets/bezierContainer.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:provider/provider.dart';
 
 import 'base_widget.dart';

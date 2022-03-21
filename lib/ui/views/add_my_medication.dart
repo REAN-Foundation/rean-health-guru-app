@@ -10,12 +10,12 @@ import 'package:paitent/core/models/MedicationDosageUnitsPojo.dart';
 import 'package:paitent/core/models/MedicationDurationUnitsPojo.dart';
 import 'package:paitent/core/models/MedicationFrequenciesPojo.dart';
 import 'package:paitent/core/viewmodels/views/patients_medication.dart';
-import 'package:paitent/networking/CustomException.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/networking/CustomException.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/SharedPrefUtils.dart';
-import 'package:paitent/utils/StringUtility.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/SharedPrefUtils.dart';
+import 'package:paitent/infra/utils/StringUtility.dart';
 
 class AddMyMedicationView extends StatefulWidget {
   @override

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:share/share.dart';

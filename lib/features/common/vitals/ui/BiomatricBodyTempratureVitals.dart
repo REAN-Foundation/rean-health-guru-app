@@ -3,29 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/GetMyVitalsHistory.dart';
-import 'package:paitent/core/viewmodels/views/patients_vitals.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/features/common/vitals/models/GetMyVitalsHistory.dart';
+import 'package:paitent/features/common/vitals/view_models/patients_vitals.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/SimpleTimeSeriesChart.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/SimpleTimeSeriesChart.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-//ignore: must_be_immutable
-class BiometricPulseVitalsView extends StatefulWidget {
-  bool allUIViewsVisible = false;
 
-  BiometricPulseVitalsView(bool allUIViewsVisible) {
-    this.allUIViewsVisible = allUIViewsVisible;
-  }
-
+class BiometricBodyTemperatureVitalsView extends StatefulWidget {
   @override
-  _BiometricPulseVitalsViewState createState() =>
-      _BiometricPulseVitalsViewState();
+  _BiometricBodyTemperatureVitalsViewState createState() =>
+      _BiometricBodyTemperatureVitalsViewState();
 }
 
-class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
+class _BiometricBodyTemperatureVitalsViewState
+    extends State<BiometricBodyTemperatureVitalsView> {
   var model = PatientVitalsViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
 
   final _controller = TextEditingController();
@@ -45,74 +39,21 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
       builder: (context, model, child) => Container(
-        child: widget.allUIViewsVisible
-            ? Scaffold(
-                key: _scaffoldKey,
-                backgroundColor: Colors.white,
-                appBar: AppBar(
-                  backgroundColor: Colors.white,
-                  brightness: Brightness.light,
-                  title: Text(
-                    'Pulse Rate',
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        color: primaryColor,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  iconTheme: IconThemeData(color: Colors.black),
-                  actions: <Widget>[
-                    /*IconButton(
-                icon: Icon(
-                  Icons.person_pin,
-                  color: Colors.black,
-                  size: 32.0,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 0.0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                weightHistoryListFeilds(),
+                const SizedBox(
+                  height: 16,
                 ),
-                onPressed: () {
-                  debugPrint("Clicked on profile icon");
-                },
-              )*/
-                  ],
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        weightFeilds(),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        weightHistoryListFeilds(),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        if (records.isEmpty) Container() else graph(),
-                        //allGoal(),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              )
-            : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    weightHistoryListFeilds(),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    if (records.isEmpty) Container() else graph(),
-                  ],
-                ),
-              ),
+                if (records.isEmpty) Container() else graph(),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -128,7 +69,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
             height: 16,
           ),
           Text(
-            'Enter your pulse rate:',
+            'Enter your Body Temperature:',
             style: TextStyle(
                 color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
             textAlign: TextAlign.center,
@@ -147,24 +88,22 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                       borderRadius: BorderRadius.circular(8.0),
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
-                  child: Semantics(
-                    label: 'Pulse rate measures in bpm',
-                    child: TextFormField(
-                        controller: _controller,
-                        maxLines: 1,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.number,
-                        onFieldSubmitted: (term) {},
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                        ],
-                        decoration: InputDecoration(
-                            hintText: '(65 to 95)',
-                            contentPadding: EdgeInsets.all(0),
-                            border: InputBorder.none,
-                            fillColor: Colors.white,
-                            filled: true)),
-                  ),
+                  child: TextFormField(
+                      controller: _controller,
+                      maxLines: 1,
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.number,
+                      onFieldSubmitted: (term) {},
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(
+                            RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                      ],
+                      decoration: InputDecoration(
+                          hintText: '(95 to 100)',
+                          contentPadding: EdgeInsets.all(0),
+                          border: InputBorder.none,
+                          fillColor: Colors.white,
+                          filled: true)),
                 ),
               ),
               RichText(
@@ -177,7 +116,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: '    bpm    ',
+                          text: '    °F    ',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -193,41 +132,35 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
           ),
           Align(
             alignment: Alignment.centerRight,
-            child: Semantics(
-              label: "Save",
-              button: true,
-              child: InkWell(
-                onTap: () {
-                  if (_controller.text.toString().isEmpty) {
-                    showToast('Please enter your Pulse Rate', context);
-                  } else {
-                    addvitals();
-                  }
-                },
-                child: ExcludeSemantics(
-                  child: Container(
-                      height: 40,
-                      width: 120,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24.0),
-                        border: Border.all(color: primaryColor, width: 1),
-                        color: primaryColor,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Save',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14),
-                          textAlign: TextAlign.center,
-                        ),
-                      )),
-                ),
-              ),
+            child: InkWell(
+              onTap: () {
+                if (_controller.text.toString().isEmpty) {
+                  showToast('Please enter your body temperature', context);
+                } else {
+                  addvitals();
+                }
+              },
+              child: Container(
+                  height: 40,
+                  width: 120,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24.0),
+                    border: Border.all(color: primaryColor, width: 1),
+                    color: primaryColor,
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Save',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                  )),
             ),
           ),
         ],
@@ -266,7 +199,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            'Pulse Rate',
+                            'Temperature',
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -338,9 +271,9 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
               overflow: TextOverflow.ellipsis,
             ),
             Semantics(
-              label: 'Pulse Rate ',
+              label: 'Temperature ',
               child: Text(
-                record.pulse.toString() + ' bpm',
+                record.bodyTemperature.toString() + ' °F',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -360,6 +293,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
         label: 'making graph of ',
+        readOnly: true,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -382,7 +316,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
               height: 8,
             ),
             Text(
-              'Pulse Rate',
+              'Temperature',
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
@@ -408,12 +342,12 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(
           DateTime.parse(records.elementAt(i).recordDate).toLocal(),
-          double.parse(records.elementAt(i).pulse.toString())));
+          double.parse(records.elementAt(i).bodyTemperature.toString())));
     }
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'PULSE',
+        id: 'BT',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -423,148 +357,146 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
   }
 
   Widget allGoal() {
-    return MergeSemantics(
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 60,
-              color: primaryColor,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  ImageIcon(
-                    AssetImage('res/images/ic_dart_goal.png'),
-                    size: 24,
-                    color: Colors.white,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    'Your progress with goals',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 60,
+            color: primaryColor,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  width: 16,
+                ),
+                ImageIcon(
+                  AssetImage('res/images/ic_dart_goal.png'),
+                  size: 24,
+                  color: Colors.white,
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  'Your progress with goals',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Initial',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Initial',
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  '85',
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Target',
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  '65',
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Latest',
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  '74',
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    flex: 6,
-                    child: Container(
-                      height: 10,
-                      color: primaryColor,
-                    ),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Container(
-                      height: 10,
-                      color: primaryLightColor,
-                    ),
-                  )
-                ],
+              Text(
+                '85',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
+            ],
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Target',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                '65',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Latest',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                '74',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 6,
+                  child: Container(
+                    height: 10,
+                    color: primaryColor,
+                  ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    height: 10,
+                    color: primaryLightColor,
+                  ),
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -573,16 +505,17 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
     try {
       progressDialog.show();
       final map = <String, dynamic>{};
-      map['Pulse'] = _controller.text.toString();
+      map['BodyTemperature'] = _controller.text.toString();
       map['PatientUserId'] = "";
-      map['Unit'] = "bpm";
+      map['Unit'] = "Celsius";
       //map['RecordedByUserId'] = null;
 
-      final BaseResponse baseResponse = await model.addMyVitals('pulse', map);
+      final BaseResponse baseResponse =
+          await model.addMyVitals('body-temperatures', map);
 
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
         showToast(baseResponse.message, context);
+        progressDialog.hide();
         Navigator.pop(context);
       } else {
         progressDialog.hide();
@@ -599,10 +532,10 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
   getVitalsHistory() async {
     try {
       final GetMyVitalsHistory getMyVitalsHistory =
-          await model.getMyVitalsHistory('pulse');
+          await model.getMyVitalsHistory('body-temperatures');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
-        records.addAll(getMyVitalsHistory.data.pulseRecords.items);
+        records.addAll(getMyVitalsHistory.data.bodyTemperatureRecords.items);
       } else {
         showToast(getMyVitalsHistory.message, context);
       }

@@ -9,10 +9,9 @@ import 'package:intl/intl.dart' as date;
 import 'package:paitent/core/models/FAQChatModelPojo.dart';
 import 'package:paitent/core/models/GetTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:phone_number/phone_number.dart';
-
-import 'SharedPrefUtils.dart';
 
 StartCarePlanResponse startCarePlanResponseGlob;
 List<String> goalPlanScreenStack = <String>[];

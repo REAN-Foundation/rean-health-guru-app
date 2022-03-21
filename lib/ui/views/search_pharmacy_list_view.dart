@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:paitent/core/models/pharmacyListApiResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/SharedPrefUtils.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 
 import 'base_widget.dart';
 

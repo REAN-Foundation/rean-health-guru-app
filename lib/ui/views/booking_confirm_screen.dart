@@ -5,7 +5,7 @@ import 'package:paitent/core/models/DoctorBookingAppoinmentPojo.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/models/labsListApiResponse.dart';
 import 'package:paitent/core/viewmodels/views/appoinment_view_model.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/ui/views/home_view.dart';
 import 'package:url_launcher/url_launcher.dart';

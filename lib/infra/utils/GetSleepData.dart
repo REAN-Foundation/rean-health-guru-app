@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
+import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 
 import 'CommonUtils.dart';
-import 'SharedPrefUtils.dart';
 
 class GetSleepData {
   List<HealthDataPoint> _healthDataList = [];

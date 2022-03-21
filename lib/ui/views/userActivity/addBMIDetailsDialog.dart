@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/Conversion.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/Conversion.dart';
 
 // ignore: must_be_immutable
 class AddBMIDetailDialog extends StatefulWidget {

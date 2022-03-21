@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+
 //ignore: must_be_immutable
 class DoctorTileView extends StatefulWidget {
   Doctors doctorDetails;

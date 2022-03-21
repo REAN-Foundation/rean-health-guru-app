@@ -3,8 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/PatientMedicalProfilePojo.dart';
 import 'package:paitent/core/models/PatientVitalsPojo.dart';
-import 'package:paitent/networking/ApiProvider.dart';
-import 'package:paitent/utils/StringUtility.dart';
+import 'package:paitent/infra/networking/ApiProvider.dart';
+import 'package:paitent/infra/utils/StringUtility.dart';
 
 import '../base_model.dart';
 
@@ -13,7 +13,8 @@ class PatientObservationsViewModel extends BaseModel {
 
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
-  Future<PatientVitalsPojo> getPatientVitals(String auth1, String patientId) async {
+  Future<PatientVitalsPojo> getPatientVitals(
+      String auth1, String patientId) async {
     setBusy(true);
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';

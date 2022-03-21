@@ -3,33 +3,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/GetMyVitalsHistory.dart';
-import 'package:paitent/core/viewmodels/views/patients_vitals.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/features/common/vitals/models/GetMyVitalsHistory.dart';
+import 'package:paitent/features/common/vitals/view_models/patients_vitals.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/SimpleTimeSeriesChart.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/SimpleTimeSeriesChart.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-class BiometricBloodOxygenVitalsView extends StatefulWidget {
+//ignore: must_be_immutable
+class BiometricWeightVitalsView extends StatefulWidget {
+  bool allUIViewsVisible = false;
+
+  BiometricWeightVitalsView(bool allUIViewsVisible) {
+    this.allUIViewsVisible = allUIViewsVisible;
+  }
+
   @override
-  _BiometricBloodOxygenVitalsViewState createState() =>
-      _BiometricBloodOxygenVitalsViewState();
+  _BiometricWeightVitalsViewState createState() =>
+      _BiometricWeightVitalsViewState();
 }
 
-class _BiometricBloodOxygenVitalsViewState
-    extends State<BiometricBloodOxygenVitalsView> {
+class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   var model = PatientVitalsViewModel();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
-
-  final _controller = TextEditingController();
   List<Items> records = <Items>[];
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
+  final _weightController = TextEditingController();
   ProgressDialog progressDialog;
+  String unit = 'Kg';
 
   @override
   void initState() {
     getVitalsHistory();
+    debugPrint('Country Local ==> ${getCurrentLocale()}');
+    if (getCurrentLocale() == 'US') {
+      unit = 'lbs';
+    }
     super.initState();
   }
 
@@ -39,19 +50,79 @@ class _BiometricBloodOxygenVitalsViewState
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
       builder: (context, model, child) => Container(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 0.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              weightHistoryListFeilds(),
-              const SizedBox(
-                height: 16,
+        child: widget.allUIViewsVisible
+            ? Scaffold(
+                key: _scaffoldKey,
+                backgroundColor: Colors.white,
+                appBar: AppBar(
+                  backgroundColor: Colors.white,
+                  brightness: Brightness.light,
+                  title: Text(
+                    'Weight',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        color: primaryColor,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  iconTheme: IconThemeData(color: Colors.black),
+                  actions: <Widget>[
+                    /*IconButton(
+                icon: Icon(
+                  Icons.person_pin,
+                  color: Colors.black,
+                  size: 32.0,
+                ),
+                onPressed: () {
+                  debugPrint("Clicked on profile icon");
+                },
+              )*/
+                  ],
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        weightFeilds(),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        weightHistoryListFeilds(),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        if (records.isEmpty) Container() else graph(),
+                        //allGoal(),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    /*const SizedBox(height: 16,),
+                    weightFeilds(),
+                    const SizedBox(height: 16,),*/
+                    weightHistoryListFeilds(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    if (records.isEmpty) Container() else graph(),
+                    //allGoal(),
+                    //const SizedBox(height: 16,),
+                  ],
+                ),
               ),
-                  if (records.isEmpty) Container() else graph()
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -67,7 +138,7 @@ class _BiometricBloodOxygenVitalsViewState
             height: 16,
           ),
           Text(
-            'Enter your blood oxygen saturation:',
+            'Enter your weight:',
             style: TextStyle(
                 color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
             textAlign: TextAlign.center,
@@ -86,22 +157,26 @@ class _BiometricBloodOxygenVitalsViewState
                       borderRadius: BorderRadius.circular(8.0),
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
-                  child: TextFormField(
-                      controller: _controller,
-                      maxLines: 1,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      onFieldSubmitted: (term) {},
-                      inputFormatters: [
-                        FilteringTextInputFormatter.deny(
-                            RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
-                      ],
-                      decoration: InputDecoration(
-                          hintText: '(92 to 100)',
-                          contentPadding: EdgeInsets.all(0),
-                          border: InputBorder.none,
-                          fillColor: Colors.white,
-                          filled: true)),
+                  child: Semantics(
+                    label: 'Weight measures in ' + unit,
+                    child: TextFormField(
+                        controller: _weightController,
+                        maxLines: 1,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.number,
+                        onFieldSubmitted: (term) {},
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(
+                              RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                        ],
+                        decoration: InputDecoration(
+                            hintText:
+                                unit == 'lbs' ? '(100 to 200)' : '(50 to 100)',
+                            contentPadding: EdgeInsets.all(0),
+                            border: InputBorder.none,
+                            fillColor: Colors.white,
+                            filled: true)),
+                  ),
                 ),
               ),
               RichText(
@@ -114,7 +189,7 @@ class _BiometricBloodOxygenVitalsViewState
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: '    %    ',
+                          text: unit == 'lbs' ? '    lbs    ' : '    Kg    ',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -130,36 +205,41 @@ class _BiometricBloodOxygenVitalsViewState
           ),
           Align(
             alignment: Alignment.centerRight,
-            child: InkWell(
-              onTap: () {
-                if (_controller.text.toString().isEmpty) {
-                  showToast(
-                      'Please enter your blood oxygen saturation', context);
-                } else {
-                  addvitals();
-                }
-              },
-              child: Container(
-                  height: 40,
-                  width: 120,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24.0),
-                    border: Border.all(color: primaryColor, width: 1),
-                    color: primaryColor,
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Save',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14),
-                      textAlign: TextAlign.center,
-                    ),
-                  )),
+            child: Semantics(
+              label: "Save",
+              button: true,
+              child: InkWell(
+                onTap: () {
+                  if (_weightController.text.toString().isEmpty) {
+                    showToast('Please enter your weight', context);
+                  } else {
+                    addvitals();
+                  }
+                },
+                child: ExcludeSemantics(
+                  child: Container(
+                      height: 40,
+                      width: 120,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24.0),
+                        border: Border.all(color: primaryColor, width: 1),
+                        color: primaryColor,
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Save',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14),
+                          textAlign: TextAlign.center,
+                        ),
+                      )),
+                ),
+              ),
             ),
           ),
         ],
@@ -198,7 +278,7 @@ class _BiometricBloodOxygenVitalsViewState
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            'Blood Oxygen',
+                            'Weight ',
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -260,19 +340,29 @@ class _BiometricBloodOxygenVitalsViewState
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              dateFormatStandard.format(DateTime.parse(record.recordDate)),
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            Semantics(
+              child: Text(
+                dateFormatStandard.format(
+                    records.elementAt(index).recordDate == null
+                        ? DateTime.now()
+                        : DateTime.parse(records.elementAt(index).recordDate)),
+                style: TextStyle(
+                    color: primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             Semantics(
-              label: 'Blood Oxygen ',
+              label: 'Weight ',
+              readOnly: true,
               child: Text(
-                record.bloodOxygenSaturation.toString() + ' %',
+                unit == 'lbs'
+                    ? (double.parse(record.bodyWeight.toString()) * 2.20462)
+                            .toStringAsFixed(1) +
+                        ' lbs'
+                    : record.bodyWeight.toString() + ' Kgs',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -292,6 +382,7 @@ class _BiometricBloodOxygenVitalsViewState
       padding: const EdgeInsets.all(0.0),
       child: Semantics(
         label: 'making graph of ',
+        readOnly: true,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -305,7 +396,7 @@ class _BiometricBloodOxygenVitalsViewState
                   border: Border.all(color: primaryLightColor),
                   borderRadius: BorderRadius.all(Radius.circular(8.0))),
               padding: const EdgeInsets.all(16),
-              height: 200,
+              height: 250,
               child: Center(
                 child: SimpleTimeSeriesChart(_createSampleData()),
               ),
@@ -314,7 +405,7 @@ class _BiometricBloodOxygenVitalsViewState
               height: 8,
             ),
             Text(
-              'Blood Oxygen Saturation',
+              'Weight',
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
@@ -338,14 +429,20 @@ class _BiometricBloodOxygenVitalsViewState
     ];*/
 
     for (int i = 0; i < records.length; i++) {
+      final String receivedWeight = unit == 'lbs'
+          ? (double.parse(records.elementAt(i).bodyWeight.toString()) * 2.20462)
+              .toStringAsFixed(1)
+          : records.elementAt(i).bodyWeight.toString();
       data.add(TimeSeriesSales(
           DateTime.parse(records.elementAt(i).recordDate).toLocal(),
-          double.parse(records.elementAt(i).bloodOxygenSaturation.toString())));
+          double.parse(receivedWeight)));
     }
+
+    debugPrint('Biometric Weight Date ==> ${data.elementAt(0).time}');
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'vitals',
+        id: 'WT',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -502,15 +599,20 @@ class _BiometricBloodOxygenVitalsViewState
   addvitals() async {
     try {
       progressDialog.show();
+
+      double entertedWeight = double.parse(_weightController.text.toString());
+
+      if (unit == 'lbs') {
+        entertedWeight = entertedWeight / 2.20462;
+      }
+
       final map = <String, dynamic>{};
-      map['BloodOxygenSaturation'] = _controller.text.toString();
+      map['BodyWeight'] = entertedWeight.toString();
       map['PatientUserId'] = "";
-      map['Unit'] = "%";
-      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
-      //map['RecordedByUserId'] = null;
+      map['Unit'] = "kg";
 
       final BaseResponse baseResponse =
-          await model.addMyVitals('blood-oxygen-saturations', map);
+          await model.addMyVitals('body-weights', map);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
@@ -531,10 +633,10 @@ class _BiometricBloodOxygenVitalsViewState
   getVitalsHistory() async {
     try {
       final GetMyVitalsHistory getMyVitalsHistory =
-          await model.getMyVitalsHistory('blood-oxygen-saturations');
+          await model.getMyVitalsHistory('body-weights');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
-        records.addAll(getMyVitalsHistory.data.bloodOxygenSaturationRecords.items);
+        records.addAll(getMyVitalsHistory.data.bodyWeightRecords.items);
       } else {
         showToast(getMyVitalsHistory.message, context);
       }

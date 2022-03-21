@@ -2,14 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
+import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/core/models/StartCarePlanResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/SharedPrefUtils.dart';
-import 'package:paitent/utils/StringUtility.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/SharedPrefUtils.dart';
+import 'package:paitent/infra/utils/StringUtility.dart';
+
 //ignore: must_be_immutable
 class StartCarePlanView extends StatefulWidget {
   String selectedCarePlan = '';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:paitent/core/models/post.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/ui/shared/text_styles.dart';
-import 'package:paitent/ui/shared/ui_helpers.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/themes/text_styles.dart';
+import 'package:paitent/infra/themes/ui_helpers.dart';
 
 class PostView extends StatelessWidget {
   final Post post;

@@ -18,8 +18,8 @@ import 'package:paitent/core/models/UserTaskResponse.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/models/pharmacyListApiResponse.dart';
 import 'package:paitent/core/models/startTaskOfAHACarePlanResponse.dart';
-import 'package:paitent/networking/ApiProvider.dart';
-import 'package:paitent/utils/StringUtility.dart';
+import 'package:paitent/infra/networking/ApiProvider.dart';
+import 'package:paitent/infra/utils/StringUtility.dart';
 
 import '../base_model.dart';
 

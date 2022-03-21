@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
+import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/core/models/assortedViewConfigs.dart';
 import 'package:paitent/core/viewmodels/views/patients_medication.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/StringUtility.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/utils/StringUtility.dart';
 
 class WeekMyCarePlanView extends StatefulWidget {
   @override
@@ -15,7 +15,6 @@ class WeekMyCarePlanView extends StatefulWidget {
 class _WeekMyCarePlanViewState extends State<WeekMyCarePlanView> {
   var model = PatientMedicationViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
 
   @override
   Widget build(BuildContext context) {

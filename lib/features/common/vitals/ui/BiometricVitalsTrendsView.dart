@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:paitent/core/viewmodels/views/patients_vitals.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/ui/views/biometricVitals/BiometricTrendView.dart';
+import 'package:paitent/features/common/vitals/ui/BiometricTrendView.dart';
+import 'package:paitent/features/common/vitals/view_models/patients_vitals.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 
-import '../base_widget.dart';
+import '../../../../ui/views/base_widget.dart';
 import 'EnterAllVitalsView.dart';
 
 class BiometricVitalsTrendsView extends StatefulWidget {

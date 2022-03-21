@@ -5,9 +5,9 @@ import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:package_info/package_info.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/utils/CommonUtils.dart';
+import 'package:paitent/core/constants/route_paths.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
 
 class SplashScreen extends StatefulWidget {
   final int seconds;

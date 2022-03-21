@@ -6,12 +6,12 @@ import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GlassOfWaterConsumption.dart';
 import 'package:paitent/core/models/NutritionResponseStore.dart';
 import 'package:paitent/core/viewmodels/views/patients_health_marker.dart';
-import 'package:paitent/networking/CustomException.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/networking/CustomException.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/SharedPrefUtils.dart';
-import 'package:paitent/utils/StringUtility.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/SharedPrefUtils.dart';
+import 'package:paitent/infra/utils/StringUtility.dart';
 
 import 'add_daily_nutrition_view.dart';
 

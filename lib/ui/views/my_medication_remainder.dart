@@ -4,9 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GetMyMedicationsResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_medication.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class MyMedicationRemainderView extends StatefulWidget {

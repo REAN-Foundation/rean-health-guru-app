@@ -3,30 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/GetMyVitalsHistory.dart';
-import 'package:paitent/core/viewmodels/views/patients_vitals.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/features/common/vitals/models/GetMyVitalsHistory.dart';
+import 'package:paitent/features/common/vitals/view_models/patients_vitals.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/SimpleTimeSeriesChart.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/SimpleTimeSeriesChart.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-//ignore: must_be_immutable
-class BiometricBloodSugarVitalsView extends StatefulWidget {
-  bool allUIViewsVisible = false;
 
-  BiometricBloodSugarVitalsView(bool allUIViewsVisible) {
-    this.allUIViewsVisible = allUIViewsVisible;
-  }
-
+class BiometricBloodOxygenVitalsView extends StatefulWidget {
   @override
-  _BiometricBloodSugarVitalsViewState createState() =>
-      _BiometricBloodSugarVitalsViewState();
+  _BiometricBloodOxygenVitalsViewState createState() =>
+      _BiometricBloodOxygenVitalsViewState();
 }
 
-class _BiometricBloodSugarVitalsViewState
-    extends State<BiometricBloodSugarVitalsView> {
+class _BiometricBloodOxygenVitalsViewState
+    extends State<BiometricBloodOxygenVitalsView> {
   var model = PatientVitalsViewModel();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
 
   final _controller = TextEditingController();
@@ -46,74 +39,19 @@ class _BiometricBloodSugarVitalsViewState
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
       builder: (context, model, child) => Container(
-        child: widget.allUIViewsVisible
-            ? Scaffold(
-                key: _scaffoldKey,
-                backgroundColor: Colors.white,
-                appBar: AppBar(
-                  backgroundColor: Colors.white,
-                  brightness: Brightness.light,
-                  title: Text(
-                    'Blood Glucose',
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        color: primaryColor,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  iconTheme: IconThemeData(color: Colors.black),
-                  actions: <Widget>[
-                    /*IconButton(
-                icon: Icon(
-                  Icons.person_pin,
-                  color: Colors.black,
-                  size: 32.0,
-                ),
-                onPressed: () {
-                  debugPrint("Clicked on profile icon");
-                },
-              )*/
-                  ],
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        weightFeilds(),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        weightHistoryListFeilds(),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        if (records.isEmpty) Container() else graph(),
-                        //allGoal(),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              )
-            : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    weightHistoryListFeilds(),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    if (records.isEmpty) Container() else graph(),
-                  ],
-                ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 0.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              weightHistoryListFeilds(),
+              const SizedBox(
+                height: 16,
               ),
+                  if (records.isEmpty) Container() else graph()
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -129,7 +67,7 @@ class _BiometricBloodSugarVitalsViewState
             height: 16,
           ),
           Text(
-            'Enter your blood glucose:',
+            'Enter your blood oxygen saturation:',
             style: TextStyle(
                 color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
             textAlign: TextAlign.center,
@@ -148,24 +86,22 @@ class _BiometricBloodSugarVitalsViewState
                       borderRadius: BorderRadius.circular(8.0),
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
-                  child: Semantics(
-                    label: 'Blood Glucose measures in mg/dl',
-                    child: TextFormField(
-                        controller: _controller,
-                        maxLines: 1,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.number,
-                        onFieldSubmitted: (term) {},
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                        ],
-                        decoration: InputDecoration(
-                            hintText: '(100 to 125)',
-                            contentPadding: EdgeInsets.all(0),
-                            border: InputBorder.none,
-                            fillColor: Colors.white,
-                            filled: true)),
-                  ),
+                  child: TextFormField(
+                      controller: _controller,
+                      maxLines: 1,
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.number,
+                      onFieldSubmitted: (term) {},
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(
+                            RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
+                      ],
+                      decoration: InputDecoration(
+                          hintText: '(92 to 100)',
+                          contentPadding: EdgeInsets.all(0),
+                          border: InputBorder.none,
+                          fillColor: Colors.white,
+                          filled: true)),
                 ),
               ),
               RichText(
@@ -178,11 +114,11 @@ class _BiometricBloodSugarVitalsViewState
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: '    mg/dL    ',
+                          text: '    %    ',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: textGrey,
+                              color: textBlack,
                               fontFamily: 'Montserrat',
                               fontStyle: FontStyle.italic)),
                     ]),
@@ -194,41 +130,36 @@ class _BiometricBloodSugarVitalsViewState
           ),
           Align(
             alignment: Alignment.centerRight,
-            child: Semantics(
-              label: 'Save',
-              button: true,
-              child: InkWell(
-                onTap: () {
-                  if (_controller.text.toString().isEmpty) {
-                    showToast('Please enter your blood glucose', context);
-                  } else {
-                    addvitals();
-                  }
-                },
-                child: ExcludeSemantics(
-                  child: Container(
-                      height: 40,
-                      width: 120,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24.0),
-                        border: Border.all(color: primaryColor, width: 1),
-                        color: primaryColor,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Save',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14),
-                          textAlign: TextAlign.center,
-                        ),
-                      )),
-                ),
-              ),
+            child: InkWell(
+              onTap: () {
+                if (_controller.text.toString().isEmpty) {
+                  showToast(
+                      'Please enter your blood oxygen saturation', context);
+                } else {
+                  addvitals();
+                }
+              },
+              child: Container(
+                  height: 40,
+                  width: 120,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24.0),
+                    border: Border.all(color: primaryColor, width: 1),
+                    color: primaryColor,
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Save',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                  )),
             ),
           ),
         ],
@@ -267,7 +198,7 @@ class _BiometricBloodSugarVitalsViewState
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            'Blood Glucose',
+                            'Blood Oxygen',
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -339,9 +270,9 @@ class _BiometricBloodSugarVitalsViewState
               overflow: TextOverflow.ellipsis,
             ),
             Semantics(
-              label: 'Blood Glucose ',
+              label: 'Blood Oxygen ',
               child: Text(
-                record.bloodGlucose.toString() + ' mg/dl',
+                record.bloodOxygenSaturation.toString() + ' %',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -383,7 +314,7 @@ class _BiometricBloodSugarVitalsViewState
               height: 8,
             ),
             Text(
-              'Blood Glucose',
+              'Blood Oxygen Saturation',
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
@@ -406,18 +337,15 @@ class _BiometricBloodSugarVitalsViewState
       new TimeSeriesSales(new DateTime(2017, 10, 10), 75),
     ];*/
 
-    //2022-01-03T10:14:05.000Z
-    //2022-01-03T10:10:37.000Z
-
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(
           DateTime.parse(records.elementAt(i).recordDate).toLocal(),
-          double.parse(records.elementAt(i).bloodGlucose.toString())));
+          double.parse(records.elementAt(i).bloodOxygenSaturation.toString())));
     }
-    debugPrint('Biometric Blood Glucose Date ==> ${data.elementAt(0).time}');
+
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'BGS',
+        id: 'vitals',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -432,38 +360,34 @@ class _BiometricBloodSugarVitalsViewState
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Semantics(
-            label: 'checking progress goal',
-            readOnly: true,
-            child: Container(
-              height: 60,
-              color: primaryColor,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  ImageIcon(
-                    AssetImage('res/images/ic_dart_goal.png'),
-                    size: 24,
-                    color: Colors.white,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    'Your progress with goals',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
+          Container(
+            height: 60,
+            color: primaryColor,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  width: 16,
+                ),
+                ImageIcon(
+                  AssetImage('res/images/ic_dart_goal.png'),
+                  size: 24,
+                  color: Colors.white,
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  'Your progress with goals',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
           ),
           const SizedBox(
@@ -579,13 +503,14 @@ class _BiometricBloodSugarVitalsViewState
     try {
       progressDialog.show();
       final map = <String, dynamic>{};
-      map['BloodGlucose'] = _controller.text.toString();
+      map['BloodOxygenSaturation'] = _controller.text.toString();
       map['PatientUserId'] = "";
-      map['Unit'] = "mg|dL";
+      map['Unit'] = "%";
+      map['RecordDate'] = DateFormat('yyyy-MM-dd').format(DateTime.now());
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse =
-          await model.addMyVitals('blood-glucose', map);
+          await model.addMyVitals('blood-oxygen-saturations', map);
 
       if (baseResponse.status == 'success') {
         progressDialog.hide();
@@ -606,10 +531,10 @@ class _BiometricBloodSugarVitalsViewState
   getVitalsHistory() async {
     try {
       final GetMyVitalsHistory getMyVitalsHistory =
-          await model.getMyVitalsHistory('blood-glucose');
+          await model.getMyVitalsHistory('blood-oxygen-saturations');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
-        records.addAll(getMyVitalsHistory.data.bloodGlucoseRecords.items);
+        records.addAll(getMyVitalsHistory.data.bloodOxygenSaturationRecords.items);
       } else {
         showToast(getMyVitalsHistory.message, context);
       }

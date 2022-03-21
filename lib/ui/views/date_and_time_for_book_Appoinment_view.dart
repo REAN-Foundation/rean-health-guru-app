@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
+import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/core/models/CheckConflictResponse.dart';
 import 'package:paitent/core/models/DoctorBookingAppoinmentPojo.dart';
 import 'package:paitent/core/models/PatientApiDetails.dart';
@@ -9,14 +9,15 @@ import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/models/getAvailableDoctorSlot.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/ui/views/doctorTileWidget.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/SharedPrefUtils.dart';
-import 'package:paitent/utils/StringUtility.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/SharedPrefUtils.dart';
+import 'package:paitent/infra/utils/StringUtility.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import 'base_widget.dart';
+
 //ignore: must_be_immutable
 class DateAndTimeForBookAppoinmentView extends StatefulWidget {
   Doctors doctorDetails;

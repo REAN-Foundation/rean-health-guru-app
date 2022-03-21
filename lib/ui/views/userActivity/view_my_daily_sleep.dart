@@ -7,8 +7,8 @@ import 'package:health/health.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/models/GlassOfWaterConsumption.dart';
 import 'package:paitent/core/viewmodels/views/patients_health_marker.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/utils/GetSleepData.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/GetSleepData.dart';
 
 import '../base_widget.dart';
 

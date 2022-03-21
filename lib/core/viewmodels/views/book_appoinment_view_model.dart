@@ -11,8 +11,8 @@ import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/models/getAvailableDoctorSlot.dart';
 import 'package:paitent/core/models/labsListApiResponse.dart';
 import 'package:paitent/core/models/pharmacyListApiResponse.dart';
-import 'package:paitent/networking/ApiProvider.dart';
-import 'package:paitent/utils/StringUtility.dart';
+import 'package:paitent/infra/networking/ApiProvider.dart';
+import 'package:paitent/infra/utils/StringUtility.dart';
 
 import '../base_model.dart';
 

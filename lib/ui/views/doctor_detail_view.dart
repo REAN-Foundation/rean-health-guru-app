@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_autolink_text/flutter_autolink_text.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
+import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/core/models/doctorListApiResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/appoinment_view_model.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/utils/SharedPrefUtils.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'base_widget.dart';
 import 'doctorTileWidget.dart';
+
 //ignore: must_be_immutable
 class DoctorDetailsView extends StatefulWidget {
   Doctors doctorDetails;

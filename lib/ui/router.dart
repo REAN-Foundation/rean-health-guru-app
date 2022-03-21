@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:paitent/core/constants/app_contstants.dart';
+import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/core/models/post.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/features/common/vitals/ui/BiomatricBloodPresureVitals.dart';
+import 'package:paitent/features/common/vitals/ui/BiomatricBodyTempratureVitals.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/ui/views/AfterSplashScreen.dart';
 import 'package:paitent/ui/views/BiomatricTask.dart';
 import 'package:paitent/ui/views/OnBoardingAhaPage.dart';
@@ -26,13 +28,11 @@ import 'package:paitent/ui/views/assessment_final_for_care_plan.dart';
 import 'package:paitent/ui/views/assessment_question_for_care_plan.dart';
 import 'package:paitent/ui/views/assessment_question_two_for_care_plan.dart';
 import 'package:paitent/ui/views/assessment_start_for_care_plan.dart';
-import 'package:paitent/ui/views/biometricVitals/BiomatricBloodOxygenVitals.dart';
-import 'package:paitent/ui/views/biometricVitals/BiomatricBloodPresureVitals.dart';
-import 'package:paitent/ui/views/biometricVitals/BiomatricBloodSugartVitals.dart';
-import 'package:paitent/ui/views/biometricVitals/BiomatricBodyTempratureVitals.dart';
-import 'package:paitent/ui/views/biometricVitals/BiomatricPulseVitals.dart';
-import 'package:paitent/ui/views/biometricVitals/BiomatricWeightVitals.dart';
-import 'package:paitent/ui/views/biometricVitals/BiometricVitalsTrendsView.dart';
+import 'package:paitent/features/common/vitals/ui/BiomatricBloodOxygenVitals.dart';
+import 'package:paitent/features/common/vitals/ui/BiomatricBloodSugartVitals.dart';
+import 'package:paitent/features/common/vitals/ui/BiomatricPulseVitals.dart';
+import 'package:paitent/features/common/vitals/ui/BiomatricWeightVitals.dart';
+import 'package:paitent/features/common/vitals/ui/BiometricVitalsTrendsView.dart';
 import 'package:paitent/ui/views/bookingAppoinmentConformation.dart';
 import 'package:paitent/ui/views/booking_confirm_screen.dart';
 import 'package:paitent/ui/views/booking_info_view.dart';
@@ -78,7 +78,7 @@ import 'package:paitent/ui/views/userActivity/view_my_daily_activity.dart';
 import 'package:paitent/ui/views/userActivity/view_my_daily_sleep.dart';
 import 'package:paitent/ui/views/video_more_care_plan.dart';
 import 'package:paitent/ui/views/word_of_the_week_care_plan.dart';
-import 'package:paitent/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
 
 class Routers {
   static Route<dynamic> generateRoute(RouteSettings settings) {

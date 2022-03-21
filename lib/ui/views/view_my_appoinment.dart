@@ -6,9 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:paitent/core/models/MyAppointmentApiResponse.dart';
 import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/core/viewmodels/views/book_appoinment_view_model.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/ui/views/pdfViewer.dart';
-import 'package:paitent/utils/SharedPrefUtils.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'base_widget.dart';

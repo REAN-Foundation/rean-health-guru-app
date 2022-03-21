@@ -9,12 +9,13 @@ import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:paitent/core/models/UploadImageResponse.dart';
 import 'package:paitent/core/viewmodels/views/patients_care_plan.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/utils/CommonUtils.dart';
-import 'package:paitent/utils/StringUtility.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:paitent/infra/utils/StringUtility.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import 'base_widget.dart';
+
 //ignore: must_be_immutable
 class AddNurseDialog extends StatefulWidget {
   Function _submitButtonListner;

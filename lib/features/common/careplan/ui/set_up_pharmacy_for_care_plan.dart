@@ -5,11 +5,11 @@ import 'package:paitent/features/common/appoinment_booking/models/pharmacyListAp
 import 'package:paitent/features/common/careplan/models/AddTeamMemberResponse.dart';
 import 'package:paitent/features/common/careplan/models/StartCarePlanResponse.dart';
 import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
+import 'package:paitent/features/common/emergency/ui/addPharmaDialog.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:paitent/ui/views/addPharmaDialog.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 
 class SetUpPharmacyForCarePlanView extends StatefulWidget {

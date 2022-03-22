@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/models/GlassOfWaterConsumption.dart';
-import 'package:paitent/core/viewmodels/views/patients_health_marker.dart';
+import 'package:paitent/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/GetSleepData.dart';
 

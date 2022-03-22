@@ -11,7 +11,7 @@ import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/ui/views/pdfViewer.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'base_widget.dart';
+import '../../../../ui/views/base_widget.dart';
 
 class ViewMyAppointment extends StatefulWidget {
   @override

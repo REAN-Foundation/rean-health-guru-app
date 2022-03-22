@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/DrugOrderIdPojo.dart';
-import 'package:paitent/core/models/DrugsLibraryPojo.dart';
-import 'package:paitent/core/models/GetMedicationStockImages.dart';
-import 'package:paitent/core/models/GetMyMedicationsResponse.dart';
-import 'package:paitent/core/models/MyCurrentMedication.dart';
-import 'package:paitent/core/models/MyMedicationSummaryRespose.dart';
+import 'package:paitent/core/viewmodels/base_model.dart';
+import 'package:paitent/features/common/medication/models/DrugOrderIdPojo.dart';
+import 'package:paitent/features/common/medication/models/DrugsLibraryPojo.dart';
+import 'package:paitent/features/common/medication/models/GetMedicationStockImages.dart';
+import 'package:paitent/features/common/medication/models/GetMyMedicationsResponse.dart';
+import 'package:paitent/features/common/medication/models/MyCurrentMedication.dart';
+import 'package:paitent/features/common/medication/models/MyMedicationSummaryRespose.dart';
 import 'package:paitent/infra/networking/ApiProvider.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-
-import '../base_model.dart';
 
 class PatientMedicationViewModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();

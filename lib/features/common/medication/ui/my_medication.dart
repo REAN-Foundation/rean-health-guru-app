@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
+import 'package:paitent/features/common/medication/ui/my_current_medication.dart';
+import 'package:paitent/features/common/medication/ui/my_medication_history.dart';
+import 'package:paitent/features/common/medication/ui/my_medication_prescription.dart';
+import 'package:paitent/features/common/medication/ui/my_medication_refill.dart';
+import 'package:paitent/features/common/medication/view_models/patients_medication.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/my_current_medication.dart';
-import 'package:paitent/ui/views/my_medication_history.dart';
-import 'package:paitent/ui/views/my_medication_prescription.dart';
-import 'package:paitent/ui/views/my_medication_refill.dart';
 
 import 'my_todays_medication.dart';
 

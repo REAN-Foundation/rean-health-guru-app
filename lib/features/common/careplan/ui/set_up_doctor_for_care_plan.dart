@@ -11,7 +11,7 @@ import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 
-import '../../../../ui/views/addDoctorDialog.dart';
+import '../../emergency/ui/addDoctorDialog.dart';
 
 class SetUpDoctorForCarePlanView extends StatefulWidget {
   @override

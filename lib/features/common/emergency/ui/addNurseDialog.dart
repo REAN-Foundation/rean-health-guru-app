@@ -14,15 +14,15 @@ import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-import 'base_widget.dart';
+import '../../../../ui/views/base_widget.dart';
 
 //ignore: must_be_immutable
-class AddFamilyMemberDialog extends StatefulWidget {
+class AddNurseDialog extends StatefulWidget {
   Function _submitButtonListner;
 
   //AllergiesDialog(@required this._allergiesCategoryMenuItems,@required this._allergiesSeveretyMenuItems, @required Function this.submitButtonListner, this.patientId);
 
-  AddFamilyMemberDialog({Key key, @required Function submitButtonListner})
+  AddNurseDialog({Key key, @required Function submitButtonListner})
       : super(key: key) {
     _submitButtonListner = submitButtonListner;
   }
@@ -31,16 +31,14 @@ class AddFamilyMemberDialog extends StatefulWidget {
   _MyDialogState createState() => _MyDialogState();
 }
 
-class _MyDialogState extends State<AddFamilyMemberDialog> {
+class _MyDialogState extends State<AddNurseDialog> {
   var model = PatientCarePlanViewModel();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _mobileNumberController = TextEditingController();
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _mobileNumberFocus = FocusNode();
-  final _descriptionFocus = FocusNode();
   String profileImage = '';
   String profileImagePath = '';
   String selectedGender = 'Male';
@@ -89,10 +87,9 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                   _entryFirstNameField('First Name*'),
                   _entryLastNameField('Last Name*'),
                   _entryMobileNoField('Phone*'),
-                  _entryDecriptionNameField('Relation*'),
                   _genderWidget(),
                   const SizedBox(
-                    height: 16,
+                    height: 32,
                   ),
                   _submitButton(context),
                 ],
@@ -105,85 +102,41 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
   }
 
   Widget _submitButton(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () async {
-        if (_firstNameController.text == '') {
-          showToastMsg('Enter first name', context);
-        } else if (_lastNameController.text == '') {
-          showToastMsg('Enter last name', context);
-        } else if (mobileNumber.isEmpty) {
-          showToastMsg('Enter mobile number', context);
-        } else if (mobileNumber.length != maxLengthOfPhone) {
-          showToastMsg('Enter valid mobile number', context);
-        } else if (_descriptionController.text == '') {
-          showToastMsg('Enter relation', context);
-        } else if (selectedGender == '') {
-          showToastMsg('Select gender', context);
-        } else {
-          widget._submitButtonListner(
-              _firstNameController.text.trim(),
-              _lastNameController.text.trim(),
-              countryCode + '-' + mobileNumber,
-              selectedGender,
-              _descriptionController.text);
-        }
-      },
-      style: ButtonStyle(
-          foregroundColor: MaterialStateProperty.all<Color>(primaryLightColor),
-          backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
-                  side: BorderSide(color: primaryColor)))),
-      child: Text(
-        '      Add       ',
-        style: TextStyle(
-            color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
-      ),
-    );
-  }
-
-  Widget _genderWidget() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Semantics(
-        label: 'Gender of the family member or frieds',
-        enabled: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ExcludeSemantics(
-              child: Text(
-                'Gender*',
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            ToggleSwitch(
-                minWidth: 120.0,
-                cornerRadius: 20,
-                initialLabelIndex: 0,
-                totalSwitches: 2,
-                activeBgColor: [Colors.green],
-                inactiveBgColor: Colors.grey,
-                labels: ['Male', 'Female'],
-                icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
-                activeBgColors: [
-                  [Colors.blue],
-                  [Colors.pink]
-                ],
-                onToggle: (index) {
-                  debugPrint('switched to: $index');
-                  if (index == 0) {
-                    selectedGender = 'Male';
-                  } else {
-                    selectedGender = 'Female';
-                  }
-                })
-          ],
+    return Semantics(
+      label: 'Save',
+      button: true,
+      child: ElevatedButton(
+        onPressed: () async {
+          if (_firstNameController.text == '') {
+            showToastMsg('Enter first name', context);
+          } else if (_lastNameController.text == '') {
+            showToastMsg('Enter last name', context);
+          } else if (mobileNumber.isEmpty) {
+            showToastMsg('Enter mobile number', context);
+          } else if (mobileNumber.length != maxLengthOfPhone) {
+            showToastMsg('Enter valid mobile number', context);
+          } else if (selectedGender == '') {
+            showToastMsg('Select gender', context);
+          } else {
+            widget._submitButtonListner(
+                _firstNameController.text.trim(),
+                _lastNameController.text.trim(),
+                countryCode + '-' + mobileNumber,
+                selectedGender);
+          }
+        },
+        style: ButtonStyle(
+            foregroundColor:
+                MaterialStateProperty.all<Color>(primaryLightColor),
+            backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                    side: BorderSide(color: primaryColor)))),
+        child: Text(
+          '      Add       ',
+          style: TextStyle(
+              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
         ),
       ),
     );
@@ -210,7 +163,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                 border: Border.all(color: primaryColor, width: 1),
                 color: Colors.white),
             child: Semantics(
-              label: 'first name of family member or friend',
+              label: 'first name of nurse',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _firstNameController,
@@ -254,20 +207,20 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                 border: Border.all(color: primaryColor, width: 1),
                 color: Colors.white),
             child: Semantics(
-              label: 'last name of family or friend',
+              label: 'last name of nurse',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _lastNameController,
                   focusNode: _lastNameFocus,
                   maxLines: 1,
                   textInputAction: TextInputAction.next,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
+                  ],
                   onFieldSubmitted: (term) {
                     _fieldFocusChange(
                         context, _lastNameFocus, _mobileNumberFocus);
                   },
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
-                  ],
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       fillColor: Colors.white,
@@ -275,6 +228,51 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget _genderWidget() {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Semantics(
+        label: 'Gender of the nurse',
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            ExcludeSemantics(
+              child: Text(
+                'Gender*',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            ToggleSwitch(
+                minWidth: 120.0,
+                cornerRadius: 20,
+                initialLabelIndex: 0,
+                totalSwitches: 2,
+                activeBgColor: [Colors.green],
+                inactiveBgColor: Colors.grey,
+                labels: ['Male', 'Female'],
+                icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
+                activeBgColors: [
+                  [Colors.blue],
+                  [Colors.pink]
+                ],
+                onToggle: (index) {
+                  debugPrint('switched to: $index');
+                  if (index == 0) {
+                    selectedGender = 'Male';
+                  } else {
+                    selectedGender = 'Female';
+                  }
+                })
+          ],
+        ),
       ),
     );
   }
@@ -314,10 +312,10 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                         controller: _mobileNumberController,
                         focusNode: _mobileNumberFocus,
                         keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
                         maxLength: 10,
                         onFieldSubmitted: (term) {
-                          _fieldFocusChange(context, _mobileNumberFocus, _descriptionFocus);
+                          //_fieldFocusChange(context, _mobileNumberFocus, _descriptionFocus);
                         },
                         maxLines: 1,
                         decoration: InputDecoration(
@@ -328,65 +326,20 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                   )
                 ],
               )*/
-
-                  /*InternationalPhoneNumberInput(
-                onInputChanged: (PhoneNumber number) {
-                  mobileNumber = number.parseNumber();
-                  debugPrint(number.parseNumber());
-                  if (mobileNumber.length == 10) {
-                    if(mobileNumber.length == 10){
-                      _fieldFocusChange(context, _mobileNumberFocus, _descriptionFocus);
-                    }
-                    //_fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
-                  }
-                  if (mobileNumber != number.parseNumber()) {
-                  } else {
-                    //dismissOtpWidget();
-                  }
-                },
-                keyboardAction: TextInputAction.done,
-                focusNode: _mobileNumberFocus,
-                */ /*textStyle:
-                TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black26),*/ /*
-                textFieldController: _mobileNumberController,
-                isEnabled: true,
-                formatInput: true,
-                ignoreBlank: true,
-                onFieldSubmitted: (term) {
-                  //_fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
-                },
-                selectorConfig: SelectorConfig(
-                    selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
-                initialValue: PhoneNumber(isoCode: details.alpha2Code),
-                inputDecoration: InputDecoration(
-                  //filled: true,
-                  //fillColor: Color(0xFFFFFFFF),
-
-                //hintText: 'Mobile Number',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-              ),
-            )*/
                   IntlPhoneField(
                 /*decoration: InputDecoration(
-                  labelText: 'Phone Number',
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(),
-                  ),
-                ),*/
+                    labelText: 'Phone Number',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(),
+                    ),
+                  ),*/
                 controller: _mobileNumberController,
                 focusNode: _mobileNumberFocus,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 autoValidate: true,
                 decoration: InputDecoration(
                     counterText: '',
-                    hintText: 'mobile number of family or friend',
+                    hintText: 'mobile number of Nurse',
                     hintStyle: TextStyle(color: Colors.transparent),
                     border: InputBorder.none,
                     fillColor: Colors.white,
@@ -405,8 +358,8 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                   maxLengthOfPhone = countries.firstWhere((element) =>
                       element['code'] == phone.countryISOCode)['max_length'];
                   /*if(mobileNumber.length == 10){
-                    _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
-                  }*/
+                      _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
+                    }*/
                 },
                 onCountryChanged: (phone) {
                   mobileNumber = '';
@@ -414,12 +367,11 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                   setState(() {});
                 },
               )
-
               /*InternationalPhoneNumberInput
-            .withCustomDecoration(
-            onInputChanged: (PhoneNumber number) {
-              mobileNumber = number.toString().trim();
-              debugPrint(mobileNumber);
+              .withCustomDecoration(
+              onInputChanged: (PhoneNumber number) {
+                mobileNumber = number.toString().trim();
+                debugPrint(mobileNumber);
 
                 if (mobileNumber != number.parseNumber()) {
 
@@ -450,53 +402,13 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
     );
   }
 
-  Widget _entryDecriptionNameField(String title, {bool isPassword = false}) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(color: primaryColor, width: 1),
-                color: Colors.white),
-            child: Semantics(
-              label: 'Relation of family or friend',
-              child: TextFormField(
-                  obscureText: isPassword,
-                  controller: _descriptionController,
-                  focusNode: _descriptionFocus,
-                  maxLines: 1,
-                  textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (term) {},
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      fillColor: Colors.white,
-                      filled: true)),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
   _fieldFocusChange(
       BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-/*
-  File _image;
+  /*File _image;
   final picker = ImagePicker();
   List<String> listFiles = new List();
 

@@ -5,7 +5,7 @@ import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
 import 'package:paitent/infra/widgets/delayed_animation.dart';
 
-import '../base_widget.dart';
+import '../../../../ui/views/base_widget.dart';
 
 class ThanksForTheFeedBack extends StatefulWidget {
   @override

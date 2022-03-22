@@ -14,7 +14,7 @@ import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-import 'base_widget.dart';
+import '../../../../ui/views/base_widget.dart';
 
 //ignore: must_be_immutable
 class AddDoctorDetailsDialog extends StatefulWidget {

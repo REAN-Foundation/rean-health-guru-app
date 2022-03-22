@@ -7,13 +7,13 @@ import 'package:health/health.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GlassOfWaterConsumption.dart';
-import 'package:paitent/core/viewmodels/views/patients_health_marker.dart';
+import 'package:paitent/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/ui/views/userActivity/addBMIDetailsDialog.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/GetSleepData.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:paitent/ui/views/userActivity/addBMIDetailsDialog.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../base_widget.dart';

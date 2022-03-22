@@ -4,7 +4,7 @@ import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/infra/networking/ApiProvider.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
 
-import '../base_model.dart';
+import '../../../../core/viewmodels/base_model.dart';
 
 class PatientHealthMarkerViewModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();

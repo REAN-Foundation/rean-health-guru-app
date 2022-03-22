@@ -6,14 +6,14 @@ import 'package:paitent/features/common/appoinment_booking/models/pharmacyListAp
 import 'package:paitent/features/common/careplan/models/AddTeamMemberResponse.dart';
 import 'package:paitent/features/common/careplan/models/TeamCarePlanReesponse.dart';
 import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
+import 'package:paitent/features/common/emergency/ui/addFamilyMemberDialog.dart';
+import 'package:paitent/features/common/emergency/ui/addNurseDialog.dart';
+import 'package:paitent/features/common/emergency/ui/addPharmaDialog.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/ui/views/addFamilyMemberDialog.dart';
-import 'package:paitent/ui/views/addNurseDialog.dart';
-import 'package:paitent/ui/views/addPharmaDialog.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 
-import 'addDoctorDialog.dart';
+import '../../emergency/ui/addDoctorDialog.dart';
 
 class TeamOfMyCarePlanView extends StatefulWidget {
   @override

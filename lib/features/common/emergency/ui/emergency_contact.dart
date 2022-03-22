@@ -8,14 +8,14 @@ import 'package:paitent/core/models/DashboardTile.dart';
 import 'package:paitent/core/models/EmergencyContactResponse.dart';
 import 'package:paitent/core/viewmodels/views/common_config_model.dart';
 import 'package:paitent/features/common/appoinment_booking/models/doctorListApiResponse.dart';
+import 'package:paitent/features/common/emergency/ui/addDoctorDetailsDialog.dart';
+import 'package:paitent/features/common/emergency/ui/addFamilyMemberDialog.dart';
+import 'package:paitent/features/common/emergency/ui/addNurseDialog.dart';
 import 'package:paitent/infra/networking/CustomException.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:paitent/ui/views/addDoctorDetailsDialog.dart';
-import 'package:paitent/ui/views/addFamilyMemberDialog.dart';
-import 'package:paitent/ui/views/addNurseDialog.dart';
 import 'package:paitent/ui/views/base_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 

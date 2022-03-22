@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paitent/core/viewmodels/views/patients_medication.dart';
 import 'package:paitent/features/common/careplan/ui/summary_of_my_care_plan.dart';
+import 'package:paitent/features/common/careplan/ui/team_of_my_care_plan.dart';
 import 'package:paitent/features/common/careplan/ui/week_my_care_plan.dart';
+import 'package:paitent/features/common/medication/view_models/patients_medication.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/team_of_my_care_plan.dart';
 
 class MyCarePlanView extends StatefulWidget {
   @override

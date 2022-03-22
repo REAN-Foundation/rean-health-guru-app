@@ -2,10 +2,10 @@ import 'package:get_it/get_it.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/GetAssesmentTemplateByIdResponse.dart';
 import 'package:paitent/core/models/GetMyAssesmentIdResponse.dart';
-import 'package:paitent/core/models/GetMyMedicationsResponse.dart';
 import 'package:paitent/core/models/KnowledgeTopicResponse.dart';
 import 'package:paitent/core/models/SearchSymptomAssesmentTempleteResponse.dart';
 import 'package:paitent/core/models/TaskSummaryResponse.dart';
+import 'package:paitent/features/common/medication/models/GetMyMedicationsResponse.dart';
 import 'package:paitent/infra/networking/ApiProvider.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
 

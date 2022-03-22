@@ -5,17 +5,17 @@ import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/core/models/DashboardTile.dart';
-import 'package:paitent/core/models/GetMyMedicationsResponse.dart';
 import 'package:paitent/core/models/KnowledgeTopicResponse.dart';
 import 'package:paitent/core/models/SearchSymptomAssesmentTempleteResponse.dart';
 import 'package:paitent/core/models/TaskSummaryResponse.dart';
 import 'package:paitent/core/viewmodels/views/dashboard_summary_model.dart';
+import 'package:paitent/features/common/medication/models/GetMyMedicationsResponse.dart';
 import 'package:paitent/infra/networking/CustomException.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/ui/views/base_widget.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:paitent/ui/views/base_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable

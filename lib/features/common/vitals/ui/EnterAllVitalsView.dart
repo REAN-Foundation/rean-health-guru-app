@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/features/common/vitals/view_models/patients_vitals.dart';
+import 'package:paitent/features/misc/models/BaseResponse.dart';
+import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:paitent/ui/views/base_widget.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class EnterAllVitalsView extends StatefulWidget {

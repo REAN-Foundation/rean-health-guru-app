@@ -2,18 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/core/models/assortedViewConfigs.dart';
 import 'package:paitent/features/common/careplan/models/GetTaskOfAHACarePlanResponse.dart';
+import 'package:paitent/features/common/careplan/models/assortedViewConfigs.dart';
 import 'package:paitent/features/common/careplan/models/startTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
+import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:paitent/ui/views/base_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../../../ui/views/home_view.dart';
+import '../../../misc/ui/home_view.dart';
 
 // ignore: must_be_immutable
 class VideoMoreCarePlanView extends StatefulWidget {

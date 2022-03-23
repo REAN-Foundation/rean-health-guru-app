@@ -7,14 +7,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:paitent/core/models/UploadImageResponse.dart';
 import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
+import 'package:paitent/features/misc/models/UploadImageResponse.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-import '../../../../ui/views/base_widget.dart';
+import '../../../misc/ui/base_widget.dart';
 
 //ignore: must_be_immutable
 class AddNurseDialog extends StatefulWidget {

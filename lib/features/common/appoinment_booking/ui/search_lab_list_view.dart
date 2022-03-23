@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/features/common/appoinment_booking/models/LabDetailsResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/models/labsListApiResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/view_models/book_appoinment_view_model.dart';
+import 'package:paitent/features/misc/models/user_data.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
-import '../../../../ui/views/base_widget.dart';
+import '../../../misc/ui/base_widget.dart';
 
 class SearchLabListView extends StatefulWidget {
   @override

@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/GlassOfWaterConsumption.dart';
-import 'package:paitent/core/models/NutritionResponseStore.dart';
+import 'package:paitent/features/common/nutrition/models/GlassOfWaterConsumption.dart';
+import 'package:paitent/features/common/nutrition/models/NutritionResponseStore.dart';
 import 'package:paitent/features/common/nutrition/view_models/patients_health_marker.dart';
+import 'package:paitent/features/misc/models/BaseResponse.dart';
+import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/db_utils/DatabaseHelper.dart';
 import 'package:paitent/infra/networking/CustomException.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:paitent/ui/views/base_widget.dart';
 
 import 'add_daily_nutrition_view.dart';
 

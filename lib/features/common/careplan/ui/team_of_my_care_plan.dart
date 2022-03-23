@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/models/doctorListApiResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/models/pharmacyListApiResponse.dart';
 import 'package:paitent/features/common/careplan/models/AddTeamMemberResponse.dart';
@@ -9,9 +8,10 @@ import 'package:paitent/features/common/careplan/view_models/patients_care_plan.
 import 'package:paitent/features/common/emergency/ui/addFamilyMemberDialog.dart';
 import 'package:paitent/features/common/emergency/ui/addNurseDialog.dart';
 import 'package:paitent/features/common/emergency/ui/addPharmaDialog.dart';
+import 'package:paitent/features/misc/models/BaseResponse.dart';
+import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/ui/views/base_widget.dart';
 
 import '../../emergency/ui/addDoctorDialog.dart';
 

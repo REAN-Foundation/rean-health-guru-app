@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
+import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/ui/views/base_widget.dart';
 
 class AssessmentQuestionTwoCarePlanView extends StatefulWidget {
   @override

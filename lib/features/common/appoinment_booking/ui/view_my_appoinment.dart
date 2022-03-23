@@ -3,15 +3,15 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/features/common/appoinment_booking/models/MyAppointmentApiResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/view_models/book_appoinment_view_model.dart';
+import 'package:paitent/features/misc/models/user_data.dart';
+import 'package:paitent/features/misc/ui/pdfViewer.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:paitent/ui/views/pdfViewer.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../../../ui/views/base_widget.dart';
+import '../../../misc/ui/base_widget.dart';
 
 class ViewMyAppointment extends StatefulWidget {
   @override

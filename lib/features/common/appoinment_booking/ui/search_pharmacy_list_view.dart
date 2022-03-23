@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/features/common/appoinment_booking/models/pharmacyListApiResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/view_models/book_appoinment_view_model.dart';
+import 'package:paitent/features/misc/models/user_data.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 
-import '../../../../ui/views/base_widget.dart';
+import '../../../misc/ui/base_widget.dart';
 
 class SearchPharmacyListView extends StatefulWidget {
   @override

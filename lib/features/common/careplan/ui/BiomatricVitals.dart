@@ -3,7 +3,7 @@ import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 
-import '../../../../ui/views/base_widget.dart';
+import '../../../misc/ui/base_widget.dart';
 
 class BiometricVitalsView extends StatefulWidget {
   @override

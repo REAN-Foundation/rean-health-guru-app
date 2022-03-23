@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/viewmodels/views/common_config_model.dart';
+import 'package:paitent/features/misc/models/BaseResponse.dart';
+import 'package:paitent/features/misc/view_models/common_config_model.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
 import 'package:paitent/infra/widgets/delayed_animation.dart';
 
-import '../../../../ui/views/base_widget.dart';
+import '../../../misc/ui/base_widget.dart';
 
 class ThanksForTheFeedBack extends StatefulWidget {
   @override

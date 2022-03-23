@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/features/common/careplan/models/GetCarePlanSummaryResponse.dart';
 import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
+import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/ui/views/base_widget.dart';
 
 class SummaryOfMyCarePlanView extends StatefulWidget {
   @override

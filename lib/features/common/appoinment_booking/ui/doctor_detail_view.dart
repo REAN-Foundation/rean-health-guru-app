@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_autolink_text/flutter_autolink_text.dart';
 import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/core/models/user_data.dart';
 import 'package:paitent/features/common/appoinment_booking/models/doctorListApiResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/ui/doctorTileWidget.dart';
 import 'package:paitent/features/common/appoinment_booking/view_models/appoinment_view_model.dart';
+import 'package:paitent/features/misc/models/user_data.dart';
+import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:paitent/ui/views/base_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable

@@ -5,7 +5,7 @@ import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/features/common/appoinment_booking/view_models/appoinment_view_model.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 
-import '../../../../ui/views/base_widget.dart';
+import '../../../misc/ui/base_widget.dart';
 
 class PaymentConfirmationView extends StatefulWidget {
   @override

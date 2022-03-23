@@ -1,15 +1,15 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paitent/core/models/assortedViewConfigs.dart';
 import 'package:paitent/features/common/careplan/models/GetTaskOfAHACarePlanResponse.dart';
+import 'package:paitent/features/common/careplan/models/assortedViewConfigs.dart';
 import 'package:paitent/features/common/careplan/models/startTaskOfAHACarePlanResponse.dart';
 import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
+import 'package:paitent/features/misc/ui/base_widget.dart';
+import 'package:paitent/features/misc/ui/home_view.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:paitent/ui/views/base_widget.dart';
-import 'package:paitent/ui/views/home_view.dart';
 
 // ignore: must_be_immutable
 class WordOfTheWeekCarePlanView extends StatefulWidget {

@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:paitent/features/common/nutrition/view_models/patients_health_marker.dart';
+import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/db_utils/DatabaseHelper.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/ui/views/base_widget.dart';
 
 //ignore: must_be_immutable
 class AddDailyNutritionView extends StatefulWidget {

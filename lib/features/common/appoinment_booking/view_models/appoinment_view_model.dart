@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/user_data.dart';
-import 'package:paitent/core/services/authentication_service.dart';
-import 'package:paitent/core/viewmodels/base_model.dart';
+import 'package:paitent/features/misc/models/BaseResponse.dart';
+import 'package:paitent/features/misc/models/user_data.dart';
+import 'package:paitent/features/misc/view_models/authentication_service.dart';
+import 'package:paitent/infra/view_models/base_model.dart';
 
 class AppoinmentViewModel extends BaseModel {
   AuthenticationService _authenticationService;

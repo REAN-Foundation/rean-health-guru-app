@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/core/models/getAvailableDoctorSlot.dart';
 import 'package:paitent/features/common/appoinment_booking/models/CheckConflictResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/models/DoctorAppoinmentBookedSuccessfully.dart';
 import 'package:paitent/features/common/appoinment_booking/models/DoctorDetailsResponse.dart';
@@ -11,10 +10,11 @@ import 'package:paitent/features/common/appoinment_booking/models/MyAppointmentA
 import 'package:paitent/features/common/appoinment_booking/models/doctorListApiResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/models/labsListApiResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/models/pharmacyListApiResponse.dart';
+import 'package:paitent/features/misc/models/getAvailableDoctorSlot.dart';
 import 'package:paitent/infra/networking/ApiProvider.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
 
-import '../../../../core/viewmodels/base_model.dart';
+import '../../../../infra/view_models/base_model.dart';
 
 class BookAppoinmentViewModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();

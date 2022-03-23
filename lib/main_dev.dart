@@ -6,9 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:paitent/infra/networking/ChatApiProvider.dart';
+import 'package:paitent/infra/router.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/provider_setup.dart';
-import 'package:paitent/ui/router.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

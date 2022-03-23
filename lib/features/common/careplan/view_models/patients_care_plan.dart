@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/core/models/BaseResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/models/doctorListApiResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/models/pharmacyListApiResponse.dart';
 import 'package:paitent/features/common/careplan/models/AddTeamMemberResponse.dart';
@@ -18,10 +17,11 @@ import 'package:paitent/features/common/careplan/models/StartCarePlanResponse.da
 import 'package:paitent/features/common/careplan/models/TeamCarePlanReesponse.dart';
 import 'package:paitent/features/common/careplan/models/UserTaskResponse.dart';
 import 'package:paitent/features/common/careplan/models/startTaskOfAHACarePlanResponse.dart';
+import 'package:paitent/features/misc/models/BaseResponse.dart';
 import 'package:paitent/infra/networking/ApiProvider.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
 
-import '../../../../core/viewmodels/base_model.dart';
+import '../../../../infra/view_models/base_model.dart';
 
 class PatientCarePlanViewModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();

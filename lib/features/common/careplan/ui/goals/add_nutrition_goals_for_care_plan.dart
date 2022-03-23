@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/features/common/medication/view_models/patients_medication.dart';
+import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/ui/views/base_widget.dart';
 
 class AddNutritionGoalsForCarePlanView extends StatefulWidget {
   @override

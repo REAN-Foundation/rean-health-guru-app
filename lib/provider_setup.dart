@@ -1,9 +1,9 @@
+import 'package:paitent/features/misc/models/user_data.dart';
+import 'package:paitent/features/misc/view_models/authentication_service.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-import 'core/models/user_data.dart';
-import 'core/services/api.dart';
-import 'core/services/authentication_service.dart';
+import 'features/misc/view_models/api.dart';
 
 List<SingleChildWidget> providers = [
   ...independentServices,

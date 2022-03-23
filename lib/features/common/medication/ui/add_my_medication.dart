@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:paitent/core/models/BaseResponse.dart';
-import 'package:paitent/core/models/MedicationDosageUnitsPojo.dart';
-import 'package:paitent/core/models/MedicationDurationUnitsPojo.dart';
-import 'package:paitent/core/models/MedicationFrequenciesPojo.dart';
 import 'package:paitent/features/common/medication/models/DrugsLibraryPojo.dart';
 import 'package:paitent/features/common/medication/models/GetMedicationStockImages.dart';
 import 'package:paitent/features/common/medication/view_models/patients_medication.dart';
+import 'package:paitent/features/misc/models/BaseResponse.dart';
+import 'package:paitent/features/misc/models/MedicationDosageUnitsPojo.dart';
+import 'package:paitent/features/misc/models/MedicationDurationUnitsPojo.dart';
+import 'package:paitent/features/misc/models/MedicationFrequenciesPojo.dart';
+import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/networking/CustomException.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:paitent/ui/views/base_widget.dart';
 
 class AddMyMedicationView extends StatefulWidget {
   @override

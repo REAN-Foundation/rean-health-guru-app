@@ -36,7 +36,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
   var doctorSearchList = <Doctors>[];
 
   String unit = 'Kg';
-
+  var height;
   final _weightController = TextEditingController();
   final _heightInFeetController = TextEditingController();
   final _heightInInchesController = TextEditingController();
@@ -53,7 +53,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
     if (widget._height != 0.0) {
       widget._height = Conversion.cmToFeet(widget._height);
 
-      var height = widget._height.toString().split('.');
+      height = widget._height.toString().split('.');
 
       _heightInFeetController.text = height[0].toString();
       _heightInFeetController.selection = TextSelection.fromPosition(

@@ -203,30 +203,33 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                       color: Colors.white),
                   child: Semantics(
                     label: 'Height measures in feet',
-                    child: TextFormField(
-                        controller: _heightInFeetController,
-                        focusNode: _heightInFeetFocus,
-                        maxLines: 1,
-                        textInputAction: TextInputAction.next,
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        onFieldSubmitted: (term) {
-                          _fieldFocusChange(context, _heightInFeetFocus,
-                              _heightInInchesFocus);
-                        },
-                        inputFormatters: [
-                          FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\+|\\-|\\ ]')),
-                        ],
-                        decoration: InputDecoration(
-                            hintText: 'Feet',
-                            hintStyle: TextStyle(
-                              fontSize: 14,
-                            ),
-                            contentPadding: EdgeInsets.all(0),
-                            border: InputBorder.none,
-                            fillColor: Colors.white,
-                            filled: true)),
+                    child: ExcludeSemantics(
+                      child: TextFormField(
+                          controller: _heightInFeetController,
+                          focusNode: _heightInFeetFocus,
+                          maxLines: 1,
+                          maxLength: 2,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.number,
+                          onFieldSubmitted: (term) {
+                            _fieldFocusChange(context, _heightInFeetFocus,
+                                _heightInInchesFocus);
+                          },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(
+                                RegExp('[\\,|\\.|\\+|\\-|\\ ]')),
+                          ],
+                          decoration: InputDecoration(
+                              hintText: 'Feet',
+                              counterText: "",
+                              hintStyle: TextStyle(
+                                fontSize: 14,
+                              ),
+                              contentPadding: EdgeInsets.all(0),
+                              border: InputBorder.none,
+                              fillColor: Colors.white,
+                              filled: true)),
+                    ),
                   ),
                 ),
               ),
@@ -243,27 +246,30 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                       color: Colors.white),
                   child: Semantics(
                     label: 'Height measures in inces',
-                    child: TextFormField(
-                        controller: _heightInInchesController,
-                        focusNode: _heightInInchesFocus,
-                        maxLines: 1,
-                        textInputAction: TextInputAction.done,
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        onFieldSubmitted: (term) {},
-                        inputFormatters: [
-                          FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\+|\\-|\\ ]')),
-                        ],
-                        decoration: InputDecoration(
-                            hintText: 'Inches',
-                            hintStyle: TextStyle(
-                              fontSize: 14,
-                            ),
-                            contentPadding: EdgeInsets.all(0),
-                            border: InputBorder.none,
-                            fillColor: Colors.white,
-                            filled: true)),
+                    child: ExcludeSemantics(
+                      child: TextFormField(
+                          controller: _heightInInchesController,
+                          focusNode: _heightInInchesFocus,
+                          maxLines: 1,
+                          maxLength: 2,
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.number,
+                          onFieldSubmitted: (term) {},
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(
+                                RegExp('[\\,|\\.|\\+|\\-|\\ ]')),
+                          ],
+                          decoration: InputDecoration(
+                              hintText: 'Inches',
+                              counterText: "",
+                              hintStyle: TextStyle(
+                                fontSize: 14,
+                              ),
+                              contentPadding: EdgeInsets.all(0),
+                              border: InputBorder.none,
+                              fillColor: Colors.white,
+                              filled: true)),
+                    ),
                   ),
                 ),
               ),

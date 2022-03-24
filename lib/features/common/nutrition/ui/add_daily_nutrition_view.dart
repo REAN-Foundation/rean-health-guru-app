@@ -360,7 +360,9 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
             else {
               widget._submitButtonListner(
                   _nutritionNameController.text.toString().trim(),
-                  double.parse(_consumedCaloriesController.text),
+                  _consumedCaloriesController.text == ''
+                      ? 0.0
+                      : double.parse(_consumedCaloriesController.text),
                   widget._nutritionName);
             }
           },

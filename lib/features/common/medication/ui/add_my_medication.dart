@@ -1295,6 +1295,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       final BaseResponse baseResponse = await model.addMedicationforVisit(map);
 
       if (baseResponse.status == 'success') {
+        showToast('Medication was added successfully.', context);
         //widget._submitButtonListner();
         //Navigator.of(context).pop();
         Navigator.pushAndRemoveUntil(context,

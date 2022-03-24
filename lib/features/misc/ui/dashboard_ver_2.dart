@@ -815,18 +815,22 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
             Container(
               color: primaryLightColor,
               padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Semantics(
-                    label: 'Yes I have taken my medications',
-                    button: true,
-                    child: InkWell(
-                      onTap: () {
-                        if (currentMedicationList.isEmpty) {
-                          showToast(
-                              'Your medication list is empty. Please add your medications.',
+              child: model.busy
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Semantics(
+                          label: 'Yes I have taken my medications',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              if (currentMedicationList.isEmpty) {
+                                showToast(
+                                    'Your medication list is empty. Please add your medications.',
                               context);
                         } else {
                           markAllMedicationAsTaken();

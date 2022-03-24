@@ -659,7 +659,11 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       width: 4,
                     ),
                     Text(
-                      bmiValue == 0.0 ? '' : 'Kg / m sq',
+                      bmiValue == 0.0
+                          ? ''
+                          : getCurrentLocale() == 'US'
+                              ? 'lbs / m sq'
+                              : 'Kg / m sq',
                       style: TextStyle(fontSize: 14.0, color: Colors.black87),
                     ),
                   ],

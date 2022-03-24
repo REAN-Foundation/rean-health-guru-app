@@ -97,7 +97,7 @@ class _BiometricBloodOxygenVitalsViewState
                             RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
                       ],
                       decoration: InputDecoration(
-                          hintText: '(92 to 100)',
+                          //hintText: '(92 to 100)',
                           contentPadding: EdgeInsets.all(0),
                           border: InputBorder.none,
                           fillColor: Colors.white,

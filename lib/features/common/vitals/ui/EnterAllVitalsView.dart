@@ -253,9 +253,9 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
-                              hintText: unit == 'lbs'
+                              /*hintText: unit == 'lbs'
                                   ? '(100 to 200)'
-                                  : '(50 to 100)',
+                                  : '(50 to 100)',*/
                               hintStyle: TextStyle(
                                 fontSize: 12,
                               ),
@@ -368,7 +368,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                   context, _systolicFocus, _diastolicFocus);
                             },
                             decoration: InputDecoration(
-                                hintText: '(80 to 120)',
+                              //hintText: '(80 to 120)',
                                 hintStyle: TextStyle(
                                   fontSize: 12,
                                 ),
@@ -407,7 +407,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                   context, _diastolicFocus, _bloodGlucoseFocus);
                             },
                             decoration: InputDecoration(
-                                hintText: '(60 to 80)',
+                              //hintText: '(60 to 80)',
                                 hintStyle: TextStyle(
                                   fontSize: 12,
                                 ),
@@ -598,7 +598,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
-                              hintText: '(100 to 125)',
+                            //hintText: '(100 to 125)',
                               hintStyle: TextStyle(
                                 fontSize: 12,
                               ),
@@ -689,7 +689,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
-                              hintText: '(92 to 100)',
+                            //hintText: '(92 to 100)',
                               hintStyle: TextStyle(
                                 fontSize: 12,
                               ),
@@ -780,7 +780,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
-                              hintText: '(65 to 95)',
+                            //hintText: '(65 to 95)',
                               hintStyle: TextStyle(fontSize: 12),
                               contentPadding: EdgeInsets.all(0),
                               border: InputBorder.none,
@@ -865,7 +865,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
-                              hintText: '(95 to 100)',
+                            //hintText: '(95 to 100)',
                               hintStyle: TextStyle(
                                 fontSize: 12,
                               ),

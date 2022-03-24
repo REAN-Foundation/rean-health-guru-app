@@ -160,7 +160,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                           FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                         ],
                         decoration: InputDecoration(
-                            hintText: '(65 to 95)',
+                            //hintText: '(65 to 95)',
                             contentPadding: EdgeInsets.all(0),
                             border: InputBorder.none,
                             fillColor: Colors.white,

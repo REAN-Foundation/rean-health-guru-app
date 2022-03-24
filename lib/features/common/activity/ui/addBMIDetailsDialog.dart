@@ -38,9 +38,11 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
   String unit = 'Kg';
 
   final _weightController = TextEditingController();
-  final _heightController = TextEditingController();
+  final _heightInFeetController = TextEditingController();
+  final _heightInInchesController = TextEditingController();
   final _weightFocus = FocusNode();
-  final _heightFocus = FocusNode();
+  final _heightInFeetFocus = FocusNode();
+  final _heightInInchesFocus = FocusNode();
 
   @override
   void initState() {
@@ -49,13 +51,17 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
     }
 
     if (widget._height != 0.0) {
-      if (getCurrentLocale() == 'US') {
-        widget._height = Conversion.cmToFeet(widget._height);
-      }
+      widget._height = Conversion.cmToFeet(widget._height);
 
-      _heightController.text = widget._height.toString();
-      _heightController.selection = TextSelection.fromPosition(
-        TextPosition(offset: _heightController.text.length),
+      var height = widget._height.toString().split('.');
+
+      _heightInFeetController.text = height[0].toString();
+      _heightInFeetController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _heightInFeetController.text.length),
+      );
+      _heightInInchesController.text = height[1].toString();
+      _heightInInchesController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _heightInInchesController.text.length),
       );
     }
 
@@ -136,15 +142,13 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                             TextInputType.numberWithOptions(decimal: true),
                         onFieldSubmitted: (term) {
                           _fieldFocusChange(
-                              context, _weightFocus, _heightFocus);
+                              context, _weightFocus, _heightInFeetFocus);
                         },
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(
                               RegExp('[\\,|\\+|\\-|\\ ]')),
                         ],
                         decoration: InputDecoration(
-                            hintText:
-                                unit == 'lbs' ? '(100 to 200)' : '(50 to 100)',
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),
@@ -198,10 +202,50 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Height measures in ',
+                    label: 'Height measures in feet',
                     child: TextFormField(
-                        controller: _heightController,
-                        focusNode: _heightFocus,
+                        controller: _heightInFeetController,
+                        focusNode: _heightInFeetFocus,
+                        maxLines: 1,
+                        textInputAction: TextInputAction.next,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        onFieldSubmitted: (term) {
+                          _fieldFocusChange(context, _heightInFeetFocus,
+                              _heightInInchesFocus);
+                        },
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(
+                              RegExp('[\\,|\\+|\\-|\\ ]')),
+                        ],
+                        decoration: InputDecoration(
+                            hintText: 'Feet',
+                            hintStyle: TextStyle(
+                              fontSize: 14,
+                            ),
+                            contentPadding: EdgeInsets.all(0),
+                            border: InputBorder.none,
+                            fillColor: Colors.white,
+                            filled: true)),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 4,
+              ),
+              Expanded(
+                flex: 8,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(color: textGrey, width: 1),
+                      color: Colors.white),
+                  child: Semantics(
+                    label: 'Height measures in inces',
+                    child: TextFormField(
+                        controller: _heightInInchesController,
+                        focusNode: _heightInInchesFocus,
                         maxLines: 1,
                         textInputAction: TextInputAction.done,
                         keyboardType:
@@ -212,8 +256,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                               RegExp('[\\,|\\+|\\-|\\ ]')),
                         ],
                         decoration: InputDecoration(
-                            hintText:
-                                getCurrentLocale() == 'US' ? '(Foot)' : '(Cm)',
+                            hintText: 'Inches',
                             hintStyle: TextStyle(
                               fontSize: 14,
                             ),
@@ -250,18 +293,22 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
             showToastMsg("Please enter your weight", context);
           } else if (double.parse(_weightController.text) > 999) {
             showToastMsg("Please enter valid weight", context);
-          } else if (_heightController.text.trim().isEmpty) {
-            showToastMsg("Please enter your height", context);
-          } else if (double.parse(_heightController.text) > 300) {
-            showToastMsg("Please enter valid height", context);
+          } else if (_heightInFeetController.text.trim().isEmpty) {
+            showToastMsg("Please enter your height in feet", context);
+          } else if (double.parse(_heightInFeetController.text) > 15) {
+            showToastMsg("Please enter valid height in feet", context);
+          } else if (_heightInInchesController.text.trim().isEmpty) {
+            showToastMsg("Please enter your inches", context);
+          } else if (double.parse(_heightInInchesController.text) > 12) {
+            showToastMsg("Please enter valid inches", context);
           } else {
             widget._submitButtonListner(
                 unit == 'lbs'
                     ? double.parse(_weightController.text) / 2.20462
                     : double.parse(_weightController.text),
-                getCurrentLocale() == 'US'
-                    ? Conversion.FeetToCm(double.parse(_heightController.text))
-                    : double.parse(_heightController.text));
+                Conversion.FeetToCm(double.parse(_heightInFeetController.text +
+                    '.' +
+                    _heightInInchesController.text)));
           }
         },
         style: ButtonStyle(

@@ -170,8 +170,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                               RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                         ],
                         decoration: InputDecoration(
-                            hintText:
-                                unit == 'lbs' ? '(100 to 200)' : '(50 to 100)',
+                            //hintText: unit == 'lbs' ? '(100 to 200)' : '(50 to 100)',
                             contentPadding: EdgeInsets.all(0),
                             border: InputBorder.none,
                             fillColor: Colors.white,

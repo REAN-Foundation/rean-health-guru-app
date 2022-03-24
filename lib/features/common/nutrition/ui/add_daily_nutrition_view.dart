@@ -349,13 +349,15 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
           onPressed: () {
             if (_nutritionNameController.text.trim().isEmpty) {
               showToastMsg("Please add your food", context);
-            } else if (_consumedCaloriesController.text.isEmpty) {
+            }
+            /*else if (_consumedCaloriesController.text.isEmpty) {
               showToastMsg("Please enter calories", context);
             } else if (double.parse(
                     _consumedCaloriesController.text.toString()) >
                 999) {
               showToastMsg("Please enter valid calories", context);
-            } else {
+            } */
+            else {
               widget._submitButtonListner(
                   _nutritionNameController.text.toString().trim(),
                   double.parse(_consumedCaloriesController.text),

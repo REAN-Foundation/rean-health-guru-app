@@ -45,7 +45,7 @@ class HomeView extends StatefulWidget {
   _HomeViewState createState() => _HomeViewState(screenPosition);
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   /*Location location = new Location();
   bool _serviceEnabled;
   PermissionStatus _permissionGranted;
@@ -323,8 +323,23 @@ class _HomeViewState extends State<HomeView> {
     getCarePlanSubscribe();
     initTargets();
     WidgetsBinding.instance.addPostFrameCallback(_layout);
-
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    debugPrint('HomeScreen ==> Launch screen 111');
+    if (state == AppLifecycleState.resumed) {
+      //do your stuff
+      debugPrint('HomeScreen ==> Launch screen');
+    }
   }
 
   showDailyCheckIn() {

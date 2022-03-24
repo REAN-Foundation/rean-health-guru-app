@@ -99,7 +99,7 @@ class _BiometricBodyTemperatureVitalsViewState
                             RegExp('[\\,|\\+|\\-|\\a-zA-Z]')),
                       ],
                       decoration: InputDecoration(
-                          hintText: '(95 to 100)',
+                          //hintText: '(95 to 100)',
                           contentPadding: EdgeInsets.all(0),
                           border: InputBorder.none,
                           fillColor: Colors.white,

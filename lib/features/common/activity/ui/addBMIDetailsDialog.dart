@@ -174,16 +174,16 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
                     fontSize: 16),
                 textAlign: TextAlign.center,
               ),
-              RichText(
+              /*RichText(
                 text: TextSpan(
-                  text: getCurrentLocale() == 'US' ? ' (Foot) ' : ' (Cm) ',
+                  //text: getCurrentLocale() == 'US' ? ' (Foot) ' : ' (Cm) ',
                   style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w600,
                       color: textBlack,
                       fontSize: 14),
                 ),
-              ),
+              ),*/
             ],
           ),
           const SizedBox(

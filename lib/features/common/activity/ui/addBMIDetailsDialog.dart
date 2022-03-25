@@ -304,9 +304,9 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
           } else if (double.parse(_heightInFeetController.text) > 15) {
             showToastMsg("Please enter valid height in feet", context);
           } else if (_heightInInchesController.text.trim().isEmpty) {
-            showToastMsg("Please enter your inches", context);
+            showToastMsg("Please enter your height in inches", context);
           } else if (double.parse(_heightInInchesController.text) > 12) {
-            showToastMsg("Please enter valid inches", context);
+            showToastMsg("Please enter valid height in inches", context);
           } else {
             widget._submitButtonListner(
                 unit == 'lbs'

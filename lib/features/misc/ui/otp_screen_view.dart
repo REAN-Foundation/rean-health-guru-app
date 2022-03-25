@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:package_info/package_info.dart';
 import 'package:paitent/features/misc/models/BaseResponse.dart';
 import 'package:paitent/features/misc/models/PatientApiDetails.dart';
 import 'package:paitent/features/misc/models/user_data.dart';
@@ -35,17 +37,49 @@ class _OTPScreenViewState extends State<OTPScreenView> {
   String otp = '';
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-
-  //String _fcmToken = '';
+  AndroidDeviceInfo androidInfo;
+  IosDeviceInfo iosInfo;
+  String _fcmToken = '';
   bool loginOTP = false;
   ApiProvider apiProvider = GetIt.instance<ApiProvider>();
 
   @override
   void initState() {
+    _initPackageInfo();
+    getDeviceData();
     mobileNumber = widget.mobileNumber;
     debugPrint('Mobile ==> ${widget.mobileNumber}');
     firebase();
     super.initState();
+  }
+
+  PackageInfo _packageInfo = PackageInfo(
+    appName: '',
+    packageName: '',
+    version: '',
+    buildNumber: '',
+  );
+
+  Future<void> _initPackageInfo() async {
+    final PackageInfo info = await PackageInfo.fromPlatform();
+    if (mounted) {
+      setState(() {
+        _packageInfo = info;
+      });
+    }
+  }
+
+  getDeviceData() async {
+    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      androidInfo = await deviceInfo.androidInfo;
+      print('Running on ${androidInfo.model}'); // e.g. "Moto G (4)"
+    }
+
+    if (Platform.isIOS) {
+      iosInfo = await deviceInfo.iosInfo;
+      print('Running on ${iosInfo.utsname.machine}'); // e.g. "iPod7,1"
+    }
   }
 
   @override
@@ -53,10 +87,10 @@ class _OTPScreenViewState extends State<OTPScreenView> {
     checkItenetConnection();
     final height = MediaQuery.of(context).size.height;
     return BaseWidget<LoginViewModel>(
-      model: LoginViewModel(authenticationService: Provider.of(context)),
-      builder: (context, model, child) => Container(
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
+        model: LoginViewModel(authenticationService: Provider.of(context)),
+        builder: (context, model, child) => Container(
+                child: Scaffold(
+              resizeToAvoidBottomInset: false,
               backgroundColor: primaryColor,
               body: Container(
                 height: height,
@@ -349,6 +383,45 @@ class _OTPScreenViewState extends State<OTPScreenView> {
     }
   }
 
+  userDiviceData(LoginViewModel model, String auth, String userId) async {
+    try {
+      //ApiProvider apiProvider = new ApiProvider();
+
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth;
+
+      final body = <String, dynamic>{};
+      body['Token'] = _fcmToken;
+      body['UserId'] = userId;
+      if (Platform.isAndroid) {
+        body['DeviceName'] = androidInfo.model;
+        body['OSVersion'] = androidInfo.version;
+      }
+      if (Platform.isIOS) {
+        body['DeviceName'] = iosInfo.utsname.machine;
+        body['OSVersion'] = iosInfo.utsname.version;
+      }
+      body['AppName'] = getAppType() == "AHA" ? "HF Helper" : "REAN HealthGuru";
+      body['AppVersion'] = _packageInfo.version;
+
+      final response = await apiProvider.post('/user-device-details',
+          header: map, body: body);
+
+      final BaseResponse baseResponse = BaseResponse.fromJson(response);
+
+      if (baseResponse.status == 'success') {
+      } else {
+        //showToast(baseResponse.message, context);
+      }
+    } on FetchDataException catch (e) {
+      showToast('Opps! Something went wrong, Please try again', context);
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint(e.toString());
+    }
+  }
+
   loginWithOTP(LoginViewModel model) async {
     try {
       final map = <String, String>{};
@@ -455,7 +528,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       assert(token != null);
       debugPrint('Push Messaging token: $token');
       debugPrint(token);
-      //_fcmToken = token;
+      _fcmToken = token;
       _sharedPrefUtils.save('fcmToken', token);
     });
 

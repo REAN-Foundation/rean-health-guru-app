@@ -286,7 +286,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
 
   calculetBMI() {
     final double heightInMeters = height / 100;
-    double heightInMetersSquare = heightInMeters * heightInMeters;
+    final double heightInMetersSquare = heightInMeters * heightInMeters;
 
     bmiValue = weight.roundToDouble() / heightInMetersSquare;
 

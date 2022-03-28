@@ -288,7 +288,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
     final double heightInMeters = height / 100;
     final double heightInMetersSquare = heightInMeters * heightInMeters;
 
-    bmiValue = weight / heightInMetersSquare;
+    bmiValue = weight.roundToDouble() / heightInMetersSquare;
 
     if (bmiValue == 0.0) {
       bmiResult = '';
@@ -659,7 +659,12 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                       width: 4,
                     ),
                     Text(
-                      bmiValue == 0.0 ? '' : 'Kg / m sq',
+                      bmiValue == 0.0
+                          ? ''
+                          : /*getCurrentLocale() == 'US'
+                              ? 'lbs / m sq'
+                              : */
+                          'kg/m sq',
                       style: TextStyle(fontSize: 14.0, color: Colors.black87),
                     ),
                   ],
@@ -977,7 +982,8 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                     this.height = height;
                     this.weight = weight;
                     calculetBMI();
-                    debugPrint('Height : $height  Weight: $weight');
+                    debugPrint(
+                        'Height : $height  Weight: ${weight.roundToDouble()}');
                     Navigator.of(context, rootNavigator: true).pop();
                   },
                   height: height,

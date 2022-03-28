@@ -12,6 +12,6 @@ class Conversion {
   }
 
   static double FeetToCm(double lenghtInFeet) {
-    return double.parse((lenghtInFeet * 30.48).toStringAsFixed(0));
+    return double.parse((lenghtInFeet * 30.48).toStringAsFixed(3));
   }
 }

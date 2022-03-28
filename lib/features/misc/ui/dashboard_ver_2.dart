@@ -31,7 +31,8 @@ class DashBoardVer2View extends StatefulWidget {
   _DashBoardVer2ViewState createState() => _DashBoardVer2ViewState();
 }
 
-class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
+class _DashBoardVer2ViewState extends State<DashBoardVer2View>
+    with WidgetsBindingObserver {
   var model = DashboardSummaryModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
@@ -94,7 +95,23 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      //do your stuff
+      getMyMedications();
+      debugPrint('Dashboard ==> Homesceen');
+    }
   }
 
   getTaskPlanSummary() async {
@@ -798,18 +815,22 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View> {
             Container(
               color: primaryLightColor,
               padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Semantics(
-                    label: 'Yes I have taken my medications',
-                    button: true,
-                    child: InkWell(
-                      onTap: () {
-                        if (currentMedicationList.isEmpty) {
-                          showToast(
-                              'Your medication list is empty. Please add your medications.',
+              child: model.busy
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Semantics(
+                          label: 'Yes I have taken my medications',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              if (currentMedicationList.isEmpty) {
+                                showToast(
+                                    'Your medication list is empty. Please add your medications.',
                               context);
                         } else {
                           markAllMedicationAsTaken();

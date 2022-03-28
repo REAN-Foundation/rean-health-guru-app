@@ -39,6 +39,8 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
   int allNutritionCount = 0;
   var nutritionList = <Map<String, dynamic>>[];
   int selectedIndex = 30000;
+  var hintFoodName = '1 bowl of rice';
+  var hintFoodCalories = '44 calories';
 
   getNutririonEntry() async {
     nutritionList = await dbHelper
@@ -53,6 +55,20 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
 
   @override
   void initState() {
+    if (widget._nutritionName == 'breakfast') {
+      hintFoodName = '1 boiled egg';
+      hintFoodCalories = '78 calories';
+    } else if (widget._nutritionName == 'lunch') {
+      hintFoodName = '1 bowl of rice';
+      hintFoodCalories = '130 calories';
+    } else if (widget._nutritionName == 'dinner') {
+      hintFoodName = 'broccoli';
+      hintFoodCalories = '45 calories';
+    } else if (widget._nutritionName == 'snack') {
+      hintFoodName = '1 bowl of vegetable salad';
+      hintFoodCalories = '85 calories';
+    }
+
     if (getAppType() == 'AHA') {
       buttonColor = redLightAha;
     }
@@ -198,7 +214,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                   decoration: InputDecoration(
                       hintStyle:
                           TextStyle(fontSize: 14, color: Colors.grey[400]),
-                      hintText: 'i.e. 1 bowl of rice',
+                      hintText: hintFoodName,
                       contentPadding: EdgeInsets.all(0),
                       border: InputBorder.none,
                       fillColor: Colors.white,
@@ -262,7 +278,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                         decoration: InputDecoration(
                             hintStyle: TextStyle(
                                 fontSize: 14, color: Colors.grey[400]),
-                            hintText: 'i.e. 44 calories',
+                            hintText: hintFoodCalories,
                             contentPadding: EdgeInsets.all(0),
                             border: InputBorder.none,
                             fillColor: Colors.white,
@@ -349,16 +365,20 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
           onPressed: () {
             if (_nutritionNameController.text.trim().isEmpty) {
               showToastMsg("Please add your food", context);
-            } else if (_consumedCaloriesController.text.isEmpty) {
+            }
+            /*else if (_consumedCaloriesController.text.isEmpty) {
               showToastMsg("Please enter calories", context);
             } else if (double.parse(
                     _consumedCaloriesController.text.toString()) >
                 999) {
               showToastMsg("Please enter valid calories", context);
-            } else {
+            } */
+            else {
               widget._submitButtonListner(
                   _nutritionNameController.text.toString().trim(),
-                  double.parse(_consumedCaloriesController.text),
+                  _consumedCaloriesController.text == ''
+                      ? 0.0
+                      : double.parse(_consumedCaloriesController.text),
                   widget._nutritionName);
             }
           },

@@ -11,6 +11,7 @@ import 'package:paitent/features/misc/models/MedicationDosageUnitsPojo.dart';
 import 'package:paitent/features/misc/models/MedicationDurationUnitsPojo.dart';
 import 'package:paitent/features/misc/models/MedicationFrequenciesPojo.dart';
 import 'package:paitent/features/misc/ui/base_widget.dart';
+import 'package:paitent/features/misc/ui/home_view.dart';
 import 'package:paitent/infra/networking/CustomException.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
@@ -1294,8 +1295,13 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       final BaseResponse baseResponse = await model.addMedicationforVisit(map);
 
       if (baseResponse.status == 'success') {
+        showToast('Medication was added successfully.', context);
         //widget._submitButtonListner();
-        Navigator.of(context).pop();
+        //Navigator.of(context).pop();
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (context) {
+          return HomeView(0);
+        }), (Route<dynamic> route) => false);
         //_getPatientAllergies("4c47a191-9cb6-4377-b828-83eb9ab48d0a");
       } else {
         showToast('Please try again', context);

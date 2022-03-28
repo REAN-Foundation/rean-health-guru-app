@@ -197,7 +197,7 @@ class _BiometricBloodPresureVitalsViewState
                                 context, _systolicFocus, _diastolicFocus);
                           },
                           decoration: InputDecoration(
-                              hintText: '(80 to 120)',
+                              //hintText: '(80 to 120)',
                               contentPadding: EdgeInsets.all(0),
                               border: InputBorder.none,
                               fillColor: Colors.white,
@@ -258,7 +258,7 @@ class _BiometricBloodPresureVitalsViewState
                               _weightFocus);*/
                           },
                           decoration: InputDecoration(
-                              hintText: '(60 to 80)',
+                            //hintText: '(60 to 80)',
                               contentPadding: EdgeInsets.all(0),
                               border: InputBorder.none,
                               fillColor: Colors.white,

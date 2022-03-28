@@ -161,7 +161,7 @@ class _BiometricBloodSugarVitalsViewState
                           FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                         ],
                         decoration: InputDecoration(
-                            hintText: '(100 to 125)',
+                            //hintText: '(100 to 125)',
                             contentPadding: EdgeInsets.all(0),
                             border: InputBorder.none,
                             fillColor: Colors.white,

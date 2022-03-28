@@ -183,8 +183,8 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Today\'s total consumed calories',
-                        semanticsLabel: 'Today\'s total consumed calories',
+                        'Total calories consumed today',
+                        semanticsLabel: 'Total calories consumed today',
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,

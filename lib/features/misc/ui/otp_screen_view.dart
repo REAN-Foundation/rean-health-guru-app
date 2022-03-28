@@ -78,6 +78,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
 
     if (Platform.isIOS) {
       iosInfo = await deviceInfo.iosInfo;
+
       print('Running on ${iosInfo.utsname.machine}'); // e.g. "iPod7,1"
     }
   }
@@ -395,12 +396,14 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       body['Token'] = _fcmToken;
       body['UserId'] = userId;
       if (Platform.isAndroid) {
-        body['DeviceName'] = androidInfo.model;
-        body['OSVersion'] = androidInfo.version;
+        body['DeviceName'] = androidInfo.brand + ' ' + androidInfo.model;
+        body['OSType'] = 'Android';
+        body['OSVersion'] = androidInfo.version.release;
       }
       if (Platform.isIOS) {
-        body['DeviceName'] = iosInfo.utsname.machine;
-        body['OSVersion'] = iosInfo.utsname.version;
+        body['DeviceName'] = iosInfo.model;
+        body['OSType'] = 'iOS';
+        body['OSVersion'] = Platform.operatingSystemVersion;
       }
       body['AppName'] = getAppType() == "AHA" ? "HF Helper" : "REAN HealthGuru";
       body['AppVersion'] = _packageInfo.version;
@@ -451,6 +454,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
               }), (Route<dynamic> route) => false);*/
 
           getPatientDetails(
+              model, userData.data.accessToken, userData.data.user.id);
+          userDiviceData(
               model, userData.data.accessToken, userData.data.user.id);
         } else {
           Navigator.pushAndRemoveUntil(context,

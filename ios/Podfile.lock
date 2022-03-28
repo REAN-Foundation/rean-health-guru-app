@@ -103,7 +103,7 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.6.0):
     - GoogleUtilities/Logger
-  - health (1.0.1):
+  - health (1.0.4):
     - Flutter
   - image_picker (0.0.1):
     - Flutter
@@ -242,7 +242,7 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 837649ad3987936c232f6717c5680216f6243d24
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleUtilities: 684ee790a24f73ebb2d1d966e9711c203f2a4237
-  health: 44840ad4328aa5586e77bef289898bfed644a81c
+  health: e7a5807e45ec58fe6b89a730c97abc6caafe94a0
   image_picker: e06f7a68f000bd36f552c1847e33cda96ed31f1f
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c

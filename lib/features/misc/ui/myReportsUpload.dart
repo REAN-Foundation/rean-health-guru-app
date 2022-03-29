@@ -785,12 +785,16 @@ class _MyReportsViewState extends State<MyReportsView> {
                 debugPrint('New FileName ==> $newFileName');
                 debugPrint('fileExtention ==> $fileExtention');
                 debugPrint('enteredFileName ==> $enteredFileName');
+                debugPrint('New FileName Length ==> ${newFileName.length}');
 
                 if (document.fileName == renameControler.text) {
                   showToastMsg('Document renamed successfully ', context);
                   Navigator.of(context, rootNavigator: true).pop();
                 } else if (newFileName == '') {
                   showToastMsg('Please enter valid file name', context);
+                } else if (newFileName.length > 64) {
+                  showToastMsg(
+                      'Record name cannot be more than 64 charecter', context);
                 } else {
                   renameDocument(document.id, renameControler.text);
                   Navigator.of(context, rootNavigator: true).pop();

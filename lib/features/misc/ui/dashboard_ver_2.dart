@@ -1750,7 +1750,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       ),
                     ),
                     Semantics(
-                      label: 'Add Snacks',
+                      label: 'Add Snack',
                       button: true,
                       child: InkWell(
                         onTap: () {

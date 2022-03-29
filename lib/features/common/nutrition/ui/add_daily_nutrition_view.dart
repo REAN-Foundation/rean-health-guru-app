@@ -419,7 +419,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Daily ' + widget._nutritionName + ' foods',
+            'Daily ' + widget._nutritionName + ' food',
             style: TextStyle(
                 color: textBlack, fontWeight: FontWeight.w600, fontSize: 14),
             textAlign: TextAlign.center,

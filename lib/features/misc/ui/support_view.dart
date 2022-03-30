@@ -23,7 +23,7 @@ class _SupportViewState extends State<SupportView> {
   String msgAHA = 'Please call us or email us for technical help.';
   String subtitle =
       'For medical help, please contact your health care professional.';
-  String phone = '+2025397323';
+  String phone = '+12025397323';
   String email = 'support@reanfoundation.org';
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   String name = ' ';

@@ -658,7 +658,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                     SizedBox(
                       width: 4,
                     ),
-                    Text(
+                    /*Text(
                       bmiValue == 0.0
                           ? ''
                           : /*getCurrentLocale() == 'US'
@@ -666,7 +666,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                               : */
                           'kg/m sq',
                       style: TextStyle(fontSize: 14.0, color: Colors.black87),
-                    ),
+                    ),*/
                   ],
                 ),
                 Text(

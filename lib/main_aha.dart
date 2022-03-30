@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/networking/ChatApiProvider.dart';
+import 'package:paitent/infra/networking/ChatApiProvider.dart';
+import 'package:paitent/infra/router.dart';
+import 'package:paitent/infra/themes/app_colors.dart';
+import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/provider_setup.dart';
-import 'package:paitent/ui/router.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/utils/CommonUtils.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'core/constants/app_contstants.dart';
-import 'networking/ApiProvider.dart';
+import 'core/constants/route_paths.dart';
+import 'infra/networking/ApiProvider.dart';
 
 Future<void> main() async {
   //enableFlutterDriverExtension();
@@ -22,7 +22,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool login = prefs.getBool('login1.5');
+  bool login = prefs.getBool('login1.8');
   login ??= false;
   primaryColor = Color(0XFFc10e21);
   primaryLightColor = Color(0XFFFFFFFF);

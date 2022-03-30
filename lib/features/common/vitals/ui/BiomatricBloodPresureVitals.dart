@@ -281,10 +281,10 @@ class _BiometricBloodPresureVitalsViewState
                   child: InkWell(
                     onTap: () {
                       if (_systolicController.text.toString().isEmpty) {
-                        showToast('Please enter your systolic blood presure',
+                        showToast('Please enter your systolic blood pressure',
                             context);
                       } else if (_diastolicController.text.toString().isEmpty) {
-                        showToast('Please enter your diastolic blood presure',
+                        showToast('Please enter your diastolic blood pressure',
                             context);
                       } else {
                         addvitals();

@@ -8,7 +8,7 @@ import 'package:paitent/features/misc/models/BaseResponse.dart';
 import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class AddGlucoseLevelGoalsForCarePlanView extends StatefulWidget {
   @override
@@ -29,11 +29,11 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
   String dob = '';
   String unformatedDOB = '';
   var dateFormat = DateFormat('dd MMM, yyyy');
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
+    progressDialog = ProgressDialog(context: context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -349,7 +349,8 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
 
   setGoals() async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['TargetDate'] = dob;
       map['BloodSugar_Target'] = _fastingController.text;
@@ -360,29 +361,29 @@ class _AddGlucoseLevelGoalsForCarePlanViewState
 
       final body = <String, dynamic>{};
       body['Goal'] = map;
-      body['GoalSettingTaskId'] = getTask().details.id;
+      body['GoalSettingTaskId'] = getTask()!.details!.id;
 
       final BaseResponse baseResponse = await model.addGoalsTask(
-          startCarePlanResponseGlob.data.carePlan.id.toString(),
+          startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
           'blood-sugar-goal',
           body);
 
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         goalPlanScreenStack.removeAt(0);
         navigateToScreen();
       } else {
-        progressDialog.hide();
-        if (baseResponse.error
+        progressDialog.close();
+        if (baseResponse.error!
             .contains('goal already exists for this care plan')) {
           goalPlanScreenStack.removeAt(0);
           navigateToScreen();
         } else {
-          showToast(baseResponse.message, context);
+          showToast(baseResponse.message!, context);
         }
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());

@@ -22,7 +22,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
   String textMsg3 =
       'The American Heart Association’s National Heart Failure Initiative, IMPLEMENT-HFTM, is made possible with funding by founding sponsor, Novartis and national sponsor, Boehringer Ingelheim and Eli Lilly and Company.';
   String profileImage = '';
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   @override
   void initState() {

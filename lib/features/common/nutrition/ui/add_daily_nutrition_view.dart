@@ -9,14 +9,14 @@ import 'package:paitent/infra/utils/CommonUtils.dart';
 
 //ignore: must_be_immutable
 class AddDailyNutritionView extends StatefulWidget {
-  String mode;
-  Function _submitButtonListner;
-  String _nutritionName;
+  String? mode;
+  late Function _submitButtonListner;
+  String? _nutritionName;
 
   AddDailyNutritionView({
-    Key key,
-    @required Function submitButtonListner,
-    String nutritionName,
+    Key? key,
+    required Function submitButtonListner,
+    String? nutritionName,
   }) : super(key: key) {
     _submitButtonListner = submitButtonListner;
     _nutritionName = nutritionName;
@@ -89,8 +89,8 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
               backgroundColor: primaryColor,
               brightness: Brightness.dark,
               title: Text(
-                widget._nutritionName.substring(0, 1).toUpperCase() +
-                    widget._nutritionName.substring(1),
+                widget._nutritionName!.substring(0, 1).toUpperCase() +
+                    widget._nutritionName!.substring(1),
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,
@@ -419,7 +419,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Daily ' + widget._nutritionName + ' food',
+            'Daily ' + widget._nutritionName! + ' food',
             style: TextStyle(
                 color: textBlack, fontWeight: FontWeight.w600, fontSize: 14),
             textAlign: TextAlign.center,

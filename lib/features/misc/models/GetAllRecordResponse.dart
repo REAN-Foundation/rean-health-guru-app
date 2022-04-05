@@ -1,8 +1,8 @@
 class GetAllRecordResponse {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
 
   GetAllRecordResponse({this.status, this.message, this.httpCode, this.data});
 
@@ -19,14 +19,14 @@ class GetAllRecordResponse {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  PatientDocuments patientDocuments;
+  PatientDocuments? patientDocuments;
 
   Data({this.patientDocuments});
 
@@ -39,20 +39,20 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (patientDocuments != null) {
-      data['PatientDocuments'] = patientDocuments.toJson();
+      data['PatientDocuments'] = patientDocuments!.toJson();
     }
     return data;
   }
 }
 
 class PatientDocuments {
-  int totalCount;
-  int retrievedCount;
-  int pageIndex;
-  int itemsPerPage;
-  String order;
-  String orderedBy;
-  List<Items> items;
+  int? totalCount;
+  int? retrievedCount;
+  int? pageIndex;
+  int? itemsPerPage;
+  String? order;
+  String? orderedBy;
+  List<Items>? items;
 
   PatientDocuments(
       {this.totalCount,
@@ -73,7 +73,7 @@ class PatientDocuments {
     if (json['Items'] != null) {
       items = <Items>[];
       json['Items'].forEach((v) {
-        items.add(Items.fromJson(v));
+        items!.add(Items.fromJson(v));
       });
     }
   }
@@ -87,32 +87,32 @@ class PatientDocuments {
     data['Order'] = order;
     data['OrderedBy'] = orderedBy;
     if (items != null) {
-      data['Items'] = items.map((v) => v.toJson()).toList();
+      data['Items'] = items!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Items {
-  String id;
-  String ehrId;
-  String displayId;
-  String documentType;
-  String patientUserId;
-  String medicalPractitionerUserId;
-  String medicalPractionerRole;
-  String uploadedByUserId;
-  String associatedVisitId;
-  String associatedVisitType;
-  String associatedOrderId;
-  String associatedOrderType;
-  String fileName;
-  String resourceId;
-  String authenticatedUrl;
-  String mimeType;
-  int sizeInKBytes;
-  DateTime recordDate;
-  DateTime uploadedDate;
+  String? id;
+  String? ehrId;
+  String? displayId;
+  String? documentType;
+  String? patientUserId;
+  String? medicalPractitionerUserId;
+  String? medicalPractionerRole;
+  String? uploadedByUserId;
+  String? associatedVisitId;
+  String? associatedVisitType;
+  String? associatedOrderId;
+  String? associatedOrderType;
+  String? fileName;
+  String? resourceId;
+  String? authenticatedUrl;
+  String? mimeType;
+  int? sizeInKBytes;
+  DateTime? recordDate;
+  DateTime? uploadedDate;
 
   Items(
       {this.id,
@@ -176,8 +176,8 @@ class Items {
     data['AuthenticatedUrl'] = authenticatedUrl;
     data['MimeType'] = mimeType;
     data['SizeInKBytes'] = sizeInKBytes;
-    data['RecordDate'] = recordDate.toIso8601String();
-    data['UploadedDate'] = uploadedDate.toIso8601String();
+    data['RecordDate'] = recordDate!.toIso8601String();
+    data['UploadedDate'] = uploadedDate!.toIso8601String();
     return data;
   }
 }

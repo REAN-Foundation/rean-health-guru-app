@@ -1,8 +1,8 @@
 class UserTaskResponse {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
 
   UserTaskResponse({this.status, this.message, this.httpCode, this.data});
 
@@ -19,14 +19,14 @@ class UserTaskResponse {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  UserTasks userTasks;
+  UserTasks? userTasks;
 
   Data({this.userTasks});
 
@@ -39,20 +39,20 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (userTasks != null) {
-      data['UserTasks'] = userTasks.toJson();
+      data['UserTasks'] = userTasks!.toJson();
     }
     return data;
   }
 }
 
 class UserTasks {
-  int totalCount;
-  int retrievedCount;
-  int pageIndex;
-  int itemsPerPage;
-  String order;
-  String orderedBy;
-  List<Items> items;
+  int? totalCount;
+  int? retrievedCount;
+  int? pageIndex;
+  int? itemsPerPage;
+  String? order;
+  String? orderedBy;
+  List<Items>? items;
 
   UserTasks(
       {this.totalCount,
@@ -73,7 +73,7 @@ class UserTasks {
     if (json['Items'] != null) {
       items = <Items>[];
       json['Items'].forEach((v) {
-        items.add(Items.fromJson(v));
+        items!.add(Items.fromJson(v));
       });
     }
   }
@@ -87,34 +87,34 @@ class UserTasks {
     data['Order'] = order;
     data['OrderedBy'] = orderedBy;
     if (items != null) {
-      data['Items'] = items.map((v) => v.toJson()).toList();
+      data['Items'] = items!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Items {
-  String id;
-  String displayId;
-  String userId;
-  String task;
-  String description;
-  String category;
-  String actionType;
-  String actionId;
-  String scheduledStartTime;
-  String scheduledEndTime;
-  String status;
-  bool started;
-  String startedAt;
-  bool finished;
-  String finishedAt;
-  bool cancelled;
-  String cancelledAt;
-  String cancellationReason;
-  bool isRecurrent;
-  String recurrenceScheduleId;
-  Action action;
+  String? id;
+  String? displayId;
+  String? userId;
+  String? task;
+  String? description;
+  String? category;
+  String? actionType;
+  String? actionId;
+  String? scheduledStartTime;
+  String? scheduledEndTime;
+  String? status;
+  bool? started;
+  String? startedAt;
+  bool? finished;
+  String? finishedAt;
+  bool? cancelled;
+  String? cancelledAt;
+  String? cancellationReason;
+  bool? isRecurrent;
+  String? recurrenceScheduleId;
+  Action? action;
 
   Items(
       {this.id,
@@ -186,30 +186,30 @@ class Items {
     data['IsRecurrent'] = isRecurrent;
     data['RecurrenceScheduleId'] = recurrenceScheduleId;
     if (action != null) {
-      data['Action'] = action.toJson();
+      data['Action'] = action!.toJson();
     }
     return data;
   }
 }
 
 class Action {
-  String id;
-  String ehrId;
-  String patientUserId;
-  String medicationId;
-  String drugName;
-  String drugId;
-  int dose;
-  String details;
-  String timeScheduleStart;
-  String timeScheduleEnd;
-  bool isTaken;
-  String takenAt;
-  bool isMissed;
-  bool isCancelled;
-  String cancelledOn;
-  String note;
-  String status;
+  String? id;
+  String? ehrId;
+  String? patientUserId;
+  String? medicationId;
+  String? drugName;
+  String? drugId;
+  int? dose;
+  String? details;
+  String? timeScheduleStart;
+  String? timeScheduleEnd;
+  bool? isTaken;
+  String? takenAt;
+  bool? isMissed;
+  bool? isCancelled;
+  String? cancelledOn;
+  String? note;
+  String? status;
 
   Action(
       {this.id,

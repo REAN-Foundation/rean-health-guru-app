@@ -4,7 +4,7 @@ import 'package:paitent/infra/themes/app_colors.dart';
 
 //ignore: must_be_immutable
 class LabTileView extends StatefulWidget {
-  Labs labdetails;
+  Labs? labdetails;
 
   LabTileView(this.labdetails);
 
@@ -13,7 +13,7 @@ class LabTileView extends StatefulWidget {
 }
 
 class _LabTileViewState extends State<LabTileView> {
-  Labs labdetails;
+  Labs? labdetails;
 
   _LabTileViewState(this.labdetails);
 
@@ -35,10 +35,11 @@ class _LabTileViewState extends State<LabTileView> {
                   backgroundColor: primaryColor,
                   child: CircleAvatar(
                       radius: 48,
-                      backgroundImage: (labdetails.imageURL == '') ||
-                              (labdetails.imageURL == null)
-                          ? AssetImage('res/images/profile_placeholder.png')
-                          : NetworkImage(labdetails.imageURL)),
+                      backgroundImage: ((labdetails!.imageURL == '') ||
+                                  (labdetails!.imageURL == null)
+                              ? AssetImage('res/images/profile_placeholder.png')
+                              : NetworkImage(labdetails!.imageURL!))
+                          as ImageProvider<Object>?),
                 ),
               ),
             ),
@@ -52,10 +53,10 @@ class _LabTileViewState extends State<LabTileView> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(labdetails.firstName + ' ' + labdetails.lastName,
+                Text(labdetails!.firstName! + ' ' + labdetails!.lastName!,
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                Text(labdetails.locality,
+                Text(labdetails!.locality!,
                     style: TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w300,

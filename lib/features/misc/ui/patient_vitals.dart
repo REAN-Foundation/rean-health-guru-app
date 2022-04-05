@@ -147,7 +147,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               SizedBox(
                 width: 8,
               ),
-              Text(vital.weight,
+              Text(vital.weight!,
                   style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w600,
@@ -183,7 +183,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               SizedBox(
                 width: 8,
               ),
-              Text(vital.temperature,
+              Text(vital.temperature!,
                   style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w600,
@@ -219,7 +219,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               SizedBox(
                 width: 8,
               ),
-              Text(vital.pulse,
+              Text(vital.pulse!,
                   style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w600,
@@ -255,7 +255,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               SizedBox(
                 width: 8,
               ),
-              Text(vital.systolicBloodPressure,
+              Text(vital.systolicBloodPressure!,
                   style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w600,
@@ -291,7 +291,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               SizedBox(
                 width: 8,
               ),
-              Text(vital.diastolicBloodPressure,
+              Text(vital.diastolicBloodPressure!,
                   style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w600,
@@ -327,7 +327,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               SizedBox(
                 width: 8,
               ),
-              Text(vital.bloodOxygenSaturation,
+              Text(vital.bloodOxygenSaturation!,
                   style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.w600,
@@ -803,12 +803,12 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
   _getPatientVitals() async {
     try {
       final PatientVitalsPojo patientVitalsPojo =
-          await model.getPatientVitals('Bearer ' + auth, patientUserId);
+          await model.getPatientVitals('Bearer ' + auth!, patientUserId!);
 
       if (patientVitalsPojo.status == 'success') {
         vitals.clear();
         setState(() {
-          vitals.addAll(patientVitalsPojo.data.vitals);
+          vitals.addAll(patientVitalsPojo.data!.vitals!);
         });
       } else {}
     } catch (CustomException) {

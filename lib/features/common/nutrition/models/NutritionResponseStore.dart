@@ -1,12 +1,12 @@
 class NutritionResponseStore {
-  double totalTodayCal;
-  double totalBreakfastCal;
-  double totalLunchCal;
-  double totalDinnerCal;
-  double totalMorningSnackCal;
-  double totalAfernoonSnackCal;
-  double totalEveningSncakCal;
-  String date;
+  double? totalTodayCal;
+  double? totalBreakfastCal;
+  double? totalLunchCal;
+  double? totalDinnerCal;
+  double? totalMorningSnackCal;
+  double? totalAfernoonSnackCal;
+  double? totalEveningSncakCal;
+  String? date;
 
   NutritionResponseStore(
       {this.totalTodayCal,

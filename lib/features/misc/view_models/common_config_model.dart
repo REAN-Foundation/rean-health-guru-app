@@ -15,17 +15,17 @@ import '../../../infra/view_models/base_model.dart';
 class CommonConfigModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();
 
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   Future<StartCarePlanResponse> getCarePlan() async {
     // Get user profile for id
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider
-        .get('/aha/care-plan/patient/' + patientUserId, header: map);
+    final response = await apiProvider!
+        .get('/aha/care-plan/patient/' + patientUserId!, header: map);
     setBusy(false);
     // Convert and return
     return StartCarePlanResponse.fromJson(response);
@@ -36,10 +36,10 @@ class CommonConfigModel extends BaseModel {
     setBusy(true);
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
     final response =
-        await apiProvider.get('/patient-documents/search', header: map);
+        await apiProvider!.get('/patient-documents/search', header: map);
     setBusy(false);
     // Convert and return
     return GetAllRecordResponse.fromJson(response);
@@ -50,9 +50,9 @@ class CommonConfigModel extends BaseModel {
     setBusy(true);
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.put(
+    final response = await apiProvider!.put(
         '/patient-documents/' + documentId + '/rename',
         header: map,
         body: body);
@@ -66,10 +66,10 @@ class CommonConfigModel extends BaseModel {
     setBusy(true);
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.delete(
-        '/patient-documents/' + documentId, header: map);
+    final response = await apiProvider!
+        .delete('/patient-documents/' + documentId, header: map);
     setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);
@@ -80,9 +80,9 @@ class CommonConfigModel extends BaseModel {
     //setBusy(true);
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.get(
+    final response = await apiProvider!.get(
         '/patient-documents/' + documentId + '/share?durationMinutes=120',
         header: map);
     //setBusy(false);
@@ -95,11 +95,11 @@ class CommonConfigModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.get(
+    final response = await apiProvider!.get(
         '/patient-emergency-contacts/search?isAvailableForEmergency=true&order=ascending&patientUserId=' +
-            patientUserId,
+            patientUserId!,
         header: map);
 
     setBusy(false);
@@ -114,10 +114,10 @@ class CommonConfigModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response =
-        await apiProvider.post('/patient-emergency-contacts', body: body, header: map);
+    final response = await apiProvider!
+        .post('/patient-emergency-contacts', body: body, header: map);
     setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);
@@ -126,9 +126,9 @@ class CommonConfigModel extends BaseModel {
   Future<BaseResponse> removeTeamMembers(String emergencyContactId) async {
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.delete(
+    final response = await apiProvider!.delete(
         '/patient-emergency-contacts/' + emergencyContactId,
         header: map);
     setBusy(false);
@@ -140,10 +140,10 @@ class CommonConfigModel extends BaseModel {
     // Get user profile for id
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.post('/clinical/emergency-events',
-        header: map, body: body);
+    final response = await apiProvider!
+        .post('/clinical/emergency-events', header: map, body: body);
     setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);
@@ -155,10 +155,10 @@ class CommonConfigModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.post('/clinical/daily-assessments/',
-        header: map, body: body);
+    final response = await apiProvider!
+        .post('/clinical/daily-assessments/', header: map, body: body);
 
     setBusy(false);
     // Convert and return

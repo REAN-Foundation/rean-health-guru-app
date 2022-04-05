@@ -1,7 +1,7 @@
 class DoctorAppoinmentBookedSuccessfully {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   DoctorAppoinmentBookedSuccessfully({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class DoctorAppoinmentBookedSuccessfully {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  Appointment appointment;
+  Appointment? appointment;
 
   Data({this.appointment});
 
@@ -36,39 +36,39 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (appointment != null) {
-      data['appointment'] = appointment.toJson();
+      data['appointment'] = appointment!.toJson();
     }
     return data;
   }
 }
 
 class Appointment {
-  String id;
-  String businessNodeId;
-  String customerId;
-  String businessUserId;
-  String businessServiceId;
-  String businessNodeName;
-  String businessServiceName;
-  String businessUserName;
-  String customerName;
-  String date;
-  String startTime;
-  String endTime;
-  DateTime startTimeUtc;
-  DateTime endTimeUtc;
-  String type;
-  String note;
-  String status;
-  String statusCode;
-  int fees;
-  int tax;
-  int tip;
-  int discount;
-  String couponCode;
-  int total;
-  bool isPaid;
-  String transactionId;
+  String? id;
+  String? businessNodeId;
+  String? customerId;
+  String? businessUserId;
+  String? businessServiceId;
+  String? businessNodeName;
+  String? businessServiceName;
+  String? businessUserName;
+  String? customerName;
+  String? date;
+  String? startTime;
+  String? endTime;
+  DateTime? startTimeUtc;
+  DateTime? endTimeUtc;
+  String? type;
+  String? note;
+  String? status;
+  String? statusCode;
+  int? fees;
+  int? tax;
+  int? tip;
+  int? discount;
+  String? couponCode;
+  int? total;
+  bool? isPaid;
+  String? transactionId;
 
   Appointment(
       {this.id,

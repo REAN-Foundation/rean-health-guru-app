@@ -5,7 +5,7 @@ import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/widgets/customClipper.dart';
 
 class BezierContainer extends StatelessWidget {
-  const BezierContainer({Key key}) : super(key: key);
+  const BezierContainer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

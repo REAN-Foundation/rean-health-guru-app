@@ -1,7 +1,7 @@
 class GlassOfWaterConsumption {
-  DateTime date;
-  int count;
-  String discription;
+  DateTime? date;
+  int? count;
+  String? discription;
 
   GlassOfWaterConsumption(this.date, this.count, this.discription);
 
@@ -13,7 +13,7 @@ class GlassOfWaterConsumption {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['date'] = date.toIso8601String();
+    data['date'] = date!.toIso8601String();
     data['count'] = count;
     data['discription'] = discription;
     return data;

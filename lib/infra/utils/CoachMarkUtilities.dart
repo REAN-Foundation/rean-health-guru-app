@@ -6,7 +6,7 @@ enum CoachMarkContentPosition { top, bottom }
 
 class CoachMarkUtilites {
   TargetFocus getTargetFocus(
-      GlobalKey key,
+      GlobalKey? key,
       String sequence,
       String heading,
       String description,
@@ -54,10 +54,10 @@ class CoachMarkUtilites {
 
   TutorialCoachMark displayCoachMark(
       BuildContext context, List<TargetFocus> targets,
-      {@required Function onCoachMartkFinish,
-      @required Function onCoachMartkSkip,
-      @required Function onCoachMartkClickTarget,
-      @required Function onCoachMartkClickOverlay}) {
+      {required Function onCoachMartkFinish,
+      required Function onCoachMartkSkip,
+      required Function onCoachMartkClickTarget,
+      required Function onCoachMartkClickOverlay}) {
     return TutorialCoachMark(
       context,
       targets: targets,

@@ -12,9 +12,9 @@ import '../../../misc/ui/home_view.dart';
 
 //ignore: must_be_immutable
 class ChallengeCarePlanView extends StatefulWidget {
-  Task task;
+  Task? task;
 
-  ChallengeCarePlanView(Task task) {
+  ChallengeCarePlanView(Task? task) {
     this.task = task;
   }
 
@@ -30,8 +30,8 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
 
   @override
   void initState() {
-    if (widget.task.details.challengeNotes != null) {
-      _textController.text = widget.task.details.challengeNotes.toString();
+    if (widget.task!.details!.challengeNotes != null) {
+      _textController.text = widget.task!.details!.challengeNotes.toString();
       _textController.selection = TextSelection.fromPosition(
         TextPosition(offset: _textController.text.length),
       );
@@ -97,7 +97,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
       ),
       child: Center(
         child: Text(
-          widget.task.details.challengeText,
+          widget.task!.details!.challengeText!,
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
@@ -116,7 +116,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
         padding: const EdgeInsets.all(8.0),
         child: Center(
           child: Text(
-            widget.task.details.subTitle,
+            widget.task!.details!.subTitle!,
             style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
             textAlign: TextAlign.center,
           ),
@@ -140,7 +140,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
           ),
         ),
         child: TextFormField(
-            enabled: !widget.task.finished,
+            enabled: !widget.task!.finished!,
             obscureText: false,
             controller: _textController,
             keyboardType: TextInputType.multiline,
@@ -173,17 +173,17 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
           // Add This
           child: MaterialButton(
             minWidth: 200,
-            child: Text(!widget.task.finished ? 'Save' : 'Done',
+            child: Text(!widget.task!.finished! ? 'Save' : 'Done',
                 style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
             onPressed: () {
-              if (!widget.task.finished) {
+              if (!widget.task!.finished!) {
                 if (_textController.text == '') {
                   showToast('Please enter challenge text', context);
                 } else {
-                  completeChallengeTaskOfAHACarePlan(widget.task);
+                  completeChallengeTaskOfAHACarePlan(widget.task!);
                 }
               } else {
                 Navigator.pop(context);
@@ -202,7 +202,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
 
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.completeChallengeTask(
-              task.details.carePlanId.toString(), task.details.id, map);
+              task.details!.carePlanId.toString(), task.details!.id!, map);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;
@@ -213,7 +213,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
         debugPrint(
             'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
-        showToast(_startTaskOfAHACarePlanResponse.message, context);
+        showToast(_startTaskOfAHACarePlanResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);

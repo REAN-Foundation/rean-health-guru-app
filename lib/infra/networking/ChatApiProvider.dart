@@ -8,20 +8,21 @@ import 'package:http/http.dart' as http;
 import 'CustomException.dart';
 
 class ChatApiProvider {
-  String _baseUrl = '';
+  String? _baseUrl = '';
 
-  ChatApiProvider(String baseUrl) {
+  ChatApiProvider(String? baseUrl) {
     _baseUrl = baseUrl;
   }
 
-  Future<dynamic> get(String url, {Map header}) async {
-    debugPrint('Base Url ==> GET ${_baseUrl + url}');
+  Future<dynamic> get(String url, {Map? header}) async {
+    debugPrint('Base Url ==> GET ${_baseUrl! + url}');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
 
     var responseJson;
     try {
       final response = await http
-          .get(Uri.parse(_baseUrl + url), headers: header)
+          .get(Uri.parse(_baseUrl! + url),
+              headers: header as Map<String, String>?)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -33,16 +34,16 @@ class ChatApiProvider {
     return responseJson;
   }
 
-  Future<dynamic> post(String url, {Map body, Map header}) async {
-    debugPrint('Base Url ==> POST ${_baseUrl + url}');
+  Future<dynamic> post(String url, {Map? body, Map? header}) async {
+    debugPrint('Base Url ==> POST ${_baseUrl! + url}');
     debugPrint('Request Body ==> ${json.encode(body).toString()}');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
 
     var responseJson;
     try {
       final response = await http
-          .post(Uri.parse(_baseUrl + url),
-              body: json.encode(body), headers: header)
+          .post(Uri.parse(_baseUrl! + url),
+              body: json.encode(body), headers: header as Map<String, String>?)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -54,16 +55,16 @@ class ChatApiProvider {
     return responseJson;
   }
 
-  Future<dynamic> put(String url, {Map body, Map header}) async {
-    debugPrint('Base Url ==> PUT ${_baseUrl + url}');
+  Future<dynamic> put(String url, {Map? body, Map? header}) async {
+    debugPrint('Base Url ==> PUT ${_baseUrl! + url}');
     debugPrint('Request Body ==> ${json.encode(body).toString()}');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
 
     var responseJson;
     try {
       final response = await http
-          .put(Uri.parse(_baseUrl + url),
-              body: json.encode(body), headers: header)
+          .put(Uri.parse(_baseUrl! + url),
+              body: json.encode(body), headers: header as Map<String, String>?)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -75,14 +76,15 @@ class ChatApiProvider {
     return responseJson;
   }
 
-  Future<dynamic> delete(String url, {Map header}) async {
-    debugPrint('Base Url ==> DELETE ${_baseUrl + url}');
+  Future<dynamic> delete(String url, {Map? header}) async {
+    debugPrint('Base Url ==> DELETE ${_baseUrl! + url}');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
 
     var responseJson;
     try {
       final response = await http
-          .delete(Uri.parse(_baseUrl + url), headers: header)
+          .delete(Uri.parse(_baseUrl! + url),
+              headers: header as Map<String, String>?)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -148,23 +150,21 @@ class ChatApiProvider {
   //   return responseJson;
   // }
 
-  multipart(String url, {String filePath, Map header}) async {
-    debugPrint('Base Url ==> POST ${_baseUrl + url}');
+  multipart(String url, {required String filePath, required Map header}) async {
+    debugPrint('Base Url ==> POST ${_baseUrl! + url}');
     debugPrint('Request File Path ==> $filePath');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
 
     var responseJson;
     try {
-      final postUri = Uri.parse(_baseUrl + url);
+      final postUri = Uri.parse(_baseUrl! + url);
       final request = http.MultipartRequest('POST', postUri);
-      request.headers.addAll(header);
+      request.headers.addAll(header as Map<String, String>);
       request.files.add(http.MultipartFile.fromBytes(
           'name', await File.fromUri(Uri.parse(filePath)).readAsBytes()));
 
-      request
-          .send()
-          .then((response) async {
-            /* try {
+      request.send().then((response) async {
+        /* try {
           var responseFinal = await http.Response.fromStream(response);
           responseJson = _response(responseFinal);
         } on CustomException{
@@ -190,7 +190,6 @@ class ChatApiProvider {
 
         });*/
           })
-          .catchError((err) => debugPrint('error : ' + err.toString()))
           .whenComplete(() {});
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -201,7 +200,7 @@ class ChatApiProvider {
     return responseJson;
   }
 
-  String getBaseUrl() {
+  String? getBaseUrl() {
     return _baseUrl;
   }
 }

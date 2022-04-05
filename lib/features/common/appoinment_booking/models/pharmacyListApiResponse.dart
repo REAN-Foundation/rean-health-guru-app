@@ -1,7 +1,7 @@
 class PharmacyListApiResponse {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   PharmacyListApiResponse({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class PharmacyListApiResponse {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<Pharmacies> pharmacies;
+  List<Pharmacies>? pharmacies;
 
   Data({this.pharmacies});
 
@@ -31,7 +31,7 @@ class Data {
     if (json['pharmacies'] != null) {
       pharmacies = <Pharmacies>[];
       json['pharmacies'].forEach((v) {
-        pharmacies.add(Pharmacies.fromJson(v));
+        pharmacies!.add(Pharmacies.fromJson(v));
       });
     }
   }
@@ -39,26 +39,26 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (pharmacies != null) {
-      data['pharmacies'] = pharmacies.map((v) => v.toJson()).toList();
+      data['pharmacies'] = pharmacies!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Pharmacies {
-  String userId;
-  String pharmacyRoleId;
-  String firstName;
-  String lastName;
-  String gender;
-  String birthDate;
-  String imageURL;
-  String locality;
-  String address;
-  String locationCoordsLongitude;
-  String locationCoordsLattitude;
-  String pharmacyName;
-  String operationalSince;
+  String? userId;
+  String? pharmacyRoleId;
+  String? firstName;
+  String? lastName;
+  String? gender;
+  String? birthDate;
+  String? imageURL;
+  String? locality;
+  String? address;
+  String? locationCoordsLongitude;
+  String? locationCoordsLattitude;
+  String? pharmacyName;
+  String? operationalSince;
 
   Pharmacies(
       {this.userId,

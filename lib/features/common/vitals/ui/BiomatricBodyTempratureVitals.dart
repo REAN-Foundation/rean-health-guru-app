@@ -9,7 +9,7 @@ import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SimpleTimeSeriesChart.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class BiometricBodyTemperatureVitalsView extends StatefulWidget {
   @override
@@ -25,7 +25,7 @@ class _BiometricBodyTemperatureVitalsViewState
   final _controller = TextEditingController();
   List<Items> records = <Items>[];
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _BiometricBodyTemperatureVitalsViewState
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
+    progressDialog = ProgressDialog(context: context);
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -262,7 +262,7 @@ class _BiometricBodyTemperatureVitalsViewState
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              dateFormatStandard.format(DateTime.parse(record.recordDate)),
+              dateFormatStandard.format(DateTime.parse(record.recordDate!)),
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
@@ -341,7 +341,7 @@ class _BiometricBodyTemperatureVitalsViewState
 
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
+          DateTime.parse(records.elementAt(i).recordDate!).toLocal(),
           double.parse(records.elementAt(i).bodyTemperature.toString())));
     }
 
@@ -503,7 +503,8 @@ class _BiometricBodyTemperatureVitalsViewState
 
   addvitals() async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['BodyTemperature'] = _controller.text.toString();
       map['PatientUserId'] = "";
@@ -514,15 +515,15 @@ class _BiometricBodyTemperatureVitalsViewState
           await model.addMyVitals('body-temperatures', map);
 
       if (baseResponse.status == 'success') {
-        showToast(baseResponse.message, context);
-        progressDialog.hide();
+        showToast(baseResponse.message!, context);
+        progressDialog.close();
         Navigator.pop(context);
       } else {
-        progressDialog.hide();
-        showToast(baseResponse.message, context);
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
@@ -535,9 +536,9 @@ class _BiometricBodyTemperatureVitalsViewState
           await model.getMyVitalsHistory('body-temperatures');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
-        records.addAll(getMyVitalsHistory.data.bodyTemperatureRecords.items);
+        records.addAll(getMyVitalsHistory.data!.bodyTemperatureRecords!.items!);
       } else {
-        showToast(getMyVitalsHistory.message, context);
+        showToast(getMyVitalsHistory.message!, context);
       }
     } catch (e) {
       model.setBusy(false);

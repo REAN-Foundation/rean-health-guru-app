@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -17,10 +19,11 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
 
   Future<void> _initPackageInfo() async {
     if (getCurrentLocale() == '') {
-      final Locale countryLocale = await Devicelocale.currentAsLocale;
-      setCurrentLocale(countryLocale.countryCode.toUpperCase());
+      final Locale countryLocale =
+          await (Devicelocale.currentAsLocale as FutureOr<Locale>);
+      setCurrentLocale(countryLocale.countryCode!.toUpperCase());
       debugPrint(
-          'Country Local ==> ${countryLocale.countryCode.toUpperCase()}');
+          'Country Local ==> ${countryLocale.countryCode!.toUpperCase()}');
     }
   }
 

@@ -1,8 +1,8 @@
 class MyMedicationSummaryRespose {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
 
   MyMedicationSummaryRespose(
       {this.status, this.message, this.httpCode, this.data});
@@ -20,14 +20,14 @@ class MyMedicationSummaryRespose {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<MedicationConsumptionSummary> medicationConsumptionSummary;
+  List<MedicationConsumptionSummary>? medicationConsumptionSummary;
 
   Data({this.medicationConsumptionSummary});
 
@@ -35,7 +35,7 @@ class Data {
     if (json['MedicationConsumptionSummary'] != null) {
       medicationConsumptionSummary = [];
       json['MedicationConsumptionSummary'].forEach((v) {
-        medicationConsumptionSummary
+        medicationConsumptionSummary!
             .add(MedicationConsumptionSummary.fromJson(v));
       });
     }
@@ -45,16 +45,16 @@ class Data {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (medicationConsumptionSummary != null) {
       data['MedicationConsumptionSummary'] =
-          medicationConsumptionSummary.map((v) => v.toJson()).toList();
+          medicationConsumptionSummary!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class MedicationConsumptionSummary {
-  String month;
-  int daysInMonth;
-  List<SummaryForMonth> summaryForMonth;
+  String? month;
+  int? daysInMonth;
+  List<SummaryForMonth>? summaryForMonth;
 
   MedicationConsumptionSummary(
       {this.month, this.daysInMonth, this.summaryForMonth});
@@ -65,7 +65,7 @@ class MedicationConsumptionSummary {
     if (json['SummaryForMonth'] != null) {
       summaryForMonth = <SummaryForMonth>[];
       json['SummaryForMonth'].forEach((v) {
-        summaryForMonth.add(SummaryForMonth.fromJson(v));
+        summaryForMonth!.add(SummaryForMonth.fromJson(v));
       });
     }
   }
@@ -75,15 +75,16 @@ class MedicationConsumptionSummary {
     data['Month'] = month;
     data['DaysInMonth'] = daysInMonth;
     if (summaryForMonth != null) {
-      data['SummaryForMonth'] = summaryForMonth.map((v) => v.toJson()).toList();
+      data['SummaryForMonth'] =
+          summaryForMonth!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class SummaryForMonth {
-  String drug;
-  SummaryForDrug summaryForDrug;
+  String? drug;
+  SummaryForDrug? summaryForDrug;
 
   SummaryForMonth({this.drug, this.summaryForDrug});
 
@@ -98,18 +99,18 @@ class SummaryForMonth {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['Drug'] = drug;
     if (summaryForDrug != null) {
-      data['SummaryForDrug'] = summaryForDrug.toJson();
+      data['SummaryForDrug'] = summaryForDrug!.toJson();
     }
     return data;
   }
 }
 
 class SummaryForDrug {
-  int missed;
-  int taken;
-  int unknown;
-  int upcoming;
-  int overdue;
+  int? missed;
+  int? taken;
+  int? unknown;
+  int? upcoming;
+  int? overdue;
 
   SummaryForDrug(
       {this.missed, this.taken, this.unknown, this.upcoming, this.overdue});

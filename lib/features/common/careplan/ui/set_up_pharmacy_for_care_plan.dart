@@ -23,7 +23,7 @@ class _SetUpPharmacyForCarePlanViewState
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  StartCarePlanResponse startCarePlanResponse;
+  late StartCarePlanResponse startCarePlanResponse;
 
   //var parmacySearchList = new List<Pharmacies>();
 
@@ -32,10 +32,10 @@ class _SetUpPharmacyForCarePlanViewState
       startCarePlanResponse = StartCarePlanResponse.fromJson(
           await _sharedPrefUtils.read('CarePlan'));
       debugPrint(
-          'AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}');
+          'AHA Care Plan id ${startCarePlanResponse.data!.carePlan!.id.toString()}');
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
@@ -334,15 +334,15 @@ class _SetUpPharmacyForCarePlanViewState
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                  pharmaciesDetails.firstName +
+                                  pharmaciesDetails.firstName! +
                                       ' ' +
-                                      pharmaciesDetails.lastName,
+                                      pharmaciesDetails.lastName!,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: primaryColor)),
                               Text(
-                                pharmaciesDetails.address,
+                                pharmaciesDetails.address!,
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w300,
@@ -545,7 +545,7 @@ class _SetUpPharmacyForCarePlanViewState
       data['Gender'] = '';
 
       final map = <String, dynamic>{};
-      map['CarePlanId'] = startCarePlanResponse.data.carePlan.id.toString();
+      map['CarePlanId'] = startCarePlanResponse.data!.carePlan!.id.toString();
       map['IsEmergencyContact'] = true;
       map['TeamMemberType'] = 'Pharmacy';
       map['Details'] = data;
@@ -557,14 +557,14 @@ class _SetUpPharmacyForCarePlanViewState
         setState(() {
           parmacySearchListGlobe.add(pharmacies);
         });
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       } else {
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException);
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 }

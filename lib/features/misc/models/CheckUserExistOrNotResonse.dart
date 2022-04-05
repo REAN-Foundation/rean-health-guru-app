@@ -1,7 +1,7 @@
 class CheckUserExistOrNotResonse {
-  String status;
-  String message;
-  String error;
+  String? status;
+  String? message;
+  String? error;
   dynamic data;
 
   CheckUserExistOrNotResonse(

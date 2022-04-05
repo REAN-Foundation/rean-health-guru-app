@@ -1,24 +1,24 @@
 class PatientMedicalProfilePojo {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
-  Client client;
-  User user;
-  String context;
-  List<String> clientIps;
-  String aPIVersion;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
+  Client? client;
+  User? user;
+  String? context;
+  List<String>? clientIps;
+  String? aPIVersion;
 
   PatientMedicalProfilePojo(
       {this.status,
-        this.message,
-        this.httpCode,
-        this.data,
-        this.client,
-        this.user,
-        this.context,
-        this.clientIps,
-        this.aPIVersion});
+      this.message,
+      this.httpCode,
+      this.data,
+      this.client,
+      this.user,
+      this.context,
+      this.clientIps,
+      this.aPIVersion});
 
   PatientMedicalProfilePojo.fromJson(Map<String, dynamic> json) {
     status = json['Status'];
@@ -38,13 +38,13 @@ class PatientMedicalProfilePojo {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     if (client != null) {
-      data['Client'] = client.toJson();
+      data['Client'] = client!.toJson();
     }
     if (user != null) {
-      data['User'] = user.toJson();
+      data['User'] = user!.toJson();
     }
     data['Context'] = context;
     data['ClientIps'] = clientIps;
@@ -54,7 +54,7 @@ class PatientMedicalProfilePojo {
 }
 
 class Data {
-  HealthProfile healthProfile;
+  HealthProfile? healthProfile;
 
   Data({this.healthProfile});
 
@@ -67,35 +67,35 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (healthProfile != null) {
-      data['HealthProfile'] = healthProfile.toJson();
+      data['HealthProfile'] = healthProfile!.toJson();
     }
     return data;
   }
 }
 
 class HealthProfile {
-  String id;
-  String patientUserId;
-  String bloodGroup;
-  String majorAilment;
-  String otherConditions;
-  bool isDiabetic;
-  bool hasHeartAilment;
-  String maritalStatus;
-  String ethnicity;
-  String nationality;
-  String occupation;
-  bool sedentaryLifestyle;
-  bool isSmoker;
-  String smokingSeverity;
-  String smokingSince;
-  bool isDrinker;
-  String drinkingSeverity;
-  String drinkingSince;
-  bool substanceAbuse;
-  String procedureHistory;
-  String obstetricHistory;
-  String otherInformation;
+  String? id;
+  String? patientUserId;
+  String? bloodGroup;
+  String? majorAilment;
+  String? otherConditions;
+  bool? isDiabetic;
+  bool? hasHeartAilment;
+  String? maritalStatus;
+  String? ethnicity;
+  String? nationality;
+  String? occupation;
+  bool? sedentaryLifestyle;
+  bool? isSmoker;
+  String? smokingSeverity;
+  String? smokingSince;
+  bool? isDrinker;
+  String? drinkingSeverity;
+  String? drinkingSince;
+  bool? substanceAbuse;
+  String? procedureHistory;
+  String? obstetricHistory;
+  String? otherInformation;
 
   HealthProfile(
       {this.id,
@@ -175,8 +175,8 @@ class HealthProfile {
 }
 
 class Client {
-  String clientName;
-  String clientCode;
+  String? clientName;
+  String? clientCode;
 
   Client({this.clientName, this.clientCode});
 
@@ -194,24 +194,24 @@ class Client {
 }
 
 class User {
-  String userId;
-  String displayName;
-  String phone;
-  String email;
-  String userName;
-  int currentRoleId;
-  int iat;
-  int exp;
+  String? userId;
+  String? displayName;
+  String? phone;
+  String? email;
+  String? userName;
+  int? currentRoleId;
+  int? iat;
+  int? exp;
 
   User(
       {this.userId,
-        this.displayName,
-        this.phone,
-        this.email,
-        this.userName,
-        this.currentRoleId,
-        this.iat,
-        this.exp});
+      this.displayName,
+      this.phone,
+      this.email,
+      this.userName,
+      this.currentRoleId,
+      this.iat,
+      this.exp});
 
   User.fromJson(Map<String, dynamic> json) {
     userId = json['UserId'];

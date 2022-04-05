@@ -27,7 +27,7 @@ class _SupportViewState extends State<SupportView> {
   String email = 'support@reanfoundation.org';
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   String name = ' ';
-  String userPhone = ' ';
+  String? userPhone = ' ';
 
   loadSharedPrefs() async {
     try {
@@ -35,18 +35,19 @@ class _SupportViewState extends State<SupportView> {
           UserData.fromJson(await _sharedPrefUtils.read('user'));
       final Patient patient =
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
-      auth = user.data.accessToken;
-      patientUserId = user.data.user.id;
+      auth = user.data!.accessToken;
+      patientUserId = user.data!.user!.id;
       //debugPrint(user.toJson().toString());
 
       setState(() {
-        name =
-            patient.user.person.firstName + ' ' + patient.user.person.lastName;
-        userPhone = patient.user.person.phone;
+        name = patient.user!.person!.firstName! +
+            ' ' +
+            patient.user!.person!.lastName!;
+        userPhone = patient.user!.person!.phone;
       });
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
@@ -223,7 +224,7 @@ class _SupportViewState extends State<SupportView> {
                                                 '%20App&body=Hey Team,%20\n\n' +
                                                 name +
                                                 '%20wants%20to%20get%20in%20touch%20with%20you.\n\nContact%20Number:%20' +
-                                                userPhone +
+                                                userPhone! +
                                                 '\n\n';
                                             if (await canLaunch(
                                                 link.toString())) {
@@ -242,7 +243,7 @@ class _SupportViewState extends State<SupportView> {
                                                         name +
                                                         ' wants to get in touch with you. ---- '
                                                             'Contact Number:' +
-                                                        userPhone +
+                                                        userPhone! +
                                                         ''
                                                             '',
                                                   });

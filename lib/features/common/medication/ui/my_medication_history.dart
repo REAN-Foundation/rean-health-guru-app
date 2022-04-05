@@ -26,14 +26,14 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
       if (myMedicationSummaryRespose.status == 'success') {
         summarys.clear();
         for (final item
-            in myMedicationSummaryRespose.data.medicationConsumptionSummary) {
-          if (item.summaryForMonth.isNotEmpty) {
+            in myMedicationSummaryRespose.data!.medicationConsumptionSummary!) {
+          if (item.summaryForMonth!.isNotEmpty) {
             summarys.add(item);
           }
         }
         debugPrint('Summary Length ==> ${summarys.length}');
       } else {
-        showToast(myMedicationSummaryRespose.message, context);
+        showToast(myMedicationSummaryRespose.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -127,7 +127,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                         label: summary.month,
                         readOnly: true,
                         child: ExcludeSemantics(
-                          child: Text(summary.month,
+                          child: Text(summary.month!,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -188,7 +188,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  for (var item in summary.summaryForMonth) ...[
+                  for (var item in summary.summaryForMonth!) ...[
                     MergeSemantics(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -200,7 +200,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                               label: item.drug,
                               readOnly: true,
                               child: ExcludeSemantics(
-                                child: Text(item.drug,
+                                child: Text(item.drug!,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -223,9 +223,10 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Text(item.summaryForDrug.taken.toString(),
+                                      Text(
+                                          item.summaryForDrug!.taken.toString(),
                                           semanticsLabel: item
-                                                  .summaryForDrug.taken
+                                                  .summaryForDrug!.taken
                                                   .toString() +
                                               ' drug taken',
                                           maxLines: 1,
@@ -238,9 +239,10 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                                         width: 8,
                                       ),
                                       Text(
-                                          item.summaryForDrug.missed.toString(),
+                                          item.summaryForDrug!.missed
+                                              .toString(),
                                           semanticsLabel: item
-                                                  .summaryForDrug.missed
+                                                  .summaryForDrug!.missed
                                                   .toString() +
                                               ' drug missed',
                                           maxLines: 1,
@@ -253,10 +255,10 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                                         width: 8,
                                       ),
                                       Text(
-                                          item.summaryForDrug.unknown
+                                          item.summaryForDrug!.unknown
                                               .toString(),
                                           semanticsLabel: item
-                                                  .summaryForDrug.unknown
+                                                  .summaryForDrug!.unknown
                                                   .toString() +
                                               ' drug unknown',
                                           maxLines: 1,

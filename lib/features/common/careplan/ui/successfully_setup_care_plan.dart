@@ -23,7 +23,7 @@ class _SuccessfullySetupCarePlanViewState
   String unformatedDOB = '';
   var dateFormat = DateFormat('dd MMM, yyyy');
 
-  StartCarePlanResponse startCarePlanResponse;
+  StartCarePlanResponse? startCarePlanResponse;
 
   /*loadSharedPrefrance() async {
     try {
@@ -31,7 +31,7 @@ class _SuccessfullySetupCarePlanViewState
       debugPrint("AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}");
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }*/
 
@@ -54,7 +54,7 @@ class _SuccessfullySetupCarePlanViewState
             backgroundColor: Colors.white,
             brightness: Brightness.light,
             title: Text(
-              startCarePlanResponse.data.carePlan.carePlanCode,
+              startCarePlanResponse!.data!.carePlan!.carePlanCode!,
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
@@ -91,7 +91,8 @@ class _SuccessfullySetupCarePlanViewState
                         children: [
                           Text(
                             'Plan ID: ' +
-                                startCarePlanResponse.data.carePlan.displayId,
+                                startCarePlanResponse!
+                                    .data!.carePlan!.displayId!,
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 color: primaryColor),
@@ -110,8 +111,8 @@ class _SuccessfullySetupCarePlanViewState
                           ),
                           Text(
                             'You have successfully set up your\n' +
-                                startCarePlanResponse
-                                    .data.carePlan.carePlanName,
+                                startCarePlanResponse!
+                                    .data!.carePlan!.carePlanName!,
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 color: textBlack,
@@ -119,7 +120,7 @@ class _SuccessfullySetupCarePlanViewState
                             textAlign: TextAlign.center,
                           ),
                           Text(
-                            startCarePlanResponse.message,
+                            startCarePlanResponse!.message!,
                             style: TextStyle(
                                 fontWeight: FontWeight.w300,
                                 color: textBlack,

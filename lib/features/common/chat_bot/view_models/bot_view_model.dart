@@ -10,7 +10,7 @@ import '../../../../infra/view_models/base_model.dart';
 class BotViewModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();
 
-  ChatApiProvider apiProvider = GetIt.instance<ChatApiProvider>();
+  ChatApiProvider? apiProvider = GetIt.instance<ChatApiProvider>();
 
   String clientName = 'REAN_BOT';
 
@@ -20,16 +20,16 @@ class BotViewModel extends BaseModel {
     }
 
     setBusy(true);
-    final map = <String, String>{};
+    final map = <String, String?>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
     map['authentication'] = dotenv.env['BOT_HEADER_TOKEN'];
 
-    final response = await apiProvider.post(
+    final response = await apiProvider!.post(
         '/' +
             clientName +
             '/REAN_SUPPORT/' +
-            dotenv.env['BOT_URL_TOKEN'] +
+            dotenv.env['BOT_URL_TOKEN']! +
             '/receive',
         header: map,
         body: body);

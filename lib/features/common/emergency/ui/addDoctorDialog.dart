@@ -8,11 +8,11 @@ import 'package:paitent/infra/utils/StringUtility.dart';
 
 //ignore: must_be_immutable
 class AddDoctorDialog extends StatefulWidget {
-  Function _submitButtonListner;
+  late Function _submitButtonListner;
 
   //AllergiesDialog(@required this._allergiesCategoryMenuItems,@required this._allergiesSeveretyMenuItems, @required Function this.submitButtonListner, this.patientId);
 
-  AddDoctorDialog({Key key, @required Function submitButtonListner})
+  AddDoctorDialog({Key? key, required Function submitButtonListner})
       : super(key: key) {
     _submitButtonListner = submitButtonListner;
   }
@@ -33,16 +33,16 @@ class _MyDialogState extends State<AddDoctorDialog> {
   getDoctorListByLocality() async {
     try {
       final DoctorListApiResponse doctorListApiResponse =
-          await model.getDoctorList('Bearer ' + auth);
+          await model.getDoctorList('Bearer ' + auth!);
 
       if (doctorListApiResponse.status == 'success') {
-        if (doctorListApiResponse.data.doctors.isNotEmpty) {
+        if (doctorListApiResponse.data!.doctors!.isNotEmpty) {
           setState(() {
-            doctorSearchList.addAll(doctorListApiResponse.data.doctors);
+            doctorSearchList.addAll(doctorListApiResponse.data!.doctors!);
           });
         }
       } else {
-        showToast(doctorListApiResponse.message, context);
+        showToast(doctorListApiResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -142,12 +142,14 @@ class _MyDialogState extends State<AddDoctorDialog> {
                               backgroundColor: primaryColor,
                               child: CircleAvatar(
                                   radius: 38,
-                                  backgroundImage: doctorDetails.imageURL ==
+                                  backgroundImage: (doctorDetails.imageURL ==
                                               '' ||
                                           doctorDetails.imageURL == null
                                       ? AssetImage(
                                           'res/images/profile_placeholder.png')
-                                      : NetworkImage(doctorDetails.imageURL)),
+                                      : NetworkImage(doctorDetails
+                                          .imageURL!)) as ImageProvider<
+                                      Object>?),
                             ),
                           ),
                         ),
@@ -164,10 +166,10 @@ class _MyDialogState extends State<AddDoctorDialog> {
                             Semantics(
                               readOnly: true,
                               child: Text(
-                                  doctorDetails.prefix +
-                                      doctorDetails.firstName +
+                                  doctorDetails.prefix! +
+                                      doctorDetails.firstName! +
                                       ' ' +
-                                      doctorDetails.lastName,
+                                      doctorDetails.lastName!,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -182,7 +184,7 @@ class _MyDialogState extends State<AddDoctorDialog> {
                                 children: [
                                   Text(
                                       doctorDetails.specialities ??
-                                          doctorDetails.qualification,
+                                          doctorDetails.qualification!,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -193,7 +195,7 @@ class _MyDialogState extends State<AddDoctorDialog> {
                                     child: Text(
                                       doctorDetails.qualification == null
                                           ? ''
-                                          : ', ' + doctorDetails.qualification,
+                                          : ', ' + doctorDetails.qualification!,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(

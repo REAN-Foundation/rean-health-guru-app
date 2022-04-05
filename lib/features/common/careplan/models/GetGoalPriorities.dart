@@ -1,7 +1,7 @@
 class GetGoalPriorities {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   GetGoalPriorities({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class GetGoalPriorities {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<String> goals;
+  List<String>? goals;
 
   Data({this.goals});
 

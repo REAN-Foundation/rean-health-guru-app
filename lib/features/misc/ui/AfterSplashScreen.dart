@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:paitent/core/constants/route_paths.dart';
+import 'package:paitent/infra/provider_setup.dart';
 import 'package:paitent/infra/router.dart';
-import 'package:paitent/provider_setup.dart';
 import 'package:provider/provider.dart';
 
 //ignore: must_be_immutable
 class AfterSplashScreen extends StatefulWidget {
-  bool isLogin;
+  bool? isLogin;
 
   AfterSplashScreen(this.isLogin);
 

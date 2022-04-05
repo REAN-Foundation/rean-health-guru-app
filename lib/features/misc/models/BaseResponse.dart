@@ -1,7 +1,7 @@
 class BaseResponse {
-  String status;
-  String message;
-  String error;
+  String? status;
+  String? message;
+  String? error;
   dynamic data;
 
   BaseResponse({this.status, this.message, this.error, this.data});

@@ -26,17 +26,17 @@ class _SetUpDoctorForCarePlanViewState
 
   //var doctorSearchList = new List<Doctors>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  StartCarePlanResponse startCarePlanResponse;
+  late StartCarePlanResponse startCarePlanResponse;
 
   loadSharedPrefrance() async {
     try {
       startCarePlanResponse = StartCarePlanResponse.fromJson(
           await _sharedPrefUtils.read('CarePlan'));
       debugPrint(
-          'AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}');
+          'AHA Care Plan id ${startCarePlanResponse.data!.carePlan!.id.toString()}');
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
@@ -308,10 +308,13 @@ class _SetUpDoctorForCarePlanViewState
                       backgroundColor: primaryColor,
                       child: CircleAvatar(
                           radius: 38,
-                          backgroundImage: doctorDetails.imageURL == '' ||
-                                  doctorDetails.imageURL == null
-                              ? AssetImage('res/images/profile_placeholder.png')
-                              : NetworkImage(doctorDetails.imageURL)),
+                          backgroundImage:
+                              (doctorDetails.imageURL == '' ||
+                                          doctorDetails.imageURL == null
+                                      ? AssetImage(
+                                          'res/images/profile_placeholder.png')
+                                      : NetworkImage(doctorDetails.imageURL!))
+                                  as ImageProvider<Object>?),
                     ),
                   ),
                 ),
@@ -325,10 +328,10 @@ class _SetUpDoctorForCarePlanViewState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                          doctorDetails.prefix +
-                              doctorDetails.firstName +
+                          doctorDetails.prefix! +
+                              doctorDetails.firstName! +
                               ' ' +
-                              doctorDetails.lastName,
+                              doctorDetails.lastName!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -340,7 +343,7 @@ class _SetUpDoctorForCarePlanViewState
                         children: [
                           Text(
                               doctorDetails.specialities ??
-                                  doctorDetails.qualification,
+                                  doctorDetails.qualification!,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -351,7 +354,7 @@ class _SetUpDoctorForCarePlanViewState
                             child: Text(
                               doctorDetails.qualification == null
                                   ? ''
-                                  : ', ' + doctorDetails.qualification,
+                                  : ', ' + doctorDetails.qualification!,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -362,7 +365,7 @@ class _SetUpDoctorForCarePlanViewState
                           ),
                         ],
                       ),
-                      Text(doctorDetails.phoneNumber,
+                      Text(doctorDetails.phoneNumber!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -561,7 +564,7 @@ class _SetUpDoctorForCarePlanViewState
       data['Gender'] = '';
 
       final map = <String, dynamic>{};
-      map['CarePlanId'] = startCarePlanResponse.data.carePlan.id.toString();
+      map['CarePlanId'] = startCarePlanResponse.data!.carePlan!.id.toString();
       map['IsEmergencyContact'] = true;
       map['TeamMemberType'] = 'Doctor';
       map['Details'] = data;
@@ -574,14 +577,14 @@ class _SetUpDoctorForCarePlanViewState
           doctorSearchListGlobe.add(doctors);
         });
         debugPrint('Docotr List Size ==> ${doctorSearchListGlobe.length}');
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       } else {
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException);
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 }

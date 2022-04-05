@@ -15,7 +15,7 @@ class ThanksForTheFeedBack extends StatefulWidget {
 class _ThanksForTheFeedBack extends State<ThanksForTheFeedBack>
     with SingleTickerProviderStateMixin {
   final int delayedAmount = 500;
-  AnimationController _controller;
+  late AnimationController _controller;
   List<int> selectedList = [];
   int selectedFeelings = 0;
   var model = CommonConfigModel();
@@ -103,7 +103,7 @@ class _ThanksForTheFeedBack extends State<ThanksForTheFeedBack>
       if (baseResponse.status == 'success') {
       } else {}
     } catch (CustomException) {
-      //progressDialog.hide();
+      //progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());

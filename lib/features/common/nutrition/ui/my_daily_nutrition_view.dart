@@ -17,7 +17,7 @@ import 'add_daily_nutrition_view.dart';
 
 //ignore: must_be_immutable
 class MyDailyNutritionView extends StatefulWidget {
-  String mode;
+  String? mode;
 
   MyDailyNutritionView(this.mode);
 
@@ -30,18 +30,18 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var dateFormat = DateFormat('yyyy-MM-dd');
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  double totalTodayCal = 0.0;
-  double totalBreakfastCal = 0.0;
-  double totalLunchCal = 0.0;
-  double totalDinnerCal = 0.0;
-  double totalMorningSnackCal = 0.0;
-  double totalAfernoonSnackCal = 0.0;
-  double totalEveningSncakCal = 0.0;
+  double? totalTodayCal = 0.0;
+  double? totalBreakfastCal = 0.0;
+  double? totalLunchCal = 0.0;
+  double? totalDinnerCal = 0.0;
+  double? totalMorningSnackCal = 0.0;
+  double? totalAfernoonSnackCal = 0.0;
+  double? totalEveningSncakCal = 0.0;
   Color buttonColor = primaryLightColor;
-  int waterGlass = 0;
-  GlassOfWaterConsumption glassOfWaterConsumption;
-  NutritionResponseStore nutritionResponseStore;
-  DateTime startDate;
+  int? waterGlass = 0;
+  GlassOfWaterConsumption? glassOfWaterConsumption;
+  late NutritionResponseStore nutritionResponseStore;
+  DateTime? startDate;
   final dbHelper = DatabaseHelper.instance;
 
   loadSharedPref() async {
@@ -65,8 +65,8 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
     }
 
     if (glassOfWaterConsumption != null) {
-      if (startDate == glassOfWaterConsumption.date) {
-        waterGlass = glassOfWaterConsumption.count;
+      if (startDate == glassOfWaterConsumption!.date) {
+        waterGlass = glassOfWaterConsumption!.count;
       }
     }
   }
@@ -194,14 +194,14 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                         height: 8,
                       ),
                       Semantics(
-                        label: totalTodayCal.toStringAsFixed(0) + ' Calories',
+                        label: totalTodayCal!.toStringAsFixed(0) + ' Calories',
                         child: ExcludeSemantics(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                totalTodayCal.toStringAsFixed(0),
+                                totalTodayCal!.toStringAsFixed(0),
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 34.0,
@@ -276,7 +276,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                 children: [
                                   Semantics(
                                     label:
-                                        totalBreakfastCal.toStringAsFixed(0) +
+                                    totalBreakfastCal!.toStringAsFixed(0) +
                                             ' Calories',
                                     child: ExcludeSemantics(
                                       child: Row(
@@ -285,7 +285,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                             width: 4,
                                           ),
                                           Text(
-                                            totalBreakfastCal
+                                            totalBreakfastCal!
                                                 .toStringAsFixed(0),
                                             semanticsLabel: '',
                                             style: TextStyle(
@@ -395,7 +395,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Semantics(
-                                    label: totalLunchCal.toStringAsFixed(0) +
+                                    label: totalLunchCal!.toStringAsFixed(0) +
                                         ' Calories',
                                     child: ExcludeSemantics(
                                       child: Row(
@@ -404,7 +404,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                             width: 4,
                                           ),
                                           Text(
-                                            totalLunchCal.toStringAsFixed(0),
+                                            totalLunchCal!.toStringAsFixed(0),
                                             semanticsLabel: '',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
@@ -513,7 +513,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Semantics(
-                                    label: totalDinnerCal.toStringAsFixed(0) +
+                                    label: totalDinnerCal!.toStringAsFixed(0) +
                                         ' Calories',
                                     child: ExcludeSemantics(
                                       child: Row(
@@ -522,7 +522,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                             width: 4,
                                           ),
                                           Text(
-                                            totalDinnerCal.toStringAsFixed(0),
+                                            totalDinnerCal!.toStringAsFixed(0),
                                             semanticsLabel: '',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
@@ -631,7 +631,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Semantics(
-                                    label: totalMorningSnackCal
+                                    label: totalMorningSnackCal!
                                             .toStringAsFixed(0) +
                                         ' Calories',
                                     child: ExcludeSemantics(
@@ -641,7 +641,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                             width: 4,
                                           ),
                                           Text(
-                                            totalMorningSnackCal
+                                            totalMorningSnackCal!
                                                 .toStringAsFixed(0),
                                             semanticsLabel: '',
                                             style: TextStyle(
@@ -751,8 +751,8 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Semantics(
-                                    label: waterGlass.toStringAsFixed(0) +
-                                        (waterGlass > 1 ? 'glasses' : 'glass')
+                                    label: waterGlass!.toStringAsFixed(0) +
+                                        (waterGlass! > 1 ? 'glasses' : 'glass')
                                             .toString(),
                                     child: ExcludeSemantics(
                                       child: Row(
@@ -772,10 +772,10 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                             width: 8,
                                           ),
                                           Text(
-                                            waterGlass > 1
+                                            waterGlass! > 1
                                                 ? 'glasses'
                                                 : 'glass',
-                                            semanticsLabel: waterGlass > 1
+                                            semanticsLabel: waterGlass! > 1
                                                 ? 'glasses'
                                                 : 'glass',
                                             style: TextStyle(
@@ -897,25 +897,25 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
 
   addNutrition(String type, double caloriesConsumed) {
     if (type == 'breakfast') {
-      totalBreakfastCal = totalBreakfastCal + caloriesConsumed;
+      totalBreakfastCal = totalBreakfastCal! + caloriesConsumed;
     } else if (type == 'lunch') {
-      totalLunchCal = totalLunchCal + caloriesConsumed;
+      totalLunchCal = totalLunchCal! + caloriesConsumed;
     } else if (type == 'dinner') {
-      totalDinnerCal = totalDinnerCal + caloriesConsumed;
+      totalDinnerCal = totalDinnerCal! + caloriesConsumed;
     } else if (type == 'snack') {
-      totalMorningSnackCal = totalMorningSnackCal + caloriesConsumed;
+      totalMorningSnackCal = totalMorningSnackCal! + caloriesConsumed;
     } else if (type == 'afternoonSnacks') {
-      totalAfernoonSnackCal = totalAfernoonSnackCal + caloriesConsumed;
+      totalAfernoonSnackCal = totalAfernoonSnackCal! + caloriesConsumed;
     } else if (type == 'eveningSnacks') {
-      totalEveningSncakCal = totalEveningSncakCal + caloriesConsumed;
+      totalEveningSncakCal = totalEveningSncakCal! + caloriesConsumed;
     }
 
-    totalTodayCal = totalBreakfastCal +
-        totalLunchCal +
-        totalDinnerCal +
-        totalMorningSnackCal +
-        totalAfernoonSnackCal +
-        totalEveningSncakCal;
+    totalTodayCal = totalBreakfastCal! +
+        totalLunchCal! +
+        totalDinnerCal! +
+        totalMorningSnackCal! +
+        totalAfernoonSnackCal! +
+        totalEveningSncakCal!;
 
     setState(() {});
 
@@ -946,7 +946,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
       final BaseResponse baseResponse =
           await model.recordMyCaloriesConsumed(map);
       if (baseResponse.status == 'success') {
-        showToast(baseResponse.message, context);
+        showToast(baseResponse.message!, context);
         recordNutririonEntry(nutritionName, nutritionType, caloriesConsumed);
       } else {}
     } on FetchDataException catch (e) {
@@ -979,7 +979,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
       print('inserted row id: $id');
     } else {
       final row = allRows.elementAt(0);
-      final int consumedCount =
+      final int? consumedCount =
           row[DatabaseHelper.columnNutritionFoodConsumedQuantity] + 1;
 
       final Map<String, dynamic> updateRow = {
@@ -996,7 +996,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
 
   recordMyWaterConsumptions() async {
     try {
-      waterGlass = waterGlass + 1;
+      waterGlass = waterGlass! + 1;
 
       _sharedPrefUtils.save('waterConsumption',
           GlassOfWaterConsumption(startDate, waterGlass, '').toJson());

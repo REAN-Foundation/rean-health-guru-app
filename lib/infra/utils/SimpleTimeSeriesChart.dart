@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class SimpleTimeSeriesChart extends StatelessWidget {
   final List<charts.Series> seriesList;
-  final bool animate;
+  final bool? animate;
 
   const SimpleTimeSeriesChart(this.seriesList, {this.animate});
 
@@ -20,7 +20,7 @@ class SimpleTimeSeriesChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return charts.TimeSeriesChart(
-      seriesList,
+      seriesList as List<Series<dynamic, DateTime>>,
       animate: animate,
       defaultRenderer: charts.LineRendererConfig(),
       // Custom renderer configuration for the point series.

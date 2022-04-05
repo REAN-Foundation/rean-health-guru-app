@@ -13,7 +13,7 @@ class PDFScreen extends StatelessWidget {
 
   PDFScreen(this.pathPDF);
 
-  File file;
+  late File file;
   static final GlobalKey _globalKey = GlobalKey();
 
   @override
@@ -48,7 +48,8 @@ class PDFScreen extends StatelessWidget {
   }
 
   urlFileShare() async {
-    final RenderBox box = _globalKey.currentContext.findRenderObject();
+    final RenderBox? box =
+        _globalKey.currentContext!.findRenderObject() as RenderBox?;
     final File imgFile = File(pathPDF);
     if (Platform.isAndroid) {
       /*  var url = 'https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg';
@@ -61,11 +62,11 @@ class PDFScreen extends StatelessWidget {
       Share.shareFiles([imgFile.path],
           subject: '',
           text: '',
-          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
     } else {
       Share.shareFiles([imgFile.path],
           subject: '',
-          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
     }
   }
 }

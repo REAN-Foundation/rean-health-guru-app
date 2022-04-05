@@ -9,18 +9,18 @@ import 'package:paitent/infra/utils/Conversion.dart';
 
 // ignore: must_be_immutable
 class AddBMIDetailDialog extends StatefulWidget {
-  Function _submitButtonListner;
-  double _height;
-  double _weight;
+  late Function _submitButtonListner;
+  double? _height;
+  double? _weight;
 
   // ignore
   //AllergiesDialog(@required this._allergiesCategoryMenuItems,@required this._allergiesSeveretyMenuItems, @required Function this.submitButtonListner, this.patientId);
 
   AddBMIDetailDialog(
-      {Key key,
-      @required Function submitButtonListner,
-      double height,
-      double weight})
+      {Key? key,
+      required Function submitButtonListner,
+      double? height,
+      double? weight})
       : super(key: key) {
     _submitButtonListner = submitButtonListner;
     _height = height;
@@ -36,7 +36,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
   var doctorSearchList = <Doctors>[];
 
   String unit = 'Kg';
-  var height;
+  late var height;
   final _weightController = TextEditingController();
   final _heightInFeetController = TextEditingController();
   final _heightInInchesController = TextEditingController();
@@ -51,7 +51,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
     }
 
     if (widget._height != 0.0) {
-      widget._height = Conversion.cmToFeet(widget._height);
+      widget._height = Conversion.cmToFeet(widget._height!);
 
       height = widget._height.toString().split('.');
 
@@ -67,7 +67,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
 
     if (widget._weight != 0.0) {
       if (unit == 'lbs') {
-        widget._weight = widget._weight * 2.20462;
+        widget._weight = widget._weight! * 2.20462;
       }
 
       _weightController.text = widget._weight.toString();

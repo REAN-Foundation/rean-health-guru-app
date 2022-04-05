@@ -18,11 +18,11 @@ import '../../../misc/ui/base_widget.dart';
 
 //ignore: must_be_immutable
 class AddNurseDialog extends StatefulWidget {
-  Function _submitButtonListner;
+  late Function _submitButtonListner;
 
   //AllergiesDialog(@required this._allergiesCategoryMenuItems,@required this._allergiesSeveretyMenuItems, @required Function this.submitButtonListner, this.patientId);
 
-  AddNurseDialog({Key key, @required Function submitButtonListner})
+  AddNurseDialog({Key? key, required Function submitButtonListner})
       : super(key: key) {
     _submitButtonListner = submitButtonListner;
   }
@@ -39,12 +39,12 @@ class _MyDialogState extends State<AddNurseDialog> {
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _mobileNumberFocus = FocusNode();
-  String profileImage = '';
-  String profileImagePath = '';
+  String? profileImage = '';
+  String? profileImagePath = '';
   String selectedGender = 'Male';
-  String mobileNumber = '';
-  String countryCode = '';
-  int maxLengthOfPhone = 0;
+  String? mobileNumber = '';
+  String? countryCode = '';
+  int? maxLengthOfPhone = 0;
 
   @override
   void initState() {
@@ -111,9 +111,9 @@ class _MyDialogState extends State<AddNurseDialog> {
             showToastMsg('Enter first name', context);
           } else if (_lastNameController.text == '') {
             showToastMsg('Enter last name', context);
-          } else if (mobileNumber.isEmpty) {
+          } else if (mobileNumber!.isEmpty) {
             showToastMsg('Enter mobile number', context);
-          } else if (mobileNumber.length != maxLengthOfPhone) {
+          } else if (mobileNumber!.length != maxLengthOfPhone) {
             showToastMsg('Enter valid mobile number', context);
           } else if (selectedGender == '') {
             showToastMsg('Select gender', context);
@@ -121,7 +121,7 @@ class _MyDialogState extends State<AddNurseDialog> {
             widget._submitButtonListner(
                 _firstNameController.text.trim(),
                 _lastNameController.text.trim(),
-                countryCode + '-' + mobileNumber,
+                countryCode! + '-' + mobileNumber!,
                 selectedGender);
           }
         },
@@ -427,7 +427,7 @@ class _MyDialogState extends State<AddNurseDialog> {
     try {
       final map = <String, String>{};
       map['enc'] = 'multipart/form-data';
-      map['Authorization'] = 'Bearer ' + auth;
+      map['Authorization'] = 'Bearer ' + auth!;
 
       final postUri =
           Uri.parse('https://hca-bff-dev.services.tikme.app/resources/upload/');
@@ -445,9 +445,9 @@ class _MyDialogState extends State<AddNurseDialog> {
           final UploadImageResponse uploadResponse =
               UploadImageResponse.fromJson(json.decode(respStr));
           if (uploadResponse.status == 'success') {
-            profileImagePath = uploadResponse.data.details.elementAt(0).url;
-            profileImage = uploadResponse.data.details.elementAt(0).url;
-            showToastMsg(uploadResponse.message, context);
+            profileImagePath = uploadResponse.data!.details!.elementAt(0).url;
+            profileImage = uploadResponse.data!.details!.elementAt(0).url;
+            showToastMsg(uploadResponse.message!, context);
           } else {
             showToastMsg('Opps, something wents wrong!', context);
           }

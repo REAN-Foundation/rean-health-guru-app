@@ -1,7 +1,7 @@
 class DoctorListApiResponse {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   DoctorListApiResponse({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class DoctorListApiResponse {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<Doctors> doctors;
+  List<Doctors>? doctors;
 
   Data({this.doctors});
 
@@ -31,7 +31,7 @@ class Data {
     if (json['doctors'] != null) {
       doctors = <Doctors>[];
       json['doctors'].forEach((v) {
-        doctors.add(Doctors.fromJson(v));
+        doctors!.add(Doctors.fromJson(v));
       });
     }
   }
@@ -39,38 +39,38 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (doctors != null) {
-      data['doctors'] = doctors.map((v) => v.toJson()).toList();
+      data['doctors'] = doctors!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Doctors {
-  String userId;
-  String doctorRoleId;
-  String firstName;
-  String lastName;
-  String prefix;
-  String phoneNumber;
-  String email;
-  String gender;
-  String birthDate;
-  String imageURL;
-  String locality;
-  String address;
-  String locationCoordsLongitude;
-  String locationCoordsLattitude;
-  String establishmentName;
-  String qualification;
-  String specialities;
-  String aboutMe;
-  String professionalHighlights;
+  String? userId;
+  String? doctorRoleId;
+  String? firstName;
+  String? lastName;
+  String? prefix;
+  String? phoneNumber;
+  String? email;
+  String? gender;
+  String? birthDate;
+  String? imageURL;
+  String? locality;
+  String? address;
+  String? locationCoordsLongitude;
+  String? locationCoordsLattitude;
+  String? establishmentName;
+  String? qualification;
+  String? specialities;
+  String? aboutMe;
+  String? professionalHighlights;
   dynamic consultationFee;
   dynamic appointmentSlotDuration;
-  String practisingSince;
-  String dateCreated;
-  String dateUpdated;
-  AppointmentRelatedDetails appointmentRelatedDetails;
+  String? practisingSince;
+  String? dateCreated;
+  String? dateUpdated;
+  AppointmentRelatedDetails? appointmentRelatedDetails;
 
   Doctors(
       {this.userId,
@@ -156,18 +156,18 @@ class Doctors {
     data['DateCreated'] = dateCreated;
     data['DateUpdated'] = dateUpdated;
     if (appointmentRelatedDetails != null) {
-      data['AppointmentRelatedDetails'] = appointmentRelatedDetails.toJson();
+      data['AppointmentRelatedDetails'] = appointmentRelatedDetails!.toJson();
     }
     return data;
   }
 }
 
 class AppointmentRelatedDetails {
-  String userId;
-  String nodeId;
-  String businessServiceId;
-  String operationalTimeZone;
-  List<String> workingHours;
+  String? userId;
+  String? nodeId;
+  String? businessServiceId;
+  String? operationalTimeZone;
+  List<String>? workingHours;
 
   AppointmentRelatedDetails(
       {this.userId,

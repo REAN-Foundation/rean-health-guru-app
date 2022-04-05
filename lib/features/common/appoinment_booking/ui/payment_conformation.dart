@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:masked_text_input_formatter/masked_text_input_formatter.dart';
 import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/features/common/appoinment_booking/view_models/appoinment_view_model.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
@@ -295,12 +294,6 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
               ),
             ),
             child: TextFormField(
-                inputFormatters: [
-                  MaskedTextInputFormatter(
-                    mask: 'xxxx xxxx xxxx xxxx',
-                    separator: ' ',
-                  ),
-                ],
                 maxLines: 1,
                 enabled: true,
                 textInputAction: TextInputAction.next,
@@ -346,12 +339,12 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
                           ),
                         ),
                         child: TextFormField(
-                          inputFormatters: [
+    /*inputFormatters: [
                             MaskedTextInputFormatter(
                               mask: 'MM/YY',
                               separator: '/',
                             ),
-                          ],
+                          ],*/
                           maxLines: 1,
                           enabled: true,
                           textInputAction: TextInputAction.next,

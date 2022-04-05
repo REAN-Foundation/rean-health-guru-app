@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:paitent/features/misc/ui/AfterSplashScreen.dart';
 import 'package:paitent/features/misc/ui/splashScreen.dart';
+import 'package:paitent/infra/provider_setup.dart';
 import 'package:paitent/infra/router.dart';
-import 'package:paitent/provider_setup.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //https://medium.com/@LohaniDamodar/flutter-separating-build-environment-with-multiple-firebase-environment-92e40e26d275
@@ -15,7 +15,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool login = prefs.getBool('login1.8');
+  bool? login = prefs.getBool('login1.8');
   login ??= false;
   debugPrint('Main >> Login Session: $login');
 
@@ -23,7 +23,7 @@ Future<void> main() async {
 }
 //ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  bool isLogin;
+  bool? isLogin;
 
   MyApp(bool isLogin) {
     this.isLogin = isLogin;

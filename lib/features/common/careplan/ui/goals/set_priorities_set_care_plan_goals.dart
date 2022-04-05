@@ -7,7 +7,7 @@ import 'package:paitent/features/misc/models/BaseResponse.dart';
 import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class SetPrioritiesGoalsForCarePlanView extends StatefulWidget {
   @override
@@ -19,12 +19,12 @@ class _SetPrioritiesGoalsForCarePlanViewState
     extends State<SetPrioritiesGoalsForCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  String selectedPrimaryGoal = '';
-  String selectedSecondaryGoal = '';
-  List<DropdownMenuItem<String>> _carePlanMenuItems;
+  String? selectedPrimaryGoal = '';
+  String? selectedSecondaryGoal = '';
+  List<DropdownMenuItem<String>>? _carePlanMenuItems;
   String selectedCarePlan = '';
-  GetGoalPriorities _getGoalPriorities;
-  ProgressDialog progressDialog;
+  late GetGoalPriorities _getGoalPriorities;
+  late ProgressDialog progressDialog;
 
   @override
   void initState() {
@@ -36,15 +36,15 @@ class _SetPrioritiesGoalsForCarePlanViewState
   getGoalsPriority() async {
     try {
       _getGoalPriorities = await model.getGoalsPriority(
-          startCarePlanResponseGlob.data.carePlan.id.toString());
+          startCarePlanResponseGlob!.data!.carePlan!.id.toString());
 
       if (_getGoalPriorities.status == 'success') {
         debugPrint('AHA Care Plan ==> ${_getGoalPriorities.toJson()}');
 
         _carePlanMenuItems =
-            buildDropDownMenuItemsForCarePlan(_getGoalPriorities.data.goals);
+            buildDropDownMenuItemsForCarePlan(_getGoalPriorities.data!.goals!);
       } else {
-        showToast(_getGoalPriorities.message, context);
+        showToast(_getGoalPriorities.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -67,7 +67,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
+    progressDialog = ProgressDialog(context: context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -318,7 +318,8 @@ class _SetPrioritiesGoalsForCarePlanViewState
 
   setPriorityGoal() async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['Primary'] = selectedPrimaryGoal;
       map['Secondary'] = selectedSecondaryGoal;
@@ -327,17 +328,17 @@ class _SetPrioritiesGoalsForCarePlanViewState
       body['Priorities'] = map;
 
       final BaseResponse baseResponse = await model.setGoalsPriority(
-          startCarePlanResponseGlob.data.carePlan.id.toString(), body);
+          startCarePlanResponseGlob!.data!.carePlan!.id.toString(), body);
 
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         Navigator.pushNamed(context, RoutePaths.Select_Goals_Care_Plan);
       } else {
-        progressDialog.hide();
-        showToast(baseResponse.message, context);
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());

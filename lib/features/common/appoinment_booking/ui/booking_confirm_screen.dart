@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_autolink_text/flutter_autolink_text.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/features/common/appoinment_booking/models/doctorListApiResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/models/labsListApiResponse.dart';
@@ -8,11 +7,10 @@ import 'package:paitent/features/misc/models/DoctorBookingAppoinmentPojo.dart';
 import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/features/misc/ui/home_view.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable
 class BookingConfirmedView extends StatefulWidget {
-  DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;
+  DoctorBookingAppoinmentPojo? bookingAppoinmentsDetails;
 
   BookingConfirmedView(this.bookingAppoinmentsDetails);
 
@@ -22,21 +20,21 @@ class BookingConfirmedView extends StatefulWidget {
 }
 
 class _BookingConfirmedViewState extends State<BookingConfirmedView> {
-  DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;
-  Doctors doctorDetails;
+  DoctorBookingAppoinmentPojo? bookingAppoinmentsDetails;
+  Doctors? doctorDetails;
   var dateFormat = DateFormat('dd MMM, yyyy');
   var dateFormatFull = DateFormat('yyyy-MM-dd');
   var timeFormat = DateFormat('hh:mm a');
-  Labs labDetails;
+  Labs? labDetails;
 
   _BookingConfirmedViewState(this.bookingAppoinmentsDetails);
 
   @override
   Widget build(BuildContext context) {
-    if (bookingAppoinmentsDetails.whichFlow == 'Lab') {
-      labDetails = bookingAppoinmentsDetails.labs;
+    if (bookingAppoinmentsDetails!.whichFlow == 'Lab') {
+      labDetails = bookingAppoinmentsDetails!.labs;
     } else {
-      doctorDetails = bookingAppoinmentsDetails.doctors;
+      doctorDetails = bookingAppoinmentsDetails!.doctors;
     }
     return BaseWidget<AppoinmentViewModel>(
         model: AppoinmentViewModel(),
@@ -102,7 +100,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
                             Container(
                               height: 360,
                               child:
-                              bookingAppoinmentsDetails.whichFlow == 'Lab'
+                              bookingAppoinmentsDetails!.whichFlow == 'Lab'
                                       ? _makeLabTile()
                                       : _makeDoctorTile(),
                             ),
@@ -144,15 +142,20 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
               backgroundColor: primaryColor,
               child: CircleAvatar(
                   radius: 38,
-                  backgroundImage: doctorDetails.imageURL == ''
-                      ? AssetImage('res/images/profile_placeholder.png')
-                      : NetworkImage(doctorDetails.imageURL)),
+                  backgroundImage: (doctorDetails!.imageURL == ''
+                          ? AssetImage('res/images/profile_placeholder.png')
+                          : NetworkImage(doctorDetails!.imageURL!))
+                      as ImageProvider<Object>?),
             ),
           ),
           SizedBox(
             height: 16,
           ),
-          Text('Dr.' + doctorDetails.firstName + ' ' + doctorDetails.lastName,
+          Text(
+              'Dr.' +
+                  doctorDetails!.firstName! +
+                  ' ' +
+                  doctorDetails!.lastName!,
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -160,7 +163,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
           SizedBox(
             height: 4,
           ),
-          Text(doctorDetails.specialities,
+          Text(doctorDetails!.specialities!,
               style: TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.w300,
@@ -181,7 +184,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
           Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),
             child: Text(
-              doctorDetails.address,
+              doctorDetails!.address!,
               style: TextStyle(
                   fontSize: 14, fontWeight: FontWeight.w300, color: textBlack),
               textAlign: TextAlign.center,
@@ -204,7 +207,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
               SizedBox(
                 width: 8,
               ),
-              AutolinkText(
+              /* AutolinkText(
                   text: '+91 ' + doctorDetails.phoneNumber,
                   textStyle: TextStyle(
                       fontSize: 14.0,
@@ -218,7 +221,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
                     } else {
                       throw 'Could not launch $url';
                     }
-                  }),
+                  }),*/
             ],
           ),
           SizedBox(
@@ -279,16 +282,17 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
               backgroundColor: primaryColor,
               child: CircleAvatar(
                   radius: 48,
-                  backgroundImage: (labDetails.imageURL == '') ||
-                          (labDetails.imageURL == null)
-                      ? AssetImage('res/images/profile_placeholder.png')
-                      : NetworkImage(labDetails.imageURL)),
+                  backgroundImage: ((labDetails!.imageURL == '') ||
+                              (labDetails!.imageURL == null)
+                          ? AssetImage('res/images/profile_placeholder.png')
+                          : NetworkImage(labDetails!.imageURL!))
+                      as ImageProvider<Object>?),
             ),
           ),
           SizedBox(
             height: 16,
           ),
-          Text(labDetails.firstName + ' ' + labDetails.lastName,
+          Text(labDetails!.firstName! + ' ' + labDetails!.lastName!,
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -296,7 +300,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
           SizedBox(
             height: 4,
           ),
-          Text(labDetails.locality,
+          Text(labDetails!.locality!,
               style: TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.w300,
@@ -317,7 +321,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
           Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),
             child: Text(
-              labDetails.address,
+              labDetails!.address!,
               style: TextStyle(
                   fontSize: 14, fontWeight: FontWeight.w300, color: textBlack),
               textAlign: TextAlign.center,
@@ -340,7 +344,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
               SizedBox(
                 width: 8,
               ),
-              AutolinkText(
+              /*AutolinkText(
                   text: '+91 ' + labDetails.phoneNumber,
                   textStyle: TextStyle(
                       fontSize: 14.0,
@@ -354,7 +358,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
                     } else {
                       throw 'Could not launch $url';
                     }
-                  }),
+                  }),*/
             ],
           ),
           SizedBox(
@@ -394,7 +398,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
           RichText(
             text: TextSpan(
               text: dateFormat.format(
-                  DateTime.parse(bookingAppoinmentsDetails.selectedDate)),
+                  DateTime.parse(bookingAppoinmentsDetails!.selectedDate)),
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
@@ -402,9 +406,9 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
               children: <TextSpan>[
                 TextSpan(
                     text: ' : ' +
-                        timeFormat.format(
-                            DateTime.parse(bookingAppoinmentsDetails.slotStart)
-                                .toLocal()),
+                        timeFormat.format(DateTime.parse(
+                                bookingAppoinmentsDetails!.slotStart!)
+                            .toLocal()),
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
@@ -514,7 +518,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
               ),
             ],
           ),
-        ) ??
-        false;
+        ).then((value) => value as bool) ??
+        false as Future<bool>;
   }
 }

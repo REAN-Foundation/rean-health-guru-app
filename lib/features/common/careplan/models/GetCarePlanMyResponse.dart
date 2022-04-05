@@ -1,7 +1,7 @@
 class GetCarePlanMyResponse {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   GetCarePlanMyResponse({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class GetCarePlanMyResponse {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<CarePlans> carePlans;
+  List<CarePlans>? carePlans;
 
   Data({this.carePlans});
 
@@ -31,7 +31,7 @@ class Data {
     if (json['carePlans'] != null) {
       carePlans = <CarePlans>[];
       json['carePlans'].forEach((v) {
-        carePlans.add(CarePlans.fromJson(v));
+        carePlans!.add(CarePlans.fromJson(v));
       });
     }
   }
@@ -39,29 +39,29 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (carePlans != null) {
-      data['carePlans'] = carePlans.map((v) => v.toJson()).toList();
+      data['carePlans'] = carePlans!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class CarePlans {
-  int id;
-  String patientUserId;
-  String displayId;
-  String allyMRN;
-  String carePlanName;
-  String carePlanCode;
-  String enrollmentBeginDate;
-  String enrollmentEndDate;
-  int durationInWeeks;
-  int endEnrollmentAfterDays;
-  bool isStopped;
-  String stoppedDate;
-  String enrolledOn;
-  bool isActive;
-  String createdAt;
-  String updatedAt;
+  int? id;
+  String? patientUserId;
+  String? displayId;
+  String? allyMRN;
+  String? carePlanName;
+  String? carePlanCode;
+  String? enrollmentBeginDate;
+  String? enrollmentEndDate;
+  int? durationInWeeks;
+  int? endEnrollmentAfterDays;
+  bool? isStopped;
+  String? stoppedDate;
+  String? enrolledOn;
+  bool? isActive;
+  String? createdAt;
+  String? updatedAt;
 
   CarePlans(
       {this.id,

@@ -9,27 +9,28 @@ import 'package:http/http.dart' as http;
 import 'CustomException.dart';
 
 class ApiProvider {
-  String _baseUrl = '';
-  String _api_key = '';
+  String? _baseUrl = '';
+  String? _api_key = '';
 
-  ApiProvider(String baseUrl) {
+  ApiProvider(String? baseUrl) {
     _baseUrl = baseUrl;
     _api_key = dotenv.env['Patient_API_KEY'];
   }
 
-  Future<dynamic> get(String url, {Map header}) async {
-    final headers = <String, String>{};
+  Future<dynamic> get(String url, {Map? header}) async {
+    final headers = <String, String?>{};
     if (header != null) {
-      headers.addAll(header);
+      headers.addAll(header as Map<String, String?>);
     }
     headers['x-api-key'] = _api_key;
-    debugPrint('Base Url ==> GET ${_baseUrl + url}');
+    debugPrint('Base Url ==> GET ${_baseUrl! + url}');
     debugPrint('Headers ==> ${json.encode(headers).toString()}');
 
     var responseJson;
     try {
       final response = await http
-          .get(Uri.parse(_baseUrl + url), headers: headers)
+          .get(Uri.parse(_baseUrl! + url),
+              headers: headers as Map<String, String>?)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -41,22 +42,22 @@ class ApiProvider {
     return responseJson;
   }
 
-  Future<dynamic> post(String url, {Map body, Map header}) async {
-    final headers = <String, String>{};
+  Future<dynamic> post(String url, {Map? body, Map? header}) async {
+    final headers = <String, String?>{};
     if (header != null) {
-      headers.addAll(header);
+      headers.addAll(header as Map<String, String?>);
     }
     headers['x-api-key'] = _api_key;
 
-    debugPrint('Base Url ==> POST ${_baseUrl + url}');
+    debugPrint('Base Url ==> POST ${_baseUrl! + url}');
     debugPrint('Request Body ==> ${json.encode(body).toString()}');
     debugPrint('Headers ==> ${json.encode(headers).toString()}');
 
     var responseJson;
     try {
       final response = await http
-          .post(Uri.parse(_baseUrl + url),
-              body: json.encode(body), headers: headers)
+          .post(Uri.parse(_baseUrl! + url),
+              body: json.encode(body), headers: headers as Map<String, String>?)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -68,24 +69,24 @@ class ApiProvider {
     return responseJson;
   }
 
-  Future<dynamic> put(String url, {Map body, Map header}) async {
-    final headers = <String, String>{};
+  Future<dynamic> put(String url, {Map? body, Map? header}) async {
+    final headers = <String, String?>{};
     if (header != null) {
-      headers.addAll(header);
+      headers.addAll(header as Map<String, String?>);
     }
     headers['x-api-key'] = _api_key;
-    debugPrint('Base Url ==> GET ${_baseUrl + url}');
+    debugPrint('Base Url ==> GET ${_baseUrl! + url}');
     debugPrint('Headers ==> ${json.encode(headers).toString()}');
 
-    debugPrint('Base Url ==> PUT ${_baseUrl + url}');
+    debugPrint('Base Url ==> PUT ${_baseUrl! + url}');
     debugPrint('Request Body ==> ${json.encode(body).toString()}');
     debugPrint('Headers ==> ${json.encode(headers).toString()}');
 
     var responseJson;
     try {
       final response = await http
-          .put(Uri.parse(_baseUrl + url),
-              body: json.encode(body), headers: headers)
+          .put(Uri.parse(_baseUrl! + url),
+              body: json.encode(body), headers: headers as Map<String, String>?)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -97,22 +98,23 @@ class ApiProvider {
     return responseJson;
   }
 
-  Future<dynamic> delete(String url, {Map header}) async {
-    final headers = <String, String>{};
+  Future<dynamic> delete(String url, {Map? header}) async {
+    final headers = <String, String?>{};
     if (header != null) {
-      headers.addAll(header);
+      headers.addAll(header as Map<String, String?>);
     }
     headers['x-api-key'] = _api_key;
-    debugPrint('Base Url ==> GET ${_baseUrl + url}');
+    debugPrint('Base Url ==> GET ${_baseUrl! + url}');
     debugPrint('Headers ==> ${json.encode(headers).toString()}');
 
-    debugPrint('Base Url ==> DELETE ${_baseUrl + url}');
+    debugPrint('Base Url ==> DELETE ${_baseUrl! + url}');
     debugPrint('Headers ==> ${json.encode(headers).toString()}');
 
     var responseJson;
     try {
       final response = await http
-          .delete(Uri.parse(_baseUrl + url), headers: headers)
+          .delete(Uri.parse(_baseUrl! + url),
+              headers: headers as Map<String, String>?)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -183,23 +185,21 @@ class ApiProvider {
   //   return responseJson;
   // }
 
-  multipart(String url, {String filePath, Map header}) async {
-    debugPrint('Base Url ==> POST ${_baseUrl + url}');
+  multipart(String url, {required String filePath, required Map header}) async {
+    debugPrint('Base Url ==> POST ${_baseUrl! + url}');
     debugPrint('Request File Path ==> $filePath');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
 
     var responseJson;
     try {
-      final postUri = Uri.parse(_baseUrl + url);
+      final postUri = Uri.parse(_baseUrl! + url);
       final request = http.MultipartRequest('POST', postUri);
-      request.headers.addAll(header);
+      request.headers.addAll(header as Map<String, String>);
       request.files.add(http.MultipartFile.fromBytes(
           'name', await File.fromUri(Uri.parse(filePath)).readAsBytes()));
 
-      request
-          .send()
-          .then((response) async {
-            /* try {
+      request.send().then((response) async {
+        /* try {
           var responseFinal = await http.Response.fromStream(response);
           responseJson = _response(responseFinal);
         } on CustomException{
@@ -225,7 +225,6 @@ class ApiProvider {
 
         });*/
           })
-          .catchError((err) => debugPrint('error : ' + err.toString()))
           .whenComplete(() {});
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -236,7 +235,7 @@ class ApiProvider {
     return responseJson;
   }
 
-  String getBaseUrl() {
+  String? getBaseUrl() {
     return _baseUrl;
   }
 }

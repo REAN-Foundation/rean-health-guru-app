@@ -1,9 +1,9 @@
 import 'package:paitent/features/common/appoinment_booking/models/labsListApiResponse.dart';
 
 class LabDetailsResponse {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   LabDetailsResponse({this.status, this.message, this.data});
 
@@ -18,14 +18,14 @@ class LabDetailsResponse {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  Labs lab;
+  Labs? lab;
 
   Data({this.lab});
 
@@ -36,7 +36,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (lab != null) {
-      data['lab'] = lab.toJson();
+      data['lab'] = lab!.toJson();
     }
     return data;
   }

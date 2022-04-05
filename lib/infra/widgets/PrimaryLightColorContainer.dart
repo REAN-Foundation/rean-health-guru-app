@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 //ignore: must_be_immutable
 class PrimaryLightColorContainer extends StatelessWidget {
-  double size;
+  double? size;
 
   PrimaryLightColorContainer(double size) {
     this.size = size;

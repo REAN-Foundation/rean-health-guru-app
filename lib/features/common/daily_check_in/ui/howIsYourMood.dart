@@ -13,7 +13,7 @@ class HowIsYourMood extends StatefulWidget {
 class _HowIsYourMood extends State<HowIsYourMood>
     with SingleTickerProviderStateMixin {
   final int delayedAmount = 500;
-  AnimationController _controller;
+  late AnimationController _controller;
   int selectedFeelings = 0;
 
   @override

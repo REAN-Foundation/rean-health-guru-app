@@ -10,9 +10,9 @@ import 'package:paitent/infra/utils/CommonUtils.dart';
 
 //ignore: must_be_immutable
 class DashBoardVer1View extends StatefulWidget {
-  Function positionToChangeNavigationBar;
+  late Function positionToChangeNavigationBar;
 
-  DashBoardVer1View({Key key, @required Function positionToChangeNavigationBar})
+  DashBoardVer1View({Key? key, required Function positionToChangeNavigationBar})
       : super(key: key) {
     this.positionToChangeNavigationBar = positionToChangeNavigationBar;
   }
@@ -37,16 +37,17 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
   int incompleteTaskCount = 0;
   int completedMedicationCount = 0;
   int incompleteMedicationCount = 0;
- /* Weight weight;
+
+  /* Weight weight;
   BloodPressure bloodPressure;
   BloodSugar bloodSugar;
   BloodOxygenSaturation bloodOxygenSaturation;
   Pulse pulse;
   Temperature temperature;*/
   String unit = 'Kg';
-  String topicId;
-  String topicName = '';
-  String briefInformation = '';
+  String? topicId;
+  String? topicName = '';
+  String? briefInformation = '';
 
   @override
   void initState() {
@@ -146,9 +147,10 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
       if (knowledgeTopicResponse.status == 'success') {
         //final Items topic =
         //knowledgeTopicResponse.data.knowledgeNuggetRecords.items.elementAt(0);
-        topicId = knowledgeTopicResponse.data.knowledgeNugget.id;
-        topicName = knowledgeTopicResponse.data.knowledgeNugget.topicName;
-        briefInformation = knowledgeTopicResponse.data.knowledgeNugget.briefInformation;
+        topicId = knowledgeTopicResponse.data!.knowledgeNugget!.id;
+        topicName = knowledgeTopicResponse.data!.knowledgeNugget!.topicName;
+        briefInformation =
+            knowledgeTopicResponse.data!.knowledgeNugget!.briefInformation;
         setState(() {});
       } else {
         //showToast(knowledgeTopicResponse.message);

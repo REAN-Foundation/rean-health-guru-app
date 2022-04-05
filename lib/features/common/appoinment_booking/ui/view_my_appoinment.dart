@@ -22,25 +22,25 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
   bool isUpCompletedSelected = true;
   var model = BookAppoinmentViewModel();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  String auth;
+  String? auth;
   List<Appointments> appointments = <Appointments>[];
   var dateFormat = DateFormat('dd MMM, yyyy');
   var dateFormatFull = DateFormat('yyyy-MM-dd');
   var timeFormat = DateFormat('hh:mm a');
   String pathPDF = '';
   bool isUpCommingSelected = true;
-  UserData user;
+  late UserData user;
 
   loadSharedPrefs() async {
     try {
       user = UserData.fromJson(await _sharedPrefUtils.read('user'));
       //debugPrint(user.toJson().toString());
-      auth = user.data.accessToken;
-      _getMyAppointments(auth);
+      auth = user.data!.accessToken;
+      _getMyAppointments(auth!);
       setState(() {});
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
@@ -88,7 +88,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                           flex: 1,
                           child: InkWell(
                             onTap: () {
-                              _getMyAppointments(auth);
+                              _getMyAppointments(auth!);
                               isUpCommingSelected = true;
                             },
                             child: Center(
@@ -110,7 +110,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                           flex: 1,
                           child: InkWell(
                             onTap: () {
-                              _getMyCompletedAppointments(auth);
+                              _getMyCompletedAppointments(auth!);
                               isUpCommingSelected = false;
                             },
                             child: Center(
@@ -178,9 +178,9 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
     bool isDateVisible = true;
 
     if (index != 0) {
-      if (dateFormat.format(appointment.startTimeUtc.toLocal()) ==
+      if (dateFormat.format(appointment.startTimeUtc!.toLocal()) ==
           dateFormat.format(
-              appointments.elementAt(index - 1).startTimeUtc.toLocal())) {
+              appointments.elementAt(index - 1).startTimeUtc!.toLocal())) {
         isDateVisible = false;
       } else {
         isDateVisible = true;
@@ -206,7 +206,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                 SizedBox(
                   height: 16,
                 ),
-                Text(dateFormat.format(appointment.startTimeUtc.toLocal()),
+                Text(dateFormat.format(appointment.startTimeUtc!.toLocal()),
                     style:
                         TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
                 SizedBox(
@@ -254,13 +254,13 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                 children: <Widget>[
                                   Padding(
                                     padding: const EdgeInsets.only(right: 18.0),
-                                    child: Text(appointment.businessNodeName,
+                                    child: Text(appointment.businessNodeName!,
                                         style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
                                             color: primaryColor)),
                                   ),
-                                  Text(appointment.businessUserName,
+                                  Text(appointment.businessUserName!,
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.w300,
@@ -274,14 +274,14 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                     children: <Widget>[
                                       Text(
                                           timeFormat.format(appointment
-                                              .startTimeUtc
+                                              .startTimeUtc!
                                               .toLocal()),
                                           style: TextStyle(
                                               fontSize: 14.0,
                                               fontWeight: FontWeight.w600)),
                                       Text(
                                           'ID: ' +
-                                              appointment.displayId
+                                              appointment.displayId!
                                                   .substring(15),
                                           style: TextStyle(
                                               fontSize: 12.0,
@@ -325,7 +325,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
           SizedBox(
             height: 16,
           ),
-          Text(dateFormat.format(appointment.startTimeUtc.toLocal()),
+          Text(dateFormat.format(appointment.startTimeUtc!.toLocal()),
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
           SizedBox(
             height: 16,
@@ -364,7 +364,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(appointment.businessUserName,
+                              Text(appointment.businessUserName!,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -378,7 +378,8 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w300,
                                       color: Color(0XFF909CAC))),
-                              Text('ID: ' + appointment.displayId.substring(15),
+                              Text(
+                                  'ID: ' + appointment.displayId!.substring(15),
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
@@ -396,7 +397,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                               ),
                               Text(
                                   timeFormat.format(
-                                      appointment.startTimeUtc.toLocal()),
+                                      appointment.startTimeUtc!.toLocal()),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -468,7 +469,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                 fontSize: 14),
                             children: <TextSpan>[
                               TextSpan(
-                                  text: user.data.user.person.firstName,
+                                  text: user.data!.user!.person!.firstName,
                                   style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       color: Colors.black,
@@ -512,7 +513,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
       if (bookingAppoinmentForDoctor.status == 'success') {
         appointments.clear();
         setState(() {
-          appointments.addAll(bookingAppoinmentForDoctor.data.appointments);
+          appointments.addAll(bookingAppoinmentForDoctor.data!.appointments!);
         });
       } else {}
     } catch (CustomException) {
@@ -536,7 +537,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
       if (bookingAppoinmentForDoctor.status == 'success') {
         appointments.clear();
         setState(() {
-          appointments.addAll(bookingAppoinmentForDoctor.data.appointments);
+          appointments.addAll(bookingAppoinmentForDoctor.data!.appointments!);
         });
       } else {}
     } catch (CustomException) {

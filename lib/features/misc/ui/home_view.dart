@@ -53,24 +53,24 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   List<Address> addresses;
   Address first;*/
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  String name = '';
+  String? name = '';
   int _currentNav = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String pathPDF = '';
   var model = CommonConfigModel();
   GlobalKey drawerKey = GlobalKey();
   GlobalKey key = GlobalKey();
-  GetHealthData healthData;
+  GetHealthData? healthData;
   String profileImage = '';
   var dateFormat = DateFormat('yyyy-MM-dd');
   final GlobalKey _keyNavigation_drawer = GlobalKey();
   final GlobalKey _keyMyTasks = GlobalKey();
   final GlobalKey _keyUploadReports = GlobalKey();
   final GlobalKey _keyEmergencyContacts = GlobalKey();
-  TutorialCoachMark tutorialCoachMark;
+  TutorialCoachMark? tutorialCoachMark;
   List<TargetFocus> targets = [];
   CoachMarkUtilites coackMarkUtilites = CoachMarkUtilites();
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   String imageResourceId = '';
 
   _HomeViewState(int screenPosition) {
@@ -83,21 +83,21 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           UserData.fromJson(await _sharedPrefUtils.read('user'));
       final Patient patient =
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
-      auth = user.data.accessToken;
+      auth = user.data!.accessToken;
 
-      patientUserId = patient.user.id;
-      patientGender = patient.user.person.gender;
+      patientUserId = patient.user!.id;
+      patientGender = patient.user!.person!.gender;
       //debugPrint('Address ==> ${patient.user.person.addresses.elementAt(0).city}');
       //debugPrint(user.toJson().toString());
       final dynamic roleId = await _sharedPrefUtils.read('roleId');
       setRoleId(roleId);
       /* */
       setState(() {
-        debugPrint('FirstName ==> ${patient.user.person.firstName}');
-        name = patient.user.person.firstName;
-        imageResourceId = patient.user.person.imageResourceId ?? '';
+        debugPrint('FirstName ==> ${patient.user!.person!.firstName}');
+        name = patient.user!.person!.firstName;
+        imageResourceId = patient.user!.person!.imageResourceId ?? '';
         profileImage = imageResourceId != ''
-            ? apiProvider.getBaseUrl() +
+            ? apiProvider!.getBaseUrl()! +
                 '/file-resources/' +
                 imageResourceId +
                 '/download'
@@ -156,7 +156,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           await model.getCarePlan();
       debugPrint('Registered Care Plan ==> ${startCarePlanResponse.toJson()}');
       if (startCarePlanResponse.status == 'success') {
-        if (startCarePlanResponse.data.carePlan != null) {
+        if (startCarePlanResponse.data!.carePlan != null) {
           debugPrint('Care Plan');
           _sharedPrefUtils.save('CarePlan', startCarePlanResponse.toJson());
           startCarePlanResponseGlob = startCarePlanResponse;
@@ -307,10 +307,11 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   Future<void> _initPackageInfo() async {
     if (getCurrentLocale() == '') {
-      final Locale countryLocale = await Devicelocale.currentAsLocale;
-      setCurrentLocale(countryLocale.countryCode.toUpperCase());
+      final Locale countryLocale =
+          await (Devicelocale.currentAsLocale as FutureOr<Locale>);
+      setCurrentLocale(countryLocale.countryCode!.toUpperCase());
       debugPrint(
-          'Country Local ==> ${countryLocale.countryCode.toUpperCase()}');
+          'Country Local ==> ${countryLocale.countryCode!.toUpperCase()}');
     }
   }
 
@@ -322,14 +323,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
     getCarePlanSubscribe();
     initTargets();
-    WidgetsBinding.instance.addPostFrameCallback(_layout);
+    WidgetsBinding.instance!.addPostFrameCallback(_layout);
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
@@ -361,7 +362,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     //UserData data = UserData.fromJson(_sharedPrefUtils.read("user"));
     //debugPrint(_sharedPrefUtils.read("user"));
 
-    Widget screen;
+    Widget? screen;
     switch (_currentNav) {
       case 0:
         screen = DashBoardVer2View(
@@ -421,7 +422,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
               iconTheme: IconThemeData(color: Colors.black),
               leading: InkWell(
                 onTap: () {
-                  _scaffoldKey.currentState.openDrawer();
+                  _scaffoldKey.currentState!.openDrawer();
                 },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 8.0, 0.0, 8.0),
@@ -442,9 +443,10 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                       decoration: BoxDecoration(
                         color: const Color(0xff7c94b6),
                         image: DecorationImage(
-                          image: profileImage == ''
+                          image: (profileImage == ''
                               ? AssetImage('res/images/profile_placeholder.png')
-                              : CachedNetworkImageProvider(profileImage),
+                              : CachedNetworkImageProvider(
+                                  profileImage)) as ImageProvider<Object>,
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(50.0)),

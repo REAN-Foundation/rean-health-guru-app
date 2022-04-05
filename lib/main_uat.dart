@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:paitent/infra/provider_setup.dart';
 import 'package:paitent/infra/router.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/provider_setup.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,15 +21,15 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool login = prefs.getBool('login1.8');
+  bool? login = prefs.getBool('login1.8');
   login ??= false;
   runApp(MyApp(login));
 }
 //ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  bool isLogin;
-  String _baseUrl;
-  String _botBaseUrl;
+  bool? isLogin;
+  String? _baseUrl;
+  String? _botBaseUrl;
   FirebaseAnalytics analytics = FirebaseAnalytics();
 
   MyApp(bool isLogin) {

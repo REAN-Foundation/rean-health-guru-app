@@ -6,7 +6,7 @@ import 'package:paitent/features/common/careplan/view_models/patients_care_plan.
 import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class SelectGoalsForCarePlanView extends StatefulWidget {
   @override
@@ -22,9 +22,9 @@ class _SelectGoalsForCarePlanViewState
   int id1 = 10;
   String radioButtonItem = 'ONE';
   String radioButtonItem1 = '';
-  GetGoalPriorities _getBiometricGoalPriorities;
-  GetGoalPriorities _getBehavioralGoalPriorities;
-  ProgressDialog progressDialog;
+  late GetGoalPriorities _getBiometricGoalPriorities;
+  late GetGoalPriorities _getBehavioralGoalPriorities;
+  ProgressDialog? progressDialog;
   List<CheckBoxModel> biometricGoalList = <CheckBoxModel>[];
   List<CheckBoxModel> behaviouralGoalList = <CheckBoxModel>[];
 
@@ -38,21 +38,21 @@ class _SelectGoalsForCarePlanViewState
   getBiometricGoal() async {
     try {
       _getBiometricGoalPriorities = await model.getBiometricGoal(
-          startCarePlanResponseGlob.data.carePlan.carePlanCode.toString());
+          startCarePlanResponseGlob!.data!.carePlan!.carePlanCode.toString());
 
       if (_getBiometricGoalPriorities.status == 'success') {
         debugPrint('AHA Care Plan ==> ${_getBiometricGoalPriorities.toJson()}');
 
         for (int i = 0;
-            i < _getBiometricGoalPriorities.data.goals.length;
+            i < _getBiometricGoalPriorities.data!.goals!.length;
             i++) {
           biometricGoalList.add(CheckBoxModel(
-              _getBiometricGoalPriorities.data.goals.elementAt(i), false));
+              _getBiometricGoalPriorities.data!.goals!.elementAt(i), false));
         }
 
         getBehavioralGoal();
       } else {
-        showToast(_getBiometricGoalPriorities.message, context);
+        showToast(_getBiometricGoalPriorities.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -64,19 +64,19 @@ class _SelectGoalsForCarePlanViewState
   getBehavioralGoal() async {
     try {
       _getBehavioralGoalPriorities = await model.getBehavioralGoal(
-          startCarePlanResponseGlob.data.carePlan.carePlanCode.toString());
+          startCarePlanResponseGlob!.data!.carePlan!.carePlanCode.toString());
 
       if (_getBehavioralGoalPriorities.status == 'success') {
         debugPrint(
             'AHA Care Plan ==> ${_getBehavioralGoalPriorities.toJson()}');
         for (int i = 0;
-            i < _getBehavioralGoalPriorities.data.goals.length;
+            i < _getBehavioralGoalPriorities.data!.goals!.length;
             i++) {
           behaviouralGoalList.add(CheckBoxModel(
-              _getBehavioralGoalPriorities.data.goals.elementAt(i), false));
+              _getBehavioralGoalPriorities.data!.goals!.elementAt(i), false));
         }
       } else {
-        showToast(_getBehavioralGoalPriorities.message, context);
+        showToast(_getBehavioralGoalPriorities.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -230,7 +230,7 @@ class _SelectGoalsForCarePlanViewState
                       value: biometricGoalList[index].isCheck,
                       title: Text(biometricGoalList[index].title),
                       controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool val) {
+                      onChanged: (bool? val) {
                         biometricGoalItemChange(val, index);
                       });
                 }),
@@ -240,7 +240,7 @@ class _SelectGoalsForCarePlanViewState
     );
   }
 
-  void biometricGoalItemChange(bool val, int index) {
+  void biometricGoalItemChange(bool? val, int index) {
     setState(() {
       biometricGoalList[index].isCheck = val;
     });
@@ -277,7 +277,7 @@ class _SelectGoalsForCarePlanViewState
                           value: behaviouralGoalList[index].isCheck,
                           title: Text(behaviouralGoalList[index].title),
                           controlAffinity: ListTileControlAffinity.leading,
-                          onChanged: (bool val) {
+                          onChanged: (bool? val) {
                             behaviouralGoalItemChange(val, index);
                           });
                     }),
@@ -285,7 +285,7 @@ class _SelectGoalsForCarePlanViewState
             ]));
   }
 
-  void behaviouralGoalItemChange(bool val, int index) {
+  void behaviouralGoalItemChange(bool? val, int index) {
     setState(() {
       behaviouralGoalList[index].isCheck = val;
     });
@@ -300,13 +300,13 @@ class _SelectGoalsForCarePlanViewState
             onTap: () {
               goalPlanScreenStack.clear();
               for (int i = 0; i < biometricGoalList.length; i++) {
-                if (biometricGoalList.elementAt(i).isCheck) {
+                if (biometricGoalList.elementAt(i).isCheck!) {
                   goalPlanScreenStack.add(biometricGoalList.elementAt(i).title);
                 }
               }
 
               for (int i = 0; i < behaviouralGoalList.length; i++) {
-                if (behaviouralGoalList.elementAt(i).isCheck) {
+                if (behaviouralGoalList.elementAt(i).isCheck!) {
                   goalPlanScreenStack
                       .add(behaviouralGoalList.elementAt(i).title);
                 }
@@ -373,7 +373,7 @@ class _SelectGoalsForCarePlanViewState
 
 class CheckBoxModel {
   String title;
-  bool isCheck;
+  bool? isCheck;
 
   CheckBoxModel(this.title, this.isCheck);
 }

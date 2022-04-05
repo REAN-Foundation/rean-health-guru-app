@@ -19,7 +19,7 @@ class AppDrawer extends StatefulWidget {
 class _AppDrawerState extends State<AppDrawer> {
   final _sharedPrefUtils = SharedPrefUtils();
   String name = '';
-  String mobileNumber = '';
+  String? mobileNumber = '';
   PackageInfo _packageInfo = PackageInfo(
     appName: '',
     packageName: '',
@@ -27,8 +27,8 @@ class _AppDrawerState extends State<AppDrawer> {
     buildNumber: '',
   );
   String profileImage = '';
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
-  String _baseUrl = '';
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+  String? _baseUrl = '';
   String imageResourceId = '';
 
   loadSharedPrefs() async {
@@ -37,22 +37,23 @@ class _AppDrawerState extends State<AppDrawer> {
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       //debugPrint(user.toJson().toString());
       setState(() {
-        name =
-            patient.user.person.firstName + ' ' + patient.user.person.lastName;
+        name = patient.user!.person!.firstName! +
+            ' ' +
+            patient.user!.person!.lastName!;
 
-        mobileNumber = patient.user.person.phone;
-        imageResourceId = patient.user.person.imageResourceId ?? '';
+        mobileNumber = patient.user!.person!.phone;
+        imageResourceId = patient.user!.person!.imageResourceId ?? '';
         profileImage = imageResourceId != ''
-            ? apiProvider.getBaseUrl() +
+            ? apiProvider!.getBaseUrl()! +
                 '/file-resources/' +
                 imageResourceId +
                 '/download'
             : '';
       });
-      _baseUrl = apiProvider.getBaseUrl();
+      _baseUrl = apiProvider!.getBaseUrl();
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
@@ -413,9 +414,9 @@ class _AppDrawerState extends State<AppDrawer> {
                       ),
                       Text(
                         'Version ' +
-                            (_baseUrl.contains('dev')
+                            (_baseUrl!.contains('dev')
                                 ? 'Dev_'
-                                : _baseUrl.contains('uat')
+                                : _baseUrl!.contains('uat')
                                     ? 'Alpha_'
                                     : '') +
                             _packageInfo.version,
@@ -535,11 +536,12 @@ class _AppDrawerState extends State<AppDrawer> {
                       decoration: BoxDecoration(
                         color: const Color(0xff7c94b6),
                         image: DecorationImage(
-                          image: profileImage == ''
+                          image: (profileImage == ''
                               ? AssetImage('res/images/profile_placeholder.png')
-                              : CachedNetworkImageProvider(profileImage),
-                          fit: BoxFit.cover,
-                        ),
+                              : CachedNetworkImageProvider(profileImage))
+                          as ImageProvider<Object>,
+                      fit: BoxFit.cover,
+                    ),
                         borderRadius: BorderRadius.all(Radius.circular(50.0)),
                         border: Border.all(
                           color: primaryColor,
@@ -575,7 +577,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
 
           Text(
-            mobileNumber,
+            mobileNumber!,
             style: TextStyle(
                 fontSize: 14, fontWeight: FontWeight.w500, color: textBlack),
             semanticsLabel: mobileNumber,

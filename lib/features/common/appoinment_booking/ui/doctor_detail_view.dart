@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_autolink_text/flutter_autolink_text.dart';
 import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/features/common/appoinment_booking/models/doctorListApiResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/ui/doctorTileWidget.dart';
@@ -8,11 +7,10 @@ import 'package:paitent/features/misc/models/user_data.dart';
 import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable
 class DoctorDetailsView extends StatefulWidget {
-  Doctors doctorDetails;
+  Doctors? doctorDetails;
 
   DoctorDetailsView(this.doctorDetails);
 
@@ -29,9 +27,9 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
   List<Address> addresses;
   Address first;*/
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  String name = '';
+  String? name = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  Doctors doctorDetails;
+  Doctors? doctorDetails;
 
   _DoctorDetailsViewState(this.doctorDetails);
 
@@ -41,11 +39,11 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
           UserData.fromJson(await _sharedPrefUtils.read('user'));
       //debugPrint(user.toJson().toString());
       setState(() {
-        name = user.data.user.person.firstName;
+        name = user.data!.user!.person!.firstName;
       });
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
@@ -90,8 +88,8 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    final highlights = doctorDetails.professionalHighlights != null
-        ? doctorDetails.professionalHighlights.split('*')
+    final highlights = doctorDetails!.professionalHighlights != null
+        ? doctorDetails!.professionalHighlights!.split('*')
         : <String>[];
 
     return BaseWidget<AppoinmentViewModel>(
@@ -144,7 +142,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                           SizedBox(
                             height: 4,
                           ),
-                          Text(doctorDetails.aboutMe,
+                          Text(doctorDetails!.aboutMe!,
                               style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w200,
@@ -206,7 +204,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                           SizedBox(
                             height: 4,
                           ),
-                          Text(doctorDetails.address,
+                          Text(doctorDetails!.address!,
                               style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w200,
@@ -226,7 +224,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                           SizedBox(
                             height: 4,
                           ),
-                          AutolinkText(
+                          /*AutolinkText(
                               text: '+91 ' + doctorDetails.phoneNumber,
                               textStyle: TextStyle(
                                   fontSize: 14.0,
@@ -240,7 +238,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                                 } else {
                                   throw 'Could not launch $url';
                                 }
-                              }),
+                              }),*/
                           SizedBox(
                             height: 16,
                           ),
@@ -257,8 +255,8 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                           ),
                           for (int i = 0;
                               i <
-                                  doctorDetails.appointmentRelatedDetails
-                                      .workingHours.length;
+                                  doctorDetails!.appointmentRelatedDetails!
+                                      .workingHours!.length;
                               i++) ...[
                             /*Text(doctorDetails.appointmentRelatedDetails.workingHours.elementAt(i),
                                 style: TextStyle(
@@ -268,8 +266,8 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
 
                             RichText(
                               text: TextSpan(
-                                text: doctorDetails
-                                        .appointmentRelatedDetails.workingHours
+                                text: doctorDetails!.appointmentRelatedDetails!
+                                        .workingHours!
                                         .elementAt(i)
                                         .substring(0, 3)
                                         .toUpperCase() +
@@ -281,15 +279,15 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                                     fontFamily: 'Montserrat'),
                                 children: <TextSpan>[
                                   TextSpan(
-                                      text: doctorDetails
-                                          .appointmentRelatedDetails
-                                          .workingHours
+                                      text: doctorDetails!
+                                          .appointmentRelatedDetails!
+                                          .workingHours!
                                           .elementAt(i)
                                           .substring(
                                               3,
-                                              doctorDetails
-                                                  .appointmentRelatedDetails
-                                                  .workingHours
+                                              doctorDetails!
+                                                  .appointmentRelatedDetails!
+                                                  .workingHours!
                                                   .elementAt(i)
                                                   .length),
                                       style: TextStyle(

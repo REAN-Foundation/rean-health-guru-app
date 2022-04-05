@@ -1,8 +1,8 @@
 class KnowledgeTopicResponse {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
 
   KnowledgeTopicResponse({this.status, this.message, this.httpCode, this.data});
 
@@ -19,14 +19,14 @@ class KnowledgeTopicResponse {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  KnowledgeNugget knowledgeNugget;
+  KnowledgeNugget? knowledgeNugget;
 
   Data({this.knowledgeNugget});
 
@@ -39,22 +39,22 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (knowledgeNugget != null) {
-      data['KnowledgeNugget'] = knowledgeNugget.toJson();
+      data['KnowledgeNugget'] = knowledgeNugget!.toJson();
     }
     return data;
   }
 }
 
 class KnowledgeNugget {
-  String id;
-  String topicName;
-  String briefInformation;
+  String? id;
+  String? topicName;
+  String? briefInformation;
 
-  KnowledgeNugget(
-      {this.id,
-        this.topicName,
-        this.briefInformation,
-      });
+  KnowledgeNugget({
+    this.id,
+    this.topicName,
+    this.briefInformation,
+  });
 
   KnowledgeNugget.fromJson(Map<String, dynamic> json) {
     id = json['id'];

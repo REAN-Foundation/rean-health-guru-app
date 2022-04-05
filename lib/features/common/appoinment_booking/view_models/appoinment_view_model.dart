@@ -5,7 +5,7 @@ import 'package:paitent/features/misc/view_models/authentication_service.dart';
 import 'package:paitent/infra/view_models/base_model.dart';
 
 class AppoinmentViewModel extends BaseModel {
-  AuthenticationService _authenticationService;
+  late AuthenticationService _authenticationService;
 
   /*AppoinmentViewModel({
     @required AuthenticationService authenticationService,

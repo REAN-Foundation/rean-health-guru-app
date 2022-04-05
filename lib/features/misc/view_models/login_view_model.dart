@@ -9,7 +9,7 @@ class LoginViewModel extends BaseModel {
   final AuthenticationService _authenticationService;
 
   LoginViewModel({
-    @required AuthenticationService authenticationService,
+    required AuthenticationService authenticationService,
   }) : _authenticationService = authenticationService;
 
   Future<UserData> login(Map body) async {

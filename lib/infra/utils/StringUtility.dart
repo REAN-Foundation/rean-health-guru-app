@@ -2,14 +2,14 @@ import 'package:paitent/features/common/appoinment_booking/models/doctorListApiR
 import 'package:paitent/features/common/appoinment_booking/models/pharmacyListApiResponse.dart';
 import 'package:paitent/features/common/careplan/models/AddTeamMemberResponse.dart';
 
-String auth = '';
-String patientUserId = '';
-String patientGender = '';
+String? auth = '';
+String? patientUserId = '';
+String? patientGender = '';
 int assrotedUICount = 1;
 var doctorSearchListGlobe = <Doctors>[];
 var parmacySearchListGlobe = <Pharmacies>[];
-var nurseMemberListGlobe = <TeamMember>[];
-var familyMemberListGlobe = <TeamMember>[];
+var nurseMemberListGlobe = <TeamMember?>[];
+var familyMemberListGlobe = <TeamMember?>[];
 
 /*
 void showToast(String msg) {

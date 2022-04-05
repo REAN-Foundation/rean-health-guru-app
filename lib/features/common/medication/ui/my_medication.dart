@@ -23,7 +23,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
 
   @override
   Widget build(BuildContext context) {
-    Widget screen;
+    late Widget screen;
     switch (_currentIndex) {
       case 0:
         screen = MyTodaysMedicationView();

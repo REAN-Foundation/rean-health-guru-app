@@ -1,8 +1,8 @@
 class PatientApiDetails {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
 
   PatientApiDetails({this.status, this.message, this.httpCode, this.data});
 
@@ -19,14 +19,14 @@ class PatientApiDetails {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  Patient patient;
+  Patient? patient;
 
   Data({this.patient});
 
@@ -38,26 +38,26 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (patient != null) {
-      data['Patient'] = patient.toJson();
+      data['Patient'] = patient!.toJson();
     }
     return data;
   }
 }
 
 class Patient {
-  String id;
-  String userId;
-  User user;
-  String displayId;
-  String ehrId;
+  String? id;
+  String? userId;
+  User? user;
+  String? displayId;
+  String? ehrId;
 
-  Patient(
-      {this.id,
-        this.userId,
-        this.user,
-        this.displayId,
-        this.ehrId,
-        });
+  Patient({
+    this.id,
+    this.userId,
+    this.user,
+    this.displayId,
+    this.ehrId,
+  });
 
   Patient.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -72,7 +72,7 @@ class Patient {
     data['id'] = id;
     data['UserId'] = userId;
     if (user != null) {
-      data['User'] = user.toJson();
+      data['User'] = user!.toJson();
     }
     data['DisplayId'] = displayId;
     data['EhrId'] = ehrId;
@@ -82,26 +82,26 @@ class Patient {
 }
 
 class User {
-  String id;
-  String userName;
-  String personId;
-  Person person;
-  String lastLogin;
-  String defaultTimeZone;
-  String currentTimeZone;
-  int roleId;
-  String role;
+  String? id;
+  String? userName;
+  String? personId;
+  Person? person;
+  String? lastLogin;
+  String? defaultTimeZone;
+  String? currentTimeZone;
+  int? roleId;
+  String? role;
 
   User(
       {this.id,
-        this.userName,
-        this.personId,
-        this.person,
-        this.lastLogin,
-        this.defaultTimeZone,
-        this.currentTimeZone,
-        this.roleId,
-        this.role});
+      this.userName,
+      this.personId,
+      this.person,
+      this.lastLogin,
+      this.defaultTimeZone,
+      this.currentTimeZone,
+      this.roleId,
+      this.role});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -122,7 +122,7 @@ class User {
     data['UserName'] = userName;
     data['PersonId'] = personId;
     if (person != null) {
-      data['Person'] = person.toJson();
+      data['Person'] = person!.toJson();
     }
     data['LastLogin'] = lastLogin;
     data['DefaultTimeZone'] = defaultTimeZone;
@@ -134,31 +134,31 @@ class User {
 }
 
 class Person {
-  String id;
-  String prefix;
-  String firstName;
-  String middleName;
-  String lastName;
-  String displayName;
-  String gender;
-  DateTime birthDate;
-  String age;
-  String phone;
-  String email;
-  String imageResourceId;
-  String activeSince;
-  List<Addresses> addresses;
+  String? id;
+  String? prefix;
+  String? firstName;
+  String? middleName;
+  String? lastName;
+  String? displayName;
+  String? gender;
+  DateTime? birthDate;
+  String? age;
+  String? phone;
+  String? email;
+  String? imageResourceId;
+  String? activeSince;
+  List<Addresses>? addresses;
 
   Person(
       {this.id,
-        this.prefix,
-        this.firstName,
-        this.middleName,
-        this.lastName,
-        this.displayName,
-        this.gender,
-        this.birthDate,
-        this.age,
+      this.prefix,
+      this.firstName,
+      this.middleName,
+      this.lastName,
+      this.displayName,
+      this.gender,
+      this.birthDate,
+      this.age,
         this.phone,
         this.email,
         this.imageResourceId,
@@ -186,7 +186,7 @@ class Person {
     if (json['Addresses'] != null) {
       addresses = <Addresses>[];
       json['Addresses'].forEach((v) {
-        addresses.add(Addresses.fromJson(v));
+        addresses!.add(Addresses.fromJson(v));
       });
     }
   }
@@ -203,7 +203,7 @@ class Person {
     if (birthDate == null) {
       data['BirthDate'] = birthDate;
     } else {
-      data['BirthDate'] = birthDate.toIso8601String();
+      data['BirthDate'] = birthDate!.toIso8601String();
     }
     data['Age'] = age;
     data['Phone'] = phone;
@@ -211,34 +211,34 @@ class Person {
     data['ImageResourceId'] = imageResourceId;
     data['ActiveSince'] = activeSince;
     if (addresses != null) {
-      data['Addresses'] = addresses.map((v) => v.toJson()).toList();
+      data['Addresses'] = addresses!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Addresses {
-  String id;
-  String type;
-  String addressLine;
-  String city;
-  String district;
-  String state;
-  String country;
-  String postalCode;
-  double longitude;
-  double lattitude;
+  String? id;
+  String? type;
+  String? addressLine;
+  String? city;
+  String? district;
+  String? state;
+  String? country;
+  String? postalCode;
+  double? longitude;
+  double? lattitude;
 
   Addresses(
       {this.id,
-        this.type,
-        this.addressLine,
-        this.city,
-        this.district,
-        this.state,
-        this.country,
-        this.postalCode,
-        this.longitude,
+      this.type,
+      this.addressLine,
+      this.city,
+      this.district,
+      this.state,
+      this.country,
+      this.postalCode,
+      this.longitude,
         this.lattitude});
 
   Addresses.fromJson(Map<String, dynamic> json) {

@@ -19,7 +19,7 @@ import '../../../../infra/view_models/base_model.dart';
 class BookAppoinmentViewModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();
 
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   Future<DoctorListApiResponse> getDoctorListBySearch(
       String searchKeyword, String auth) async {
@@ -30,7 +30,7 @@ class BookAppoinmentViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = auth;
 
-    final response = await apiProvider.get(
+    final response = await apiProvider!.get(
         '/doctor?name=' +
             searchKeyword +
             '&locality=' +
@@ -55,7 +55,7 @@ class BookAppoinmentViewModel extends BaseModel {
     map['authorization'] = auth;
 
     final response =
-        await apiProvider.get('/doctor?&name=' + searchKeyword, header: map);
+        await apiProvider!.get('/doctor?&name=' + searchKeyword, header: map);
 
     debugPrint(response.toString());
     setBusy(false);
@@ -71,7 +71,7 @@ class BookAppoinmentViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = auth;
 
-    final response = await apiProvider.get('/doctor', header: map);
+    final response = await apiProvider!.get('/doctor', header: map);
 
     debugPrint(response.toString());
     setBusy(false);
@@ -89,7 +89,7 @@ class BookAppoinmentViewModel extends BaseModel {
     map['authorization'] = auth;
 
     final response =
-        await apiProvider.get('/doctor/' + doctorUserId, header: map);
+        await apiProvider!.get('/doctor/' + doctorUserId, header: map);
 
     debugPrint(response.toString());
     //setBusy(false);
@@ -106,7 +106,7 @@ class BookAppoinmentViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = auth;
 
-    final response = await apiProvider.get('/lab/' + labUserId, header: map);
+    final response = await apiProvider!.get('/lab/' + labUserId, header: map);
 
     debugPrint(response.toString());
     //setBusy(false);
@@ -124,7 +124,7 @@ class BookAppoinmentViewModel extends BaseModel {
     map['authorization'] = auth;
 
     final response =
-        await apiProvider.get('/lab?&name=' + searchKeyword, header: map);
+        await apiProvider!.get('/lab?&name=' + searchKeyword, header: map);
 
     debugPrint(response.toString());
     setBusy(false);
@@ -141,8 +141,8 @@ class BookAppoinmentViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = auth;
 
-    final response =
-        await apiProvider.get('/lab?long=' + long + '&lat=' + lat, header: map);
+    final response = await apiProvider!
+        .get('/lab?long=' + long + '&lat=' + lat, header: map);
 
     debugPrint(response.toString());
     setBusy(false);
@@ -158,7 +158,7 @@ class BookAppoinmentViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = auth;
 
-    final response = await apiProvider.get('/lab', header: map);
+    final response = await apiProvider!.get('/lab', header: map);
 
     debugPrint(response.toString());
     setBusy(false);
@@ -175,7 +175,7 @@ class BookAppoinmentViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = auth;
 
-    final response = await apiProvider
+    final response = await apiProvider!
         .get('/pharmacy?long=' + long + '&lat=' + lat, header: map);
 
     debugPrint(response.toString());
@@ -193,7 +193,7 @@ class BookAppoinmentViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = auth;
 
-    final response = await apiProvider.get(
+    final response = await apiProvider!.get(
         '/appointment/slots/doctor/' +
             doctorId +
             '?from_date=' +
@@ -217,7 +217,7 @@ class BookAppoinmentViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = auth;
 
-    final response = await apiProvider.get(
+    final response = await apiProvider!.get(
         '/appointment/slots/lab/' +
             labId +
             '?from_date=' +
@@ -238,10 +238,10 @@ class BookAppoinmentViewModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.post(
-        '/appointment/patient/' + patientUserId + '/check-slot-conflict',
+    final response = await apiProvider!.post(
+        '/appointment/patient/' + patientUserId! + '/check-slot-conflict',
         header: map,
         body: body);
 
@@ -261,7 +261,7 @@ class BookAppoinmentViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = auth;
 
-    final response = await apiProvider
+    final response = await apiProvider!
         .post('/appointment/book/doctor/' + doctorId, body: body, header: map);
 
     debugPrint(response.toString());
@@ -280,8 +280,8 @@ class BookAppoinmentViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = auth;
 
-    final response = await apiProvider.post('/appointment/book/lab/' + labId,
-        body: body, header: map);
+    final response = await apiProvider!
+        .post('/appointment/book/lab/' + labId, body: body, header: map);
 
     debugPrint(response.toString());
     setBusy(false);
@@ -295,7 +295,8 @@ class BookAppoinmentViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = auth;
 
-    final response = await apiProvider.get('/appointment/for-me/', header: map);
+    final response =
+        await apiProvider!.get('/appointment/for-me/', header: map);
 
     debugPrint(response.toString());
     setBusy(false);
@@ -310,7 +311,7 @@ class BookAppoinmentViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = auth;
 
-    final response = await apiProvider.get(
+    final response = await apiProvider!.get(
         '/appointment/for-me/?from_date=' +
             startDate +
             '&to_date=' +
@@ -331,7 +332,7 @@ class BookAppoinmentViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = auth;
 
-    final response = await apiProvider.get(
+    final response = await apiProvider!.get(
         '/appointment/for-me/?show=' +
             status +
             '&from_date=' +

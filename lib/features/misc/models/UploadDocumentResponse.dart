@@ -1,7 +1,7 @@
 class UploadDocumentResponse {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   UploadDocumentResponse({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class UploadDocumentResponse {
     data['Status'] = status;
     data['Message'] = message;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  PatientDocument patientDocument;
+  PatientDocument? patientDocument;
 
   Data({this.patientDocument});
 
@@ -36,31 +36,31 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (patientDocument != null) {
-      data['PatientDocument'] = patientDocument.toJson();
+      data['PatientDocument'] = patientDocument!.toJson();
     }
     return data;
   }
 }
 
 class PatientDocument {
-  String id;
-  String displayId;
-  String documentType;
-  String patientUserId;
-  String medicalPractitionerUserId;
-  String medicalPractionerRole;
-  String uploadedByUserId;
-  String associatedVisitId;
-  String associatedVisitType;
-  String associatedOrderId;
-  String associatedOrderType;
-  String fileName;
-  String resourceId;
-  String authenticatedUrl;
-  String mimeType;
-  int sizeInKBytes;
-  String recordDate;
-  String uploadedDate;
+  String? id;
+  String? displayId;
+  String? documentType;
+  String? patientUserId;
+  String? medicalPractitionerUserId;
+  String? medicalPractionerRole;
+  String? uploadedByUserId;
+  String? associatedVisitId;
+  String? associatedVisitType;
+  String? associatedOrderId;
+  String? associatedOrderType;
+  String? fileName;
+  String? resourceId;
+  String? authenticatedUrl;
+  String? mimeType;
+  int? sizeInKBytes;
+  String? recordDate;
+  String? uploadedDate;
 
   PatientDocument(
       {this.id,

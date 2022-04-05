@@ -29,10 +29,10 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _mobileNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final _passwordFocus = FocusNode();
-  String mobileNumber = '';
+  String? mobileNumber = '';
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  String countryCode = '';
+  String? countryCode = '';
 
   //String _fcmToken;
 
@@ -294,12 +294,12 @@ class _LoginViewState extends State<LoginView> {
           debugPrint('mobile = $mobileNumber');
           debugPrint('Password = ${_passwordController.text}');
 
-          if (mobileNumber.length != 10) {
+          if (mobileNumber!.length != 10) {
             showToast('Please enter valid mobile number', context);
           } else if (_passwordController.text.toString() == '') {
             showToast('Please enter password', context);
           } else {
-            final map = <String, String>{};
+            final map = <String, String?>{};
             map['PhoneNumber'] = mobileNumber;
             map['Password'] = _passwordController.text;
             map['Email'] = null;
@@ -309,15 +309,15 @@ class _LoginViewState extends State<LoginView> {
               if (loginSuccess.status == 'success') {
                 _sharedPrefUtils.save('user', loginSuccess.toJson());
                 //_sharedPrefUtils.saveBoolean("login1.8", true);
-                getPatientDetails(model, loginSuccess.data.accessToken,
-                    loginSuccess.data.user.id);
+                getPatientDetails(model, loginSuccess.data!.accessToken!,
+                    loginSuccess.data!.user!.id!);
                 //debugPrint(loginSuccess.data.user.firstName);
                 /*Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder: (context) {
                       return HomeView();
                     }), (Route<dynamic> route) => false);*/
               } else {
-                showToast(loginSuccess.message, context);
+                showToast(loginSuccess.message!, context);
               }
             } catch (CustomException) {
               model.setBusy(false);
@@ -371,7 +371,7 @@ class _LoginViewState extends State<LoginView> {
 
       if (doctorListApiResponse.status == 'success') {
         _sharedPrefUtils.save(
-            'patientDetails', doctorListApiResponse.data.patient.toJson());
+            'patientDetails', doctorListApiResponse.data!.patient!.toJson());
         _sharedPrefUtils.saveBoolean('login1.8', true);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
@@ -379,7 +379,7 @@ class _LoginViewState extends State<LoginView> {
         }), (Route<dynamic> route) => false);
         model.setBusy(false);
       } else {
-        showToast(doctorListApiResponse.message, context);
+        showToast(doctorListApiResponse.message!, context);
         model.setBusy(false);
       }
     } catch (CustomException) {
@@ -479,7 +479,7 @@ class _LoginViewState extends State<LoginView> {
   }
 
   void firebase() {
-    _fcm.getToken().then((String token) async {
+    _fcm.getToken().then((String? token) async {
       assert(token != null);
       debugPrint('Push Messaging token: $token');
       debugPrint(token);

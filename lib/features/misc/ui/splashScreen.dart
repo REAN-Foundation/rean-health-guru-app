@@ -15,19 +15,18 @@ class SplashScreen extends StatefulWidget {
   final Color backgroundColor;
   final TextStyle styleTextUnderTheLoader;
   final dynamic navigateAfterSeconds;
-  final double photoSize;
+  final double? photoSize;
   final dynamic onClick;
-  final Color loaderColor;
-  final Image image;
+  final Color? loaderColor;
+  final Image? image;
   final Text loadingText;
-  final ImageProvider imageBackground;
-  final Gradient gradientBackground;
-  final String baseUrl;
-
+  final ImageProvider? imageBackground;
+  final Gradient? gradientBackground;
+  final String? baseUrl;
 
   SplashScreen(
       {this.loaderColor,
-      @required this.seconds,
+      required this.seconds,
       this.photoSize,
       this.onClick,
       this.navigateAfterSeconds,
@@ -61,15 +60,17 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     }
 
-    final String locale = await FlutterSimCountryCode.simCountryCode;
+    final String locale =
+        await (FlutterSimCountryCode.simCountryCode as FutureOr<String>);
     if (locale.trim().isNotEmpty) {
       setCurrentLocale(locale.toUpperCase());
       debugPrint('Country Local ==> ${locale.toUpperCase()}');
     } else {
-      final Locale countryLocale = await Devicelocale.currentAsLocale;
-      setCurrentLocale(countryLocale.countryCode.toUpperCase());
+      final Locale countryLocale =
+          await (Devicelocale.currentAsLocale as FutureOr<Locale>);
+      setCurrentLocale(countryLocale.countryCode!.toUpperCase());
       debugPrint(
-          'Country Local ==> ${countryLocale.countryCode.toUpperCase()}');
+          'Country Local ==> ${countryLocale.countryCode!.toUpperCase()}');
     }
   }
 
@@ -186,8 +187,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(widget.loaderColor),
+                          valueColor: AlwaysStoppedAnimation<Color?>(
+                              widget.loaderColor),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
@@ -198,9 +199,9 @@ class _SplashScreenState extends State<SplashScreen> {
                           readOnly: true,
                           child: Text(
                               'Version ' +
-                                  (widget.baseUrl.contains('dev')
+                                  (widget.baseUrl!.contains('dev')
                                       ? 'Dev_'
-                                      : widget.baseUrl.contains('uat')
+                                      : widget.baseUrl!.contains('uat')
                                           ? 'Alpha_'
                                           : '') +
                                   _packageInfo.version,

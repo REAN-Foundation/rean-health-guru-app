@@ -1,7 +1,7 @@
 class ChatApiResponse {
-  bool success;
-  String message;
-  Data data;
+  bool? success;
+  String? message;
+  Data? data;
 
   ChatApiResponse({this.success, this.message, this.data});
 
@@ -16,14 +16,14 @@ class ChatApiResponse {
     data['success'] = success;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  String responseMessage;
+  String? responseMessage;
 
   Data({this.responseMessage});
 

@@ -1,8 +1,8 @@
 class MedicationDurationUnitsPojo {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
 
   MedicationDurationUnitsPojo(
       {this.status, this.message, this.httpCode, this.data});
@@ -20,14 +20,14 @@ class MedicationDurationUnitsPojo {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<String> medicationDurationUnits;
+  List<String>? medicationDurationUnits;
 
   Data({this.medicationDurationUnits});
 

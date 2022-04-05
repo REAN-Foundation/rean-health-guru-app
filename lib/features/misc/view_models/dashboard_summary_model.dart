@@ -13,16 +13,16 @@ import 'package:paitent/infra/view_models/base_model.dart';
 class DashboardSummaryModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();
 
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   Future<TaskSummaryResponse> getTaskPlanSummary() async {
     // Get user profile for id
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.get(
-        '/patient-task/patient/' + patientUserId + '/summary-for-today',
+    final response = await apiProvider!.get(
+        '/patient-task/patient/' + patientUserId! + '/summary-for-today',
         header: map);
     setBusy(false);
     // Convert and return
@@ -33,11 +33,11 @@ class DashboardSummaryModel extends BaseModel {
     // Get user profile for id
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.get(
+    final response = await apiProvider!.get(
         '/clinical/medication-consumptions/summary-for-day/' +
-            patientUserId +
+            patientUserId! +
             '/' +
             date,
         header: map);
@@ -50,10 +50,10 @@ class DashboardSummaryModel extends BaseModel {
     // Get user profile for id
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.get(
-        '/biometrics/' + patientUserId + '/latest-biometrics-summary',
+    final response = await apiProvider!.get(
+        '/biometrics/' + patientUserId! + '/latest-biometrics-summary',
         header: map);
     setBusy(false);
     // Convert and return
@@ -64,10 +64,11 @@ class DashboardSummaryModel extends BaseModel {
     // Get user profile for id
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider
-        .get('/educational/knowledge-nuggets/today/' + patientUserId, header: map);
+    final response = await apiProvider!.get(
+        '/educational/knowledge-nuggets/today/' + patientUserId!,
+        header: map);
     setBusy(false);
     // Convert and return
     return KnowledgeTopicResponse.fromJson(response);
@@ -77,10 +78,10 @@ class DashboardSummaryModel extends BaseModel {
     // Get user profile for id
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response =
-        await apiProvider.post('/clinical/emergency-events', header: map, body: body);
+    final response = await apiProvider!
+        .post('/clinical/emergency-events', header: map, body: body);
     setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);
@@ -92,11 +93,11 @@ class DashboardSummaryModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.get(
+    final response = await apiProvider!.get(
         '/clinical/medication-consumptions/schedule-for-day/' +
-            patientUserId +
+            patientUserId! +
             '/' +
             date,
         header: map);
@@ -112,9 +113,9 @@ class DashboardSummaryModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.put(
+    final response = await apiProvider!.put(
         '/clinical/medication-consumptions/mark-list-as-taken/',
         header: map,
         body: body);
@@ -130,10 +131,10 @@ class DashboardSummaryModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.post('/clinical/symptoms/how-do-you-feel/',
-        header: map, body: body);
+    final response = await apiProvider!
+        .post('/clinical/symptoms/how-do-you-feel/', header: map, body: body);
 
     setBusy(false);
     // Convert and return
@@ -147,9 +148,9 @@ class DashboardSummaryModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.get(
+    final response = await apiProvider!.get(
         '/clinical/symptom-assessment-templates/search?title=' + keyword,
         header: map);
 
@@ -165,9 +166,9 @@ class DashboardSummaryModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.get(
+    final response = await apiProvider!.get(
         '/clinical/symptom-assessment-templates/' + assesmentId,
         header: map);
 
@@ -182,10 +183,10 @@ class DashboardSummaryModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.post('/clinical/symptom-assessments/',
-        header: map, body: body);
+    final response = await apiProvider!
+        .post('/clinical/symptom-assessments/', header: map, body: body);
 
     setBusy(false);
     // Convert and return
@@ -198,10 +199,10 @@ class DashboardSummaryModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
     final response =
-        await apiProvider.post('/clinical/symptoms/', header: map, body: body);
+        await apiProvider!.post('/clinical/symptoms/', header: map, body: body);
 
     //setBusy(false);
     // Convert and return

@@ -1,21 +1,20 @@
-import 'package:check_radio_group/model/item_group.dart';
-import 'package:check_radio_group/radio/radio_group.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:group_radio_button/group_radio_button.dart';
 import 'package:paitent/features/misc/models/BaseResponse.dart';
 import 'package:paitent/features/misc/models/PatientMedicalProfilePojo.dart';
 import 'package:paitent/features/misc/view_models/patients_observation.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import 'base_widget.dart';
 
 //ignore: must_be_immutable
 class EditPatientMedicalProfileView extends StatefulWidget {
-  HealthProfile healthProfile;
+  HealthProfile? healthProfile;
 
-  EditPatientMedicalProfileView(HealthProfile mProfiles) {
+  EditPatientMedicalProfileView(HealthProfile? mProfiles) {
     healthProfile = mProfiles;
   }
 
@@ -26,46 +25,46 @@ class EditPatientMedicalProfileView extends StatefulWidget {
 
 class _EditPatientMedicalProfileViewState
     extends State<EditPatientMedicalProfileView> {
-  final List<GroupItem> radioItems = [
-    GroupItem(title: 'Yes'),
-    GroupItem(title: 'No'),
+  final List<String> radioItems = [
+    'Yes',
+    'No',
   ];
 
-  final List<GroupItem> maritalStatusItems = [
-    GroupItem(title: 'Married'),
-    GroupItem(title: 'Single'),
+  final List<String> maritalStatusItems = [
+    'Married',
+    'Single',
   ];
 
   var model = PatientObservationsViewModel();
-  final TextEditingController _majorAilmentController =
-      TextEditingController();
+  final TextEditingController _majorAilmentController = TextEditingController();
   final TextEditingController _bloodGroupController = TextEditingController();
   final TextEditingController _ocupationController = TextEditingController();
   final TextEditingController _nationalityController = TextEditingController();
-  final TextEditingController _otherConditionsController = TextEditingController();
-  final TextEditingController _procedureHistoryController = TextEditingController();
+  final TextEditingController _otherConditionsController =
+      TextEditingController();
+  final TextEditingController _procedureHistoryController =
+      TextEditingController();
   final TextEditingController _ethnicityController = TextEditingController();
 
-
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
 
   final _majorAilmentFocus = FocusNode();
   final _ethnicityFocus = FocusNode();
   final _bloodGroupFocus = FocusNode();
   final _ocupationFocus = FocusNode();
   final _nationalityFocus = FocusNode();
+
   //final _surgicalHistoryFocus = FocusNode();
   final _obstetricHistoryFocus = FocusNode();
   final _otherConditionsFocus = FocusNode();
   final _procedureHistoryFocus = FocusNode();
-
 
   var isDiabetic;
   var hasHeartAilment;
   var sedentaryLifestyle;
   var isSmoker;
   var isDrinker;
-  String maritalStatus;
+  String? maritalStatus;
 
   @override
   void initState() {
@@ -74,63 +73,63 @@ class _EditPatientMedicalProfileViewState
   }
 
   setData() {
-    _majorAilmentController.text = widget.healthProfile.majorAilment;
+    _majorAilmentController.text = widget.healthProfile!.majorAilment!;
     _majorAilmentController.selection = TextSelection.fromPosition(
       TextPosition(offset: _majorAilmentController.text.length),
     );
 
-    _bloodGroupController.text = widget.healthProfile.bloodGroup;
+    _bloodGroupController.text = widget.healthProfile!.bloodGroup!;
     _bloodGroupController.selection = TextSelection.fromPosition(
       TextPosition(offset: _bloodGroupController.text.length),
     );
 
-    _ocupationController.text = widget.healthProfile.occupation;
+    _ocupationController.text = widget.healthProfile!.occupation!;
     _ocupationController.selection = TextSelection.fromPosition(
       TextPosition(offset: _ocupationController.text.length),
     );
 
-    _nationalityController.text = widget.healthProfile.nationality;
+    _nationalityController.text = widget.healthProfile!.nationality!;
     _nationalityController.selection = TextSelection.fromPosition(
       TextPosition(offset: _nationalityController.text.length),
     );
 
-    _procedureHistoryController.text = widget.healthProfile.procedureHistory;
+    _procedureHistoryController.text = widget.healthProfile!.procedureHistory!;
     _procedureHistoryController.selection = TextSelection.fromPosition(
       TextPosition(offset: _procedureHistoryController.text.length),
     );
 
-   /* _surgicalHistoryController.text = widget.medicalProfiles.surgicalHistory;
+    /* _surgicalHistoryController.text = widget.medicalProfiles.surgicalHistory;
     _surgicalHistoryController.selection = TextSelection.fromPosition(
       TextPosition(offset: _surgicalHistoryController.text.length),
     );*/
 
-    isDiabetic = yesOrNo(widget.healthProfile.isDiabetic);
-    hasHeartAilment = yesOrNo(widget.healthProfile.hasHeartAilment);
-    sedentaryLifestyle = yesOrNo(widget.healthProfile.sedentaryLifestyle);
-    isSmoker = yesOrNo(widget.healthProfile.isSmoker);
-    isDrinker = yesOrNo(widget.healthProfile.isSmoker);
-    maritalStatus = widget.healthProfile.maritalStatus;
-    _otherConditionsController.text = widget.healthProfile.otherConditions;
+    isDiabetic = yesOrNo(widget.healthProfile!.isDiabetic!);
+    hasHeartAilment = yesOrNo(widget.healthProfile!.hasHeartAilment!);
+    sedentaryLifestyle = yesOrNo(widget.healthProfile!.sedentaryLifestyle!);
+    isSmoker = yesOrNo(widget.healthProfile!.isSmoker!);
+    isDrinker = yesOrNo(widget.healthProfile!.isSmoker!);
+    maritalStatus = widget.healthProfile!.maritalStatus;
+    _otherConditionsController.text = widget.healthProfile!.otherConditions!;
     _otherConditionsController.selection = TextSelection.fromPosition(
       TextPosition(offset: _otherConditionsController.text.length),
     );
 
-    _procedureHistoryController.text = widget.healthProfile.procedureHistory;
+    _procedureHistoryController.text = widget.healthProfile!.procedureHistory!;
     _procedureHistoryController.selection = TextSelection.fromPosition(
       TextPosition(offset: _procedureHistoryController.text.length),
     );
 
-    _ethnicityController.text = widget.healthProfile.ethnicity;
+    _ethnicityController.text = widget.healthProfile!.ethnicity!;
     _ethnicityController.selection = TextSelection.fromPosition(
       TextPosition(offset: _ethnicityController.text.length),
     );
 
-    isDiabetic = yesOrNo(widget.healthProfile.isDiabetic);
-    hasHeartAilment = yesOrNo(widget.healthProfile.hasHeartAilment);
-    sedentaryLifestyle = yesOrNo(widget.healthProfile.sedentaryLifestyle);
-    isSmoker = yesOrNo(widget.healthProfile.isSmoker);
-    isDrinker = yesOrNo(widget.healthProfile.isDrinker);
-    maritalStatus = widget.healthProfile.maritalStatus;
+    isDiabetic = yesOrNo(widget.healthProfile!.isDiabetic!);
+    hasHeartAilment = yesOrNo(widget.healthProfile!.hasHeartAilment!);
+    sedentaryLifestyle = yesOrNo(widget.healthProfile!.sedentaryLifestyle!);
+    isSmoker = yesOrNo(widget.healthProfile!.isSmoker!);
+    isDrinker = yesOrNo(widget.healthProfile!.isDrinker!);
+    maritalStatus = widget.healthProfile!.maritalStatus;
     if (maritalStatus == 'Unknown') {
       maritalStatus = 'Single';
     }
@@ -140,27 +139,11 @@ class _EditPatientMedicalProfileViewState
     return flag ? 'Yes' : 'No';
   }
 
-  GroupItem showSelectedItemForMarried(String text) {
-    for (int i = 0; i < maritalStatusItems.length; i++) {
-      if (text == maritalStatusItems[i].title) {
-        return maritalStatusItems[i];
-      }
-    }
-    return maritalStatusItems[0];
-  }
 
-  GroupItem showSelectedItemForYesOrNo(String text) {
-    for (int i = 0; i < radioItems.length; i++) {
-      if (text == radioItems[i].title) {
-        return radioItems[i];
-      }
-    }
-    return radioItems[0];
-  }
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
+    progressDialog = ProgressDialog(context: context);
     return BaseWidget<PatientObservationsViewModel>(
         model: model,
         builder: (context, model, child) => Scaffold(
@@ -217,12 +200,12 @@ class _EditPatientMedicalProfileViewState
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
                               color: textBlack)),
-                      RadioGroup(
+                      RadioGroup<String?>.builder(
                         items: maritalStatusItems,
-                        selected: showSelectedItemForMarried(maritalStatus),
-                        onSelected: (item) {
-                          debugPrint(item.title);
-                          maritalStatus = item.title;
+                        groupValue: maritalStatus,
+                        onChanged: (item) {
+                          debugPrint(item);
+                          maritalStatus = item;
                         },
                       ),
                       Text('Diabetic',
@@ -230,12 +213,12 @@ class _EditPatientMedicalProfileViewState
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
                               color: textBlack)),
-                      RadioGroup(
+                      RadioGroup<String?>.builder(
                         items: radioItems,
-                        selected: showSelectedItemForYesOrNo(isDiabetic),
-                        onSelected: (item) {
-                          debugPrint(item.title);
-                          isDiabetic = item.title;
+                        groupValue: isDiabetic,
+                        onChanged: (item) {
+                          debugPrint(item);
+                          isDiabetic = item;
                         },
                       ),
                       Text('Heart Patient',
@@ -243,12 +226,12 @@ class _EditPatientMedicalProfileViewState
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
                               color: textBlack)),
-                      RadioGroup(
+                      RadioGroup<String?>.builder(
                         items: radioItems,
-                        selected: showSelectedItemForYesOrNo(hasHeartAilment),
-                        onSelected: (item) {
-                          debugPrint(item.title);
-                          hasHeartAilment = item.title;
+                        groupValue: hasHeartAilment,
+                        onChanged: (item) {
+                          debugPrint(item);
+                          hasHeartAilment = item;
                         },
                       ),
                       /*Text('Sedentary Occupation',
@@ -256,7 +239,7 @@ class _EditPatientMedicalProfileViewState
                         fontSize: 16.0,
                         fontWeight: FontWeight.w600,
                         color: textBlack)),
-                RadioGroup(
+                RadioGroup<String>.builder(
                   items: radioItems,
                   onSelected: (item) {
                     debugPrint(item.title);
@@ -267,12 +250,12 @@ class _EditPatientMedicalProfileViewState
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
                               color: textBlack)),
-                      RadioGroup(
+                      RadioGroup<String?>.builder(
                         items: radioItems,
-                        selected: showSelectedItemForYesOrNo(isSmoker),
-                        onSelected: (item) {
-                          debugPrint(item.title);
-                          isSmoker = item.title;
+                        groupValue: isSmoker,
+                        onChanged: (item) {
+                          debugPrint(item);
+                          isSmoker = item;
                         },
                       ),
                       Text('Is Drinker?',
@@ -280,12 +263,12 @@ class _EditPatientMedicalProfileViewState
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
                               color: textBlack)),
-                      RadioGroup(
+                      RadioGroup<String?>.builder(
                         items: radioItems,
-                        selected: showSelectedItemForYesOrNo(isDrinker),
-                        onSelected: (item) {
-                          debugPrint(item.title);
-                          isDrinker = item.title;
+                        groupValue: isDrinker,
+                        onChanged: (item) {
+                          debugPrint(item);
+                          isDrinker = item;
                         },
                       ),
                       SizedBox(
@@ -372,7 +355,8 @@ class _EditPatientMedicalProfileViewState
 
   _updatePatientMedicalProfile() async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final Map<String, dynamic> data = <String, dynamic>{};
       data['BloodGroup'] = _bloodGroupController.text.toUpperCase();
       data['MajorAilment'] = _majorAilmentController.text;
@@ -391,18 +375,18 @@ class _EditPatientMedicalProfileViewState
       data['ProcedureHistory'] = _procedureHistoryController.text;
 
       final BaseResponse baseResponse = await model.updatePatientMedicalProfile(
-          widget.healthProfile.id, data);
+          widget.healthProfile!.id, data);
 
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         Navigator.pop(context);
         showToast('Medical Profile updated successfully!', context);
       } else {
-        showToast(baseResponse.message, context);
-        progressDialog.hide();
+        showToast(baseResponse.message!, context);
+        progressDialog.close();
       }
     } catch (CustomException) {
-      progressDialog.hide();
+      progressDialog.close();
       debugPrint('Error ' + CustomException.toString());
     }
   }

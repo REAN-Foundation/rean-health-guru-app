@@ -7,9 +7,9 @@ import 'package:paitent/infra/themes/app_colors.dart';
 
 //ignore: must_be_immutable
 class AssessmentStartCarePlanView extends StatefulWidget {
-  Assessmment assesment;
+  Assessmment? assesment;
 
-  AssessmentStartCarePlanView(Assessmment assesmentC) {
+  AssessmentStartCarePlanView(Assessmment? assesmentC) {
     assesment = assesmentC;
   }
 
@@ -93,7 +93,7 @@ class _AssessmentStartCarePlanViewState
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                widget.assesment.question.questionText,
+                widget.assesment!.question!.questionText!,
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w600,
@@ -237,7 +237,7 @@ class _AssessmentStartCarePlanViewState
               Radio(
                 value: 1,
                 groupValue: id,
-                onChanged: (val) {
+                onChanged: (dynamic val) {
                   setState(() {
                     radioButtonItem = '3 to 5 litres';
                     id = 1;
@@ -260,7 +260,7 @@ class _AssessmentStartCarePlanViewState
               Radio(
                 value: 2,
                 groupValue: id,
-                onChanged: (val) {
+                onChanged: (dynamic val) {
                   setState(() {
                     radioButtonItem = 'less than 3 litres';
                     id = 2;
@@ -283,7 +283,7 @@ class _AssessmentStartCarePlanViewState
               Radio(
                 value: 3,
                 groupValue: id,
-                onChanged: (val) {
+                onChanged: (dynamic val) {
                   setState(() {
                     radioButtonItem = '5 litres or more';
                     id = 3;

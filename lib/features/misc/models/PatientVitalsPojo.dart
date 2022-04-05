@@ -1,7 +1,7 @@
 class PatientVitalsPojo {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   PatientVitalsPojo({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class PatientVitalsPojo {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<Vitals> vitals;
+  List<Vitals>? vitals;
 
   Data({this.vitals});
 
@@ -31,7 +31,7 @@ class Data {
     if (json['vitals'] != null) {
       vitals = <Vitals>[];
       json['vitals'].forEach((v) {
-        vitals.add(Vitals.fromJson(v));
+        vitals!.add(Vitals.fromJson(v));
       });
     }
   }
@@ -39,24 +39,24 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (vitals != null) {
-      data['vitals'] = vitals.map((v) => v.toJson()).toList();
+      data['vitals'] = vitals!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Vitals {
-  String id;
-  String visitId;
-  String patientUserId;
-  String doctorUserId;
-  String weight;
-  String height;
-  String temperature;
-  String pulse;
-  String systolicBloodPressure;
-  String diastolicBloodPressure;
-  String bloodOxygenSaturation;
+  String? id;
+  String? visitId;
+  String? patientUserId;
+  String? doctorUserId;
+  String? weight;
+  String? height;
+  String? temperature;
+  String? pulse;
+  String? systolicBloodPressure;
+  String? diastolicBloodPressure;
+  String? bloodOxygenSaturation;
 
   Vitals(
       {this.id,

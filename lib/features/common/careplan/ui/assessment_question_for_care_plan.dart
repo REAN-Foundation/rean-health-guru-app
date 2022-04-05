@@ -7,9 +7,9 @@ import 'package:paitent/infra/themes/app_colors.dart';
 
 //ignore: must_be_immutable
 class AssessmentQuestionCarePlanView extends StatefulWidget {
-  Assessmment assesment;
+  Assessmment? assesment;
 
-  AssessmentQuestionCarePlanView(Assessmment assesmentC) {
+  AssessmentQuestionCarePlanView(Assessmment? assesmentC) {
     assesment = assesmentC;
   }
 
@@ -53,9 +53,11 @@ class _AssessmentQuestionCarePlanViewState
   }
 
   processAnswer() {
-    for (int i = 0; i < widget.assesment.question.answerOptions.length; i++) {
-      answers
-          .add(Answer(i, widget.assesment.question.answerOptions.elementAt(i)));
+    for (int i = 0;
+        i < widget.assesment!.question!.answerOptions!.length;
+        i++) {
+      answers.add(
+          Answer(i, widget.assesment!.question!.answerOptions!.elementAt(i)));
     }
     setState(() {});
   }
@@ -133,7 +135,7 @@ class _AssessmentQuestionCarePlanViewState
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                widget.assesment.question.questionText,
+                widget.assesment!.question!.questionText!,
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w600,
@@ -150,7 +152,7 @@ class _AssessmentQuestionCarePlanViewState
                 title: Text(data.text),
                         groupValue: id,
                         value: data.index,
-                        onChanged: (val) {
+                onChanged: (dynamic val) {
                           setState(() {
                             radioItem = data.text;
                             id = data.index;

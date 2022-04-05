@@ -15,7 +15,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 //ignore: must_be_immutable
 class LearnMoreCarePlanView extends StatefulWidget {
-  AssortedViewConfigs assortedViewConfigs;
+  AssortedViewConfigs? assortedViewConfigs;
 
   LearnMoreCarePlanView(this.assortedViewConfigs);
 
@@ -65,9 +65,9 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
             backgroundColor: Colors.white,
             brightness: Brightness.light,
             title: Text(
-              widget.assortedViewConfigs.header == ''
+              widget.assortedViewConfigs!.header == ''
                   ? 'Learn More!'
-                  : widget.assortedViewConfigs.header,
+                  : widget.assortedViewConfigs!.header!,
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
@@ -95,9 +95,9 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
                 height: 16,
               ),
               Expanded(
-                child: widget.assortedViewConfigs.toShow == '1'
+                child: widget.assortedViewConfigs!.toShow == '1'
                     ? iMageView()
-                    : widget.assortedViewConfigs.toShow == '2'
+                    : widget.assortedViewConfigs!.toShow == '2'
                         ? audioView()
                         : videoView(),
               ),
@@ -209,13 +209,13 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
                         MaterialPageRoute(builder: (context) {
                           return HomeView( 0 );
                         }), (Route<dynamic> route) => false);*/
-                    if (widget.assortedViewConfigs.task.finished) {
+                    if (widget.assortedViewConfigs!.task.finished!) {
                       Navigator.pop(context);
                     } else {
                       completeMessageTaskOfAHACarePlan(
-                          widget.assortedViewConfigs.task);
-                        }
-                      },
+                          widget.assortedViewConfigs!.task);
+                    }
+                  },
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Container(
@@ -279,8 +279,8 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
               children: [
                 InkWell(
                   onTap: () {
-                    _launchURL(widget.assortedViewConfigs.task.details
-                        .concreteTask.mediaUrl);
+                    _launchURL(widget.assortedViewConfigs!.task.details!
+                        .concreteTask!.mediaUrl!);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -332,7 +332,8 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                widget.assortedViewConfigs.task.details.concreteTask.text ?? '',
+                widget.assortedViewConfigs!.task.details!.concreteTask!.text ??
+                    '',
                 style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
               ),
             ),
@@ -344,8 +345,9 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
 
   Widget iMageView() {
     debugPrint(
-        'Image Visible ==> ${widget.assortedViewConfigs.task.details.type == 'Infographics'}');
-    debugPrint('Image URL ==> ${widget.assortedViewConfigs.task.details.url}');
+        'Image Visible ==> ${widget.assortedViewConfigs!.task.details!.type == 'Infographics'}');
+    debugPrint(
+        'Image URL ==> ${widget.assortedViewConfigs!.task.details!.url}');
     return Scrollbar(
       isAlwaysShown: true,
       controller: _scrollController,
@@ -354,14 +356,14 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (widget.assortedViewConfigs.task.details.url != null) ...[
+            if (widget.assortedViewConfigs!.task.details!.url != null) ...[
               Visibility(
-                visible: widget.assortedViewConfigs.task.details.type ==
+                visible: widget.assortedViewConfigs!.task.details!.type ==
                     'Infographics',
                 child: Container(
                     padding: const EdgeInsets.all(16.0),
                     child: Image.network(
-                      widget.assortedViewConfigs.task.details.url,
+                      widget.assortedViewConfigs!.task.details!.url!,
                       fit: BoxFit.cover,
                     )),
               ),
@@ -369,7 +371,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                widget.assortedViewConfigs.task.details.text,
+                widget.assortedViewConfigs!.task.details!.text!,
                 style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
               ),
             ),
@@ -406,8 +408,8 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
     try {
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.completeMessageTaskOfAHACarePlan(
-              startCarePlanResponseGlob.data.carePlan.id.toString(),
-              task.details.id);
+              startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+              task.details!.id!);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;
@@ -418,7 +420,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
         debugPrint(
             'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
-        showToast(_startTaskOfAHACarePlanResponse.message, context);
+        showToast(_startTaskOfAHACarePlanResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);

@@ -1,8 +1,8 @@
 class EmergencyContactResponse {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
 
   EmergencyContactResponse(
       {this.status, this.message, this.httpCode, this.data});
@@ -20,14 +20,14 @@ class EmergencyContactResponse {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  EmergencyContacts emergencyContacts;
+  EmergencyContacts? emergencyContacts;
 
   Data({this.emergencyContacts});
 
@@ -40,29 +40,29 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (emergencyContacts != null) {
-      data['EmergencyContacts'] = emergencyContacts.toJson();
+      data['EmergencyContacts'] = emergencyContacts!.toJson();
     }
     return data;
   }
 }
 
 class EmergencyContacts {
-  int totalCount;
-  int retrievedCount;
-  int pageIndex;
-  int itemsPerPage;
-  String order;
-  String orderedBy;
-  List<Items> items;
+  int? totalCount;
+  int? retrievedCount;
+  int? pageIndex;
+  int? itemsPerPage;
+  String? order;
+  String? orderedBy;
+  List<Items>? items;
 
   EmergencyContacts(
       {this.totalCount,
-        this.retrievedCount,
-        this.pageIndex,
-        this.itemsPerPage,
-        this.order,
-        this.orderedBy,
-        this.items});
+      this.retrievedCount,
+      this.pageIndex,
+      this.itemsPerPage,
+      this.order,
+      this.orderedBy,
+      this.items});
 
   EmergencyContacts.fromJson(Map<String, dynamic> json) {
     totalCount = json['TotalCount'];
@@ -74,7 +74,7 @@ class EmergencyContacts {
     if (json['Items'] != null) {
       items = [];
       json['Items'].forEach((v) {
-        items.add(Items.fromJson(v));
+        items!.add(Items.fromJson(v));
       });
     }
   }
@@ -88,28 +88,28 @@ class EmergencyContacts {
     data['Order'] = order;
     data['OrderedBy'] = orderedBy;
     if (items != null) {
-      data['Items'] = items.map((v) => v.toJson()).toList();
+      data['Items'] = items!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Items {
-  String id;
-  String patientUserId;
-  String contactPersonId;
-  ContactPerson contactPerson;
-  String contactRelation;
-  String addressId;
+  String? id;
+  String? patientUserId;
+  String? contactPersonId;
+  ContactPerson? contactPerson;
+  String? contactRelation;
+  String? addressId;
 
   //String address;
-  String organizationId;
-  String organization;
-  bool isAvailableForEmergency;
-  String timeOfAvailability;
-  String description;
-  String additionalPhoneNumbers;
-  String email;
+  String? organizationId;
+  String? organization;
+  bool? isAvailableForEmergency;
+  String? timeOfAvailability;
+  String? description;
+  String? additionalPhoneNumbers;
+  String? email;
 
   Items(
       {this.id,
@@ -151,7 +151,7 @@ class Items {
     data['PatientUserId'] = patientUserId;
     data['ContactPersonId'] = contactPersonId;
     if (contactPerson != null) {
-      data['ContactPerson'] = contactPerson.toJson();
+      data['ContactPerson'] = contactPerson!.toJson();
     }
     data['ContactRelation'] = contactRelation;
     data['AddressId'] = addressId;
@@ -168,30 +168,30 @@ class Items {
 }
 
 class ContactPerson {
-  String id;
-  String prefix;
-  String firstName;
-  String middleName;
-  String lastName;
-  String displayName;
-  String gender;
-  String birthDate;
-  String age;
-  String phone;
-  String email;
-  String imageResourceId;
-  String activeSince;
+  String? id;
+  String? prefix;
+  String? firstName;
+  String? middleName;
+  String? lastName;
+  String? displayName;
+  String? gender;
+  String? birthDate;
+  String? age;
+  String? phone;
+  String? email;
+  String? imageResourceId;
+  String? activeSince;
 
   ContactPerson(
       {this.id,
-        this.prefix,
-        this.firstName,
-        this.middleName,
-        this.lastName,
-        this.displayName,
-        this.gender,
-        this.birthDate,
-        this.age,
+      this.prefix,
+      this.firstName,
+      this.middleName,
+      this.lastName,
+      this.displayName,
+      this.gender,
+      this.birthDate,
+      this.age,
         this.phone,
         this.email,
         this.imageResourceId,

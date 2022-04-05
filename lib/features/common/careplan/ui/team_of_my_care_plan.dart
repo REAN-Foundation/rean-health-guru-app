@@ -33,7 +33,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
     try {
       final TeamCarePlanReesponse teamCarePlanReesponse =
           await model.getAHACarePlanTeam(
-              startCarePlanResponseGlob.data.carePlan.id.toString());
+              startCarePlanResponseGlob!.data!.carePlan!.id.toString());
 
       if (teamCarePlanReesponse.status == 'success') {
         doctorTeam.clear();
@@ -43,7 +43,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
         debugPrint('AHA Care Plan ==> ${teamCarePlanReesponse.toJson()}');
         _srotTeamMembers(teamCarePlanReesponse);
       } else {
-        showToast(teamCarePlanReesponse.message, context);
+        showToast(teamCarePlanReesponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -53,7 +53,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   }
 
   _srotTeamMembers(TeamCarePlanReesponse teamCarePlanReesponse) {
-    for (final teamMemeber in teamCarePlanReesponse.data.team) {
+    for (final teamMemeber in teamCarePlanReesponse.data!.team!) {
       if (teamMemeber.roleName == 'Doctor') {
         doctorTeam.add(teamMemeber);
       } else if (teamMemeber.roleName == 'Pharmacy') {
@@ -282,7 +282,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   }
 
   Widget _makeDoctorListCard(BuildContext context, int index) {
-    final Details details = doctorTeam.elementAt(index).details;
+    final Details details = doctorTeam.elementAt(index).details!;
     return Container(
       height: 80,
       decoration: BoxDecoration(
@@ -327,15 +327,15 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                                 padding: const EdgeInsets.only(right: 18.0),
                                 child: Text(
                                     'Dr. ' +
-                                        details.firstName +
+                                        details.firstName! +
                                         ' ' +
-                                        details.lastName,
+                                        details.lastName!,
                                     style: TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                               ),
-                              Text(details.gender,
+                              Text(details.gender!,
                                   style: TextStyle(
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w300,
@@ -346,7 +346,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                  Text('Phone: +91 ' + details.phoneNumber,
+                                  Text('Phone: +91 ' + details.phoneNumber!,
                                       style: TextStyle(
                                           fontSize: 12.0,
                                           fontWeight: FontWeight.w300,
@@ -414,7 +414,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   }
 
   Widget _makePharmacyListCard(BuildContext context, int index) {
-    final Details details = pharmaTeam.elementAt(index).details;
+    final Details details = pharmaTeam.elementAt(index).details!;
     return Container(
       height: 80,
       decoration: BoxDecoration(
@@ -459,13 +459,15 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 18.0),
                                 child: Text(
-                                    details.firstName + ' ' + details.lastName,
+                                    details.firstName! +
+                                        ' ' +
+                                        details.lastName!,
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                               ),
-                              Text('Phone: +91 ' + details.phoneNumber,
+                              Text('Phone: +91 ' + details.phoneNumber!,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
@@ -530,7 +532,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   }
 
   Widget _makeNurseListCard(BuildContext context, int index) {
-    final Details details = socialWorkerTeam.elementAt(index).details;
+    final Details details = socialWorkerTeam.elementAt(index).details!;
     return Container(
       height: 80,
       decoration: BoxDecoration(
@@ -575,19 +577,21 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 18.0),
                                 child: Text(
-                                    details.firstName + ' ' + details.lastName,
+                                    details.firstName! +
+                                        ' ' +
+                                        details.lastName!,
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                               ),
-                              Text('Phone: +91 ' + details.phoneNumber,
+                              Text('Phone: +91 ' + details.phoneNumber!,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
                                       color: primaryColor)),
                               Text(
-                                details.gender,
+                                details.gender!,
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w200,
@@ -656,7 +660,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   }
 
   Widget _makeFamilyMemberListCard(BuildContext context, int index) {
-    final Details details = familyTeam.elementAt(index).details;
+    final Details details = familyTeam.elementAt(index).details!;
     return Container(
       height: 80,
       decoration: BoxDecoration(
@@ -701,19 +705,21 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 18.0),
                                 child: Text(
-                                    details.firstName + ' ' + details.lastName,
+                                    details.firstName! +
+                                        ' ' +
+                                        details.lastName!,
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                         color: primaryColor)),
                               ),
-                              Text('Phone: +91 ' + details.phoneNumber,
+                              Text('Phone: +91 ' + details.phoneNumber!,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
                                       color: primaryColor)),
                               Text(
-                                details.relation,
+                                details.relation!,
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w200,
@@ -825,7 +831,8 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       data['Gender'] = '';
 
       final map = <String, dynamic>{};
-      map['CarePlanId'] = startCarePlanResponseGlob.data.carePlan.id.toString();
+      map['CarePlanId'] =
+          startCarePlanResponseGlob!.data!.carePlan!.id.toString();
       map['IsEmergencyContact'] = true;
       map['TeamMemberType'] = 'Doctor';
       map['Details'] = data;
@@ -835,14 +842,14 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getAHACarePlanSummary();
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       } else {
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException);
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
@@ -929,7 +936,8 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       data['Gender'] = '';
 
       final map = <String, dynamic>{};
-      map['CarePlanId'] = startCarePlanResponseGlob.data.carePlan.id.toString();
+      map['CarePlanId'] =
+          startCarePlanResponseGlob!.data!.carePlan!.id.toString();
       map['IsEmergencyContact'] = true;
       map['TeamMemberType'] = 'Pharmacy';
       map['Details'] = data;
@@ -939,14 +947,14 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getAHACarePlanSummary();
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       } else {
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException);
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
@@ -1095,7 +1103,8 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       data['Relation'] = relation;
 
       final map = <String, dynamic>{};
-      map['CarePlanId'] = startCarePlanResponseGlob.data.carePlan.id.toString();
+      map['CarePlanId'] =
+          startCarePlanResponseGlob!.data!.carePlan!.id.toString();
       map['IsEmergencyContact'] = true;
       map['TeamMemberType'] = type;
       map['Details'] = data;
@@ -1105,15 +1114,15 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getAHACarePlanSummary();
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       } else {
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      //progressDialog.hide();
+      //progressDialog.close();
       showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException);
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
@@ -1144,7 +1153,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
           TextButton(
             child: Text('Yes'),
             onPressed: () {
-              removeTeamMembers(team.id);
+              removeTeamMembers(team.id!);
               Navigator.of(context, rootNavigator: true).pop();
             },
           ),
@@ -1165,15 +1174,15 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getAHACarePlanSummary();
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       } else {
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      //progressDialog.hide();
+      //progressDialog.close();
       showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException);
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 }

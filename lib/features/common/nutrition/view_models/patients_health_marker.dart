@@ -9,7 +9,7 @@ import '../../../../infra/view_models/base_model.dart';
 class PatientHealthMarkerViewModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();
 
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   Future<BaseResponse> recordMyCalories(Map body) async {
     // Get user profile for id
@@ -17,10 +17,12 @@ class PatientHealthMarkerViewModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.post('/wellness/daily-records/calorie-balances',
-        header: map, body: body);
+    final response = await apiProvider!.post(
+        '/wellness/daily-records/calorie-balances',
+        header: map,
+        body: body);
 
     setBusy(false);
     // Convert and return
@@ -33,10 +35,10 @@ class PatientHealthMarkerViewModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.post('/wellness/daily-records/step-counts',
-        header: map, body: body);
+    final response = await apiProvider!
+        .post('/wellness/daily-records/step-counts', header: map, body: body);
 
     setBusy(false);
     // Convert and return
@@ -49,10 +51,12 @@ class PatientHealthMarkerViewModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider
-        .post('/wellness/nutrition/water-consumptions', header: map, body: body);
+    final response = await apiProvider!.post(
+        '/wellness/nutrition/water-consumptions',
+        header: map,
+        body: body);
 
     setBusy(false);
     // Convert and return
@@ -65,10 +69,10 @@ class PatientHealthMarkerViewModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response =
-        await apiProvider.post('/wellness/nutrition/food-consumptions', header: map, body: body);
+    final response = await apiProvider!
+        .post('/wellness/nutrition/food-consumptions', header: map, body: body);
 
     debugPrint(response.toString());
 

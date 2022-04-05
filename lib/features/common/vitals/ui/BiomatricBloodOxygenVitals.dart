@@ -9,7 +9,7 @@ import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SimpleTimeSeriesChart.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class BiometricBloodOxygenVitalsView extends StatefulWidget {
   @override
@@ -25,7 +25,7 @@ class _BiometricBloodOxygenVitalsViewState
   final _controller = TextEditingController();
   List<Items> records = <Items>[];
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _BiometricBloodOxygenVitalsViewState
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
+    progressDialog = ProgressDialog(context: context);
     return BaseWidget<PatientVitalsViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -261,7 +261,7 @@ class _BiometricBloodOxygenVitalsViewState
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              dateFormatStandard.format(DateTime.parse(record.recordDate)),
+              dateFormatStandard.format(DateTime.parse(record.recordDate!)),
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
@@ -339,7 +339,7 @@ class _BiometricBloodOxygenVitalsViewState
 
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
+          DateTime.parse(records.elementAt(i).recordDate!).toLocal(),
           double.parse(records.elementAt(i).bloodOxygenSaturation.toString())));
     }
 
@@ -501,7 +501,8 @@ class _BiometricBloodOxygenVitalsViewState
 
   addvitals() async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['BloodOxygenSaturation'] = _controller.text.toString();
       map['PatientUserId'] = "";
@@ -513,15 +514,15 @@ class _BiometricBloodOxygenVitalsViewState
           await model.addMyVitals('blood-oxygen-saturations', map);
 
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
-        showToast(baseResponse.message, context);
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
         Navigator.pop(context);
       } else {
-        progressDialog.hide();
-        showToast(baseResponse.message, context);
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
@@ -534,9 +535,10 @@ class _BiometricBloodOxygenVitalsViewState
           await model.getMyVitalsHistory('blood-oxygen-saturations');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
-        records.addAll(getMyVitalsHistory.data.bloodOxygenSaturationRecords.items);
+        records.addAll(
+            getMyVitalsHistory.data!.bloodOxygenSaturationRecords!.items!);
       } else {
-        showToast(getMyVitalsHistory.message, context);
+        showToast(getMyVitalsHistory.message!, context);
       }
     } catch (e) {
       model.setBusy(false);

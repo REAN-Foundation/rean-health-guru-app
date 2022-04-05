@@ -16,10 +16,10 @@ class SelectCarePlanView extends StatefulWidget {
 class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  GetAHACarePlansResponse _ahaCarePlansResponse;
-  List<DropdownMenuItem<String>> _carePlanMenuItems;
-  String selectedCarePlan = '';
-  CarePlanTypes carePlanTypes;
+  late GetAHACarePlansResponse _ahaCarePlansResponse;
+  List<DropdownMenuItem<String>>? _carePlanMenuItems;
+  String? selectedCarePlan = '';
+  late CarePlanTypes carePlanTypes;
 
   @override
   void initState() {
@@ -41,9 +41,9 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         debugPrint('AHA Care Plan ==> ${_ahaCarePlansResponse.toJson()}');
 
         _carePlanMenuItems = buildDropDownMenuItemsForCarePlan(
-            _ahaCarePlansResponse.data.carePlanTypes);
+            _ahaCarePlansResponse.data!.carePlanTypes!);
       } else {
-        showToast(_ahaCarePlansResponse.message, context);
+        showToast(_ahaCarePlansResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -57,7 +57,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < list.length; i++) {
       items.add(DropdownMenuItem(
-        child: Text(list.elementAt(i).code),
+        child: Text(list.elementAt(i).code!),
         value: list.elementAt(i).code,
       ));
     }
@@ -65,10 +65,12 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   }
 
   getCarePlanDetails() {
-    for (int i = 0; i < _ahaCarePlansResponse.data.carePlanTypes.length; i++) {
+    for (int i = 0;
+        i < _ahaCarePlansResponse.data!.carePlanTypes!.length;
+        i++) {
       if (selectedCarePlan ==
-          _ahaCarePlansResponse.data.carePlanTypes.elementAt(i).code) {
-        carePlanTypes = _ahaCarePlansResponse.data.carePlanTypes.elementAt(i);
+          _ahaCarePlansResponse.data!.carePlanTypes!.elementAt(i).code) {
+        carePlanTypes = _ahaCarePlansResponse.data!.carePlanTypes!.elementAt(i);
       }
     }
   }
@@ -215,7 +217,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             height: 4,
           ),
           Text(
-            selectedCarePlan == '' ? '' : carePlanTypes.name,
+            selectedCarePlan == '' ? '' : carePlanTypes.name!,
             style: TextStyle(
                 color: textBlack, fontSize: 16, fontWeight: FontWeight.w300),
           ),

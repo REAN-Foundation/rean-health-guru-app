@@ -1,7 +1,7 @@
 class GetActionOfGoalPlan {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   GetActionOfGoalPlan({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class GetActionOfGoalPlan {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<Goals> goals;
+  List<Goals>? goals;
 
   Data({this.goals});
 
@@ -31,7 +31,7 @@ class Data {
     if (json['goals'] != null) {
       goals = <Goals>[];
       json['goals'].forEach((v) {
-        goals.add(Goals.fromJson(v));
+        goals!.add(Goals.fromJson(v));
       });
     }
   }
@@ -39,25 +39,25 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (goals != null) {
-      data['goals'] = goals.map((v) => v.toJson()).toList();
+      data['goals'] = goals!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Goals {
-  int id;
-  int assetID;
-  String assetType;
-  String assetName;
-  String description;
-  String language;
-  String category;
-  String source;
-  String tags;
-  String createdAt;
-  String updatedAt;
-  bool isChecked = false;
+  int? id;
+  int? assetID;
+  String? assetType;
+  String? assetName;
+  String? description;
+  String? language;
+  String? category;
+  String? source;
+  String? tags;
+  String? createdAt;
+  String? updatedAt;
+  bool? isChecked = false;
 
   Goals(
       {this.id,

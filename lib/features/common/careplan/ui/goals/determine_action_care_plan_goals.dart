@@ -9,7 +9,7 @@ import 'package:paitent/features/misc/ui/home_view.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class DeterminActionPlansForCarePlanView extends StatefulWidget {
   @override
@@ -23,9 +23,9 @@ class _DeterminActionPlansForCarePlanViewState
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int id = 0;
   String radioButtonItem = 'ONE';
-  GetActionOfGoalPlan getActionOfGoalPlan;
-  List<int> action = <int>[];
-  ProgressDialog progressDialog;
+  late GetActionOfGoalPlan getActionOfGoalPlan;
+  List<int?> action = <int?>[];
+  late ProgressDialog progressDialog;
 
   @override
   void initState() {
@@ -37,12 +37,12 @@ class _DeterminActionPlansForCarePlanViewState
   getActionOfGoalPlanApi() async {
     try {
       getActionOfGoalPlan = await model.getActionOfGoalPlan(
-          startCarePlanResponseGlob.data.carePlan.id.toString());
+          startCarePlanResponseGlob!.data!.carePlan!.id.toString());
 
       if (getActionOfGoalPlan.status == 'success') {
         debugPrint('AHA Care Plan ==> ${getActionOfGoalPlan.toJson()}');
       } else {
-        showToast(getActionOfGoalPlan.message, context);
+        showToast(getActionOfGoalPlan.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -53,7 +53,7 @@ class _DeterminActionPlansForCarePlanViewState
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
+    progressDialog = ProgressDialog(context: context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -146,17 +146,17 @@ class _DeterminActionPlansForCarePlanViewState
             Expanded(
               child: ListView.builder(
                   //physics: const NeverScrollableScrollPhysics(),
-                  itemCount: getActionOfGoalPlan.data.goals.length,
+                  itemCount: getActionOfGoalPlan.data!.goals!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return CheckboxListTile(
-                        value: getActionOfGoalPlan.data.goals
+                        value: getActionOfGoalPlan.data!.goals!
                             .elementAt(index)
                             .isChecked,
-                        title: Text(getActionOfGoalPlan.data.goals
+                        title: Text(getActionOfGoalPlan.data!.goals!
                             .elementAt(index)
-                            .assetName),
+                            .assetName!),
                         controlAffinity: ListTileControlAffinity.leading,
-                        onChanged: (bool val) {
+                        onChanged: (bool? val) {
                           itemChange(val, index);
                         });
                   }),
@@ -166,9 +166,9 @@ class _DeterminActionPlansForCarePlanViewState
     );
   }
 
-  void itemChange(bool val, int index) {
+  void itemChange(bool? val, int index) {
     setState(() {
-      getActionOfGoalPlan.data.goals.elementAt(index).isChecked = val;
+      getActionOfGoalPlan.data!.goals!.elementAt(index).isChecked = val;
     });
   }
 
@@ -216,9 +216,9 @@ class _DeterminActionPlansForCarePlanViewState
     return InkWell(
       onTap: () {
         action.clear();
-        for (int i = 0; i < getActionOfGoalPlan.data.goals.length; i++) {
-          if (getActionOfGoalPlan.data.goals.elementAt(i).isChecked) {
-            action.add(getActionOfGoalPlan.data.goals.elementAt(i).id);
+        for (int i = 0; i < getActionOfGoalPlan.data!.goals!.length; i++) {
+          if (getActionOfGoalPlan.data!.goals!.elementAt(i).isChecked!) {
+            action.add(getActionOfGoalPlan.data!.goals!.elementAt(i).id);
           }
         }
         setGoals();
@@ -263,25 +263,26 @@ class _DeterminActionPlansForCarePlanViewState
 
   setGoals() async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final body = <String, dynamic>{};
       body['Actions'] = action;
 
       final BaseResponse baseResponse = await model.addGoalsTask(
-          startCarePlanResponseGlob.data.carePlan.id.toString(),
+          startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
           'goal-actions',
           body);
 
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         showDialog(
             context: context,
             builder: (_) {
               return _dialog(context);
             });
       } else {
-        progressDialog.hide();
-        if (baseResponse.error
+        progressDialog.close();
+        if (baseResponse.error!
             .contains('goal already exists for this care plan')) {
           showDialog(
               context: context,
@@ -289,11 +290,11 @@ class _DeterminActionPlansForCarePlanViewState
                 return _dialog(context);
               });
         } else {
-          showToast(baseResponse.message, context);
+          showToast(baseResponse.message!, context);
         }
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
@@ -396,14 +397,15 @@ class _DeterminActionPlansForCarePlanViewState
 
   completeMessageTaskOfAHACarePlan() async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.stopTaskOfAHACarePlan(
-              startCarePlanResponseGlob.data.carePlan.id.toString(),
-              getTask().details.id);
+              startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+              getTask()!.details!.id!);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         assrotedUICount = 0;
         //Navigator.of(context, rootNavigator: true).pop();
         Navigator.pushAndRemoveUntil(context,
@@ -413,11 +415,11 @@ class _DeterminActionPlansForCarePlanViewState
         debugPrint(
             'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
-        progressDialog.hide();
-        showToast(_startTaskOfAHACarePlanResponse.message, context);
+        progressDialog.close();
+        showToast(_startTaskOfAHACarePlanResponse.message!, context);
       }
     } catch (CustomException) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());

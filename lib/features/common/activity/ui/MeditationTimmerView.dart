@@ -15,7 +15,7 @@ class MeditationTimmerView extends StatefulWidget {
 class _MeditationTimmerViewState extends State<MeditationTimmerView> {
   var model = PatientHealthMarkerViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  Timer _timer;
+  Timer? _timer;
   int seconds = 0;
   int minutes = 0;
   int hours = 0;
@@ -60,7 +60,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   if (_timer != null) ...[
-                    _timer.isActive
+                    _timer!.isActive
                         ? countUpTimmer()
                         : Container(
                             height: 260,
@@ -78,7 +78,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                   ),
                   FlipCard(
                     onFlip: () {
-                      if (_timer != null && _timer.isActive) {
+                      if (_timer != null && _timer!.isActive) {
                         _pauseTimmer();
                       } else {
                         startTimer();
@@ -99,7 +99,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           if (_timer != null) ...[
-                            _timer.isActive
+                            _timer!.isActive
                                 ? Icon(
                                     Icons.play_arrow,
                                     color: primaryColor,
@@ -161,7 +161,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                           child: OutlinedButton(
                             child: Text('Discard Session'),
                             onPressed: () {
-                              _timer.cancel();
+                              _timer!.cancel();
                               _timer = null;
                               minutes = 0;
                               seconds = 0;
@@ -190,7 +190,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                           child: ElevatedButton(
                             child: Text('Finish'),
                             onPressed: () {
-                              _timer.cancel();
+                              _timer!.cancel();
                               Navigator.of(context).pop();
                             },
                             style: ElevatedButton.styleFrom(
@@ -294,6 +294,6 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
 
   _pauseTimmer() {
     isPause = true;
-    _timer.cancel();
+    _timer!.cancel();
   }
 }

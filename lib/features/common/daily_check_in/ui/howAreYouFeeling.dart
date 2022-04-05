@@ -14,7 +14,7 @@ class HowAreYouFeelingToday extends StatefulWidget {
 class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
     with SingleTickerProviderStateMixin {
   final int delayedAmount = 500;
-  AnimationController _controller;
+  late AnimationController _controller;
   int selectedFeelings = 0;
   var dateFormat = DateFormat('yyyy-MM-dd');
 

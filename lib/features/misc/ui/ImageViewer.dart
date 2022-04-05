@@ -3,23 +3,24 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:progress_dialog/progress_dialog.dart';
 import 'package:share/share.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
+
 //ignore: must_be_immutable
 class ImageViewer extends StatelessWidget {
   static final GlobalKey _globalKey = GlobalKey();
-  String path = '';
-  String fileName;
+  String? path = '';
+  String? fileName;
 
   ImageViewer(this.path, this.fileName);
 
-  ProgressDialog progressDialog;
-  File file;
+  ProgressDialog? progressDialog;
+  late File file;
 
   @override
   Widget build(BuildContext context) {
-    file = File(path);
-    progressDialog = ProgressDialog(context);
+    file = File(path!);
+    progressDialog = ProgressDialog(context: context);
     return Scaffold(
       key: _globalKey,
       appBar: AppBar(
@@ -58,7 +59,8 @@ class ImageViewer extends StatelessWidget {
   }
 
   urlFileShare() async {
-    final RenderBox box = _globalKey.currentContext.findRenderObject();
+    final RenderBox? box =
+        _globalKey.currentContext!.findRenderObject() as RenderBox?;
     if (Platform.isAndroid) {
       /*  var url = 'https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg';
       var response = await get(url);
@@ -74,11 +76,11 @@ class ImageViewer extends StatelessWidget {
           sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);*/
       Share.shareFiles([file.path],
           subject: 'Hello, check your shared file.',
-          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
     } else {
-      Share.share(path,
+      Share.share(path!,
           subject: 'Hello, check your shared file.',
-          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
     }
   }
 }

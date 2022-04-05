@@ -1,8 +1,8 @@
 class GetMyVitalsHistory {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
 
   GetMyVitalsHistory({this.status, this.message, this.httpCode, this.data});
 
@@ -19,27 +19,27 @@ class GetMyVitalsHistory {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  Records bloodGlucoseRecords;
-  Records bloodPressureRecords;
-  Records pulseRecords;
-  Records bodyTemperatureRecords;
-  Records bodyWeightRecords;
-  Records bloodOxygenSaturationRecords;
+  Records? bloodGlucoseRecords;
+  Records? bloodPressureRecords;
+  Records? pulseRecords;
+  Records? bodyTemperatureRecords;
+  Records? bodyWeightRecords;
+  Records? bloodOxygenSaturationRecords;
 
   Data(
       {this.bloodGlucoseRecords,
-        this.bloodPressureRecords,
-        this.pulseRecords,
-        this.bodyTemperatureRecords,
-        this.bodyWeightRecords,
-        this.bloodOxygenSaturationRecords});
+      this.bloodPressureRecords,
+      this.pulseRecords,
+      this.bodyTemperatureRecords,
+      this.bodyWeightRecords,
+      this.bloodOxygenSaturationRecords});
 
   Data.fromJson(Map<String, dynamic> json) {
     bloodGlucoseRecords = json['BloodGlucoseRecords'] != null
@@ -65,45 +65,45 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (bloodGlucoseRecords != null) {
-      data['BloodGlucoseRecords'] = bloodGlucoseRecords.toJson();
+      data['BloodGlucoseRecords'] = bloodGlucoseRecords!.toJson();
     }
     if (bloodPressureRecords != null) {
-      data['BloodPressureRecords'] = bloodPressureRecords.toJson();
+      data['BloodPressureRecords'] = bloodPressureRecords!.toJson();
     }
     if (pulseRecords != null) {
-      data['PulseRecords'] = pulseRecords.toJson();
+      data['PulseRecords'] = pulseRecords!.toJson();
     }
     if (bodyTemperatureRecords != null) {
-      data['BodyTemperatureRecords'] = bodyTemperatureRecords.toJson();
+      data['BodyTemperatureRecords'] = bodyTemperatureRecords!.toJson();
     }
     if (bodyWeightRecords != null) {
-      data['BodyWeightRecords'] = bodyWeightRecords.toJson();
+      data['BodyWeightRecords'] = bodyWeightRecords!.toJson();
     }
     if (bloodOxygenSaturationRecords != null) {
       data['BloodOxygenSaturationRecords'] =
-          bloodOxygenSaturationRecords.toJson();
+          bloodOxygenSaturationRecords!.toJson();
     }
     return data;
   }
 }
 
 class Records {
-  int totalCount;
-  int retrievedCount;
-  int pageIndex;
-  int itemsPerPage;
-  String order;
-  String orderedBy;
-  List<Items> items;
+  int? totalCount;
+  int? retrievedCount;
+  int? pageIndex;
+  int? itemsPerPage;
+  String? order;
+  String? orderedBy;
+  List<Items>? items;
 
   Records(
       {this.totalCount,
-        this.retrievedCount,
-        this.pageIndex,
-        this.itemsPerPage,
-        this.order,
-        this.orderedBy,
-        this.items});
+      this.retrievedCount,
+      this.pageIndex,
+      this.itemsPerPage,
+      this.order,
+      this.orderedBy,
+      this.items});
 
   Records.fromJson(Map<String, dynamic> json) {
     totalCount = json['TotalCount'];
@@ -115,7 +115,7 @@ class Records {
     if (json['Items'] != null) {
       items = [];
       json['Items'].forEach((v) {
-        items.add(Items.fromJson(v));
+        items!.add(Items.fromJson(v));
       });
     }
   }
@@ -129,16 +129,16 @@ class Records {
     data['Order'] = order;
     data['OrderedBy'] = orderedBy;
     if (items != null) {
-      data['Items'] = items.map((v) => v.toJson()).toList();
+      data['Items'] = items!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Items {
-  String id;
-  String ehrId;
-  String patientUserId;
+  String? id;
+  String? ehrId;
+  String? patientUserId;
   dynamic bloodGlucose;
   dynamic systolic;
   dynamic diastolic;
@@ -146,9 +146,9 @@ class Items {
   dynamic bodyTemperature;
   dynamic bodyWeight;
   dynamic bloodOxygenSaturation;
-  String unit;
-  String recordDate;
-  String recordedByUserId;
+  String? unit;
+  String? recordDate;
+  String? recordedByUserId;
 
   Items(
       {this.id,
@@ -157,9 +157,9 @@ class Items {
       this.bloodGlucose,
       this.systolic,
       this.diastolic,
-        this.pulse,
-        this.bodyTemperature,
-        this.bodyWeight,
+      this.pulse,
+      this.bodyTemperature,
+      this.bodyWeight,
         this.bloodOxygenSaturation,
         this.unit,
         this.recordDate,

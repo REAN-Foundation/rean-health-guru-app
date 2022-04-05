@@ -32,15 +32,15 @@ class FAQChatScreenState extends State<FAQChatScreen> {
 
   var chatBoxWidth = 0.0;
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  String phoneNumber = '';
+  String? phoneNumber = '';
 
-  Timer timer;
+  late Timer timer;
 
   loadSharedPrefs() async {
     try {
       final UserData user =
           UserData.fromJson(await _sharedPrefUtils.read('user'));
-      phoneNumber = user.data.user.person.phone;
+      phoneNumber = user.data!.user!.person!.phone;
 
       /* */
       setState(() {
@@ -50,7 +50,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
           Timer.periodic(Duration(seconds: 30), (Timer t) => setState(() {}));
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
@@ -256,7 +256,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                chatModelPojo.text,
+                chatModelPojo.text!,
                 style: TextStyle(fontSize: 14, color: textBlack),
               ),
               SizedBox(
@@ -295,7 +295,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                chatModelPojo.text,
+                chatModelPojo.text!,
                 style: TextStyle(fontSize: 14, color: Colors.white),
               ),
               SizedBox(
@@ -317,23 +317,23 @@ class FAQChatScreenState extends State<FAQChatScreen> {
 
   announceText() {
     if (!chatList.elementAt(0).hasAnnounced) {
-      SemanticsService.announce(chatList.elementAt(0).text, TextDirection.ltr);
+      SemanticsService.announce(chatList.elementAt(0).text!, TextDirection.ltr);
       chatList.elementAt(0).hasAnnounced = true;
     }
   }
 
   sendMessageBotApi(String msg) async {
     try {
-      final map = <String, String>{};
+      final map = <String, String?>{};
       map['phoneNumber'] = phoneNumber;
       map['type'] = 'text';
       map['message'] = msg.trim();
 
       final ChatApiResponse baseResponse = await model.sendMsgApi(map);
       debugPrint('Base Response ==> ${baseResponse.toJson()}');
-      if (baseResponse.success) {
+      if (baseResponse.success!) {
         final chatMsgReceive = FAQChatModelPojo(
-            baseResponse.data.responseMessage, DateTime.now(), 'BOT');
+            baseResponse.data!.responseMessage, DateTime.now(), 'BOT');
         chatList.insert(0, chatMsgReceive);
 
         setState(() {

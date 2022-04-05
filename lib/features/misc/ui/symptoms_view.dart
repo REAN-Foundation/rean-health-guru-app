@@ -21,9 +21,9 @@ import 'base_widget.dart';
 
 // ignore: must_be_immutable
 class SymptomsView extends StatefulWidget {
-  String assessmmentId = '';
+  String? assessmmentId = '';
 
-  SymptomsView(String id) {
+  SymptomsView(String? id) {
     assessmmentId = id;
   }
 
@@ -34,15 +34,15 @@ class SymptomsView extends StatefulWidget {
 class _SymptomsViewState extends State<SymptomsView> {
   var model = DashboardSummaryModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  SymptomAssessmentTemplate assessmentTemplate;
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  SymptomAssessmentTemplate? assessmentTemplate;
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
 
   //List symptomList = new List<SymptomsPojo>();
   var dateFormat = DateFormat('yyyy-MM-dd');
-  String myAssesssmentId = '';
+  String? myAssesssmentId = '';
   final GlobalKey _keySymptoms = GlobalKey();
-  TutorialCoachMark tutorialCoachMark;
+  TutorialCoachMark? tutorialCoachMark;
   List<TargetFocus> targets = [];
   CoachMarkUtilites coackMarkUtilites = CoachMarkUtilites();
 
@@ -249,7 +249,7 @@ class _SymptomsViewState extends State<SymptomsView> {
             height: 0,
           );
         },
-        itemCount: assessmentTemplate.templateSymptomTypes.length,
+        itemCount: assessmentTemplate!.templateSymptomTypes!.length,
         scrollDirection: Axis.vertical,
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true);
@@ -324,10 +324,10 @@ class _SymptomsViewState extends State<SymptomsView> {
 
   Widget _createSymptomsListUI(BuildContext context, int index) {
     final TemplateSymptomTypes symptomTypes =
-        assessmentTemplate.templateSymptomTypes.elementAt(index);
+        assessmentTemplate!.templateSymptomTypes!.elementAt(index);
 
     return Dismissible(
-      key: index == 1 ? _keySymptoms : Key(symptomTypes.symptom),
+      key: index == 1 ? _keySymptoms : Key(symptomTypes.symptom!),
       child: InkWell(
           onTap: () {
             debugPrint('${symptomTypes.symptom} clicked');
@@ -337,14 +337,14 @@ class _SymptomsViewState extends State<SymptomsView> {
               height: 40,
               width: 40,
               child: CachedNetworkImage(
-                imageUrl: apiProvider.getBaseUrl() +
+                imageUrl: apiProvider!.getBaseUrl()! +
                     '/file-resources/' +
-                    symptomTypes.imageResourceId +
+                    symptomTypes.imageResourceId! +
                     '/download-by-version-name/1',
               ),
             ),
             title: Text(
-              symptomTypes.symptom,
+              symptomTypes.symptom!,
               style: TextStyle(
                   fontSize: 14.0,
                   color: primaryColor,
@@ -358,7 +358,7 @@ class _SymptomsViewState extends State<SymptomsView> {
         if (direction == DismissDirection.endToStart) {
           addPatientSymptomsInAssesment(symptomTypes.symptomTypeId, true);
           setState(() {
-            assessmentTemplate.templateSymptomTypes.removeAt(index);
+            assessmentTemplate!.templateSymptomTypes!.removeAt(index);
           });
           /*final bool res = await showDialog(
               context: context,
@@ -396,7 +396,7 @@ class _SymptomsViewState extends State<SymptomsView> {
         } else {
           addPatientSymptomsInAssesment(symptomTypes.symptomTypeId, true);
           setState(() {
-            assessmentTemplate.templateSymptomTypes.removeAt(index);
+            assessmentTemplate!.templateSymptomTypes!.removeAt(index);
           });
         }
       },
@@ -407,19 +407,19 @@ class _SymptomsViewState extends State<SymptomsView> {
     try {
       final GetAssesmentTemplateByIdResponse
           searchSymptomAssesmentTempleteResponse =
-          await model.getAssesmentTemplateById(widget.assessmmentId);
+          await model.getAssesmentTemplateById(widget.assessmmentId!);
       debugPrint(
           'Get Assesment Template By Id Response ==> ${searchSymptomAssesmentTempleteResponse.toJson()}');
       if (searchSymptomAssesmentTempleteResponse.status == 'success') {
         assessmentTemplate = searchSymptomAssesmentTempleteResponse
-            .data.symptomAssessmentTemplate;
+            .data!.symptomAssessmentTemplate;
         debugPrint(
-            'Get Assesment Template Symptoms Types Length ==> ${searchSymptomAssesmentTempleteResponse.data.symptomAssessmentTemplate.templateSymptomTypes.length}');
+            'Get Assesment Template Symptoms Types Length ==> ${searchSymptomAssesmentTempleteResponse.data!.symptomAssessmentTemplate!.templateSymptomTypes!.length}');
         setState(() {});
         getMyAssesmentId();
       } else {
         //getAssesmentTemplateById();
-        showToast(searchSymptomAssesmentTempleteResponse.message, context);
+        showToast(searchSymptomAssesmentTempleteResponse.message!, context);
       }
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -435,17 +435,17 @@ class _SymptomsViewState extends State<SymptomsView> {
       body['PatientUserId'] = patientUserId;
       body['AssessmentTemplateId'] = widget.assessmmentId;
       body['AssessmentDate'] = dateFormat.format(DateTime.now());
-      body['Title'] = assessmentTemplate.id;
+      body['Title'] = assessmentTemplate!.id;
 
       final GetMyAssesmentIdResponse response =
           await model.getMyAssesmentId(body);
       debugPrint('Get My Assesment Id Response ==> ${response.toJson()}');
       if (response.status == 'success') {
-        myAssesssmentId = response.data.symptomAssessment.id;
+        myAssesssmentId = response.data!.symptomAssessment!.id;
         setState(() {});
       } else {
         //getAssesmentTemplateById();
-        showToast(response.message, context);
+        showToast(response.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -454,7 +454,7 @@ class _SymptomsViewState extends State<SymptomsView> {
     }
   }
 
-  addPatientSymptomsInAssesment(String symptomTypeId, bool isPresent) async {
+  addPatientSymptomsInAssesment(String? symptomTypeId, bool isPresent) async {
     try {
       final body = <String, dynamic>{};
       body['PatientUserId'] = patientUserId;
@@ -472,7 +472,7 @@ class _SymptomsViewState extends State<SymptomsView> {
       if (response.status == 'success') {
         setState(() {});
       } else {
-        showToast(response.message, context);
+        showToast(response.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -483,8 +483,8 @@ class _SymptomsViewState extends State<SymptomsView> {
 }
 
 class SymptomsPojo {
-  String imageUrl;
-  String text;
+  String? imageUrl;
+  String? text;
 
   SymptomsPojo(String imageUrl, String text) {
     this.imageUrl = imageUrl;

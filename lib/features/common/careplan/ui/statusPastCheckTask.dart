@@ -6,13 +6,13 @@ import 'package:paitent/features/misc/models/BaseResponse.dart';
 import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 // ignore: must_be_immutable
 class StatusPastCheckTask extends StatefulWidget {
-  Task task;
+  Task? task;
 
-  StatusPastCheckTask(Task task) {
+  StatusPastCheckTask(Task? task) {
     this.task = task;
   }
 
@@ -26,7 +26,7 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<CheckBoxModel> statusList = <CheckBoxModel>[];
 
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
 
   var questionTextControler = TextEditingController();
 
@@ -51,7 +51,7 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
+    progressDialog = ProgressDialog(context: context);
     return BaseWidget<PatientCarePlanViewModel>(
       model: model,
       builder: (context, model, child) => Container(
@@ -99,7 +99,7 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
                               value: statusList[index].isCheck,
                               title: Text(statusList[index].title),
                               controlAffinity: ListTileControlAffinity.leading,
-                              onChanged: (bool val) {
+                              onChanged: (bool? val) {
                                 itemChange(val, index);
                               });
                         }),
@@ -121,7 +121,7 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
     );
   }
 
-  void itemChange(bool val, int index) {
+  void itemChange(bool? val, int index) {
     setState(() {
       statusList[index].isCheck = val;
     });
@@ -252,7 +252,8 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
 
   updateWeeklyReflection() async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['ScheduledVisitToDoctor'] = statusList.elementAt(0).isCheck;
       map['UnscheduledVisitToDoctor'] = statusList.elementAt(1).isCheck;
@@ -265,18 +266,18 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
       map['AdditionalDetails'] = questionTextControler.text;
 
       final BaseResponse baseResponse = await model.updateWeeklyReflection(
-          startCarePlanResponseGlob.data.carePlan.id.toString(),
-          widget.task.details.id,
+          startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+          widget.task!.details!.id!,
           map);
 
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         Navigator.pop(context);
       } else {
-        showToast(baseResponse.message, context);
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());

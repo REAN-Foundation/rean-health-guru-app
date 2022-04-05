@@ -238,7 +238,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
                   child: Radio(
                     value: 1,
                     groupValue: id,
-                    onChanged: (val) {
+                    onChanged: (dynamic val) {
                       setState(() {
                         radioButtonItem = '3 to 5 litres';
                         id = 1;
@@ -264,7 +264,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
                   child: Radio(
                     value: 2,
                     groupValue: id,
-                    onChanged: (val) {
+                    onChanged: (dynamic val) {
                       setState(() {
                         radioButtonItem = 'less than 3 litres';
                         id = 2;
@@ -290,7 +290,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
                   child: Radio(
                     value: 3,
                     groupValue: id,
-                    onChanged: (val) {
+                    onChanged: (dynamic val) {
                       setState(() {
                         radioButtonItem = '5 litres or more';
                         id = 3;

@@ -21,7 +21,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<HealthDataPoint> _healthDataList = [];
   var dateFormat = DateFormat('yyyy-MM-dd');
-  GetSleepData sleepData;
+  GetSleepData? sleepData;
   int steps = 0;
   double weight = 0;
   double height = 0;
@@ -32,8 +32,8 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
   int waterGlass = 0;
   String bmiResult = '';
   Color bmiResultColor = Colors.black87;
-  DateTime startDate;
-  DateTime endDate;
+  late DateTime startDate;
+  late DateTime endDate;
   int heartRateBmp = 0;
 
   @override

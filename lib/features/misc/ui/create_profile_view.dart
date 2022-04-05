@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -20,8 +21,8 @@ import 'package:paitent/infra/networking/CustomException.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -35,13 +36,13 @@ class CreateProfile extends StatefulWidget {
 class _CreateProfileState extends State<CreateProfile> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  String profileImagePath = '';
+  String? profileImagePath = '';
   final ImagePicker _picker = ImagePicker();
   String mobileNumber = '';
 
   //ApiProvider apiProvider = new ApiProvider();
 
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
@@ -50,8 +51,8 @@ class _CreateProfileState extends State<CreateProfile> {
   String dob = '';
   String unformatedDOB = '';
   String userId = '';
-  String auth = '';
-  ProgressDialog progressDialog;
+  String? auth = '';
+  late ProgressDialog progressDialog;
   String fullName = '';
   var dateFormat = DateFormat('MMM dd, yyyy');
 
@@ -74,8 +75,8 @@ class _CreateProfileState extends State<CreateProfile> {
           UserData.fromJson(await _sharedPrefUtils.read('user'));
       //patient = Patient.fromJson(await _sharedPrefUtils.read("patientDetails"));
       debugPrint(user.toJson().toString());
-      userId = user.data.user.id.toString();
-      auth = user.data.accessToken;
+      userId = user.data!.user!.id.toString();
+      auth = user.data!.accessToken;
 
       /* fullName = user.data.user.firstName + " " + user.data.user.lastName;
       mobileNumber = user.data.user.phoneNumber;
@@ -109,7 +110,7 @@ class _CreateProfileState extends State<CreateProfile> {
         }
       }catch(Excepetion){
         debugPrint('Error');
-        debugPrint(Excepetion);
+        debugPrint(Excepetion.toString());
       }*/
 
       /*_emailController.text = user.data.user.email;
@@ -132,7 +133,7 @@ class _CreateProfileState extends State<CreateProfile> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
+    progressDialog = ProgressDialog(context: context);
     return BaseWidget<LoginViewModel>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       builder: (context, model, child) => Container(
@@ -144,34 +145,34 @@ class _CreateProfileState extends State<CreateProfile> {
             title: Text(
               'Create Profile',
               style: TextStyle(
-                  fontSize: 16.0,
-                  color: primaryColor,
-                  fontWeight: FontWeight.w600),
-            ),
-            iconTheme: IconThemeData(color: Colors.black),
-          ),
-          body: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: 40),
-                  //_profileIcon(),
-                  _textFeildWidget(),
-                  SizedBox(height: 20),
-                  if (model.busy)
-                    CircularProgressIndicator()
-                  else
-                    _submitButton(model),
-                  SizedBox(height: 20),
-                ],
+                      fontSize: 16.0,
+                      color: primaryColor,
+                      fontWeight: FontWeight.w600),
+                ),
+                iconTheme: IconThemeData(color: Colors.black),
+              ),
+              body: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(height: 40),
+                      //_profileIcon(),
+                      _textFeildWidget(),
+                      SizedBox(height: 20),
+                      if (model.busy)
+                        CircularProgressIndicator()
+                      else
+                        _submitButton(model),
+                      SizedBox(height: 20),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
     );
   }
 
@@ -191,12 +192,12 @@ class _CreateProfileState extends State<CreateProfile> {
     /*allowedFileExtensions: ['mwfbak'],
     allowedUtiTypes: ['com.sidlatau.example.mwfbak'],*/
 
-    String result;
+    String? result;
     try {
       result = await FlutterDocumentPicker.openDocument(params: params);
 
       if (result != '') {
-        final File file = File(result);
+        final File file = File(result!);
         debugPrint(result);
         final String fileName = file.path.split('/').last;
         debugPrint('File Name ==> $fileName');
@@ -207,7 +208,7 @@ class _CreateProfileState extends State<CreateProfile> {
       }
     } catch (e) {
       showToast('Please select document', context);
-      debugPrint(e);
+      debugPrint(e.toString());
       result = 'Error: $e';
     }
   }
@@ -229,10 +230,10 @@ class _CreateProfileState extends State<CreateProfile> {
 
   uploadProfilePicture(File file) async {
     try {
-      final String _baseUrl = apiProvider.getBaseUrl();
+      final String _baseUrl = apiProvider!.getBaseUrl()!;
       final map = <String, String>{};
       map['enc'] = 'multipart/form-data';
-      map['Authorization'] = 'Bearer ' + auth;
+      map['Authorization'] = 'Bearer ' + auth!;
 
       final postUri = Uri.parse(_baseUrl + '/resources/upload/');
       final request = http.MultipartRequest('POST', postUri);
@@ -248,14 +249,14 @@ class _CreateProfileState extends State<CreateProfile> {
           final respStr = await response.stream.bytesToString();
           debugPrint('Uploded ' + respStr);
           final UploadImageResponse uploadResponse =
-              UploadImageResponse.fromJson(json.decode(respStr));
+          UploadImageResponse.fromJson(json.decode(respStr));
           if (uploadResponse.status == 'success') {
-            profileImagePath = uploadResponse.data.details.elementAt(0).url;
+            profileImagePath = uploadResponse.data!.details!.elementAt(0).url;
             //profileImage = uploadResponse.data.details.elementAt(0).url;
-            showToast(uploadResponse.message, context);
+            showToast(uploadResponse.message!, context);
             setState(() {
               debugPrint(
-                  'File Public URL ==> ${uploadResponse.data.details.elementAt(0).url}');
+                  'File Public URL ==> ${uploadResponse.data!.details!.elementAt(0).url}');
             });
           } else {
             showToast('Opps, something wents wrong!', context);
@@ -428,7 +429,7 @@ class _CreateProfileState extends State<CreateProfile> {
         Material(
           //Wrap with Material
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
           elevation: 4.0,
           color: primaryColor,
           clipBehavior: Clip.antiAlias,
@@ -450,7 +451,8 @@ class _CreateProfileState extends State<CreateProfile> {
                 } else if (selectedGender == '') {
                   showToast('Please select your gender', context);
                 } else {
-                  progressDialog.show();
+                  progressDialog.show(max: 100, msg: 'Loading...');
+                  progressDialog.show(max: 100, msg: 'Loading...');
                   final map = <String, String>{};
                   map['FirstName'] =
                       _firstNameController.text.toString().trim();
@@ -462,10 +464,10 @@ class _CreateProfileState extends State<CreateProfile> {
 
                   try {
                     final BaseResponse updateProfileSuccess = await model
-                        .updateProfile(map, userId, 'Bearer ' + auth);
+                        .updateProfile(map, userId, 'Bearer ' + auth!);
 
                     if (updateProfileSuccess.status == 'success') {
-                      progressDialog.hide();
+                      progressDialog.close();
                       if (getAppType() == 'AHA') {
                         showToast('Welcome to HF Helper', context);
                       } else {
@@ -475,11 +477,11 @@ class _CreateProfileState extends State<CreateProfile> {
                     Navigator.pop(context);
                   }*/
                       model.setBusy(true);
-                      getPatientDetails(model, auth, userId);
+                      getPatientDetails(model, auth!, userId);
                       //Navigator.pushNamed(context, RoutePaths.Home);
                     } else {
-                      progressDialog.hide();
-                      showToast(updateProfileSuccess.message, context);
+                      progressDialog.close();
+                      showToast(updateProfileSuccess.message!, context);
                     }
                   } on FetchDataException catch (e) {
                     debugPrint('error caught: $e');
@@ -504,7 +506,7 @@ class _CreateProfileState extends State<CreateProfile> {
       map['authorization'] = 'Bearer ' + auth;
 
       final response =
-          await apiProvider.get('/patients/' + userId, header: map);
+          await apiProvider!.get('/patients/' + userId, header: map);
 
       final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
@@ -512,7 +514,7 @@ class _CreateProfileState extends State<CreateProfile> {
       if (doctorListApiResponse.status == 'success') {
         _sharedPrefUtils.saveBoolean('login1.8', true);
         await _sharedPrefUtils.save(
-            'patientDetails', doctorListApiResponse.data.patient.toJson());
+            'patientDetails', doctorListApiResponse.data!.patient!.toJson());
         _sharedPrefUtils.saveBoolean('login1.8', true);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
@@ -520,7 +522,7 @@ class _CreateProfileState extends State<CreateProfile> {
         }), (Route<dynamic> route) => false);
         model.setBusy(false);
       } else {
-        showToast(doctorListApiResponse.message, context);
+        showToast(doctorListApiResponse.message!, context);
         model.setBusy(false);
       }
     } on FetchDataException catch (e) {
@@ -594,7 +596,6 @@ class _CreateProfileState extends State<CreateProfile> {
       ),
     );
   }*/
-
 
 
   /* Widget _genderWidget(){
@@ -712,15 +713,15 @@ class _CreateProfileState extends State<CreateProfile> {
                     minTime: DateTime(1940, 1, 1),
                     maxTime: DateTime.now().subtract(Duration(days: 1)),
                     onChanged: (date) {
-                  debugPrint('change $date');
-                }, onConfirm: (date) {
-                  unformatedDOB =
-                      date.toIso8601String().replaceAll("T00:00:00.000", "");
-                  setState(() {
-                    dob = dateFormat.format(date);
-                  });
-                  debugPrint('confirm $date');
-                }, currentTime: DateTime.now(), locale: LocaleType.en);
+                      debugPrint('change $date');
+                    }, onConfirm: (date) {
+                      unformatedDOB =
+                          date.toIso8601String().replaceAll("T00:00:00.000", "");
+                      setState(() {
+                        dob = dateFormat.format(date);
+                      });
+                      debugPrint('confirm $date');
+                    }, currentTime: DateTime.now(), locale: LocaleType.en);
               },
             ),
           ),
@@ -746,8 +747,7 @@ class _CreateProfileState extends State<CreateProfile> {
     );
   }
 
-  _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+  _fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
   }
@@ -768,9 +768,9 @@ class _CreateProfileState extends State<CreateProfile> {
   }
 
   openCamera() async {
-    final picture = await _picker.pickImage(
+    final picture = await (_picker.pickImage(
       source: ImageSource.camera,
-    );
+    ) as FutureOr<XFile>);
     final File file = File(picture.path);
     debugPrint(picture.path);
     final String fileName = file.path.split('/').last;

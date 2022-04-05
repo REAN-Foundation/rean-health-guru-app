@@ -304,7 +304,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
               fontFamily: 'Montserrat'),
         ),
         Text(
-          "Track symptoms, medications and other health metrics.Share health information your doctor in real-time. Connect with other  people living with heart failure.",
+          "Track symptoms, medications and other health metrics. Share health information with your doctor in real-time. Connect with other people living with heart failure.",
           textAlign: TextAlign.left,
           style: TextStyle(
               height: 1.4,

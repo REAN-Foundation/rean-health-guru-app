@@ -5,7 +5,7 @@
 # file with configuration.  For more information, see:
 # https://github.com/actions/labeler
 
-name: PROD Workflow
+name: AHA PROD Workflow
 
 # Controls when the workflow will run.
 on:
@@ -15,7 +15,7 @@ on:
 
 jobs:
   Android-App-Release-Prod:
-    environment: prod
+    environment: aha-prod
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -33,12 +33,12 @@ jobs:
         with:
           fastlane-dir: android
       - name: Promote to Playstore
-        run: bundle exec fastlane promote_beta_to_production_rf
+        run: bundle exec fastlane promote_beta_to_production_aha
         env:
           PLAYSTORE_JSON_KEY_DATA: ${{ secrets.PLAYSTORE_JSON_KEY_DATA }}
 
   iOS-App-Release-Prod:
-    environment: prod
+    environment: aha-prod
     runs-on: macos-latest
     defaults:
       run:
@@ -57,7 +57,7 @@ jobs:
           fastlane-dir: ios
           
       - name: Promote to Appstore
-        run: bundle exec fastlane submit_beta_to_app_store_rf
+        run: bundle exec fastlane submit_beta_to_app_store_aha
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}

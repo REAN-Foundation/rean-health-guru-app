@@ -14,7 +14,7 @@ import 'base_widget.dart';
 class EditPatientMedicalProfileView extends StatefulWidget {
   HealthProfile? healthProfile;
 
-  EditPatientMedicalProfileView(HealthProfile? mProfiles) {
+  EditPatientMedicalProfileView(mProfiles) {
     healthProfile = mProfiles;
   }
 
@@ -64,7 +64,7 @@ class _EditPatientMedicalProfileViewState
   var sedentaryLifestyle;
   var isSmoker;
   var isDrinker;
-  String? maritalStatus;
+  String maritalStatus = '';
 
   @override
   void initState() {
@@ -108,7 +108,7 @@ class _EditPatientMedicalProfileViewState
     sedentaryLifestyle = yesOrNo(widget.healthProfile!.sedentaryLifestyle!);
     isSmoker = yesOrNo(widget.healthProfile!.isSmoker!);
     isDrinker = yesOrNo(widget.healthProfile!.isSmoker!);
-    maritalStatus = widget.healthProfile!.maritalStatus;
+    maritalStatus = widget.healthProfile!.maritalStatus.toString();
     _otherConditionsController.text = widget.healthProfile!.otherConditions!;
     _otherConditionsController.selection = TextSelection.fromPosition(
       TextPosition(offset: _otherConditionsController.text.length),
@@ -129,7 +129,7 @@ class _EditPatientMedicalProfileViewState
     sedentaryLifestyle = yesOrNo(widget.healthProfile!.sedentaryLifestyle!);
     isSmoker = yesOrNo(widget.healthProfile!.isSmoker!);
     isDrinker = yesOrNo(widget.healthProfile!.isDrinker!);
-    maritalStatus = widget.healthProfile!.maritalStatus;
+    maritalStatus = widget.healthProfile!.maritalStatus.toString();
     if (maritalStatus == 'Unknown') {
       maritalStatus = 'Single';
     }
@@ -200,39 +200,51 @@ class _EditPatientMedicalProfileViewState
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
                               color: textBlack)),
-                      RadioGroup<String?>.builder(
+                      RadioGroup<String>.builder(
                         items: maritalStatusItems,
                         groupValue: maritalStatus,
                         onChanged: (item) {
                           debugPrint(item);
-                          maritalStatus = item;
+                          maritalStatus = item.toString();
                         },
+                        itemBuilder: (item) => RadioButtonBuilder(
+                          item,
+                          textPosition: RadioButtonTextPosition.right,
+                        ),
                       ),
                       Text('Diabetic',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
                               color: textBlack)),
-                      RadioGroup<String?>.builder(
+                      RadioGroup<String>.builder(
                         items: radioItems,
                         groupValue: isDiabetic,
                         onChanged: (item) {
                           debugPrint(item);
                           isDiabetic = item;
                         },
+                        itemBuilder: (item) => RadioButtonBuilder(
+                          item,
+                          textPosition: RadioButtonTextPosition.right,
+                        ),
                       ),
                       Text('Heart Patient',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
                               color: textBlack)),
-                      RadioGroup<String?>.builder(
+                      RadioGroup<String>.builder(
                         items: radioItems,
                         groupValue: hasHeartAilment,
                         onChanged: (item) {
                           debugPrint(item);
                           hasHeartAilment = item;
                         },
+                        itemBuilder: (item) => RadioButtonBuilder(
+                          item,
+                          textPosition: RadioButtonTextPosition.right,
+                        ),
                       ),
                       /*Text('Sedentary Occupation',
                     style: TextStyle(
@@ -250,26 +262,34 @@ class _EditPatientMedicalProfileViewState
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
                               color: textBlack)),
-                      RadioGroup<String?>.builder(
+                      RadioGroup<String>.builder(
                         items: radioItems,
                         groupValue: isSmoker,
                         onChanged: (item) {
                           debugPrint(item);
                           isSmoker = item;
                         },
+                        itemBuilder: (item) => RadioButtonBuilder(
+                          item,
+                          textPosition: RadioButtonTextPosition.right,
+                        ),
                       ),
                       Text('Is Drinker?',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
                               color: textBlack)),
-                      RadioGroup<String?>.builder(
+                      RadioGroup<String>.builder(
                         items: radioItems,
                         groupValue: isDrinker,
                         onChanged: (item) {
                           debugPrint(item);
                           isDrinker = item;
                         },
+                        itemBuilder: (item) => RadioButtonBuilder(
+                          item,
+                          textPosition: RadioButtonTextPosition.right,
+                        ),
                       ),
                       SizedBox(
                         width: 24,

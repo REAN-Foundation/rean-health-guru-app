@@ -15,7 +15,9 @@ import 'package:paitent/infra/utils/StringUtility.dart';
 class WordOfTheWeekCarePlanView extends StatefulWidget {
   AssortedViewConfigs? assortedViewConfigs;
 
-  WordOfTheWeekCarePlanView(this.assortedViewConfigs);
+  WordOfTheWeekCarePlanView(assortedViewConfigs) {
+    this.assortedViewConfigs = assortedViewConfigs;
+  }
 
   @override
   _WordOfTheWeekCarePlanViewState createState() =>

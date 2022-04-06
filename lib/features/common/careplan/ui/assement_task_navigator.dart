@@ -28,7 +28,7 @@ class AssesmentTaskNavigatorView extends StatefulWidget {
 
   Task? task;
 
-  AssesmentTaskNavigatorView(Task? task) {
+  AssesmentTaskNavigatorView(task) {
     this.task = task;
   }
 

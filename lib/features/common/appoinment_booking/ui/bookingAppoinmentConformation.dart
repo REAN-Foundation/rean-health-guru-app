@@ -17,7 +17,9 @@ import '../../../misc/ui/base_widget.dart';
 class BookingAppoinmentConfirmationView extends StatefulWidget {
   DoctorBookingAppoinmentPojo? bookingAppoinmentsDetails;
 
-  BookingAppoinmentConfirmationView(this.bookingAppoinmentsDetails);
+  BookingAppoinmentConfirmationView(bookingAppoinmentsDetails) {
+    this.bookingAppoinmentsDetails = bookingAppoinmentsDetails;
+  }
 
   @override
   _BookingAppoinmentConfirmationViewViewState createState() =>

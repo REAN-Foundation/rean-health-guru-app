@@ -13,7 +13,9 @@ import '../../../misc/ui/base_widget.dart';
 class LabDetailsView extends StatefulWidget {
   Labs? labdetails;
 
-  LabDetailsView(this.labdetails);
+  LabDetailsView(labdetails) {
+    this.labdetails = labdetails;
+  }
 
   @override
   _LabDetailsViewState createState() => _LabDetailsViewState(labdetails);

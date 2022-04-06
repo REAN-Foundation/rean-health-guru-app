@@ -14,7 +14,7 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 class BiomatricTask extends StatefulWidget {
   Task? task;
 
-  BiomatricTask(Task? task) {
+  BiomatricTask(task) {
     this.task = task;
   }
 

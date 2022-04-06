@@ -30,7 +30,7 @@ class ApiProvider {
     try {
       final response = await http
           .get(Uri.parse(_baseUrl! + url),
-              headers: headers as Map<String, String>?)
+              headers: headers as Map<String, String?>)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {

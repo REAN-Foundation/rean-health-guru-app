@@ -31,7 +31,9 @@ import '../../../misc/ui/base_widget.dart';
 class BookingInfoView extends StatefulWidget {
   DoctorBookingAppoinmentPojo? bookingAppoinmentsDetails;
 
-  BookingInfoView(this.bookingAppoinmentsDetails);
+  BookingInfoView(bookingAppoinmentsDetails) {
+    this.bookingAppoinmentsDetails = bookingAppoinmentsDetails;
+  }
 
   @override
   _BookingInfoViewState createState() =>

@@ -117,33 +117,32 @@ class Routers {
       case RoutePaths.Booking_Appoinment_Confirmation_View:
         return MaterialPageRoute(
             builder: (_) => BookingAppoinmentConfirmationView(
-                settings.arguments as DoctorBookingAppoinmentPojo?));
+                settings.arguments.runtimeType));
       case RoutePaths.Lab_Details_View:
         return MaterialPageRoute(
-            builder: (_) => LabDetailsView(settings.arguments as Labs?));
+            builder: (_) => LabDetailsView(settings.arguments.runtimeType));
       case RoutePaths.Search_Lab_List_View:
         return MaterialPageRoute(builder: (_) => SearchLabListView());
       case RoutePaths.Doctor_Details_View:
         return MaterialPageRoute(
-            builder: (_) => DoctorDetailsView(settings.arguments as Doctors?));
+            builder: (_) => DoctorDetailsView(settings.arguments.runtimeType));
       case RoutePaths.Search_Doctor_List_View:
         return MaterialPageRoute(builder: (_) => SearchDoctorListView());
       case RoutePaths.Booking_Appoinment_Done_View:
         return MaterialPageRoute(
-            builder: (_) => BookingConfirmedView(
-                settings.arguments as DoctorBookingAppoinmentPojo?));
+            builder: (_) =>
+                BookingConfirmedView(settings.arguments.runtimeType));
       case RoutePaths.Booking_Appoinment_Info_View:
         return MaterialPageRoute(
-            builder: (_) => BookingInfoView(
-                settings.arguments as DoctorBookingAppoinmentPojo?));
+            builder: (_) => BookingInfoView(settings.arguments.runtimeType));
       case RoutePaths.Select_Date_And_Time_Lab_Book_Appoinment:
         return MaterialPageRoute(
             builder: (_) => DateAndTimeForLabsBookAppoinmentView(
-                settings.arguments as Labs?));
+                settings.arguments.runtimeType));
       case RoutePaths.Select_Date_And_Time_Book_Appoinment:
         return MaterialPageRoute(
             builder: (_) => DateAndTimeForBookAppoinmentView(
-                settings.arguments as Doctors?));
+                settings.arguments.runtimeType));
       case RoutePaths.Edit_Profile:
         return MaterialPageRoute(builder: (_) => EditProfile());
       case RoutePaths.Home:
@@ -190,8 +189,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => PatientMedicalProfileView());
       case RoutePaths.Patient_EDIT_MEDIACL_PROFILE:
         return MaterialPageRoute(
-            builder: (_) => EditPatientMedicalProfileView(
-                settings.arguments as HealthProfile?));
+            builder: (_) =>
+                EditPatientMedicalProfileView(settings.arguments.runtimeType));
       case RoutePaths.My_Medications:
         return MaterialPageRoute(builder: (_) => MyMedicationView());
       case RoutePaths.ADD_MY_MEDICATION:
@@ -218,38 +217,36 @@ class Routers {
             builder: (_) => SuccessfullySetupCarePlanView());
       case RoutePaths.Learn_More_Care_Plan:
         return MaterialPageRoute(
-            builder: (_) => LearnMoreCarePlanView(
-                settings.arguments as AssortedViewConfigs?));
+            builder: (_) =>
+                LearnMoreCarePlanView(settings.arguments.runtimeType));
       case RoutePaths.Video_More_Care_Plan:
         return MaterialPageRoute(
-            builder: (_) => VideoMoreCarePlanView(
-                settings.arguments as AssortedViewConfigs?));
+            builder: (_) =>
+                VideoMoreCarePlanView(settings.arguments.runtimeType));
       case RoutePaths.Mindfull_Moment_Care_Plan:
         return MaterialPageRoute(builder: (_) => MindFullMomentCarePlanView());
       case RoutePaths.Challenge_Care_Plan:
         return MaterialPageRoute(
-            builder: (_) => ChallengeCarePlanView(settings.arguments as Task?));
+            builder: (_) =>
+                ChallengeCarePlanView(settings.arguments.runtimeType));
       case RoutePaths.Word_Of_The_Week_Care_Plan:
         return MaterialPageRoute(
-            builder: (_) => WordOfTheWeekCarePlanView(
-                settings.arguments as AssortedViewConfigs?));
+            builder: (_) =>
+                WordOfTheWeekCarePlanView(settings.arguments.runtimeType));
       case RoutePaths.Quiz_Care_Plan:
         return MaterialPageRoute(builder: (_) => QuizForCarePlanView());
       case RoutePaths.Assessment_Navigator:
         return MaterialPageRoute(
-            builder: (_) =>
-                AssesmentTaskNavigatorView(settings.arguments as Task?));
+            builder: (_) => AssesmentTaskNavigatorView(settings.arguments));
       case RoutePaths.Biometric_Care_Plan_Line:
         return MaterialPageRoute(
-            builder: (_) => BiomatricTask(settings.arguments as Task?));
+            builder: (_) => BiomatricTask(settings.arguments));
       case RoutePaths.Assessment_Start_Care_Plan:
         return MaterialPageRoute(
-            builder: (_) => AssessmentStartCarePlanView(
-                settings.arguments as Assessmment?));
+            builder: (_) => AssessmentStartCarePlanView(settings.arguments));
       case RoutePaths.Assessment_Question_Care_Plan:
         return MaterialPageRoute(
-            builder: (_) => AssessmentQuestionCarePlanView(
-                settings.arguments as Assessmment?));
+            builder: (_) => AssessmentQuestionCarePlanView(settings.arguments));
       case RoutePaths.Assessment_Question_Two_Care_Plan:
         return MaterialPageRoute(
             builder: (_) => AssessmentQuestionTwoCarePlanView());
@@ -267,11 +264,10 @@ class Routers {
         return MaterialPageRoute(builder: (_) => SetGoalPlanCarePlanView());
       case RoutePaths.Self_Reflection_For_Goals_Care_Plan:
         return MaterialPageRoute(
-            builder: (_) =>
-                SelfReflactionWeek_1_View(settings.arguments as Task?));
+            builder: (_) => SelfReflactionWeek_1_View(settings.arguments));
       case RoutePaths.Care_Plan_Status_Check:
         return MaterialPageRoute(
-            builder: (_) => StatusPastCheckTask(settings.arguments as Task?));
+            builder: (_) => StatusPastCheckTask(settings.arguments));
       case RoutePaths.Add_Goals_Care_Plan:
         return MaterialPageRoute(builder: (_) => AddGoalsForCarePlanView());
       case RoutePaths.Approve_Doctor_Goals_Care_Plan:

@@ -19,7 +19,9 @@ import '../../../misc/ui/home_view.dart';
 class VideoMoreCarePlanView extends StatefulWidget {
   AssortedViewConfigs? assortedViewConfigs;
 
-  VideoMoreCarePlanView(this.assortedViewConfigs);
+  VideoMoreCarePlanView(assortedViewConfigs) {
+    this.assortedViewConfigs = assortedViewConfigs;
+  }
 
   @override
   _VideoMoreCarePlanViewState createState() => _VideoMoreCarePlanViewState();

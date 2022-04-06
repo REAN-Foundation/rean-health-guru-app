@@ -280,18 +280,17 @@ class _EditProfileState extends State<EditProfile> {
         actions: <Widget>[
           TextButton(
             child: Text('Yes'),
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-              ),
-              TextButton(
-                child: Text('No'),
-                onPressed: () => Navigator.of(context).pop(false),
-              ),
-            ],
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
           ),
-        ).then((value) => value as bool) ??
-        false as Future<bool>;
+          TextButton(
+            child: Text('No'),
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+        ],
+      ),
+    ).then((value) => value as bool);
   }
 
   Future getFile() async {

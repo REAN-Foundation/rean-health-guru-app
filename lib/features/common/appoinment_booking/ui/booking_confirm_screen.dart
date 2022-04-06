@@ -12,7 +12,9 @@ import 'package:paitent/infra/themes/app_colors.dart';
 class BookingConfirmedView extends StatefulWidget {
   DoctorBookingAppoinmentPojo? bookingAppoinmentsDetails;
 
-  BookingConfirmedView(this.bookingAppoinmentsDetails);
+  BookingConfirmedView(bookingAppoinmentsDetails) {
+    this.bookingAppoinmentsDetails = bookingAppoinmentsDetails;
+  }
 
   @override
   _BookingConfirmedViewState createState() =>
@@ -508,17 +510,16 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
           builder: (context) => AlertDialog(
             title: Text('Thank You For Booking'),
             content: Text('Your Appointment is Booked Successfully'),
-            actions: <Widget>[
-              GestureDetector(
-                onTap: () => Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (context) {
-                  return HomeView(4);
-                }), (Route<dynamic> route) => false),
-                child: Text('Ok'),
-              ),
-            ],
+        actions: <Widget>[
+          GestureDetector(
+            onTap: () => Navigator.pushAndRemoveUntil(context,
+                MaterialPageRoute(builder: (context) {
+              return HomeView(4);
+            }), (Route<dynamic> route) => false),
+            child: Text('Ok'),
           ),
-        ).then((value) => value as bool) ??
-        false as Future<bool>;
+        ],
+      ),
+    ).then((value) => value as bool);
   }
 }

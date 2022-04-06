@@ -12,7 +12,9 @@ import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 class DoctorDetailsView extends StatefulWidget {
   Doctors? doctorDetails;
 
-  DoctorDetailsView(this.doctorDetails);
+  DoctorDetailsView(doctorDetails) {
+    this.doctorDetails = doctorDetails;
+  }
 
   @override
   _DoctorDetailsViewState createState() =>

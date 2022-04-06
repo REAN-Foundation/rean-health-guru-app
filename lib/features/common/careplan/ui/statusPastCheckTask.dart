@@ -12,7 +12,7 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 class StatusPastCheckTask extends StatefulWidget {
   Task? task;
 
-  StatusPastCheckTask(Task? task) {
+  StatusPastCheckTask(task) {
     this.task = task;
   }
 

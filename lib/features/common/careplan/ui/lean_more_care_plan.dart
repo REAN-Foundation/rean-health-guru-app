@@ -17,7 +17,9 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class LearnMoreCarePlanView extends StatefulWidget {
   AssortedViewConfigs? assortedViewConfigs;
 
-  LearnMoreCarePlanView(this.assortedViewConfigs);
+  LearnMoreCarePlanView(assortedViewConfigs) {
+    this.assortedViewConfigs = assortedViewConfigs;
+  }
 
   @override
   _LearnMoreCarePlanViewState createState() => _LearnMoreCarePlanViewState();

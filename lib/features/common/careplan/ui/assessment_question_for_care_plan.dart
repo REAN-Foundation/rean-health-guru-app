@@ -9,7 +9,7 @@ import 'package:paitent/infra/themes/app_colors.dart';
 class AssessmentQuestionCarePlanView extends StatefulWidget {
   Assessmment? assesment;
 
-  AssessmentQuestionCarePlanView(Assessmment? assesmentC) {
+  AssessmentQuestionCarePlanView(assesmentC) {
     assesment = assesmentC;
   }
 

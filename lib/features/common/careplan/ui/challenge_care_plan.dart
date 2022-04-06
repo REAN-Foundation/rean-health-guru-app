@@ -14,7 +14,7 @@ import '../../../misc/ui/home_view.dart';
 class ChallengeCarePlanView extends StatefulWidget {
   Task? task;
 
-  ChallengeCarePlanView(Task? task) {
+  ChallengeCarePlanView(task) {
     this.task = task;
   }
 

@@ -12,7 +12,7 @@ import 'package:sn_progress_dialog/progress_dialog.dart';
 class SelfReflactionWeek_1_View extends StatefulWidget {
   Task? task;
 
-  SelfReflactionWeek_1_View(Task? task) {
+  SelfReflactionWeek_1_View(task) {
     this.task = task;
   }
 

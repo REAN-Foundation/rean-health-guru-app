@@ -22,7 +22,9 @@ import '../../../misc/ui/base_widget.dart';
 class DateAndTimeForLabsBookAppoinmentView extends StatefulWidget {
   Labs? labDetails;
 
-  DateAndTimeForLabsBookAppoinmentView(this.labDetails);
+  DateAndTimeForLabsBookAppoinmentView(labDetails) {
+    this.labDetails = labDetails;
+  }
 
   @override
   _DateAndTimeForLabsBookAppoinmentViewState createState() =>

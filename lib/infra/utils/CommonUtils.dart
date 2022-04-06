@@ -117,10 +117,10 @@ String? getBaseUrl() {
 }
 
 String getCurrentLocale() {
-  return _currentLocale;
+  return _currentLocale.toString();
 }
 
-String setCurrentLocale(String locale) {
+setCurrentLocale(String? locale) {
   _currentLocale = locale;
 }
 

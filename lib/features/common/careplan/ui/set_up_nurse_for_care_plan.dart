@@ -51,7 +51,7 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
       nurseMemberListGlobe.addAll(nurseMemberListGlobe);
     }*/
     progressDialog = ProgressDialog(context: context);
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -98,7 +98,7 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
                         height: 16,
                       ),
                       Expanded(
-                          child: model.busy
+                          child: model!.busy
                               ? Center(
                                   child: SizedBox(
                                       height: 32,

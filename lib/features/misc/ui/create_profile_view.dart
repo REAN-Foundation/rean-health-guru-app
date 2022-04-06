@@ -134,7 +134,7 @@ class _CreateProfileState extends State<CreateProfile> {
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context: context);
-    return BaseWidget<LoginViewModel>(
+    return BaseWidget<LoginViewModel?>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -145,7 +145,7 @@ class _CreateProfileState extends State<CreateProfile> {
             title: Text(
               'Create Profile',
               style: TextStyle(
-                      fontSize: 16.0,
+                  fontSize: 16.0,
                       color: primaryColor,
                       fontWeight: FontWeight.w600),
                 ),
@@ -162,10 +162,10 @@ class _CreateProfileState extends State<CreateProfile> {
                       //_profileIcon(),
                       _textFeildWidget(),
                       SizedBox(height: 20),
-                      if (model.busy)
-                        CircularProgressIndicator()
-                      else
-                        _submitButton(model),
+                      if (model!.busy)
+                    CircularProgressIndicator()
+                  else
+                    _submitButton(model),
                       SizedBox(height: 20),
                     ],
                   ),

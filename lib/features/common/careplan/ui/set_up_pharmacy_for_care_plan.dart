@@ -50,7 +50,7 @@ class _SetUpPharmacyForCarePlanViewState
     /*if(parmacySearchListGlobe.length != 0){
       parmacySearchListGlobe.addAll(parmacySearchListGlobe);
     }*/
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -148,14 +148,14 @@ class _SetUpPharmacyForCarePlanViewState
                       ),*/
                       Expanded(
                           child:
-                              /*model.busy
+                          /*model!.busy
                           ? Center(
                           child: SizedBox(
                               height: 32,
                               width: 32,
                               child: CircularProgressIndicator()))
                           :*/
-                          (parmacySearchListGlobe.isEmpty)
+                              (parmacySearchListGlobe.isEmpty)
                                   ? noDoctorFound()
                                   : doctorSearchResultListView()) //,
                     ],
@@ -165,7 +165,7 @@ class _SetUpPharmacyForCarePlanViewState
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (model.busy)
+                  if (model!.busy)
                     Container()
                   else
                     InkWell(

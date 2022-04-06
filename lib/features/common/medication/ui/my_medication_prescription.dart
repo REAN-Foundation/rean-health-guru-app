@@ -17,7 +17,7 @@ class _MyMedicationPrescrptionViewState
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientMedicationViewModel>(
+    return BaseWidget<PatientMedicationViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(

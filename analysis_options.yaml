@@ -105,7 +105,7 @@ linter:
     camel_case_types: false
     cancel_subscriptions: true
     # cascade_invocations # not yet tested : true
-    cast_nullable_to_non_nullable: true
+    cast_nullable_to_non_nullable: false
     # close_sinks # not reliable enough : true
     # comment_references # blocked on https://github.com/dart-lang/linter/issues/1142 : true
     # constant_identifier_names # needs an opt-out https://github.com/dart-lang/linter/issues/204 : true
@@ -168,7 +168,7 @@ linter:
     # prefer_expression_function_bodies # conflicts with https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo#consider-using--for-short-functions-and-methods : true
     prefer_final_fields: true
     prefer_final_in_for_each: true
-    prefer_final_locals: true
+    prefer_final_locals: false
     prefer_for_elements_to_map_fromIterable: true
     prefer_foreach: true
     prefer_function_declarations_over_variables: true

@@ -47,7 +47,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -102,7 +102,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                   height: 4,
                 ),
                 Expanded(
-                  child: model.busy
+                  child: model!.busy
                       ? Center(
                           child: CircularProgressIndicator(),
                         )

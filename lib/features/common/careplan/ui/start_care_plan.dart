@@ -33,7 +33,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: MergeSemantics(
@@ -205,7 +205,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                       Semantics(
                         label: 'please select a start date',
                         readOnly: true,
-                        child: model.busy
+                        child: model!.busy
                             ? Center(
                                 child: CircularProgressIndicator(),
                               )

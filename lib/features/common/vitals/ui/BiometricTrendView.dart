@@ -29,13 +29,13 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientVitalsViewModel>(
+    return BaseWidget<PatientVitalsViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: Colors.white,
-          body: model.busy
+          body: model!.busy
               ? loadProgress()
               : Padding(
                   padding: const EdgeInsets.all(8.0),

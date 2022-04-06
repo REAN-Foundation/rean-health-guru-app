@@ -18,7 +18,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
   @override
   Widget build(BuildContext context) {
     _ammountController.text = '300';
-    return BaseWidget<AppoinmentViewModel>(
+    return BaseWidget<AppoinmentViewModel?>(
       model: AppoinmentViewModel(),
       builder: (context, model, child) => Container(
         child: Scaffold(

@@ -187,7 +187,7 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context: context);
-    return BaseWidget<LoginViewModel>(
+    return BaseWidget<LoginViewModel?>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       child: LoginHeader(
         mobileNumberController: _mobileNumberController,
@@ -198,7 +198,7 @@ class _EditProfileState extends State<EditProfile> {
           onWillPop: () async {
             if (isEditable) {
               final result = await _onBackPressed();
-                  return result;
+              return result;
                 } else {
                   Navigator.of(context).pop();
                   return true;
@@ -234,9 +234,9 @@ class _EditProfileState extends State<EditProfile> {
                         SizedBox(height: 20),
                         Visibility(
                           visible: isEditable,
-                          child: model.busy
-                              ? CircularProgressIndicator()
-                              : _submitButton(model),
+                          child: model!.busy
+                          ? CircularProgressIndicator()
+                          : _submitButton(model),
                         ),
                         SizedBox(height: 20),
                       ],

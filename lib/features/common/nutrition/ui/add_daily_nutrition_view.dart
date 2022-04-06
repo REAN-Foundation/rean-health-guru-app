@@ -78,7 +78,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientHealthMarkerViewModel>(
+    return BaseWidget<PatientHealthMarkerViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(

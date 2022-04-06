@@ -44,7 +44,7 @@ class _SignUpViewState extends State<SignUpView> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    return BaseWidget<LoginViewModel>(
+    return BaseWidget<LoginViewModel?>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       child: LoginHeader(
         mobileNumberController: _mobileNumberController,
@@ -73,7 +73,7 @@ class _SignUpViewState extends State<SignUpView> {
                             SizedBox(height: 50),
                             _textFeildWidget(),
                             SizedBox(height: 20),
-                            if (model.busy)
+                            if (model!.busy)
                               CircularProgressIndicator()
                             else
                               _submitButton(model),

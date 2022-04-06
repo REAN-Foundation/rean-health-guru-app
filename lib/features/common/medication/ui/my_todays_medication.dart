@@ -165,13 +165,13 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context: context);
-    return BaseWidget<PatientMedicationViewModel>(
+    return BaseWidget<PatientMedicationViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: Colors.white,
-          body: model.busy
+          body: model!.busy
               ? Center(
                   child: SizedBox(
                     height: 32,
@@ -182,7 +182,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               : (morningMedicationList.isEmpty &&
                       afternoonMedicationList.isEmpty &&
                       eveningMedicationList.isEmpty &&
-              nightMedicationList.isEmpty
+                      nightMedicationList.isEmpty
                   ? noMedicationFound()
                   : SingleChildScrollView(
                       child: Column(

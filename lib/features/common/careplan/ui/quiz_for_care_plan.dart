@@ -22,7 +22,7 @@ class _QuizForCarePlanViewState extends State<QuizForCarePlanView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(

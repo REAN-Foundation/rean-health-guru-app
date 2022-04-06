@@ -52,7 +52,7 @@ class _SetUpDoctorForCarePlanViewState
       doctorSearchListGlobe.addAll(doctorSearchListGlobe);
     }*/
 
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -150,14 +150,14 @@ class _SetUpDoctorForCarePlanViewState
                       ),*/
                       Expanded(
                           child:
-                              /* model.busy
+                          /* model!.busy
                           ? Center(
                           child: SizedBox(
                               height: 32,
                               width: 32,
                               child: CircularProgressIndicator()))
                           : */
-                          (doctorSearchListGlobe.isEmpty)
+                              (doctorSearchListGlobe.isEmpty)
                                   ? noDoctorFound()
                                   : doctorSearchResultListView()) //,
                     ],
@@ -167,7 +167,7 @@ class _SetUpDoctorForCarePlanViewState
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (model.busy)
+                  if (model!.busy)
                     Container()
                   else
                     InkWell(

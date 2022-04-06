@@ -46,7 +46,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     checkItenetConnection();
     final height = MediaQuery.of(context).size.height;
-    return BaseWidget<LoginViewModel>(
+    return BaseWidget<LoginViewModel?>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       builder: (context, model, child) => Container(
           child: Scaffold(
@@ -71,7 +71,7 @@ class _LoginViewState extends State<LoginView> {
                             SizedBox(height: 50),
                             _emailPasswordWidget(),
                             SizedBox(height: 20),
-                            if (model.busy)
+                            if (model!.busy)
                               CircularProgressIndicator()
                             else
                               _submitButton(model),

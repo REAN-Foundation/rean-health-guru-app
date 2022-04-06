@@ -87,7 +87,7 @@ class _BookingAppoinmentConfirmationViewViewState
     debugPrint(bookingAppoinmentsDetails!.userData!.data!.user!.id);
     patientDetails = bookingAppoinmentsDetails!.patient;
     userData = bookingAppoinmentsDetails!.userData;
-    return BaseWidget<BookAppoinmentViewModel>(
+    return BaseWidget<BookAppoinmentViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -124,7 +124,7 @@ class _BookingAppoinmentConfirmationViewViewState
                   SizedBox(
                     height: 16,
                   ),
-                  if (model.busy)
+                  if (model!.busy)
                     Center(child: CircularProgressIndicator())
                   else
                     _continueButton(),

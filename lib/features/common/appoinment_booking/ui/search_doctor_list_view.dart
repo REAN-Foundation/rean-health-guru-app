@@ -158,7 +158,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context: context);
-    return BaseWidget<BookAppoinmentViewModel>(
+    return BaseWidget<BookAppoinmentViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -250,7 +250,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                     height: 16,
                   ),
                   Expanded(
-                    child: model.busy
+                    child: model!.busy
                         ? Center(
                             child: SizedBox(
                                 height: 32,

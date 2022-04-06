@@ -164,7 +164,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<DashboardSummaryModel>(
+    return BaseWidget<DashboardSummaryModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -955,7 +955,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
               SizedBox(
                 height: 24,
               ),
-              if (model.busy)
+              if (model!.busy)
                 SizedBox(
                     width: 28,
                     height: 28,

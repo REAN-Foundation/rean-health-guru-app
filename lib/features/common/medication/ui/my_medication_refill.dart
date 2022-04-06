@@ -15,7 +15,7 @@ class _MyMedicationRefillViewState extends State<MyMedicationRefillView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientMedicationViewModel>(
+    return BaseWidget<PatientMedicationViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(

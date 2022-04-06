@@ -87,7 +87,7 @@ class _SelectGoalsForCarePlanViewState
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -119,7 +119,7 @@ class _SelectGoalsForCarePlanViewState
           ),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: model.busy
+            child: model!.busy
                 ? Center(
                     child: CircularProgressIndicator(),
                   )

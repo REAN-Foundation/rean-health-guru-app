@@ -38,7 +38,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
     } else {
       doctorDetails = bookingAppoinmentsDetails!.doctors;
     }
-    return BaseWidget<AppoinmentViewModel>(
+    return BaseWidget<AppoinmentViewModel?>(
         model: AppoinmentViewModel(),
         builder: (context, model, child) => Container(
                 child: WillPopScope(

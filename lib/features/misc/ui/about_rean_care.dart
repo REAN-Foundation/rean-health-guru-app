@@ -43,7 +43,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
           child: Scaffold(

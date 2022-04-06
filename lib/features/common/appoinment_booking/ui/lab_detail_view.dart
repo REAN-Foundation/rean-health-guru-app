@@ -90,7 +90,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<AppoinmentViewModel>(
+    return BaseWidget<AppoinmentViewModel?>(
       model: AppoinmentViewModel(),
       builder: (context, model, child) => Container(
         child: Scaffold(

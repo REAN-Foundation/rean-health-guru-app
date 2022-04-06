@@ -18,19 +18,20 @@ class ApiProvider {
   }
 
   Future<dynamic> get(String url, {Map? header}) async {
-    final headers = <String, String?>{};
+    Map<String, String>? headers = <String, String>{};
     if (header != null) {
-      headers.addAll(header as Map<String, String?>);
+      headers.addAll(header as Map<String, String>);
     }
-    headers['x-api-key'] = _api_key;
+    if (_api_key != null) {
+      headers['x-api-key'] = _api_key as String;
+    }
     debugPrint('Base Url ==> GET ${_baseUrl! + url}');
     debugPrint('Headers ==> ${json.encode(headers).toString()}');
 
     var responseJson;
     try {
       final response = await http
-          .get(Uri.parse(_baseUrl! + url),
-              headers: headers as Map<String, String?>)
+          .get(Uri.parse(_baseUrl! + url), headers: headers)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -43,11 +44,13 @@ class ApiProvider {
   }
 
   Future<dynamic> post(String url, {Map? body, Map? header}) async {
-    final headers = <String, String?>{};
+    Map<String, String>? headers = <String, String>{};
     if (header != null) {
-      headers.addAll(header as Map<String, String?>);
+      headers.addAll(header as Map<String, String>);
     }
-    headers['x-api-key'] = _api_key;
+    if (_api_key != null) {
+      headers['x-api-key'] = _api_key as String;
+    }
 
     debugPrint('Base Url ==> POST ${_baseUrl! + url}');
     debugPrint('Request Body ==> ${json.encode(body).toString()}');
@@ -57,7 +60,7 @@ class ApiProvider {
     try {
       final response = await http
           .post(Uri.parse(_baseUrl! + url),
-              body: json.encode(body), headers: headers as Map<String, String>?)
+              body: json.encode(body), headers: headers)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -70,13 +73,13 @@ class ApiProvider {
   }
 
   Future<dynamic> put(String url, {Map? body, Map? header}) async {
-    final headers = <String, String?>{};
+    Map<String, String>? headers = <String, String>{};
     if (header != null) {
-      headers.addAll(header as Map<String, String?>);
+      headers.addAll(header as Map<String, String>);
     }
-    headers['x-api-key'] = _api_key;
-    debugPrint('Base Url ==> GET ${_baseUrl! + url}');
-    debugPrint('Headers ==> ${json.encode(headers).toString()}');
+    if (_api_key != null) {
+      headers['x-api-key'] = _api_key as String;
+    }
 
     debugPrint('Base Url ==> PUT ${_baseUrl! + url}');
     debugPrint('Request Body ==> ${json.encode(body).toString()}');
@@ -86,7 +89,7 @@ class ApiProvider {
     try {
       final response = await http
           .put(Uri.parse(_baseUrl! + url),
-              body: json.encode(body), headers: headers as Map<String, String>?)
+              body: json.encode(body), headers: headers)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -99,13 +102,13 @@ class ApiProvider {
   }
 
   Future<dynamic> delete(String url, {Map? header}) async {
-    final headers = <String, String?>{};
+    Map<String, String>? headers = <String, String>{};
     if (header != null) {
-      headers.addAll(header as Map<String, String?>);
+      headers.addAll(header as Map<String, String>);
     }
-    headers['x-api-key'] = _api_key;
-    debugPrint('Base Url ==> GET ${_baseUrl! + url}');
-    debugPrint('Headers ==> ${json.encode(headers).toString()}');
+    if (_api_key != null) {
+      headers['x-api-key'] = _api_key as String;
+    }
 
     debugPrint('Base Url ==> DELETE ${_baseUrl! + url}');
     debugPrint('Headers ==> ${json.encode(headers).toString()}');
@@ -113,8 +116,7 @@ class ApiProvider {
     var responseJson;
     try {
       final response = await http
-          .delete(Uri.parse(_baseUrl! + url),
-              headers: headers as Map<String, String>?)
+          .delete(Uri.parse(_baseUrl! + url), headers: headers)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {

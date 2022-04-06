@@ -6,7 +6,9 @@ class BaseModel extends ChangeNotifier {
   bool get busy => _busy;
 
   void setBusy(bool value) {
-    _busy = value;
+    if (_busy != null) {
+      _busy = value;
+    }
     notifyListeners();
   }
 }

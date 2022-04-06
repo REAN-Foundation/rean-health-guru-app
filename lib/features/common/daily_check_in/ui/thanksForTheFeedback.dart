@@ -40,7 +40,7 @@ class _ThanksForTheFeedBack extends State<ThanksForTheFeedBack>
   @override
   Widget build(BuildContext context) {
     recordHowAreYouFeeling();
-    return BaseWidget<CommonConfigModel>(
+    return BaseWidget<CommonConfigModel?>(
         model: model,
         builder: (context, model, child) => Container(
             height: 160,

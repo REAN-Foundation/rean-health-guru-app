@@ -107,7 +107,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   Widget build(BuildContext context) {
     checkItenetConnection();
     final height = MediaQuery.of(context).size.height;
-    return BaseWidget<LoginViewModel>(
+    return BaseWidget<LoginViewModel?>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       builder: (context, model, child) => Container(
           child: Scaffold(
@@ -130,7 +130,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(0.0),
-                          child: loginContent(model),
+                          child: loginContent(model!),
                         ),
                       ],
                     ),

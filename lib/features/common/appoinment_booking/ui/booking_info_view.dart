@@ -132,7 +132,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
     //UserData data = UserData.fromJson(_sharedPrefUtils.read("user"));
     //debugPrint(_sharedPrefUtils.read("user"));
 
-    return BaseWidget<BookAppoinmentViewModel>(
+    return BaseWidget<BookAppoinmentViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -175,7 +175,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                   SizedBox(
                     height: 16,
                   ),
-                  if (model.busy)
+                  if (model!.busy)
                     Center(child: CircularProgressIndicator())
                   else
                     _continueButton(),

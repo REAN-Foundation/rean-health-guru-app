@@ -205,7 +205,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<DashboardSummaryModel>(
+    return BaseWidget<DashboardSummaryModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(

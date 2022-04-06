@@ -110,7 +110,7 @@ class _SymptomsViewState extends State<SymptomsView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<DashboardSummaryModel>(
+    return BaseWidget<DashboardSummaryModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -140,7 +140,7 @@ class _SymptomsViewState extends State<SymptomsView> {
               )*/
             ],
           ),
-          body: model.busy
+              body: model!.busy
               ? Center(
                   child: SizedBox(
                       height: 32,

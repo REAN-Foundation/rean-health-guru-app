@@ -50,7 +50,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientMedicationViewModel>(
+    return BaseWidget<PatientMedicationViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -58,7 +58,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
           backgroundColor: Colors.white,
           body: Padding(
             padding: EdgeInsets.all(16.0),
-            child: model.busy
+            child: model!.busy
                 ? Center(
                     child: SizedBox(
                         height: 32,

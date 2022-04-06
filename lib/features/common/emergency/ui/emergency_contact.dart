@@ -107,7 +107,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<CommonConfigModel>(
+    return BaseWidget<CommonConfigModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -133,7 +133,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     ),
                   ),
                   sectionHeader('Doctors'),
-                  if (model.busy)
+                  if (model!.busy)
                     Container(
                       height: 80,
                       child: Center(

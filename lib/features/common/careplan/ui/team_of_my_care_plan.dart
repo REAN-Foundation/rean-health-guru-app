@@ -76,7 +76,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -89,7 +89,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                 const SizedBox(
                   height: 16,
                 ),
-                if (model.busy)
+                    if (model!.busy)
                   Container(
                     height: 80,
                     child: Center(

@@ -54,7 +54,7 @@ class _DeterminActionPlansForCarePlanViewState
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context: context);
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(

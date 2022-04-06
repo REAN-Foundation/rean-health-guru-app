@@ -51,7 +51,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context: context);
-    return BaseWidget<PatientMedicationViewModel>(
+    return BaseWidget<PatientMedicationViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -59,7 +59,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
           backgroundColor: Colors.white,
           body: Padding(
             padding: EdgeInsets.all(16.0),
-            child: model.busy
+            child: model!.busy
                 ? Center(
                     child: SizedBox(
                         height: 32,

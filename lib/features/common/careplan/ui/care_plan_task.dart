@@ -153,7 +153,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Container(
@@ -252,7 +252,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               Expanded(
                   child: Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: model.busy
+                      child: model!.busy
                           ? Center(child: CircularProgressIndicator())
                           : tasksList.isEmpty
                               ? noTaskFound()
@@ -264,7 +264,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     );
   }
 
-//isSubscribe ?  model.busy ? Center(child: CircularProgressIndicator(),) : tasks.length == 0 ? noTaskFound() : listWidget() : noDoctorFound(),
+//isSubscribe ?  model!.busy ? Center(child: CircularProgressIndicator(),) : tasks.length == 0 ? noTaskFound() : listWidget() : noDoctorFound(),
   Widget noTaskFound() {
     return Center(
       child: Text('No tasks for today',

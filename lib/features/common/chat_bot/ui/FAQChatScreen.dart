@@ -69,14 +69,14 @@ class FAQChatScreenState extends State<FAQChatScreen> {
   @override
   Widget build(BuildContext context) {
     chatBoxWidth = MediaQuery.of(context).size.width - 100;
-    return BaseWidget<BotViewModel>(
+    return BaseWidget<BotViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
           key: _scaffoldKey,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                backgroundColor: Colors.white,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
             brightness: Brightness.light,
             title: Text(
               'Support',

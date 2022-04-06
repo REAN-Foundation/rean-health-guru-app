@@ -44,7 +44,7 @@ class _BiometricBloodSugarVitalsViewState
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context: context);
-    return BaseWidget<PatientVitalsViewModel>(
+    return BaseWidget<PatientVitalsViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: widget.allUIViewsVisible

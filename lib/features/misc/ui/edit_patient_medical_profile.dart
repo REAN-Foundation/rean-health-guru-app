@@ -14,7 +14,7 @@ import 'base_widget.dart';
 class EditPatientMedicalProfileView extends StatefulWidget {
   HealthProfile? healthProfile;
 
-  EditPatientMedicalProfileView(mProfiles) {
+  EditPatientMedicalProfileView(HealthProfile mProfiles) {
     healthProfile = mProfiles;
   }
 
@@ -144,7 +144,7 @@ class _EditPatientMedicalProfileViewState
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context: context);
-    return BaseWidget<PatientObservationsViewModel>(
+    return BaseWidget<PatientObservationsViewModel?>(
         model: model,
         builder: (context, model, child) => Scaffold(
               appBar: AppBar(

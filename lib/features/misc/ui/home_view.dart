@@ -362,7 +362,12 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     //UserData data = UserData.fromJson(_sharedPrefUtils.read("user"));
     //debugPrint(_sharedPrefUtils.read("user"));
 
-    Widget? screen;
+    Widget screen = DashBoardVer2View(
+      positionToChangeNavigationBar: (int tabPosition) {
+        debugPrint('Tapped Tab $tabPosition');
+        _selectedTab(tabPosition);
+      },
+    );
     switch (_currentNav) {
       case 0:
         screen = DashBoardVer2View(
@@ -386,7 +391,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         break;
     }
 
-    return BaseWidget<CommonConfigModel>(
+    return BaseWidget<CommonConfigModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(

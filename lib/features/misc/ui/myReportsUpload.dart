@@ -159,7 +159,7 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<CommonConfigModel>(
+    return BaseWidget<CommonConfigModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -214,7 +214,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                 Expanded(
                   child: Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: model.busy
+                      child: model!.busy
                           ? Center(child: CircularProgressIndicator())
                           : documents.isEmpty
                               ? noRecordsFound()

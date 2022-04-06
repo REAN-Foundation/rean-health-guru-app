@@ -77,7 +77,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -107,7 +107,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               )*/
             ],
           ),
-          body: model.busy
+              body: model!.busy
               ? Center(
                   child: CircularProgressIndicator(),
                 )

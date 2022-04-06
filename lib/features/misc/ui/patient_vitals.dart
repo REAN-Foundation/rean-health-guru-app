@@ -42,7 +42,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientObservationsViewModel>(
+    return BaseWidget<PatientObservationsViewModel?>(
         model: model,
         builder: (context, model, child) => Scaffold(
               backgroundColor: Colors.white,
@@ -60,7 +60,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
               ),
               body: Padding(
                   padding: const EdgeInsets.all(24.0),
-                  child: model.busy
+                  child: model!.busy
                       ? Center(
                           child: SizedBox(
                               height: 32,

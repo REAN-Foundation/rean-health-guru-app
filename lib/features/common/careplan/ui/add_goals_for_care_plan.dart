@@ -51,7 +51,7 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
         break;
     }
 
-    return BaseWidget<PatientMedicationViewModel>(
+    return BaseWidget<PatientMedicationViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(

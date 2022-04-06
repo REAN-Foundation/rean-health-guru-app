@@ -94,7 +94,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
         ? doctorDetails!.professionalHighlights!.split('*')
         : <String>[];
 
-    return BaseWidget<AppoinmentViewModel>(
+    return BaseWidget<AppoinmentViewModel?>(
       model: AppoinmentViewModel(),
       builder: (context, model, child) => Container(
         child: Scaffold(

@@ -87,7 +87,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
   Widget build(BuildContext context) {
     checkItenetConnection();
     final height = MediaQuery.of(context).size.height;
-    return BaseWidget<LoginViewModel>(
+    return BaseWidget<LoginViewModel?>(
         model: LoginViewModel(authenticationService: Provider.of(context)),
         builder: (context, model, child) => Container(
                 child: Scaffold(
@@ -129,7 +129,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                                         color: primaryColor,
                                       )),
                                 )),
-                            _textFeild(model),
+                            _textFeild(model!),
                             SizedBox(height: 40),
                             if (model.busy)
                               CircularProgressIndicator()

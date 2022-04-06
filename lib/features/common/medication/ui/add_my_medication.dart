@@ -138,7 +138,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientMedicationViewModel>(
+    return BaseWidget<PatientMedicationViewModel?>(
         model: model,
         builder: (context, model, child) => Container(
                 /* shape: RoundedRectangleBorder(

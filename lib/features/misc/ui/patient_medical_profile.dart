@@ -44,7 +44,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientObservationsViewModel>(
+    return BaseWidget<PatientObservationsViewModel?>(
         model: model,
         builder: (context, model, child) => Scaffold(
             backgroundColor: Colors.white,
@@ -60,7 +60,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
               ),
               iconTheme: IconThemeData(color: Colors.black),
             ),
-            body: model.busy
+                body: model!.busy
                 ? Center(child: CircularProgressIndicator())
                 : SingleChildScrollView(
                     child: Padding(

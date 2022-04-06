@@ -105,7 +105,7 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<BookAppoinmentViewModel>(
+    return BaseWidget<BookAppoinmentViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -185,7 +185,7 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
                     height: 16,
                   ),
                   Expanded(
-                    child: model.busy
+                    child: model!.busy
                         ? Center(
                             child: SizedBox(
                                 height: 32,

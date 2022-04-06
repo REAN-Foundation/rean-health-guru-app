@@ -59,7 +59,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<BookAppoinmentViewModel>(
+    return BaseWidget<BookAppoinmentViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Padding(
@@ -134,7 +134,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                   Expanded(
                       child: Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: model.busy
+                          child: model!.busy
                               ? Center(child: CircularProgressIndicator())
                               : appointments.isEmpty
                                   ? noAppointmentFound()

@@ -60,6 +60,7 @@ import 'package:paitent/features/common/vitals/ui/BiomatricBodyTempratureVitals.
 import 'package:paitent/features/common/vitals/ui/BiomatricPulseVitals.dart';
 import 'package:paitent/features/common/vitals/ui/BiomatricWeightVitals.dart';
 import 'package:paitent/features/common/vitals/ui/BiometricVitalsTrendsView.dart';
+import 'package:paitent/features/misc/models/PatientMedicalProfilePojo.dart';
 import 'package:paitent/features/misc/ui/AfterSplashScreen.dart';
 import 'package:paitent/features/misc/ui/OnBoardingAhaPage.dart';
 import 'package:paitent/features/misc/ui/OnBoardingPage.dart';
@@ -189,8 +190,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => PatientMedicalProfileView());
       case RoutePaths.Patient_EDIT_MEDIACL_PROFILE:
         return MaterialPageRoute(
-            builder: (_) =>
-                EditPatientMedicalProfileView(settings.arguments.runtimeType));
+            builder: (_) => EditPatientMedicalProfileView(
+                settings.arguments as HealthProfile));
       case RoutePaths.My_Medications:
         return MaterialPageRoute(builder: (_) => MyMedicationView());
       case RoutePaths.ADD_MY_MEDICATION:

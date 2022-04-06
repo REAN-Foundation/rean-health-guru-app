@@ -71,35 +71,35 @@ class DatabaseHelper {
   // and the value is the column value. The return value is the id of the
   // inserted row.
   Future<int> insert(Map<String, dynamic> row) async {
-    final Database db = await (instance.database as FutureOr<Database>);
-    return db.insert(table, row);
+    final Database? db = await instance.database;
+    return db!.insert(table, row);
   }
 
   // All of the rows are returned as a list of maps, where each map is
   // a key-value list of columns.
   Future<List<Map<String, dynamic>>> queryAllRows() async {
-    final Database db = await (instance.database as FutureOr<Database>);
-    return db.query(table);
+    final Database? db = await instance.database;
+    return db!.query(table);
   }
 
   Future<List<Map<String, dynamic>>> querySelectFirstRow() async {
-    final Database db = await (instance.database as FutureOr<Database>);
-    return db.rawQuery('SELECT * FROM $table LIMIT 1');
+    final Database? db = await instance.database;
+    return db!.rawQuery('SELECT * FROM $table LIMIT 1');
   }
 
   //ORDER BY ROWID ASC
 
   Future<List<Map<String, dynamic>>> querySelectWhereFoodName(String foodName) async {
-    final Database db = await (instance.database as FutureOr<Database>);
-    return db.rawQuery(
+    final Database? db = await instance.database;
+    return db!.rawQuery(
         'SELECT * FROM $table WHERE $columnNutritionFoodItemName=?',
         [foodName]);
   }
 
   Future<List<Map<String, dynamic>>> querySelectOrderByConsumedQuantity(
       String? nutritionType) async {
-    final Database db = await (instance.database as FutureOr<Database>);
-    return db.rawQuery(
+    final Database? db = await instance.database;
+    return db!.rawQuery(
         'SELECT * FROM $table WHERE $columnNutritionFoodConsumedTag = ? ORDER BY $columnNutritionFoodConsumedQuantity DESC',
         [nutritionType]);
   }
@@ -107,24 +107,24 @@ class DatabaseHelper {
   // All of the methods (insert, query, update, delete) can also be done using
   // raw SQL commands. This method uses a raw query to give the row count.
   Future<int?> queryRowCount() async {
-    final Database db = await (instance.database as FutureOr<Database>);
+    final Database? db = await instance.database;
     return Sqflite.firstIntValue(
-        await db.rawQuery('SELECT COUNT(*) FROM $table'));
+        await db!.rawQuery('SELECT COUNT(*) FROM $table'));
   }
 
   // We are assuming here that the id column in the map is set. The other
   // column values will be used to update the row.
   Future<int> update(Map<String, dynamic> row) async {
-    final Database db = await (instance.database as FutureOr<Database>);
+    final Database? db = await instance.database;
     final String? foodItemName = row[columnNutritionFoodItemName];
-    return db.update(table, row,
+    return db!.update(table, row,
         where: '$columnNutritionFoodItemName = ?', whereArgs: [foodItemName]);
   }
 
   // Deletes the row specified by the id. The number of affected rows is
   // returned. This should be 1 as long as the row exists.
   Future<int> delete(int id) async {
-    final Database db = await (instance.database as FutureOr<Database>);
-    return db.delete(table, where: '$columnId = ?', whereArgs: [id]);
+    final Database? db = await instance.database;
+    return db!.delete(table, where: '$columnId = ?', whereArgs: [id]);
   }
 }

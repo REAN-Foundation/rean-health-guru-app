@@ -42,7 +42,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
         break;
     }
 
-    return BaseWidget<PatientMedicationViewModel>(
+    return BaseWidget<PatientMedicationViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(

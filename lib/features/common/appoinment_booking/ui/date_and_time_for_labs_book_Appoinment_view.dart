@@ -187,7 +187,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
     //UserData data = UserData.fromJson(_sharedPrefUtils.read("user"));
     //debugPrint(_sharedPrefUtils.read("user"));
     progressDialog = ProgressDialog(context: context);
-    return BaseWidget<BookAppoinmentViewModel>(
+    return BaseWidget<BookAppoinmentViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -291,7 +291,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
                 ),
               ),
               Expanded(
-                  child: model.busy
+                  child: model!.busy
                       ? Center(
                           child: SizedBox(
                               height: 32,

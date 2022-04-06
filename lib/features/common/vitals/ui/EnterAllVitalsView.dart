@@ -52,7 +52,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context: context);
-    return BaseWidget<PatientVitalsViewModel>(
+    return BaseWidget<PatientVitalsViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -92,7 +92,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   ),
                   Align(
                     alignment: Alignment.center,
-                    child: model.busy
+                    child: model!.busy
                         ? SizedBox(
                             width: 32,
                             height: 32,

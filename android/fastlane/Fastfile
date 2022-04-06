@@ -96,8 +96,8 @@ platform :android do
     )
   end
 
-  desc "Promote Beta to Production"
-  lane :promote_beta_to_production do
+  desc "Promote Beta to Production RF"
+  lane :promote_beta_to_production_rf do
     upload_to_play_store(
       track: 'beta',
       track_promote_to: 'production',
@@ -105,6 +105,18 @@ platform :android do
       package_name: "org.reanfoundation.patient",
       json_key_data: ENV["PLAYSTORE_JSON_KEY_DATA"],
       metadata_path: './fastlane/metadata/android/rf_prod'
+    )
+  end
+
+  desc "Promote Beta to Production AHA"
+  lane :promote_beta_to_production_aha do
+    upload_to_play_store(
+      track: 'beta',
+      track_promote_to: 'production',
+      skip_upload_changelogs: true,
+      package_name: "org.heart.hfpatient",
+      json_key_data: ENV["PLAYSTORE_JSON_KEY_DATA"],
+      metadata_path: './fastlane/metadata/android/aha_prod'
     )
   end
 

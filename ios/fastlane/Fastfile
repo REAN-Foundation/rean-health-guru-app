@@ -222,6 +222,7 @@ platform :ios do
       skip_metadata: false,
       force: true, # Skip HTMl report verification
       skip_screenshots: true,
+      metadata_path: "./fastlane/metadata/rf_prod"
       platform: "ios",
       submission_information: {
         add_id_info_uses_idfa: false,
@@ -251,6 +252,7 @@ platform :ios do
       force: true, # Skip HTMl report verification
       skip_screenshots: true,
       platform: "ios",
+      metadata_path: "./fastlane/metadata/aha_prod"
       submission_information: {
         add_id_info_uses_idfa: false,
         add_id_info_serves_ads: false,

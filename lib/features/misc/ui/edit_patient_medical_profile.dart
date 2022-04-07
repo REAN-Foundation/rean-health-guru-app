@@ -384,7 +384,6 @@ class _EditPatientMedicalProfileViewState
   _updatePatientMedicalProfile() async {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
-      progressDialog.show(max: 100, msg: 'Loading...');
       final Map<String, dynamic> data = <String, dynamic>{};
       data['BloodGroup'] = _bloodGroupController.text.toUpperCase();
       data['MajorAilment'] = _majorAilmentController.text;

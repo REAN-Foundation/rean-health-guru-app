@@ -598,7 +598,6 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   addvitals() async {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
-      progressDialog.show(max: 100, msg: 'Loading...');
 
       double entertedWeight = double.parse(_weightController.text.toString());
 

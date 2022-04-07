@@ -73,27 +73,28 @@ class _EditPatientMedicalProfileViewState
   }
 
   setData() {
-    _majorAilmentController.text = widget.healthProfile!.majorAilment!;
+    _majorAilmentController.text = widget.healthProfile!.majorAilment ?? '';
     _majorAilmentController.selection = TextSelection.fromPosition(
       TextPosition(offset: _majorAilmentController.text.length),
     );
 
-    _bloodGroupController.text = widget.healthProfile!.bloodGroup!;
+    _bloodGroupController.text = widget.healthProfile!.bloodGroup ?? '';
     _bloodGroupController.selection = TextSelection.fromPosition(
       TextPosition(offset: _bloodGroupController.text.length),
     );
 
-    _ocupationController.text = widget.healthProfile!.occupation!;
+    _ocupationController.text = widget.healthProfile!.occupation ?? '';
     _ocupationController.selection = TextSelection.fromPosition(
       TextPosition(offset: _ocupationController.text.length),
     );
 
-    _nationalityController.text = widget.healthProfile!.nationality!;
+    _nationalityController.text = widget.healthProfile!.nationality ?? '';
     _nationalityController.selection = TextSelection.fromPosition(
       TextPosition(offset: _nationalityController.text.length),
     );
 
-    _procedureHistoryController.text = widget.healthProfile!.procedureHistory!;
+    _procedureHistoryController.text =
+        widget.healthProfile!.procedureHistory ?? '';
     _procedureHistoryController.selection = TextSelection.fromPosition(
       TextPosition(offset: _procedureHistoryController.text.length),
     );
@@ -109,17 +110,19 @@ class _EditPatientMedicalProfileViewState
     isSmoker = yesOrNo(widget.healthProfile!.isSmoker!);
     isDrinker = yesOrNo(widget.healthProfile!.isSmoker!);
     maritalStatus = widget.healthProfile!.maritalStatus.toString();
-    _otherConditionsController.text = widget.healthProfile!.otherConditions!;
+    _otherConditionsController.text =
+        widget.healthProfile!.otherConditions ?? '';
     _otherConditionsController.selection = TextSelection.fromPosition(
       TextPosition(offset: _otherConditionsController.text.length),
     );
 
-    _procedureHistoryController.text = widget.healthProfile!.procedureHistory!;
+    _procedureHistoryController.text =
+        widget.healthProfile!.procedureHistory ?? '';
     _procedureHistoryController.selection = TextSelection.fromPosition(
       TextPosition(offset: _procedureHistoryController.text.length),
     );
 
-    _ethnicityController.text = widget.healthProfile!.ethnicity!;
+    _ethnicityController.text = widget.healthProfile!.ethnicity ?? '';
     _ethnicityController.selection = TextSelection.fromPosition(
       TextPosition(offset: _ethnicityController.text.length),
     );
@@ -206,6 +209,7 @@ class _EditPatientMedicalProfileViewState
                         onChanged: (item) {
                           debugPrint(item);
                           maritalStatus = item.toString();
+                          setState(() {});
                         },
                         itemBuilder: (item) => RadioButtonBuilder(
                           item,
@@ -223,6 +227,7 @@ class _EditPatientMedicalProfileViewState
                         onChanged: (item) {
                           debugPrint(item);
                           isDiabetic = item;
+                          setState(() {});
                         },
                         itemBuilder: (item) => RadioButtonBuilder(
                           item,
@@ -240,6 +245,7 @@ class _EditPatientMedicalProfileViewState
                         onChanged: (item) {
                           debugPrint(item);
                           hasHeartAilment = item;
+                          setState(() {});
                         },
                         itemBuilder: (item) => RadioButtonBuilder(
                           item,
@@ -268,6 +274,7 @@ class _EditPatientMedicalProfileViewState
                         onChanged: (item) {
                           debugPrint(item);
                           isSmoker = item;
+                          setState(() {});
                         },
                         itemBuilder: (item) => RadioButtonBuilder(
                           item,
@@ -285,6 +292,7 @@ class _EditPatientMedicalProfileViewState
                         onChanged: (item) {
                           debugPrint(item);
                           isDrinker = item;
+                          setState(() {});
                         },
                         itemBuilder: (item) => RadioButtonBuilder(
                           item,

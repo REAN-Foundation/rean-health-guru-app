@@ -504,7 +504,6 @@ class _BiometricBodyTemperatureVitalsViewState
   addvitals() async {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
-      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['BodyTemperature'] = _controller.text.toString();
       map['PatientUserId'] = "";

@@ -347,14 +347,14 @@ class _EditProfileState extends State<EditProfile> {
   uploadProfilePicture(File file) async {
     try {
       final String _baseUrl = apiProvider!.getBaseUrl()!;
-      final map = <String, String?>{};
+      Map<String, String>? map = <String, String>{};
       map['enc'] = 'multipart/form-data';
       map['Authorization'] = 'Bearer ' + auth!;
       map['x-api-key'] = _api_key;
 
       final postUri = Uri.parse(_baseUrl + '/file-resources/upload/');
       final request = http.MultipartRequest('POST', postUri);
-      request.headers.addAll(map as Map<String, String>);
+      request.headers.addAll(map);
       request.files.add(http.MultipartFile(
           'name', file.readAsBytes().asStream(), file.lengthSync(),
           filename: file.path.split('/').last));
@@ -1805,10 +1805,10 @@ class _EditProfileState extends State<EditProfile> {
 
   openGallery() async {
     //getFile();
-    final picture = await (_picker.pickImage(
+    final picture = await _picker.pickImage(
       source: ImageSource.gallery,
-    ) as FutureOr<XFile>);
-    final File file = File(picture.path);
+    );
+    final File file = File(picture!.path);
     debugPrint(picture.path);
     final String fileName = file.path.split('/').last;
     debugPrint('File Name ==> $fileName');
@@ -1816,10 +1816,10 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   openCamera() async {
-    final picture = await (_picker.pickImage(
+    final picture = await _picker.pickImage(
       source: ImageSource.camera,
-    ) as FutureOr<XFile>);
-    final File file = File(picture.path);
+    );
+    final File file = File(picture!.path);
     debugPrint(picture.path);
     final String fileName = file.path.split('/').last;
     debugPrint('File Name ==> $fileName');

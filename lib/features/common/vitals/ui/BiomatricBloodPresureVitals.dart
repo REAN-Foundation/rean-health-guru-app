@@ -950,7 +950,6 @@ class _BiometricBloodPresureVitalsViewState
   addvitals() async {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
-      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['Systolic'] = _systolicController.text.toString();
       map['Diastolic'] = _diastolicController.text.toString();

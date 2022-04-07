@@ -502,7 +502,6 @@ class _BiometricBloodOxygenVitalsViewState
   addvitals() async {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
-      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['BloodOxygenSaturation'] = _controller.text.toString();
       map['PatientUserId'] = "";

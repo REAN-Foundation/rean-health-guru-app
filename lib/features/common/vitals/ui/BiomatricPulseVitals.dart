@@ -573,7 +573,6 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
   addvitals() async {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
-      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['Pulse'] = _controller.text.toString();
       map['PatientUserId'] = "";

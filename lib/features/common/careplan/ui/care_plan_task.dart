@@ -773,7 +773,6 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   markMedicationsAsTaken(String consumptionId) async {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
-      progressDialog.show(max: 100, msg: 'Loading...');
       final BaseResponse baseResponse =
           await model.markMedicationsAsTaken(consumptionId);
       debugPrint('Medication ==> ${baseResponse.toJson()}');

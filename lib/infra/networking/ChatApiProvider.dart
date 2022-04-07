@@ -14,15 +14,14 @@ class ChatApiProvider {
     _baseUrl = baseUrl;
   }
 
-  Future<dynamic> get(String url, {Map? header}) async {
+  Future<dynamic> get(String url, {Map<String, String>? header}) async {
     debugPrint('Base Url ==> GET ${_baseUrl! + url}');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
 
     var responseJson;
     try {
       final response = await http
-          .get(Uri.parse(_baseUrl! + url),
-              headers: header as Map<String, String>?)
+          .get(Uri.parse(_baseUrl! + url), headers: header)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -34,7 +33,8 @@ class ChatApiProvider {
     return responseJson;
   }
 
-  Future<dynamic> post(String url, {Map? body, Map? header}) async {
+  Future<dynamic> post(String url,
+      {Map? body, Map<String, String>? header}) async {
     debugPrint('Base Url ==> POST ${_baseUrl! + url}');
     debugPrint('Request Body ==> ${json.encode(body).toString()}');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
@@ -43,7 +43,7 @@ class ChatApiProvider {
     try {
       final response = await http
           .post(Uri.parse(_baseUrl! + url),
-              body: json.encode(body), headers: header as Map<String, String>?)
+              body: json.encode(body), headers: header)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -55,7 +55,8 @@ class ChatApiProvider {
     return responseJson;
   }
 
-  Future<dynamic> put(String url, {Map? body, Map? header}) async {
+  Future<dynamic> put(String url,
+      {Map? body, Map<String, String>? header}) async {
     debugPrint('Base Url ==> PUT ${_baseUrl! + url}');
     debugPrint('Request Body ==> ${json.encode(body).toString()}');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
@@ -64,7 +65,7 @@ class ChatApiProvider {
     try {
       final response = await http
           .put(Uri.parse(_baseUrl! + url),
-              body: json.encode(body), headers: header as Map<String, String>?)
+              body: json.encode(body), headers: header)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {
@@ -76,15 +77,14 @@ class ChatApiProvider {
     return responseJson;
   }
 
-  Future<dynamic> delete(String url, {Map? header}) async {
+  Future<dynamic> delete(String url, {Map<String, String>? header}) async {
     debugPrint('Base Url ==> DELETE ${_baseUrl! + url}');
     debugPrint('Headers ==> ${json.encode(header).toString()}');
 
     var responseJson;
     try {
       final response = await http
-          .delete(Uri.parse(_baseUrl! + url),
-              headers: header as Map<String, String>?)
+          .delete(Uri.parse(_baseUrl! + url), headers: header)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {

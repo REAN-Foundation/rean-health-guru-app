@@ -20,10 +20,10 @@ class BotViewModel extends BaseModel {
     }
 
     setBusy(true);
-    final map = <String, String?>{};
+    Map<String, String>? map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
-    map['authentication'] = dotenv.env['BOT_HEADER_TOKEN'];
+    map['authentication'] = dotenv.env['BOT_HEADER_TOKEN'] as String;
 
     final response = await apiProvider!.post(
         '/' +

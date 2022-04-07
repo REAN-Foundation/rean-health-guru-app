@@ -1,0 +1,6 @@
+The new HF Helper app can help heart failure patients stay healthy between office visits by tracking their symptoms, managing medication, and sharing health information with their doctor - all in one place.
+With HF Helper you can:
+ Track symptoms, medications and other health metrics.
+ Share health information with your doctor in real-time.
+ Connect with other people living with heart failure.
+The American Heart Association’s National Heart Failure Initiative, IMPLEMENT-HF, is made possible with funding by founding sponsor, Novartis, and national sponsor, Boehringer Ingelheim and Eli Lilly and Company.

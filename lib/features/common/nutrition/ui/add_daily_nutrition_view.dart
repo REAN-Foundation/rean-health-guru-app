@@ -203,14 +203,14 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                   focusNode: _nutritionNameFocus,
                   maxLines: 1,
                   textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.text,
                   onFieldSubmitted: (term) {
                     _fieldFocusChange(
                         context, _nutritionNameFocus, __consumedCaloriesFocus);
                   },
-                  inputFormatters: [
+                  /*inputFormatters: [
                     FilteringTextInputFormatter.deny(RegExp('[\\,|\\+|\\-]')),
-                  ],
+                  ],*/
                   decoration: InputDecoration(
                       hintStyle:
                           TextStyle(fontSize: 14, color: Colors.grey[400]),

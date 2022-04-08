@@ -637,32 +637,28 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [
-                                      InkWell(
-                                        onTap: () {},
-                                        child: Container(
-                                          width: 250,
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              /*Text(
-                                                  'Email:  ',
+                                      Container(
+                                        width: 250,
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            /*Text(
+                                                'Email:  ',
+                                                style: TextStyle(
+                                                    fontSize: 12.0,
+                                                    fontWeight: FontWeight.w300,
+                                                    color: primaryColor)),*/
+                                            Expanded(
+                                              child: Text(
+                                                  details.contactPerson!.email!,
                                                   style: TextStyle(
                                                       fontSize: 12.0,
-                                                      fontWeight: FontWeight.w300,
-                                                      color: primaryColor)),*/
-                                              Expanded(
-                                                child: Text(
-                                                    details
-                                                        .contactPerson!.email!,
-                                                    style: TextStyle(
-                                                        fontSize: 12.0,
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                        color: primaryColor)),
-                                              ),
-                                            ],
-                                          ),
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                      color: textGrey)),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       SizedBox(

@@ -206,6 +206,8 @@ class _EditPatientMedicalProfileViewState
                       RadioGroup<String>.builder(
                         items: maritalStatusItems,
                         groupValue: maritalStatus,
+                        direction: Axis.horizontal,
+                        horizontalAlignment: MainAxisAlignment.start,
                         onChanged: (item) {
                           debugPrint(item);
                           maritalStatus = item.toString();
@@ -216,6 +218,9 @@ class _EditPatientMedicalProfileViewState
                           textPosition: RadioButtonTextPosition.right,
                         ),
                       ),
+                      SizedBox(
+                        height: 8,
+                      ),
                       Text('Diabetic',
                           style: TextStyle(
                               fontSize: 16.0,
@@ -224,6 +229,8 @@ class _EditPatientMedicalProfileViewState
                       RadioGroup<String>.builder(
                         items: radioItems,
                         groupValue: isDiabetic,
+                        direction: Axis.horizontal,
+                        horizontalAlignment: MainAxisAlignment.start,
                         onChanged: (item) {
                           debugPrint(item);
                           isDiabetic = item;
@@ -234,6 +241,9 @@ class _EditPatientMedicalProfileViewState
                           textPosition: RadioButtonTextPosition.right,
                         ),
                       ),
+                      SizedBox(
+                        height: 8,
+                      ),
                       Text('Heart Patient',
                           style: TextStyle(
                               fontSize: 16.0,
@@ -242,6 +252,8 @@ class _EditPatientMedicalProfileViewState
                       RadioGroup<String>.builder(
                         items: radioItems,
                         groupValue: hasHeartAilment,
+                        direction: Axis.horizontal,
+                        horizontalAlignment: MainAxisAlignment.start,
                         onChanged: (item) {
                           debugPrint(item);
                           hasHeartAilment = item;
@@ -263,6 +275,9 @@ class _EditPatientMedicalProfileViewState
                     debugPrint(item.title);
                   },
                 ),*/
+                      SizedBox(
+                        height: 8,
+                      ),
                       Text('Is Smoker?',
                           style: TextStyle(
                               fontSize: 16.0,
@@ -271,6 +286,8 @@ class _EditPatientMedicalProfileViewState
                       RadioGroup<String>.builder(
                         items: radioItems,
                         groupValue: isSmoker,
+                        direction: Axis.horizontal,
+                        horizontalAlignment: MainAxisAlignment.start,
                         onChanged: (item) {
                           debugPrint(item);
                           isSmoker = item;
@@ -281,6 +298,9 @@ class _EditPatientMedicalProfileViewState
                           textPosition: RadioButtonTextPosition.right,
                         ),
                       ),
+                      SizedBox(
+                        height: 8,
+                      ),
                       Text('Is Drinker?',
                           style: TextStyle(
                               fontSize: 16.0,
@@ -289,6 +309,8 @@ class _EditPatientMedicalProfileViewState
                       RadioGroup<String>.builder(
                         items: radioItems,
                         groupValue: isDrinker,
+                        direction: Axis.horizontal,
+                        horizontalAlignment: MainAxisAlignment.start,
                         onChanged: (item) {
                           debugPrint(item);
                           isDrinker = item;

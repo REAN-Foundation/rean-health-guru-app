@@ -1221,11 +1221,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   SizedBox(
                     width: 8,
                   ),
-                  Text('Knowledge Tree',
+                  Text('Health Insights',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           fontFamily: 'Montserrat')),
                 ],
               ),
@@ -1341,7 +1341,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Vitals',
+                      Text('Record your vitals',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
@@ -1596,7 +1596,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Nutrition',
+                      Text('Monitor your nutrition',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,

@@ -447,6 +447,7 @@ class _EditProfileState extends State<EditProfile> {
                       button: true,
                       child: InkWell(
                           onTap: () {
+                            FocusManager.instance.primaryFocus?.unfocus();
                             showMaterialModalBottomSheet(
                                 isDismissible: true,
                                 backgroundColor: Colors.transparent,

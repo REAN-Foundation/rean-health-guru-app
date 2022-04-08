@@ -92,7 +92,8 @@ class _BiometricBodyTemperatureVitalsViewState
                       controller: _controller,
                       maxLines: 1,
                       textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
                       onFieldSubmitted: (term) {},
                       inputFormatters: [
                         FilteringTextInputFormatter.deny(

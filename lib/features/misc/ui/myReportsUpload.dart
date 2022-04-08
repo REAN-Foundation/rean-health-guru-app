@@ -201,7 +201,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                 uploadWidget(),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text('Records',
+                  child: Text('Medical Records',
                       style: TextStyle(
                           fontSize: 16,
                           color: primaryColor,
@@ -269,7 +269,7 @@ class _MyReportsViewState extends State<MyReportsView> {
             size: 24,
           ),
           label: Text(
-            'Upload new records',
+            'Upload medical records',
             style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.white,
@@ -356,7 +356,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(document.displayId!,
+                      Text(' ', //document.displayId!
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -974,11 +974,13 @@ class _MyReportsViewState extends State<MyReportsView> {
             ),
             Align(
               alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text(
-                  'Note: Files formats supported include  .docx, .pdf, .ppt.',
-                  style: TextStyle(fontSize: 12, color: textGrey),
+              child: Semantics(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    'Note: Files formats supported include  .docx, .pdf, .ppt.',
+                    style: TextStyle(fontSize: 12, color: textGrey),
+                  ),
                 ),
               ),
             ),

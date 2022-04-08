@@ -163,7 +163,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                         controller: _weightController,
                         maxLines: 1,
                         textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.number,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
                         onFieldSubmitted: (term) {},
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(

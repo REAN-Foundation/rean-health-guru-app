@@ -460,7 +460,7 @@ class _AppDrawerState extends State<AppDrawer> {
       builder: (context) => AlertDialog(
         content: ListTile(
           title: Text(
-            'Logout',
+            'Alert!',
             style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontStyle: FontStyle.normal,
@@ -469,7 +469,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           contentPadding: EdgeInsets.all(4.0),
           subtitle: Text(
-            'Are you sure you want to logout?',
+            '\nAre you sure you want to logout?',
             style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontStyle: FontStyle.normal,

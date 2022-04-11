@@ -68,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
       final Locale? countryLocale = await Devicelocale.currentAsLocale;
       setCurrentLocale(countryLocale!.countryCode!.toUpperCase());
       debugPrint(
-          'Country Local ==> ${countryLocale!.countryCode!.toUpperCase()}');
+          'Country Local ==> ${countryLocale.countryCode!.toUpperCase()}');
     }
   }
 

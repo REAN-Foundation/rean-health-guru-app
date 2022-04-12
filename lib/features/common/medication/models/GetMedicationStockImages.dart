@@ -1,8 +1,8 @@
 class GetMedicationStockImages {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
 
   GetMedicationStockImages(
       {this.status, this.message, this.httpCode, this.data});
@@ -20,14 +20,14 @@ class GetMedicationStockImages {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<MedicationStockImages> medicationStockImages;
+  List<MedicationStockImages>? medicationStockImages;
 
   Data({this.medicationStockImages});
 
@@ -35,7 +35,7 @@ class Data {
     if (json['MedicationStockImages'] != null) {
       medicationStockImages = <MedicationStockImages>[];
       json['MedicationStockImages'].forEach((v) {
-        medicationStockImages.add(MedicationStockImages.fromJson(v));
+        medicationStockImages!.add(MedicationStockImages.fromJson(v));
       });
     }
   }
@@ -44,18 +44,18 @@ class Data {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (medicationStockImages != null) {
       data['MedicationStockImages'] =
-          medicationStockImages.map((v) => v.toJson()).toList();
+          medicationStockImages!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class MedicationStockImages {
-  int id;
-  String code;
-  String fileName;
-  String resourceId;
-  String publicUrl;
+  int? id;
+  String? code;
+  String? fileName;
+  String? resourceId;
+  String? publicUrl;
   bool isSelected = false;
 
   MedicationStockImages(

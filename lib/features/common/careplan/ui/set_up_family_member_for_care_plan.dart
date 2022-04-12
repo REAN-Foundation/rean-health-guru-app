@@ -10,7 +10,7 @@ import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class SetUpFamilyMemberForCarePlanView extends StatefulWidget {
   @override
@@ -23,10 +23,10 @@ class _SetUpFamilyMemberForCarePlanViewState
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  StartCarePlanResponse startCarePlanResponse;
+  StartCarePlanResponse? startCarePlanResponse;
 
   //var teamMemberList = new List<TeamMember>();
-  ProgressDialog progressDialog;
+  ProgressDialog? progressDialog;
 
   loadSharedPrefrance() async {
     try {
@@ -34,10 +34,10 @@ class _SetUpFamilyMemberForCarePlanViewState
           await _sharedPrefUtils.read('CarePlan'));
       startCarePlanResponseGlob = startCarePlanResponse;
       debugPrint(
-          'AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}');
+          'AHA Care Plan id ${startCarePlanResponse!.data!.carePlan!.id.toString()}');
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
@@ -52,9 +52,9 @@ class _SetUpFamilyMemberForCarePlanViewState
     /*if(familyMemberListGlobe.length != 0){
       teamMemberList.addAll(familyMemberListGlobe);
     }*/
-    progressDialog = ProgressDialog(context);
+    progressDialog = ProgressDialog(context: context);
 
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -101,7 +101,7 @@ class _SetUpFamilyMemberForCarePlanViewState
                         height: 16,
                       ),
                       Expanded(
-                          child: model.busy
+                          child: model!.busy
                               ? Center(
                                   child: SizedBox(
                                       height: 32,
@@ -236,7 +236,7 @@ class _SetUpFamilyMemberForCarePlanViewState
   }
 
   Widget _makeDoctorListCard(BuildContext context, int index) {
-    final TeamMember teamMember = familyMemberListGlobe.elementAt(index);
+    final TeamMember teamMember = familyMemberListGlobe.elementAt(index)!;
     return Container(
       height: 80,
       decoration: BoxDecoration(
@@ -278,21 +278,21 @@ class _SetUpFamilyMemberForCarePlanViewState
                             Padding(
                               padding: const EdgeInsets.only(right: 18.0),
                               child: Text(
-                                  teamMember.details.firstName +
+                                  teamMember.details!.firstName! +
                                       ' ' +
-                                      teamMember.details.lastName,
+                                      teamMember.details!.lastName!,
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       color: primaryColor)),
                             ),
-                            Text('+91 ' + teamMember.details.phoneNumber,
+                            Text('+91 ' + teamMember.details!.phoneNumber!,
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w300,
                                     color: Color(0XFF909CAC))),
                             Text(
-                              teamMember.details.relation,
+                              teamMember.details!.relation!,
                               style: TextStyle(
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.w200,
@@ -481,7 +481,7 @@ class _SetUpFamilyMemberForCarePlanViewState
   addTeamMembers(String firstName, String lastName, String phoneNumber,
       String gender, String relation) async {
     try {
-      //progressDialog.show();
+      //progressDialog.show(max: 100, msg: 'Loading...' );progressDialog.show(max: 100, msg: 'Loading...' );
       model.setBusy(true);
 
       /*TeamMemberJsonRequest jsonRequest = new TeamMemberJsonRequest();
@@ -500,7 +500,7 @@ class _SetUpFamilyMemberForCarePlanViewState
       data['Prefix'] = ' ';
 
       final map = <String, dynamic>{};
-      map['CarePlanId'] = startCarePlanResponse.data.carePlan.id.toString();
+      map['CarePlanId'] = startCarePlanResponse!.data!.carePlan!.id.toString();
       map['IsEmergencyContact'] = true;
       map['TeamMemberType'] = 'FamilyMember';
       map['Details'] = data;
@@ -509,20 +509,20 @@ class _SetUpFamilyMemberForCarePlanViewState
           await model.addTeamMembers(map);
       debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
-        //progressDialog.hide();
+        //progressDialog.close();
         setState(() {
-          familyMemberListGlobe.add(addTeamMemberResponse.data.teamMember);
+          familyMemberListGlobe.add(addTeamMemberResponse.data!.teamMember);
         });
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       } else {
-        //progressDialog.hide();
-        showToast(addTeamMemberResponse.message, context);
+        //progressDialog.close();
+        showToast(addTeamMemberResponse.message!, context);
       }
     } catch (CustomException) {
-      //progressDialog.hide();
+      //progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException);
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 }

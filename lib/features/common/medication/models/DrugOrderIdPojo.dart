@@ -1,7 +1,7 @@
 class DrugOrderIdPojo {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   DrugOrderIdPojo({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class DrugOrderIdPojo {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  DrugOrder drugOrder;
+  DrugOrder? drugOrder;
 
   Data({this.drugOrder});
 
@@ -36,23 +36,23 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (drugOrder != null) {
-      data['drugOrder'] = drugOrder.toJson();
+      data['drugOrder'] = drugOrder!.toJson();
     }
     return data;
   }
 }
 
 class DrugOrder {
-  String id;
-  String patientUserId;
-  String doctorUserId;
-  String displayId;
-  String visitId;
-  String suggestedPharmacyId;
-  int currentState;
-  String referencedOrderId;
-  String updatedAt;
-  String createdAt;
+  String? id;
+  String? patientUserId;
+  String? doctorUserId;
+  String? displayId;
+  String? visitId;
+  String? suggestedPharmacyId;
+  int? currentState;
+  String? referencedOrderId;
+  String? updatedAt;
+  String? createdAt;
 
   DrugOrder(
       {this.id,

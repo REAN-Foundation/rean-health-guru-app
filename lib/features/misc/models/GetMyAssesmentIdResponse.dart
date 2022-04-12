@@ -1,13 +1,13 @@
 class GetMyAssesmentIdResponse {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
-  Client client;
-  User user;
-  String context;
-  List<String> clientIps;
-  String aPIVersion;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
+  Client? client;
+  User? user;
+  String? context;
+  List<String>? clientIps;
+  String? aPIVersion;
 
   GetMyAssesmentIdResponse(
       {this.status,
@@ -38,13 +38,13 @@ class GetMyAssesmentIdResponse {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     if (client != null) {
-      data['Client'] = client.toJson();
+      data['Client'] = client!.toJson();
     }
     if (user != null) {
-      data['User'] = user.toJson();
+      data['User'] = user!.toJson();
     }
     data['Context'] = context;
     data['ClientIps'] = clientIps;
@@ -54,7 +54,7 @@ class GetMyAssesmentIdResponse {
 }
 
 class Data {
-  SymptomAssessment symptomAssessment;
+  SymptomAssessment? symptomAssessment;
 
   Data({this.symptomAssessment});
 
@@ -67,20 +67,20 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (symptomAssessment != null) {
-      data['SymptomAssessment'] = symptomAssessment.toJson();
+      data['SymptomAssessment'] = symptomAssessment!.toJson();
     }
     return data;
   }
 }
 
 class SymptomAssessment {
-  String id;
-  String patientUserId;
-  String title;
-  String assessmentTemplateId;
-  String overallStatus;
-  String assessmentDate;
-  List<String> symptomsRecorded;
+  String? id;
+  String? patientUserId;
+  String? title;
+  String? assessmentTemplateId;
+  String? overallStatus;
+  String? assessmentDate;
+  List<String>? symptomsRecorded;
 
   SymptomAssessment(
       {this.id,
@@ -123,8 +123,8 @@ class SymptomAssessment {
 }
 
 class Client {
-  String clientName;
-  String clientCode;
+  String? clientName;
+  String? clientCode;
 
   Client({this.clientName, this.clientCode});
 
@@ -142,14 +142,14 @@ class Client {
 }
 
 class User {
-  String userId;
-  String displayName;
-  String phone;
-  String email;
-  String userName;
-  int currentRoleId;
-  int iat;
-  int exp;
+  String? userId;
+  String? displayName;
+  String? phone;
+  String? email;
+  String? userName;
+  int? currentRoleId;
+  int? iat;
+  int? exp;
 
   User(
       {this.userId,

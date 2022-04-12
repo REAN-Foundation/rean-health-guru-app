@@ -20,7 +20,7 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
 
   @override
   Widget build(BuildContext context) {
-    Widget screen;
+    late Widget screen;
     switch (_currentIndex) {
       case 0:
         screen = SummaryOfMyCarePlanView();
@@ -33,7 +33,7 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
         break;
     }
 
-    return BaseWidget<PatientMedicationViewModel>(
+    return BaseWidget<PatientMedicationViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(

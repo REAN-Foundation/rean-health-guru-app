@@ -13,7 +13,7 @@ import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:phone_number/phone_number.dart';
 
-StartCarePlanResponse startCarePlanResponseGlob;
+StartCarePlanResponse? startCarePlanResponseGlob;
 List<String> goalPlanScreenStack = <String>[];
 /*StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponseGlobe;
 
@@ -26,11 +26,11 @@ StartTaskOfAHACarePlanResponse getStartTaskOfAHACarePlanResponse() {
 }*/
 
 bool _isLogin = false;
-String _baseUrl = '';
-Task _task;
-String countryCodeGlobe = '';
+String? _baseUrl = '';
+Task? _task;
+String? countryCodeGlobe = '';
 var dummyNumberList = <String>[];
-String _currentLocale = '';
+String? _currentLocale = '';
 String _appName = '';
 dynamic _roleId = '';
 final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
@@ -80,7 +80,7 @@ void setTask(Task response) {
   _task = response;
 }
 
-Task getTask() {
+Task? getTask() {
   return _task;
 }
 
@@ -108,24 +108,24 @@ bool getSessionFlag() {
   return _isLogin;
 }
 
-void setBaseUrl(String baseUrl) {
+void setBaseUrl(String? baseUrl) {
   _baseUrl = baseUrl;
 }
 
-String getBaseUrl() {
+String? getBaseUrl() {
   return _baseUrl;
 }
 
 String getCurrentLocale() {
-  return _currentLocale;
+  return _currentLocale.toString();
 }
 
-String setCurrentLocale(String locale) {
+setCurrentLocale(String? locale) {
   _currentLocale = locale;
 }
 
 void showToast(String msg, BuildContext context) {
-  FocusManager.instance.primaryFocus.unfocus();
+  FocusManager.instance.primaryFocus!.unfocus();
   /*Fluttertoast.showToast(
     msg: msg,
     toastLength: Toast.LENGTH_LONG,
@@ -149,7 +149,7 @@ void showToastMsg(String msg, BuildContext context) {
       SemanticsService.announce(msg, TextDirection.ltr);
     });
   }
-  FocusManager.instance.primaryFocus.unfocus();
+  FocusManager.instance.primaryFocus!.unfocus();
   Fluttertoast.showToast(
     msg: msg,
     gravity: ToastGravity.SNACKBAR,

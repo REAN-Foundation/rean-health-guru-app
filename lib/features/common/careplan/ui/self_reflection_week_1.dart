@@ -6,13 +6,13 @@ import 'package:paitent/features/misc/models/BaseResponse.dart';
 import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
 class SelfReflactionWeek_1_View extends StatefulWidget {
-  Task task;
+  Task? task;
 
-  SelfReflactionWeek_1_View(Task task) {
+  SelfReflactionWeek_1_View(task) {
     this.task = task;
   }
 
@@ -25,7 +25,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
   String answer1 = '';
   String answer7 = '';
 
@@ -48,8 +48,8 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<PatientCarePlanViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -834,7 +834,8 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
 
   updateWeeklyReflection() async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['AreYouFeelingGood'] = answer1 == 'Good';
       map['HowIsYourProgress_Text'] = question2TextControler.text;
@@ -845,18 +846,18 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
       map['ReadyToProceedFurther'] = answer7 == 'Yes';
 
       final BaseResponse baseResponse = await model.statusCheck(
-          startCarePlanResponseGlob.data.carePlan.id.toString(),
-          widget.task.details.id,
+          startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+          widget.task!.details!.id!,
           map);
 
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         Navigator.pop(context);
       } else {
-        showToast(baseResponse.message, context);
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());

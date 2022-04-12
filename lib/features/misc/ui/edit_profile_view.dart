@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -24,8 +25,8 @@ import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
 import 'package:paitent/infra/widgets/login_header.dart';
-import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -42,6 +43,7 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController _middleNameController = TextEditingController();
 
   final TextEditingController _mobileNumberController = TextEditingController();
+
   //final TextEditingController _emergencyMobileNumberController = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
@@ -51,13 +53,13 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController _postalCodeController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  String profileImagePath = '';
+  String? profileImagePath = '';
   final ImagePicker _picker = ImagePicker();
-  String mobileNumber = '';
+  String? mobileNumber = '';
 
   //ApiProvider apiProvider = new ApiProvider();
 
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
@@ -71,23 +73,23 @@ class _EditProfileState extends State<EditProfile> {
   final _postalFocus = FocusNode();
   final _addressFocus = FocusNode();
   final _sharedPrefUtils = SharedPrefUtils();
-  String selectedGender = '';
+  String? selectedGender = '';
   String dob = '';
   String unformatedDOB = '';
   String userId = '';
-  String auth = '';
+  String? auth = '';
   String addresses = '';
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
   String fullName = '';
   var dateFormat = DateFormat('MMM dd, yyyy');
-  Patient patient;
+  late Patient patient;
 
   //String profileImage = "";
   String emergencymobileNumber = '';
   bool isEditable = false;
 
   String countryCode = '';
-  String imageResourceId = '';
+  String? imageResourceId = '';
   var _api_key;
 
   @override
@@ -105,32 +107,33 @@ class _EditProfileState extends State<EditProfile> {
       patient = Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
       debugPrint(patient.toJson().toString());
 
-      dob = dateFormat.format(patient.user.person.birthDate);
-      unformatedDOB = patient.user.person.birthDate.toIso8601String();
-      userId = user.data.user.id.toString();
-      auth = user.data.accessToken;
+      dob = dateFormat.format(patient.user!.person!.birthDate!);
+      unformatedDOB = patient.user!.person!.birthDate!.toIso8601String();
+      userId = user.data!.user!.id.toString();
+      auth = user.data!.accessToken;
 
-      fullName =
-          patient.user.person.firstName + ' ' + patient.user.person.lastName;
-      mobileNumber = patient.user.person.phone;
+      fullName = patient.user!.person!.firstName! +
+          ' ' +
+          patient.user!.person!.lastName!;
+      mobileNumber = patient.user!.person!.phone;
 
-      _firstNameController.text = patient.user.person.firstName;
+      _firstNameController.text = patient.user!.person!.firstName!;
       _firstNameController.selection = TextSelection.fromPosition(
         TextPosition(offset: _firstNameController.text.length),
       );
 
-      _lastNameController.text = patient.user.person.lastName;
+      _lastNameController.text = patient.user!.person!.lastName!;
       _lastNameController.selection = TextSelection.fromPosition(
         TextPosition(offset: _lastNameController.text.length),
       );
 
-      _mobileNumberController.text = patient.user.person.phone;
+      _mobileNumberController.text = patient.user!.person!.phone!;
       _mobileNumberController.selection = TextSelection.fromPosition(
         TextPosition(offset: _mobileNumberController.text.length),
       );
 
-      debugPrint("selectedGender ==> ${patient.user.person.gender}");
-      selectedGender = patient.user.person.gender;
+      debugPrint("selectedGender ==> ${patient.user!.person!.gender}");
+      selectedGender = patient.user!.person!.gender;
 
       /*try {
         debugPrint(await _sharedPrefUtils.readString("bloodGroup"));
@@ -143,17 +146,17 @@ class _EditProfileState extends State<EditProfile> {
         }
       }catch(Excepetion){
         debugPrint('Error');
-        debugPrint(Excepetion);
+        debugPrint(Excepetion.toString());
       }*/
 
-      _emailController.text = patient.user.person.email;
+      _emailController.text = patient.user!.person!.email!;
       // _emergencyMobileNumberController.text = patient.user.person;
 
-      imageResourceId = patient.user.person.imageResourceId ?? '';
+      imageResourceId = patient.user!.person!.imageResourceId ?? '';
       profileImagePath = imageResourceId != ''
-          ? apiProvider.getBaseUrl() +
+          ? apiProvider!.getBaseUrl()! +
               '/file-resources/' +
-              imageResourceId +
+              imageResourceId! +
               '/download'
           : '';
 
@@ -167,13 +170,14 @@ class _EditProfileState extends State<EditProfile> {
     }
 
     try {
-      _cityController.text = patient.user.person.addresses.elementAt(0).city;
+      _cityController.text =
+          patient.user!.person!.addresses!.elementAt(0).city!;
       _addressController.text =
-          patient.user.person.addresses.elementAt(0).addressLine;
+          patient.user!.person!.addresses!.elementAt(0).addressLine!;
       _countryController.text =
-          patient.user.person.addresses.elementAt(0).country;
+          patient.user!.person!.addresses!.elementAt(0).country!;
       _postalCodeController.text =
-          patient.user.person.addresses.elementAt(0).postalCode;
+          patient.user!.person!.addresses!.elementAt(0).postalCode!;
       setState(() {});
     } catch (e) {
       debugPrint('error caught: $e');
@@ -182,8 +186,8 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<LoginViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<LoginViewModel?>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       child: LoginHeader(
         mobileNumberController: _mobileNumberController,
@@ -195,99 +199,98 @@ class _EditProfileState extends State<EditProfile> {
             if (isEditable) {
               final result = await _onBackPressed();
               return result;
-            } else {
-              Navigator.of(context).pop();
-              return true;
-            }
-          },
-          child: Scaffold(
-            backgroundColor: Colors.white,
-            appBar: AppBar(
-              brightness: Brightness.light,
-              backgroundColor: Colors.white,
-              title: Text(
-                isEditable ? 'Edit Profile' : 'View Profile',
-                semanticsLabel: isEditable ? 'Edit Profile' : 'View Profile',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    color: primaryColor,
-                    fontWeight: FontWeight.w600),
-              ),
-              iconTheme: IconThemeData(color: Colors.black),
-            ),
-            body: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    /* SizedBox(height: height * .2),
+                } else {
+                  Navigator.of(context).pop();
+                  return true;
+                }
+              },
+              child: Scaffold(
+                backgroundColor: Colors.white,
+                appBar: AppBar(
+                  brightness: Brightness.light,
+                  backgroundColor: Colors.white,
+                  title: Text(
+                    isEditable ? 'Edit Profile' : 'View Profile',
+                    semanticsLabel: isEditable ? 'Edit Profile' : 'View Profile',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        color: primaryColor,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  iconTheme: IconThemeData(color: Colors.black),
+                ),
+                body: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        /* SizedBox(height: height * .2),
                       _title(),
                       SizedBox(height: 50),*/
-                    _profileIcon(),
-                    _textFeildWidget(),
-                    SizedBox(height: 20),
-                    Visibility(
-                      visible: isEditable,
-                      child: model.busy
+                        _profileIcon(),
+                        _textFeildWidget(),
+                        SizedBox(height: 20),
+                        Visibility(
+                          visible: isEditable,
+                          child: model!.busy
                           ? CircularProgressIndicator()
                           : _submitButton(model),
+                        ),
+                        SizedBox(height: 20),
+                      ],
                     ),
-                    SizedBox(height: 20),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-            floatingActionButton: Visibility(
-              visible: !isEditable,
-              child: Semantics(
-                label: 'Edit profile',
-                button: true,
-                child: FloatingActionButton(
-                  backgroundColor: primaryColor,
-                  foregroundColor: Colors.white,
-                  tooltip: 'Edit profile',
-                  mini: false,
-                  onPressed: () {
-                    isEditable = true;
-                    setState(() {});
-                  },
-                  child: Icon(Icons.edit),
+                floatingActionButton: Visibility(
+                  visible: !isEditable,
+                  child: Semantics(
+                    label: 'Edit profile',
+                    button: true,
+                    child: FloatingActionButton(
+                      backgroundColor: primaryColor,
+                      foregroundColor: Colors.white,
+                      tooltip: 'Edit profile',
+                      mini: false,
+                      onPressed: () {
+                        isEditable = true;
+                        setState(() {});
+                      },
+                      child: Icon(Icons.edit),
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ),
     );
   }
 
   Future<bool> _onBackPressed() {
     return showDialog(
       context: context,
-          builder: (context) => AlertDialog(
-            title: Semantics(
-              child: Text('Alert!'),
-              header: true,
-              readOnly: true,
-            ),
-            content: Text('Are you sure you want to discard the changes?'),
-            actions: <Widget>[
-              TextButton(
-                child: Text('Yes'),
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-              ),
-              TextButton(
-                child: Text('No'),
-                onPressed: () => Navigator.of(context).pop(false),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: Semantics(
+          child: Text('Alert!'),
+          header: true,
+          readOnly: true,
+        ),
+        content: Text('Are you sure you want to discard the changes?'),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Yes'),
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
           ),
-        ) ??
-        false;
+          TextButton(
+            child: Text('No'),
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+        ],
+      ),
+    ).then((value) => value as bool);
   }
 
   Future getFile() async {
@@ -305,12 +308,12 @@ class _EditProfileState extends State<EditProfile> {
     /*allowedFileExtensions: ['mwfbak'],
     allowedUtiTypes: ['com.sidlatau.example.mwfbak'],*/
 
-    String result;
+    String? result;
     try {
       result = await FlutterDocumentPicker.openDocument(params: params);
 
       if (result != '') {
-        final File file = File(result);
+        final File file = File(result!);
         debugPrint(result);
         final String fileName = file.path.split('/').last;
         debugPrint('File Name ==> $fileName');
@@ -321,7 +324,7 @@ class _EditProfileState extends State<EditProfile> {
       }
     } catch (e) {
       showToast('Please select document', context);
-      debugPrint(e);
+      debugPrint(e.toString());
       result = 'Error: $e';
     }
   }
@@ -343,10 +346,10 @@ class _EditProfileState extends State<EditProfile> {
 
   uploadProfilePicture(File file) async {
     try {
-      final String _baseUrl = apiProvider.getBaseUrl();
-      final map = <String, String>{};
+      final String _baseUrl = apiProvider!.getBaseUrl()!;
+      Map<String, String>? map = <String, String>{};
       map['enc'] = 'multipart/form-data';
-      map['Authorization'] = 'Bearer ' + auth;
+      map['Authorization'] = 'Bearer ' + auth!;
       map['x-api-key'] = _api_key;
 
       final postUri = Uri.parse(_baseUrl + '/file-resources/upload/');
@@ -367,16 +370,17 @@ class _EditProfileState extends State<EditProfile> {
           final respStr = await response.stream.bytesToString();
           debugPrint('Uploded ' + respStr);
           final FileUploadPublicResourceResponse uploadResponse =
-              FileUploadPublicResourceResponse.fromJson(json.decode(respStr));
+          FileUploadPublicResourceResponse.fromJson(json.decode(respStr));
           if (uploadResponse.status == 'success') {
             profileImagePath =
-                uploadResponse.data.fileResources.elementAt(0).url;
-            imageResourceId = uploadResponse.data.fileResources.elementAt(0).id;
+                uploadResponse.data!.fileResources!.elementAt(0).url;
+            imageResourceId =
+                uploadResponse.data!.fileResources!.elementAt(0).id;
             //profileImage = uploadResponse.data.details.elementAt(0).url;
-            showToast(uploadResponse.message, context);
+            showToast(uploadResponse.message!, context);
             setState(() {
               debugPrint(
-                  'File Public URL ==> ${uploadResponse.data.fileResources.elementAt(0).url}');
+                  'File Public URL ==> ${uploadResponse.data!.fileResources!.elementAt(0).url}');
             });
           } else {
             showToast('Opps, something wents wrong!', context);
@@ -421,9 +425,10 @@ class _EditProfileState extends State<EditProfile> {
                   decoration: BoxDecoration(
                     color: const Color(0xff7c94b6),
                     image: DecorationImage(
-                      image: profileImagePath == ''
-                          ? AssetImage('res/images/profile_placeholder.png')
-                          : NetworkImage(profileImagePath),
+                      image: (profileImagePath == ''
+                              ? AssetImage('res/images/profile_placeholder.png')
+                              : NetworkImage(profileImagePath!))
+                          as ImageProvider<Object>,
                       fit: BoxFit.cover,
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(50.0)),
@@ -442,6 +447,7 @@ class _EditProfileState extends State<EditProfile> {
                       button: true,
                       child: InkWell(
                           onTap: () {
+                            FocusManager.instance.primaryFocus?.unfocus();
                             showMaterialModalBottomSheet(
                                 isDismissible: true,
                                 backgroundColor: Colors.transparent,
@@ -478,7 +484,7 @@ class _EditProfileState extends State<EditProfile> {
           SizedBox(
             height: 4,
           ),
-          Text(mobileNumber,
+          Text(mobileNumber!,
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
@@ -922,7 +928,7 @@ class _EditProfileState extends State<EditProfile> {
                 ],
               )*/
 
-                /*InternationalPhoneNumberInput(
+            /*InternationalPhoneNumberInput(
                 onInputChanged: (PhoneNumber number) {
                   mobileNumber = number.parseNumber();
                   debugPrint(number.parseNumber());
@@ -964,11 +970,11 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               )*/
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Semantics(
                 label:
-                    'Mobile number ' + _mobileNumberController.text.toString(),
+                'Mobile number ' + _mobileNumberController.text.toString(),
                 child: TextFormField(
                     controller: _mobileNumberController,
                     focusNode: _mobileNumberFocus,
@@ -1290,7 +1296,7 @@ class _EditProfileState extends State<EditProfile> {
         Material(
           //Wrap with Material
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
           elevation: 4.0,
           color: primaryColor,
           clipBehavior: Clip.antiAlias,
@@ -1320,7 +1326,8 @@ class _EditProfileState extends State<EditProfile> {
                     showToast('Please enter postal code', context);
                   } */
                   else {
-                    progressDialog.show();
+                    progressDialog.show(max: 100, msg: 'Loading...');
+                    progressDialog.show(max: 100, msg: 'Loading...');
 
                     final map = <String, dynamic>{};
                     map['Gender'] = selectedGender;
@@ -1329,7 +1336,7 @@ class _EditProfileState extends State<EditProfile> {
                     map['FirstName'] = _firstNameController.text;
                     map['MiddleName'] = _middleNameController.text;
                     map['LastName'] = _lastNameController.text;
-                    final address = <String, String>{};
+                    final address = <String, String?>{};
                     address['AddressLine'] = _addressController.text.trim();
                     address['City'] = _cityController.text.trim();
                     address['Country'] = _countryController.text.trim();
@@ -1341,7 +1348,7 @@ class _EditProfileState extends State<EditProfile> {
                     //map['Locality'] = _cityController.text;
                     //map['Address'] = _addressController.text;
                     map['ImageResourceId'] =
-                        imageResourceId == '' ? null : imageResourceId;
+                    imageResourceId == '' ? null : imageResourceId;
                     //map['EmergencyContactNumber'] =
                     //  _emergencyMobileNumberController.text;
                     map['Email'] = _emailController.text;
@@ -1350,20 +1357,20 @@ class _EditProfileState extends State<EditProfile> {
 
                     try {
                       final BaseResponse updateProfileSuccess = await model
-                          .updateProfile(map, userId, 'Bearer ' + auth);
+                          .updateProfile(map, userId, 'Bearer ' + auth!);
 
                       if (updateProfileSuccess.status == 'success') {
-                        progressDialog.hide();
-                        showToast(updateProfileSuccess.message, context);
+                        progressDialog.close();
+                        showToast(updateProfileSuccess.message!, context);
                         /* if (Navigator.canPop(context)) {
                       Navigator.pop(context);
                     }*/
 
-                        getPatientDetails(model, auth, userId);
+                        getPatientDetails(model, auth!, userId);
                         //Navigator.pushNamed(context, RoutePaths.Home);
                       } else {
-                        progressDialog.hide();
-                        showToast(updateProfileSuccess.message, context);
+                        progressDialog.close();
+                        showToast(updateProfileSuccess.message!, context);
                       }
                     } on FetchDataException catch (e) {
                       debugPrint("3");
@@ -1390,22 +1397,25 @@ class _EditProfileState extends State<EditProfile> {
       map['Content-Type'] = 'application/json';
       map['authorization'] = 'Bearer ' + auth;
 
-      final response = await apiProvider.get('/patients/' + userId, header: map);
+      final response =
+          await apiProvider!.get('/patients/' + userId, header: map);
 
       final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        debugPrint(doctorListApiResponse.data.patient.user.person.toJson().toString());
-        await _sharedPrefUtils.save('patientDetails',
-            doctorListApiResponse.data.patient.toJson());
+        debugPrint(doctorListApiResponse.data!.patient!.user!.person!
+            .toJson()
+            .toString());
+        await _sharedPrefUtils.save(
+            'patientDetails', doctorListApiResponse.data!.patient!.toJson());
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);
         }), (Route<dynamic> route) => false);
         model.setBusy(false);
       } else {
-        showToast(doctorListApiResponse.message, context);
+        showToast(doctorListApiResponse.message!, context);
         model.setBusy(false);
       }
     } catch (CustomException) {
@@ -1621,8 +1631,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+  _fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
   }
@@ -1670,7 +1679,7 @@ class _EditProfileState extends State<EditProfile> {
                           decoration: BoxDecoration(
                             color: primaryLightColor,
                             borderRadius:
-                                BorderRadius.all(Radius.circular(50.0)),
+                            BorderRadius.all(Radius.circular(50.0)),
                             border: Border.all(
                               color: primaryColor,
                               width: 1.0,
@@ -1716,7 +1725,7 @@ class _EditProfileState extends State<EditProfile> {
                           decoration: BoxDecoration(
                             color: primaryLightColor,
                             borderRadius:
-                                BorderRadius.all(Radius.circular(50.0)),
+                            BorderRadius.all(Radius.circular(50.0)),
                             border: Border.all(
                               color: primaryColor,
                               width: 1.0,
@@ -1800,7 +1809,7 @@ class _EditProfileState extends State<EditProfile> {
     final picture = await _picker.pickImage(
       source: ImageSource.gallery,
     );
-    final File file = File(picture.path);
+    final File file = File(picture!.path);
     debugPrint(picture.path);
     final String fileName = file.path.split('/').last;
     debugPrint('File Name ==> $fileName');
@@ -1811,7 +1820,7 @@ class _EditProfileState extends State<EditProfile> {
     final picture = await _picker.pickImage(
       source: ImageSource.camera,
     );
-    final File file = File(picture.path);
+    final File file = File(picture!.path);
     debugPrint(picture.path);
     final String fileName = file.path.split('/').last;
     debugPrint('File Name ==> $fileName');

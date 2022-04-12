@@ -1,8 +1,8 @@
 class GetMyMedicationsResponse {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
 
   GetMyMedicationsResponse(
       {this.status, this.message, this.httpCode, this.data});
@@ -20,14 +20,14 @@ class GetMyMedicationsResponse {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  MedicationSchedulesForDay medicationSchedulesForDay;
+  MedicationSchedulesForDay? medicationSchedulesForDay;
 
   Data({this.medicationSchedulesForDay});
 
@@ -40,15 +40,15 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (medicationSchedulesForDay != null) {
-      data['MedicationSchedulesForDay'] = medicationSchedulesForDay.toJson();
+      data['MedicationSchedulesForDay'] = medicationSchedulesForDay!.toJson();
     }
     return data;
   }
 }
 
 class MedicationSchedulesForDay {
-  String day;
-  List<Schedules> schedules;
+  String? day;
+  List<Schedules>? schedules;
 
   MedicationSchedulesForDay({this.day, this.schedules});
 
@@ -57,7 +57,7 @@ class MedicationSchedulesForDay {
     if (json['Schedules'] != null) {
       schedules = [];
       json['Schedules'].forEach((v) {
-        schedules.add(Schedules.fromJson(v));
+        schedules!.add(Schedules.fromJson(v));
       });
     }
   }
@@ -66,20 +66,20 @@ class MedicationSchedulesForDay {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['Day'] = day;
     if (schedules != null) {
-      data['Schedules'] = schedules.map((v) => v.toJson()).toList();
+      data['Schedules'] = schedules!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Schedules {
-  String id;
-  String patientUserId;
-  String drugName;
-  String details;
-  DateTime timeScheduleStart;
-  String timeScheduleEnd;
-  String status;
+  String? id;
+  String? patientUserId;
+  String? drugName;
+  String? details;
+  DateTime? timeScheduleStart;
+  String? timeScheduleEnd;
+  String? status;
 
   Schedules(
       {this.id,

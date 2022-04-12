@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_autolink_text/flutter_autolink_text.dart';
 import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/features/common/appoinment_booking/models/labsListApiResponse.dart';
 import 'package:paitent/features/common/appoinment_booking/ui/labTileWidget.dart';
@@ -7,15 +6,16 @@ import 'package:paitent/features/common/appoinment_booking/view_models/appoinmen
 import 'package:paitent/features/misc/models/user_data.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../misc/ui/base_widget.dart';
 
 //ignore: must_be_immutable
 class LabDetailsView extends StatefulWidget {
-  Labs labdetails;
+  Labs? labdetails;
 
-  LabDetailsView(this.labdetails);
+  LabDetailsView(labdetails) {
+    this.labdetails = labdetails;
+  }
 
   @override
   _LabDetailsViewState createState() => _LabDetailsViewState(labdetails);
@@ -29,9 +29,9 @@ class _LabDetailsViewState extends State<LabDetailsView> {
   List<Address> addresses;
   Address first;*/
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  String name = '';
+  String? name = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  Labs labDetails;
+  Labs? labDetails;
 
   _LabDetailsViewState(this.labDetails);
 
@@ -41,11 +41,11 @@ class _LabDetailsViewState extends State<LabDetailsView> {
           UserData.fromJson(await _sharedPrefUtils.read('user'));
       //debugPrint(user.toJson().toString());
       setState(() {
-        name = user.data.user.person.firstName;
+        name = user.data!.user!.person!.firstName;
       });
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
@@ -90,7 +90,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<AppoinmentViewModel>(
+    return BaseWidget<AppoinmentViewModel?>(
       model: AppoinmentViewModel(),
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -138,7 +138,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                           SizedBox(
                             height: 4,
                           ),
-                          Text(labDetails.aboutUs,
+                          Text(labDetails!.aboutUs!,
                               style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w300,
@@ -197,7 +197,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                           SizedBox(
                             height: 4,
                           ),
-                          Text(labDetails.address,
+                          Text(labDetails!.address!,
                               style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w300,
@@ -215,7 +215,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                           SizedBox(
                             height: 4,
                           ),
-                          AutolinkText(
+                          /*AutolinkText(
                               text: '+91 ' + labDetails.phoneNumber,
                               textStyle: TextStyle(
                                   fontSize: 14.0,
@@ -229,7 +229,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                                 } else {
                                   throw 'Could not launch $url';
                                 }
-                              }),
+                              }),*/
                           SizedBox(
                             height: 16,
                           ),
@@ -245,8 +245,8 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                           ),
                           for (int i = 0;
                               i <
-                                  labDetails.appointmentRelatedDetails
-                                      .workingHours.length;
+                                  labDetails!.appointmentRelatedDetails!
+                                      .workingHours!.length;
                               i++) ...[
                             /*Text(doctorDetails.appointmentRelatedDetails.workingHours.elementAt(i),
                                     style: TextStyle(
@@ -256,8 +256,8 @@ class _LabDetailsViewState extends State<LabDetailsView> {
 
                             RichText(
                               text: TextSpan(
-                                text: labDetails
-                                        .appointmentRelatedDetails.workingHours
+                                text: labDetails!.appointmentRelatedDetails!
+                                        .workingHours!
                                         .elementAt(i)
                                         .substring(0, 3)
                                         .toUpperCase() +
@@ -269,14 +269,15 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                                     fontFamily: 'Montserrat'),
                                 children: <TextSpan>[
                                   TextSpan(
-                                      text: labDetails.appointmentRelatedDetails
-                                          .workingHours
+                                      text: labDetails!
+                                          .appointmentRelatedDetails!
+                                          .workingHours!
                                           .elementAt(i)
                                           .substring(
                                               3,
-                                              labDetails
-                                                  .appointmentRelatedDetails
-                                                  .workingHours
+                                              labDetails!
+                                                  .appointmentRelatedDetails!
+                                                  .workingHours!
                                                   .elementAt(i)
                                                   .length),
                                       style: TextStyle(

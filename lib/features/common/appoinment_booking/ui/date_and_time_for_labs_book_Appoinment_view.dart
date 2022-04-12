@@ -14,15 +14,17 @@ import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import '../../../misc/ui/base_widget.dart';
 
 //ignore: must_be_immutable
 class DateAndTimeForLabsBookAppoinmentView extends StatefulWidget {
-  Labs labDetails;
+  Labs? labDetails;
 
-  DateAndTimeForLabsBookAppoinmentView(this.labDetails);
+  DateAndTimeForLabsBookAppoinmentView(labDetails) {
+    this.labDetails = labDetails;
+  }
 
   @override
   _DateAndTimeForLabsBookAppoinmentViewState createState() =>
@@ -32,22 +34,22 @@ class DateAndTimeForLabsBookAppoinmentView extends StatefulWidget {
 class _DateAndTimeForLabsBookAppoinmentViewState
     extends State<DateAndTimeForLabsBookAppoinmentView> {
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  String name = '';
+  String? name = '';
   var value;
   List<Slots> timeSlot = [];
   List<Slots> timeSlotAm = [];
   List<Slots> timeSlotPm = [];
 
-  DateTime selectedMonth;
-  DateTime userSelectedDate;
+  late DateTime selectedMonth;
+  late DateTime userSelectedDate;
   bool isAmSelected = true;
-  Labs labDetails;
+  Labs? labDetails;
   List<String> dayLabels = ['Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat', 'Sun'];
-  String auth = '';
+  String? auth = '';
   var model = BookAppoinmentViewModel();
   String startTime = '';
   String endTime = '';
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
 
   _DateAndTimeForLabsBookAppoinmentViewState(this.labDetails);
 
@@ -65,14 +67,14 @@ class _DateAndTimeForLabsBookAppoinmentViewState
       bookingAppoinmentsDetails.patient = patient;
       bookingAppoinmentsDetails.userData = user;
       //debugPrint(user.toJson().toString());
-      auth = user.data.accessToken;
+      auth = user.data!.accessToken;
       getAvailableDoctorSlot();
       setState(() {
-        name = user.data.user.person.firstName;
+        name = user.data!.user!.person!.firstName;
       });
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
@@ -80,10 +82,10 @@ class _DateAndTimeForLabsBookAppoinmentViewState
     try {
       final GetAvailableDoctorSlot getAvailableDoctorSlot =
           await model.getAvailableLabSlot(
-              labDetails.userId.toString(),
+              labDetails!.userId.toString(),
               dateFormat.format(userSelectedDate),
               dateFormat.format(userSelectedDate),
-              'Bearer ' + auth);
+              'Bearer ' + auth!);
 
       if (getAvailableDoctorSlot.status == 'success') {
         timeSlot.clear();
@@ -91,15 +93,15 @@ class _DateAndTimeForLabsBookAppoinmentViewState
         timeSlotAm.clear();
         timeSlotPm.clear();
 
-        if (getAvailableDoctorSlot.data.slotsByDate.isNotEmpty) {
+        if (getAvailableDoctorSlot.data!.slotsByDate!.isNotEmpty) {
           timeSlot.addAll(
-              getAvailableDoctorSlot.data.slotsByDate.elementAt(0).slots);
+              getAvailableDoctorSlot.data!.slotsByDate!.elementAt(0).slots!);
 
           for (int i = 0; i < timeSlot.length; i++) {
             debugPrint(DateFormat.jm()
-                .format(timeSlot.elementAt(i).slotStart.toLocal()));
+                .format(timeSlot.elementAt(i).slotStart!.toLocal()));
             if (DateFormat.jm()
-                .format(timeSlot.elementAt(i).slotStart.toLocal())
+                .format(timeSlot.elementAt(i).slotStart!.toLocal())
                 .contains('AM')) {
               timeSlotAm.add(timeSlot.elementAt(i));
             } else {
@@ -109,7 +111,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
           debugPrint('Am ${timeSlotAm.length}  PM ${timeSlotPm.length}');
         }
       } else {
-        showToast(getAvailableDoctorSlot.message, context);
+        showToast(getAvailableDoctorSlot.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -184,8 +186,8 @@ class _DateAndTimeForLabsBookAppoinmentViewState
     //loadSharedPrefs();
     //UserData data = UserData.fromJson(_sharedPrefUtils.read("user"));
     //debugPrint(_sharedPrefUtils.read("user"));
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<BookAppoinmentViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<BookAppoinmentViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -289,7 +291,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
                 ),
               ),
               Expanded(
-                  child: model.busy
+                  child: model!.busy
                       ? Center(
                           child: SizedBox(
                               height: 32,
@@ -405,7 +407,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
     final Slots slot = timeSlots.elementAt(index);
     Color selcetedColor = Colors.white;
     //debugPrint("isAvailable ${slot.isAvailable} isSelected ${slot.isSelected}, Time Slot ${slot.slotStart.substring(0,5)+" - "+slot.slotEnd.substring(0,5)}");
-    if (slot.isAvailable) {
+    if (slot.isAvailable!) {
       if (slot.isSelected) {
         selcetedColor = primaryColor;
       }
@@ -425,7 +427,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         child: Center(
-          child: Text(timeFormat.format(slot.slotStart.toLocal()),
+          child: Text(timeFormat.format(slot.slotStart!.toLocal()),
               //+" - "+timeFormat.format(slot.slotEnd.toLocal())
               style: TextStyle(
                   fontSize: 12.0,
@@ -435,7 +437,7 @@ class _DateAndTimeForLabsBookAppoinmentViewState
       ),
       onTap: () {
         debugPrint('Slot Avalibility ${slot.isAvailable}');
-        if (slot.isAvailable) {
+        if (slot.isAvailable!) {
           checkSlotConflict(slot.slotStart, slot.slotEnd, index);
         }
         //selectTimeSlot(index);
@@ -443,9 +445,10 @@ class _DateAndTimeForLabsBookAppoinmentViewState
     );
   }
 
-  checkSlotConflict(DateTime startTime, DateTime endTime, int index) async {
+  checkSlotConflict(DateTime? startTime, DateTime? endTime, int index) async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
       map['StartTime'] = startTime.toString();
@@ -455,19 +458,19 @@ class _DateAndTimeForLabsBookAppoinmentViewState
           await model.checkSlotConflict(map);
       debugPrint('Conflict ==> ${checkConflictResponse.toJson()}');
       if (checkConflictResponse.status == 'success') {
-        progressDialog.hide();
-        if (checkConflictResponse.data.result.canBook) {
+        progressDialog.close();
+        if (checkConflictResponse.data!.result!.canBook!) {
           selectTimeSlot(index);
         } else {
           showToast('You have already booked an appointment for this time slot',
               context);
         }
       } else {
-        progressDialog.hide();
-        showToast(checkConflictResponse.error, context);
+        progressDialog.close();
+        showToast(checkConflictResponse.error!, context);
       }
     } catch (CustomException) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
@@ -477,13 +480,13 @@ class _DateAndTimeForLabsBookAppoinmentViewState
   selectTimeSlot(int index) {
     debugPrint('index click $index');
     for (int i = 0; i < timeSlots.length; i++) {
-      if (i == index && timeSlots.elementAt(i).isAvailable) {
+      if (i == index && timeSlots.elementAt(i).isAvailable!) {
         debugPrint('index click true');
         timeSlots.elementAt(i).isSelected = true;
         debugPrint(
-            'UTC ${timeSlots.elementAt(i).slotStart.toUtc().toIso8601String()}');
-        startTime = timeSlots.elementAt(i).slotStart.toUtc().toIso8601String();
-        endTime = timeSlots.elementAt(i).slotEnd.toUtc().toIso8601String();
+            'UTC ${timeSlots.elementAt(i).slotStart!.toUtc().toIso8601String()}');
+        startTime = timeSlots.elementAt(i).slotStart!.toUtc().toIso8601String();
+        endTime = timeSlots.elementAt(i).slotEnd!.toUtc().toIso8601String();
       } else {
         debugPrint('index click false');
         timeSlots.elementAt(i).isSelected = false;
@@ -578,9 +581,9 @@ class _DateAndTimeForLabsBookAppoinmentViewState
     debugPrint("selected date ${startDate.toIso8601String()}");*/
   }
 
-  DateTime startDate;
-  DateTime endDate;
-  DateTime selectedDate;
+  DateTime? startDate;
+  DateTime? endDate;
+  DateTime? selectedDate;
   List<DateTime> markedDates = [
     DateTime.now().subtract(Duration(days: 1)),
     DateTime.now().subtract(Duration(days: 2)),

@@ -19,7 +19,7 @@ class _ApproveDoctorForCarePlanViewState
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -66,7 +66,7 @@ class _ApproveDoctorForCarePlanViewState
                     children: [
                       Expanded(
                           child:
-                              /*model.busy
+                          /*model!.busy
                           ? Center(
                           child: SizedBox(
                               height: 32,

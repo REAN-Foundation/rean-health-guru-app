@@ -4,11 +4,11 @@ import 'package:paitent/features/common/careplan/view_models/patients_care_plan.
 import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
 class BiomatricAssignmentTask extends StatefulWidget {
-  Assessmment assessmment;
+  late Assessmment assessmment;
 
   BiomatricAssignmentTask(Assessmment assessmment) {
     assessmment = assessmment;
@@ -25,12 +25,12 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
 
   final TextEditingController _Controller = TextEditingController();
 
-  ProgressDialog progressDialog;
+  ProgressDialog? progressDialog;
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<PatientCarePlanViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -153,7 +153,7 @@ class _BiomatricAssignmentTaskViewState extends State<BiomatricAssignmentTask> {
         padding: const EdgeInsets.all(8.0),
         child: Center(
           child: Text(
-            'Enter ' + widget.assessmment.biometricName,
+            'Enter ' + widget.assessmment.biometricName!,
             style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
             textAlign: TextAlign.center,
           ),

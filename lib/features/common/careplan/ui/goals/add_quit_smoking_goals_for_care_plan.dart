@@ -8,7 +8,7 @@ import 'package:paitent/features/misc/models/BaseResponse.dart';
 import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class AddQuitSmokingGoalsForCarePlanView extends StatefulWidget {
   @override
@@ -31,12 +31,12 @@ class _AddQuitSmokingGoalsForCarePlanViewState
   String dob = '';
   String unformatedDOB = '';
   var dateFormat = DateFormat('dd MMM, yyyy');
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<PatientCarePlanViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -135,7 +135,7 @@ class _AddQuitSmokingGoalsForCarePlanViewState
               Radio(
                 value: 1,
                 groupValue: id,
-                onChanged: (val) {
+                onChanged: (dynamic val) {
                   setState(() {
                     radioButtonItem = 'Forever';
                     id = 1;
@@ -158,7 +158,7 @@ class _AddQuitSmokingGoalsForCarePlanViewState
               Radio(
                 value: 2,
                 groupValue: id,
-                onChanged: (val) {
+                onChanged: (dynamic val) {
                   setState(() {
                     radioButtonItem = 'Tobacco Free Till';
                     id = 2;
@@ -232,7 +232,7 @@ class _AddQuitSmokingGoalsForCarePlanViewState
               Radio(
                 value: 3,
                 groupValue: id,
-                onChanged: (val) {
+                onChanged: (dynamic val) {
                   setState(() {
                     radioButtonItem = 'I Don\'t Smoke';
                     id = 3;
@@ -292,7 +292,8 @@ class _AddQuitSmokingGoalsForCarePlanViewState
 
   setGoals() async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['TobaccoFreeTargetDate'] = dob;
       map['StopSmokingForever'] = radioButtonItem == 'Forever';
@@ -303,26 +304,26 @@ class _AddQuitSmokingGoalsForCarePlanViewState
       body['GoalSettingTaskId'] = 'e73575f5-cd5d-4177-9af8-ae1565a576a8';
 
       final BaseResponse baseResponse = await model.addGoalsTask(
-          startCarePlanResponseGlob.data.carePlan.id.toString(),
+          startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
           'physical-activity-goal',
           body);
 
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         goalPlanScreenStack.removeAt(0);
         navigateToScreen();
       } else {
-        progressDialog.hide();
-        if (baseResponse.error
+        progressDialog.close();
+        if (baseResponse.error!
             .contains('goal already exists for this care plan')) {
           goalPlanScreenStack.removeAt(0);
           navigateToScreen();
         } else {
-          showToast(baseResponse.message, context);
+          showToast(baseResponse.message!, context);
         }
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());

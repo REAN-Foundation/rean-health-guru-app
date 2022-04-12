@@ -1,7 +1,7 @@
 class MyAppointmentApiResponse {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   MyAppointmentApiResponse({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class MyAppointmentApiResponse {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<Appointments> appointments;
+  List<Appointments>? appointments;
 
   Data({this.appointments});
 
@@ -31,7 +31,7 @@ class Data {
     if (json['appointments'] != null) {
       appointments = <Appointments>[];
       json['appointments'].forEach((v) {
-        appointments.add(Appointments.fromJson(v));
+        appointments!.add(Appointments.fromJson(v));
       });
     }
   }
@@ -39,44 +39,44 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (appointments != null) {
-      data['appointments'] = appointments.map((v) => v.toJson()).toList();
+      data['appointments'] = appointments!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Appointments {
-  String id;
-  String businessNodeId;
-  String customerId;
-  String displayId;
-  String businessUserId;
-  String businessServiceId;
-  String businessNodeName;
-  String businessServiceName;
-  String businessUserName;
-  String customerName;
-  String date;
-  String startTime;
-  String endTime;
-  DateTime startTimeUtc;
-  DateTime endTimeUtc;
-  DateTime customerDOB;
-  String customerGender;
-  String type;
-  String note;
-  String status;
-  String statusCode;
-  int fees;
-  int tax;
-  int tip;
-  int discount;
-  int couponCode;
-  int total;
-  bool isPaid;
-  String transactionId;
-  String patientUserId;
-  String providerUserId;
+  String? id;
+  String? businessNodeId;
+  String? customerId;
+  String? displayId;
+  String? businessUserId;
+  String? businessServiceId;
+  String? businessNodeName;
+  String? businessServiceName;
+  String? businessUserName;
+  String? customerName;
+  String? date;
+  String? startTime;
+  String? endTime;
+  DateTime? startTimeUtc;
+  DateTime? endTimeUtc;
+  DateTime? customerDOB;
+  String? customerGender;
+  String? type;
+  String? note;
+  String? status;
+  String? statusCode;
+  int? fees;
+  int? tax;
+  int? tip;
+  int? discount;
+  int? couponCode;
+  int? total;
+  bool? isPaid;
+  String? transactionId;
+  String? patientUserId;
+  String? providerUserId;
 
   Appointments(
       {this.id,

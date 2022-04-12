@@ -32,8 +32,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   final _durationFocus = FocusNode();
   final _sharedPrefUtils = SharedPrefUtils();
 
-  String _dosageUnit = '';
-  String _frequencyUnit = '';
+  String? _dosageUnit = '';
+  String? _frequencyUnit = '';
   String startOn = '';
 
   final _unitController = TextEditingController();
@@ -43,19 +43,19 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   bool searchForDrug = false;
   List<Items> drugs = [];
 
-  List<String> drugsList = [];
-  List<DropdownMenuItem<String>> _dosageUnitMenuItems;
-  List<DropdownMenuItem<String>> _frequencyUnitMenuItems;
+  List<String?> drugsList = [];
+  List<DropdownMenuItem<String>>? _dosageUnitMenuItems;
+  List<DropdownMenuItem<String>>? _frequencyUnitMenuItems;
 
-  bool morningCheck = false;
-  bool afternoonCheck = false;
-  bool eveningCheck = false;
-  bool nightCheck = false;
+  bool? morningCheck = false;
+  bool? afternoonCheck = false;
+  bool? eveningCheck = false;
+  bool? nightCheck = false;
 
   List<MedicationStockImages> medicationStockImagesList =
       <MedicationStockImages>[];
 
-  String medcationResourceId = '';
+  String? medcationResourceId = '';
 
   @override
   void initState() {
@@ -73,30 +73,30 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
           MedicationDosageUnitsPojo.fromJson(
               await _sharedPrefUtils.read('MedicationDosageUnits'));
       debugPrint(
-          'Dosage = ${dosageUnitsPojo.data.medicationDosageUnits.length.toString()}');
+          'Dosage = ${dosageUnitsPojo.data!.medicationDosageUnits!.length.toString()}');
       final MedicationDurationUnitsPojo durationUnitsPojo =
           MedicationDurationUnitsPojo.fromJson(
               await _sharedPrefUtils.read('MedicationDurationUnits'));
       debugPrint(
-          'Duration = ${durationUnitsPojo.data.medicationDurationUnits.length.toString()}');
+          'Duration = ${durationUnitsPojo.data!.medicationDurationUnits!.length.toString()}');
       final MedicationFrequenciesPojo frequenciesPojo =
           MedicationFrequenciesPojo.fromJson(
               await _sharedPrefUtils.read('MedicationFrequencies'));
       debugPrint(
-          'Frequency = ${frequenciesPojo.data.medicationFrequencyUnits.length.toString()}');
+          'Frequency = ${frequenciesPojo.data!.medicationFrequencyUnits!.length.toString()}');
 
       setState(() {
         _frequencyUnitMenuItems = buildDropDownMenuItemsForFrequency(
-            frequenciesPojo.data.medicationFrequencyUnits);
+            frequenciesPojo.data!.medicationFrequencyUnits!);
         _dosageUnitMenuItems = buildDropDownMenuItemsForDosageUnit(
-            dosageUnitsPojo.data.medicationDosageUnits);
+            dosageUnitsPojo.data!.medicationDosageUnits!);
       });
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
     }
     /*catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }*/
   }
 
@@ -138,7 +138,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientMedicationViewModel>(
+    return BaseWidget<PatientMedicationViewModel?>(
         model: model,
         builder: (context, model, child) => Container(
                 /* shape: RoundedRectangleBorder(
@@ -281,7 +281,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                         () => getDrugsSuggestions(pattern),
                       );
                     },
-                    itemBuilder: (context, suggestion) {
+                    itemBuilder: (context, dynamic suggestion) {
                       return ListTile(
                         title: Text(
                           suggestion,
@@ -292,12 +292,12 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     transitionBuilder: (context, suggestionsBox, controller) {
                       return suggestionsBox;
                     },
-                    onSuggestionSelected: (suggestion) {
+                    onSuggestionSelected: (dynamic suggestion) {
                       debugPrint(suggestion);
                       _typeAheadController.text = suggestion;
                     },
                     validator: (value) {
-                      if (value.isEmpty) {
+                      if (value!.isEmpty) {
                         return 'Please select a drug';
                       } else {
                         return '';
@@ -517,7 +517,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 fontSize: 18.0, color: textBlack, fontWeight: FontWeight.w600),
             children: <TextSpan>[
               TextSpan(
-                  text: ' ' + _frequencyUnit == ''
+                  text: ' ' + _frequencyUnit! == ''
                       ? ''
                       : _frequencyUnit == 'Weekly'
                           ? ' (number of weeks)'
@@ -665,13 +665,13 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       selcetedColor = Colors.white;
     }
 
-    final String medicationName = images.code
+    final String medicationName = images.code!
         .replaceAll(RegExp("[0-9]"), "")
         .replaceAll('_', ' ')
         .trimLeft();
 
     debugPrint(
-        'Medication Name ==> ${images.code.replaceAll(RegExp("[0-9]"), "").replaceAll('_', ' ').trimLeft()}');
+        'Medication Name ==> ${images.code!.replaceAll(RegExp("[0-9]"), "").replaceAll('_', ' ').trimLeft()}');
 
     return InkWell(
       child: Container(
@@ -694,7 +694,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   width: 32,
                   height: 32,
                   child: CachedNetworkImage(
-                    imageUrl: images.publicUrl,
+                    imageUrl: images.publicUrl!,
                   ),
                 )),
               ),
@@ -891,16 +891,16 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       int frequency = 0;
 
                       if (_frequencyUnit == 'Daily') {
-                        if (morningCheck) {
+                        if (morningCheck!) {
                           frequency = frequency + 1;
                         }
-                        if (afternoonCheck) {
+                        if (afternoonCheck!) {
                           frequency = frequency + 1;
                         }
-                        if (eveningCheck) {
+                        if (eveningCheck!) {
                           frequency = frequency + 1;
                         }
-                        if (nightCheck) {
+                        if (nightCheck!) {
                           frequency = frequency + 1;
                         }
                       }
@@ -1189,11 +1189,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     );
   }
 
-
-  List<String> getDrugsSuggestions(String query) {
-    final List<String> matches = [];
+  List<String?> getDrugsSuggestions(String query) {
+    final List<String?> matches = [];
     matches.addAll(drugsList);
-    matches.retainWhere((s) => s.toLowerCase().contains(query.toLowerCase()));
+    matches.retainWhere((s) => s!.toLowerCase().contains(query.toLowerCase()));
     return matches;
   }
 
@@ -1211,7 +1210,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         });
         drugs.clear();
         setState(() {
-          drugs.addAll(baseResponse.data.drugs.items);
+          drugs.addAll(baseResponse.data!.drugs!.items!);
         });
         _sortDrugs();
       } else {
@@ -1241,19 +1240,19 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       int frequency = 0;
 
       if (_frequencyUnit == 'Daily') {
-        if (morningCheck) {
+        if (morningCheck!) {
           frequency = frequency + 1;
           timeShedule.add('Morning');
         }
-        if (afternoonCheck) {
+        if (afternoonCheck!) {
           frequency = frequency + 1;
           timeShedule.add('Afternoon');
         }
-        if (eveningCheck) {
+        if (eveningCheck!) {
           frequency = frequency + 1;
           timeShedule.add('Evening');
         }
-        if (nightCheck) {
+        if (nightCheck!) {
           frequency = frequency + 1;
           timeShedule.add('Night');
         }
@@ -1354,7 +1353,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
       if (baseResponse.status == 'success') {
         FocusScope.of(context).unfocus();
-        showToast(baseResponse.message, context);
+        showToast(baseResponse.message!, context);
       } else {
         showToast('Please try again', context);
       }
@@ -1370,7 +1369,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       if (getMedicationStockImages.status == 'success') {
         medicationStockImagesList.clear();
         medicationStockImagesList
-            .addAll(getMedicationStockImages.data.medicationStockImages);
+            .addAll(getMedicationStockImages.data!.medicationStockImages!);
         setState(() {});
       } else {
         showToast('Please try again', context);

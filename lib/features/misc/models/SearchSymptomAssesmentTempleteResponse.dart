@@ -1,13 +1,13 @@
 class SearchSymptomAssesmentTempleteResponse {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
-  Client client;
-  User user;
-  String context;
-  List<String> clientIps;
-  String aPIVersion;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
+  Client? client;
+  User? user;
+  String? context;
+  List<String>? clientIps;
+  String? aPIVersion;
 
   SearchSymptomAssesmentTempleteResponse(
       {this.status,
@@ -38,13 +38,13 @@ class SearchSymptomAssesmentTempleteResponse {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     if (client != null) {
-      data['Client'] = client.toJson();
+      data['Client'] = client!.toJson();
     }
     if (user != null) {
-      data['User'] = user.toJson();
+      data['User'] = user!.toJson();
     }
     data['Context'] = context;
     data['ClientIps'] = clientIps;
@@ -54,7 +54,7 @@ class SearchSymptomAssesmentTempleteResponse {
 }
 
 class Data {
-  SymptomAssessmentTemplates symptomAssessmentTemplates;
+  SymptomAssessmentTemplates? symptomAssessmentTemplates;
 
   Data({this.symptomAssessmentTemplates});
 
@@ -68,20 +68,20 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (symptomAssessmentTemplates != null) {
-      data['SymptomAssessmentTemplates'] = symptomAssessmentTemplates.toJson();
+      data['SymptomAssessmentTemplates'] = symptomAssessmentTemplates!.toJson();
     }
     return data;
   }
 }
 
 class SymptomAssessmentTemplates {
-  int totalCount;
-  int retrievedCount;
-  int pageIndex;
-  int itemsPerPage;
-  String order;
-  String orderedBy;
-  List<Items> items;
+  int? totalCount;
+  int? retrievedCount;
+  int? pageIndex;
+  int? itemsPerPage;
+  String? order;
+  String? orderedBy;
+  List<Items>? items;
 
   SymptomAssessmentTemplates(
       {this.totalCount,
@@ -102,7 +102,7 @@ class SymptomAssessmentTemplates {
     if (json['Items'] != null) {
       items = <Items>[];
       json['Items'].forEach((v) {
-        items.add(Items.fromJson(v));
+        items!.add(Items.fromJson(v));
       });
     }
   }
@@ -116,18 +116,18 @@ class SymptomAssessmentTemplates {
     data['Order'] = order;
     data['OrderedBy'] = orderedBy;
     if (items != null) {
-      data['Items'] = items.map((v) => v.toJson()).toList();
+      data['Items'] = items!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Items {
-  String id;
-  String title;
-  String description;
-  List<String> tags;
-  List<TemplateSymptomTypes> templateSymptomTypes;
+  String? id;
+  String? title;
+  String? description;
+  List<String>? tags;
+  List<TemplateSymptomTypes>? templateSymptomTypes;
 
   Items(
       {this.id,
@@ -144,7 +144,7 @@ class Items {
     if (json['TemplateSymptomTypes'] != null) {
       templateSymptomTypes = [];
       json['TemplateSymptomTypes'].forEach((v) {
-        templateSymptomTypes.add(TemplateSymptomTypes.fromJson(v));
+        templateSymptomTypes!.add(TemplateSymptomTypes.fromJson(v));
       });
     }
   }
@@ -157,17 +157,17 @@ class Items {
     data['Tags'] = tags;
     if (templateSymptomTypes != null) {
       data['TemplateSymptomTypes'] =
-          templateSymptomTypes.map((v) => v.toJson()).toList();
+          templateSymptomTypes!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class TemplateSymptomTypes {
-  int index;
-  String symptomTypeId;
-  String symptom;
-  String description;
+  int? index;
+  String? symptomTypeId;
+  String? symptom;
+  String? description;
 
   TemplateSymptomTypes(
       {this.index, this.symptomTypeId, this.symptom, this.description});
@@ -190,8 +190,8 @@ class TemplateSymptomTypes {
 }
 
 class Client {
-  String clientName;
-  String clientCode;
+  String? clientName;
+  String? clientCode;
 
   Client({this.clientName, this.clientCode});
 
@@ -209,14 +209,14 @@ class Client {
 }
 
 class User {
-  String userId;
-  String displayName;
-  String phone;
-  String email;
-  String userName;
-  int currentRoleId;
-  int iat;
-  int exp;
+  String? userId;
+  String? displayName;
+  String? phone;
+  String? email;
+  String? userName;
+  int? currentRoleId;
+  int? iat;
+  int? exp;
 
   User(
       {this.userId,

@@ -22,11 +22,11 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
   var model = PatientMedicationViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String selectedGoal = 'Blood Pressure';
+  String? selectedGoal = 'Blood Pressure';
 
   @override
   Widget build(BuildContext context) {
-    Widget screen;
+    Widget? screen;
     switch (selectedGoal) {
       case 'Blood Pressure':
         screen = AddBloodPresureeGoalsForCarePlanView();
@@ -51,7 +51,7 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
         break;
     }
 
-    return BaseWidget<PatientMedicationViewModel>(
+    return BaseWidget<PatientMedicationViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(

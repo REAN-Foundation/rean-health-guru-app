@@ -23,15 +23,17 @@ import 'package:paitent/infra/networking/ApiProvider.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import '../../../misc/ui/base_widget.dart';
 
 //ignore: must_be_immutable
 class BookingInfoView extends StatefulWidget {
-  DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;
+  DoctorBookingAppoinmentPojo? bookingAppoinmentsDetails;
 
-  BookingInfoView(this.bookingAppoinmentsDetails);
+  BookingInfoView(bookingAppoinmentsDetails) {
+    this.bookingAppoinmentsDetails = bookingAppoinmentsDetails;
+  }
 
   @override
   _BookingInfoViewState createState() =>
@@ -49,63 +51,63 @@ class _BookingInfoViewState extends State<BookingInfoView> {
   final TextEditingController _mobileNumberController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  String mobileNumber;
+  String? mobileNumber;
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _mobileNumberFocus = FocusNode();
   final _noteFocus = FocusNode();
   final _emailFocus = FocusNode();
-  UserData user;
-  Doctors doctorDetails;
-  DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;
+  late UserData user;
+  Doctors? doctorDetails;
+  DoctorBookingAppoinmentPojo? bookingAppoinmentsDetails;
   var dateFormat = DateFormat('dd MMM, yyyy');
   var dateFormatFull = DateFormat('yyyy-MM-dd');
   var timeFormat = DateFormat('hh:mm a');
-  String attachmentPath = '';
+  String? attachmentPath = '';
   String dob = '';
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
   var patientId = '';
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
-  Labs labDetails;
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+  Labs? labDetails;
 
   _BookingInfoViewState(this.bookingAppoinmentsDetails);
 
-  String auth = '';
+  String? auth = '';
   var model = BookAppoinmentViewModel();
 
   loadSharedPrefs() async {
     try {
       user = UserData.fromJson(await _sharedPrefUtils.read('user'));
-      patientId = user.data.user.id.toString();
-      auth = user.data.accessToken;
+      patientId = user.data!.user!.id.toString();
+      auth = user.data!.accessToken;
 
       setSelfData();
       debugPrint(user.toJson().toString());
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
   setSelfData() {
     dob = dateFormat
-        .format(bookingAppoinmentsDetails.patient.user.person.birthDate);
+        .format(bookingAppoinmentsDetails!.patient!.user!.person!.birthDate!);
 
-    _firstNameController.text = user.data.user.person.firstName;
+    _firstNameController.text = user.data!.user!.person!.firstName!;
     _firstNameController.selection = TextSelection.fromPosition(
       TextPosition(offset: _firstNameController.text.length),
     );
 
-    _lastNameController.text = user.data.user.person.lastName;
+    _lastNameController.text = user.data!.user!.person!.lastName!;
     _lastNameController.selection = TextSelection.fromPosition(
       TextPosition(offset: _lastNameController.text.length),
     );
 
-    _mobileNumberController.text = user.data.user.person.phone;
+    _mobileNumberController.text = user.data!.user!.person!.phone!;
     _mobileNumberController.selection = TextSelection.fromPosition(
       TextPosition(offset: _mobileNumberController.text.length),
     );
-    _emailController.text = user.data.user.person.email;
+    _emailController.text = user.data!.user!.person!.email!;
 
     setState(() {});
   }
@@ -118,19 +120,19 @@ class _BookingInfoViewState extends State<BookingInfoView> {
 
   @override
   Widget build(BuildContext context) {
-    if (bookingAppoinmentsDetails.whichFlow == 'Lab') {
-      labDetails = bookingAppoinmentsDetails.labs;
+    if (bookingAppoinmentsDetails!.whichFlow == 'Lab') {
+      labDetails = bookingAppoinmentsDetails!.labs;
     } else {
-      doctorDetails = bookingAppoinmentsDetails.doctors;
+      doctorDetails = bookingAppoinmentsDetails!.doctors;
     }
 
-    progressDialog = ProgressDialog(context);
+    progressDialog = ProgressDialog(context: context);
 
     //loadSharedPrefs();
     //UserData data = UserData.fromJson(_sharedPrefUtils.read("user"));
     //debugPrint(_sharedPrefUtils.read("user"));
 
-    return BaseWidget<BookAppoinmentViewModel>(
+    return BaseWidget<BookAppoinmentViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -157,7 +159,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                   SizedBox(
                     height: 16,
                   ),
-                  if (bookingAppoinmentsDetails.whichFlow == 'Lab')
+                  if (bookingAppoinmentsDetails!.whichFlow == 'Lab')
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: LabTileView(labDetails),
@@ -173,7 +175,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                   SizedBox(
                     height: 16,
                   ),
-                  if (model.busy)
+                  if (model!.busy)
                     Center(child: CircularProgressIndicator())
                   else
                     _continueButton(),
@@ -227,9 +229,9 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                 showToast("Please enter password");
               } */
               else {
-                bookingAppoinmentsDetails.patientNote =
+                bookingAppoinmentsDetails!.patientNote =
                     _noteController.text.toString();
-                bookingAppoinmentsDetails.attachmentPath = attachmentPath;
+                bookingAppoinmentsDetails!.attachmentPath = attachmentPath;
                 Navigator.pushNamed(
                     context, RoutePaths.Booking_Appoinment_Confirmation_View,
                     arguments: bookingAppoinmentsDetails);
@@ -245,23 +247,23 @@ class _BookingInfoViewState extends State<BookingInfoView> {
   bookADoctorAppoinmentSlot() async {
     try {
       model.setBusy(true);
-      final map = <String, String>{};
+      final map = <String, String?>{};
       map['patientUserId'] = patientId;
       map['date'] = dateFormatFull
-          .format(DateTime.parse(bookingAppoinmentsDetails.selectedDate));
-      map['startTime'] = bookingAppoinmentsDetails.slotStart;
-      map['endTime'] = bookingAppoinmentsDetails.slotEnd;
+          .format(DateTime.parse(bookingAppoinmentsDetails!.selectedDate));
+      map['startTime'] = bookingAppoinmentsDetails!.slotStart;
+      map['endTime'] = bookingAppoinmentsDetails!.slotEnd;
 
       final DoctorAppoinmentBookedSuccessfully bookAAppoinmentForDoctor =
           await model.bookAAppoinmentForDoctor(
-              doctorDetails.userId.toString(), map, 'Bearer ' + auth);
+              doctorDetails!.userId.toString(), map, 'Bearer ' + auth!);
 
       if (bookAAppoinmentForDoctor.status == 'success') {
         //Navigator.pushNamed(context, RoutePaths.Booking_Appoinment_Confirmation_View);
-        showToast(bookAAppoinmentForDoctor.message, context);
+        showToast(bookAAppoinmentForDoctor.message!, context);
         debugPrint('Clicked On Proceed');
       } else {
-        showToast(bookAAppoinmentForDoctor.message, context);
+        showToast(bookAAppoinmentForDoctor.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -291,7 +293,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
           RichText(
             text: TextSpan(
               text: dateFormat.format(
-                  DateTime.parse(bookingAppoinmentsDetails.selectedDate)),
+                  DateTime.parse(bookingAppoinmentsDetails!.selectedDate)),
               style: TextStyle(
                   fontWeight: FontWeight.normal,
                   color: Colors.white,
@@ -299,9 +301,9 @@ class _BookingInfoViewState extends State<BookingInfoView> {
               children: <TextSpan>[
                 TextSpan(
                     text: ' : ' +
-                        timeFormat.format(
-                            DateTime.parse(bookingAppoinmentsDetails.slotStart)
-                                .toLocal()),
+                        timeFormat.format(DateTime.parse(
+                                bookingAppoinmentsDetails!.slotStart!)
+                            .toLocal()),
                     style: TextStyle(
                         fontWeight: FontWeight.normal,
                         color: Colors.white,
@@ -383,10 +385,11 @@ class _BookingInfoViewState extends State<BookingInfoView> {
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      bookingAppoinmentsDetails.patient.user.person.gender ==
+                      bookingAppoinmentsDetails!
+                                      .patient!.user!.person!.gender ==
                                   'M' ||
-                              bookingAppoinmentsDetails
-                                      .patient.user.person.gender ==
+                              bookingAppoinmentsDetails!
+                                      .patient!.user!.person!.gender ==
                                   'Male'
                           ? 'Male'
                           : 'Female',
@@ -787,13 +790,13 @@ class _BookingInfoViewState extends State<BookingInfoView> {
   }
 
   Future getFile() async {
-    String result;
+    String? result;
     try {
       result = await FlutterDocumentPicker.openDocument();
       debugPrint('File Result ==> $result');
 
       if (result != '') {
-        final File file = File(result);
+        final File file = File(result!);
         debugPrint(result);
         final String fileName = file.path.split('/').last;
         debugPrint('File Name ==> $fileName');
@@ -803,19 +806,19 @@ class _BookingInfoViewState extends State<BookingInfoView> {
       }
     } catch (e) {
       showToast('Please select document', context);
-      debugPrint(e);
+      debugPrint(e.toString());
       result = 'Error: $e';
     }
   }
 
   uploadProfilePicture(File file) async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, String>{};
       map['enc'] = 'multipart/form-data';
-      map['Authorization'] = 'Bearer ' + auth;
+      map['Authorization'] = 'Bearer ' + auth!;
 
-      final String _baseUrl = apiProvider.getBaseUrl();
+      final String _baseUrl = apiProvider!.getBaseUrl()!;
 
       final postUri = Uri.parse(_baseUrl + '/resources/upload/');
       final request = http.MultipartRequest('POST', postUri);
@@ -827,37 +830,37 @@ class _BookingInfoViewState extends State<BookingInfoView> {
 
       request.send().then((response) async {
         if (response.statusCode == 200) {
-          progressDialog.hide();
+          progressDialog.close();
           debugPrint('Uploaded!');
           final respStr = await response.stream.bytesToString();
           debugPrint('Uploded ' + respStr);
           final UploadImageResponse uploadResponse =
               UploadImageResponse.fromJson(json.decode(respStr));
           if (uploadResponse.status == 'success') {
-            progressDialog.hide();
-            attachmentPath = uploadResponse.data.details.elementAt(0).url;
+            progressDialog.close();
+            attachmentPath = uploadResponse.data!.details!.elementAt(0).url;
             listFiles.add(attachmentPath);
             showToast('File uploaded successfully!', context);
             setState(() {});
           } else {
-            progressDialog.hide();
+            progressDialog.close();
             showToast('Opps, something wents wrong!', context);
           }
         } else {
-          progressDialog.hide();
+          progressDialog.close();
           debugPrint('Upload Faild !');
         }
       }); // debugPrint("3");
 
     } catch (CustomException) {
-      progressDialog.hide();
+      progressDialog.close();
       debugPrint('4');
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
     }
   }
 
-  var listFiles = <String>[];
+  var listFiles = <String?>[];
 
   Widget _addAttachment() {
     return Column(
@@ -915,7 +918,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
   bool validateEmail(String value) {
     const Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    final RegExp regex = RegExp(pattern);
+    final RegExp regex = RegExp(pattern as String);
     if (regex.hasMatch(value)) {
       return false;
     } else {

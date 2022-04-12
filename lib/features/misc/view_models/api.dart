@@ -15,7 +15,7 @@ class Api {
 
   //ApiProvider apiProvider = new ApiProvider();
 
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   Future<UserData> loginPatient(Map body) async {
     // Get user profile for id
@@ -26,7 +26,7 @@ class Api {
     map['Content-Type'] = 'application/json';
 
     final response =
-        await apiProvider.post('/user/login', body: body, header: map);
+        await apiProvider!.post('/user/login', body: body, header: map);
 
     debugPrint(response.toString());
 
@@ -43,7 +43,7 @@ class Api {
     map['Content-Type'] = 'application/json';
 
     final response =
-        await apiProvider.post('/patient', body: body, header: map);
+        await apiProvider!.post('/patient', body: body, header: map);
 
     debugPrint(response.toString());
 
@@ -60,7 +60,7 @@ class Api {
     map['Content-Type'] = 'application/json';
 
     final response =
-        await apiProvider.post('/user/validate-otp', body: body, header: map);
+        await apiProvider!.post('/user/validate-otp', body: body, header: map);
 
     debugPrint(response.toString());
 
@@ -77,7 +77,7 @@ class Api {
     map['Content-Type'] = 'application/json';
 
     final response =
-        await apiProvider.post('/Patient', body: body, header: map);
+        await apiProvider!.post('/Patient', body: body, header: map);
 
     debugPrint(response.toString());
 
@@ -94,7 +94,7 @@ class Api {
     map['authorization'] = auth;
 
     final response =
-        await apiProvider.put('/patients/' + userId, body: body, header: map);
+        await apiProvider!.put('/patients/' + userId, body: body, header: map);
 
     debugPrint(response.toString());
 

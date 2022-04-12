@@ -7,7 +7,7 @@ import 'package:paitent/features/misc/models/user_data.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import '../../../misc/ui/base_widget.dart';
 
@@ -24,44 +24,44 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
   Address first;
   bool _serviceEnabled;*/
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  String name = '';
+  String? name = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _searchController = TextEditingController();
   var model = BookAppoinmentViewModel();
-  String auth = '';
+  String? auth = '';
   var doctorSearchList = <Doctors>[];
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
 
   loadSharedPrefs() async {
     try {
       final UserData user =
           UserData.fromJson(await _sharedPrefUtils.read('user'));
       //debugPrint(user.toJson().toString());
-      auth = user.data.accessToken;
+      auth = user.data!.accessToken;
       getDoctorList();
       setState(() {
-        name = user.data.user.person.firstName;
+        name = user.data!.user!.person!.firstName;
       });
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
   getDoctorList() async {
     try {
       final DoctorListApiResponse doctorListApiResponse =
-          await model.getDoctorList('Bearer ' + auth);
+          await model.getDoctorList('Bearer ' + auth!);
 
       if (doctorListApiResponse.status == 'success') {
-        if (doctorListApiResponse.data.doctors.isNotEmpty) {
+        if (doctorListApiResponse.data!.doctors!.isNotEmpty) {
           doctorSearchList.clear();
-          doctorSearchList.addAll(doctorListApiResponse.data.doctors);
+          doctorSearchList.addAll(doctorListApiResponse.data!.doctors!);
         } else {
           doctorSearchList.clear();
         }
       } else {
-        showToast(doctorListApiResponse.message, context);
+        showToast(doctorListApiResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -73,17 +73,17 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
   getDoctorListByName(String name) async {
     try {
       final DoctorListApiResponse doctorListApiResponse =
-          await model.getDoctorListByLocality(name, 'Bearer ' + auth);
+          await model.getDoctorListByLocality(name, 'Bearer ' + auth!);
 
       if (doctorListApiResponse.status == 'success') {
-        if (doctorListApiResponse.data.doctors.isNotEmpty) {
+        if (doctorListApiResponse.data!.doctors!.isNotEmpty) {
           doctorSearchList.clear();
-          doctorSearchList.addAll(doctorListApiResponse.data.doctors);
+          doctorSearchList.addAll(doctorListApiResponse.data!.doctors!);
         } else {
           doctorSearchList.clear();
         }
       } else {
-        showToast(doctorListApiResponse.message, context);
+        showToast(doctorListApiResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -94,20 +94,21 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
 
   getDoctorDetails(String doctorUserId) async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final DoctorDetailsResponse doctorDetailsResponse =
-          await model.getDoctorDetails('Bearer ' + auth, doctorUserId);
+          await model.getDoctorDetails('Bearer ' + auth!, doctorUserId);
 
       if (doctorDetailsResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         Navigator.pushNamed(context, RoutePaths.Doctor_Details_View,
-            arguments: doctorDetailsResponse.data.doctor);
+            arguments: doctorDetailsResponse.data!.doctor);
       } else {
-        progressDialog.hide();
-        showToast(doctorDetailsResponse.message, context);
+        progressDialog.close();
+        showToast(doctorDetailsResponse.message!, context);
       }
     } catch (CustomException) {
-      progressDialog.hide();
+      progressDialog.close();
       showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
@@ -156,8 +157,8 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<BookAppoinmentViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<BookAppoinmentViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -249,7 +250,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                     height: 16,
                   ),
                   Expanded(
-                    child: model.busy
+                    child: model!.busy
                         ? Center(
                             child: SizedBox(
                                 height: 32,
@@ -321,11 +322,12 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                           backgroundColor: primaryColor,
                           child: CircleAvatar(
                               radius: 38,
-                              backgroundImage: doctorDetails.imageURL == '' ||
-                                      doctorDetails.imageURL == null
-                                  ? AssetImage(
-                                      'res/images/profile_placeholder.png')
-                                  : NetworkImage(doctorDetails.imageURL)),
+                              backgroundImage: (doctorDetails.imageURL == '' ||
+                                          doctorDetails.imageURL == null
+                                      ? AssetImage(
+                                          'res/images/profile_placeholder.png')
+                                      : NetworkImage(doctorDetails.imageURL!))
+                                  as ImageProvider<Object>?),
                         )),
                       ),
                       SizedBox(
@@ -338,10 +340,10 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                                doctorDetails.prefix +
-                                    doctorDetails.firstName +
+                                doctorDetails.prefix! +
+                                    doctorDetails.firstName! +
                                     ' ' +
-                                    doctorDetails.lastName,
+                                    doctorDetails.lastName!,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -353,7 +355,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                               children: [
                                 Text(
                                     doctorDetails.specialities ??
-                                        doctorDetails.qualification,
+                                        doctorDetails.qualification!,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -364,7 +366,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                                   child: Text(
                                     doctorDetails.qualification == null
                                         ? ''
-                                        : ', ' + doctorDetails.qualification,
+                                        : ', ' + doctorDetails.qualification!,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -415,7 +417,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                     ),
                   ),
                   Semantics(
-                    label: 'Book_' + doctorDetails.firstName + ' ',
+                    label: 'Book_' + doctorDetails.firstName! + ' ',
                     child: ElevatedButton(
                       child: Text(
                         'Book Now',
@@ -428,7 +430,7 @@ class _SearchDoctorListViewState extends State<SearchDoctorListView> {
                             fontWeight: FontWeight.w600),
                       ),
                       onPressed: () {
-                        getDoctorDetails(doctorDetails.userId);
+                        getDoctorDetails(doctorDetails.userId!);
                       },
                       style: ButtonStyle(
                           foregroundColor: MaterialStateProperty.all<Color>(

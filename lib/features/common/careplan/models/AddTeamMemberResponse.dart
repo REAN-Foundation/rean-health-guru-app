@@ -1,9 +1,9 @@
 import 'TeamCarePlanReesponse.dart';
 
 class AddTeamMemberResponse {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   AddTeamMemberResponse({this.status, this.message, this.data});
 
@@ -18,14 +18,14 @@ class AddTeamMemberResponse {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  TeamMember teamMember;
+  TeamMember? teamMember;
 
   Data({this.teamMember});
 
@@ -38,19 +38,19 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (teamMember != null) {
-      data['teamMember'] = teamMember.toJson();
+      data['teamMember'] = teamMember!.toJson();
     }
     return data;
   }
 }
 
 class TeamMember {
-  String id;
-  String carePlanId;
-  String userId;
-  int role;
-  String roleName;
-  Details details;
+  String? id;
+  String? carePlanId;
+  String? userId;
+  int? role;
+  String? roleName;
+  Details? details;
 
   TeamMember(
       {this.id,
@@ -78,7 +78,7 @@ class TeamMember {
     data['Role'] = role;
     data['RoleName'] = roleName;
     if (details != null) {
-      data['Details'] = details.toJson();
+      data['Details'] = details!.toJson();
     }
     return data;
   }

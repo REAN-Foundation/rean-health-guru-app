@@ -20,8 +20,8 @@ class GetSleepData {
   Color bmiResultColor = Colors.black87;
   int waterGlass = 0;
   String bmiResult = '';
-  DateTime startDate;
-  DateTime endDate;
+  late DateTime startDate;
+  late DateTime endDate;
   double totalSleepInMin = 0;
 
   GetSleepData() {

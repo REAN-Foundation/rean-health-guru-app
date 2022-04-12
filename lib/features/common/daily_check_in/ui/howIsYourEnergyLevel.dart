@@ -13,7 +13,7 @@ class HowIsYourEnergyLevel extends StatefulWidget {
 class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
     with SingleTickerProviderStateMixin {
   final int delayedAmount = 500;
-  AnimationController _controller;
+  late AnimationController _controller;
   List<int> selectedList = [];
   int selectedFeelings = 0;
 

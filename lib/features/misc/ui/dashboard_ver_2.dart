@@ -20,9 +20,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable
 class DashBoardVer2View extends StatefulWidget {
-  Function positionToChangeNavigationBar;
+  late Function positionToChangeNavigationBar;
 
-  DashBoardVer2View({Key key, @required Function positionToChangeNavigationBar})
+  DashBoardVer2View({Key? key, required Function positionToChangeNavigationBar})
       : super(key: key) {
     this.positionToChangeNavigationBar = positionToChangeNavigationBar;
   }
@@ -45,10 +45,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
       end: Alignment.centerRight,
       colors: [primaryLightColor, colorF6F6FF]);
   var dateFormat = DateFormat('yyyy-MM-dd');
-  int completedTaskCount = 0;
-  int incompleteTaskCount = 0;
+  int? completedTaskCount = 0;
+  int? incompleteTaskCount = 0;
   int completedMedicationCount = 0;
   int incompleteMedicationCount = 0;
+
 /*  Weight weight;
   BloodPressure bloodPressure;
   BloodSugar bloodSugar;
@@ -56,12 +57,12 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   Pulse pulse;
   Temperature temperature;*/
   String unit = 'Kg';
-  String topicId;
-  String topicName = '';
-  String briefInformation = '';
+  String? topicId;
+  String? topicName = '';
+  String? briefInformation = '';
   var emergencyDetailsTextControler = TextEditingController();
   List<Schedules> currentMedicationList = <Schedules>[];
-  DashboardTile emergencyDashboardTile;
+  DashboardTile? emergencyDashboardTile;
 
   loadSharedPrefs() async {
     try {
@@ -73,7 +74,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     }
     /*catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }*/
   }
 
@@ -95,13 +96,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
     super.initState();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
@@ -121,9 +122,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
       debugPrint('Task Summary ==> ${taskSummaryResponse.toJson()}');
       if (taskSummaryResponse.status == 'success') {
         completedTaskCount =
-            taskSummaryResponse.data.summary.completedTaskCount;
+            taskSummaryResponse.data!.summary!.completedTaskCount;
         incompleteTaskCount =
-            taskSummaryResponse.data.summary.incompleteTaskCount;
+            taskSummaryResponse.data!.summary!.incompleteTaskCount;
         setState(() {});
         //showToast(startCarePlanResponse.message);
       } else {
@@ -138,7 +139,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
 
   sortMyMedication(GetMyMedicationsResponse response) {
     for (final medSummary
-        in response.data.medicationSchedulesForDay.schedules) {
+        in response.data!.medicationSchedulesForDay!.schedules!) {
       if (medSummary.status == 'Unknown' ||
           medSummary.status == 'Upcoming' ||
           medSummary.status == 'Overdue') {
@@ -158,11 +159,12 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
           await model.getMedicationSummary(dateFormat.format(DateTime.now()));
       debugPrint('Medication Summary ==> ${taskSummaryResponse.toJson()}');
       if (taskSummaryResponse.status == 'success') {
-        completedMedicationCount = taskSummaryResponse.data.summary.taken +
-            taskSummaryResponse.data.summary.missed;
-        incompleteMedicationCount = taskSummaryResponse.data.summary.unknown +
-            taskSummaryResponse.data.summary.overdue +
-            taskSummaryResponse.data.summary.upcoming;
+        completedMedicationCount = taskSummaryResponse.data!.summary!.taken! +
+            taskSummaryResponse.data!.summary!.missed!;
+        incompleteMedicationCount =
+            taskSummaryResponse.data!.summary!.unknown! +
+                taskSummaryResponse.data!.summary!.overdue! +
+                taskSummaryResponse.data!.summary!.upcoming!;
         setState(() {});
         //showToast(startCarePlanResponse.message);
       } else {
@@ -203,7 +205,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<DashboardSummaryModel>(
+    return BaseWidget<DashboardSummaryModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -903,12 +905,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   }
 
   Widget emergency() {
-    String discription = '';
+    String? discription = '';
 
     if (emergencyDashboardTile != null) {
       //debugPrint('Emergency ==> ${emergencyDashboardTile.date.difference(DateTime.now()).inDays}');
-      if (emergencyDashboardTile.date.difference(DateTime.now()).inDays == 0) {
-        discription = emergencyDashboardTile.discription;
+      if (emergencyDashboardTile!.date!.difference(DateTime.now()).inDays ==
+          0) {
+        discription = emergencyDashboardTile!.discription;
       }
     }
 
@@ -994,7 +997,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(discription,
+                          Text(discription!,
                               maxLines: 4,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -1218,11 +1221,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   SizedBox(
                     width: 8,
                   ),
-                  Text('Knowledge Tree',
+                  Text('Health Insights',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           fontFamily: 'Montserrat')),
                 ],
               ),
@@ -1338,7 +1341,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Vitals',
+                      Text('Record your vitals',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
@@ -1593,7 +1596,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Nutrition',
+                      Text('Monitor your nutrition',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
@@ -2265,7 +2268,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
 
   _emergencyDetailDialog(bool isEdit) async {
     if (isEdit) {
-      emergencyDetailsTextControler.text = emergencyDashboardTile.discription;
+      emergencyDetailsTextControler.text = emergencyDashboardTile!.discription!;
       emergencyDetailsTextControler.selection = TextSelection.fromPosition(
         TextPosition(offset: emergencyDetailsTextControler.text.length),
       );
@@ -2324,10 +2327,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
           'Today Knowledge Topic ==> ${knowledgeTopicResponse.toJson()}');
       if (knowledgeTopicResponse.status == 'success') {
         //final Items topic =
-         //knowledgeTopicResponse.data.knowledgeNuggetRecords.items.elementAt(0);
-        topicId = knowledgeTopicResponse.data.knowledgeNugget.id;
-        topicName = knowledgeTopicResponse.data.knowledgeNugget.topicName;
-        briefInformation = knowledgeTopicResponse.data.knowledgeNugget.briefInformation;
+        //knowledgeTopicResponse.data.knowledgeNuggetRecords.items.elementAt(0);
+        topicId = knowledgeTopicResponse.data!.knowledgeNugget!.id;
+        topicName = knowledgeTopicResponse.data!.knowledgeNugget!.topicName;
+        briefInformation =
+            knowledgeTopicResponse.data!.knowledgeNugget!.briefInformation;
         setState(() {});
       } else {
         //showToast(knowledgeTopicResponse.message);
@@ -2341,7 +2345,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
 
   addMedicalEmergencyEvent(String emergencyBreif) async {
     try {
-      final map = <String, String>{};
+      final map = <String, String?>{};
       map['PatientUserId'] = patientUserId;
       map['Details'] = emergencyBreif;
       map['EmergencyDate'] = dateFormat.format(DateTime.now());
@@ -2375,11 +2379,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
       debugPrint('Medication ==> ${getMyMedicationsResponse.toJson()}');
       if (getMyMedicationsResponse.status == 'success') {
         debugPrint(
-            'Medication Length ==> ${getMyMedicationsResponse.data.medicationSchedulesForDay.schedules.length}');
+            'Medication Length ==> ${getMyMedicationsResponse.data!.medicationSchedulesForDay!.schedules!.length}');
         if (getMyMedicationsResponse
-            .data.medicationSchedulesForDay.schedules.isNotEmpty) {
+            .data!.medicationSchedulesForDay!.schedules!.isNotEmpty) {
           currentMedicationList.addAll(getMyMedicationsResponse
-              .data.medicationSchedulesForDay.schedules);
+              .data!.medicationSchedulesForDay!.schedules!);
           sortMyMedication(getMyMedicationsResponse);
         }
       } else {
@@ -2395,10 +2399,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   markAllMedicationAsTaken() async {
     try {
       debugPrint(currentMedicationList.length.toString());
-      final medicationIds = <String>[];
+      final medicationIds = <String?>[];
       for (final item in currentMedicationList) {
         //debugPrint(item.timeScheduleEnd.toString() +'  '+ DateTime.now().toString() +'  '+DateTime.now().isAfter(DateTime.parse(item.timeScheduleEnd)).toString());
-        if (DateTime.now().isAfter(item.timeScheduleStart) &&
+        if (DateTime.now().isAfter(item.timeScheduleStart!) &&
             item.status != 'Taken') {
           medicationIds.add(item.id);
           debugPrint(item.id);
@@ -2413,19 +2417,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
             await model.markAllMedicationsAsTaken(body);
         debugPrint('Medication ==> ${baseResponse.toJson()}');
         if (baseResponse.status == 'success') {
-          //progressDialog.hide();
-          showToast(baseResponse.message, context);
+          //progressDialog.close();
+          showToast(baseResponse.message!, context);
           getMyMedications();
         } else {
-          showToast(baseResponse.message, context);
-          //progressDialog.hide();
-          showToast(baseResponse.message, context);
+          showToast(baseResponse.message!, context);
+          //progressDialog.close();
+          showToast(baseResponse.message!, context);
         }
       } else {
         showToast('You have taken all the medication till now.', context);
       }
     } catch (CustomException) {
-      //progressDialog.hide();
+      //progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
@@ -2445,7 +2449,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
           await model.recordHowAreYouFeeling(body);
       debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
-        //progressDialog.hide();
+        //progressDialog.close();
         //showToast(baseResponse.message, context);
         if (feeling == 1) {
           showToast('Good to hear that', context);
@@ -2455,12 +2459,12 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
           getSymptomAssesmentTemplete();
         }
       } else {
-        showToast(baseResponse.error, context);
-        //progressDialog.hide();
+        showToast(baseResponse.error!, context);
+        //progressDialog.close();
         // showToast(baseResponse.message, context);
       }
     } catch (CustomException) {
-      //progressDialog.hide();
+      //progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
@@ -2477,7 +2481,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
       if (searchSymptomAssesmentTempleteResponse.status == 'success') {
         Navigator.pushNamed(context, RoutePaths.Symptoms,
             arguments: searchSymptomAssesmentTempleteResponse
-                .data.symptomAssessmentTemplates.items
+                .data!.symptomAssessmentTemplates!.items!
                 .elementAt(0)
                 .id);
         setState(() {});

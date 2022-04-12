@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_autolink_text/flutter_autolink_text.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/features/common/appoinment_booking/models/DoctorAppoinmentBookedSuccessfully.dart';
@@ -11,16 +10,16 @@ import 'package:paitent/features/misc/models/PatientApiDetails.dart';
 import 'package:paitent/features/misc/models/user_data.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-//import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../misc/ui/base_widget.dart';
 
 //ignore: must_be_immutable
 class BookingAppoinmentConfirmationView extends StatefulWidget {
-  DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;
+  DoctorBookingAppoinmentPojo? bookingAppoinmentsDetails;
 
-  BookingAppoinmentConfirmationView(this.bookingAppoinmentsDetails);
+  BookingAppoinmentConfirmationView(bookingAppoinmentsDetails) {
+    this.bookingAppoinmentsDetails = bookingAppoinmentsDetails;
+  }
 
   @override
   _BookingAppoinmentConfirmationViewViewState createState() =>
@@ -29,12 +28,12 @@ class BookingAppoinmentConfirmationView extends StatefulWidget {
 
 class _BookingAppoinmentConfirmationViewViewState
     extends State<BookingAppoinmentConfirmationView> {
-  DoctorBookingAppoinmentPojo bookingAppoinmentsDetails;
+  DoctorBookingAppoinmentPojo? bookingAppoinmentsDetails;
   var model = BookAppoinmentViewModel();
-  Doctors doctorDetails;
-  Patient patientDetails;
-  UserData userData;
-  Labs labDetails;
+  Doctors? doctorDetails;
+  Patient? patientDetails;
+  UserData? userData;
+  Labs? labDetails;
 
   _BookingAppoinmentConfirmationViewViewState(this.bookingAppoinmentsDetails);
 
@@ -80,15 +79,15 @@ class _BookingAppoinmentConfirmationViewViewState
 
   @override
   Widget build(BuildContext context) {
-    if (bookingAppoinmentsDetails.whichFlow == 'Lab') {
-      labDetails = bookingAppoinmentsDetails.labs;
+    if (bookingAppoinmentsDetails!.whichFlow == 'Lab') {
+      labDetails = bookingAppoinmentsDetails!.labs;
     } else {
-      doctorDetails = bookingAppoinmentsDetails.doctors;
+      doctorDetails = bookingAppoinmentsDetails!.doctors;
     }
-    debugPrint(bookingAppoinmentsDetails.userData.data.user.id);
-    patientDetails = bookingAppoinmentsDetails.patient;
-    userData = bookingAppoinmentsDetails.userData;
-    return BaseWidget<BookAppoinmentViewModel>(
+    debugPrint(bookingAppoinmentsDetails!.userData!.data!.user!.id);
+    patientDetails = bookingAppoinmentsDetails!.patient;
+    userData = bookingAppoinmentsDetails!.userData;
+    return BaseWidget<BookAppoinmentViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -117,7 +116,7 @@ class _BookingAppoinmentConfirmationViewViewState
                     height: 16,
                   ),
                   _makeDateAndTimeTile(),
-                  if (bookingAppoinmentsDetails.whichFlow == 'Lab')
+                  if (bookingAppoinmentsDetails!.whichFlow == 'Lab')
                     _makeLabListCard()
                   else
                     _makeDoctorListCard(),
@@ -125,7 +124,7 @@ class _BookingAppoinmentConfirmationViewViewState
                   SizedBox(
                     height: 16,
                   ),
-                  if (model.busy)
+                  if (model!.busy)
                     Center(child: CircularProgressIndicator())
                   else
                     _continueButton(),
@@ -157,7 +156,7 @@ class _BookingAppoinmentConfirmationViewViewState
           child: MaterialButton(
             minWidth: 200,
             child: Text(
-                bookingAppoinmentsDetails.whichFlow == 'Lab'
+                bookingAppoinmentsDetails!.whichFlow == 'Lab'
                     ? 'Confirm Booking'
                     : 'Continue To Pay',
                 style: TextStyle(
@@ -165,7 +164,7 @@ class _BookingAppoinmentConfirmationViewViewState
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
             onPressed: () {
-              if (bookingAppoinmentsDetails.whichFlow == 'Lab') {
+              if (bookingAppoinmentsDetails!.whichFlow == 'Lab') {
                 _bookALabAppoinmentSlot();
               } else {
                 _showPaymentNativeView();
@@ -212,9 +211,9 @@ class _BookingAppoinmentConfirmationViewViewState
               height: 16,
             ),
             Text(
-              patientDetails.user.person.firstName +
+              patientDetails!.user!.person!.firstName! +
                   ' ' +
-                  patientDetails.user.person.lastName,
+                  patientDetails!.user!.person!.lastName!,
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -224,12 +223,12 @@ class _BookingAppoinmentConfirmationViewViewState
               height: 8,
             ),
             Text(
-                patientDetails.user.person.gender == 'M'
+                patientDetails!.user!.person!.gender == 'M'
                     ? 'Male' ', ' +
-                        calculateAge(patientDetails.user.person.birthDate) +
+                        calculateAge(patientDetails!.user!.person!.birthDate!) +
                         ' years'
                     : 'Female' ', ' +
-                        calculateAge(patientDetails.user.person.birthDate) +
+                        calculateAge(patientDetails!.user!.person!.birthDate!) +
                         ' years',
                 style: TextStyle(
                     fontSize: 14.0,
@@ -240,9 +239,9 @@ class _BookingAppoinmentConfirmationViewViewState
             ),
             Text(
                 '+91 ' +
-                    userData.data.user.person.phone +
+                    userData!.data!.user!.person!.phone! +
                     ' | ' +
-                    userData.data.user.person.email,
+                    userData!.data!.user!.person!.email!,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -290,7 +289,7 @@ class _BookingAppoinmentConfirmationViewViewState
                         fontWeight: FontWeight.w300,
                         color: Color(0XFF303030))),
                 Expanded(
-                  child: Text(bookingAppoinmentsDetails.patientNote,
+                  child: Text(bookingAppoinmentsDetails!.patientNote,
                       style: TextStyle(
                           fontSize: 14.0,
                           fontWeight: FontWeight.w300,
@@ -301,7 +300,7 @@ class _BookingAppoinmentConfirmationViewViewState
             SizedBox(
               height: 8,
             ),
-            if (bookingAppoinmentsDetails.attachmentPath != '') ...[
+            if (bookingAppoinmentsDetails!.attachmentPath != '') ...[
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -363,10 +362,11 @@ class _BookingAppoinmentConfirmationViewViewState
                         backgroundColor: primaryColor,
                         child: CircleAvatar(
                             radius: 38,
-                            backgroundImage: doctorDetails.imageURL == ''
-                                ? AssetImage(
-                                    'res/images/profile_placeholder.png')
-                                : NetworkImage(doctorDetails.imageURL)),
+                            backgroundImage: (doctorDetails!.imageURL == ''
+                                    ? AssetImage(
+                                        'res/images/profile_placeholder.png')
+                                    : NetworkImage(doctorDetails!.imageURL!))
+                                as ImageProvider<Object>?),
                       ),
                     ),
                   ),
@@ -382,14 +382,14 @@ class _BookingAppoinmentConfirmationViewViewState
                     children: <Widget>[
                       Text(
                           'Dr.' +
-                              doctorDetails.firstName +
+                              doctorDetails!.firstName! +
                               ' ' +
-                              doctorDetails.lastName,
+                              doctorDetails!.lastName!,
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                               color: primaryColor)),
-                      Text(doctorDetails.specialities,
+                      Text(doctorDetails!.specialities!,
                           style: TextStyle(
                               fontSize: 14.0,
                               fontWeight: FontWeight.w300,
@@ -438,7 +438,7 @@ class _BookingAppoinmentConfirmationViewViewState
               ),
               Expanded(
                 child: Text(
-                  doctorDetails.address,
+                  doctorDetails!.address!,
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w300,
@@ -467,7 +467,7 @@ class _BookingAppoinmentConfirmationViewViewState
               SizedBox(
                 width: 16,
               ),
-              AutolinkText(
+              /* Linkify(
                   text: '+91 ' + doctorDetails.phoneNumber,
                   textStyle: TextStyle(
                       fontSize: 14.0,
@@ -481,7 +481,7 @@ class _BookingAppoinmentConfirmationViewViewState
                     } else {
                       throw 'Could not launch $url';
                     }
-                  }),
+                  }),*/
             ],
           ),
         ],
@@ -524,11 +524,12 @@ class _BookingAppoinmentConfirmationViewViewState
                         backgroundColor: primaryColor,
                         child: CircleAvatar(
                             radius: 48,
-                            backgroundImage: (labDetails.imageURL == '') ||
-                                    (labDetails.imageURL == null)
-                                ? AssetImage(
-                                    'res/images/profile_placeholder.png')
-                                : NetworkImage(labDetails.imageURL)),
+                            backgroundImage: ((labDetails!.imageURL == '') ||
+                                        (labDetails!.imageURL == null)
+                                    ? AssetImage(
+                                        'res/images/profile_placeholder.png')
+                                    : NetworkImage(labDetails!.imageURL!))
+                                as ImageProvider<Object>?),
                       ),
                     ),
                   ),
@@ -542,12 +543,12 @@ class _BookingAppoinmentConfirmationViewViewState
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(labDetails.firstName + ' ' + labDetails.lastName,
+                      Text(labDetails!.firstName! + ' ' + labDetails!.lastName!,
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                               color: primaryColor)),
-                      Text(labDetails.locality,
+                      Text(labDetails!.locality!,
                           style: TextStyle(
                               fontSize: 14.0,
                               fontWeight: FontWeight.w300,
@@ -596,7 +597,7 @@ class _BookingAppoinmentConfirmationViewViewState
               ),
               Expanded(
                 child: Text(
-                  labDetails.address,
+                  labDetails!.address!,
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w300,
@@ -625,7 +626,7 @@ class _BookingAppoinmentConfirmationViewViewState
               SizedBox(
                 width: 16,
               ),
-              AutolinkText(
+              /*AutolinkText(
                   text: '+91 ' + labDetails.phoneNumber,
                   textStyle: TextStyle(
                       fontSize: 14.0,
@@ -639,7 +640,7 @@ class _BookingAppoinmentConfirmationViewViewState
                     } else {
                       throw 'Could not launch $url';
                     }
-                  }),
+                  }),*/
             ],
           ),
         ],
@@ -667,7 +668,7 @@ class _BookingAppoinmentConfirmationViewViewState
           RichText(
             text: TextSpan(
               text: dateFormat.format(
-                  DateTime.parse(bookingAppoinmentsDetails.selectedDate)),
+                  DateTime.parse(bookingAppoinmentsDetails!.selectedDate)),
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
@@ -675,9 +676,9 @@ class _BookingAppoinmentConfirmationViewViewState
               children: <TextSpan>[
                 TextSpan(
                     text: ' : ' +
-                        timeFormat.format(
-                            DateTime.parse(bookingAppoinmentsDetails.slotStart)
-                                .toLocal()),
+                        timeFormat.format(DateTime.parse(
+                                bookingAppoinmentsDetails!.slotStart!)
+                            .toLocal()),
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
@@ -706,23 +707,23 @@ class _BookingAppoinmentConfirmationViewViewState
   _bookALabAppoinmentSlot() async {
     try {
       model.setBusy(true);
-      final map = <String, String>{};
-      map['PatientUserId'] = userData.data.user.id;
+      final map = <String, String?>{};
+      map['PatientUserId'] = userData!.data!.user!.id;
       map['Date'] = dateFormatFull
-          .format(DateTime.parse(bookingAppoinmentsDetails.selectedDate));
-      map['StartTime'] = bookingAppoinmentsDetails.slotStart;
-      map['EndTime'] = bookingAppoinmentsDetails.slotEnd;
+          .format(DateTime.parse(bookingAppoinmentsDetails!.selectedDate));
+      map['StartTime'] = bookingAppoinmentsDetails!.slotStart;
+      map['EndTime'] = bookingAppoinmentsDetails!.slotEnd;
 
       final DoctorAppoinmentBookedSuccessfully bookAAppoinmentForDoctor =
-          await model.bookAAppoinmentForLab(labDetails.userId.toString(), map,
-              'Bearer ' + userData.data.accessToken);
+          await model.bookAAppoinmentForLab(labDetails!.userId.toString(), map,
+              'Bearer ' + userData!.data!.accessToken!);
 
       if (bookAAppoinmentForDoctor.status == 'success') {
         Navigator.pushNamed(context, RoutePaths.Booking_Appoinment_Done_View,
             arguments: bookingAppoinmentsDetails);
-        showToast(bookAAppoinmentForDoctor.message, context);
+        showToast(bookAAppoinmentForDoctor.message!, context);
       } else {
-        showToast(bookAAppoinmentForDoctor.message, context);
+        showToast(bookAAppoinmentForDoctor.message!, context);
       }
     } catch (CustomException) {
       debugPrint('Error ' + CustomException.toString());
@@ -736,7 +737,7 @@ class _BookingAppoinmentConfirmationViewViewState
     options = {
       'key': apiKey, // Enter the Key ID generated from the Dashboard
 
-      'amount': doctorDetails.consultationFee *
+      'amount': doctorDetails!.consultationFee *
           100, //in the smallest currency sub-unit.
       'name': 'REAN Care',
 
@@ -745,8 +746,8 @@ class _BookingAppoinmentConfirmationViewViewState
       'buttontext': 'Pay',
       'description': 'Doctor Consutation Fee',
       'prefill': {
-        'contact': userData.data.user.person.phone,
-        'email': userData.data.user..person.email,
+        'contact': userData!.data!.user!.person!.phone,
+        'email': userData!.data!.user!.person!.email,
       }
     };
 

@@ -16,7 +16,7 @@ import 'package:paitent/features/misc/ui/home_view.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
 class AssesmentTaskNavigatorView extends StatefulWidget {
@@ -26,9 +26,9 @@ class AssesmentTaskNavigatorView extends StatefulWidget {
     this._startTaskOfAHACarePlanResponse = _startTaskOfAHACarePlanResponseC;
   }*/
 
-  Task task;
+  Task? task;
 
-  AssesmentTaskNavigatorView(Task task) {
+  AssesmentTaskNavigatorView(task) {
     this.task = task;
   }
 
@@ -41,26 +41,26 @@ class _AssesmentTaskNavigatorViewState
     extends State<AssesmentTaskNavigatorView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool isLastQuestion = false;
+  bool? isLastQuestion = false;
 
-  StartAssesmentResponse _startAssesmentResponse;
-  Assessmment assessmment;
-  ProgressDialog progressDialog;
+  late StartAssesmentResponse _startAssesmentResponse;
+  Assessmment? assessmment;
+  late ProgressDialog progressDialog;
   var dateFormat = DateFormat('yyyy-MM-dd');
   var timeFormat = DateFormat('HH:mm:ss');
 
   @override
   void initState() {
-    progressDialog = ProgressDialog(context);
+    progressDialog = ProgressDialog(context: context);
     startAssesmentResponse();
-    debugPrint(widget.task.details.carePlanId.toString());
+    debugPrint(widget.task!.details!.carePlanId.toString());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<PatientCarePlanViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<PatientCarePlanViewModel?>(
         model: model,
         builder: (context, model, child) => Container(
               child: Scaffold(
@@ -98,24 +98,26 @@ class _AssesmentTaskNavigatorViewState
   startAssesmentResponse() async {
     try {
       debugPrint('Assesment 1');
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
 
       _startAssesmentResponse = await model.startAssesmentResponse(
-          widget.task.details.carePlanId.toString(), widget.task.details.id);
+          widget.task!.details!.carePlanId.toString(),
+          widget.task!.details!.id!);
 
       if (_startAssesmentResponse.status == 'success') {
-        progressDialog.hide();
-        navigateScreen(_startAssesmentResponse.data.assessmment);
+        progressDialog.close();
+        navigateScreen(_startAssesmentResponse.data!.assessmment!);
         debugPrint(
             'AHA Assesment Care Plan Task ==> ${_startAssesmentResponse.toJson()}');
-        assessmment = _startAssesmentResponse.data.assessmment;
+        assessmment = _startAssesmentResponse.data!.assessmment;
       } else {
         Navigator.pop(context);
-        progressDialog.hide();
-        showToast(_startAssesmentResponse.message, context);
+        progressDialog.close();
+        showToast(_startAssesmentResponse.message!, context);
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint(e.toString());
@@ -123,12 +125,12 @@ class _AssesmentTaskNavigatorViewState
   }
 
   navigateScreen(Assessmment assessmment) {
-    progressDialog.hide();
-    if (assessmment.isBiometric) {
+    progressDialog.close();
+    if (assessmment.isBiometric!) {
       //showToast('Biometric Task');
       assignmentTask(assessmment);
     } else {
-      switch (assessmment.question.questionType) {
+      switch (assessmment.question!.questionType) {
         case 'menuQuestion':
           menuQuestion(assessmment);
           break;
@@ -214,8 +216,9 @@ class _AssesmentTaskNavigatorViewState
 
   assesmentNextQuestion(var value, Assessmment assessmment) async {
     try {
-      progressDialog = ProgressDialog(context);
-      progressDialog.show();
+      progressDialog = ProgressDialog(context: context);
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['BiometricValue'] = value;
       map['MeasuredOn'] = dateFormat.format(DateTime.now().toUtc()) +
@@ -225,38 +228,38 @@ class _AssesmentTaskNavigatorViewState
 
       final AnswerAssesmentResponse _answerAssesmentResponse =
           await model.addBiometricAssignmentTask(
-              startCarePlanResponseGlob.data.carePlan.id.toString(),
-              assessmment.taskId,
-              assessmment.qnAId,
+              startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+              assessmment.taskId!,
+              assessmment.qnAId!,
               map);
 
       if (_answerAssesmentResponse.status == 'success') {
-        progressDialog.hide();
-        if (isLastQuestion) {
+        progressDialog.close();
+        if (isLastQuestion!) {
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
             return HomeView(1);
           }), (Route<dynamic> route) => false);
           debugPrint('Last Question');
         } else {
-          progressDialog.hide();
-          navigateScreen(_answerAssesmentResponse.data.assessmment);
+          progressDialog.close();
+          navigateScreen(_answerAssesmentResponse.data!.assessmment!);
           debugPrint('No Question');
         }
-        if (_answerAssesmentResponse.data.assessmment.question != null) {
-          isLastQuestion =
-              _answerAssesmentResponse.data.assessmment.question.isLastQuestion;
+        if (_answerAssesmentResponse.data!.assessmment!.question != null) {
+          isLastQuestion = _answerAssesmentResponse
+              .data!.assessmment!.question!.isLastQuestion;
         }
 
         debugPrint(
             'AHA Start Care Plan ==> ${_answerAssesmentResponse.toJson()}');
-        assessmment = _answerAssesmentResponse.data.assessmment;
+        assessmment = _answerAssesmentResponse.data!.assessmment!;
       } else {
-        progressDialog.hide();
-        showToast(_answerAssesmentResponse.message, context);
+        progressDialog.close();
+        showToast(_answerAssesmentResponse.message!, context);
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
@@ -265,8 +268,9 @@ class _AssesmentTaskNavigatorViewState
 
   nextQuestion(int index) async {
     try {
-      progressDialog = ProgressDialog(context);
-      progressDialog.show();
+      progressDialog = ProgressDialog(context: context);
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       final answerIndices = <int>[];
       answerIndices.add(index);
@@ -275,37 +279,37 @@ class _AssesmentTaskNavigatorViewState
 
       final AnswerAssesmentResponse _answerAssesmentResponse =
           await model.answerAssesmentResponse(
-              widget.task.details.carePlanId.toString(),
-              widget.task.details.id,
-              assessmment.qnAId,
+              widget.task!.details!.carePlanId.toString(),
+              widget.task!.details!.id!,
+              assessmment!.qnAId!,
               map);
 
       if (_answerAssesmentResponse.status == 'success') {
-        progressDialog.hide();
-        if (isLastQuestion) {
-          completeMessageTaskOfAHACarePlan(widget.task);
+        progressDialog.close();
+        if (isLastQuestion!) {
+          completeMessageTaskOfAHACarePlan(widget.task!);
           /*Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
                 return HomeView( 1 );
               }), (Route<dynamic> route) => false);*/
           debugPrint('Last Question');
         } else {
-          progressDialog.hide();
-          navigateScreen(_answerAssesmentResponse.data.assessmment);
+          progressDialog.close();
+          navigateScreen(_answerAssesmentResponse.data!.assessmment!);
           debugPrint('No Question');
         }
-        isLastQuestion =
-            _answerAssesmentResponse.data.assessmment.question.isLastQuestion;
+        isLastQuestion = _answerAssesmentResponse
+            .data!.assessmment!.question!.isLastQuestion;
 
         debugPrint(
             'AHA Start Care Plan ==> ${_answerAssesmentResponse.toJson()}');
-        assessmment = _answerAssesmentResponse.data.assessmment;
+        assessmment = _answerAssesmentResponse.data!.assessmment;
       } else {
-        progressDialog.hide();
-        showToast(_answerAssesmentResponse.message, context);
+        progressDialog.close();
+        showToast(_answerAssesmentResponse.message!, context);
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
@@ -314,15 +318,16 @@ class _AssesmentTaskNavigatorViewState
 
   completeMessageTaskOfAHACarePlan(Task task) async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.stopTaskOfAHACarePlan(
-              startCarePlanResponseGlob.data.carePlan.id.toString(),
-              task.details.id);
+              startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+              task.details!.id!);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;
-        progressDialog.hide();
+        progressDialog.close();
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(1);
@@ -330,11 +335,11 @@ class _AssesmentTaskNavigatorViewState
         debugPrint(
             'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
-        progressDialog.hide();
-        showToast(_startTaskOfAHACarePlanResponse.message, context);
+        progressDialog.close();
+        showToast(_startTaskOfAHACarePlanResponse.message!, context);
       }
     } catch (CustomException) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
@@ -383,7 +388,7 @@ class _AssesmentTaskNavigatorViewState
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                assessmment.question.questionText,
+                assessmment.question!.questionText!,
                 style: TextStyle(
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w600,
@@ -396,8 +401,8 @@ class _AssesmentTaskNavigatorViewState
               padding: const EdgeInsets.all(16.0),
               child: InkWell(
                 onTap: () {
-                  if (assessmment.question.questionType == 'statement') {
-                    completeMessageTaskOfAHACarePlan(widget.task);
+                  if (assessmment.question!.questionType == 'statement') {
+                    completeMessageTaskOfAHACarePlan(widget.task!);
                     /*Navigator.pushAndRemoveUntil(context,
                         MaterialPageRoute(builder: (context) {
                           return HomeView( 1 );

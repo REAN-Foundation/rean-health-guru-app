@@ -1,7 +1,7 @@
 class LabsListApiResponse {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   LabsListApiResponse({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class LabsListApiResponse {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<Labs> labs;
+  List<Labs>? labs;
 
   Data({this.labs});
 
@@ -31,7 +31,7 @@ class Data {
     if (json['labs'] != null) {
       labs = <Labs>[];
       json['labs'].forEach((v) {
-        labs.add(Labs.fromJson(v));
+        labs!.add(Labs.fromJson(v));
       });
     }
   }
@@ -39,36 +39,36 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (labs != null) {
-      data['labs'] = labs.map((v) => v.toJson()).toList();
+      data['labs'] = labs!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Labs {
-  String userId;
-  String roleId;
-  String firstName;
-  String lastName;
-  String prefix;
-  String phoneNumber;
-  String email;
-  String gender;
-  String birthDate;
-  String imageURL;
-  String locality;
-  String address;
-  String locationCoordsLongitude;
-  String locationCoordsLattitude;
-  String establishmentName;
-  String specialities;
-  int labType;
-  String aboutUs;
-  String operationalSince;
-  String appointmentSlotDuration;
-  String dateCreated;
-  String dateUpdated;
-  AppointmentRelatedDetails appointmentRelatedDetails;
+  String? userId;
+  String? roleId;
+  String? firstName;
+  String? lastName;
+  String? prefix;
+  String? phoneNumber;
+  String? email;
+  String? gender;
+  String? birthDate;
+  String? imageURL;
+  String? locality;
+  String? address;
+  String? locationCoordsLongitude;
+  String? locationCoordsLattitude;
+  String? establishmentName;
+  String? specialities;
+  int? labType;
+  String? aboutUs;
+  String? operationalSince;
+  String? appointmentSlotDuration;
+  String? dateCreated;
+  String? dateUpdated;
+  AppointmentRelatedDetails? appointmentRelatedDetails;
 
   Labs(
       {this.userId,
@@ -148,18 +148,18 @@ class Labs {
     data['DateCreated'] = dateCreated;
     data['DateUpdated'] = dateUpdated;
     if (appointmentRelatedDetails != null) {
-      data['AppointmentRelatedDetails'] = appointmentRelatedDetails.toJson();
+      data['AppointmentRelatedDetails'] = appointmentRelatedDetails!.toJson();
     }
     return data;
   }
 }
 
 class AppointmentRelatedDetails {
-  String userId;
-  String nodeId;
-  String businessServiceId;
-  String operationalTimeZone;
-  List<String> workingHours;
+  String? userId;
+  String? nodeId;
+  String? businessServiceId;
+  String? operationalTimeZone;
+  List<String>? workingHours;
 
   AppointmentRelatedDetails(
       {this.userId,

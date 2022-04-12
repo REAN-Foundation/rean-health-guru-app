@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
 import 'package:paitent/features/common/medication/models/MyCurrentMedication.dart';
 import 'package:paitent/features/common/medication/view_models/patients_medication.dart';
+import 'package:paitent/features/misc/models/BaseResponse.dart';
+import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/networking/ApiProvider.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class MyCurrentMedicationView extends StatefulWidget {
   @override
@@ -25,8 +25,8 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   var timeFormat = DateFormat('hh:mm a');
   List<Items> currentMedicationList = <Items>[];
-  ProgressDialog progressDialog;
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  late ProgressDialog progressDialog;
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   @override
   void initState() {
@@ -41,10 +41,10 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       debugPrint('Medication ==> ${currentMedication.toJson()}');
       if (currentMedication.status == 'success') {
         currentMedicationList.clear();
-        filterData(currentMedication.data.medications.items);
+        filterData(currentMedication.data!.medications!.items!);
         //currentMedicationList.addAll(currentMedication.data.medications.items);
       } else {
-        showToast(currentMedication.message, context);
+        showToast(currentMedication.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -55,7 +55,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
 
   filterData(List<Items> medicationList) {
     for (int i = 0; i < medicationList.length; i++) {
-      if (medicationList.elementAt(i).endDate.isAfter(DateTime.now())) {
+      if (medicationList.elementAt(i).endDate!.isAfter(DateTime.now())) {
         currentMedicationList.add(medicationList.elementAt(i));
         debugPrint('End Data ==> ${medicationList.elementAt(i).endDate}');
       }
@@ -65,8 +65,8 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<PatientMedicationViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<PatientMedicationViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -74,7 +74,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
             backgroundColor: Colors.white,
             body: Padding(
               padding: EdgeInsets.all(16.0),
-              child: model.busy
+              child: model!.busy
                   ? Center(
                       child: SizedBox(
                           height: 32,
@@ -153,7 +153,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Semantics(
-                    child: Text(medication.drugName,
+                    child: Text(medication.drugName!,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontSize: 16,
@@ -163,7 +163,8 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Text(medication.dose.toString() + ' ' + medication.dosageUnit,
+                  Text(
+                      medication.dose.toString() + ' ' + medication.dosageUnit!,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -176,7 +177,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   Text(
                       medication.frequencyUnit.toString() +
                           ' - ' +
-                          medication.timeSchedules.join(', '),
+                          medication.timeSchedules!.join(', '),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -186,7 +187,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   Text(
                       'Started on ' +
                           dateFormatStandard
-                              .format(medication.startDate.toLocal()),
+                              .format(medication.startDate!.toLocal()),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -211,9 +212,9 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                 child: Semantics(
                   label: 'Medication ',
                   child: CachedNetworkImage(
-                    imageUrl: apiProvider.getBaseUrl() +
+                    imageUrl: apiProvider!.getBaseUrl()! +
                         '/file-resources/' +
-                        medication.imageResourceId +
+                        medication.imageResourceId! +
                         '/download-by-version-name/1',
                   ),
                 ),
@@ -424,19 +425,20 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
 
   markMedicationsAsTaken(String consumptionId) async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final BaseResponse baseResponse =
           await model.markMedicationsAsTaken(consumptionId);
       debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         getMyMedications();
       } else {
-        progressDialog.hide();
-        showToast(baseResponse.message, context);
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
       }
     } catch (CustomException) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());

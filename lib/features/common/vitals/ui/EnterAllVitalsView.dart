@@ -7,7 +7,7 @@ import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class EnterAllVitalsView extends StatefulWidget {
   @override
@@ -34,7 +34,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   final _systolicFocus = FocusNode();
   final _diastolicFocus = FocusNode();
-  ProgressDialog progressDialog;
+  ProgressDialog? progressDialog;
   String unit = 'Kg';
 
   var scrollContainer = ScrollController();
@@ -51,8 +51,8 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<PatientVitalsViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<PatientVitalsViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -92,7 +92,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   ),
                   Align(
                     alignment: Alignment.center,
-                    child: model.busy
+                    child: model!.busy
                         ? SizedBox(
                             width: 32,
                             height: 32,
@@ -908,7 +908,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        showToast(baseResponse.message, context);
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -932,7 +932,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        showToast(baseResponse.message, context);
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -955,7 +955,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        showToast(baseResponse.message, context);
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -979,7 +979,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        showToast(baseResponse.message, context);
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -1001,7 +1001,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
       if (baseResponse.status == 'success') {
         clearAllFeilds();
       } else {
-        showToast(baseResponse.message, context);
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
       model.setBusy(false);
@@ -1025,7 +1025,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
         //showToast('Record added successfully');
         clearAllFeilds();
       } else {
-        showToast(baseResponse.message, context);
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
       model.setBusy(false);

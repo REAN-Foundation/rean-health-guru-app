@@ -10,7 +10,7 @@ import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class SetUpNurseForCarePlanView extends StatefulWidget {
   @override
@@ -22,20 +22,20 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  StartCarePlanResponse startCarePlanResponse;
+  late StartCarePlanResponse startCarePlanResponse;
 
   //var nurseMemberList = new List<TeamMember>();
-  ProgressDialog progressDialog;
+  ProgressDialog? progressDialog;
 
   loadSharedPrefrance() async {
     try {
       startCarePlanResponse = StartCarePlanResponse.fromJson(
           await _sharedPrefUtils.read('CarePlan'));
       debugPrint(
-          'AHA Care Plan id ${startCarePlanResponse.data.carePlan.id.toString()}');
+          'AHA Care Plan id ${startCarePlanResponse.data!.carePlan!.id.toString()}');
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
@@ -50,8 +50,8 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
     /*if(nurseMemberListGlobe.length != 0){
       nurseMemberListGlobe.addAll(nurseMemberListGlobe);
     }*/
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<PatientCarePlanViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -98,7 +98,7 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
                         height: 16,
                       ),
                       Expanded(
-                          child: model.busy
+                          child: model!.busy
                               ? Center(
                                   child: SizedBox(
                                       height: 32,
@@ -233,7 +233,7 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
   }
 
   Widget _makeDoctorListCard(BuildContext context, int index) {
-    final TeamMember teamMember = nurseMemberListGlobe.elementAt(index);
+    final TeamMember teamMember = nurseMemberListGlobe.elementAt(index)!;
     return Container(
       height: 80,
       decoration: BoxDecoration(
@@ -275,21 +275,21 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
                             Padding(
                               padding: const EdgeInsets.only(right: 18.0),
                               child: Text(
-                                  teamMember.details.firstName +
+                                  teamMember.details!.firstName! +
                                       ' ' +
-                                      teamMember.details.lastName,
+                                      teamMember.details!.lastName!,
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       color: primaryColor)),
                             ),
-                            Text(teamMember.details.phoneNumber,
+                            Text(teamMember.details!.phoneNumber!,
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w300,
                                     color: Color(0XFF909CAC))),
                             Text(
-                              teamMember.details.gender,
+                              teamMember.details!.gender!,
                               style: TextStyle(
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.w200,
@@ -477,7 +477,7 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
       String gender) async {
     try {
       model.setBusy(true);
-      //progressDialog.show();
+      //progressDialog.show(max: 100, msg: 'Loading...' );progressDialog.show(max: 100, msg: 'Loading...' );
 
       /*TeamMemberJsonRequest jsonRequest = new TeamMemberJsonRequest();
       jsonRequest.carePlanId = startCarePlanResponse.data.carePlan.id.toString();
@@ -493,7 +493,7 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
       data['Gender'] = gender;
 
       final map = <String, dynamic>{};
-      map['CarePlanId'] = startCarePlanResponse.data.carePlan.id.toString();
+      map['CarePlanId'] = startCarePlanResponse.data!.carePlan!.id.toString();
       map['IsEmergencyContact'] = true;
       map['TeamMemberType'] = 'HealthWorker';
       map['Details'] = data;
@@ -502,20 +502,20 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
           await model.addTeamMembers(map);
       debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
-        //progressDialog.hide();
+        //progressDialog.close();
         setState(() {
-          nurseMemberListGlobe.add(addTeamMemberResponse.data.teamMember);
+          nurseMemberListGlobe.add(addTeamMemberResponse.data!.teamMember);
         });
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       } else {
-        //progressDialog.hide();
-        showToast(addTeamMemberResponse.message, context);
+        //progressDialog.close();
+        showToast(addTeamMemberResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      //progressDialog.hide();
+      //progressDialog.close();
       showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException);
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 }

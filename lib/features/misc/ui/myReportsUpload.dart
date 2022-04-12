@@ -24,8 +24,8 @@ import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:progress_dialog/progress_dialog.dart';
 import 'package:share/share.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class MyReportsView extends StatefulWidget {
   @override
@@ -35,24 +35,24 @@ class MyReportsView extends StatefulWidget {
 class _MyReportsViewState extends State<MyReportsView> {
   var model = CommonConfigModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
   String attachmentPath = '';
   List<Items> documents = <Items>[];
 
   var dateFormat = DateFormat('MMM dd, yyyy');
   var renameControler = TextEditingController();
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
   final ImagePicker _picker = ImagePicker();
-  String _api_key = '';
+  String? _api_key = '';
 
   @override
   void initState() {
     _api_key = dotenv.env['Patient_API_KEY'];
-    progressDialog = ProgressDialog(context, isDismissible: false);
+    progressDialog = ProgressDialog(context: context);
     getAllRecords();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         _scrollController.jumpTo(50.0);
       }
@@ -69,9 +69,9 @@ class _MyReportsViewState extends State<MyReportsView> {
       debugPrint('Records ==> ${allRecordResponse.toJson()}');
       if (allRecordResponse.status == 'success') {
         documents.clear();
-        if (allRecordResponse.data.patientDocuments.items.isNotEmpty) {
+        if (allRecordResponse.data!.patientDocuments!.items!.isNotEmpty) {
           documents.clear();
-          documents.addAll(allRecordResponse.data.patientDocuments.items);
+          documents.addAll(allRecordResponse.data!.patientDocuments!.items!);
         }
         //showToast(startCarePlanResponse.message);
       } else {
@@ -87,31 +87,32 @@ class _MyReportsViewState extends State<MyReportsView> {
   getDocumentPublicLink(Items document, bool imageView) async {
     try {
       if (!imageView) {
-        progressDialog.show();
+        progressDialog.show(
+            max: 100, msg: 'Loading...', barrierDismissible: false);
       }
       final GetSharablePublicLink getSharablePublicLink =
-          await model.getDocumentPublicLink(document.id);
+          await model.getDocumentPublicLink(document.id!);
       debugPrint('Records ==> ${getSharablePublicLink.toJson()}');
       if (getSharablePublicLink.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         if (imageView) {
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => ImageViewer(
-                      getSharablePublicLink.data.patientDocumentLink,
+                      getSharablePublicLink.data!.patientDocumentLink,
                       document.fileName)));
         } else {
-          progressDialog.hide();
-          urlFileShare(getSharablePublicLink.data.patientDocumentLink);
+          progressDialog.close();
+          urlFileShare(getSharablePublicLink.data!.patientDocumentLink);
         }
         //showToast(startCarePlanResponse.message);
       } else {
-        progressDialog.hide();
-        showToast(getSharablePublicLink.message, context);
+        progressDialog.close();
+        showToast(getSharablePublicLink.message!, context);
       }
     } catch (CustomException) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
@@ -130,7 +131,7 @@ class _MyReportsViewState extends State<MyReportsView> {
         getAllRecords();
         showToast('Document renamed successfully.', context);
       } else {
-        showToast(baseResponse.message, context);
+        showToast(baseResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -145,9 +146,9 @@ class _MyReportsViewState extends State<MyReportsView> {
       debugPrint('Records ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         getAllRecords();
-        showToast(baseResponse.message, context);
+        showToast(baseResponse.message!, context);
       } else {
-        showToast(baseResponse.message, context);
+        showToast(baseResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -158,7 +159,7 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<CommonConfigModel>(
+    return BaseWidget<CommonConfigModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -200,7 +201,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                 uploadWidget(),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Text('Records',
+                  child: Text('Medical Records',
                       style: TextStyle(
                           fontSize: 16,
                           color: primaryColor,
@@ -213,7 +214,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                 Expanded(
                   child: Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: model.busy
+                      child: model!.busy
                           ? Center(child: CircularProgressIndicator())
                           : documents.isEmpty
                               ? noRecordsFound()
@@ -268,7 +269,7 @@ class _MyReportsViewState extends State<MyReportsView> {
             size: 24,
           ),
           label: Text(
-            'Upload new records',
+            'Upload medical records',
             style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.white,
@@ -310,21 +311,22 @@ class _MyReportsViewState extends State<MyReportsView> {
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       child: InkWell(
         onTap: () {
-          progressDialog.show();
+          progressDialog.show(
+              max: 100, msg: 'Loading...', barrierDismissible: false);
           //showToast(document.mimeType);
-          if (document.mimeType.contains('pdf')) {
+          if (document.mimeType!.contains('pdf')) {
             //createFileOfPdfUrl(document.urlAuth, document.fileName);
 
-            createFileOfPdfUrl(document.authenticatedUrl, document.fileName)
+            createFileOfPdfUrl(document.authenticatedUrl!, document.fileName)
                 .then((f) {
-              progressDialog.hide();
+              progressDialog.close();
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => PDFScreen(f.path)));
             });
-          } else if (document.mimeType.contains('image')) {
-            createFileOfPdfUrl(document.authenticatedUrl, document.fileName)
+          } else if (document.mimeType!.contains('image')) {
+            createFileOfPdfUrl(document.authenticatedUrl!, document.fileName)
                 .then((f) {
-              progressDialog.hide();
+              progressDialog.close();
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -354,14 +356,14 @@ class _MyReportsViewState extends State<MyReportsView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(document.displayId,
+                      Text(' ', //document.displayId!
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w300,
                               color: textBlack)),
-                      Text(dateFormat.format(document.uploadedDate.toLocal()),
+                      Text(dateFormat.format(document.uploadedDate!.toLocal()),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -372,7 +374,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width - 100,
-                    child: Text(document.fileName,
+                    child: Text(document.fileName!,
                         semanticsLabel: document.fileName,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -510,36 +512,37 @@ class _MyReportsViewState extends State<MyReportsView> {
   ],
   )*/
 
-  urlFileShare(String shareLink) async {
-    final RenderBox box = _scaffoldKey.currentContext.findRenderObject();
+  urlFileShare(String? shareLink) async {
+    final RenderBox? box =
+        _scaffoldKey.currentContext!.findRenderObject() as RenderBox?;
     if (Platform.isAndroid) {
       /*  var url = 'https://i.ytimg.com/vi/fq4N0hgOWzU/maxresdefault.jpg';
       var response = await get(url);
       final documentDirectory = (await getExternalStorageDirectory()).path;*/
       //File imgFile = new File(pathPDF);
       /*imgFile.writeAsBytesSync(response.bodyBytes);*/
-      Share.share(shareLink,
+      Share.share(shareLink!,
           subject: 'Hello, check your shared file.',
-          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
     } else {
-      Share.share(shareLink,
+      Share.share(shareLink!,
           subject: 'Hello, check your shared file.',
-          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
     }
   }
 
-  Future<File> createFileOfPdfUrl(String url, String fileName) async {
+  Future<File> createFileOfPdfUrl(String url, String? fileName) async {
     //debugPrint('Base Url ==> ${url}');
     //final url = "http://africau.edu/images/default/sample.pdf";
     //final url = "https://www.lalpathlabs.com/SampleReports/Z614.pdf";
     //final filename = url.substring(url.lastIndexOf("/") + 1);
     final map = <String, String>{};
     //map["enc"] = "multipart/form-data";
-    map['Authorization'] = 'Bearer ' + auth;
+    map['Authorization'] = 'Bearer ' + auth!;
 
     final request = await HttpClient().getUrl(Uri.parse(url));
-    request.headers.add('Authorization', 'Bearer ' + auth);
-    request.headers.add('x-api-key', _api_key);
+    request.headers.add('Authorization', 'Bearer ' + auth!);
+    request.headers.add('x-api-key', _api_key!);
     final response = await request.close();
 
     debugPrint('Base Url ==> ${request.uri}');
@@ -553,10 +556,10 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   Future getFile(String type) async {
-    String result;
+    String? result;
     try {
       final FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
-        allowedMimeTypes: [
+          allowedMimeTypes: [
             'application/pdf',
             'application/docs',
             'application/ppt'
@@ -571,7 +574,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       debugPrint('File Result ==> $result');
 
       if (result != '') {
-        final File file = File(result);
+        final File file = File(result!);
         debugPrint(result);
         final String fileName = file.path.split('/').last;
         debugPrint('File Name ==> $fileName');
@@ -581,7 +584,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       }
     } catch (e) {
       showToast('Please select correct document', context);
-      debugPrint(e);
+      debugPrint(e.toString());
       result = 'Error: $e';
     }
   }
@@ -607,7 +610,7 @@ class _MyReportsViewState extends State<MyReportsView> {
     'Doctor Notes'
   ];
 
-  Future<String> _askForDocsType() async {
+  Future<String?> _askForDocsType() async {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -650,14 +653,14 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   uploadProfilePicture(File file, String type) async {
-    progressDialog.show();
+    progressDialog.show(max: 100, msg: 'Loading...', barrierDismissible: false);
     try {
-      final map = <String, String>{};
+      Map<String, String>? map = <String, String>{};
       map['enc'] = 'multipart/form-data';
-      map['Authorization'] = 'Bearer ' + auth;
-      map['x-api-key'] = _api_key;
+      map['Authorization'] = 'Bearer ' + auth!;
+      map['x-api-key'] = _api_key as String;
 
-      final String _baseUrl = apiProvider.getBaseUrl();
+      final String _baseUrl = apiProvider!.getBaseUrl()!;
 
       final postUri = Uri.parse(_baseUrl + '/patient-documents/');
       final request = http.MultipartRequest('POST', postUri);
@@ -667,7 +670,7 @@ class _MyReportsViewState extends State<MyReportsView> {
           filename: file.path.split('/').last));
       //request.files.add(new http.MultipartFile.fromBytes('name', await file.readAsBytes()), fileName);
       request.fields['DocumentType'] = type;
-      request.fields['PatientUserId'] = patientUserId;
+      request.fields['PatientUserId'] = patientUserId!;
 
       debugPrint('Base Url ==> MultiPart ${request.url}');
       debugPrint('Request Body ==> ${json.encode(request.fields).toString()}');
@@ -675,7 +678,7 @@ class _MyReportsViewState extends State<MyReportsView> {
 
       request.send().then((response) async {
         if (response.statusCode == 201) {
-          progressDialog.hide();
+          progressDialog.close();
           debugPrint('Uploaded!');
           final respStr = await response.stream.bytesToString();
           debugPrint('Uploded ' + respStr);
@@ -683,20 +686,20 @@ class _MyReportsViewState extends State<MyReportsView> {
               UploadDocumentResponse.fromJson(json.decode(respStr));
           if (uploadResponse.status == 'success') {
             getAllRecords();
-            showToast(uploadResponse.message, context);
+            showToast(uploadResponse.message!, context);
           } else {
             showToast('Opps, something went wrong!', context);
           }
         } else {
           final respStr = await response.stream.bytesToString();
-          progressDialog.hide();
+          progressDialog.close();
           showToast('Opps, something went wrong!', context);
           debugPrint('Upload Faild ! ==> $respStr');
         }
       }); // debugPrint("3");
 
     } catch (CustomException) {
-      progressDialog.hide();
+      progressDialog.close();
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
     }
@@ -733,7 +736,7 @@ class _MyReportsViewState extends State<MyReportsView> {
           TextButton(
             child: Text('Yes'),
             onPressed: () {
-              deleteDocument(document.id);
+              deleteDocument(document.id!);
               Navigator.of(context, rootNavigator: true).pop();
             },
           ),
@@ -743,7 +746,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   _renameDialog(Items document) async {
-    renameControler.text = document.fileName;
+    renameControler.text = document.fileName!;
     renameControler.selection = TextSelection.fromPosition(
       TextPosition(offset: renameControler.text.length - 4),
     );
@@ -796,7 +799,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                   showToastMsg(
                       'Record name cannot be more than 64 character', context);
                 } else {
-                  renameDocument(document.id, renameControler.text);
+                  renameDocument(document.id!, renameControler.text);
                   Navigator.of(context, rootNavigator: true).pop();
                 }
               })
@@ -920,7 +923,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                   child: InkWell(
                     onTap: () async {
                       Navigator.pop(context);
-                      final String type = await _askForDocsType();
+                      final String? type = await _askForDocsType();
                       debugPrint('File Type $type');
                       if (type != null) {
                         getFile(type);
@@ -971,11 +974,13 @@ class _MyReportsViewState extends State<MyReportsView> {
             ),
             Align(
               alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text(
-                  'Note: Files formats supported include  .docx, .pdf, .ppt.',
-                  style: TextStyle(fontSize: 12, color: textGrey),
+              child: Semantics(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    'Note: Files formats supported include  .docx, .pdf, .ppt.',
+                    style: TextStyle(fontSize: 12, color: textGrey),
+                  ),
                 ),
               ),
             ),
@@ -986,13 +991,13 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   openGallery() async {
-    final String type = await _askForDocsType();
+    final String? type = await _askForDocsType();
     debugPrint('File Type $type');
     if (type != null) {
       final picture = await _picker.pickImage(
         source: ImageSource.gallery,
       );
-      final File file = File(picture.path);
+      final File file = File(picture!.path);
       debugPrint(picture.path);
       final String fileName = file.path.split('/').last;
       debugPrint('File Name ==> $fileName');
@@ -1003,17 +1008,18 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   openCamera() async {
-    final String type = await _askForDocsType();
+    final String? type = await _askForDocsType();
     debugPrint('File Type $type');
-
-    final picture = await _picker.pickImage(
-      source: ImageSource.camera,
-    );
-    final File file = File(picture.path);
-    debugPrint(picture.path);
-    final String fileName = file.path.split('/').last;
-    debugPrint('File Name ==> $fileName');
-    uploadProfilePicture(file, type);
+    if (type != null) {
+      final picture = await _picker.pickImage(
+        source: ImageSource.camera,
+      );
+      final File file = File(picture!.path);
+      debugPrint(picture.path);
+      final String fileName = file.path.split('/').last;
+      debugPrint('File Name ==> $fileName');
+      uploadProfilePicture(file, type);
+    }
   }
 }
 

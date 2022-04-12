@@ -7,7 +7,7 @@ import 'package:paitent/features/misc/models/user_data.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import '../../../misc/ui/base_widget.dart';
 
@@ -24,44 +24,44 @@ class _SearchLabListViewState extends State<SearchLabListView> {
   Address first;
   bool _serviceEnabled;*/
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  String name = '';
+  String? name = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _searchController = TextEditingController();
-  String auth = '';
+  String? auth = '';
   var model = BookAppoinmentViewModel();
   var labSearchList = <Labs>[];
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
 
   loadSharedPrefs() async {
     try {
       final UserData user =
           UserData.fromJson(await _sharedPrefUtils.read('user'));
       //debugPrint(user.toJson().toString());
-      auth = user.data.accessToken;
+      auth = user.data!.accessToken;
       getLabList();
       setState(() {
-        name = user.data.user.person.firstName;
+        name = user.data!.user!.person!.firstName;
       });
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
   getLabList() async {
     try {
       final LabsListApiResponse labsListApiResponse =
-          await model.getLabsList('Bearer ' + auth);
+          await model.getLabsList('Bearer ' + auth!);
 
       if (labsListApiResponse.status == 'success') {
-        if (labsListApiResponse.data.labs.isNotEmpty) {
+        if (labsListApiResponse.data!.labs!.isNotEmpty) {
           labSearchList.clear();
-          labSearchList.addAll(labsListApiResponse.data.labs);
+          labSearchList.addAll(labsListApiResponse.data!.labs!);
         } else {
           labSearchList.clear();
         }
       } else {
-        showToast(labsListApiResponse.message, context);
+        showToast(labsListApiResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -73,17 +73,17 @@ class _SearchLabListViewState extends State<SearchLabListView> {
   getLabListByName(String name) async {
     try {
       final LabsListApiResponse labsListApiResponse =
-          await model.getLabsListByLocality(name, 'Bearer ' + auth);
+          await model.getLabsListByLocality(name, 'Bearer ' + auth!);
 
       if (labsListApiResponse.status == 'success') {
-        if (labsListApiResponse.data.labs.isNotEmpty) {
+        if (labsListApiResponse.data!.labs!.isNotEmpty) {
           labSearchList.clear();
-          labSearchList.addAll(labsListApiResponse.data.labs);
+          labSearchList.addAll(labsListApiResponse.data!.labs!);
         } else {
           labSearchList.clear();
         }
       } else {
-        showToast(labsListApiResponse.message, context);
+        showToast(labsListApiResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -127,20 +127,21 @@ class _SearchLabListViewState extends State<SearchLabListView> {
 
   getLabDetails(String labUserId) async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final LabDetailsResponse doctorDetailsResponse =
-          await model.getLabDetails('Bearer ' + auth, labUserId);
+          await model.getLabDetails('Bearer ' + auth!, labUserId);
 
       if (doctorDetailsResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         Navigator.pushNamed(context, RoutePaths.Lab_Details_View,
-            arguments: doctorDetailsResponse.data.lab);
+            arguments: doctorDetailsResponse.data!.lab);
       } else {
-        progressDialog.hide();
-        showToast(doctorDetailsResponse.message, context);
+        progressDialog.close();
+        showToast(doctorDetailsResponse.message!, context);
       }
     } catch (CustomException) {
-      progressDialog.hide();
+      progressDialog.close();
       showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
@@ -156,8 +157,8 @@ class _SearchLabListViewState extends State<SearchLabListView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<BookAppoinmentViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<BookAppoinmentViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -244,7 +245,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                     height: 16,
                   ),
                   Expanded(
-                    child: model.busy
+                    child: model!.busy
                         ? Center(
                             child: SizedBox(
                                 height: 32,
@@ -315,11 +316,12 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                             backgroundColor: primaryColor,
                             child: CircleAvatar(
                                 radius: 38,
-                                backgroundImage: (labDetails.imageURL == '') ||
+                                backgroundImage: ((labDetails.imageURL == '') ||
                                         (labDetails.imageURL == null)
                                     ? AssetImage(
                                         'res/images/profile_placeholder.png')
-                                    : NetworkImage(labDetails.imageURL)),
+                                    : NetworkImage(labDetails
+                                        .imageURL!)) as ImageProvider<Object>?),
                           ),
                         ),
                       ),
@@ -332,7 +334,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(labDetails.establishmentName,
+                            Text(labDetails.establishmentName!,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -340,7 +342,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                                     fontWeight: FontWeight.w600,
                                     fontFamily: 'Montserrat',
                                     color: primaryColor)),
-                            Text(labDetails.locality,
+                            Text(labDetails.locality!,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -365,14 +367,14 @@ class _SearchLabListViewState extends State<SearchLabListView> {
                     width: 60,
                   ),
                   Semantics(
-                    label: 'Book_' + labDetails.establishmentName + '',
+                    label: 'Book_' + labDetails.establishmentName! + '',
                     button: true,
                     hint: 'activate to book now',
                     child: InkWell(
                       onTap: () {
                         /*Navigator.pushNamed(context, RoutePaths.Lab_Details_View,
                             arguments: labDetails);*/
-                        getLabDetails(labDetails.userId);
+                        getLabDetails(labDetails.userId!);
                       },
                       child: Container(
                         height: 56,

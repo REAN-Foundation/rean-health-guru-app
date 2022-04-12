@@ -27,15 +27,15 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var dateFormat = DateFormat('yyyy-MM-dd');
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  double totalTodayCal = 0.0;
-  double totalBreakfastCal = 0.0;
-  double totalLunchCal = 0.0;
-  double totalDinnerCal = 0.0;
-  double totalMorningSnackCal = 0.0;
-  double totalAfernoonSnackCal = 0.0;
-  double totalEveningSncakCal = 0.0;
+  double? totalTodayCal = 0.0;
+  double? totalBreakfastCal = 0.0;
+  double? totalLunchCal = 0.0;
+  double? totalDinnerCal = 0.0;
+  double? totalMorningSnackCal = 0.0;
+  double? totalAfernoonSnackCal = 0.0;
+  double? totalEveningSncakCal = 0.0;
 
-  NutritionResponseStore nutritionResponseStore;
+  late NutritionResponseStore nutritionResponseStore;
 
   loadSharedPref() async {
     try {
@@ -99,7 +99,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientHealthMarkerViewModel>(
+    return BaseWidget<PatientHealthMarkerViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -177,14 +177,15 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                               color: textGrey),
                         ),
                         Semantics(
-                          label: totalTodayCal.toStringAsFixed(0) + ' Calories',
+                          label:
+                              totalTodayCal!.toStringAsFixed(0) + ' Calories',
                           child: ExcludeSemantics(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  totalTodayCal.toStringAsFixed(0),
+                                  totalTodayCal!.toStringAsFixed(0),
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 24.0,
@@ -230,13 +231,13 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Semantics(
-                              label: totalBreakfastCal.toStringAsFixed(0) +
+                              label: totalBreakfastCal!.toStringAsFixed(0) +
                                   ' Calories',
                               child: ExcludeSemantics(
                                 child: Row(
                                   children: [
                                     Text(
-                                      totalBreakfastCal.toStringAsFixed(0),
+                                      totalBreakfastCal!.toStringAsFixed(0),
                                       semanticsLabel: '',
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500,
@@ -313,12 +314,12 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Semantics(
-                              label: totalLunchCal.toStringAsFixed(0) +
+                              label: totalLunchCal!.toStringAsFixed(0) +
                                   ' Calories',
                               child: ExcludeSemantics(
                                 child: Row(children: [
                                   Text(
-                                    totalLunchCal.toStringAsFixed(0),
+                                    totalLunchCal!.toStringAsFixed(0),
                                     semanticsLabel: '',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
@@ -394,13 +395,13 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Semantics(
-                              label: totalDinnerCal.toStringAsFixed(0) +
+                              label: totalDinnerCal!.toStringAsFixed(0) +
                                   ' Calories',
                               child: ExcludeSemantics(
                                 child: Row(
                                   children: [
                                     Text(
-                                      totalDinnerCal.toStringAsFixed(0),
+                                      totalDinnerCal!.toStringAsFixed(0),
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 18.0,
@@ -476,13 +477,13 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Semantics(
-                              label: totalMorningSnackCal.toStringAsFixed(0) +
+                              label: totalMorningSnackCal!.toStringAsFixed(0) +
                                   ' Calories',
                               child: ExcludeSemantics(
                                 child: Row(
                                   children: [
                                     Text(
-                                      totalMorningSnackCal.toStringAsFixed(0),
+                                      totalMorningSnackCal!.toStringAsFixed(0),
                                       semanticsLabel: '',
                                       style: TextStyle(
                                           fontWeight: FontWeight.w500,
@@ -563,7 +564,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    totalAfernoonSnackCal.toStringAsFixed(0),
+                                    totalAfernoonSnackCal!.toStringAsFixed(0),
                                     semanticsLabel: '',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
@@ -634,7 +635,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    totalEveningSncakCal.toStringAsFixed(0),
+                                    totalEveningSncakCal!.toStringAsFixed(0),
                                     semanticsLabel: '',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
@@ -770,25 +771,25 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
 
   addNutrition(String type, double caloriesConsumed) {
     if (type == 'breakfast') {
-      totalBreakfastCal = totalBreakfastCal + caloriesConsumed;
+      totalBreakfastCal = totalBreakfastCal! + caloriesConsumed;
     } else if (type == 'lunch') {
-      totalLunchCal = totalLunchCal + caloriesConsumed;
+      totalLunchCal = totalLunchCal! + caloriesConsumed;
     } else if (type == 'dinner') {
-      totalDinnerCal = totalDinnerCal + caloriesConsumed;
+      totalDinnerCal = totalDinnerCal! + caloriesConsumed;
     } else if (type == 'snack') {
-      totalMorningSnackCal = totalMorningSnackCal + caloriesConsumed;
+      totalMorningSnackCal = totalMorningSnackCal! + caloriesConsumed;
     } else if (type == 'afternoonSnacks') {
-      totalAfernoonSnackCal = totalAfernoonSnackCal + caloriesConsumed;
+      totalAfernoonSnackCal = totalAfernoonSnackCal! + caloriesConsumed;
     } else if (type == 'eveningSnacks') {
-      totalEveningSncakCal = totalEveningSncakCal + caloriesConsumed;
+      totalEveningSncakCal = totalEveningSncakCal! + caloriesConsumed;
     }
 
-    totalTodayCal = totalBreakfastCal +
-        totalLunchCal +
-        totalDinnerCal +
-        totalMorningSnackCal +
-        totalAfernoonSnackCal +
-        totalEveningSncakCal;
+    totalTodayCal = totalBreakfastCal! +
+        totalLunchCal! +
+        totalDinnerCal! +
+        totalMorningSnackCal! +
+        totalAfernoonSnackCal! +
+        totalEveningSncakCal!;
 
     setState(() {});
 
@@ -818,7 +819,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
       final BaseResponse baseResponse =
           await model.recordMyCaloriesConsumed(map);
       if (baseResponse.status == 'success') {
-        showToast(baseResponse.message, context);
+        showToast(baseResponse.message!, context);
       } else {}
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');

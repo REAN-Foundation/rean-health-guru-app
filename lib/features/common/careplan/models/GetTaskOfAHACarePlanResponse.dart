@@ -1,7 +1,7 @@
 class GetTaskOfAHACarePlanResponse {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   GetTaskOfAHACarePlanResponse({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class GetTaskOfAHACarePlanResponse {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<Task> tasks;
+  List<Task>? tasks;
 
   Data({this.tasks});
 
@@ -31,7 +31,7 @@ class Data {
     if (json['tasks'] != null) {
       tasks = <Task>[];
       json['tasks'].forEach((v) {
-        tasks.add(Task.fromJson(v));
+        tasks!.add(Task.fromJson(v));
       });
     }
   }
@@ -39,29 +39,29 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (tasks != null) {
-      data['tasks'] = tasks.map((v) => v.toJson()).toList();
+      data['tasks'] = tasks!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Task {
-  String id;
-  String patientUserId;
-  String displayId;
-  String name;
-  int categoryId;
-  String categoryName;
-  String type;
-  DateTime scheduledStartTime;
-  DateTime scheduledEndTime;
-  bool started;
-  String startedAt;
-  bool finished;
-  String finishedAt;
-  bool taskIsSuccess;
-  bool cancelled;
-  Details details;
+  String? id;
+  String? patientUserId;
+  String? displayId;
+  String? name;
+  int? categoryId;
+  String? categoryName;
+  String? type;
+  DateTime? scheduledStartTime;
+  DateTime? scheduledEndTime;
+  bool? started;
+  String? startedAt;
+  bool? finished;
+  String? finishedAt;
+  bool? taskIsSuccess;
+  bool? cancelled;
+  Details? details;
 
   Task(
       {this.id,
@@ -110,8 +110,8 @@ class Task {
     data['CategoryId'] = categoryId;
     data['CategoryName'] = categoryName;
     data['Type'] = type;
-    data['ScheduledStartTime'] = scheduledStartTime.toIso8601String();
-    data['ScheduledEndTime'] = scheduledEndTime.toIso8601String();
+    data['ScheduledStartTime'] = scheduledStartTime!.toIso8601String();
+    data['ScheduledEndTime'] = scheduledEndTime!.toIso8601String();
     data['Started'] = started;
     data['StartedAt'] = startedAt;
     data['Finished'] = finished;
@@ -119,62 +119,62 @@ class Task {
     data['TaskIsSuccess'] = taskIsSuccess;
     data['Cancelled'] = cancelled;
     if (details != null) {
-      data['Details'] = details.toJson();
+      data['Details'] = details!.toJson();
     }
     return data;
   }
 }
 
 class Details {
-  String id;
-  String patientUserId;
-  int carePlanId;
-  String type;
-  bool isEducationalTask;
-  String mainTitle;
-  String subTitle;
-  String description;
-  String language;
-  String taskDate;
-  int weekNumber;
-  int weekDayNumber;
-  int sessionNumber;
-  String scheduledStartTime;
-  String scheduledEndTime;
-  bool started;
-  String startedAt;
-  bool finished;
-  String finishedAt;
-  String action;
-  String category;
-  int bloodGlucose;
-  int bloodPressureSystolic;
-  int bloodPressureDiastolic;
-  int weight;
-  String text;
-  String assetName;
-  String challengeText;
-  String challengeNotes;
-  String medicationId;
-  String drugOrderId;
-  String drugName;
-  String details;
-  String timeScheduleStart;
-  String timeScheduleEnd;
-  String takenAt;
-  bool isTaken;
-  bool isMissed;
-  bool isCancelled;
-  DateTime cancelledOn;
-  String note;
-  String status;
-  String dateCreated;
-  String dateUpdated;
-  String url;
-  String additionalInfo;
-  ConcreteTask concreteTask;
-  String businessUserName;
-  String businessNodeName;
+  String? id;
+  String? patientUserId;
+  int? carePlanId;
+  String? type;
+  bool? isEducationalTask;
+  String? mainTitle;
+  String? subTitle;
+  String? description;
+  String? language;
+  String? taskDate;
+  int? weekNumber;
+  int? weekDayNumber;
+  int? sessionNumber;
+  String? scheduledStartTime;
+  String? scheduledEndTime;
+  bool? started;
+  String? startedAt;
+  bool? finished;
+  String? finishedAt;
+  String? action;
+  String? category;
+  int? bloodGlucose;
+  int? bloodPressureSystolic;
+  int? bloodPressureDiastolic;
+  int? weight;
+  String? text;
+  String? assetName;
+  String? challengeText;
+  String? challengeNotes;
+  String? medicationId;
+  String? drugOrderId;
+  String? drugName;
+  String? details;
+  String? timeScheduleStart;
+  String? timeScheduleEnd;
+  String? takenAt;
+  bool? isTaken;
+  bool? isMissed;
+  bool? isCancelled;
+  DateTime? cancelledOn;
+  String? note;
+  String? status;
+  String? dateCreated;
+  String? dateUpdated;
+  String? url;
+  String? additionalInfo;
+  ConcreteTask? concreteTask;
+  String? businessUserName;
+  String? businessNodeName;
 
   Details(
       {this.id,
@@ -332,30 +332,30 @@ class Details {
     data['business_node_name'] = businessNodeName;
     data['business_user_name'] = businessUserName;
     if (concreteTask != null) {
-      data['ConcreteTask'] = concreteTask.toJson();
+      data['ConcreteTask'] = concreteTask!.toJson();
     }
     return data;
   }
 }
 
 class ConcreteTask {
-  String id;
-  String patientUserId;
-  String taskId;
-  String taskType;
-  int carePlanId;
-  String allyMRN;
-  String sessionId;
-  String assetID;
-  String assetName;
-  String text;
-  String mediaUrl;
-  String word;
-  String meaning;
-  String category;
-  String language;
-  String createdAt;
-  String updatedAt;
+  String? id;
+  String? patientUserId;
+  String? taskId;
+  String? taskType;
+  int? carePlanId;
+  String? allyMRN;
+  String? sessionId;
+  String? assetID;
+  String? assetName;
+  String? text;
+  String? mediaUrl;
+  String? word;
+  String? meaning;
+  String? category;
+  String? language;
+  String? createdAt;
+  String? updatedAt;
 
   ConcreteTask(
       {this.id,

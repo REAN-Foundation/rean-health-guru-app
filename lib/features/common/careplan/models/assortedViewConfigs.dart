@@ -8,6 +8,6 @@ class AssortedViewConfigs {
   String toShow = '';
   String testToshow = '';
   bool isNextButtonVisible = false;
-  String header = '';
-  Task task;
+  String? header = '';
+  late Task task;
 }

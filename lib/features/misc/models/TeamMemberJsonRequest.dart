@@ -1,8 +1,8 @@
 class TeamMemberJsonRequest {
-  String carePlanId;
-  bool isEmergencyContact;
-  String teamMemberType;
-  Details details;
+  String? carePlanId;
+  bool? isEmergencyContact;
+  String? teamMemberType;
+  Details? details;
 
   TeamMemberJsonRequest(
       {this.carePlanId,
@@ -24,19 +24,19 @@ class TeamMemberJsonRequest {
     data['IsEmergencyContact'] = isEmergencyContact;
     data['TeamMemberType'] = teamMemberType;
     if (details != null) {
-      data['Details'] = details.toJson();
+      data['Details'] = details!.toJson();
     }
     return data;
   }
 }
 
 class Details {
-  String userId;
-  String firstName;
-  String lastName;
-  String prefix;
-  String phoneNumber;
-  String gender;
+  String? userId;
+  String? firstName;
+  String? lastName;
+  String? prefix;
+  String? phoneNumber;
+  String? gender;
 
   Details(
       {this.userId,

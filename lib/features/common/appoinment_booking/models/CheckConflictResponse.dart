@@ -1,8 +1,8 @@
 class CheckConflictResponse {
-  String status;
-  String message;
-  String error;
-  Data data;
+  String? status;
+  String? message;
+  String? error;
+  Data? data;
 
   CheckConflictResponse({this.status, this.message, this.error, this.data});
 
@@ -19,14 +19,14 @@ class CheckConflictResponse {
     data['message'] = message;
     data['error'] = error;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  Result result;
+  Result? result;
 
   Data({this.result});
 
@@ -37,14 +37,14 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (result != null) {
-      data['result'] = result.toJson();
+      data['result'] = result!.toJson();
     }
     return data;
   }
 }
 
 class Result {
-  bool canBook;
+  bool? canBook;
   dynamic conflictingAppointment;
 
   Result({this.canBook, this.conflictingAppointment});

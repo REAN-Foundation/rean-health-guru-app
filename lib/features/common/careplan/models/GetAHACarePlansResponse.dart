@@ -1,25 +1,25 @@
 class GetAHACarePlansResponse {
-  String _status;
-  String _message;
-  Data _data;
+  String? _status;
+  String? _message;
+  Data? _data;
 
-  GetAHACarePlansResponse({String status, String message, Data data}) {
+  GetAHACarePlansResponse({String? status, String? message, Data? data}) {
     _status = status;
     _message = message;
     _data = data;
   }
 
-  String get status => _status;
+  String? get status => _status;
 
-  set status(String status) => _status = status;
+  set status(String? status) => _status = status;
 
-  String get message => _message;
+  String? get message => _message;
 
-  set message(String message) => _message = message;
+  set message(String? message) => _message = message;
 
-  Data get data => _data;
+  Data? get data => _data;
 
-  set data(Data data) => _data = data;
+  set data(Data? data) => _data = data;
 
   GetAHACarePlansResponse.fromJson(Map<String, dynamic> json) {
     _status = json['status'];
@@ -32,29 +32,29 @@ class GetAHACarePlansResponse {
     data['status'] = _status;
     data['message'] = _message;
     if (_data != null) {
-      data['data'] = _data.toJson();
+      data['data'] = _data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<CarePlanTypes> _carePlanTypes;
+  List<CarePlanTypes>? _carePlanTypes;
 
-  Data({List<CarePlanTypes> carePlanTypes}) {
+  Data({List<CarePlanTypes>? carePlanTypes}) {
     _carePlanTypes = carePlanTypes;
   }
 
-  List<CarePlanTypes> get carePlanTypes => _carePlanTypes;
+  List<CarePlanTypes>? get carePlanTypes => _carePlanTypes;
 
-  set carePlanTypes(List<CarePlanTypes> carePlanTypes) =>
+  set carePlanTypes(List<CarePlanTypes>? carePlanTypes) =>
       _carePlanTypes = carePlanTypes;
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['carePlanTypes'] != null) {
       _carePlanTypes = <CarePlanTypes>[];
       json['carePlanTypes'].forEach((v) {
-        _carePlanTypes.add(CarePlanTypes.fromJson(v));
+        _carePlanTypes!.add(CarePlanTypes.fromJson(v));
       });
     }
   }
@@ -62,29 +62,29 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (_carePlanTypes != null) {
-      data['carePlanTypes'] = _carePlanTypes.map((v) => v.toJson()).toList();
+      data['carePlanTypes'] = _carePlanTypes!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class CarePlanTypes {
-  int _id;
-  String _code;
-  String _name;
-  int _durationInWeeks;
-  String _description;
-  String _createdAt;
-  String _updatedAt;
+  int? _id;
+  String? _code;
+  String? _name;
+  int? _durationInWeeks;
+  String? _description;
+  String? _createdAt;
+  String? _updatedAt;
 
   CarePlanTypes(
-      {int id,
-      String code,
-      String name,
-      int durationInWeeks,
-      String description,
-      String createdAt,
-      String updatedAt}) {
+      {int? id,
+      String? code,
+      String? name,
+      int? durationInWeeks,
+      String? description,
+      String? createdAt,
+      String? updatedAt}) {
     _id = id;
     _code = code;
     _name = name;
@@ -94,34 +94,34 @@ class CarePlanTypes {
     _updatedAt = updatedAt;
   }
 
-  int get id => _id;
+  int? get id => _id;
 
-  set id(int id) => _id = id;
+  set id(int? id) => _id = id;
 
-  String get code => _code;
+  String? get code => _code;
 
-  set code(String code) => _code = code;
+  set code(String? code) => _code = code;
 
-  String get name => _name;
+  String? get name => _name;
 
-  set name(String name) => _name = name;
+  set name(String? name) => _name = name;
 
-  int get durationInWeeks => _durationInWeeks;
+  int? get durationInWeeks => _durationInWeeks;
 
-  set durationInWeeks(int durationInWeeks) =>
+  set durationInWeeks(int? durationInWeeks) =>
       _durationInWeeks = durationInWeeks;
 
-  String get description => _description;
+  String? get description => _description;
 
-  set description(String description) => _description = description;
+  set description(String? description) => _description = description;
 
-  String get createdAt => _createdAt;
+  String? get createdAt => _createdAt;
 
-  set createdAt(String createdAt) => _createdAt = createdAt;
+  set createdAt(String? createdAt) => _createdAt = createdAt;
 
-  String get updatedAt => _updatedAt;
+  String? get updatedAt => _updatedAt;
 
-  set updatedAt(String updatedAt) => _updatedAt = updatedAt;
+  set updatedAt(String? updatedAt) => _updatedAt = updatedAt;
 
   CarePlanTypes.fromJson(Map<String, dynamic> json) {
     _id = json['id'];

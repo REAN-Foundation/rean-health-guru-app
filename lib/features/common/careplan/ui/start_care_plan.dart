@@ -13,7 +13,7 @@ import 'package:paitent/infra/utils/StringUtility.dart';
 
 //ignore: must_be_immutable
 class StartCarePlanView extends StatefulWidget {
-  String selectedCarePlan = '';
+  String? selectedCarePlan = '';
 
   StartCarePlanView(this.selectedCarePlan);
 
@@ -33,7 +33,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: MergeSemantics(
@@ -98,7 +98,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        'Your selected plan is : ' + widget.selectedCarePlan,
+                        'Your selected plan is : ' + widget.selectedCarePlan!,
                         style: TextStyle(
                             fontWeight: FontWeight.w600, color: primaryColor),
                       ),
@@ -205,7 +205,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
                       Semantics(
                         label: 'please select a start date',
                         readOnly: true,
-                        child: model.busy
+                        child: model!.busy
                             ? Center(
                                 child: CircularProgressIndicator(),
                               )
@@ -274,7 +274,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
     try {
       final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
       model.setBusy(true);
-      final map = <String, String>{};
+      final map = <String, String?>{};
       map['PatientUserId'] = patientUserId;
       map['CarePlanCode'] = widget.selectedCarePlan;
       map['StartDate'] = startDate;
@@ -285,9 +285,9 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
       if (startCarePlanResponse.status == 'success') {
         _sharedPrefUtils.save('CarePlan', startCarePlanResponse.toJson());
         Navigator.pushNamed(context, RoutePaths.Setup_Doctor_For_Care_Plan);
-        showToast(startCarePlanResponse.message, context);
+        showToast(startCarePlanResponse.message!, context);
       } else {
-        showToast(startCarePlanResponse.message, context);
+        showToast(startCarePlanResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);

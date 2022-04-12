@@ -1,7 +1,7 @@
 class StartAssesmentResponse {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   StartAssesmentResponse({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class StartAssesmentResponse {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  Assessmment assessmment;
+  Assessmment? assessmment;
 
   Data({this.assessmment});
 
@@ -36,22 +36,22 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (assessmment != null) {
-      data['assessmment'] = assessmment.toJson();
+      data['assessmment'] = assessmment!.toJson();
     }
     return data;
   }
 }
 
 class Assessmment {
-  String qnAId;
-  String taskId;
-  String assessmentTitle;
-  String assessmentDate;
-  int carePlanId;
-  Question question;
-  bool isBiometric;
-  String biometricName;
-  String biometricMeasureUnit;
+  String? qnAId;
+  String? taskId;
+  String? assessmentTitle;
+  String? assessmentDate;
+  int? carePlanId;
+  Question? question;
+  bool? isBiometric;
+  String? biometricName;
+  String? biometricMeasureUnit;
 
   Assessmment(
       {this.qnAId,
@@ -84,7 +84,7 @@ class Assessmment {
     data['AssessmentDate'] = assessmentDate;
     data['CarePlanId'] = carePlanId;
     if (question != null) {
-      data['Question'] = question.toJson();
+      data['Question'] = question!.toJson();
     }
     data['IsBiometric'] = isBiometric;
     data['BiometricName'] = biometricName;
@@ -94,11 +94,11 @@ class Assessmment {
 }
 
 class Question {
-  int index;
-  bool isLastQuestion;
-  String questionText;
-  String questionType;
-  List<String> answerOptions;
+  int? index;
+  bool? isLastQuestion;
+  String? questionText;
+  String? questionType;
+  List<String>? answerOptions;
 
   Question(
       {this.index,

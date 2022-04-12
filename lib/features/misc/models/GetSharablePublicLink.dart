@@ -1,8 +1,8 @@
 class GetSharablePublicLink {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
 
   GetSharablePublicLink({this.status, this.message, this.httpCode, this.data});
 
@@ -19,14 +19,14 @@ class GetSharablePublicLink {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  String patientDocumentLink;
+  String? patientDocumentLink;
 
   Data({this.patientDocumentLink});
 

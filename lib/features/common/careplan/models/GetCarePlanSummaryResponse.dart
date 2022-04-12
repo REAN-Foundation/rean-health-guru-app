@@ -1,7 +1,7 @@
 class GetCarePlanSummaryResponse {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   GetCarePlanSummaryResponse({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class GetCarePlanSummaryResponse {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  CarePlanSummary carePlanSummary;
+  CarePlanSummary? carePlanSummary;
 
   Data({this.carePlanSummary});
 
@@ -36,24 +36,24 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (carePlanSummary != null) {
-      data['carePlanSummary'] = carePlanSummary.toJson();
+      data['carePlanSummary'] = carePlanSummary!.toJson();
     }
     return data;
   }
 }
 
 class CarePlanSummary {
-  String patientUserId;
-  String carePlanDisplayId;
-  String carePlanName;
-  String carePlanCode;
-  int durationInWeeks;
-  DateTime carePlanStartDate;
-  DateTime carePlanEndDate;
-  String enrolledOn;
-  int currentWeek;
-  int dayOfCurrentWeek;
-  String carePlanStatus;
+  String? patientUserId;
+  String? carePlanDisplayId;
+  String? carePlanName;
+  String? carePlanCode;
+  int? durationInWeeks;
+  DateTime? carePlanStartDate;
+  DateTime? carePlanEndDate;
+  String? enrolledOn;
+  int? currentWeek;
+  int? dayOfCurrentWeek;
+  String? carePlanStatus;
 
   CarePlanSummary(
       {this.patientUserId,
@@ -89,8 +89,8 @@ class CarePlanSummary {
     data['CarePlanName'] = carePlanName;
     data['CarePlanCode'] = carePlanCode;
     data['DurationInWeeks'] = durationInWeeks;
-    data['CarePlanStartDate'] = carePlanStartDate.toIso8601String();
-    data['CarePlanEndDate'] = carePlanEndDate.toIso8601String();
+    data['CarePlanStartDate'] = carePlanStartDate!.toIso8601String();
+    data['CarePlanEndDate'] = carePlanEndDate!.toIso8601String();
     data['EnrolledOn'] = enrolledOn;
     data['CurrentWeek'] = currentWeek;
     data['DayOfCurrentWeek'] = dayOfCurrentWeek;

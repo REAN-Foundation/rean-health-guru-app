@@ -1,5 +1,5 @@
 class FAQChatModelPojo {
-  String text;
+  String? text;
   DateTime timeStamp;
   String sender;
   bool hasAnnounced = false;

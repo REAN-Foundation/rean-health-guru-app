@@ -17,9 +17,11 @@ import '../../../misc/ui/home_view.dart';
 
 // ignore: must_be_immutable
 class VideoMoreCarePlanView extends StatefulWidget {
-  AssortedViewConfigs assortedViewConfigs;
+  AssortedViewConfigs? assortedViewConfigs;
 
-  VideoMoreCarePlanView(this.assortedViewConfigs);
+  VideoMoreCarePlanView(assortedViewConfigs) {
+    this.assortedViewConfigs = assortedViewConfigs;
+  }
 
   @override
   _VideoMoreCarePlanViewState createState() => _VideoMoreCarePlanViewState();
@@ -31,25 +33,25 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
 
 //https://www.youtube.com/watch?v=s1pG7k_1nSw
   String videourl = 'https://www.youtube.com/watch?v=d8PzoTr95ik';
-  String videoId;
+  String? videoId;
   String textMsg1 =
       'Welcome to the Connected Heart Health CarePlan. For the next 12 weeks you will be given daily activities designed to help you manage your condition.\n\nThese activities will include education, assessments, challenges, and communication. We will begin with some foundational information and developing your self CarePlan.';
   String textMsg2 =
       "Heart Failure is a chronic, progressive condition in which the heart muscle is unable to pump enough blood through the heart to meet the body's needs for blood and oxygen.\n\nHeart failure usually results in an enlarged heart.";
 
-  YoutubePlayerController _controller;
+  late YoutubePlayerController _controller;
 
   String unformatedDOB = '';
   var dateFormat = DateFormat('dd MMM, yyyy');
 
   @override
   void initState() {
-    if (widget.assortedViewConfigs.task.type == 'Video') {
+    if (widget.assortedViewConfigs!.task.type == 'Video') {
       videoId = YoutubePlayer.convertUrlToId(
-          widget.assortedViewConfigs.task.details.url);
+          widget.assortedViewConfigs!.task.details!.url!);
       debugPrint(videoId);
       _controller = YoutubePlayerController(
-        initialVideoId: videoId, //"d8PzoTr95ik",
+        initialVideoId: videoId!, //"d8PzoTr95ik",
         flags: YoutubePlayerFlags(
           autoPlay: false,
           mute: false,
@@ -61,7 +63,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -71,9 +73,9 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
             backgroundColor: Colors.white,
             brightness: Brightness.light,
             title: Text(
-              widget.assortedViewConfigs.header == ''
+              widget.assortedViewConfigs!.header == ''
                   ? 'Learn More!'
-                  : widget.assortedViewConfigs.header,
+                  : widget.assortedViewConfigs!.header!,
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
@@ -106,9 +108,9 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
                       height: 16,
                     ),
                     Expanded(
-                      child: widget.assortedViewConfigs.toShow == '1'
+                      child: widget.assortedViewConfigs!.toShow == '1'
                           ? iMageView()
-                          : widget.assortedViewConfigs.toShow == '2'
+                          : widget.assortedViewConfigs!.toShow == '2'
                               ? audioView()
                               : videoView(),
                     ),
@@ -235,7 +237,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
                           return HomeView( 0 );
                         }), (Route<dynamic> route) => false);*/
                   completeMessageTaskOfAHACarePlan(
-                      widget.assortedViewConfigs.task);
+                      widget.assortedViewConfigs!.task);
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -295,7 +297,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
           Container(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              widget.assortedViewConfigs.task.details.text,
+              widget.assortedViewConfigs!.task.details!.text!,
               style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
             ),
           ),
@@ -307,8 +309,8 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
             children: [
               InkWell(
                 onTap: () {
-                  _launchURL(widget
-                      .assortedViewConfigs.task.details.concreteTask.mediaUrl);
+                  _launchURL(widget.assortedViewConfigs!.task.details!
+                      .concreteTask!.mediaUrl!);
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -368,7 +370,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
           Container(
               padding: const EdgeInsets.all(16.0),
               child: Image.asset(
-                widget.assortedViewConfigs.testToshow == '1'
+                widget.assortedViewConfigs!.testToshow == '1'
                     ? 'res/images/care_plan_message.jpg'
                     : 'res/images/care_plan_info_graphic.jpg',
                 fit: BoxFit.cover,
@@ -376,7 +378,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
           Container(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              widget.assortedViewConfigs.task.details.text,
+              widget.assortedViewConfigs!.task.details!.text!,
               style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
             ),
           ),
@@ -412,7 +414,8 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
     try {
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.completeMessageTaskOfAHACarePlan(
-              startCarePlanResponseGlob.data.carePlan.id.toString(), task.id);
+              startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+              task.id!);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;
@@ -423,7 +426,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
         debugPrint(
             'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
-        showToast(_startTaskOfAHACarePlanResponse.message, context);
+        showToast(_startTaskOfAHACarePlanResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);

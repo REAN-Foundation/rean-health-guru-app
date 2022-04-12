@@ -1,8 +1,8 @@
 import 'package:paitent/features/common/careplan/models/GetTaskOfAHACarePlanResponse.dart';
 
 class StartTaskOfAHACarePlanResponse {
-  String status;
-  String message;
+  String? status;
+  String? message;
   dynamic data;
 
   StartTaskOfAHACarePlanResponse({this.status, this.message, this.data});
@@ -25,7 +25,7 @@ class StartTaskOfAHACarePlanResponse {
 }
 
 class Data {
-  Task task;
+  Task? task;
 
   Data({this.task});
 
@@ -36,7 +36,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (task != null) {
-      data['task'] = task.toJson();
+      data['task'] = task!.toJson();
     }
     return data;
   }

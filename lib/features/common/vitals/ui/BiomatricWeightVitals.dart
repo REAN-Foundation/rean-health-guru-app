@@ -9,7 +9,7 @@ import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SimpleTimeSeriesChart.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
 class BiometricWeightVitalsView extends StatefulWidget {
@@ -31,7 +31,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   List<Items> records = <Items>[];
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   final _weightController = TextEditingController();
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
   String unit = 'Kg';
 
   @override
@@ -46,8 +46,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<PatientVitalsViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<PatientVitalsViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: widget.allUIViewsVisible
@@ -163,7 +163,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                         controller: _weightController,
                         maxLines: 1,
                         textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.number,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
                         onFieldSubmitted: (term) {},
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(
@@ -344,7 +345,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                 dateFormatStandard.format(
                     records.elementAt(index).recordDate == null
                         ? DateTime.now()
-                        : DateTime.parse(records.elementAt(index).recordDate)),
+                        : DateTime.parse(records.elementAt(index).recordDate!)),
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -433,7 +434,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
               .toStringAsFixed(1)
           : records.elementAt(i).bodyWeight.toString();
       data.add(TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
+          DateTime.parse(records.elementAt(i).recordDate!).toLocal(),
           double.parse(receivedWeight)));
     }
 
@@ -597,7 +598,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
   addvitals() async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
 
       double entertedWeight = double.parse(_weightController.text.toString());
 
@@ -614,15 +615,15 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           await model.addMyVitals('body-weights', map);
 
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
-        showToast(baseResponse.message, context);
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
         Navigator.pop(context);
       } else {
-        progressDialog.hide();
-        showToast(baseResponse.message, context);
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
@@ -635,9 +636,9 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           await model.getMyVitalsHistory('body-weights');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
-        records.addAll(getMyVitalsHistory.data.bodyWeightRecords.items);
+        records.addAll(getMyVitalsHistory.data!.bodyWeightRecords!.items!);
       } else {
-        showToast(getMyVitalsHistory.message, context);
+        showToast(getMyVitalsHistory.message!, context);
       }
     } catch (e) {
       model.setBusy(false);

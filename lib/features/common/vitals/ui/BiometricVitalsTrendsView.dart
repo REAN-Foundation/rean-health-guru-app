@@ -20,7 +20,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
 
   @override
   Widget build(BuildContext context) {
-    Widget screen;
+    late Widget screen;
     switch (_currentIndex) {
       case 0:
         screen = EnterAllVitalsView();
@@ -30,7 +30,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
         break;
     }
 
-    return BaseWidget<PatientVitalsViewModel>(
+    return BaseWidget<PatientVitalsViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(

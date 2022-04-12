@@ -1,8 +1,8 @@
 class DrugsLibraryPojo {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
 
   DrugsLibraryPojo({this.status, this.message, this.httpCode, this.data});
 
@@ -19,14 +19,14 @@ class DrugsLibraryPojo {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  Drugs drugs;
+  Drugs? drugs;
 
   Data({this.drugs});
 
@@ -37,20 +37,20 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (drugs != null) {
-      data['Drugs'] = drugs.toJson();
+      data['Drugs'] = drugs!.toJson();
     }
     return data;
   }
 }
 
 class Drugs {
-  int totalCount;
-  int retrievedCount;
-  int pageIndex;
-  int itemsPerPage;
-  String order;
-  String orderedBy;
-  List<Items> items;
+  int? totalCount;
+  int? retrievedCount;
+  int? pageIndex;
+  int? itemsPerPage;
+  String? order;
+  String? orderedBy;
+  List<Items>? items;
 
   Drugs(
       {this.totalCount,
@@ -71,7 +71,7 @@ class Drugs {
     if (json['Items'] != null) {
       items = <Items>[];
       json['Items'].forEach((v) {
-        items.add(Items.fromJson(v));
+        items!.add(Items.fromJson(v));
       });
     }
   }
@@ -85,22 +85,22 @@ class Drugs {
     data['Order'] = order;
     data['OrderedBy'] = orderedBy;
     if (items != null) {
-      data['Items'] = items.map((v) => v.toJson()).toList();
+      data['Items'] = items!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Items {
-  String id;
-  String ehrId;
-  String drugName;
-  String genericName;
-  String ingredients;
-  String strength;
-  String otherCommercialNames;
-  String manufacturer;
-  String otherInformation;
+  String? id;
+  String? ehrId;
+  String? drugName;
+  String? genericName;
+  String? ingredients;
+  String? strength;
+  String? otherCommercialNames;
+  String? manufacturer;
+  String? otherInformation;
 
   Items(
       {this.id,

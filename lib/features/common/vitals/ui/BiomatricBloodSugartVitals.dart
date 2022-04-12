@@ -9,7 +9,7 @@ import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SimpleTimeSeriesChart.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
 class BiometricBloodSugarVitalsView extends StatefulWidget {
@@ -33,7 +33,7 @@ class _BiometricBloodSugarVitalsViewState
   final _controller = TextEditingController();
   List<Items> records = <Items>[];
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
 
   @override
   void initState() {
@@ -43,8 +43,8 @@ class _BiometricBloodSugarVitalsViewState
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<PatientVitalsViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<PatientVitalsViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: widget.allUIViewsVisible
@@ -331,7 +331,7 @@ class _BiometricBloodSugarVitalsViewState
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              dateFormatStandard.format(DateTime.parse(record.recordDate)),
+              dateFormatStandard.format(DateTime.parse(record.recordDate!)),
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
@@ -412,7 +412,7 @@ class _BiometricBloodSugarVitalsViewState
 
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
+          DateTime.parse(records.elementAt(i).recordDate!).toLocal(),
           double.parse(records.elementAt(i).bloodGlucose.toString())));
     }
     debugPrint('Biometric Blood Glucose Date ==> ${data.elementAt(0).time}');
@@ -578,7 +578,7 @@ class _BiometricBloodSugarVitalsViewState
 
   addvitals() async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['BloodGlucose'] = _controller.text.toString();
       map['PatientUserId'] = "";
@@ -589,15 +589,15 @@ class _BiometricBloodSugarVitalsViewState
           await model.addMyVitals('blood-glucose', map);
 
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
-        showToast(baseResponse.message, context);
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
         Navigator.pop(context);
       } else {
-        progressDialog.hide();
-        showToast(baseResponse.message, context);
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
@@ -610,9 +610,9 @@ class _BiometricBloodSugarVitalsViewState
           await model.getMyVitalsHistory('blood-glucose');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
-        records.addAll(getMyVitalsHistory.data.bloodGlucoseRecords.items);
+        records.addAll(getMyVitalsHistory.data!.bloodGlucoseRecords!.items!);
       } else {
-        showToast(getMyVitalsHistory.message, context);
+        showToast(getMyVitalsHistory.message!, context);
       }
     } catch (e) {
       model.setBusy(false);

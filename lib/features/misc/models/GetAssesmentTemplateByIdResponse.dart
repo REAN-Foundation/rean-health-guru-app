@@ -1,8 +1,8 @@
 class GetAssesmentTemplateByIdResponse {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
 
   GetAssesmentTemplateByIdResponse(
       {this.status, this.message, this.httpCode, this.data});
@@ -20,14 +20,14 @@ class GetAssesmentTemplateByIdResponse {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  SymptomAssessmentTemplate symptomAssessmentTemplate;
+  SymptomAssessmentTemplate? symptomAssessmentTemplate;
 
   Data({this.symptomAssessmentTemplate});
 
@@ -40,18 +40,18 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (symptomAssessmentTemplate != null) {
-      data['SymptomAssessmentTemplate'] = symptomAssessmentTemplate.toJson();
+      data['SymptomAssessmentTemplate'] = symptomAssessmentTemplate!.toJson();
     }
     return data;
   }
 }
 
 class SymptomAssessmentTemplate {
-  String id;
-  String title;
-  String description;
-  List<String> tags;
-  List<TemplateSymptomTypes> templateSymptomTypes;
+  String? id;
+  String? title;
+  String? description;
+  List<String>? tags;
+  List<TemplateSymptomTypes>? templateSymptomTypes;
 
   SymptomAssessmentTemplate(
       {this.id,
@@ -68,7 +68,7 @@ class SymptomAssessmentTemplate {
     if (json['TemplateSymptomTypes'] != null) {
       templateSymptomTypes = <TemplateSymptomTypes>[];
       json['TemplateSymptomTypes'].forEach((v) {
-        templateSymptomTypes.add(TemplateSymptomTypes.fromJson(v));
+        templateSymptomTypes!.add(TemplateSymptomTypes.fromJson(v));
       });
     }
   }
@@ -81,18 +81,18 @@ class SymptomAssessmentTemplate {
     data['Tags'] = tags;
     if (templateSymptomTypes != null) {
       data['TemplateSymptomTypes'] =
-          templateSymptomTypes.map((v) => v.toJson()).toList();
+          templateSymptomTypes!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class TemplateSymptomTypes {
-  int index;
-  String symptomTypeId;
-  String symptom;
-  String description;
-  String imageResourceId;
+  int? index;
+  String? symptomTypeId;
+  String? symptom;
+  String? description;
+  String? imageResourceId;
 
   TemplateSymptomTypes(
       {this.index,

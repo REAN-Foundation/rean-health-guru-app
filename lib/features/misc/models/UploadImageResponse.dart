@@ -1,7 +1,7 @@
 class UploadImageResponse {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   UploadImageResponse({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class UploadImageResponse {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<Details> details;
+  List<Details>? details;
 
   Data({this.details});
 
@@ -31,7 +31,7 @@ class Data {
     if (json['details'] != null) {
       details = <Details>[];
       json['details'].forEach((v) {
-        details.add(Details.fromJson(v));
+        details!.add(Details.fromJson(v));
       });
     }
   }
@@ -39,18 +39,18 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (details != null) {
-      data['details'] = details.map((v) => v.toJson()).toList();
+      data['details'] = details!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Details {
-  String fileName;
-  String resourceId;
-  String url;
-  String mimeType;
-  int size;
+  String? fileName;
+  String? resourceId;
+  String? url;
+  String? mimeType;
+  int? size;
 
   Details({this.fileName, this.resourceId, this.url, this.mimeType, this.size});
 

@@ -8,15 +8,15 @@ import 'package:paitent/infra/utils/CommonUtils.dart';
 
 // ignore: must_be_immutable
 class AddNutritionDetailsDialog extends StatefulWidget {
-  Function _submitButtonListner;
-  String _nutritionName;
+  late Function _submitButtonListner;
+  String? _nutritionName;
 
   //AllergiesDialog(@required this._allergiesCategoryMenuItems,@required this._allergiesSeveretyMenuItems, @required Function this.submitButtonListner, this.patientId);
 
   AddNutritionDetailsDialog({
-    Key key,
-    @required Function submitButtonListner,
-    String nutritionName,
+    Key? key,
+    required Function submitButtonListner,
+    String? nutritionName,
   }) : super(key: key) {
     _submitButtonListner = submitButtonListner;
     _nutritionName = nutritionName;
@@ -44,7 +44,7 @@ class _MyDialogState extends State<AddNutritionDetailsDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
         model: model,
         builder: (context, model, child) => Container(
               child: textFeilds(),

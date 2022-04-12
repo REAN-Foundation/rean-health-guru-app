@@ -12,7 +12,7 @@ import 'package:paitent/infra/utils/CoachMarkUtilities.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/infra/utils/StringConstant.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 class MyTodaysMedicationView extends StatefulWidget {
@@ -32,11 +32,11 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
   List<Schedules> afternoonMedicationList = <Schedules>[];
   List<Schedules> eveningMedicationList = <Schedules>[];
   List<Schedules> nightMedicationList = <Schedules>[];
-  ProgressDialog progressDialog;
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
-  GlobalKey _key;
+  ProgressDialog? progressDialog;
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+  GlobalKey? _key;
   var globalKeyName;
-  TutorialCoachMark tutorialCoachMark;
+  TutorialCoachMark? tutorialCoachMark;
   List<TargetFocus> targets = [];
   CoachMarkUtilites coackMarkUtilites = CoachMarkUtilites();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
@@ -94,16 +94,16 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
       debugPrint('Medication ==> ${getMyMedicationsResponse.toJson()}');
       if (getMyMedicationsResponse.status == 'success') {
         debugPrint(
-            'Medication Length ==> ${getMyMedicationsResponse.data.medicationSchedulesForDay.schedules.length}');
+            'Medication Length ==> ${getMyMedicationsResponse.data!.medicationSchedulesForDay!.schedules!.length}');
         if (getMyMedicationsResponse
-            .data.medicationSchedulesForDay.schedules.isNotEmpty) {
+            .data!.medicationSchedulesForDay!.schedules!.isNotEmpty) {
           currentMedicationList.addAll(getMyMedicationsResponse
-              .data.medicationSchedulesForDay.schedules);
+              .data!.medicationSchedulesForDay!.schedules!);
           formatMedicationSectionWise(getMyMedicationsResponse
-              .data.medicationSchedulesForDay.schedules);
+              .data!.medicationSchedulesForDay!.schedules!);
         }
       } else {
-        showToast(getMyMedicationsResponse.message, context);
+        showToast(getMyMedicationsResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -123,7 +123,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     initTargets();
 
     medications.forEach((currentMedication) {
-      if (currentMedication.details
+      if (currentMedication.details!
           .toUpperCase()
           .contains('Morning'.toUpperCase())) {
         debugPrint(
@@ -133,7 +133,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
             currentMedication.status == 'Overdue') {
           morningMedicationList.add(currentMedication);
         }
-      } else if (currentMedication.details
+      } else if (currentMedication.details!
           .toUpperCase()
           .contains('Afternoon'.toUpperCase())) {
         if (currentMedication.status == 'Unknown' ||
@@ -141,7 +141,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
             currentMedication.status == 'Overdue') {
           afternoonMedicationList.add(currentMedication);
         }
-      } else if (currentMedication.details
+      } else if (currentMedication.details!
           .toUpperCase()
           .contains('Evening'.toUpperCase())) {
         if (currentMedication.status == 'Unknown' ||
@@ -149,7 +149,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
             currentMedication.status == 'Overdue') {
           eveningMedicationList.add(currentMedication);
         }
-      } else if (currentMedication.details
+      } else if (currentMedication.details!
           .toUpperCase()
           .contains('Night'.toUpperCase())) {
         if (currentMedication.status == 'Unknown' ||
@@ -164,14 +164,14 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<PatientMedicationViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<PatientMedicationViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: Colors.white,
-          body: model.busy
+          body: model!.busy
               ? Center(
                   child: SizedBox(
                     height: 32,
@@ -182,7 +182,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               : (morningMedicationList.isEmpty &&
                       afternoonMedicationList.isEmpty &&
                       eveningMedicationList.isEmpty &&
-              nightMedicationList.isEmpty
+                      nightMedicationList.isEmpty
                   ? noMedicationFound()
                   : SingleChildScrollView(
                       child: Column(
@@ -323,7 +323,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     String tittle,
   ) {
     final Schedules medication = medications.elementAt(index);
-    Key _localKey = Key(medication.drugName);
+    Key? _localKey = Key(medication.drugName!);
 
     if (globalKeyName == medication.drugName && !alreadyAssign) {
       //WidgetsBinding.instance.addPostFrameCallback(_layout);
@@ -332,7 +332,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     }
 
     return Dismissible(
-      key: _localKey,
+      key: _localKey!,
       child: ListTile(
         /*leading:SizedBox( height: 40, width: 16, child: CachedNetworkImage(
           imageUrl: symptomTypes.publicImageUrl,
@@ -340,11 +340,11 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
         title: Semantics(
           label: tittle +
               " " +
-              medication.drugName +
+              medication.drugName! +
               " swipe right for not taken or left for taken",
           child: ExcludeSemantics(
             child: Text(
-              '        ' + medication.drugName,
+              '        ' + medication.drugName!,
               style: TextStyle(
                   fontSize: 14.0,
                   color: primaryColor,
@@ -358,13 +358,13 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
       secondaryBackground: slideLeftBackground(),
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.endToStart) {
-          markMedicationsAsTaken(medication.id);
+          markMedicationsAsTaken(medication.id!);
           setState(() {
-            if (medication.details.contains('Morning')) {
+            if (medication.details!.contains('Morning')) {
               morningMedicationList.removeAt(index);
-            } else if (medication.details.contains('Afternoon')) {
+            } else if (medication.details!.contains('Afternoon')) {
               afternoonMedicationList.removeAt(index);
-            } else if (medication.details.contains('Evening')) {
+            } else if (medication.details!.contains('Evening')) {
               eveningMedicationList.removeAt(index);
             } else {
               nightMedicationList.removeAt(index);
@@ -404,13 +404,13 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               });*/
           //return res;
         } else {
-          markMedicationsAsMissed(medication.id);
+          markMedicationsAsMissed(medication.id!);
           setState(() {
-            if (medication.details.contains('Morning')) {
+            if (medication.details!.contains('Morning')) {
               morningMedicationList.removeAt(index);
-            } else if (medication.details.contains('Afternoon')) {
+            } else if (medication.details!.contains('Afternoon')) {
               afternoonMedicationList.removeAt(index);
-            } else if (medication.details.contains('Evening')) {
+            } else if (medication.details!.contains('Evening')) {
               eveningMedicationList.removeAt(index);
             } else {
               nightMedicationList.removeAt(index);
@@ -481,19 +481,19 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
 
   markMedicationsAsTaken(String consumptionId) async {
     try {
-      //progressDialog.show();
+      //progressDialog.show(max: 100, msg: 'Loading...' );progressDialog.show(max: 100, msg: 'Loading...' );
       final BaseResponse baseResponse =
           await model.markMedicationsAsTaken(consumptionId);
       debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
-        //progressDialog.hide();
+        //progressDialog.close();
         //getMyMedications();
       } else {
-        //progressDialog.hide();
-        showToast(baseResponse.message, context);
+        //progressDialog.close();
+        showToast(baseResponse.message!, context);
       }
     } catch (CustomException) {
-      //progressDialog.hide();
+      //progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
@@ -502,19 +502,19 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
 
   markMedicationsAsMissed(String consumptionId) async {
     try {
-      //progressDialog.show();
+      //progressDialog.show(max: 100, msg: 'Loading...' );progressDialog.show(max: 100, msg: 'Loading...' );
       final BaseResponse baseResponse =
           await model.markMedicationsAsMissed(consumptionId);
       debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
-        //progressDialog.hide();
+        //progressDialog.close();
         //getMyMedications();
       } else {
-        //progressDialog.hide();
-        showToast(baseResponse.message, context);
+        //progressDialog.close();
+        showToast(baseResponse.message!, context);
       }
     } catch (CustomException) {
-      //progressDialog.hide();
+      //progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());

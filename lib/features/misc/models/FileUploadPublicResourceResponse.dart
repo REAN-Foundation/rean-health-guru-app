@@ -1,8 +1,8 @@
 class FileUploadPublicResourceResponse {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
 
   FileUploadPublicResourceResponse(
       {this.status, this.message, this.httpCode, this.data});
@@ -20,14 +20,14 @@ class FileUploadPublicResourceResponse {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<FileResources> fileResources;
+  List<FileResources>? fileResources;
 
   Data({this.fileResources});
 
@@ -35,7 +35,7 @@ class Data {
     if (json['FileResources'] != null) {
       fileResources = [];
       json['FileResources'].forEach((v) {
-        fileResources.add(FileResources.fromJson(v));
+        fileResources!.add(FileResources.fromJson(v));
       });
     }
   }
@@ -43,22 +43,22 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (fileResources != null) {
-      data['FileResources'] = fileResources.map((v) => v.toJson()).toList();
+      data['FileResources'] = fileResources!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class FileResources {
-  String id;
-  String fileName;
-  String url;
-  String ownerUserId;
-  String uploadedByUserId;
-  bool isPublicResource;
-  String mimeType;
-  List<Versions> versions;
-  Versions defaultVersion;
+  String? id;
+  String? fileName;
+  String? url;
+  String? ownerUserId;
+  String? uploadedByUserId;
+  bool? isPublicResource;
+  String? mimeType;
+  List<Versions>? versions;
+  Versions? defaultVersion;
 
   FileResources(
       {this.id,
@@ -82,7 +82,7 @@ class FileResources {
     if (json['Versions'] != null) {
       versions = [];
       json['Versions'].forEach((v) {
-        versions.add(Versions.fromJson(v));
+        versions!.add(Versions.fromJson(v));
       });
     }
     defaultVersion = json['DefaultVersion'] != null
@@ -100,26 +100,26 @@ class FileResources {
     data['IsPublicResource'] = isPublicResource;
     data['MimeType'] = mimeType;
     if (versions != null) {
-      data['Versions'] = versions.map((v) => v.toJson()).toList();
+      data['Versions'] = versions!.map((v) => v.toJson()).toList();
     }
     if (defaultVersion != null) {
-      data['DefaultVersion'] = defaultVersion.toJson();
+      data['DefaultVersion'] = defaultVersion!.toJson();
     }
     return data;
   }
 }
 
 class Versions {
-  String versionId;
-  String resourceId;
-  String version;
-  String fileName;
-  String mimeType;
-  String originalName;
-  int size;
-  String storageKey;
-  String url;
-  String sourceFilePath;
+  String? versionId;
+  String? resourceId;
+  String? version;
+  String? fileName;
+  String? mimeType;
+  String? originalName;
+  int? size;
+  String? storageKey;
+  String? url;
+  String? sourceFilePath;
 
   Versions(
       {this.versionId,

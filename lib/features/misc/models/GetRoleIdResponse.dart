@@ -1,12 +1,12 @@
 class GetRoleIdResponse {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
-  Client client;
-  String context;
-  List<String> clientIps;
-  String aPIVersion;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
+  Client? client;
+  String? context;
+  List<String>? clientIps;
+  String? aPIVersion;
 
   GetRoleIdResponse(
       {this.status,
@@ -35,10 +35,10 @@ class GetRoleIdResponse {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     if (client != null) {
-      data['Client'] = client.toJson();
+      data['Client'] = client!.toJson();
     }
     data['Context'] = context;
     data['ClientIps'] = clientIps;
@@ -48,7 +48,7 @@ class GetRoleIdResponse {
 }
 
 class Data {
-  List<PersonRoleTypes> personRoleTypes;
+  List<PersonRoleTypes>? personRoleTypes;
 
   Data({this.personRoleTypes});
 
@@ -56,7 +56,7 @@ class Data {
     if (json['PersonRoleTypes'] != null) {
       personRoleTypes = <PersonRoleTypes>[];
       json['PersonRoleTypes'].forEach((v) {
-        personRoleTypes.add(PersonRoleTypes.fromJson(v));
+        personRoleTypes!.add(PersonRoleTypes.fromJson(v));
       });
     }
   }
@@ -64,15 +64,16 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (personRoleTypes != null) {
-      data['PersonRoleTypes'] = personRoleTypes.map((v) => v.toJson()).toList();
+      data['PersonRoleTypes'] =
+          personRoleTypes!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class PersonRoleTypes {
-  int id;
-  String roleName;
+  int? id;
+  String? roleName;
 
   PersonRoleTypes({this.id, this.roleName});
 
@@ -90,8 +91,8 @@ class PersonRoleTypes {
 }
 
 class Client {
-  String clientName;
-  String clientCode;
+  String? clientName;
+  String? clientCode;
 
   Client({this.clientName, this.clientCode});
 

@@ -9,7 +9,7 @@ import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SimpleTimeSeriesChart.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
 class BiometricBloodPresureVitalsView extends StatefulWidget {
@@ -37,7 +37,7 @@ class _BiometricBloodPresureVitalsViewState
   final _systolicFocus = FocusNode();
   final _diastolicFocus = FocusNode();
 
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
 
   @override
   void initState() {
@@ -47,8 +47,8 @@ class _BiometricBloodPresureVitalsViewState
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<PatientVitalsViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<PatientVitalsViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: widget.allUIViewsVisible
@@ -446,7 +446,7 @@ class _BiometricBloodPresureVitalsViewState
               Expanded(
                 flex: 1,
                 child: Text(
-                  dateFormatStandard.format(DateTime.parse(record.recordDate)),
+                  dateFormatStandard.format(DateTime.parse(record.recordDate!)),
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
@@ -548,7 +548,7 @@ class _BiometricBloodPresureVitalsViewState
 
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
+          DateTime.parse(records.elementAt(i).recordDate!).toLocal(),
           double.parse(records.elementAt(i).systolic.toString())));
     }
 
@@ -615,7 +615,7 @@ class _BiometricBloodPresureVitalsViewState
 
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate).toLocal(),
+          DateTime.parse(records.elementAt(i).recordDate!).toLocal(),
           double.parse(records.elementAt(i).diastolic.toString())));
     }
 
@@ -949,7 +949,7 @@ class _BiometricBloodPresureVitalsViewState
 
   addvitals() async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['Systolic'] = _systolicController.text.toString();
       map['Diastolic'] = _diastolicController.text.toString();
@@ -957,20 +957,19 @@ class _BiometricBloodPresureVitalsViewState
       map['Unit'] = "mmHg";
       //map['RecordedByUserId'] = null;
 
-
       final BaseResponse baseResponse =
           await model.addMyVitals('blood-pressures', map);
 
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
-        showToast(baseResponse.message, context);
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
         Navigator.pop(context);
       } else {
-        progressDialog.hide();
-        showToast(baseResponse.message, context);
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
@@ -983,9 +982,9 @@ class _BiometricBloodPresureVitalsViewState
           await model.getMyVitalsHistory('blood-pressures');
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
-        records.addAll(getMyVitalsHistory.data.bloodPressureRecords.items);
+        records.addAll(getMyVitalsHistory.data!.bloodPressureRecords!.items!);
       } else {
-        showToast(getMyVitalsHistory.message, context);
+        showToast(getMyVitalsHistory.message!, context);
       }
     } catch (e) {
       model.setBusy(false);

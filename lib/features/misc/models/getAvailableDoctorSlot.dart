@@ -1,7 +1,7 @@
 class GetAvailableDoctorSlot {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   GetAvailableDoctorSlot({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class GetAvailableDoctorSlot {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<SlotsByDate> slotsByDate;
+  List<SlotsByDate>? slotsByDate;
 
   Data({this.slotsByDate});
 
@@ -31,7 +31,7 @@ class Data {
     if (json['slots_by_date'] != null) {
       slotsByDate = <SlotsByDate>[];
       json['slots_by_date'].forEach((v) {
-        slotsByDate.add(SlotsByDate.fromJson(v));
+        slotsByDate!.add(SlotsByDate.fromJson(v));
       });
     }
   }
@@ -39,19 +39,19 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (slotsByDate != null) {
-      data['slots_by_date'] = slotsByDate.map((v) => v.toJson()).toList();
+      data['slots_by_date'] = slotsByDate!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class SlotsByDate {
-  String date;
-  int weekDayId;
-  String weekDay;
-  String dayStartTime;
-  String dayEndTime;
-  List<Slots> slots;
+  String? date;
+  int? weekDayId;
+  String? weekDay;
+  String? dayStartTime;
+  String? dayEndTime;
+  List<Slots>? slots;
 
   SlotsByDate(
       {this.date,
@@ -70,7 +70,7 @@ class SlotsByDate {
     if (json['slots'] != null) {
       slots = <Slots>[];
       json['slots'].forEach((v) {
-        slots.add(Slots.fromJson(v));
+        slots!.add(Slots.fromJson(v));
       });
     }
   }
@@ -83,16 +83,16 @@ class SlotsByDate {
     data['day_start_time'] = dayStartTime;
     data['day_end_time'] = dayEndTime;
     if (slots != null) {
-      data['slots'] = slots.map((v) => v.toJson()).toList();
+      data['slots'] = slots!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Slots {
-  DateTime slotStart;
-  DateTime slotEnd;
-  bool isAvailable;
+  DateTime? slotStart;
+  DateTime? slotEnd;
+  bool? isAvailable;
   bool isSelected = false;
 
   Slots({this.slotStart, this.slotEnd, this.isAvailable});
@@ -105,8 +105,8 @@ class Slots {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['slot_start'] = slotStart.toIso8601String();
-    data['slot_end'] = slotEnd.toIso8601String();
+    data['slot_start'] = slotStart!.toIso8601String();
+    data['slot_end'] = slotEnd!.toIso8601String();
     data['available'] = isAvailable;
     return data;
   }

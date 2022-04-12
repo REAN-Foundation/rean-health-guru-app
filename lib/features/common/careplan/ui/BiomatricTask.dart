@@ -8,13 +8,13 @@ import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/features/misc/ui/home_view.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
 class BiomatricTask extends StatefulWidget {
-  Task task;
+  Task? task;
 
-  BiomatricTask(Task task) {
+  BiomatricTask(task) {
     this.task = task;
   }
 
@@ -38,35 +38,35 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
   final _weightFocus = FocusNode();
   final _fastingFocus = FocusNode();
 
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
 
   String unit = 'Kg';
 
   @override
   void initState() {
-    if (widget.task.details.bloodPressureSystolic != null) {
+    if (widget.task!.details!.bloodPressureSystolic != null) {
       _systolicController.text =
-          widget.task.details.bloodPressureSystolic.toString();
+          widget.task!.details!.bloodPressureSystolic.toString();
       _systolicController.selection = TextSelection.fromPosition(
         TextPosition(offset: _systolicController.text.length),
       );
     }
-    if (widget.task.details.bloodPressureDiastolic != null) {
+    if (widget.task!.details!.bloodPressureDiastolic != null) {
       _diastolicController.text =
-          widget.task.details.bloodPressureDiastolic.toString();
+          widget.task!.details!.bloodPressureDiastolic.toString();
       _diastolicController.selection = TextSelection.fromPosition(
         TextPosition(offset: _diastolicController.text.length),
       );
     }
-    if (widget.task.details.weight != null) {
-      debugPrint('Task Weight ==> ${widget.task.details.weight}');
-      _weightController.text = widget.task.details.weight.toString();
+    if (widget.task!.details!.weight != null) {
+      debugPrint('Task Weight ==> ${widget.task!.details!.weight}');
+      _weightController.text = widget.task!.details!.weight.toString();
       _weightController.selection = TextSelection.fromPosition(
         TextPosition(offset: _weightController.text.length),
       );
     }
-    if (widget.task.details.bloodGlucose != null) {
-      _fastingController.text = widget.task.details.bloodGlucose.toString();
+    if (widget.task!.details!.bloodGlucose != null) {
+      _fastingController.text = widget.task!.details!.bloodGlucose.toString();
       _fastingController.selection = TextSelection.fromPosition(
         TextPosition(offset: _fastingController.text.length),
       );
@@ -82,8 +82,8 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<PatientCarePlanViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -126,12 +126,12 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                   const SizedBox(
                     height: 16,
                   ),
-                  if (widget.task.details.subTitle.contains('weight')) ...[
+                  if (widget.task!.details!.subTitle!.contains('weight')) ...[
                     weightFeilds(),
-                  ] else if (widget.task.details.subTitle
+                  ] else if (widget.task!.details!.subTitle!
                       .contains('glucose')) ...[
                     glucoseFeilds(),
-                  ] else if (widget.task.details.subTitle
+                  ] else if (widget.task!.details!.subTitle!
                       .contains('blood pressure')) ...[
                     bloodPresureFeilds(),
                   ],
@@ -157,7 +157,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
           child: Semantics(
             readOnly: true,
             child: Text(
-              widget.task.details.subTitle,
+              widget.task!.details!.subTitle!,
               style:
                   TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
               textAlign: TextAlign.center,
@@ -210,7 +210,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: TextFormField(
-                        enabled: !widget.task.finished,
+                        enabled: !widget.task!.finished!,
                         controller: _systolicController,
                         focusNode: _systolicFocus,
                         maxLines: 1,
@@ -271,7 +271,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                         border: Border.all(color: primaryColor, width: 1),
                         color: Colors.white),
                     child: TextFormField(
-                        enabled: !widget.task.finished,
+                        enabled: !widget.task!.finished!,
                         controller: _diastolicController,
                         focusNode: _diastolicFocus,
                         maxLines: 1,
@@ -305,7 +305,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
               children: [
                 InkWell(
                   onTap: () {
-                    if (widget.task.finished) {
+                    if (widget.task!.finished!) {
                       Navigator.of(context).pop();
                     } else {
                       nextQuestion();
@@ -329,7 +329,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                         readOnly: true,
                         child: Center(
                           child: Text(
-                            !widget.task.finished ? 'Save' : 'Done',
+                            !widget.task!.finished! ? 'Save' : 'Done',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
@@ -396,7 +396,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                       hint: 'between 50 to 100',
                       enabled: true,
                       child: TextFormField(
-                          enabled: !widget.task.finished,
+                          enabled: !widget.task!.finished!,
                           controller: _weightController,
                           focusNode: _weightFocus,
                           maxLines: 1,
@@ -432,7 +432,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                   enabled: true,
                   child: InkWell(
                     onTap: () {
-                      if (widget.task.finished) {
+                      if (widget.task!.finished!) {
                         Navigator.of(context).pop();
                       } else {
                         nextQuestion();
@@ -455,7 +455,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                           child: Semantics(
                             label: 'Entry saved',
                             child: Text(
-                              !widget.task.finished ? 'Save' : 'Done',
+                              !widget.task!.finished! ? 'Save' : 'Done',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600,
@@ -525,7 +525,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                   border: Border.all(color: primaryColor, width: 1),
                   color: Colors.white),
               child: TextFormField(
-                  enabled: !widget.task.finished,
+                  enabled: !widget.task!.finished!,
                   controller: _fastingController,
                   focusNode: _fastingFocus,
                   maxLines: 1,
@@ -553,7 +553,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                   enabled: true,
                   child: InkWell(
                     onTap: () {
-                      if (widget.task.finished) {
+                      if (widget.task!.finished!) {
                         Navigator.of(context).pop();
                       } else {
                         nextQuestion();
@@ -576,7 +576,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
                           child: Semantics(
                             label: 'Entry saved',
                             child: Text(
-                              !widget.task.finished ? 'Save' : 'Done',
+                              !widget.task!.finished! ? 'Save' : 'Done',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600,
@@ -595,18 +595,19 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
 
   nextQuestion() async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
 
-      if (widget.task.details.subTitle.contains('weight')) {
+      if (widget.task!.details!.subTitle!.contains('weight')) {
         double entertedWeight = double.parse(_weightController.text.toString());
         if (unit == 'lbs') {
           entertedWeight = entertedWeight / 2.20462;
         }
         map['Weight'] = entertedWeight.toString();
-      } else if (widget.task.details.subTitle.contains('glucose')) {
+      } else if (widget.task!.details!.subTitle!.contains('glucose')) {
         map['BloodGlucose'] = _fastingController.text.toString();
-      } else if (widget.task.details.subTitle.contains('blood pressure')) {
+      } else if (widget.task!.details!.subTitle!.contains('blood pressure')) {
         map['BloodPressure_Systolic'] = _systolicController.text.toString();
         map['BloodPressure_Diastolic'] = _diastolicController.text.toString();
       }
@@ -616,22 +617,22 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
           '.000Z';
 
       final BaseResponse baseResponse = await model.addBiometricTask(
-          startCarePlanResponseGlob.data.carePlan.id.toString(),
-          widget.task.details.id,
+          startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+          widget.task!.details!.id!,
           map);
 
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(1);
         }), (Route<dynamic> route) => false);
       } else {
-        progressDialog.hide();
-        showToast(baseResponse.message, context);
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
       }
     } catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());

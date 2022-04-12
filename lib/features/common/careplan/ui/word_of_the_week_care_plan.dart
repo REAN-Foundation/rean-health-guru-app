@@ -13,9 +13,11 @@ import 'package:paitent/infra/utils/StringUtility.dart';
 
 // ignore: must_be_immutable
 class WordOfTheWeekCarePlanView extends StatefulWidget {
-  AssortedViewConfigs assortedViewConfigs;
+  AssortedViewConfigs? assortedViewConfigs;
 
-  WordOfTheWeekCarePlanView(this.assortedViewConfigs);
+  WordOfTheWeekCarePlanView(assortedViewConfigs) {
+    this.assortedViewConfigs = assortedViewConfigs;
+  }
 
   @override
   _WordOfTheWeekCarePlanViewState createState() =>
@@ -28,7 +30,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -114,7 +116,8 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      widget.assortedViewConfigs.task.details.concreteTask.word,
+                      widget.assortedViewConfigs!.task.details!.concreteTask!
+                          .word!,
                       style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.w600,
@@ -141,7 +144,8 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      widget.assortedViewConfigs.task.details.concreteTask.word,
+                      widget.assortedViewConfigs!.task.details!.concreteTask!
+                          .word!,
                       style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.w600,
@@ -149,8 +153,8 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                       textAlign: TextAlign.center,
                     ),
                     Text(
-                      widget.assortedViewConfigs.task.details.concreteTask
-                          .meaning,
+                      widget.assortedViewConfigs!.task.details!.concreteTask!
+                          .meaning!,
                       style:
                           TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
                       textAlign: TextAlign.center,
@@ -172,7 +176,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                   child: ElevatedButton(
                     onPressed: () {
                       completeMessageTaskOfAHACarePlan(
-                          widget.assortedViewConfigs.task);
+                          widget.assortedViewConfigs!.task);
                     },
                     style: ButtonStyle(
                         foregroundColor:
@@ -315,8 +319,8 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
     try {
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.completeMessageTaskOfAHACarePlan(
-              startCarePlanResponseGlob.data.carePlan.id.toString(),
-              task.details.id);
+              startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+              task.details!.id!);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;
@@ -327,7 +331,7 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
         debugPrint(
             'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
-        showToast(_startTaskOfAHACarePlanResponse.message, context);
+        showToast(_startTaskOfAHACarePlanResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);

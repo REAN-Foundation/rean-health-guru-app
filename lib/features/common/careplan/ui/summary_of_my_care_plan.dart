@@ -16,21 +16,21 @@ class SummaryOfMyCarePlanView extends StatefulWidget {
 class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  GetCarePlanSummaryResponse _getCarePlanSummaryResponse;
+  late GetCarePlanSummaryResponse _getCarePlanSummaryResponse;
   var dateFormat = DateFormat('MMMM, dd yyyy');
-  int currentWeek = 0;
+  int? currentWeek = 0;
 
   getAHACarePlanSummary() async {
     try {
       _getCarePlanSummaryResponse = await model.getAHACarePlanSummary(
-          startCarePlanResponseGlob.data.carePlan.id.toString());
+          startCarePlanResponseGlob!.data!.carePlan!.id.toString());
 
       if (_getCarePlanSummaryResponse.status == 'success') {
         debugPrint('AHA Care Plan ==> ${_getCarePlanSummaryResponse.toJson()}');
         currentWeek =
-            _getCarePlanSummaryResponse.data.carePlanSummary.currentWeek;
+            _getCarePlanSummaryResponse.data!.carePlanSummary!.currentWeek;
       } else {
-        showToast(_getCarePlanSummaryResponse.message, context);
+        showToast(_getCarePlanSummaryResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -47,7 +47,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -73,8 +73,8 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                         ),
                         Expanded(
                           child: Text(
-                            startCarePlanResponseGlob
-                                .data.carePlan.carePlanName,
+                            startCarePlanResponseGlob!
+                                .data!.carePlan!.carePlanName!,
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -87,7 +87,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           width: 8,
                         ),
                         Text(
-                          startCarePlanResponseGlob.data.carePlan.displayId,
+                          startCarePlanResponseGlob!.data!.carePlan!.displayId!,
                           style: TextStyle(
                               fontSize: 10, fontWeight: FontWeight.w200),
                           maxLines: 1,
@@ -102,7 +102,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                   height: 4,
                 ),
                 Expanded(
-                  child: model.busy
+                  child: model!.busy
                       ? Center(
                           child: CircularProgressIndicator(),
                         )
@@ -117,7 +117,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                               Stack(
                                 children: <Widget>[
                                   if (_getCarePlanSummaryResponse
-                                          .data.carePlanSummary.currentWeek
+                                          .data!.carePlanSummary!.currentWeek
                                           .toString() ==
                                       '-1')
                                     Container()
@@ -195,7 +195,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                     decoration: BoxDecoration(
                       color: currentWeek == 12
                           ? Colors.green
-                          : currentWeek > 12
+                          : currentWeek! > 12
                               ? primaryColor
                               : primaryLightColor,
                       borderRadius:
@@ -214,7 +214,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             style: TextStyle(
                                 color: currentWeek == 12
                                     ? primaryLightColor
-                                    : currentWeek > 12
+                                    : currentWeek! > 12
                                         ? Colors.white
                                         : primaryColor,
                                 fontSize: 16,
@@ -244,7 +244,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                     decoration: BoxDecoration(
                       color: currentWeek == 11
                           ? Colors.green
-                          : currentWeek > 11
+                          : currentWeek! > 11
                               ? primaryColor
                               : primaryLightColor,
                       borderRadius:
@@ -263,7 +263,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             style: TextStyle(
                                 color: currentWeek == 11
                                     ? primaryLightColor
-                                    : currentWeek > 11
+                                    : currentWeek! > 11
                                         ? Colors.white
                                         : primaryColor,
                                 fontSize: 16,
@@ -293,7 +293,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                     decoration: BoxDecoration(
                       color: currentWeek == 10
                           ? Colors.green
-                          : currentWeek > 10
+                          : currentWeek! > 10
                               ? primaryColor
                               : primaryLightColor,
                       borderRadius:
@@ -309,7 +309,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           style: TextStyle(
                               color: currentWeek == 10
                                   ? primaryLightColor
-                                  : currentWeek > 10
+                                  : currentWeek! > 10
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
@@ -338,7 +338,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                     decoration: BoxDecoration(
                       color: currentWeek == 9
                           ? Colors.green
-                          : currentWeek > 9
+                          : currentWeek! > 9
                               ? primaryColor
                               : primaryLightColor,
                       borderRadius:
@@ -354,7 +354,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           style: TextStyle(
                               color: currentWeek == 9
                                   ? primaryLightColor
-                                  : currentWeek > 9
+                                  : currentWeek! > 9
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
@@ -383,7 +383,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                     decoration: BoxDecoration(
                       color: currentWeek == 8
                           ? Colors.green
-                          : currentWeek > 8
+                          : currentWeek! > 8
                               ? primaryColor
                               : primaryLightColor,
                       borderRadius:
@@ -399,7 +399,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           style: TextStyle(
                               color: currentWeek == 8
                                   ? primaryLightColor
-                                  : currentWeek > 8
+                                  : currentWeek! > 8
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
@@ -428,7 +428,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                     decoration: BoxDecoration(
                       color: currentWeek == 7
                           ? Colors.green
-                          : currentWeek > 7
+                          : currentWeek! > 7
                               ? primaryColor
                               : primaryLightColor,
                       borderRadius:
@@ -444,7 +444,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           style: TextStyle(
                               color: currentWeek == 7
                                   ? primaryLightColor
-                                  : currentWeek > 7
+                                  : currentWeek! > 7
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
@@ -473,7 +473,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                     decoration: BoxDecoration(
                       color: currentWeek == 6
                           ? Colors.green
-                          : currentWeek > 6
+                          : currentWeek! > 6
                               ? primaryColor
                               : primaryLightColor,
                       borderRadius:
@@ -489,7 +489,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           style: TextStyle(
                               color: currentWeek == 6
                                   ? primaryLightColor
-                                  : currentWeek > 6
+                                  : currentWeek! > 6
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
@@ -518,7 +518,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                     decoration: BoxDecoration(
                       color: currentWeek == 5
                           ? Colors.green
-                          : currentWeek > 5
+                          : currentWeek! > 5
                               ? primaryColor
                               : primaryLightColor,
                       borderRadius:
@@ -534,7 +534,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           style: TextStyle(
                               color: currentWeek == 5
                                   ? primaryLightColor
-                                  : currentWeek > 5
+                                  : currentWeek! > 5
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
@@ -563,7 +563,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                     decoration: BoxDecoration(
                       color: currentWeek == 4
                           ? Colors.green
-                          : currentWeek > 4
+                          : currentWeek! > 4
                               ? primaryColor
                               : primaryLightColor,
                       borderRadius:
@@ -579,7 +579,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           style: TextStyle(
                               color: currentWeek == 4
                                   ? primaryLightColor
-                                  : currentWeek > 4
+                                  : currentWeek! > 4
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
@@ -608,7 +608,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                     decoration: BoxDecoration(
                       color: currentWeek == 3
                           ? Colors.green
-                          : currentWeek > 3
+                          : currentWeek! > 3
                               ? primaryColor
                               : primaryLightColor,
                       borderRadius:
@@ -624,7 +624,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           style: TextStyle(
                               color: currentWeek == 3
                                   ? primaryLightColor
-                                  : currentWeek > 3
+                                  : currentWeek! > 3
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
@@ -653,7 +653,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                     decoration: BoxDecoration(
                       color: currentWeek == 2
                           ? Colors.green
-                          : currentWeek > 2
+                          : currentWeek! > 2
                               ? primaryColor
                               : primaryLightColor,
                       borderRadius:
@@ -669,7 +669,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           style: TextStyle(
                               color: currentWeek == 2
                                   ? primaryLightColor
-                                  : currentWeek > 2
+                                  : currentWeek! > 2
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,
@@ -698,7 +698,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                     decoration: BoxDecoration(
                       color: currentWeek == 1
                           ? Colors.green
-                          : currentWeek > 1
+                          : currentWeek! > 1
                               ? primaryColor
                               : primaryLightColor,
                       borderRadius:
@@ -715,7 +715,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                         Expanded(
                           child: Text(
                             dateFormat.format(_getCarePlanSummaryResponse
-                                .data.carePlanSummary.carePlanStartDate
+                                .data!.carePlanSummary!.carePlanStartDate!
                                 .toLocal()),
                             style: TextStyle(
                                 color: primaryLightColor,
@@ -728,7 +728,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           style: TextStyle(
                               color: currentWeek == 1
                                   ? primaryLightColor
-                                  : currentWeek > 1
+                                  : currentWeek! > 1
                                       ? Colors.white
                                       : primaryColor,
                               fontSize: 16,

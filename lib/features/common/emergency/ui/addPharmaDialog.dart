@@ -8,11 +8,11 @@ import 'package:paitent/infra/utils/StringUtility.dart';
 
 //ignore: must_be_immutable
 class AddPharmaDialog extends StatefulWidget {
-  Function _submitButtonListner;
+  late Function _submitButtonListner;
 
   //AllergiesDialog(@required this._allergiesCategoryMenuItems,@required this._allergiesSeveretyMenuItems, @required Function this.submitButtonListner, this.patientId);
 
-  AddPharmaDialog({Key key, @required Function submitButtonListner})
+  AddPharmaDialog({Key? key, required Function submitButtonListner})
       : super(key: key) {
     _submitButtonListner = submitButtonListner;
   }
@@ -33,26 +33,27 @@ class _MyDialogState extends State<AddPharmaDialog> {
 
   getLabListByLocality() async {
     try {
-      final PharmacyListApiResponse listApiResponse = await model
-          .getPhrmacyListByLocality('18.526301', '73.834522', 'Bearer ' + auth);
+      final PharmacyListApiResponse listApiResponse =
+          await model.getPhrmacyListByLocality(
+              '18.526301', '73.834522', 'Bearer ' + auth!);
 
       if (listApiResponse.status == 'success') {
-        if (listApiResponse.data.pharmacies.isNotEmpty) {
-          parmacySearchList.addAll(listApiResponse.data.pharmacies);
+        if (listApiResponse.data!.pharmacies!.isNotEmpty) {
+          parmacySearchList.addAll(listApiResponse.data!.pharmacies!);
         }
       } else {
-        showToast(listApiResponse.message, context);
+        showToast(listApiResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      debugPrint(CustomException);
+      debugPrint(CustomException.toString());
       //showToast(CustomException.toString(), context);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
         model: model,
         builder: (context, model, child) => Container(
               /* shape: RoundedRectangleBorder(
@@ -171,15 +172,15 @@ class _MyDialogState extends State<AddPharmaDialog> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                              pharmaciesDetails.firstName +
+                              pharmaciesDetails.firstName! +
                                   ' ' +
-                                  pharmaciesDetails.lastName,
+                                  pharmaciesDetails.lastName!,
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                   color: primaryColor)),
                           Text(
-                            pharmaciesDetails.address,
+                            pharmaciesDetails.address!,
                             style: TextStyle(
                                 fontSize: 12.0,
                                 fontWeight: FontWeight.w300,

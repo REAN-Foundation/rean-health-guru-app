@@ -4,7 +4,7 @@ import 'package:paitent/infra/themes/app_colors.dart';
 
 //ignore: must_be_immutable
 class DoctorTileView extends StatefulWidget {
-  Doctors doctorDetails;
+  Doctors? doctorDetails;
 
   DoctorTileView(this.doctorDetails);
 
@@ -13,7 +13,7 @@ class DoctorTileView extends StatefulWidget {
 }
 
 class _DoctorTileViewState extends State<DoctorTileView> {
-  Doctors doctorDetails;
+  Doctors? doctorDetails;
 
   _DoctorTileViewState(this.doctorDetails);
 
@@ -39,9 +39,12 @@ class _DoctorTileViewState extends State<DoctorTileView> {
                     backgroundColor: primaryColor,
                     child: CircleAvatar(
                         radius: 38,
-                        backgroundImage: doctorDetails.imageURL == ''
-                            ? AssetImage('res/images/profile_placeholder.png')
-                            : NetworkImage(doctorDetails.imageURL)),
+                        backgroundImage:
+                            (doctorDetails!.imageURL == ''
+                                    ? AssetImage(
+                                        'res/images/profile_placeholder.png')
+                                    : NetworkImage(doctorDetails!.imageURL!))
+                                as ImageProvider<Object>?),
                   ),
                 )),
               ),
@@ -55,19 +58,19 @@ class _DoctorTileViewState extends State<DoctorTileView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                        doctorDetails.prefix +
-                            doctorDetails.firstName +
+                        doctorDetails!.prefix! +
+                            doctorDetails!.firstName! +
                             ' ' +
-                            doctorDetails.lastName,
+                            doctorDetails!.lastName!,
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             fontFamily: 'Montserrat',
                             color: primaryColor)),
                     Text(
-                        doctorDetails.specialities +
+                        doctorDetails!.specialities! +
                             ', ' +
-                            doctorDetails.qualification,
+                            doctorDetails!.qualification!,
                         style: TextStyle(
                             fontSize: 12.0,
                             fontWeight: FontWeight.w100,
@@ -95,7 +98,7 @@ class _DoctorTileViewState extends State<DoctorTileView> {
                       fontFamily: 'Montserrat'),
                   children: <TextSpan>[
                     TextSpan(
-                        text: ' ₹' + doctorDetails.consultationFee.toString(),
+                        text: ' ₹' + doctorDetails!.consultationFee.toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color: primaryColor,

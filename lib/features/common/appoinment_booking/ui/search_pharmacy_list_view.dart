@@ -21,10 +21,10 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
   Address first;
   bool _serviceEnabled;*/
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  String name = '';
+  String? name = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _searchController = TextEditingController();
-  String auth = '';
+  String? auth = '';
   var model = BookAppoinmentViewModel();
   var parmacySearchList = <Pharmacies>[];
 
@@ -33,28 +33,29 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
       final UserData user =
           UserData.fromJson(await _sharedPrefUtils.read('user'));
       //debugPrint(user.toJson().toString());
-      auth = user.data.accessToken;
+      auth = user.data!.accessToken;
       getLabListByLocality();
       setState(() {
-        name = user.data.user.person.firstName;
+        name = user.data!.user!.person!.firstName;
       });
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
   getLabListByLocality() async {
     try {
-      final PharmacyListApiResponse listApiResponse = await model
-          .getPhrmacyListByLocality('18.526301', '73.834522', 'Bearer ' + auth);
+      final PharmacyListApiResponse listApiResponse =
+          await model.getPhrmacyListByLocality(
+              '18.526301', '73.834522', 'Bearer ' + auth!);
 
       if (listApiResponse.status == 'success') {
-        if (listApiResponse.data.pharmacies.isNotEmpty) {
-          parmacySearchList.addAll(listApiResponse.data.pharmacies);
+        if (listApiResponse.data!.pharmacies!.isNotEmpty) {
+          parmacySearchList.addAll(listApiResponse.data!.pharmacies!);
         }
       } else {
-        showToast(listApiResponse.message, context);
+        showToast(listApiResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -104,7 +105,7 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<BookAppoinmentViewModel>(
+    return BaseWidget<BookAppoinmentViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -184,7 +185,7 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
                     height: 16,
                   ),
                   Expanded(
-                    child: model.busy
+                    child: model!.busy
                         ? Center(
                             child: SizedBox(
                                 height: 32,
@@ -276,12 +277,12 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                                pharmaciesDetails.firstName +
+                                pharmaciesDetails.firstName! +
                                     ' ' +
-                                    pharmaciesDetails.lastName,
+                                    pharmaciesDetails.lastName!,
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w600)),
-                            Text(pharmaciesDetails.address,
+                            Text(pharmaciesDetails.address!,
                                 style: TextStyle(
                                     fontSize: 14.0,
                                     fontWeight: FontWeight.w300,
@@ -301,7 +302,7 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Semantics(
-                    label: 'Go for' + pharmaciesDetails.firstName + ' ',
+                    label: 'Go for' + pharmaciesDetails.firstName! + ' ',
                     child: InkWell(
                       onTap: () {},
                       child: Container(

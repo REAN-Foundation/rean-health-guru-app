@@ -1,7 +1,7 @@
 class DashboardTile {
-  DateTime date;
-  String tile;
-  String discription;
+  DateTime? date;
+  String? tile;
+  String? discription;
 
   DashboardTile(this.date, this.tile, this.discription);
 
@@ -13,7 +13,7 @@ class DashboardTile {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['date'] = date.toIso8601String();
+    data['date'] = date!.toIso8601String();
     data['tile'] = tile;
     data['discription'] = discription;
     return data;

@@ -7,7 +7,7 @@ import 'package:paitent/features/misc/models/BaseResponse.dart';
 import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class MyMedicationRemainderView extends StatefulWidget {
   @override
@@ -21,7 +21,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
   var dateFormatStandard = DateFormat('yyyy-MM-dd');
   var timeFormat = DateFormat('hh:mm a');
   List<Schedules> medConsumptions = <Schedules>[];
-  ProgressDialog progressDialog;
+  late ProgressDialog progressDialog;
 
   @override
   void initState() {
@@ -36,10 +36,10 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
       debugPrint('Medication ==> ${getMyMedicationsResponse.toJson()}');
       if (getMyMedicationsResponse.status == 'success') {
         medConsumptions.clear();
-        medConsumptions.addAll(
-            getMyMedicationsResponse.data.medicationSchedulesForDay.schedules);
+        medConsumptions.addAll(getMyMedicationsResponse
+            .data!.medicationSchedulesForDay!.schedules!);
       } else {
-        showToast(getMyMedicationsResponse.message, context);
+        showToast(getMyMedicationsResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -50,8 +50,8 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context);
-    return BaseWidget<PatientMedicationViewModel>(
+    progressDialog = ProgressDialog(context: context);
+    return BaseWidget<PatientMedicationViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -59,7 +59,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
           backgroundColor: Colors.white,
           body: Padding(
             padding: EdgeInsets.all(16.0),
-            child: model.busy
+            child: model!.busy
                 ? Center(
                     child: SizedBox(
                         height: 32,
@@ -135,7 +135,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width - 200,
-                        child: Text(consumptions.drugName,
+                        child: Text(consumptions.drugName!,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -149,7 +149,8 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
                     children: [
                       Text(
                           'Today, ' +
-                              timeFormat.format(consumptions.timeScheduleStart),
+                              timeFormat
+                                  .format(consumptions.timeScheduleStart!),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -331,19 +332,20 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
 
   markMedicationsAsTaken(String consumptionId) async {
     try {
-      progressDialog.show();
+      progressDialog.show(max: 100, msg: 'Loading...');
+      progressDialog.show(max: 100, msg: 'Loading...');
       final BaseResponse baseResponse =
           await model.markMedicationsAsTaken(consumptionId);
       debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         getMyMedications();
       } else {
-        progressDialog.hide();
-        showToast(baseResponse.message, context);
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
       }
     } catch (CustomException) {
-      progressDialog.hide();
+      progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());

@@ -1,14 +1,15 @@
 class TeamCarePlanReesponse {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   TeamCarePlanReesponse({this.status, this.message, this.data});
 
   TeamCarePlanReesponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != String ? Data.fromJson(json['data']) : String;
+    data = (json['data'] != String ? Data.fromJson(json['data']) : String)
+        as Data?;
   }
 
   Map<String, dynamic> toJson() {
@@ -16,14 +17,14 @@ class TeamCarePlanReesponse {
     data['status'] = status;
     data['message'] = message;
     if (this.data != String) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<Team> team;
+  List<Team>? team;
 
   Data({this.team});
 
@@ -31,7 +32,7 @@ class Data {
     if (json['team'] != String) {
       team = <Team>[];
       json['team'].forEach((v) {
-        team.add(Team.fromJson(v));
+        team!.add(Team.fromJson(v));
       });
     }
   }
@@ -39,20 +40,20 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (team != String) {
-      data['team'] = team.map((v) => v.toJson()).toList();
+      data['team'] = team!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Team {
-  String id;
-  int carePlanId;
-  String userId;
-  int role;
-  String roleName;
-  String isEmergencyContact;
-  Details details;
+  String? id;
+  int? carePlanId;
+  String? userId;
+  int? role;
+  String? roleName;
+  String? isEmergencyContact;
+  Details? details;
 
   Team(
       {this.id,
@@ -70,7 +71,9 @@ class Team {
     role = json['Role'];
     roleName = json['RoleName'];
     isEmergencyContact = json['IsEmergencyContact'];
-    details = json['Details'] != String ? Details.fromJson(json['Details']) : String;
+    details = (json['Details'] != String
+        ? Details.fromJson(json['Details'])
+        : String) as Details?;
   }
 
   Map<String, dynamic> toJson() {
@@ -82,19 +85,19 @@ class Team {
     data['RoleName'] = roleName;
     data['IsEmergencyContact'] = isEmergencyContact;
     if (details != String) {
-      data['Details'] = details.toJson();
+      data['Details'] = details!.toJson();
     }
     return data;
   }
 }
 
 class Details {
-  String firstName;
-  String lastName;
-  String prefix;
-  String phoneNumber;
-  String email;
-  String gender;
+  String? firstName;
+  String? lastName;
+  String? prefix;
+  String? phoneNumber;
+  String? email;
+  String? gender;
 
   /*String address;
   String imageURL;
@@ -109,7 +112,7 @@ class Details {
   String consultationFee;
   String appointmentSlotDuration;
   String practisingSince;*/
-  String relation;
+  String? relation;
 
   // String description;
 

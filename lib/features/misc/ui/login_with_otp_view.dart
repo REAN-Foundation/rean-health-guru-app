@@ -19,8 +19,8 @@ import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/SharedPrefUtils.dart';
 import 'package:paitent/infra/widgets/PrimaryLightColorContainer.dart';
-import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import 'base_widget.dart';
 
@@ -30,21 +30,21 @@ class LoginWithOTPView extends StatefulWidget {
 }
 
 class _LoginWithOTPViewState extends State<LoginWithOTPView> {
-  String mobileNumber = '';
-  String countryCode = '';
+  String? mobileNumber = '';
+  String? countryCode = '';
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   //String _fcmToken ="";
   final TextEditingController _mobileNumberController = TextEditingController();
   final _mobileNumberFocus = FocusNode();
-  ProgressDialog progressDialog;
-  int maxLengthOfPhone = 0;
+  late ProgressDialog progressDialog;
+  int? maxLengthOfPhone = 0;
 
   @override
   void initState() {
-    progressDialog = ProgressDialog(context, isDismissible: false);
+    progressDialog = ProgressDialog(context: context);
     getKnowdledgeLinkLastViewDate();
     permissionDialog();
     //if(apiProvider.getBaseUrl().contains('dev')) {
@@ -62,22 +62,22 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       debugPrint('Mobile = $mobileNumber');
 
       final response =
-          await apiProvider.get('/types/person-roles', header: map);
+          await apiProvider!.get('/types/person-roles', header: map);
 
       final GetRoleIdResponse getRoleIdResponse =
           GetRoleIdResponse.fromJson(response);
 
       if (getRoleIdResponse.status == 'success') {
         for (int i = 0;
-            i < getRoleIdResponse.data.personRoleTypes.length;
+            i < getRoleIdResponse.data!.personRoleTypes!.length;
             i++) {
-          if (getRoleIdResponse.data.personRoleTypes.elementAt(i).roleName ==
+          if (getRoleIdResponse.data!.personRoleTypes!.elementAt(i).roleName ==
               "Patient") {
             _sharedPrefUtils.save('roleId',
-                getRoleIdResponse.data.personRoleTypes.elementAt(i).id);
+                getRoleIdResponse.data!.personRoleTypes!.elementAt(i).id);
             debugPrint(
-                "ROLE ID ==> ${getRoleIdResponse.data.personRoleTypes.elementAt(i).id}");
-            setRoleId(getRoleIdResponse.data.personRoleTypes.elementAt(i).id);
+                "ROLE ID ==> ${getRoleIdResponse.data!.personRoleTypes!.elementAt(i).id}");
+            setRoleId(getRoleIdResponse.data!.personRoleTypes!.elementAt(i).id);
           }
         }
       } else {
@@ -107,7 +107,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   Widget build(BuildContext context) {
     checkItenetConnection();
     final height = MediaQuery.of(context).size.height;
-    return BaseWidget<LoginViewModel>(
+    return BaseWidget<LoginViewModel?>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       builder: (context, model, child) => Container(
           child: Scaffold(
@@ -130,7 +130,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(0.0),
-                          child: loginContent(model),
+                          child: loginContent(model!),
                         ),
                       ],
                     ),
@@ -423,9 +423,9 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                         side: BorderSide(color: primaryColor)))),
             onPressed: () {
-              if (mobileNumber.trim().isEmpty) {
+              if (mobileNumber!.trim().isEmpty) {
                 showToast('Please enter phone number', context);
-              } else if (mobileNumber.length == maxLengthOfPhone) {
+              } else if (mobileNumber!.length == maxLengthOfPhone) {
                 countryCodeGlobe = countryCode;
                 model.setBusy(true);
                 if (dummyNumberList.contains(mobileNumber)) {
@@ -448,11 +448,12 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   checkUserExistsOrNot(LoginViewModel model) async {
     try {
-      progressDialog.show();
+      progressDialog.show(
+          max: 100, msg: 'Loading...', barrierDismissible: false);
       debugPrint('Mobile = $mobileNumber');
 
-      final response = await apiProvider.get('/users/by-phone/' +
-          mobileNumber +
+      final response = await apiProvider!.get('/users/by-phone/' +
+          mobileNumber! +
           '/role/' +
           getRoleId().toString());
 
@@ -468,8 +469,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         if (checkUserExistOrNotResonse.message == 'User not found.') {
           generateOTP(model);
         } else {
-          progressDialog.hide();
-          showToast(checkUserExistOrNotResonse.message, context);
+          progressDialog.close();
+          showToast(checkUserExistOrNotResonse.message!, context);
         }
         model.setBusy(false);
         //showToast(checkUserExistOrNotResonse.message, context);
@@ -491,18 +492,18 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       debugPrint('Mobile = $mobileNumber');
 
       final body = <String, dynamic>{};
-      body['Phone'] = countryCode + '-' + mobileNumber;
+      body['Phone'] = countryCode! + '-' + mobileNumber!;
       body['Purpose'] = 'Login';
       body['RoleId'] = getRoleId();
 
-      final response = await apiProvider.post('/users/generate-otp',
-          header: map, body: body);
+      final response = await apiProvider!
+          .post('/users/generate-otp', header: map, body: body);
 
       final BaseResponse doctorListApiResponse =
           BaseResponse.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         showToast(
             'OTP has been successfully sent on your mobile number', context);
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,
@@ -510,13 +511,13 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         _clearFeilds();
         model.setBusy(false);
       } else {
-        progressDialog.hide();
+        progressDialog.close();
         model.setBusy(false);
-        showToast(doctorListApiResponse.message, context);
+        showToast(doctorListApiResponse.message!, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});
@@ -532,32 +533,32 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       debugPrint('Mobile = $mobileNumber');
 
       final body = <String, dynamic>{};
-      body['Phone'] = countryCode + '-' + mobileNumber;
+      body['Phone'] = countryCode! + '-' + mobileNumber!;
       body['GenerateLoginOTP'] = true;
 
       final response =
-          await apiProvider.post('/patients', header: map, body: body);
+          await apiProvider!.post('/patients', header: map, body: body);
 
       final PatientApiDetails doctorListApiResponse =
           PatientApiDetails.fromJson(response);
       if (doctorListApiResponse.status == 'success') {
-        progressDialog.hide();
+        progressDialog.close();
         showToast(
             'OTP has been successfully sent on your mobile number', context);
         _sharedPrefUtils.save(
-            'patientDetails', doctorListApiResponse.data.patient.toJson());
+            'patientDetails', doctorListApiResponse.data!.patient!.toJson());
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,
             arguments: mobileNumber);
         _clearFeilds();
         model.setBusy(false);
       } else {
-        progressDialog.hide();
+        progressDialog.close();
         model.setBusy(false);
-        showToast(doctorListApiResponse.message, context);
+        showToast(doctorListApiResponse.message!, context);
         setState(() {});
       }
     } on FetchDataException catch (e) {
-      progressDialog.hide();
+      progressDialog.close();
       debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});
@@ -584,7 +585,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         showToast(
             'OTP has been successfully sent on your mobile number', context);
         _sharedPrefUtils.save(
-            'patientDetails', doctorListApiResponse.data.patient.toJson());
+            'patientDetails', doctorListApiResponse.data!.patient!.toJson());
         _sharedPrefUtils.saveBoolean('login1.8', true);
         _clearFeilds();
         Navigator.pushAndRemoveUntil(context,
@@ -595,7 +596,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       } else {
         debugPrint('Its API Failuar');
         model.setBusy(false);
-        showToast(doctorListApiResponse.message, context);
+        showToast(doctorListApiResponse.message!, context);
       }
     } on FetchDataException catch (e) {
       showToast('Opps! Something went wrong, Please try again', context);
@@ -701,14 +702,14 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   }
 
   _clearFeilds() {
-    progressDialog.hide();
+    progressDialog.close();
     mobileNumber = '';
     _mobileNumberController.clear();
     setState(() {});
   }
 
   void firebase() {
-    _fcm.getToken().then((String token) async {
+    _fcm.getToken().then((String? token) async {
       assert(token != null);
       debugPrint('Push Messaging token: $token');
       debugPrint(token);

@@ -1,7 +1,7 @@
 class TaskSummaryResponse {
-  String status;
-  String message;
-  Data data;
+  String? status;
+  String? message;
+  Data? data;
 
   TaskSummaryResponse({this.status, this.message, this.data});
 
@@ -16,14 +16,14 @@ class TaskSummaryResponse {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  Summary summary;
+  Summary? summary;
 
   Data({this.summary});
 
@@ -35,26 +35,26 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (summary != null) {
-      data['summary'] = summary.toJson();
+      data['summary'] = summary!.toJson();
     }
     return data;
   }
 }
 
 class Summary {
-  int completedTaskCount;
-  int incompleteTaskCount;
-  int missed;
-  int taken;
-  int unknown;
-  int upcoming;
-  int overdue;
-  Weight weight;
-  BloodPressure bloodPressure;
-  BloodSugar bloodSugar;
-  BloodOxygenSaturation bloodOxygenSaturation;
-  Pulse pulse;
-  Temperature temperature;
+  int? completedTaskCount;
+  int? incompleteTaskCount;
+  int? missed;
+  int? taken;
+  int? unknown;
+  int? upcoming;
+  int? overdue;
+  Weight? weight;
+  BloodPressure? bloodPressure;
+  BloodSugar? bloodSugar;
+  BloodOxygenSaturation? bloodOxygenSaturation;
+  Pulse? pulse;
+  Temperature? temperature;
 
   Summary(
       {this.completedTaskCount,
@@ -105,22 +105,22 @@ class Summary {
     data['Upcoming'] = upcoming;
     data['Overdue'] = overdue;
     if (weight != null) {
-      data['Weight'] = weight.toJson();
+      data['Weight'] = weight!.toJson();
     }
     if (bloodPressure != null) {
-      data['BloodPressure'] = bloodPressure.toJson();
+      data['BloodPressure'] = bloodPressure!.toJson();
     }
     if (bloodSugar != null) {
-      data['BloodSugar'] = bloodSugar.toJson();
+      data['BloodSugar'] = bloodSugar!.toJson();
     }
     if (bloodOxygenSaturation != null) {
-      data['BloodOxygenSaturation'] = bloodOxygenSaturation.toJson();
+      data['BloodOxygenSaturation'] = bloodOxygenSaturation!.toJson();
     }
     if (pulse != null) {
-      data['Pulse'] = pulse.toJson();
+      data['Pulse'] = pulse!.toJson();
     }
     if (temperature != null) {
-      data['Temperature'] = temperature.toJson();
+      data['Temperature'] = temperature!.toJson();
     }
     return data;
   }
@@ -128,8 +128,8 @@ class Summary {
 
 class Weight {
   dynamic weight;
-  String unit;
-  String recordDate;
+  String? unit;
+  String? recordDate;
 
   Weight({this.weight, this.unit, this.recordDate});
 
@@ -149,10 +149,10 @@ class Weight {
 }
 
 class BloodPressure {
-  int bloodPressureSystolic;
-  int bloodPressureDiastolic;
-  String unit;
-  String recordDate;
+  int? bloodPressureSystolic;
+  int? bloodPressureDiastolic;
+  String? unit;
+  String? recordDate;
 
   BloodPressure(
       {this.bloodPressureSystolic,
@@ -179,8 +179,8 @@ class BloodPressure {
 
 class BloodSugar {
   dynamic bloodGlucose;
-  String unit;
-  String recordDate;
+  String? unit;
+  String? recordDate;
 
   BloodSugar({this.bloodGlucose, this.unit, this.recordDate});
 
@@ -201,8 +201,8 @@ class BloodSugar {
 
 class BloodOxygenSaturation {
   dynamic bloodOxygenSaturation;
-  String unit;
-  String recordDate;
+  String? unit;
+  String? recordDate;
 
   BloodOxygenSaturation(
       {this.bloodOxygenSaturation, this.unit, this.recordDate});
@@ -224,8 +224,8 @@ class BloodOxygenSaturation {
 
 class Pulse {
   dynamic pulse;
-  String unit;
-  String recordDate;
+  String? unit;
+  String? recordDate;
 
   Pulse({this.pulse, this.unit, this.recordDate});
 
@@ -246,8 +246,8 @@ class Pulse {
 
 class Temperature {
   dynamic temperature;
-  String unit;
-  String recordDate;
+  String? unit;
+  String? recordDate;
 
   Temperature({this.temperature, this.unit, this.recordDate});
 

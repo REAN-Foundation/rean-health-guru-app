@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:paitent/core/constants/route_paths.dart';
 import 'package:paitent/features/common/careplan/models/GetAHACarePlansResponse.dart';
 import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
@@ -20,6 +22,11 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   List<DropdownMenuItem<String>>? _carePlanMenuItems;
   String? selectedCarePlan = '';
   late CarePlanTypes carePlanTypes;
+  String dob = '';
+  String unformatedDOB = '';
+  var dateFormat = DateFormat('dd MMM, yyyy');
+  var dateFormatStandard = DateFormat('yyyy-MM-dd');
+  String startDate = '';
 
   @override
   void initState() {
@@ -82,18 +89,19 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       builder: (context, model, child) => Container(
         child: Scaffold(
           key: _scaffoldKey,
-          backgroundColor: Colors.white,
+          backgroundColor: primaryColor,
           appBar: AppBar(
-            backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            elevation: 0,
+            backgroundColor: primaryColor,
+            brightness: Brightness.dark,
             title: Text(
               'Select Care Plan',
               style: TextStyle(
                   fontSize: 16.0,
-                  color: primaryColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.w600),
             ),
-            iconTheme: IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.white),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -107,37 +115,82 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               )*/
             ],
           ),
-              body: model!.busy
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 8,
+          body: Stack(
+            children: [
+              Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    color: primaryColor,
+                    height: 100,
+                    width: MediaQuery.of(context).size.width,
+                  )),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    color: primaryColor,
+                    height: 0,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(12),
+                              topLeft: Radius.circular(12))),
+                      child: model!.busy
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Semantics(
+                                          label: 'Care Plan image',
+                                          image: true,
+                                          child: Image.asset(
+                                            'res/images/ic_hf_care_plan.png',
+                                            color: primaryColor,
+                                            width: 120,
+                                            height: 120,
+                                          ),
+                                        ),
+                                        selectCarePlanDropDown(),
+                                        startCarePlanDate(),
+
+                                        if (selectedCarePlan == '')
+                                          Container()
+                                        else
+                                          descriptionOfCarePlan(),
+                                        //eligibilityOfCarePlan(),
+                                        //recomandationForCarePlan(),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                registerFooter(),
+                              ],
+                            ),
                     ),
-                    headerText(),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            selectCarePlanDropDown(),
-                            if (selectedCarePlan == '')
-                              Container()
-                            else
-                              descriptionOfCarePlan(),
-                            //eligibilityOfCarePlan(),
-                            //recomandationForCarePlan(),
-                          ],
-                        ),
-                      ),
-                    ),
-                    registerFooter(),
-                  ],
-                ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -170,18 +223,19 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           Text(
             'Select Care Plan',
             style: TextStyle(
-                color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),
+                color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
           ),
           const SizedBox(
             height: 4,
           ),
           Container(
+            height: 48,
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(color: primaryColor, width: 1),
-                color: colorF6F6FF),
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(color: Colors.grey, width: 1),
+            ),
             child: DropdownButton<String>(
               isExpanded: true,
               hint: Text(
@@ -223,6 +277,95 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget startCarePlanDate() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Select Start Date:',
+            style: TextStyle(
+                color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          GestureDetector(
+            child: ExcludeSemantics(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 48.0,
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  border: Border.all(
+                    color: Color(0XFF909CAC),
+                    width: 1.0,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          dob,
+                          style: TextStyle(
+                              fontWeight: FontWeight.normal, fontSize: 16),
+                        ),
+                      ),
+                      SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: Image.asset('res/images/ic_calender.png')),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            onTap: () {
+              DatePicker.showDatePicker(context,
+                  showTitleActions: true,
+                  minTime: DateTime.now().subtract(Duration(days: 0)),
+                  onChanged: (date) {
+                debugPrint('change $date');
+              }, onConfirm: (date) {
+                unformatedDOB = date.toIso8601String();
+                setState(() {
+                  dob = dateFormat.format(date);
+                  startDate =
+                      dateFormatStandard.format(date) + 'T00:00:00.000Z';
+                });
+                debugPrint('confirm $date');
+                debugPrint('confirm formated $startDate');
+              }, currentTime: DateTime.now(), locale: LocaleType.en);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget checkElegibility() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onTap: () {},
+          child: Text(
+            'Check Eligibility',
+            style: TextStyle(
+                fontWeight: FontWeight.w600, color: primaryColor, fontSize: 12),
+          ),
+        ),
+      ],
     );
   }
 
@@ -433,9 +576,6 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     return Container(
         height: 60,
         padding: const EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-          color: colorF6F6FF,
-        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

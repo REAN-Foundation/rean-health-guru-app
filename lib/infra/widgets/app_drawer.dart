@@ -227,7 +227,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
               Visibility(
-                visible: false,
+                visible: true,
                 child: InkWell(
                   onTap: () {
                     if (startCarePlanResponseGlob == null) {

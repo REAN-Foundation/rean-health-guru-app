@@ -8,6 +8,7 @@ Color primaryLightColor = Color(0XFFEBE0FF);
 const Color textBlack = Color(0XFF303030);
 const Color textGrey = Color(0XFF636466);
 const Color color909CAC = Color(0XFF909CAC);
+const Color colorF5F5F5 = Color(0XFFF5F5F5);
 const Color colorF6F6FF = Color(0XFFF6F6FF);
 const Color colorF5F8FA = Color(0XFFF5F8FA);
 const Color colorOrange = Color(0XFFF29B84);

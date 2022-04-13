@@ -191,36 +191,39 @@ class _MyReportsViewState extends State<MyReportsView> {
               ),*/
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 0.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  height: 8,
-                ),
-                uploadWidget(),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text('Medical Records',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: primaryColor,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Montserrat')),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: model!.busy
-                          ? Center(child: CircularProgressIndicator())
-                          : documents.isEmpty
-                              ? noRecordsFound()
-                              : listWidget()),
-                ),
-              ],
+            child: Container(
+              color: colorF5F5F5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    height: 16,
+                  ),
+                  uploadWidget(),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text('Medical Records',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: textBlack,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Montserrat')),
+                  ),
+                  SizedBox(
+                    height: 0,
+                  ),
+                  Expanded(
+                    child: Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: model!.busy
+                            ? Center(child: CircularProgressIndicator())
+                            : documents.isEmpty
+                                ? noRecordsFound()
+                                : listWidget()),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -243,46 +246,51 @@ class _MyReportsViewState extends State<MyReportsView> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ElevatedButton.icon(
-          onPressed: () async {
-            /*String type = await _askForDocsType();
-            debugPrint('File Type ${type}');
-            if (type != null) {
-              getFile(type);
-            } else {
-              showToast('Please select document type');
-            }*/
+        SizedBox(
+          width: MediaQuery.of(context).size.width - 20,
+          height: 40,
+          child: ElevatedButton(
+            //.icon
+            onPressed: () async {
+              /*String type = await _askForDocsType();
+              debugPrint('File Type ${type}');
+              if (type != null) {
+                getFile(type);
+              } else {
+                showToast('Please select document type');
+              }*/
 
-            showMaterialModalBottomSheet(
-                isDismissible: true,
-                backgroundColor: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(25.0)),
-                ),
-                context: context,
-                builder: (context) => _uploadImageSelector());
-          },
-          icon: Icon(
-            Icons.file_upload,
-            color: Colors.white,
-            size: 24,
+              showMaterialModalBottomSheet(
+                  isDismissible: true,
+                  backgroundColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(25.0)),
+                  ),
+                  context: context,
+                  builder: (context) => _uploadImageSelector());
+            },
+            /*icon: Icon(
+              Icons.file_upload,
+              color: Colors.white,
+              size: 24,
+            ),*/
+            child: Text(
+              'Upload medical records',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600),
+            ),
+            style: ButtonStyle(
+                foregroundColor:
+                    MaterialStateProperty.all<Color>(primaryLightColor),
+                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        side: BorderSide(color: primaryColor)))),
           ),
-          label: Text(
-            'Upload medical records',
-            style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.white,
-                fontWeight: FontWeight.w600),
-          ),
-          style: ButtonStyle(
-              foregroundColor:
-                  MaterialStateProperty.all<Color>(primaryLightColor),
-              backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
-                      side: BorderSide(color: primaryColor)))),
         ),
       ],
     );
@@ -342,38 +350,20 @@ class _MyReportsViewState extends State<MyReportsView> {
         },
         child: Container(
           height: 100,
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           decoration: BoxDecoration(
-              color: colorF6F6FF,
+              color: Colors.white,
               border: Border.all(color: primaryLightColor),
               borderRadius: BorderRadius.all(Radius.circular(4.0))),
-          child: Stack(
-            children: [
-              Column(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(' ', //document.displayId!
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w300,
-                              color: textBlack)),
-                      Text(dateFormat.format(document.uploadedDate!.toLocal()),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w300,
-                              color: textBlack)),
-                    ],
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width - 100,
+                children: [
+                  Expanded(
                     child: Text(document.fileName!,
                         semanticsLabel: document.fileName,
                         maxLines: 2,
@@ -383,9 +373,32 @@ class _MyReportsViewState extends State<MyReportsView> {
                             fontWeight: FontWeight.w600,
                             color: textBlack)),
                   ),
+                  Text(
+                      '    ' +
+                          dateFormat.format(document.uploadedDate!.toLocal()),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: textBlack)),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 1,
+                    color: Colors.black12,
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Semantics(
                         button: true,
@@ -415,11 +428,11 @@ class _MyReportsViewState extends State<MyReportsView> {
                               ),
                             )),
                       ),
-                      Container(
-                        height: 12,
-                        width: 1,
-                        color: primaryColor,
-                      ),
+                      // Container(
+                      //   height: 12,
+                      //   width: 1,
+                      //   color: primaryColor,
+                      // ),
                       Semantics(
                         button: true,
                         child: InkWell(
@@ -448,11 +461,11 @@ class _MyReportsViewState extends State<MyReportsView> {
                               ),
                             )),
                       ),
-                      Container(
+                      /* Container(
                         height: 12,
                         width: 1,
                         color: primaryColor,
-                      ),
+                      ),*/
                       Semantics(
                         button: true,
                         child: InkWell(
@@ -489,14 +502,6 @@ class _MyReportsViewState extends State<MyReportsView> {
                   ),
                 ],
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.grey,
-                  size: 16,
-                ),
-              )
             ],
           ),
         ),

@@ -40,9 +40,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>In $(APP_DISPLAY_NAME) you can upload your Profile picture / Medical reports using Camera for ease of use. Your photos / Documents won&apos;t be shared without your permission.</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Integrating your Apple Health data with REAN HealthGuru will make it easy for you to track and manage all health goals!</string>
+	<string>Integrating your Apple Health data with $(APP_DISPLAY_NAME) will make it easy for you to track and manage all health goals!</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Integrating your Apple Health data with REAN HealthGuru will make it easy for you to track and manage all health goals!</string>
+	<string>Integrating your Apple Health data with $(APP_DISPLAY_NAME) will make it easy for you to track and manage all health goals!</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This application requires location permission for Booking Appoinment</string>
 	<key>NSPhotoLibraryUsageDescription</key>

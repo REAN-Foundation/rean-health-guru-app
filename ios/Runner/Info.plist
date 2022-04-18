@@ -47,6 +47,11 @@
 	<string>This application requires location permission for Booking Appoinment</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>In $(APP_DISPLAY_NAME) you can upload your Profile picture / Medical reports using Photo Library for ease of use. Your photos / Documents won&apos;t be shared without your permission.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

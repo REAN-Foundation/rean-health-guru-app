@@ -301,9 +301,10 @@ class _OTPScreenViewState extends State<OTPScreenView> {
               debugPrint('mobile = ${widget.mobileNumber}');
               debugPrint('OTP = $otp');
 
-              if (widget.mobileNumber!.length != 10) {
+              /*if (widget.mobileNumber!.length != maxLengthOfPhone) {
                 showToast('Please enter valid mobile number', context);
-              } else if (otp.toString() == '') {
+              } else*/
+              if (otp.toString() == '') {
                 showToast('Please enter otp', context);
               } else {
                 model.setBusy(true);

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +10,7 @@ import 'package:paitent/features/misc/ui/base_widget.dart';
 import 'package:paitent/infra/themes/app_colors.dart';
 import 'package:paitent/infra/utils/CommonUtils.dart';
 import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SelectCarePlanView extends StatefulWidget {
   @override
@@ -171,11 +173,11 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                                         ),
                                         selectCarePlanDropDown(),
                                         startCarePlanDate(),
-
-                                        if (selectedCarePlan == '')
+                                        checkElegibility(),
+                                        /* if (selectedCarePlan == '')
                                           Container()
-                                        else
-                                          descriptionOfCarePlan(),
+                                        else*/
+                                        descriptionOfCarePlan(),
                                         //eligibilityOfCarePlan(),
                                         //recomandationForCarePlan(),
                                       ],
@@ -354,60 +356,92 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   }
 
   Widget checkElegibility() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        GestureDetector(
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: GestureDetector(
           onTap: () {},
           child: Text(
             'Check Eligibility',
             style: TextStyle(
-                fontWeight: FontWeight.w600, color: primaryColor, fontSize: 12),
+                fontWeight: FontWeight.w600, color: primaryColor, fontSize: 14),
           ),
         ),
-      ],
+      ),
     );
   }
 
   Widget descriptionOfCarePlan() {
-    return Padding(
-      padding:
-          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Description',
-            style: TextStyle(
-                color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          /* Text("dfbbd", style: TextStyle(
-              color: textBlack, fontSize: 16, fontFamily: 'Montserrat', fontWeight: FontWeight.w200,),),*/
-          RichText(
-            text: TextSpan(
-              text: carePlanTypes.description,
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w200,
-                color: textBlack,
-              ),
-              children: <TextSpan>[
-                /*TextSpan(
-                    text: 'https://www.heart.org',
-                    style: TextStyle( fontWeight: FontWeight.w200, color: Colors.lightBlueAccent, fontFamily: 'Montserrat', decoration: TextDecoration.underline,),
-                recognizer: new TapGestureRecognizer()..onTap = () => _urlLauncher('https://www.heart.org'),),
-                TextSpan(
-                    text: ') to improve your cardiovascular health if you have experienced heart attack, heart failure, angioplasty or heart surgery.',
-                    style: TextStyle( fontWeight: FontWeight.w200, color: textBlack, fontFamily: 'Montserrat')),*/
+    return Column(
+      children: [
+        SizedBox(
+          height: 32,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+              left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
+          child: Container(
+            padding: const EdgeInsets.only(
+                left: 8.0, right: 8.0, top: 16.0, bottom: 16.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                color: const Color(0xffcecece).withOpacity(0.5)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Description',
+                  style: TextStyle(
+                      color: textBlack,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                /* Text("dfbbd", style: TextStyle(
+                    color: textBlack, fontSize: 16, fontFamily: 'Montserrat', fontWeight: FontWeight.w200,),),*/
+                RichText(
+                  text: TextSpan(
+                    text:
+                        'Cardiac rehab is a medically supervised programme designed by American Heart ',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      color: textGrey,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '(https://www.heart.org)',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: primaryColor,
+                          fontFamily: 'Montserrat',
+                          fontSize: 14,
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () => _launchURL('https://www.heart.org'),
+                      ),
+                      TextSpan(
+                          text:
+                              ' to improve your cardiovascular health if you have experienced heart attack, heart failure, angioplasty or heart surgery.',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: textGrey,
+                              fontSize: 14,
+                              fontFamily: 'Montserrat')),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -572,6 +606,10 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     );
   }
 
+  void _launchURL(String _url) async {
+    if (!await launch(_url)) throw 'Could not launch $_url';
+  }
+
   Widget registerFooter() {
     return Container(
         height: 60,
@@ -590,7 +628,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               },
               child: Container(
                 height: 40,
-                width: 160,
+                width: MediaQuery.of(context).size.width - 32,
                 padding: EdgeInsets.symmetric(
                   horizontal: 16.0,
                 ),

@@ -132,6 +132,7 @@ class _EditProfileState extends State<EditProfile> {
         TextPosition(offset: _mobileNumberController.text.length),
       );
 
+      debugPrint("DOB ==> $dob");
       debugPrint("selectedGender ==> ${patient.user!.person!.gender}");
       selectedGender = patient.user!.person!.gender;
 
@@ -148,8 +149,11 @@ class _EditProfileState extends State<EditProfile> {
         debugPrint('Error');
         debugPrint(Excepetion.toString());
       }*/
-
-      _emailController.text = patient.user!.person!.email!;
+      try {
+        _emailController.text = patient.user!.person!.email!;
+      } catch (e) {
+        debugPrint('Error ==> ${e.toString()}');
+      }
       // _emergencyMobileNumberController.text = patient.user.person;
 
       imageResourceId = patient.user!.person!.imageResourceId ?? '';

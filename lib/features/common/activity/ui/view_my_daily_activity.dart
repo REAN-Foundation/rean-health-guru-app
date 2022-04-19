@@ -5,16 +5,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/features/common/activity/ui/addBMIDetailsDialog.dart';
-import 'package:paitent/features/common/nutrition/models/GlassOfWaterConsumption.dart';
-import 'package:paitent/features/common/nutrition/view_models/patients_health_marker.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/infra/utils/GetSleepData.dart';
-import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:patient/features/common/activity/ui/add_bmi_details_dialog.dart';
+import 'package:patient/features/common/nutrition/models/glass_of_water_consumption.dart';
+import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/get_sleep_data.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 

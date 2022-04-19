@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/models/PatientApiDetails.dart';
-import 'package:paitent/features/misc/models/user_data.dart';
-import 'package:paitent/infra/networking/ApiProvider.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/models/patient_api_details.dart';
+import 'package:patient/features/misc/models/user_data.dart';
+import 'package:patient/infra/networking/api_provider.dart';
 
 /// The service responsible for networking requests
 class Api {

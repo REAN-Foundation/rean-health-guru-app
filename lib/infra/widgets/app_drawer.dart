@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:package_info/package_info.dart';
-import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/features/misc/models/PatientApiDetails.dart';
-import 'package:paitent/features/misc/ui/login_with_otp_view.dart';
-import 'package:paitent/infra/networking/ApiProvider.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/infra/utils/SharedPrefUtils.dart';
+import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/misc/models/patient_api_details.dart';
+import 'package:patient/features/misc/ui/login_with_otp_view.dart';
+import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
 
 class AppDrawer extends StatefulWidget {
   @override

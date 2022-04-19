@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paitent/features/common/medication/models/MyMedicationSummaryRespose.dart';
-import 'package:paitent/features/common/medication/view_models/patients_medication.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:patient/features/common/medication/models/my_medication_summary_respose.dart';
+import 'package:patient/features/common/medication/view_models/patients_medication.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 
 class MyMedicationHistoryView extends StatefulWidget {
   @override

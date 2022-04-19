@@ -1,11 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/features/common/appoinment_booking/view_models/book_appoinment_view_model.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/appointment_booking/view_models/book_appointment_view_model.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 
 class DashBoardView extends StatefulWidget {
   @override
@@ -111,7 +111,7 @@ class _DashBoardViewState extends State<DashBoardView> {
               margin: EdgeInsets.symmetric(horizontal: 5.0),
               decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('res/images/bg_gray_hexa.jpg'),
+                    image: AssetImage('res/images/bg_grey_hexa.jpg'),
                     fit: BoxFit.cover,
                   ),
                   border: Border.all(color: primaryLightColor, width: 2),

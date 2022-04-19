@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
-import 'package:paitent/features/common/vitals/models/GetMyVitalsHistory.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/infra/networking/ApiProvider.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:patient/features/common/vitals/models/get_my_vitals_history.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 
 import '../../../../infra/view_models/base_model.dart';
 

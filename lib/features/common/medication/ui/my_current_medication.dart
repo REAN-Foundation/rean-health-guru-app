@@ -3,14 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/features/common/medication/models/MyCurrentMedication.dart';
-import 'package:paitent/features/common/medication/view_models/patients_medication.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/infra/networking/ApiProvider.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/medication/models/my_current_medication.dart';
+import 'package:patient/features/common/medication/view_models/patients_medication.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class MyCurrentMedicationView extends StatefulWidget {

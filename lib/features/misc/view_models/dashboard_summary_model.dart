@@ -1,14 +1,14 @@
 import 'package:get_it/get_it.dart';
-import 'package:paitent/features/common/medication/models/GetMyMedicationsResponse.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/models/GetAssesmentTemplateByIdResponse.dart';
-import 'package:paitent/features/misc/models/GetMyAssesmentIdResponse.dart';
-import 'package:paitent/features/misc/models/KnowledgeTopicResponse.dart';
-import 'package:paitent/features/misc/models/SearchSymptomAssesmentTempleteResponse.dart';
-import 'package:paitent/features/misc/models/TaskSummaryResponse.dart';
-import 'package:paitent/infra/networking/ApiProvider.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:paitent/infra/view_models/base_model.dart';
+import 'package:patient/features/common/medication/models/get_my_medications_response.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/models/get_assessment_template_by_id_response.dart';
+import 'package:patient/features/misc/models/get_my_assesment_id_response.dart';
+import 'package:patient/features/misc/models/knowledge_topic_response.dart';
+import 'package:patient/features/misc/models/search_symptom_assessment_templete_response.dart';
+import 'package:patient/features/misc/models/task_summary_response.dart';
+import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/view_models/base_model.dart';
 
 class DashboardSummaryModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();

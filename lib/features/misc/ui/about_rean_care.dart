@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/infra/networking/ApiProvider.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutREANCareView extends StatefulWidget {
@@ -138,7 +138,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                             semanticLabel: 'American Heart Association Logo',
                           )
                         : Image.asset(
-                            'res/images/app_logo_tranparent.png',
+                            'res/images/app_logo_transparent.png',
                             semanticLabel: 'REAN HealthGuru',
                             color: primaryColor,
                           ),

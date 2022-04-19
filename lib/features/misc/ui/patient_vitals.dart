@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/features/misc/models/PatientVitalsPojo.dart';
-import 'package:paitent/features/misc/view_models/patients_observation.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:patient/features/misc/models/patient_vitals_pojo.dart';
+import 'package:patient/features/misc/view_models/patients_observation.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 
 import 'base_widget.dart';
 

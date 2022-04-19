@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:group_radio_button/group_radio_button.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/models/PatientMedicalProfilePojo.dart';
-import 'package:paitent/features/misc/view_models/patients_observation.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/models/patient_medical_profile_pojo.dart';
+import 'package:patient/features/misc/view_models/patients_observation.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import 'base_widget.dart';

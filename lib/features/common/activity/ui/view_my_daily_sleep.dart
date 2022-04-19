@@ -5,9 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/features/common/nutrition/view_models/patients_health_marker.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/GetSleepData.dart';
+import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/get_sleep_data.dart';
 
 import '../../../misc/ui/base_widget.dart';
 

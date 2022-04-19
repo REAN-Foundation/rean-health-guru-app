@@ -1,4 +1,4 @@
-name: paitent
+name: patient
 description: A new Flutter application.
 
 # The following defines the version and build number for your application.
@@ -12,7 +12,7 @@ description: A new Flutter application.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.8.23+93
+version: 1.8.26+94
 
 environment:
   sdk: '>=2.12.0 <3.0.0'

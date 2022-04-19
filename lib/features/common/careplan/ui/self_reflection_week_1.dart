@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paitent/features/common/careplan/models/GetTaskOfAHACarePlanResponse.dart';
-import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
+import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable

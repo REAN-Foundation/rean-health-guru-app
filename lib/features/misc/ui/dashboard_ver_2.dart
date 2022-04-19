@@ -2,20 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/features/common/medication/models/GetMyMedicationsResponse.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/models/DashboardTile.dart';
-import 'package:paitent/features/misc/models/KnowledgeTopicResponse.dart';
-import 'package:paitent/features/misc/models/SearchSymptomAssesmentTempleteResponse.dart';
-import 'package:paitent/features/misc/models/TaskSummaryResponse.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/features/misc/view_models/dashboard_summary_model.dart';
-import 'package:paitent/infra/networking/CustomException.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/medication/models/get_my_medications_response.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/models/dashboard_tile.dart';
+import 'package:patient/features/misc/models/knowledge_topic_response.dart';
+import 'package:patient/features/misc/models/search_symptom_assessment_templete_response.dart';
+import 'package:patient/features/misc/models/task_summary_response.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/features/misc/view_models/dashboard_summary_model.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable
@@ -1439,7 +1439,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                                           Radius.circular(12.0))),
                                   child: ImageIcon(
                                     AssetImage(
-                                        'res/images/ic_blood_presure.png'),
+                                        'res/images/ic_blood_pressure.png'),
                                     size: 32,
                                     color: iconColor,
                                   ),
@@ -1776,7 +1776,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(12.0))),
                                   child: ImageIcon(
-                                    AssetImage('res/images/ic_snacks.png'),
+                                    AssetImage('res/images/ic_snack.png'),
                                     size: 32,
                                     color: iconColor,
                                   ),

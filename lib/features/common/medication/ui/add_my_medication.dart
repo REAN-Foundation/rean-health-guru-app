@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:paitent/features/common/medication/models/DrugsLibraryPojo.dart';
-import 'package:paitent/features/common/medication/models/GetMedicationStockImages.dart';
-import 'package:paitent/features/common/medication/view_models/patients_medication.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/models/MedicationDosageUnitsPojo.dart';
-import 'package:paitent/features/misc/models/MedicationDurationUnitsPojo.dart';
-import 'package:paitent/features/misc/models/MedicationFrequenciesPojo.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/features/misc/ui/home_view.dart';
-import 'package:paitent/infra/networking/CustomException.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:patient/features/common/medication/models/drugs_library_pojo.dart';
+import 'package:patient/features/common/medication/models/get_medication_stock_images.dart';
+import 'package:patient/features/common/medication/view_models/patients_medication.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/models/medication_dosage_units_pojo.dart';
+import 'package:patient/features/misc/models/medication_duration_units_pojo.dart';
+import 'package:patient/features/misc/models/medication_frequencies_pojo.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/features/misc/ui/home_view.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 
 class AddMyMedicationView extends StatefulWidget {
   @override

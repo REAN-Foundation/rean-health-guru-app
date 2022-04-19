@@ -59,12 +59,18 @@ class _SplashScreenState extends State<SplashScreen> {
         _packageInfo = info;
       });
     }
-
-    final String? locale = await FlutterSimCountryCode.simCountryCode;
-    if (locale!.trim().isNotEmpty) {
-      setCurrentLocale(locale.toUpperCase());
-      debugPrint('Country Local ==> ${locale.toUpperCase()}');
-    } else {
+    try {
+      final String? locale = await FlutterSimCountryCode.simCountryCode;
+      if (locale!.trim().isNotEmpty) {
+        setCurrentLocale(locale.toUpperCase());
+        debugPrint('Country Local ==> ${locale.toUpperCase()}');
+      } else {
+        final Locale? countryLocale = await Devicelocale.currentAsLocale;
+        setCurrentLocale(countryLocale!.countryCode!.toUpperCase());
+        debugPrint(
+            'Country Local ==> ${countryLocale.countryCode!.toUpperCase()}');
+      }
+    } catch (e) {
       final Locale? countryLocale = await Devicelocale.currentAsLocale;
       setCurrentLocale(countryLocale!.countryCode!.toUpperCase());
       debugPrint(

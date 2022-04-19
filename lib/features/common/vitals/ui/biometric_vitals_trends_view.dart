@@ -88,7 +88,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
           Expanded(
             flex: 1,
             child: Semantics(
-              label: 'Vitals 1 of 2',
+              label: 'Record Vitals 1 of 2',
               selected: true,
               child: InkWell(
                 onTap: () {
@@ -110,7 +110,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
                         height: 4,
                       ),
                       Text(
-                        'Vitals',
+                        'Record Vitals',
                         style: TextStyle(
                             color:
                                 _currentIndex == 0 ? Colors.white : Colors.grey,
@@ -125,7 +125,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
           Expanded(
             flex: 1,
             child: Semantics(
-              label: 'Trends 2 of 2',
+              label: 'View Trends 2 of 2',
               selected: true,
               child: InkWell(
                 onTap: () {
@@ -147,7 +147,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
                         height: 4,
                       ),
                       Text(
-                        'Trends',
+                        'View Trends',
                         style: TextStyle(
                             color:
                                 _currentIndex == 1 ? Colors.white : Colors.grey,

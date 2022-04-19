@@ -74,6 +74,7 @@ setUpDummyNumbers() {
   dummyNumberList.add('6123612361');
   dummyNumberList.add('5512355123');
   dummyNumberList.add('1234567890');
+  dummyNumberList.add('123456789');
 }
 
 void setTask(Task response) {

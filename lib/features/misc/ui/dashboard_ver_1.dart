@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/features/misc/models/KnowledgeTopicResponse.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/features/misc/view_models/dashboard_summary_model.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/misc/models/knowledge_topic_response.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/features/misc/view_models/dashboard_summary_model.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 
 //ignore: must_be_immutable
 class DashBoardVer1View extends StatefulWidget {
@@ -1044,7 +1044,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               ImageIcon(
-                                AssetImage('res/images/ic_blood_presure.png'),
+                                AssetImage('res/images/ic_blood_pressure.png'),
                                 size: 24,
                                         color: iconColor,
                                       ),

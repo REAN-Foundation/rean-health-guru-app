@@ -2,10 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_driver/driver_extension.dart';
-import 'package:paitent/features/misc/ui/AfterSplashScreen.dart';
-import 'package:paitent/features/misc/ui/splashScreen.dart';
-import 'package:paitent/infra/provider_setup.dart';
-import 'package:paitent/infra/router.dart';
+import 'package:patient/features/misc/ui/after_splash_screen.dart';
+import 'package:patient/features/misc/ui/splash_screen.dart';
+import 'package:patient/infra/provider_setup.dart';
+import 'package:patient/infra/router.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //https://medium.com/@LohaniDamodar/flutter-separating-build-environment-with-multiple-firebase-environment-92e40e26d275
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
                   fontSize: 28,
                   fontWeight: FontWeight.w600,
                   color: Colors.white)),
-          image: Image.asset('res/images/app_logo_tranparent.png'),
+          image: Image.asset('res/images/app_logo_transparent.png'),
           backgroundColor: Colors.deepPurple,
           styleTextUnderTheLoader: TextStyle(),
           photoSize: 100.0,

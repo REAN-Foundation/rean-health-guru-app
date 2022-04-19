@@ -1,9 +1,9 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/features/common/chat_bot/models/ChatApiResponse.dart';
-import 'package:paitent/infra/networking/ChatApiProvider.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:patient/features/common/chat_bot/models/chat_api_response.dart';
+import 'package:patient/infra/networking/chat_api_provider.dart';
+import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 
 import '../../../../infra/view_models/base_model.dart';
 

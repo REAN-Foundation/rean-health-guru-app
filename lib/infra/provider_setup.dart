@@ -1,5 +1,5 @@
-import 'package:paitent/features/misc/view_models/api.dart';
-import 'package:paitent/features/misc/view_models/authentication_service.dart';
+import 'package:patient/features/misc/view_models/api.dart';
+import 'package:patient/features/misc/view_models/authentication_service.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 

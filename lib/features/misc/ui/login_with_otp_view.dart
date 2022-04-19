@@ -6,19 +6,19 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/models/CheckUserExistOrNotResonse.dart';
-import 'package:paitent/features/misc/models/GetRoleIdResponse.dart';
-import 'package:paitent/features/misc/models/PatientApiDetails.dart';
-import 'package:paitent/features/misc/ui/home_view.dart';
-import 'package:paitent/features/misc/view_models/login_view_model.dart';
-import 'package:paitent/infra/networking/ApiProvider.dart';
-import 'package:paitent/infra/networking/CustomException.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:paitent/infra/widgets/PrimaryLightColorContainer.dart';
+import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/models/check_user_exists_or_not_resonse.dart';
+import 'package:patient/features/misc/models/get_role_id_response.dart';
+import 'package:patient/features/misc/models/patient_api_details.dart';
+import 'package:patient/features/misc/ui/home_view.dart';
+import 'package:patient/features/misc/view_models/login_view_model.dart';
+import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
+import 'package:patient/infra/widgets/primary_light_color_container.dart';
 import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -171,7 +171,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                                             'American Heart Association logo',
                                       )
                                     : Image.asset(
-                                        'res/images/app_logo_tranparent.png',
+                                        'res/images/app_logo_transparent.png',
                                         semanticLabel: 'REAN HealthGuru',
                                         color: primaryColor,
                                       ),

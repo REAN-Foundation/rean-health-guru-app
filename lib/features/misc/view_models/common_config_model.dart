@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/features/common/careplan/models/StartCarePlanResponse.dart';
-import 'package:paitent/features/common/emergency/models/EmergencyContactResponse.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/models/GetAllRecordResponse.dart';
-import 'package:paitent/features/misc/models/GetSharablePublicLink.dart';
-import 'package:paitent/infra/networking/ApiProvider.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:patient/features/common/careplan/models/start_careplan_response.dart';
+import 'package:patient/features/common/emergency/models/emergency_contact_response.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/models/get_all_record_response.dart';
+import 'package:patient/features/misc/models/get_sharable_public_link.dart';
+import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 
 import '../../../infra/view_models/base_model.dart';
 

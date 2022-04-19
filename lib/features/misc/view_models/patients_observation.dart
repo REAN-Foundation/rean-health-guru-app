@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/models/PatientMedicalProfilePojo.dart';
-import 'package:paitent/features/misc/models/PatientVitalsPojo.dart';
-import 'package:paitent/infra/networking/ApiProvider.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:paitent/infra/view_models/base_model.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/models/patient_medical_profile_pojo.dart';
+import 'package:patient/features/misc/models/patient_vitals_pojo.dart';
+import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/view_models/base_model.dart';
 
 
 class PatientObservationsViewModel extends BaseModel {

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/features/common/medication/models/DrugOrderIdPojo.dart';
-import 'package:paitent/features/common/medication/models/DrugsLibraryPojo.dart';
-import 'package:paitent/features/common/medication/models/GetMedicationStockImages.dart';
-import 'package:paitent/features/common/medication/models/GetMyMedicationsResponse.dart';
-import 'package:paitent/features/common/medication/models/MyCurrentMedication.dart';
-import 'package:paitent/features/common/medication/models/MyMedicationSummaryRespose.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/infra/networking/ApiProvider.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:paitent/infra/view_models/base_model.dart';
+import 'package:patient/features/common/medication/models/drug_order_id_pojo.dart';
+import 'package:patient/features/common/medication/models/drugs_library_pojo.dart';
+import 'package:patient/features/common/medication/models/get_medication_stock_images.dart';
+import 'package:patient/features/common/medication/models/get_my_medications_response.dart';
+import 'package:patient/features/common/medication/models/my_current_medication.dart';
+import 'package:patient/features/common/medication/models/my_medication_summary_respose.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/view_models/base_model.dart';
 
 class PatientMedicationViewModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();

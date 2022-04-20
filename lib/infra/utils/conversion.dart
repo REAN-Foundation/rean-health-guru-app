@@ -14,4 +14,16 @@ class Conversion {
   static double FeetToCm(double lenghtInFeet) {
     return double.parse((lenghtInFeet * 30.48).toStringAsFixed(3));
   }
+
+  static String durationFromMinToHrsToString(int minutes) {
+    final d = Duration(minutes: minutes);
+    final List<String> parts = d.toString().split(':');
+    return '${parts[0].padLeft(2, '0')} hr ${parts[1].padLeft(2, '0')} min';
+  }
+
+  static String durationFromSecToMinToString(int seconds) {
+    final d = Duration(seconds: seconds);
+    final List<String> parts = d.toString().split(':');
+    return '${parts[1].padLeft(2, '0')} min ${parts[2].padLeft(2, '0').replaceRange(2, parts[2].padLeft(2, '0').length, '')} sec';
+  }
 }

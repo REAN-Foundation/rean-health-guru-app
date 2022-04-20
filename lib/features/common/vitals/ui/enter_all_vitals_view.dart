@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -36,7 +38,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
   final _diastolicFocus = FocusNode();
   ProgressDialog? progressDialog;
   String unit = 'Kg';
-
+  GetHealthData getHealthData = GetIt.instance<GetHealthData>();
   var scrollContainer = ScrollController();
   final ScrollController _scrollController = ScrollController();
 
@@ -46,7 +48,59 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
+    getVitalsFromDevice();
     super.initState();
+  }
+
+  getVitalsFromDevice() {
+    if (getHealthData.getBloodOxygen() != '0.0') {
+      _bloodOxygenSaturationController.text = getHealthData.getBloodOxygen();
+      _bloodOxygenSaturationController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _bloodOxygenSaturationController.text.length),
+      );
+    }
+
+    if (getHealthData.getBPDiastolic() != '0.0') {
+      _diastolicController.text = getHealthData.getBPDiastolic();
+      _diastolicController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _diastolicController.text.length),
+      );
+    }
+
+    if (getHealthData.getBPSystolic() != '0.0') {
+      _systolicController.text = getHealthData.getBPSystolic();
+      _systolicController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _systolicController.text.length),
+      );
+    }
+
+    if (getHealthData.getBodyTemprature() != '0.0') {
+      _bodyTempratureController.text = getHealthData.getBodyTemprature();
+      _bodyTempratureController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _bodyTempratureController.text.length),
+      );
+    }
+
+    if (getHealthData.getHeartRate() != '0.0') {
+      _pulseRateController.text = getHealthData.getHeartRate();
+      _pulseRateController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _pulseRateController.text.length),
+      );
+    }
+
+    if (getHealthData.getWeight() != '0.0') {
+      _weightController.text = getHealthData.getWeight();
+      _weightController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _weightController.text.length),
+      );
+    }
+
+    if (getHealthData.getBloodGlucose() != '0.0') {
+      _bloodGlucosecontroller.text = getHealthData.getBloodGlucose();
+      _bloodGlucosecontroller.selection = TextSelection.fromPosition(
+        TextPosition(offset: _bloodGlucosecontroller.text.length),
+      );
+    }
   }
 
   @override

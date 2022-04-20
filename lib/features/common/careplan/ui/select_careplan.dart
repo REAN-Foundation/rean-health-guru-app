@@ -3,10 +3,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/careplan/models/enroll_care_clan_response.dart';
 import 'package:patient/features/common/careplan/models/get_aha_careplans_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
@@ -23,7 +26,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   late GetAHACarePlansResponse _ahaCarePlansResponse;
   List<DropdownMenuItem<String>>? _carePlanMenuItems;
   String? selectedCarePlan = '';
-  late CarePlanTypes carePlanTypes;
+  AvailablePlans? carePlanTypes;
   String dob = '';
   String unformatedDOB = '';
   var dateFormat = DateFormat('dd MMM, yyyy');
@@ -50,7 +53,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         debugPrint('AHA Care Plan ==> ${_ahaCarePlansResponse.toJson()}');
 
         _carePlanMenuItems = buildDropDownMenuItemsForCarePlan(
-            _ahaCarePlansResponse.data!.carePlanTypes!);
+            _ahaCarePlansResponse.data!.availablePlans!);
       } else {
         showToast(_ahaCarePlansResponse.message!, context);
       }
@@ -62,12 +65,12 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   }
 
   List<DropdownMenuItem<String>> buildDropDownMenuItemsForCarePlan(
-      List<CarePlanTypes> list) {
+      List<AvailablePlans> list) {
     final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < list.length; i++) {
       items.add(DropdownMenuItem(
-        child: Text(list.elementAt(i).code!),
-        value: list.elementAt(i).code,
+        child: Text(list.elementAt(i).displayName!),
+        value: list.elementAt(i).displayName,
       ));
     }
     return items;
@@ -75,11 +78,14 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   getCarePlanDetails() {
     for (int i = 0;
-        i < _ahaCarePlansResponse.data!.carePlanTypes!.length;
+        i < _ahaCarePlansResponse.data!.availablePlans!.length;
         i++) {
       if (selectedCarePlan ==
-          _ahaCarePlansResponse.data!.carePlanTypes!.elementAt(i).code) {
-        carePlanTypes = _ahaCarePlansResponse.data!.carePlanTypes!.elementAt(i);
+          _ahaCarePlansResponse.data!.availablePlans!
+              .elementAt(i)
+              .displayName) {
+        carePlanTypes =
+            _ahaCarePlansResponse.data!.availablePlans!.elementAt(i);
       }
     }
   }
@@ -272,11 +278,11 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           const SizedBox(
             height: 4,
           ),
-          Text(
-            selectedCarePlan == '' ? '' : carePlanTypes.name!,
+          /*Text(
+            selectedCarePlan == '' ? '' : carePlanTypes.displayName!,
             style: TextStyle(
                 color: textBlack, fontSize: 16, fontWeight: FontWeight.w300),
-          ),
+          ),*/
         ],
       ),
     );
@@ -361,7 +367,17 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       child: Align(
         alignment: Alignment.centerLeft,
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            showMaterialModalBottomSheet(
+                isDismissible: true,
+                backgroundColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(25.0)),
+                ),
+                context: context,
+                builder: (context) => eligibilityOfCarePlan());
+          },
           child: Text(
             'Check Eligibility',
             style: TextStyle(
@@ -423,7 +439,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           fontSize: 14,
                           decoration: TextDecoration.underline,
                         ),
-                        recognizer: new TapGestureRecognizer()
+                        recognizer: TapGestureRecognizer()
                           ..onTap = () => _launchURL('https://www.heart.org'),
                       ),
                       TextSpan(
@@ -446,83 +462,111 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   }
 
   Widget eligibilityOfCarePlan() {
-    return Padding(
-      padding:
-          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Check Eligibility',
-            style: TextStyle(
-                color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 4,
-          ),
-          RichText(
-            text: TextSpan(
-              text:
-                  'People of all ages with heart conditions can benefit from a cardiac rehab program. You may benefit if you have or have experienced a:',
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w200,
-                color: textBlack,
-              ),
-              children: <TextSpan>[
-                TextSpan(
-                  text: '\n• heart attack (myocardial infarction)',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w200,
-                    color: textBlack,
-                    fontFamily: 'Montserrat',
-                  ),
-                ),
-                TextSpan(
-                    text:
-                        '\n• heart condition, such as coronary artery disease (CAD), angina or heart failure',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w200,
-                        color: textBlack,
-                        fontFamily: 'Montserrat')),
-                TextSpan(
-                    text:
-                        '\n• heart procedure or surgery, including coronary artery bypass graft (CABG) surgery, percutaneous coronary intervention (PCI, including coronary or balloon angioplasty and stenting), valve replacement, a pacemaker or implantable cardioverter defibrillator (ICD)',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w200,
-                        color: textBlack,
-                        fontFamily: 'Montserrat')),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+    return Container(
+      height: 400,
+      color: Colors.transparent,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+              left: 16.0, right: 16.0, top: 16.0, bottom: 16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  width: 120,
-                  height: 30,
-                  padding: EdgeInsets.symmetric(horizontal: 4.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24.0),
-                      border: Border.all(color: primaryColor, width: 1),
-                      color: Colors.white),
-                  child: Center(
-                    child: Text(
-                      'View more >>',
+              Text(
+                'Check Eligibility',
+                style: TextStyle(
+                    color: textBlack,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 18.0),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              RichText(
+                text: TextSpan(
+                  text:
+                      'People of all ages with heart conditions can benefit from a cardiac rehab program. You may benefit if you have or have experienced a:',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: textGrey,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: '\n\n\n• heart attack (myocardial infarction)',
                       style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: primaryColor,
-                          fontSize: 12),
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: textGrey,
+                      ),
+                    ),
+                    TextSpan(
+                        text:
+                            '\n• heart condition, such as coronary artery disease (CAD), angina or heart failure',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          color: textGrey,
+                        )),
+                    TextSpan(
+                        text:
+                            '\n• heart procedure or surgery, including coronary artery bypass graft (CABG) surgery, percutaneous coronary intervention (PCI, including coronary or balloon angioplasty and stenting), valve replacement, a pacemaker or implantable cardioverter defibrillator (ICD)',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          color: textGrey,
+                        )),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 48,
+                      width: MediaQuery.of(context).size.width - 32,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6.0),
+                          border: Border.all(color: primaryColor, width: 1),
+                          color: primaryColor),
+                      child: Center(
+                        child: Text(
+                          'Alright',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              fontSize: 14),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
+                ],
+              )
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }
@@ -606,7 +650,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     );
   }
 
-  void _launchURL(String _url) async {
+  _launchURL(String _url) async {
     if (!await launch(_url)) throw 'Could not launch $_url';
   }
 
@@ -627,13 +671,13 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 }
               },
               child: Container(
-                height: 40,
+                height: 48,
                 width: MediaQuery.of(context).size.width - 32,
                 padding: EdgeInsets.symmetric(
                   horizontal: 16.0,
                 ),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24.0),
+                    borderRadius: BorderRadius.circular(6.0),
                     border: Border.all(color: primaryColor, width: 1),
                     color: primaryColor),
                 child: Center(
@@ -649,5 +693,31 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             ),
           ],
         ));
+  }
+
+  startCarePlan() async {
+    try {
+      model.setBusy(true);
+      final map = <String, String?>{};
+      map['Provider'] = carePlanTypes!.provider;
+      map['PlanCode'] = carePlanTypes!.code;
+      map['StartDate'] = startDate;
+
+      final EnrollCarePlanResponse response = await model.startCarePlan(map);
+      debugPrint('Registered Care Plan ==> ${response.toJson()}');
+      if (response.status == 'success') {
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (context) {
+          return HomeView(0);
+        }), (Route<dynamic> route) => false);
+        showToast(response.message!, context);
+      } else {
+        showToast(response.message!, context);
+      }
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
+    }
   }
 }

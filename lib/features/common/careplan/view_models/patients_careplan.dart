@@ -6,17 +6,17 @@ import 'package:patient/features/common/appointment_booking/models/doctor_list_a
 import 'package:patient/features/common/appointment_booking/models/pharmacy_list_api_response.dart';
 import 'package:patient/features/common/careplan/models/add_team_member_response.dart';
 import 'package:patient/features/common/careplan/models/answer_assessment_response.dart';
-import 'package:patient/features/common/careplan/models/get_aha_careplans_response.dart';
+import 'package:patient/features/common/careplan/models/enroll_care_clan_response.dart';
 import 'package:patient/features/common/careplan/models/get_action_of_goal_plan.dart';
+import 'package:patient/features/common/careplan/models/get_aha_careplans_response.dart';
 import 'package:patient/features/common/careplan/models/get_careplan_my_response.dart';
 import 'package:patient/features/common/careplan/models/get_careplan_summary_response.dart';
 import 'package:patient/features/common/careplan/models/get_goal_priorities.dart';
 import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
-import 'package:patient/features/common/careplan/models/start_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/team_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/user_task_response.dart';
-import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/utils/string_utility.dart';
@@ -37,14 +37,14 @@ class PatientCarePlanViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response =
-        await apiProvider!.get('/aha/care-plan/types', header: map);
+        await apiProvider!.get('/care-plans?provider=AHA', header: map);
 
     setBusy(false);
     // Convert and return
     return GetAHACarePlansResponse.fromJson(response);
   }
 
-  Future<StartCarePlanResponse> startCarePlan(Map body) async {
+  Future<EnrollCarePlanResponse> startCarePlan(Map body) async {
     // Get user profile for id
 
     debugPrint(json.encode(body).toString());
@@ -53,11 +53,13 @@ class PatientCarePlanViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider!
-        .post('/aha/care-plan/enroll', body: body, header: map);
+    final response = await apiProvider!.post(
+        '/care-plans/patients/' + patientUserId! + '/enroll',
+        body: body,
+        header: map);
     setBusy(false);
     // Convert and return
-    return StartCarePlanResponse.fromJson(response);
+    return EnrollCarePlanResponse.fromJson(response);
   }
 
   Future<AddTeamMemberResponse> addTeamMembers(Map body) async {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
@@ -33,7 +35,9 @@ class GetSleepData {
         DateTime.now().day, 11, 59, 59);
     debugPrint('Start Sleep Date ==> $startDate');
     debugPrint('End Sleep Date ==> $endDate');
-    fetchData();
+    if (Platform.isIOS) {
+      fetchData();
+    }
     loadHeightAndWeight();
   }
 
@@ -74,7 +78,7 @@ class GetSleepData {
       try {
         /// Fetch new data
         final List<HealthDataPoint> healthData =
-            await health.getHealthDataFromTypes(startDate, endDate, types);
+        await health.getHealthDataFromTypes(startDate, endDate, types);
 
         /// Save all the new data points
         _healthDataList.addAll(healthData);
@@ -140,8 +144,7 @@ class GetSleepData {
       }
     }
 
-    if (height == 0.0 || weight == 0.0) {
-    } else {
+    if (height == 0.0 || weight == 0.0) {} else {
       calculetBMI();
     }
 

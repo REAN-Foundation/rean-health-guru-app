@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/enroll_care_clan_response.dart';
 import 'package:patient/features/common/careplan/models/get_aha_careplans_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
@@ -666,8 +665,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 if (selectedCarePlan == '') {
                   showToast('Please select care plan', context);
                 } else {
-                  Navigator.pushNamed(context, RoutePaths.Start_Care_Plan,
-                      arguments: selectedCarePlan);
+                  startCarePlan();
                 }
               },
               child: Container(

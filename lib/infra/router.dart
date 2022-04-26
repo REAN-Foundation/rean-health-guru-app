@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/activity/ui/meditation_timmer_view.dart';
-import 'package:patient/features/common/activity/ui/view_my_daily_activity.dart';
+import 'package:patient/features/common/activity/ui/view_my_all_daily_activity.dart';
+import 'package:patient/features/common/activity/ui/view_my_all_daily_stress.dart';
 import 'package:patient/features/common/activity/ui/view_my_daily_sleep.dart';
 import 'package:patient/features/common/appointment_booking/ui/booking_appointment_confirmation.dart';
 import 'package:patient/features/common/appointment_booking/ui/booking_confirm_screen.dart';
@@ -14,14 +15,14 @@ import 'package:patient/features/common/appointment_booking/ui/lab_detail_view.d
 import 'package:patient/features/common/appointment_booking/ui/payment_confirmation.dart';
 import 'package:patient/features/common/appointment_booking/ui/search_doctor_list_view.dart';
 import 'package:patient/features/common/appointment_booking/ui/search_lab_list_view.dart';
-import 'package:patient/features/common/careplan/ui/biometric_task.dart';
 import 'package:patient/features/common/careplan/ui/add_goals_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/approve_doctor_for_goal_careplan.dart';
-import 'package:patient/features/common/careplan/ui/assessment_task_navigator.dart';
 import 'package:patient/features/common/careplan/ui/assessment_final_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/assessment_question_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/assessment_question_two_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/assessment_start_for_careplan.dart';
+import 'package:patient/features/common/careplan/ui/assessment_task_navigator.dart';
+import 'package:patient/features/common/careplan/ui/biometric_task.dart';
 import 'package:patient/features/common/careplan/ui/challenge_careplan.dart';
 import 'package:patient/features/common/careplan/ui/goals/add_blood_pressure_goals_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/goals/add_cholesterol_goals_for_careplan.dart';
@@ -53,24 +54,24 @@ import 'package:patient/features/common/chat_bot/ui/faq_chat_screen.dart';
 import 'package:patient/features/common/medication/ui/add_my_medication.dart';
 import 'package:patient/features/common/medication/ui/my_medication.dart';
 import 'package:patient/features/common/nutrition/ui/my_daily_nutrition_view.dart';
+import 'package:patient/features/common/vitals/ui/biometric_blood_glucose_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_oxygen_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_pressure_vitals.dart';
-import 'package:patient/features/common/vitals/ui/biometric_blood_glucose_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_body_temperature_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_pulse_vitals.dart';
-import 'package:patient/features/common/vitals/ui/biometric_weight_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_vitals_trends_view.dart';
+import 'package:patient/features/common/vitals/ui/biometric_weight_vitals.dart';
 import 'package:patient/features/misc/models/patient_medical_profile_pojo.dart';
-import 'package:patient/features/misc/ui/after_splash_screen.dart';
-import 'package:patient/features/misc/ui/on_boarding_aha_page.dart';
-import 'package:patient/features/misc/ui/on_boarding_page.dart';
 import 'package:patient/features/misc/ui/about_rean_care.dart';
+import 'package:patient/features/misc/ui/after_splash_screen.dart';
 import 'package:patient/features/misc/ui/create_profile_view.dart';
 import 'package:patient/features/misc/ui/edit_patient_medical_profile.dart';
 import 'package:patient/features/misc/ui/edit_profile_view.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/features/misc/ui/login_with_otp_view.dart';
 import 'package:patient/features/misc/ui/my_reports_upload.dart';
+import 'package:patient/features/misc/ui/on_boarding_aha_page.dart';
+import 'package:patient/features/misc/ui/on_boarding_page.dart';
 import 'package:patient/features/misc/ui/otp_screen_view.dart';
 import 'package:patient/features/misc/ui/patient_medical_profile.dart';
 import 'package:patient/features/misc/ui/splash_screen.dart';
@@ -156,8 +157,12 @@ class Routers {
       case RoutePaths.My_Vitals:
         //return MaterialPageRoute(builder: (_) => BiometricVitalsView());
         return MaterialPageRoute(builder: (_) => BiometricVitalsTrendsView());
+      case RoutePaths.MY_STRESS:
+        return MaterialPageRoute(builder: (_) => ViewMyAllDailyStress());
       case RoutePaths.My_Activity:
-        return MaterialPageRoute(builder: (_) => ViewMyDailyActivity());
+        return MaterialPageRoute(
+            builder: (_) =>
+                ViewMyAllDailyActivity(settings.arguments as String?));
       case RoutePaths.MySleepData:
         return MaterialPageRoute(builder: (_) => ViewMyDailySleep());
       case RoutePaths.My_Nutrition:

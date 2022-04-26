@@ -4,10 +4,13 @@ import 'dart:core';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
+import 'package:get_it/get_it.dart';
 import 'package:package_info/package_info.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/get_health_data.dart';
+import 'package:patient/infra/utils/get_sleep_data.dart';
 
 class SplashScreen extends StatefulWidget {
   final int seconds;
@@ -80,6 +83,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
+    GetIt.instance.registerSingleton<GetSleepData>(GetSleepData());
     _initPackageInfo();
     getDailyCheckInDate();
     super.initState();

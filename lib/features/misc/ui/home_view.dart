@@ -23,7 +23,6 @@ import 'package:patient/infra/utils/coach_mark_utilities.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_all_configurations.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
-import 'package:patient/infra/utils/get_sleep_data.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_constant.dart';
 import 'package:patient/infra/utils/string_utility.dart';
@@ -346,8 +345,6 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   showDailyCheckIn() {
     debugPrint('Inside Daily Check In');
-    GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
-    GetIt.instance.registerSingleton<GetSleepData>(GetSleepData());
     healthData = GetIt.instance<GetHealthData>();
     if (dailyCheckInDate != dateFormat.format(DateTime.now())) {
       showMaterialModalBottomSheet(

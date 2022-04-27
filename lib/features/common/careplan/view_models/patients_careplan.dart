@@ -207,9 +207,10 @@ class PatientCarePlanViewModel extends BaseModel {
             '?userId=' +
             patientUserId! +
             '&orderBy=ScheduledStartTime&order=descending&scheduledFrom=' +
-            dateFrom +
+            dateFrom /*+
             '&scheduledTo=' +
-            dateTo,
+            dateTo*/
+        ,
         header: map);
 
     setBusy(false);

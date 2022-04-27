@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/route_paths.dart';
-import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
-import 'package:patient/features/common/careplan/models/user_task_response.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
+import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/user_task_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -67,11 +67,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   getUserTask() async {
     try {
+      var dateTill = DateTime.now();
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
       userTaskResponse = await model.getUserTasks(
           query,
           dateQueryFormat.format(DateTime.now()),
-          dateQueryFormat.format(DateTime.now()));
+          dateQueryFormat.format(dateTill.add(Duration(days: 82))));
 
       if (userTaskResponse.status == 'success') {
         tasksList.clear();

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -80,11 +81,14 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
         DateTime.now().day, 23, 59, 59);
     loadSharedPrefs();
     //loadWaterConsuption();
-    //if (Platform.isIOS) {
-    fetchData();
-    sleepData = GetSleepData();
-    //data = GetHealthData();
-    //}
+    if (Platform.isIOS) {
+      fetchData();
+      sleepData = GetSleepData();
+      Timer.periodic(Duration(seconds: 3), (Timer t) {
+        setState(() {});
+      });
+      //data = GetHealthData();
+    }
     super.initState();
   }
 

@@ -52,7 +52,7 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
   int heartRateBmp = 0;
   ScrollController? _scrollController;
   GetHealthData? data;
-  final durationInMin = Duration(minutes: 5);
+  final durationInMin = Duration(minutes: 3);
   late AndroidDeviceInfo androidInfo;
   late IosDeviceInfo iosInfo;
 
@@ -85,6 +85,9 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
       sleepData = GetSleepData();
       data = GetHealthData();
       Timer.periodic(durationInMin, (Timer t) => fetchData());
+      Timer.periodic(Duration(seconds: 1), (Timer t) {
+        setState(() {});
+      });
     }
     super.initState();
   }
@@ -112,7 +115,7 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
       //HealthDataType.DISTANCE_WALKING_RUNNING,
     ];
 
-    setState(() => _state = AppState.FETCHING_DATA);
+    //setState(() => _state = AppState.FETCHING_DATA);
 
     /// You MUST request access to the data types before reading them
     final bool accessWasGranted = await health.requestAuthorization(types);
@@ -344,6 +347,7 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
     totalBasalCalories = 0;
     totalCalories = 0;
     steps = 0;
+    stepsDevice = 0;
     //weight = 0;
     //height = 0;
   }
@@ -569,6 +573,9 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
   }
 
   Widget exerciseTime() {
+    debugPrint(
+        "Inside Exercise Time ==> ${data!.getExerciseTimeInMin().abs()}");
+
     return Container(
       height: 200,
       decoration: BoxDecoration(

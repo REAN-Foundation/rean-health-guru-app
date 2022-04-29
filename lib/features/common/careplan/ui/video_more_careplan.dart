@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/route_paths.dart';
-import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
 import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/user_task_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -46,9 +46,9 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
 
   @override
   void initState() {
-    if (widget.assortedViewConfigs!.task.type == 'Video') {
+    if (widget.assortedViewConfigs!.task.action!.type == 'Video') {
       videoId = YoutubePlayer.convertUrlToId(
-          widget.assortedViewConfigs!.task.details!.url!);
+          widget.assortedViewConfigs!.task.action!.url!);
       debugPrint(videoId);
       _controller = YoutubePlayerController(
         initialVideoId: videoId!, //"d8PzoTr95ik",
@@ -297,7 +297,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
           Container(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              widget.assortedViewConfigs!.task.details!.text!,
+              widget.assortedViewConfigs!.task.action!.details!,
               style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
             ),
           ),
@@ -309,8 +309,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
             children: [
               InkWell(
                 onTap: () {
-                  _launchURL(widget.assortedViewConfigs!.task.details!
-                      .concreteTask!.mediaUrl!);
+                  _launchURL(widget.assortedViewConfigs!.task.action!.url);
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -378,7 +377,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
           Container(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              widget.assortedViewConfigs!.task.details!.text!,
+              widget.assortedViewConfigs!.task.action!.details!,
               style: TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
             ),
           ),
@@ -410,7 +409,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
     }
   }
 
-  completeMessageTaskOfAHACarePlan(Task task) async {
+  completeMessageTaskOfAHACarePlan(Items task) async {
     try {
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.completeMessageTaskOfAHACarePlan(

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
-import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/user_task_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
@@ -26,9 +25,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   var model = PatientCarePlanViewModel();
   var dateFormat = DateFormat('MMM dd - hh:mm a');
   var dateQueryFormat = DateFormat('yyyy-MM-dd');
-  late GetTaskOfAHACarePlanResponse _carePlanTaskResponse;
   late UserTaskResponse userTaskResponse;
-  List<Task> tasks = <Task>[];
   List<Items> tasksList = <Items>[];
   bool isSubscribe = false;
   late ProgressDialog progressDialog;
@@ -36,34 +33,6 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   String query = 'pending';
   final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
-
-  getAHACarePlanSummary() async {
-    try {
-      //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
-      _carePlanTaskResponse = await model.getTaskOfpatient(query);
-
-      if (_carePlanTaskResponse.status == 'success') {
-        tasks.clear();
-        tasks.addAll(_carePlanTaskResponse.data!.tasks!);
-        debugPrint('AHA Care Plan ==> ${_carePlanTaskResponse.toJson()}');
-        debugPrint(
-            'AHA Care Plan Task Count ==> ${_carePlanTaskResponse.data!.tasks!.length}');
-      } else {
-        tasks.clear();
-        showToast(_carePlanTaskResponse.message!, context);
-      }
-    } on FetchDataException catch (e) {
-      tasks.clear();
-      debugPrint('error caught: $e');
-      model.setBusy(false);
-      showToast(e.toString(), context);
-    }
-    /*catch (Exception e) {
-      model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint(CustomException.toString());
-    }*/
-  }
 
   getUserTask() async {
     try {
@@ -179,7 +148,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                     Semantics(
                       label: 'taskCount',
                       child: Text(
-                        tasks.length.toString(),
+                        tasksList.length.toString(),
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
@@ -293,7 +262,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       isAlwaysShown: true,
       controller: _scrollController,
       child: ListView.separated(
-          itemBuilder: (context, index) => _makeMedicineCard(context, index),
+          itemBuilder: (context, index) => _createToDos(context, index),
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(
               height: 8,
@@ -305,24 +274,24 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     );
   }
 
-/*  Widget _createToDos(BuildContext context, int index) {
-    final Task task = tasks.elementAt(index);
+  Widget _createToDos(BuildContext context, int index) {
+    final Items task = tasksList.elementAt(index);
 
-    return task.categoryName == 'Care-plan-task'
+    return task.actionType == 'Careplan'
         ? _makeTaskCard(context, index)
-        : task.categoryName == 'Medication-consumption-task'
+        : task.actionType == 'Medication'
             ? _makeMedicineCard(context, index)
-            : task.categoryName == 'Appointment-task'
-                ? _makeUpcommingAppointmentCard(context, index)
-                : Container();
-  }*/
+            /*: task.categoryName == 'Appointment-task'
+                ? _makeUpcommingAppointmentCard(context, index)*/
+            : Container();
+  }
 
-/*  Widget _makeTaskCard(BuildContext context, int index) {
-    final Task task = tasks.elementAt(index);
+  Widget _makeTaskCard(BuildContext context, int index) {
+    final Items task = tasksList.elementAt(index);
     //debugPrint('Category Name ==> ${task.categoryName} && Task Tittle ==> ${task.details.mainTitle}');
     return InkWell(
       onTap: () {
-        debugPrint('Task Type ==> ${task.type}');
+        debugPrint('Task Type ==> ${task.action!.category}');
         if (task.finished) {
           debugPrint('Task ID ==> ${task.id}');
           _taskNavigator(task);
@@ -333,9 +302,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       },
       child: MergeSemantics(
         child: Semantics(
-          label: task.details.mainTitle,
+          label: task.task,
           child: Container(
-            key: Key(task.details.type),
             decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: primaryLightColor),
@@ -367,7 +335,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 Container(
                                   width:
                                       MediaQuery.of(context).size.width - 200,
-                                  child: Text(task.details.mainTitle,
+                                  child: Text(task.task.toString(),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -387,8 +355,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                    dateFormat.format(
-                                        task.scheduledStartTime.toLocal()),
+                                    dateFormat.format(DateTime.parse(
+                                            task.scheduledStartTime.toString())
+                                        .toLocal()),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -420,7 +389,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Text(task.details.subTitle,
+                                Text(task.description ?? '',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -430,7 +399,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 SizedBox(
                                   height: 4,
                                 ),
-                                Text(task.details.description,
+                                Text(task.description ?? '',
                                     maxLines: 4,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -461,7 +430,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 ),
                               ],
                             )
-                            */ /*Column(
+                          /*Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -474,7 +443,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                     fontSize: 10),
                               ),*/ /* */ /*
                             ],
-                          ),*/ /*
+                          ),*/
                             ),
                       ],
                     ),
@@ -486,7 +455,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         ),
       ),
     );
-  }*/
+  }
 
   Widget _makeMedicineCard(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
@@ -893,14 +862,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     );
   }*/
 
-  startAHACarePlanSummary(Task task) async {
+  startAHACarePlanSummary(Items task) async {
     try {
-      progressDialog.show(max: 100, msg: 'Loading...');
       progressDialog.show(max: 100, msg: 'Loading...');
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.startTaskOfAHACarePlan(
               startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
-              task.details!.id!);
+              task.id!);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         progressDialog.close();
@@ -913,7 +881,6 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         showToast(_startTaskOfAHACarePlanResponse.message!, context);
       }
     } on FetchDataException catch (e) {
-      tasks.clear();
       debugPrint('error caught: $e');
       model.setBusy(false);
       showToast(e.toString(), context);
@@ -925,11 +892,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     }
   }
 
-  _taskNavigator(Task task) {
+  _taskNavigator(Items task) {
     //setStartTaskOfAHACarePlanResponse(_startTaskOfAHACarePlanResponse);
     setTask(task);
-    debugPrint('Task Type ==> ${task.details!.type}');
-    switch (task.details!.type) {
+    debugPrint('Task Type ==> ${task.action!.type}');
+    switch (task.action!.type) {
       case 'Message':
         assrotedUICount = 3;
         final AssortedViewConfigs newAssortedViewConfigs =
@@ -937,7 +904,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         newAssortedViewConfigs.toShow = '1';
         newAssortedViewConfigs.testToshow = '2';
         newAssortedViewConfigs.isNextButtonVisible = false;
-        newAssortedViewConfigs.header = task.details!.mainTitle;
+        newAssortedViewConfigs.header = task.task;
         newAssortedViewConfigs.task = task;
 
         Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
@@ -948,7 +915,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         });
         break;
       case 'Assessment':
-        if (!task.finished!) {
+        if (!task.finished) {
           Navigator.pushNamed(context, RoutePaths.Assessment_Navigator,
                   arguments: task)
               .then((value) {
@@ -961,11 +928,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         //Navigator.pushNamed(context, RoutePaths.Assessment_Start_Care_Plan);
         break;
       case 'Link':
-        _launchURL(task.details!.url!.replaceAll(' ', '%20')).then((value) {
+        _launchURL(task.action!.url!.replaceAll(' ', '%20')).then((value) {
           getUserTask();
           //showToast('Task completed successfully');
         });
-        if (!task.finished!) {
+        if (!task.finished) {
           completeMessageTaskOfAHACarePlan(task);
         }
         break;
@@ -986,7 +953,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         });
         break;
       case 'Goal':
-        if (!task.finished!) {
+        if (!task.finished) {
           Navigator.pushNamed(
                   context, RoutePaths.Set_Prority_For_Goals_Care_Plan)
               .then((value) {
@@ -1004,7 +971,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         newAssortedViewConfigs.toShow = '2';
         newAssortedViewConfigs.testToshow = '2';
         newAssortedViewConfigs.isNextButtonVisible = false;
-        newAssortedViewConfigs.header = task.details!.mainTitle;
+        newAssortedViewConfigs.header = task.task;
         newAssortedViewConfigs.task = task;
         Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
                 arguments: newAssortedViewConfigs)
@@ -1020,7 +987,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         newAssortedViewConfigs.toShow = '2';
         newAssortedViewConfigs.testToshow = '2';
         newAssortedViewConfigs.isNextButtonVisible = false;
-        newAssortedViewConfigs.header = task.details!.mainTitle;
+        newAssortedViewConfigs.header = task.task;
         newAssortedViewConfigs.task = task;
         Navigator.pushNamed(context, RoutePaths.Word_Of_The_Week_Care_Plan,
                 arguments: newAssortedViewConfigs)
@@ -1030,7 +997,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         });
         break;
       case 'Patient Weekly Relection':
-        if (!task.finished!) {
+        if (!task.finished) {
           Navigator.pushNamed(
                   context, RoutePaths.Self_Reflection_For_Goals_Care_Plan,
                   arguments: task)
@@ -1043,7 +1010,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         }
         break;
       case 'Care Plan Status Check':
-        if (!task.finished!) {
+        if (!task.finished) {
           Navigator.pushNamed(context, RoutePaths.Care_Plan_Status_Check,
                   arguments: task)
               .then((value) {
@@ -1055,7 +1022,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         }
         break;
       case 'Video':
-        debugPrint('URL ==> ${task.details!.url!.replaceAll(' ', '%20')}');
+        debugPrint('URL ==> ${task.action!.url!.replaceAll(' ', '%20')}');
         /*if(task.details.url.contains('youtube')){
         assrotedUICount = 3;
         AssortedViewConfigs newAssortedViewConfigs =  new AssortedViewConfigs();
@@ -1071,44 +1038,44 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           getUserTask();
         });
         }else {*/
-        _launchURL(task.details!.url!.replaceAll(' ', '%20')).then((value) {
+        _launchURL(task.action!.url!.replaceAll(' ', '%20')).then((value) {
           getUserTask();
           //showToast('Task completed successfully');
         });
         //}
-        if (!task.finished!) {
+        if (!task.finished) {
           completeMessageTaskOfAHACarePlan(task);
         }
         break;
       case 'Infographics':
-        debugPrint('URL ==> ${task.details!.url!.replaceAll(' ', '%20')}');
-        _launchURL(task.details!.url!.replaceAll(' ', '%20')).then((value) {
+        debugPrint('URL ==> ${task.action!.url!.replaceAll(' ', '%20')}');
+        _launchURL(task.action!.url!.replaceAll(' ', '%20')).then((value) {
           getUserTask();
           //showToast('Task completed successfully');
         });
-        if (!task.finished!) {
+        if (!task.finished) {
           completeMessageTaskOfAHACarePlan(task);
         }
         break;
       case 'Animation':
-        debugPrint('URL ==> ${task.details!.url!.replaceAll(' ', '%20')}');
-        _launchURL(task.details!.url!.replaceAll(' ', '%20')).then((value) {
+        debugPrint('URL ==> ${task.action!.url!.replaceAll(' ', '%20')}');
+        _launchURL(task.action!.url!.replaceAll(' ', '%20')).then((value) {
           getUserTask();
           //showToast('Task completed successfully');
         });
-        if (!task.finished!) {
+        if (!task.finished) {
           completeMessageTaskOfAHACarePlan(task);
         }
         break;
     }
   }
 
-  completeMessageTaskOfAHACarePlan(Task task) async {
+  completeMessageTaskOfAHACarePlan(Items task) async {
     try {
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.stopTaskOfAHACarePlan(
               startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
-              task.details!.id!);
+              task.id!);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;

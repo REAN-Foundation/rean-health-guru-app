@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
 import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/user_task_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
@@ -211,7 +211,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
                         MaterialPageRoute(builder: (context) {
                           return HomeView( 0 );
                         }), (Route<dynamic> route) => false);*/
-                    if (widget.assortedViewConfigs!.task.finished!) {
+                    if (widget.assortedViewConfigs!.task.finished) {
                       Navigator.pop(context);
                     } else {
                       completeMessageTaskOfAHACarePlan(
@@ -281,8 +281,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
               children: [
                 InkWell(
                   onTap: () {
-                    _launchURL(widget.assortedViewConfigs!.task.details!
-                        .concreteTask!.mediaUrl!);
+                    _launchURL(widget.assortedViewConfigs!.task.action!.url);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -334,8 +333,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                widget.assortedViewConfigs!.task.details!.concreteTask!.text ??
-                    '',
+                widget.assortedViewConfigs!.task.action!.description ?? '',
                 style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
               ),
             ),
@@ -347,9 +345,8 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
 
   Widget iMageView() {
     debugPrint(
-        'Image Visible ==> ${widget.assortedViewConfigs!.task.details!.type == 'Infographics'}');
-    debugPrint(
-        'Image URL ==> ${widget.assortedViewConfigs!.task.details!.url}');
+        'Image Visible ==> ${widget.assortedViewConfigs!.task.action!.type == 'Infographics'}');
+    debugPrint('Image URL ==> ${widget.assortedViewConfigs!.task.action!.url}');
     return Scrollbar(
       isAlwaysShown: true,
       controller: _scrollController,
@@ -358,14 +355,14 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (widget.assortedViewConfigs!.task.details!.url != null) ...[
+            if (widget.assortedViewConfigs!.task.action!.url != null) ...[
               Visibility(
-                visible: widget.assortedViewConfigs!.task.details!.type ==
+                visible: widget.assortedViewConfigs!.task.action!.type ==
                     'Infographics',
                 child: Container(
                     padding: const EdgeInsets.all(16.0),
                     child: Image.network(
-                      widget.assortedViewConfigs!.task.details!.url!,
+                      widget.assortedViewConfigs!.task.action!.url!,
                       fit: BoxFit.cover,
                     )),
               ),
@@ -373,7 +370,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                widget.assortedViewConfigs!.task.details!.text!,
+                widget.assortedViewConfigs!.task.action!.description!,
                 style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
               ),
             ),
@@ -406,12 +403,12 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
     }
   }
 
-  completeMessageTaskOfAHACarePlan(Task task) async {
+  completeMessageTaskOfAHACarePlan(Items task) async {
     try {
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.completeMessageTaskOfAHACarePlan(
               startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
-              task.details!.id!);
+              task.id!);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;

@@ -563,7 +563,7 @@ class _AddPhysicalActivityGoalsForCarePlanViewState
 
       final body = <String, dynamic>{};
       body['Goal'] = map;
-      body['GoalSettingTaskId'] = getTask()!.details!.id;
+      body['GoalSettingTaskId'] = getTask()!.id;
 
       final BaseResponse baseResponse = await model.addGoalsTask(
           startCarePlanResponseGlob!.data!.carePlan!.id.toString(),

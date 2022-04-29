@@ -402,7 +402,7 @@ class _DeterminActionPlansForCarePlanViewState
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.stopTaskOfAHACarePlan(
               startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
-              getTask()!.details!.id!);
+              getTask()!.id!);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         progressDialog.close();

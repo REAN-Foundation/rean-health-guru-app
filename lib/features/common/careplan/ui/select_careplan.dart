@@ -704,10 +704,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       final EnrollCarePlanResponse response = await model.startCarePlan(map);
       debugPrint('Registered Care Plan ==> ${response.toJson()}');
       if (response.status == 'success') {
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) {
-          return HomeView(0);
-        }), (Route<dynamic> route) => false);
+        showSuccessDialog();
         showToast(response.message!, context);
       } else {
         showToast(response.message!, context);
@@ -717,5 +714,88 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
     }
+  }
+
+  showSuccessDialog() {
+    Dialog sucsessDialog = Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      //this right here
+      child: Container(
+        height: 380.0,
+        width: 300.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Semantics(
+              label: 'Care Plan image',
+              image: true,
+              child: Image.asset(
+                'res/images/ic_careplan_success.png',
+                width: 200,
+                height: 200,
+              ),
+            ),
+            Text(
+              'Thank You!',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Montserrat",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 20.0),
+            ),
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                'You have successfully completed your assesmement',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 14.0),
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(top: 20.0)),
+            InkWell(
+              onTap: () {
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (context) {
+                  return HomeView(0);
+                }), (Route<dynamic> route) => false);
+              },
+              child: Container(
+                height: 48,
+                width: 260,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    border: Border.all(color: primaryColor, width: 1),
+                    color: primaryColor),
+                child: Center(
+                  child: Text(
+                    'Go to my task',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 14),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: 20,
+            ),
+          ],
+        ),
+      ),
+    );
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => sucsessDialog);
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/infra/networking/ApiProvider.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutREANCareView extends StatefulWidget {
@@ -22,7 +22,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
   String textMsg3 =
       'The American Heart Association’s National Heart Failure Initiative, IMPLEMENT-HFTM, is made possible with funding by founding sponsor, Novartis and national sponsor, Boehringer Ingelheim and Eli Lilly and Company.';
   String profileImage = '';
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
           child: Scaffold(
@@ -138,7 +138,7 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                             semanticLabel: 'American Heart Association Logo',
                           )
                         : Image.asset(
-                            'res/images/app_logo_tranparent.png',
+                            'res/images/app_logo_transparent.png',
                             semanticLabel: 'REAN HealthGuru',
                             color: primaryColor,
                           ),

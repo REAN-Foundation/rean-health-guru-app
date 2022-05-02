@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/features/common/medication/models/DrugOrderIdPojo.dart';
-import 'package:paitent/features/common/medication/models/DrugsLibraryPojo.dart';
-import 'package:paitent/features/common/medication/models/GetMedicationStockImages.dart';
-import 'package:paitent/features/common/medication/models/GetMyMedicationsResponse.dart';
-import 'package:paitent/features/common/medication/models/MyCurrentMedication.dart';
-import 'package:paitent/features/common/medication/models/MyMedicationSummaryRespose.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/infra/networking/ApiProvider.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:paitent/infra/view_models/base_model.dart';
+import 'package:patient/features/common/medication/models/drug_order_id_pojo.dart';
+import 'package:patient/features/common/medication/models/drugs_library_pojo.dart';
+import 'package:patient/features/common/medication/models/get_medication_stock_images.dart';
+import 'package:patient/features/common/medication/models/get_my_medications_response.dart';
+import 'package:patient/features/common/medication/models/my_current_medication.dart';
+import 'package:patient/features/common/medication/models/my_medication_summary_respose.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/view_models/base_model.dart';
 
 class PatientMedicationViewModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();
 
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   Future<MyCurrentMedication> getMyCurrentMedications() async {
     // Get user profile for id
@@ -22,10 +22,10 @@ class PatientMedicationViewModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.get(
-        '/clinical/medications/search?patientUserId=' + patientUserId,
+    final response = await apiProvider!.get(
+        '/clinical/medications/search?patientUserId=' + patientUserId!,
         header: map);
 
     setBusy(false);
@@ -39,11 +39,11 @@ class PatientMedicationViewModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.get(
+    final response = await apiProvider!.get(
         '/clinical/medication-consumptions/schedule-for-day/' +
-            patientUserId +
+            patientUserId! +
             '/' +
             date,
         header: map);
@@ -59,11 +59,11 @@ class PatientMedicationViewModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
     final body = <String, String>{};
 
-    final response = await apiProvider.put(
+    final response = await apiProvider!.put(
         '/clinical/medication-consumptions/mark-as-taken/' + consumptionId,
         header: map,
         body: body);
@@ -79,11 +79,11 @@ class PatientMedicationViewModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
     final body = <String, String>{};
 
-    final response = await apiProvider.put(
+    final response = await apiProvider!.put(
         '/clinical/medication-consumptions/mark-as-missed/' + consumptionId,
         header: map,
         body: body);
@@ -99,11 +99,11 @@ class PatientMedicationViewModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.get(
+    final response = await apiProvider!.get(
         '/clinical/medication-consumptions/summary-for-calendar-months/' +
-            patientUserId,
+            patientUserId!,
         header: map);
 
     setBusy(false);
@@ -114,8 +114,8 @@ class PatientMedicationViewModel extends BaseModel {
   Future<DrugsLibraryPojo> getDrugsByKeyword(String searchKeyword) async {
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
-    final response = await apiProvider.get(
+    map['authorization'] = 'Bearer ' + auth!;
+    final response = await apiProvider!.get(
         '/clinical/drugs/search?name=' + searchKeyword,
         header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
     debugPrint(response.toString());
@@ -127,9 +127,9 @@ class PatientMedicationViewModel extends BaseModel {
     setBusy(true);
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.post('/clinical/medications',
+    final response = await apiProvider!.post('/clinical/medications',
         body: body, header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
 
     debugPrint(response.toString());
@@ -141,9 +141,9 @@ class PatientMedicationViewModel extends BaseModel {
   Future<BaseResponse> addDrugToLibrary(Map body) async {
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
     final response =
-        await apiProvider.post('/clinical/drugs', body: body, header: map);
+        await apiProvider!.post('/clinical/drugs', body: body, header: map);
     debugPrint(response.toString());
     // Convert and return
     return BaseResponse.fromJson(response);
@@ -153,9 +153,9 @@ class PatientMedicationViewModel extends BaseModel {
     setBusy(true);
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.post('/drug-order',
+    final response = await apiProvider!.post('/drug-order',
         body: body, header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
 
     debugPrint(response.toString());
@@ -167,8 +167,9 @@ class PatientMedicationViewModel extends BaseModel {
   Future<GetMedicationStockImages> getMedicationStockImages() async {
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
-    final response = await apiProvider.get('/clinical/medications/stock-images',
+    map['authorization'] = 'Bearer ' + auth!;
+    final response = await apiProvider!.get(
+        '/clinical/medications/stock-images',
         header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
     debugPrint(response.toString());
     // Convert and return

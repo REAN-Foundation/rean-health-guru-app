@@ -1,8 +1,8 @@
 class TimeSlot {
-  int id;
-  String title;
-  bool isSelected;
-  bool isAvaliable;
+  int? id;
+  String? title;
+  bool? isSelected;
+  bool? isAvaliable;
 
   TimeSlot({this.id, this.title, this.isSelected, this.isAvaliable});
 

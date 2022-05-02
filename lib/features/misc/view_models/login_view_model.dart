@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/models/user_data.dart';
-import 'package:paitent/features/misc/view_models/authentication_service.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/models/user_data.dart';
+import 'package:patient/features/misc/view_models/authentication_service.dart';
 
 import '../../../infra/view_models/base_model.dart';
 
@@ -9,7 +9,7 @@ class LoginViewModel extends BaseModel {
   final AuthenticationService _authenticationService;
 
   LoginViewModel({
-    @required AuthenticationService authenticationService,
+    required AuthenticationService authenticationService,
   }) : _authenticationService = authenticationService;
 
   Future<UserData> login(Map body) async {

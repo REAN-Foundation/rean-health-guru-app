@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/features/misc/models/PatientMedicalProfilePojo.dart';
-import 'package:paitent/features/misc/view_models/patients_observation.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/misc/models/patient_medical_profile_pojo.dart';
+import 'package:patient/features/misc/view_models/patients_observation.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 
 import 'base_widget.dart';
 
@@ -15,7 +15,7 @@ class PatientMedicalProfileView extends StatefulWidget {
 }
 
 class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
-  HealthProfile healthProfile;
+  HealthProfile? healthProfile;
 
   var model = PatientObservationsViewModel();
   final TextEditingController _majorAilmentController = TextEditingController();
@@ -44,7 +44,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientObservationsViewModel>(
+    return BaseWidget<PatientObservationsViewModel?>(
         model: model,
         builder: (context, model, child) => Scaffold(
             backgroundColor: Colors.white,
@@ -60,7 +60,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
               ),
               iconTheme: IconThemeData(color: Colors.black),
             ),
-            body: model.busy
+                body: model!.busy
                 ? Center(child: CircularProgressIndicator())
                 : SingleChildScrollView(
                     child: Padding(
@@ -93,7 +93,8 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               Expanded(
                                 child: Text(
                                     '' +
-                                        replaceNull(healthProfile.majorAilment),
+                                        replaceNull(
+                                            healthProfile!.majorAilment),
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
@@ -127,7 +128,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text(
                                     '' +
                                         replaceNull(
-                                            healthProfile.otherConditions),
+                                            healthProfile!.otherConditions),
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
@@ -159,7 +160,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               ),
                               Expanded(
                                 child: Text(
-                                    '' + replaceNull(healthProfile.ethnicity),
+                                    '' + replaceNull(healthProfile!.ethnicity),
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
@@ -188,7 +189,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               SizedBox(
                                 width: 8,
                               ),
-                              Text('' + replaceNull(healthProfile.bloodGroup),
+                              Text('' + replaceNull(healthProfile!.bloodGroup),
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w500,
@@ -217,7 +218,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               SizedBox(
                                 width: 8,
                               ),
-                              Text('' + yesOrNo(healthProfile.isDiabetic),
+                              Text('' + yesOrNo(healthProfile!.isDiabetic!),
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w500,
@@ -245,7 +246,8 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               SizedBox(
                                 width: 8,
                               ),
-                              Text('' + yesOrNo(healthProfile.hasHeartAilment),
+                              Text(
+                                  '' + yesOrNo(healthProfile!.hasHeartAilment!),
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w500,
@@ -279,7 +281,8 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               Expanded(
                                 child: Text(
                                     '' +
-                                        replaceNull(healthProfile.maritalStatus
+                                        replaceNull(healthProfile!
+                                            .maritalStatus!
                                             .replaceAll('Unknown', 'Single')),
                                     style: TextStyle(
                                         fontSize: 16.0,
@@ -311,7 +314,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               ),
                               Expanded(
                                 child: Text(
-                                    '' + replaceNull(healthProfile.occupation),
+                                    '' + replaceNull(healthProfile!.occupation),
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
@@ -365,7 +368,8 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               ),
                               Expanded(
                                 child: Text(
-                                    '' + replaceNull(healthProfile.nationality),
+                                    '' +
+                                        replaceNull(healthProfile!.nationality),
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
@@ -397,7 +401,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               SizedBox(
                                 width: 8,
                               ),
-                              Text('' + yesOrNo(healthProfile.isSmoker),
+                              Text('' + yesOrNo(healthProfile!.isSmoker!),
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w500,
@@ -425,7 +429,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               SizedBox(
                                 width: 8,
                               ),
-                              Text('' + yesOrNo(healthProfile.isDrinker),
+                              Text('' + yesOrNo(healthProfile!.isDrinker!),
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w500,
@@ -457,7 +461,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text(
                                     '' +
                                         replaceNull(
-                                            healthProfile.procedureHistory),
+                                            healthProfile!.procedureHistory),
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
@@ -496,7 +500,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                   )));
   }
 
-  String replaceNull(String text) {
+  String replaceNull(String? text) {
     debugPrint('Medical Profile ==> $text');
     return text ?? '';
   }
@@ -507,11 +511,11 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
 
   _getPatientMedicalProfile() async {
     try {
-      final PatientMedicalProfilePojo allergiesPojo =
-          await model.getPatientMedicalProfile('Bearer ' + auth, patientUserId);
+      final PatientMedicalProfilePojo allergiesPojo = await model
+          .getPatientMedicalProfile('Bearer ' + auth!, patientUserId);
 
       if (allergiesPojo.status == 'success') {
-        healthProfile = allergiesPojo.data.healthProfile;
+        healthProfile = allergiesPojo.data!.healthProfile;
       } else {}
     } catch (CustomException) {
       debugPrint('Error ' + CustomException.toString());

@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/features/misc/models/KnowledgeTopicResponse.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/features/misc/view_models/dashboard_summary_model.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/misc/models/knowledge_topic_response.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/features/misc/view_models/dashboard_summary_model.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 
 //ignore: must_be_immutable
 class DashBoardVer1View extends StatefulWidget {
-  Function positionToChangeNavigationBar;
+  late Function positionToChangeNavigationBar;
 
-  DashBoardVer1View({Key key, @required Function positionToChangeNavigationBar})
+  DashBoardVer1View({Key? key, required Function positionToChangeNavigationBar})
       : super(key: key) {
     this.positionToChangeNavigationBar = positionToChangeNavigationBar;
   }
@@ -37,16 +37,17 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
   int incompleteTaskCount = 0;
   int completedMedicationCount = 0;
   int incompleteMedicationCount = 0;
- /* Weight weight;
+
+  /* Weight weight;
   BloodPressure bloodPressure;
   BloodSugar bloodSugar;
   BloodOxygenSaturation bloodOxygenSaturation;
   Pulse pulse;
   Temperature temperature;*/
   String unit = 'Kg';
-  String topicId;
-  String topicName = '';
-  String briefInformation = '';
+  String? topicId;
+  String? topicName = '';
+  String? briefInformation = '';
 
   @override
   void initState() {
@@ -146,9 +147,10 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
       if (knowledgeTopicResponse.status == 'success') {
         //final Items topic =
         //knowledgeTopicResponse.data.knowledgeNuggetRecords.items.elementAt(0);
-        topicId = knowledgeTopicResponse.data.knowledgeNugget.id;
-        topicName = knowledgeTopicResponse.data.knowledgeNugget.topicName;
-        briefInformation = knowledgeTopicResponse.data.knowledgeNugget.briefInformation;
+        topicId = knowledgeTopicResponse.data!.knowledgeNugget!.id;
+        topicName = knowledgeTopicResponse.data!.knowledgeNugget!.topicName;
+        briefInformation =
+            knowledgeTopicResponse.data!.knowledgeNugget!.briefInformation;
         setState(() {});
       } else {
         //showToast(knowledgeTopicResponse.message);
@@ -162,7 +164,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<DashboardSummaryModel>(
+    return BaseWidget<DashboardSummaryModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -953,7 +955,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
               SizedBox(
                 height: 24,
               ),
-              if (model.busy)
+              if (model!.busy)
                 SizedBox(
                     width: 28,
                     height: 28,
@@ -1042,7 +1044,7 @@ class _DashBoardVer1ViewState extends State<DashBoardVer1View> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               ImageIcon(
-                                AssetImage('res/images/ic_blood_presure.png'),
+                                AssetImage('res/images/ic_blood_pressure.png'),
                                 size: 24,
                                         color: iconColor,
                                       ),

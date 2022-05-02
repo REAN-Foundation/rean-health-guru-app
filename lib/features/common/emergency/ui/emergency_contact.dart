@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
-import 'package:paitent/features/common/appoinment_booking/models/doctorListApiResponse.dart';
-import 'package:paitent/features/common/emergency/models/EmergencyContactResponse.dart';
-import 'package:paitent/features/common/emergency/ui/addDoctorDetailsDialog.dart';
-import 'package:paitent/features/common/emergency/ui/addFamilyMemberDialog.dart';
-import 'package:paitent/features/common/emergency/ui/addNurseDialog.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/models/DashboardTile.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/features/misc/view_models/common_config_model.dart';
-import 'package:paitent/infra/networking/CustomException.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:patient/features/common/appointment_booking/models/doctor_list_api_response.dart';
+import 'package:patient/features/common/emergency/models/emergency_contact_response.dart';
+import 'package:patient/features/common/emergency/ui/add_doctor_details_dialog.dart';
+import 'package:patient/features/common/emergency/ui/add_family_member_dialog.dart';
+import 'package:patient/features/common/emergency/ui/add_nurse_dialog.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/models/dashboard_tile.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/features/misc/view_models/common_config_model.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EmergencyContactView extends StatefulWidget {
@@ -30,7 +30,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
   var dateFormat = DateFormat('yyyy-MM-dd');
-  DashboardTile emergencyDashboardTile;
+  DashboardTile? emergencyDashboardTile;
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   var doctorTeam = <Items>[];
   var pharmaTeam = <Items>[];
@@ -56,7 +56,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
             'Emergency Contact ==> ${emergencyContactResponse.toJson()}');
         _sortTeamMembers(emergencyContactResponse);
       } else {
-        showToast(emergencyContactResponse.message, context);
+        showToast(emergencyContactResponse.message!, context);
       }
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -66,7 +66,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   _sortTeamMembers(EmergencyContactResponse emergencyContactResponse) {
-    for (final teamMember in emergencyContactResponse.data.emergencyContacts.items) {
+    for (final teamMember
+        in emergencyContactResponse.data!.emergencyContacts!.items!) {
       if (teamMember.contactRelation == 'Doctor') {
         doctorTeam.add(teamMember);
       } else if (teamMember.contactRelation == 'Pharmacy user') {
@@ -93,7 +94,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     }
     /*catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }*/
   }
 
@@ -106,7 +107,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<CommonConfigModel>(
+    return BaseWidget<CommonConfigModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -132,7 +133,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     ),
                   ),
                   sectionHeader('Doctors'),
-                  if (model.busy)
+                  if (model!.busy)
                     Container(
                       height: 80,
                       child: Center(
@@ -192,12 +193,13 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   Widget emergency() {
-    String discription = '';
+    String? discription = '';
 
     if (emergencyDashboardTile != null) {
       //debugPrint('Emergency ==> ${emergencyDashboardTile.date.difference(DateTime.now()).inDays}');
-      if (emergencyDashboardTile.date.difference(DateTime.now()).inDays == 0) {
-        discription = emergencyDashboardTile.discription;
+      if (emergencyDashboardTile!.date!.difference(DateTime.now()).inDays ==
+          0) {
+        discription = emergencyDashboardTile!.discription;
       }
     }
 
@@ -284,7 +286,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
-                            child: Text(discription,
+                            child: Text(discription!,
                                 maxLines: 4,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -349,7 +351,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   _emergencyDetailDialog(bool isEdit) async {
     if (isEdit) {
-      emergencyDetailsTextControler.text = emergencyDashboardTile.discription;
+      emergencyDetailsTextControler.text = emergencyDashboardTile!.discription!;
       emergencyDetailsTextControler.selection = TextSelection.fromPosition(
         TextPosition(offset: emergencyDetailsTextControler.text.length),
       );
@@ -560,7 +562,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                             child: InkWell(
                               onTap: () async {
                                 final String url =
-                                    'tel://' + details.contactPerson.phone;
+                                    'tel://' + details.contactPerson!.phone!;
                                 if (await canLaunch(url)) {
                                   await launch(url);
                                 } else {
@@ -597,10 +599,11 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                               padding: const EdgeInsets.only(right: 24.0),
                               child: Text(
                                   'Dr. ' +
-                                      details.contactPerson.firstName
+                                      details.contactPerson!.firstName
                                           .toString() +
                                       ' ' +
-                                      details.contactPerson.lastName.toString(),
+                                      details.contactPerson!.lastName
+                                          .toString(),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -613,11 +616,11 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                             ),
                             Semantics(
                               label: "Phone: " +
-                                  details.contactPerson.phone.replaceAllMapped(
-                                      RegExp(r".{1}"),
-                                      (match) => "${match.group(0)} "),
+                                  details.contactPerson!.phone!
+                                      .replaceAllMapped(RegExp(r".{1}"),
+                                          (match) => "${match.group(0)} "),
                               child: ExcludeSemantics(
-                                child: Text(details.contactPerson.phone,
+                                child: Text(details.contactPerson!.phone!,
                                     style: TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w300,
@@ -627,37 +630,35 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                             SizedBox(
                               height: 4,
                             ),
-                            if (details.contactPerson.email != null)
+                            if (details.contactPerson!.email != null)
                               Semantics(
-                                label: "Email: " + details.contactPerson.email,
+                                label:
+                                    "Email: " + details.contactPerson!.email!,
                                 child: ExcludeSemantics(
                                   child: Column(
                                     children: [
-                                      InkWell(
-                                        onTap: () {},
-                                        child: Container(
-                                          width: 250,
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              /*Text(
-                                                  'Email:  ',
+                                      Container(
+                                        width: 250,
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            /*Text(
+                                                'Email:  ',
+                                                style: TextStyle(
+                                                    fontSize: 12.0,
+                                                    fontWeight: FontWeight.w300,
+                                                    color: primaryColor)),*/
+                                            Expanded(
+                                              child: Text(
+                                                  details.contactPerson!.email!,
                                                   style: TextStyle(
                                                       fontSize: 12.0,
-                                                      fontWeight: FontWeight.w300,
-                                                      color: primaryColor)),*/
-                                              Expanded(
-                                                child: Text(
-                                                    details.contactPerson.email,
-                                                    style: TextStyle(
-                                                        fontSize: 12.0,
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                        color: primaryColor)),
-                                              ),
-                                            ],
-                                          ),
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                      color: textGrey)),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       SizedBox(
@@ -899,8 +900,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 button: true,
                                 child: InkWell(
                                   onTap: () async {
-                                    final String url =
-                                        'tel://' + details.contactPerson.phone;
+                                    final String url = 'tel://' +
+                                        details.contactPerson!.phone!;
                                     if (await canLaunch(url)) {
                                       await launch(url);
                                     } else {
@@ -937,10 +938,10 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 24.0),
                                   child: Text(
-                                      details.contactPerson.firstName
+                                      details.contactPerson!.firstName
                                               .toString() +
                                           ' ' +
-                                          details.contactPerson.lastName
+                                          details.contactPerson!.lastName
                                               .toString(),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
@@ -954,11 +955,11 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 ),
                                 Semantics(
                                   label: "Phone: " +
-                                      details.contactPerson.phone
+                                      details.contactPerson!.phone!
                                           .replaceAllMapped(RegExp(r".{1}"),
                                               (match) => "${match.group(0)} "),
                                   child: ExcludeSemantics(
-                                    child: Text(details.contactPerson.phone,
+                                    child: Text(details.contactPerson!.phone!,
                                         style: TextStyle(
                                             fontSize: 12.0,
                                             fontWeight: FontWeight.w300,
@@ -969,7 +970,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   height: 4,
                                 ),
                                 Text(
-                                  details.contactRelation,
+                                  details.contactRelation!,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w200,
@@ -1076,8 +1077,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 button: true,
                                 child: InkWell(
                                   onTap: () async {
-                                    final String url =
-                                        'tel://' + details.contactPerson.phone;
+                                    final String url = 'tel://' +
+                                        details.contactPerson!.phone!;
                                     if (await canLaunch(url)) {
                                       await launch(url);
                                     } else {
@@ -1114,10 +1115,10 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 Padding(
                                   padding: const EdgeInsets.only(right: 24.0),
                                   child: Text(
-                                      details.contactPerson.firstName
+                                      details.contactPerson!.firstName
                                               .toString() +
                                           ' ' +
-                                          details.contactPerson.lastName
+                                          details.contactPerson!.lastName
                                               .toString(),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
@@ -1131,11 +1132,11 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 ),
                                 Semantics(
                                   label: "Phone: " +
-                                      details.contactPerson.phone
+                                      details.contactPerson!.phone!
                                           .replaceAllMapped(RegExp(r".{1}"),
                                               (match) => "${match.group(0)} "),
                                   child: ExcludeSemantics(
-                                    child: Text(details.contactPerson.phone,
+                                    child: Text(details.contactPerson!.phone!,
                                         style: TextStyle(
                                             fontSize: 12.0,
                                             fontWeight: FontWeight.w300,
@@ -1146,7 +1147,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   height: 4,
                                 ),
                                 Text(
-                                  details.contactRelation,
+                                  details.contactRelation!,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w200,
@@ -1267,14 +1268,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getEmergencyTeam();
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       } else {
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException);
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
@@ -1415,10 +1416,10 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   addTeamMembers(String firstName, String lastName, String phoneNumber,
       String gender, String relation, String type,
-      {String email}) async {
+      {String? email}) async {
     try {
       model.setBusy(true);
-      //progressDialog.show();
+      //progressDialog.show(max: 100, msg: 'Loading...' );progressDialog.show(max: 100, msg: 'Loading...' );
 
       /*TeamMemberJsonRequest jsonRequest = new TeamMemberJsonRequest();
       jsonRequest.carePlanId = startCarePlanResponse.data.carePlan.id.toString();
@@ -1447,9 +1448,9 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getEmergencyTeam();
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       } else {
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       }
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -1486,7 +1487,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
           TextButton(
             child: Text('Yes'),
             onPressed: () {
-              removeTeamMembers(contact.id);
+              removeTeamMembers(contact.id!);
               Navigator.of(context, rootNavigator: true).pop();
             },
           ),
@@ -1507,21 +1508,21 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getEmergencyTeam();
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       } else {
-        showToast(addTeamMemberResponse.message, context);
+        showToast(addTeamMemberResponse.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
-      //progressDialog.hide();
+      //progressDialog.close();
       showToast(CustomException.toString(), context);
-      debugPrint('Error ' + CustomException);
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 
   addMedicalEmergencyEvent(String emergencyBreif) async {
     try {
-      final map = <String, String>{};
+      final map = <String, String?>{};
       map['PatientUserId'] = patientUserId;
       map['Details'] = emergencyBreif;
       map['EmergencyDate'] = dateFormat.format(DateTime.now());

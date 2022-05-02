@@ -5,16 +5,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/features/common/activity/ui/addBMIDetailsDialog.dart';
-import 'package:paitent/features/common/nutrition/models/GlassOfWaterConsumption.dart';
-import 'package:paitent/features/common/nutrition/view_models/patients_health_marker.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/infra/utils/GetSleepData.dart';
-import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:patient/features/common/activity/ui/add_bmi_details_dialog.dart';
+import 'package:patient/features/common/nutrition/models/glass_of_water_consumption.dart';
+import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/get_sleep_data.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 
@@ -30,7 +30,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
   List<HealthDataPoint> _healthDataList = [];
   AppState _state = AppState.DATA_NOT_FETCHED;
   var dateFormat = DateFormat('yyyy-MM-dd');
-  GetSleepData sleepData;
+  GetSleepData? sleepData;
   int steps = 0;
   double weight = 0;
   double height = 0;
@@ -38,12 +38,12 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
   double totalBasalCalories = 0;
   double totalCalories = 0;
   double bmiValue = 0;
-  int waterGlass = 0;
+  int? waterGlass = 0;
   String bmiResult = '';
   Color bmiResultColor = Colors.black87;
-  GlassOfWaterConsumption glassOfWaterConsumption;
-  DateTime startDate;
-  DateTime endDate;
+  GlassOfWaterConsumption? glassOfWaterConsumption;
+  DateTime? startDate;
+  late DateTime endDate;
   int heartRateBmp = 0;
 
   loadSharedPref() async {
@@ -70,8 +70,8 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
     }
 
     if (glassOfWaterConsumption != null) {
-      if (startDate == glassOfWaterConsumption.date) {
-        waterGlass = glassOfWaterConsumption.count;
+      if (startDate == glassOfWaterConsumption!.date) {
+        waterGlass = glassOfWaterConsumption!.count;
       }
     }
   }
@@ -124,7 +124,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
       try {
         /// Fetch new data
         final List<HealthDataPoint> healthData =
-            await health.getHealthDataFromTypes(startDate, endDate, types);
+            await health.getHealthDataFromTypes(startDate!, endDate, types);
 
         /// Save all the new data points
         _healthDataList.addAll(healthData);
@@ -332,7 +332,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientHealthMarkerViewModel>(
+    return BaseWidget<PatientHealthMarkerViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -1030,7 +1030,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
 
   recordMyWaterConsumptions() async {
     try {
-      waterGlass = waterGlass + 1;
+      waterGlass = waterGlass! + 1;
 
       _sharedPrefUtils.save('waterConsumption',
           GlassOfWaterConsumption(startDate, waterGlass, '').toJson());

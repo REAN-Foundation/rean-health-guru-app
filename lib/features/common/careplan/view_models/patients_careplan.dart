@@ -207,7 +207,7 @@ class PatientCarePlanViewModel extends BaseModel {
             query +
             '?userId=' +
             patientUserId! +
-            '&orderBy=ScheduledStartTime&order=descending&scheduledFrom=' +
+            '&orderBy=ScheduledStartTime&order=ascending&scheduledFrom=' +
             dateFrom +
             '&scheduledTo=' +
             dateTo,

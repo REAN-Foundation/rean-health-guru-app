@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -80,11 +81,14 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
         DateTime.now().day, 23, 59, 59);
     loadSharedPrefs();
     //loadWaterConsuption();
-    //if (Platform.isIOS) {
-    fetchData();
-    sleepData = GetSleepData();
-    //data = GetHealthData();
-    //}
+    if (Platform.isIOS) {
+      fetchData();
+      sleepData = GetSleepData();
+      Timer.periodic(Duration(seconds: 3), (Timer t) {
+        setState(() {});
+      });
+      //data = GetHealthData();
+    }
     super.initState();
   }
 
@@ -345,6 +349,8 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
   }
 
   Widget sleepTime() {
+    debugPrint('Inside Sleep ==>${sleepData!.getSleepDuration().abs()} ');
+
     return Container(
       height: 240,
       decoration: BoxDecoration(
@@ -427,7 +433,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                         child: Text(
                             "You didn’t have enough sleep. Its better to sleep 7-9 hours everyday.",
                             semanticsLabel:
-                                'You didn’tt have enough sleep. Its better to sleep 7-9 hours everyday.',
+                            'You didn’tt have enough sleep. Its better to sleep 7-9 hours everyday.',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(

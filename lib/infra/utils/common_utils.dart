@@ -27,7 +27,7 @@ StartTaskOfAHACarePlanResponse getStartTaskOfAHACarePlanResponse() {
 
 bool _isLogin = false;
 String? _baseUrl = '';
-UserTask? _task;
+late UserTask _task;
 String? countryCodeGlobe = '';
 var dummyNumberList = <String>[];
 String? _currentLocale = '';
@@ -77,11 +77,11 @@ setUpDummyNumbers() {
   dummyNumberList.add('123456789');
 }
 
-void setTask(UserTask? response) {
+void setTask(UserTask response) {
   _task = response;
 }
 
-UserTask? getTask() {
+UserTask getTask() {
   return _task;
 }
 

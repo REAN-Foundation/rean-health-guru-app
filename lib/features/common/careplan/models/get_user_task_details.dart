@@ -216,7 +216,7 @@ class UserTask {
 
   dynamic get startedAt => _startedAt;
 
-  bool? get finished => _finished;
+  bool get finished => _finished ?? false;
 
   dynamic get finishedAt => _finishedAt;
 
@@ -305,7 +305,7 @@ class Action {
     int? sequence,
     int? frequency,
     String? status,
-    String? rawContent,
+    dynamic rawContent,
   }) {
     _id = id;
     _userTaskId = userTaskId;
@@ -374,7 +374,7 @@ class Action {
   int? _sequence;
   int? _frequency;
   String? _status;
-  String? _rawContent;
+  dynamic _rawContent;
 
   String? get id => _id;
 

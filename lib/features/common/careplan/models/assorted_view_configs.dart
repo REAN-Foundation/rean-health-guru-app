@@ -9,5 +9,5 @@ class AssortedViewConfigs {
   String testToshow = '';
   bool isNextButtonVisible = false;
   String? header = '';
-  late UserTask task;
+  late UserTask? task;
 }

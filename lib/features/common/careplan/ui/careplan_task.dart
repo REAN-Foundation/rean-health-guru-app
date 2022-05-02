@@ -330,6 +330,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           debugPrint('Task Type ==> ${task.action!.category}');
           if (!task.finished) {
             debugPrint('Task ID ==> ${task.id}');
+            getUserTaskDetails(task.action!.userTaskId.toString());
             //_taskNavigator(task);
             //showToast('Task completed already');
           } else {
@@ -782,9 +783,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     progressDialog.show(max: 100, msg: 'Loading...');
     try {
       GetUserTaskDetails response = await model.getUserTaskDetails(userTaskId);
-
+      debugPrint('User Tasks Details ==> ${userTaskResponse.toJson()}');
       if (userTaskResponse.status == 'success') {
-        _taskNavigator(response.data!.userTask);
+        _taskNavigator(response.data!.userTask!);
         progressDialog.close();
       } else {
         tasksList.clear();
@@ -1060,12 +1061,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     }
   }
 
-  _taskNavigator(UserTask? task) {
+  _taskNavigator(UserTask task) {
+    progressDialog.close();
     //setStartTaskOfAHACarePlanResponse(_startTaskOfAHACarePlanResponse);
     setTask(task);
     if (task != null) {
-      debugPrint('Task Type ==> ${task!.action!.type}');
-      switch (task!.action!.type) {
+      debugPrint('Task Type ==> ${task.action!.type}');
+      switch (task.action!.type) {
         case 'Message':
           assrotedUICount = 3;
           final AssortedViewConfigs newAssortedViewConfigs =
@@ -1074,7 +1076,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           newAssortedViewConfigs.testToshow = '2';
           newAssortedViewConfigs.isNextButtonVisible = false;
           newAssortedViewConfigs.header = task.task;
-          newAssortedViewConfigs.task = task!;
+          newAssortedViewConfigs.task = task;
 
           Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
                   arguments: newAssortedViewConfigs)
@@ -1084,17 +1086,15 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           });
           break;
         case 'Assessment':
-          if (task != null) {
-            if (!task.finished) {
-              Navigator.pushNamed(context, RoutePaths.Assessment_Navigator,
-                      arguments: task)
-                  .then((value) {
-                getUserTask();
-                //showToast('Task completed successfully');
-              });
-            } else {
-              showToast('Task is already completed', context);
-            }
+          if (task.finished) {
+            Navigator.pushNamed(context, RoutePaths.Assessment_Navigator,
+                    arguments: task)
+                .then((value) {
+              getUserTask();
+              //showToast('Task completed successfully');
+            });
+          } else {
+            showToast('Task is already completed', context);
           }
           //Navigator.pushNamed(context, RoutePaths.Assessment_Start_Care_Plan);
           break;
@@ -1242,7 +1242,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     }
   }
 
-  completeMessageTaskOfAHACarePlan(Items task) async {
+  completeMessageTaskOfAHACarePlan(UserTask task) async {
     try {
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.stopTaskOfAHACarePlan(

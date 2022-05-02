@@ -2,8 +2,8 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
+import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
 import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
-import 'package:patient/features/common/careplan/models/user_task_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
@@ -116,7 +116,8 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      widget.assortedViewConfigs!.task.action!.details!,
+                      widget.assortedViewConfigs!.task!.action!.description
+                          .toString(),
                       style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.w600,
@@ -143,7 +144,8 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      widget.assortedViewConfigs!.task.action!.details!,
+                      widget.assortedViewConfigs!.task!.action!.description
+                          .toString(),
                       style: TextStyle(
                           color: primaryColor,
                           fontWeight: FontWeight.w600,
@@ -151,7 +153,8 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
                       textAlign: TextAlign.center,
                     ),
                     Text(
-                      widget.assortedViewConfigs!.task.action!.details!,
+                      widget.assortedViewConfigs!.task!.action!.description
+                          .toString(),
                       style:
                           TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
                       textAlign: TextAlign.center,
@@ -312,12 +315,12 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
     );
   }
 
-  completeMessageTaskOfAHACarePlan(Items task) async {
+  completeMessageTaskOfAHACarePlan(UserTask? task) async {
     try {
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.completeMessageTaskOfAHACarePlan(
               startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
-              task.id!);
+              task!.action!.userTaskId!);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;

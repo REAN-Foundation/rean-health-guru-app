@@ -650,7 +650,10 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   }
 
   _launchURL(String _url) async {
-    if (!await launch(_url)) throw 'Could not launch $_url';
+    if (!await launch(_url)) {
+    } else {
+      throw 'Could not launch $_url';
+    }
   }
 
   Widget registerFooter() {
@@ -664,6 +667,8 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               onTap: () {
                 if (selectedCarePlan == '') {
                   showToast('Please select care plan', context);
+                } else if (startDate == '') {
+                  showToast('Please select start date', context);
                 } else {
                   startCarePlan();
                 }
@@ -704,7 +709,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       final EnrollCarePlanResponse response = await model.startCarePlan(map);
       debugPrint('Registered Care Plan ==> ${response.toJson()}');
       if (response.status == 'success') {
-        //showSuccessDialog();
+        showSuccessDialog();
         showToast(response.message!, context);
       } else {
         showToast(response.message!, context);

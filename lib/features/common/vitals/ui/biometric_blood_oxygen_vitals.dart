@@ -1,6 +1,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/vitals/models/get_my_vitals_history.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
@@ -8,6 +9,7 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -26,11 +28,22 @@ class _BiometricBloodOxygenVitalsViewState
   List<Items> records = <Items>[];
   var dateFormatStandard = DateFormat('MMM dd, yyyy');
   late ProgressDialog progressDialog;
+  GetHealthData getHealthData = GetIt.instance<GetHealthData>();
 
   @override
   void initState() {
     getVitalsHistory();
+    getVitalsFromDevice();
     super.initState();
+  }
+
+  getVitalsFromDevice() {
+    if (getHealthData.getBloodOxygen() != '0.0') {
+      _controller.text = getHealthData.getBloodOxygen();
+      _controller.selection = TextSelection.fromPosition(
+        TextPosition(offset: _controller.text.length),
+      );
+    }
   }
 
   @override

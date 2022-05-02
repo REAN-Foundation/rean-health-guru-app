@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
-import 'package:patient/infra/utils/shared_prefUtils.dart';
 
 import 'common_utils.dart';
 
@@ -11,7 +10,6 @@ class GetHealthData {
   List<HealthDataPoint> _healthDataList = [];
   AppState _state = AppState.DATA_NOT_FETCHED;
   var dateFormat = DateFormat('yyyy-MM-dd');
-  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   int steps = 0;
   double weight = 0;
   double height = 0;
@@ -25,6 +23,13 @@ class GetHealthData {
   late DateTime startDate;
   late DateTime endDate;
   double totalSleepInMin = 0;
+  double totalExerciseMin = 0;
+  double bodyTemprature = 0;
+  double bloodOxygen = 0;
+  double bloodGlucose = 0;
+  double bloodPressureSystolic = 0;
+  double bloodPressureDiastolic = 0;
+  double heartRate = 0;
 
   GetHealthData() {
     startDate = DateTime(
@@ -36,13 +41,13 @@ class GetHealthData {
     if (Platform.isIOS) {
       fetchData();
     }
-    loadHeightAndWeight();
+    //loadHeightAndWeight();
   }
 
-  loadHeightAndWeight() async {
+  /*loadHeightAndWeight() async {
     height = await _sharedPrefUtils.readDouble('height');
     weight = await _sharedPrefUtils.readDouble('weight');
-  }
+  }*/
 
   Future<void> fetchData() async {
     /// Get everything from midnight until now
@@ -62,6 +67,14 @@ class GetHealthData {
       HealthDataType.ACTIVE_ENERGY_BURNED,
       HealthDataType.SLEEP_ASLEEP,
       HealthDataType.SLEEP_AWAKE,
+      HealthDataType.EXERCISE_TIME,
+      HealthDataType.BLOOD_OXYGEN,
+      HealthDataType.BLOOD_GLUCOSE,
+      HealthDataType.BLOOD_PRESSURE_DIASTOLIC,
+      HealthDataType.BLOOD_PRESSURE_SYSTOLIC,
+      HealthDataType.BODY_TEMPERATURE,
+      HealthDataType.HEART_RATE,
+      HealthDataType.SLEEP_ASLEEP,
       //HealthDataType.BASAL_ENERGY_BURNED,
       //HealthDataType.DISTANCE_WALKING_RUNNING,
     ];
@@ -127,7 +140,7 @@ class GetHealthData {
         steps = steps + p.value.toInt();
       } else if (p.typeString == 'WEIGHT') {
         if (p.value.toDouble() != 0) {
-          //weight = p.value.toDouble();
+          weight = p.value.toDouble();
         }
       } else if (p.typeString == 'HEIGHT') {
         if (p.value.toDouble() != 0) {
@@ -139,6 +152,26 @@ class GetHealthData {
         totalBasalCalories = totalBasalCalories + p.value.toDouble();
       } else if (p.typeString == 'SLEEP_ASLEEP') {
         totalSleepInMin = totalSleepInMin + p.value.toDouble();
+      } else if (p.typeString == 'EXERCISE_TIME') {
+        totalExerciseMin = totalExerciseMin + p.value.toDouble();
+      } else if (p.typeString == 'BLOOD_OXYGEN') {
+        if (p.value.toDouble() != 0) {
+          bloodOxygen = p.value.toDouble() * 100;
+        }
+      } else if (p.typeString == 'BLOOD_GLUCOSE') {
+        bloodGlucose = p.value.toDouble();
+      } else if (p.typeString == 'BLOOD_PRESSURE_DIASTOLIC') {
+        bloodPressureDiastolic = p.value.toDouble();
+      } else if (p.typeString == 'BLOOD_PRESSURE_SYSTOLIC') {
+        bloodPressureSystolic = p.value.toDouble();
+      } else if (p.typeString == 'BODY_TEMPERATURE') {
+        if (p.value.toDouble() != 0) {
+          bodyTemprature = p.value.toDouble();
+        }
+      } else if (p.typeString == 'HEART_RATE') {
+        if (p.value.toDouble() != 0) {
+          heartRate = p.value.toDouble();
+        }
       }
     }
 
@@ -156,6 +189,13 @@ class GetHealthData {
     debugPrint('WEIGHT : $weight');
     debugPrint('Height : $height');
     debugPrint('SLEEP_ASLEEP : $totalSleepInMin');
+    debugPrint('EXERCISE_TIME : $totalExerciseMin');
+    debugPrint('BLOOD_OXYGEN : $bloodOxygen');
+    debugPrint('BLOOD_GLUCOSE : $bloodGlucose');
+    debugPrint('BLOOD_PRESSURE_DIASTOLIC : $bloodPressureDiastolic');
+    debugPrint('BLOOD_PRESSURE_SYSTOLIC : $bloodPressureSystolic');
+    debugPrint('BODY_TEMPERATURE : $bodyTemprature');
+    debugPrint('HEART_RATE : $heartRate');
     debugPrint(
         '========================############################=============================');
   }
@@ -184,6 +224,34 @@ class GetHealthData {
       bmiResult = 'Severely Obese';
       bmiResultColor = Colors.red;
     }
+  }
+
+  String getHeartRate() {
+    return heartRate.toString();
+  }
+
+  String getBodyTemprature() {
+    return bodyTemprature.toString();
+  }
+
+  String getBloodGlucose() {
+    return bloodGlucose.toString();
+  }
+
+  String getBloodOxygen() {
+    return bloodOxygen.toString();
+  }
+
+  String getBPSystolic() {
+    return bloodPressureSystolic.toString();
+  }
+
+  String getBPDiastolic() {
+    return bloodPressureSystolic.toString();
+  }
+
+  int getExerciseTimeInMin() {
+    return totalExerciseMin.toInt();
   }
 
   String getWeight() {

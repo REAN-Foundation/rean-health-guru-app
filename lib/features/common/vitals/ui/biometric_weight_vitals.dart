@@ -1,6 +1,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/vitals/models/get_my_vitals_history.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
@@ -8,6 +9,7 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -33,6 +35,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   final _weightController = TextEditingController();
   late ProgressDialog progressDialog;
   String unit = 'Kg';
+  GetHealthData getHealthData = GetIt.instance<GetHealthData>();
 
   @override
   void initState() {
@@ -41,7 +44,17 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
+    getVitalsFromDevice();
     super.initState();
+  }
+
+  getVitalsFromDevice() {
+    if (getHealthData.getWeight() != '0.0') {
+      _weightController.text = getHealthData.getWeight();
+      _weightController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _weightController.text.length),
+      );
+    }
   }
 
   @override

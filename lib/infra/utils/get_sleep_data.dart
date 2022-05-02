@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
@@ -28,12 +30,14 @@ class GetSleepData {
     //String startDateString = dateFormat.format(DateTime.now().subtract(Duration(days: 1)))+', 21, 59, 59';
     //startDate = DateTime.parse(startDateString);
     startDate = DateTime(DateTime.now().year, DateTime.now().month,
-        DateTime.now().subtract(Duration(days: 2)).day, 21, 59, 59);
+        DateTime.now().subtract(Duration(days: 1)).day, 21, 59, 59);
     endDate = DateTime(DateTime.now().year, DateTime.now().month,
         DateTime.now().day, 11, 59, 59);
     debugPrint('Start Sleep Date ==> $startDate');
     debugPrint('End Sleep Date ==> $endDate');
-    fetchData();
+    if (Platform.isIOS) {
+      fetchData();
+    }
     loadHeightAndWeight();
   }
 
@@ -74,7 +78,7 @@ class GetSleepData {
       try {
         /// Fetch new data
         final List<HealthDataPoint> healthData =
-            await health.getHealthDataFromTypes(startDate, endDate, types);
+        await health.getHealthDataFromTypes(startDate, endDate, types);
 
         /// Save all the new data points
         _healthDataList.addAll(healthData);
@@ -140,8 +144,7 @@ class GetSleepData {
       }
     }
 
-    if (height == 0.0 || weight == 0.0) {
-    } else {
+    if (height == 0.0 || weight == 0.0) {} else {
       calculetBMI();
     }
 
@@ -185,12 +188,20 @@ class GetSleepData {
     }
   }
 
-  String getSleepDuration() {
-    final DateTime startTime = _healthDataList.elementAt(0).dateFrom;
-    final DateTime endTime =
-        _healthDataList.elementAt(_healthDataList.length).dateTo;
+  int getSleepDuration() {
+    try {
+      debugPrint(
+          'Sleep Start time ${_healthDataList.elementAt(_healthDataList.length - 1).dateFrom}');
+      debugPrint('Sleep End time ${_healthDataList.elementAt(0).dateTo}');
 
-    return endTime.difference(startTime).inMinutes.toString();
+      final DateTime startTime = _healthDataList.elementAt(0).dateFrom;
+      final DateTime endTime =
+          _healthDataList.elementAt(_healthDataList.length - 1).dateTo;
+
+      return endTime.difference(startTime).inMinutes;
+    } catch (Exception) {
+      return 0;
+    }
   }
 
   String getWeight() {

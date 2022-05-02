@@ -386,7 +386,7 @@ class Items {
     _cancellationReason = cancellationReason;
     _isRecurrent = isRecurrent;
     _recurrenceScheduleId = recurrenceScheduleId;
-    _action = action;
+    action = action;
   }
 
   Items.fromJson(dynamic json) {
@@ -410,7 +410,7 @@ class Items {
     _cancellationReason = json['CancellationReason'];
     _isRecurrent = json['IsRecurrent'];
     _recurrenceScheduleId = json['RecurrenceScheduleId'];
-    _action = json['Action'] != null ? Action.fromJson(json['Action']) : null;
+    action = json['Action'] != null ? Action.fromJson(json['Action']) : null;
   }
 
   String? _id;
@@ -433,7 +433,7 @@ class Items {
   dynamic _cancellationReason;
   bool? _isRecurrent;
   dynamic _recurrenceScheduleId;
-  Action? _action;
+  Action? action;
 
   String? get id => _id;
 
@@ -475,7 +475,7 @@ class Items {
 
   dynamic get recurrenceScheduleId => _recurrenceScheduleId;
 
-  Action? get action => _action;
+  //Action? get action => action;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -499,8 +499,8 @@ class Items {
     map['CancellationReason'] = _cancellationReason;
     map['IsRecurrent'] = _isRecurrent;
     map['RecurrenceScheduleId'] = _recurrenceScheduleId;
-    if (_action != null) {
-      map['Action'] = _action?.toJson();
+    if (action != null) {
+      map['Action'] = action?.toJson();
     }
     return map;
   }
@@ -615,8 +615,26 @@ class Action {
     _isMissed = json['IsMissed'];
     _isCancelled = json['IsCancelled'];
     _cancelledOn = json['CancelledOn'];
+    _userTaskId = json['UserTaskId'];
     _note = json['Note'];
+    _enrollmentId = json['EnrollmentId'];
+    _provider = json['Provider'];
+    _planName = json['PlanName'];
+    _planCode = json['PlanCode'];
+    _type = json['Type'];
+    _category = json['Category'];
+    _providerActionId = json['ProviderActionId'];
+    _title = json['Title'];
+    _description = json['Description'];
+    _url = json['Url'];
+    _scheduledAt = json['ScheduledAt'];
+    _startedAt = json['StartedAt'];
+    _completedAt = json['CompletedAt'];
+    _comments = json['Comments'];
+    _sequence = json['Sequence'];
+    _frequency = json['Frequency'];
     _status = json['Status'];
+    _rawContent = json['RawContent'];
   }
 
   String? _id;

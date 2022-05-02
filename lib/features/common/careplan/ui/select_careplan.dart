@@ -704,7 +704,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       final EnrollCarePlanResponse response = await model.startCarePlan(map);
       debugPrint('Registered Care Plan ==> ${response.toJson()}');
       if (response.status == 'success') {
-        showSuccessDialog();
+        //showSuccessDialog();
         showToast(response.message!, context);
       } else {
         showToast(response.message!, context);
@@ -730,13 +730,13 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               label: 'Care Plan image',
               image: true,
               child: Image.asset(
-                'res/images/ic_careplan_success.png',
+                'res/images/ic_careplan_success_tick.png',
                 width: 200,
                 height: 200,
               ),
             ),
             Text(
-              'Thank You!',
+              'Congratulations!',
               style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w700,
@@ -747,7 +747,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             Padding(
               padding: EdgeInsets.all(15.0),
               child: Text(
-                'You have successfully completed your assesmement',
+                'You Have Successfully registered with\nAHAHF Care Plan ',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.black,
@@ -777,7 +777,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     color: primaryColor),
                 child: Center(
                   child: Text(
-                    'Go to my task',
+                    'Home',
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,

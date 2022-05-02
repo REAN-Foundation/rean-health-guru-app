@@ -13,6 +13,7 @@ import 'package:patient/features/common/careplan/models/get_careplan_my_response
 import 'package:patient/features/common/careplan/models/get_careplan_summary_response.dart';
 import 'package:patient/features/common/careplan/models/get_goal_priorities.dart';
 import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
 import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
 import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/team_careplan_response.dart';
@@ -207,15 +208,28 @@ class PatientCarePlanViewModel extends BaseModel {
             '?userId=' +
             patientUserId! +
             '&orderBy=ScheduledStartTime&order=descending&scheduledFrom=' +
-            dateFrom /*+
+            dateFrom +
             '&scheduledTo=' +
-            dateTo*/
-        ,
+            dateTo,
         header: map);
 
     setBusy(false);
     // Convert and return
     return UserTaskResponse.fromJson(response);
+  }
+
+  Future<GetUserTaskDetails> getUserTaskDetails(String userTaskId) async {
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    //var response = await apiProvider.get('/aha/care-plan/'+ahaCarePlanId+'/fetch-daily-tasks', header: map);
+    final response =
+        await apiProvider!.get('/user-tasks/' + userTaskId, header: map);
+
+    setBusy(false);
+    // Convert and return
+    return GetUserTaskDetails.fromJson(response);
   }
 
   Future<GetTaskOfAHACarePlanResponse> getTaskOfpatient(String state) async {

@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart' as date;
+import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
 import 'package:patient/features/common/careplan/models/start_careplan_response.dart';
-import 'package:patient/features/common/careplan/models/user_task_response.dart'
-    as task;
 import 'package:patient/features/common/chat_bot/models/faq_chat_model_pojo.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
@@ -28,7 +27,7 @@ StartTaskOfAHACarePlanResponse getStartTaskOfAHACarePlanResponse() {
 
 bool _isLogin = false;
 String? _baseUrl = '';
-task.Items? _task;
+UserTask? _task;
 String? countryCodeGlobe = '';
 var dummyNumberList = <String>[];
 String? _currentLocale = '';
@@ -78,11 +77,11 @@ setUpDummyNumbers() {
   dummyNumberList.add('123456789');
 }
 
-void setTask(task.Items response) {
+void setTask(UserTask? response) {
   _task = response;
 }
 
-task.Items? getTask() {
+UserTask? getTask() {
   return _task;
 }
 

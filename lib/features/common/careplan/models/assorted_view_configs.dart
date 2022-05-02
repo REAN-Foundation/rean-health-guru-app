@@ -1,4 +1,4 @@
-import 'package:patient/features/common/careplan/models/user_task_response.dart';
+import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
 
 class AssortedViewConfigs {
   //toShow
@@ -9,5 +9,5 @@ class AssortedViewConfigs {
   String testToshow = '';
   bool isNextButtonVisible = false;
   String? header = '';
-  late Items task;
+  late UserTask task;
 }

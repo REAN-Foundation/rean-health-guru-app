@@ -37,7 +37,11 @@ class _DeterminActionPlansForCarePlanViewState
   getActionOfGoalPlanApi() async {
     try {
       getActionOfGoalPlan = await model.getActionOfGoalPlan(
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString());
+        carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+            .elementAt(0)
+            .enrollmentId
+            .toString(),
+      );
 
       if (getActionOfGoalPlan.status == 'success') {
         debugPrint('AHA Care Plan ==> ${getActionOfGoalPlan.toJson()}');
@@ -269,7 +273,10 @@ class _DeterminActionPlansForCarePlanViewState
       body['Actions'] = action;
 
       final BaseResponse baseResponse = await model.addGoalsTask(
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+          carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+              .elementAt(0)
+              .enrollmentId
+              .toString(),
           'goal-actions',
           body);
 
@@ -401,7 +408,10 @@ class _DeterminActionPlansForCarePlanViewState
       progressDialog.show(max: 100, msg: 'Loading...');
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.stopTaskOfAHACarePlan(
-              startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+              carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+                  .elementAt(0)
+                  .enrollmentId
+                  .toString(),
               getTask().id!);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {

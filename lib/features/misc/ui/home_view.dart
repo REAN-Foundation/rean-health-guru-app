@@ -9,7 +9,8 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/core/constants/route_paths.dart';
-import 'package:patient/features/common/careplan/models/start_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
+import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/daily_check_in/ui/how_are_you_feeling.dart';
 import 'package:patient/features/common/emergency/ui/emergency_contact.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
@@ -128,20 +129,27 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     try {
       if (_sharedPrefUtils.read('CarePlan') == null) {
       } else {
-        startCarePlanResponseGlob = StartCarePlanResponse.fromJson(
-            await _sharedPrefUtils.read('CarePlan'));
+        carePlanEnrollmentForPatientGlobe =
+            GetCarePlanEnrollmentForPatient.fromJson(
+                await _sharedPrefUtils.read('CarePlan'));
         //debugPrint("CarePlan ==> ${startCarePlanResponseGlob.data.carePlan.carePlanCode}");
       }
-      Timer(Duration(seconds: 3), () {
-        //getCarePlan();
+      if (_sharedPrefUtils.read('CarePlanWeekly') == null) {
+      } else {
+        weeklyCarePlanStatusGlobe = GetWeeklyCarePlanStatus.fromJson(
+            await _sharedPrefUtils.read('CarePlanWeekly'));
+        //debugPrint("CarePlan ==> ${startCarePlanResponseGlob.data.carePlan.carePlanCode}");
+      }
+      Timer(Duration(seconds: 2), () {
+        getCarePlan();
       });
       Future.delayed(
         Duration(seconds: 4),
         () => GetAllConfigrations(),
       );
     } catch (Excepetion) {
-      Timer(Duration(seconds: 3), () {
-        //getCarePlan();
+      Timer(Duration(seconds: 2), () {
+        getCarePlan();
       });
       Future.delayed(
         Duration(seconds: 4),
@@ -152,15 +160,41 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   getCarePlan() async {
     try {
-      final StartCarePlanResponse startCarePlanResponse =
+      final GetCarePlanEnrollmentForPatient carePlanEnrollmentForPatient =
           await model.getCarePlan();
-      debugPrint('Registered Care Plan ==> ${startCarePlanResponse.toJson()}');
-      if (startCarePlanResponse.status == 'success') {
-        if (startCarePlanResponse.data!.carePlan != null) {
+      debugPrint(
+          'Registered Care Plan ==> ${carePlanEnrollmentForPatient.toJson()}');
+      if (carePlanEnrollmentForPatient.status == 'success') {
+        if (carePlanEnrollmentForPatient.data!.patientEnrollments!.isNotEmpty) {
           debugPrint('Care Plan');
-          _sharedPrefUtils.save('CarePlan', startCarePlanResponse.toJson());
-          startCarePlanResponseGlob = startCarePlanResponse;
+          carePlanEnrollmentForPatientGlobe = carePlanEnrollmentForPatient;
+          _sharedPrefUtils.save(
+              'CarePlan', carePlanEnrollmentForPatient.toJson());
+          getCarePlanWeeklyStatus(carePlanEnrollmentForPatient
+              .data!.patientEnrollments!
+              .elementAt(0)
+              .id
+              .toString());
         }
+        //showToast(startCarePlanResponse.message);
+      } else {
+        //showToast(startCarePlanResponse.message);
+      }
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  getCarePlanWeeklyStatus(String carePlanId) async {
+    try {
+      final GetWeeklyCarePlanStatus weeklyCarePlanStatus =
+          await model.getCarePlanWeeklyStatus(carePlanId);
+      debugPrint('Weekly Care Plan ==> ${weeklyCarePlanStatus.toJson()}');
+      if (weeklyCarePlanStatus.status == 'success') {
+        weeklyCarePlanStatusGlobe = weeklyCarePlanStatus;
+        _sharedPrefUtils.save('CarePlanWeekly', weeklyCarePlanStatus.toJson());
         //showToast(startCarePlanResponse.message);
       } else {
         //showToast(startCarePlanResponse.message);

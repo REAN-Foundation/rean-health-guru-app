@@ -367,7 +367,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                     width:
                                         MediaQuery.of(context).size.width - 200,
                                     child: Text(
-                                        task.action!.category.toString(),
+                                        task.action!.type.toString(),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
@@ -1036,7 +1036,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       progressDialog.show(max: 100, msg: 'Loading...');
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.startTaskOfAHACarePlan(
-              startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+              carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+                  .elementAt(0)
+                  .enrollmentId
+                  .toString(),
               task.id!);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
@@ -1244,10 +1247,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   completeMessageTaskOfAHACarePlan(UserTask task) async {
     try {
-      final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
-          await model.stopTaskOfAHACarePlan(
-              startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
-              task.id!);
+      final BaseResponse _startTaskOfAHACarePlanResponse =
+          await model.finishUserTask(task.action!.userTaskId.toString());
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;

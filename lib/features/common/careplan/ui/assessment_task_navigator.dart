@@ -7,9 +7,9 @@ import 'package:patient/features/common/careplan/models/answer_assessment_respon
 import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
 import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
-import 'package:patient/features/common/careplan/ui/biometric_assignment_task.dart';
 import 'package:patient/features/common/careplan/ui/assessment_question_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/assessment_start_for_careplan.dart';
+import 'package:patient/features/common/careplan/ui/biometric_assignment_task.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
@@ -228,7 +228,10 @@ class _AssesmentTaskNavigatorViewState
 
       final AnswerAssesmentResponse _answerAssesmentResponse =
           await model.addBiometricAssignmentTask(
-              startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+              carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+                  .elementAt(0)
+                  .enrollmentId
+                  .toString(),
               assessmment.taskId!,
               assessmment.qnAId!,
               map);
@@ -322,7 +325,10 @@ class _AssesmentTaskNavigatorViewState
       progressDialog.show(max: 100, msg: 'Loading...');
       final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
           await model.stopTaskOfAHACarePlan(
-              startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+              carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+                  .elementAt(0)
+                  .enrollmentId
+                  .toString(),
               task.details!.id!);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {

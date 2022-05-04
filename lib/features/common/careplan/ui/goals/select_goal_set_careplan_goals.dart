@@ -38,7 +38,10 @@ class _SelectGoalsForCarePlanViewState
   getBiometricGoal() async {
     try {
       _getBiometricGoalPriorities = await model.getBiometricGoal(
-          startCarePlanResponseGlob!.data!.carePlan!.carePlanCode.toString());
+          carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+              .elementAt(0)
+              .enrollmentId
+              .toString());
 
       if (_getBiometricGoalPriorities.status == 'success') {
         debugPrint('AHA Care Plan ==> ${_getBiometricGoalPriorities.toJson()}');
@@ -64,7 +67,10 @@ class _SelectGoalsForCarePlanViewState
   getBehavioralGoal() async {
     try {
       _getBehavioralGoalPriorities = await model.getBehavioralGoal(
-          startCarePlanResponseGlob!.data!.carePlan!.carePlanCode.toString());
+          carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+              .elementAt(0)
+              .enrollmentId
+              .toString());
 
       if (_getBehavioralGoalPriorities.status == 'success') {
         debugPrint(

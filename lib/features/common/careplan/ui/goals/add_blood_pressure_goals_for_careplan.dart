@@ -388,7 +388,10 @@ class _AddBloodPresureeGoalsForCarePlanViewState
       body['GoalSettingTaskId'] = getTask().id;
 
       final BaseResponse baseResponse = await model.addGoalsTask(
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+          carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+              .elementAt(0)
+              .enrollmentId
+              .toString(),
           'blood-pressure-goal',
           body);
 

@@ -36,7 +36,11 @@ class _SetPrioritiesGoalsForCarePlanViewState
   getGoalsPriority() async {
     try {
       _getGoalPriorities = await model.getGoalsPriority(
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString());
+        carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+            .elementAt(0)
+            .enrollmentId
+            .toString(),
+      );
 
       if (_getGoalPriorities.status == 'success') {
         debugPrint('AHA Care Plan ==> ${_getGoalPriorities.toJson()}');
@@ -328,7 +332,11 @@ class _SetPrioritiesGoalsForCarePlanViewState
       body['Priorities'] = map;
 
       final BaseResponse baseResponse = await model.setGoalsPriority(
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString(), body);
+          carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+              .elementAt(0)
+              .enrollmentId
+              .toString(),
+          body);
 
       if (baseResponse.status == 'success') {
         progressDialog.close();

@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:patient/features/common/careplan/ui/summary_of_my_careplan.dart';
-import 'package:patient/features/common/careplan/ui/team_of_my_careplan.dart';
-import 'package:patient/features/common/careplan/ui/week_my_careplan.dart';
 import 'package:patient/features/common/medication/view_models/patients_medication.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -16,11 +14,11 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
   var model = PatientMedicationViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var _currentIndex = 0;
+  //var _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    late Widget screen;
+/*    late Widget screen;
     switch (_currentIndex) {
       case 0:
         screen = SummaryOfMyCarePlanView();
@@ -31,7 +29,7 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
       case 2:
         screen = WeekMyCarePlanView();
         break;
-    }
+    }*/
 
     return BaseWidget<PatientMedicationViewModel?>(
       model: model,
@@ -40,16 +38,17 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
           key: _scaffoldKey,
           backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            elevation: 0,
+            backgroundColor: primaryColor,
+            brightness: Brightness.dark,
             title: Text(
               'My Care Plan',
               style: TextStyle(
                   fontSize: 16.0,
-                  color: primaryColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.w600),
             ),
-            iconTheme: IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.white),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -63,14 +62,39 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
               )*/
             ],
           ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: _buildTabDesign(),
+          body: Stack(
+            children: [
+              Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    color: primaryColor,
+                    height: 100,
+                    width: MediaQuery.of(context).size.width,
+                  )),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    color: primaryColor,
+                    height: 0,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(12),
+                              topLeft: Radius.circular(12))),
+                      child: SummaryOfMyCarePlanView(),
+                    ),
+                  )
+                ],
               ),
-              Expanded(child: screen)
             ],
           ),
         ),
@@ -78,7 +102,7 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
     );
   }
 
-  Widget _buildTabDesign() {
+/*Widget _buildTabDesign() {
     return Container(
       padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
       decoration: BoxDecoration(
@@ -146,7 +170,7 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
               ],
             ),
           ),
-          /*InkWell(
+          */ /*InkWell(
             onTap: () {
               setState(() {
                 _currentIndex = 2;
@@ -171,9 +195,9 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
                 ),
               ],
             ),
-          ),*/
+          ),*/ /*
         ],
       ),
     );
-  }
+  }*/
 }

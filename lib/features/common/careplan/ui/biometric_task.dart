@@ -617,7 +617,10 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
           '.000Z';
 
       final BaseResponse baseResponse = await model.addBiometricTask(
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+          carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+              .elementAt(0)
+              .enrollmentId
+              .toString(),
           widget.task!.details!.id!,
           map);
 

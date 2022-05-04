@@ -6,14 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart' as date;
+import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
-import 'package:patient/features/common/careplan/models/start_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/chat_bot/models/faq_chat_model_pojo.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:phone_number/phone_number.dart';
 
-StartCarePlanResponse? startCarePlanResponseGlob;
+GetCarePlanEnrollmentForPatient? carePlanEnrollmentForPatientGlobe;
+GetWeeklyCarePlanStatus? weeklyCarePlanStatusGlobe;
 List<String> goalPlanScreenStack = <String>[];
 /*StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponseGlobe;
 

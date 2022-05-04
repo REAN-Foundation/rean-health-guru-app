@@ -710,7 +710,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       debugPrint('Registered Care Plan ==> ${response.toJson()}');
       if (response.status == 'success') {
         showSuccessDialog();
-        showToast(response.message!, context);
+        //showToast(response.message!, context);
       } else {
         showToast(response.message!, context);
       }

@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
-import 'package:patient/features/common/careplan/models/start_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
+import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/emergency/models/emergency_contact_response.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/get_all_record_response.dart';
@@ -17,7 +18,23 @@ class CommonConfigModel extends BaseModel {
 
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
-  Future<StartCarePlanResponse> getCarePlan() async {
+  Future<GetCarePlanEnrollmentForPatient> getCarePlan() async {
+    // Get user profile for id
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/care-plans/patients/' + patientUserId! + '/enrollments',
+        header: map);
+    setBusy(false);
+    // Convert and return
+    return GetCarePlanEnrollmentForPatient.fromJson(response);
+  }
+
+  Future<GetWeeklyCarePlanStatus> getCarePlanWeeklyStatus(
+      String carePlanId) async {
     // Get user profile for id
 
     final map = <String, String>{};
@@ -25,10 +42,10 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!
-        .get('/aha/care-plan/patient/' + patientUserId!, header: map);
+        .get('/care-plans/' + carePlanId + '/weekly-status', header: map);
     setBusy(false);
     // Convert and return
-    return StartCarePlanResponse.fromJson(response);
+    return GetWeeklyCarePlanStatus.fromJson(response);
   }
 
   Future<GetAllRecordResponse> getAllRecords() async {

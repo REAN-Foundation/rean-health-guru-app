@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
-import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
+import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -317,10 +317,8 @@ class _WordOfTheWeekCarePlanViewState extends State<WordOfTheWeekCarePlanView> {
 
   completeMessageTaskOfAHACarePlan(UserTask? task) async {
     try {
-      final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
-          await model.completeMessageTaskOfAHACarePlan(
-              startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
-              task!.action!.userTaskId!);
+      final BaseResponse _startTaskOfAHACarePlanResponse =
+          await model.finishUserTask(task!.action!.userTaskId!.toString());
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;

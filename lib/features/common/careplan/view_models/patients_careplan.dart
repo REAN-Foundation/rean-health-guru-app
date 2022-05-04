@@ -210,7 +210,8 @@ class PatientCarePlanViewModel extends BaseModel {
             '&orderBy=ScheduledStartTime&order=ascending&scheduledFrom=' +
             dateFrom +
             '&scheduledTo=' +
-            dateTo,
+            dateTo +
+            '&itemsPerPage=200',
         header: map);
 
     setBusy(false);
@@ -290,8 +291,7 @@ class PatientCarePlanViewModel extends BaseModel {
     return StartTaskOfAHACarePlanResponse.fromJson(response);
   }
 
-  Future<StartTaskOfAHACarePlanResponse> completeMessageTaskOfAHACarePlan(
-      String ahaCarePlanId, String taskId) async {
+  Future<BaseResponse> finishUserTask(String userTaskId) async {
     setBusy(true);
 
     final map = <String, String>{};
@@ -300,18 +300,12 @@ class PatientCarePlanViewModel extends BaseModel {
 
     final body = <String, String>{};
 
-    final response = await apiProvider!.post(
-        '/aha/care-plan/' +
-            ahaCarePlanId +
-            '/message-task/' +
-            taskId +
-            '/mark-as-read',
-        body: body,
-        header: map);
+    final response = await apiProvider!
+        .put('/user-tasks/' + userTaskId + '/finish', body: body, header: map);
 
     setBusy(false);
     // Convert and return
-    return StartTaskOfAHACarePlanResponse.fromJson(response);
+    return BaseResponse.fromJson(response);
   }
 
   Future<StartTaskOfAHACarePlanResponse> completeChallengeTask(

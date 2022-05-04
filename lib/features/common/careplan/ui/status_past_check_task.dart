@@ -266,7 +266,10 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
       map['AdditionalDetails'] = questionTextControler.text;
 
       final BaseResponse baseResponse = await model.updateWeeklyReflection(
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+          carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+              .elementAt(0)
+              .enrollmentId
+              .toString(),
           widget.task!.details!.id!,
           map);
 

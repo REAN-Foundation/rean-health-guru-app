@@ -234,7 +234,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 visible: true,
                 child: InkWell(
                   onTap: () {
-                    if (startCarePlanResponseGlob == null) {
+                    if (carePlanEnrollmentForPatientGlobe == null) {
                       Navigator.popAndPushNamed(
                           context, RoutePaths.Select_Care_Plan);
                     } else {
@@ -485,15 +485,15 @@ class _AppDrawerState extends State<AppDrawer> {
           TextButton(
             child: Text('Yes'),
             onPressed: () {
-              startCarePlanResponseGlob = null;
+              carePlanEnrollmentForPatientGlobe = null;
               _sharedPrefUtils.save('CarePlan', null);
               _sharedPrefUtils.saveBoolean('login', null);
               _sharedPrefUtils.clearAll();
               chatList.clear();
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (context) {
-                    return LoginWithOTPView();
-                  }), (Route<dynamic> route) => false);
+                return LoginWithOTPView();
+              }), (Route<dynamic> route) => false);
             },
           ),
           TextButton(

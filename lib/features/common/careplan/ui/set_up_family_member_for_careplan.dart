@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/add_team_member_response.dart';
-import 'package:patient/features/common/careplan/models/start_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/common/emergency/ui/add_family_member_dialog.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -23,18 +23,18 @@ class _SetUpFamilyMemberForCarePlanViewState
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  StartCarePlanResponse? startCarePlanResponse;
+  GetCarePlanEnrollmentForPatient? startCarePlanResponse;
 
   //var teamMemberList = new List<TeamMember>();
   ProgressDialog? progressDialog;
 
   loadSharedPrefrance() async {
     try {
-      startCarePlanResponse = StartCarePlanResponse.fromJson(
+      startCarePlanResponse = GetCarePlanEnrollmentForPatient.fromJson(
           await _sharedPrefUtils.read('CarePlan'));
-      startCarePlanResponseGlob = startCarePlanResponse;
+      carePlanEnrollmentForPatientGlobe = startCarePlanResponse;
       debugPrint(
-          'AHA Care Plan id ${startCarePlanResponse!.data!.carePlan!.id.toString()}');
+          'AHA Care Plan id ${carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!.elementAt(0).enrollmentId.toString()}');
     } catch (Excepetion) {
       // do something
       debugPrint(Excepetion.toString());
@@ -500,7 +500,11 @@ class _SetUpFamilyMemberForCarePlanViewState
       data['Prefix'] = ' ';
 
       final map = <String, dynamic>{};
-      map['CarePlanId'] = startCarePlanResponse!.data!.carePlan!.id.toString();
+      map['CarePlanId'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .enrollmentId
+          .toString();
       map['IsEmergencyContact'] = true;
       map['TeamMemberType'] = 'FamilyMember';
       map['Details'] = data;

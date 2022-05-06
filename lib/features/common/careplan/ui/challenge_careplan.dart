@@ -44,7 +44,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
       builder: (context, model, child) => Container(
         child: Scaffold(
           key: _scaffoldKey,
-          backgroundColor: primaryColor,
+          backgroundColor: Colors.white,
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,

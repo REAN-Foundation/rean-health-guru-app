@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/careplan/models/create_health_priority_response.dart';
 import 'package:patient/features/common/careplan/models/get_goal_priorities.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
-import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class SetPrioritiesGoalsForCarePlanView extends StatefulWidget {
@@ -86,7 +87,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
               'Set Care Plan Goals',
               style: TextStyle(
                   fontSize: 16.0,
-                  color: primaryColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.white),
@@ -124,7 +125,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
                   ),
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(0.0),
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -145,7 +146,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
 
   Widget body() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(0.0),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -157,9 +158,12 @@ class _SetPrioritiesGoalsForCarePlanViewState
             ),
             priorityDetails(),
             const SizedBox(
-              height: 48,
+              height: 32,
             ),
             submitButton(),
+            const SizedBox(
+              height: 16,
+            ),
           ],
         ),
       ),
@@ -168,14 +172,19 @@ class _SetPrioritiesGoalsForCarePlanViewState
 
   Widget currentScreenCount() {
     return Container(
+      padding: const EdgeInsets.all(16.0),
       width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          color: primaryLightColor,
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(12), topLeft: Radius.circular(12))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            height: 56,
-            width: 56,
+            height: 32,
+            width: 32,
             decoration: BoxDecoration(
                 color: primaryColor,
                 borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -186,7 +195,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
                 '1',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 32,
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Montserrat',
                 ),
@@ -199,7 +208,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
           Text(
             'Set Priorities',
             style: TextStyle(
-                color: primaryColor, fontSize: 20, fontWeight: FontWeight.w600),
+                color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ],
       ),
@@ -207,101 +216,109 @@ class _SetPrioritiesGoalsForCarePlanViewState
   }
 
   Widget priorityDetails() {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-          border: Border.all(width: 1, color: Colors.grey),
-          borderRadius: BorderRadius.all(Radius.circular(8))),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Select primary and secondary priority focus areas based on your conditions. This will help you in identifying focussed goals and selecting corresponding relevant actions to achieve those goals.',
-            style: TextStyle(
-                color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Text(
-            "So Let's start!",
-            style: TextStyle(
-                color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 32,
-          ),
-          Text(
-            'Primary',
-            style: TextStyle(
-                color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(color: primaryColor, width: 1),
-                color: colorF6F6FF),
-            child: DropdownButton<String>(
-              isExpanded: true,
-              hint: Text(
-                'Select Primary Goal',
-                style: TextStyle(
-                    color: textBlack,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
-              ),
-              items: _carePlanMenuItems,
-              onChanged: (value) {
-                setState(() {
-                  selectedPrimaryGoal = value;
-                });
-              },
-              value: selectedPrimaryGoal == '' ? null : selectedPrimaryGoal,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+            border: Border.all(width: 1, color: Colors.grey),
+            borderRadius: BorderRadius.all(Radius.circular(8))),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Select primary and secondary priority focus areas based on your conditions. This will help you in identifying focussed goals and selecting corresponding relevant actions to achieve those goals.',
+              style: TextStyle(
+                  color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
             ),
-          ),
-          const SizedBox(
-            height: 32,
-          ),
-          Text(
-            'Secondary',
-            style: TextStyle(
-                color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(color: primaryColor, width: 1),
-                color: colorF6F6FF),
-            child: DropdownButton<String>(
-              isExpanded: true,
-              hint: Text(
-                'Select Secondary Goal',
-                style: TextStyle(
-                    color: textBlack,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
-              ),
-              items: _carePlanMenuItems,
-              onChanged: (value) {
-                setState(() {
-                  selectedSecondaryGoal = value;
-                });
-              },
-              value: selectedSecondaryGoal == '' ? null : selectedSecondaryGoal,
+            const SizedBox(
+              height: 16,
             ),
-          )
-        ],
+            Text(
+              "So Let's start!",
+              style: TextStyle(
+                  color: textBlack, fontSize: 14, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(
+              height: 32,
+            ),
+            Text(
+              'Primary',
+              style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: primaryColor, width: 1),
+                  color: colorF6F6FF),
+              child: DropdownButton<String>(
+                isExpanded: true,
+                hint: Text(
+                  'Select Primary Goal',
+                  style: TextStyle(
+                      color: textBlack,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                ),
+                items: _carePlanMenuItems,
+                onChanged: (value) {
+                  setState(() {
+                    selectedPrimaryGoal = value;
+                  });
+                },
+                value: selectedPrimaryGoal == '' ? null : selectedPrimaryGoal,
+              ),
+            ),
+            const SizedBox(
+              height: 32,
+            ),
+            Text(
+              'Secondary',
+              style: TextStyle(
+                  color: primaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: primaryColor, width: 1),
+                  color: colorF6F6FF),
+              child: DropdownButton<String>(
+                isExpanded: true,
+                hint: Text(
+                  'Select Secondary Goal',
+                  style: TextStyle(
+                      color: textBlack,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                ),
+                items: _carePlanMenuItems,
+                onChanged: (value) {
+                  setState(() {
+                    selectedSecondaryGoal = value;
+                  });
+                },
+                value:
+                    selectedSecondaryGoal == '' ? null : selectedSecondaryGoal,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -362,24 +379,40 @@ class _SetPrioritiesGoalsForCarePlanViewState
   setPriorityGoal() async {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
-      progressDialog.show(max: 100, msg: 'Loading...');
-      final map = <String, dynamic>{};
-      map['Primary'] = selectedPrimaryGoal;
-      map['Secondary'] = selectedSecondaryGoal;
 
       final body = <String, dynamic>{};
-      body['Priorities'] = map;
+      body['HealthPriorityType'] = selectedPrimaryGoal;
+      body['IsPrimary'] = true;
+      body['Source'] = 'Careplan';
+      body['Provider'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .provider
+          .toString();
+      body['ProviderEnrollmentId'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .enrollmentId
+          .toString();
+      body['ProviderCareplanCode'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .planCode
+          .toString();
+      body['ProviderCareplanName'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .planName
+          .toString();
+      body['PatientUserId'] = patientUserId;
 
-      final BaseResponse baseResponse = await model.setGoalsPriority(
-          carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
-              .elementAt(0)
-              .enrollmentId
-              .toString(),
-          body);
+      final CreateHealthPriorityResponse baseResponse =
+          await model.setGoalsPriority(body);
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
-        Navigator.pushNamed(context, RoutePaths.Select_Goals_Care_Plan);
+        Navigator.pushNamed(context, RoutePaths.Select_Goals_Care_Plan,
+            arguments: baseResponse);
       } else {
         progressDialog.close();
         showToast(baseResponse.message!, context);

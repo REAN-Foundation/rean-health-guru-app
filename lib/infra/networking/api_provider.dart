@@ -81,15 +81,21 @@ class ApiProvider {
       headers['x-api-key'] = _api_key as String;
     }
 
+    Map<String, String>? contentBody = <String, String>{};
+
+    if (body != null) {
+      contentBody.addAll(body as Map<String, String>);
+    }
+
     debugPrint('Base Url ==> PUT ${_baseUrl! + url}');
-    debugPrint('Request Body ==> ${json.encode(body).toString()}');
+    debugPrint('Request Body ==> ${json.encode(contentBody).toString()}');
     debugPrint('Headers ==> ${json.encode(headers).toString()}');
 
     var responseJson;
     try {
       final response = await http
           .put(Uri.parse(_baseUrl! + url),
-              body: json.encode(body), headers: headers)
+              body: json.encode(contentBody), headers: headers)
           .timeout(const Duration(seconds: 40));
       responseJson = _response(response);
     } on SocketException {

@@ -44,6 +44,7 @@ PhoneNumberUtil plugin = PhoneNumberUtil();
 String dailyMood = '';
 String dailyFeeling = '';
 List<String> dailyEnergyLevels = [];
+List<String> createdGoalsIds = [];
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');

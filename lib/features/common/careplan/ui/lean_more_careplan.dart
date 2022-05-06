@@ -7,6 +7,7 @@ import 'package:patient/features/common/careplan/view_models/patients_careplan.d
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
@@ -457,10 +458,10 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
       } else {
         showToast(response.message!, context);
       }
-    } catch (CustomException) {
+    } on FetchDataException catch (e) {
       model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint(CustomException.toString());
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 }

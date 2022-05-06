@@ -16,6 +16,7 @@ import 'package:patient/features/common/appointment_booking/ui/payment_confirmat
 import 'package:patient/features/common/appointment_booking/ui/search_doctor_list_view.dart';
 import 'package:patient/features/common/appointment_booking/ui/search_lab_list_view.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
+import 'package:patient/features/common/careplan/models/create_health_priority_response.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
 import 'package:patient/features/common/careplan/ui/add_goals_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/approve_doctor_for_goal_careplan.dart';
@@ -269,7 +270,9 @@ class Routers {
         return MaterialPageRoute(
             builder: (_) => SetPrioritiesGoalsForCarePlanView());
       case RoutePaths.Select_Goals_Care_Plan:
-        return MaterialPageRoute(builder: (_) => SelectGoalsForCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => SelectGoalsForCarePlanView(
+                settings.arguments as CreateHealthPriorityResponse));
       case RoutePaths.Determine_Action_For_Care_Plan:
         return MaterialPageRoute(
             builder: (_) => DeterminActionPlansForCarePlanView());

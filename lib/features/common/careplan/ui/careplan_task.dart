@@ -334,7 +334,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             //_taskNavigator(task);
             //showToast('Task completed already');
           } else {
-            startAHACarePlanSummary(task);
+            getUserTaskDetails(task.action!.userTaskId.toString());
+            //startAHACarePlanSummary(task);
           }
         },
         child: MergeSemantics(
@@ -1223,29 +1224,33 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           break;
         case 'Infographic':
           debugPrint('URL ==> ${task.action!.url!.replaceAll(' ', '%20')}');
-          assrotedUICount = 3;
-          final AssortedViewConfigs newAssortedViewConfigs =
-              AssortedViewConfigs();
-          newAssortedViewConfigs.toShow = '1';
-          newAssortedViewConfigs.testToshow = '2';
-          newAssortedViewConfigs.isNextButtonVisible = false;
-          newAssortedViewConfigs.header = task.task;
-          newAssortedViewConfigs.task = task;
+          if (task.action!.url.toString().contains('.jpg') ||
+              task.action!.url.toString().contains('.jpeg') ||
+              task.action!.url.toString().contains('.png')) {
+            assrotedUICount = 3;
+            final AssortedViewConfigs newAssortedViewConfigs =
+                AssortedViewConfigs();
+            newAssortedViewConfigs.toShow = '1';
+            newAssortedViewConfigs.testToshow = '2';
+            newAssortedViewConfigs.isNextButtonVisible = false;
+            newAssortedViewConfigs.header = task.task;
+            newAssortedViewConfigs.task = task;
 
-          Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
-                  arguments: newAssortedViewConfigs)
-              .then((value) {
-            getUserTask();
-            //showToast('Task completed successfully');
-          });
-          /*
-          _launchURL(task.action!.url!.replaceAll(' ', '%20')).then((value) {
-            //getUserTask();
-            //showToast('Task completed successfully');
-          });
-          if (!task.finished) {
-            //completeMessageTaskOfAHACarePlan(task);
-          }*/
+            Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
+                    arguments: newAssortedViewConfigs)
+                .then((value) {
+              getUserTask();
+              //showToast('Task completed successfully');
+            });
+          } else {
+            _launchURL(task.action!.url!.replaceAll(' ', '%20')).then((value) {
+              getUserTask();
+              //showToast('Task completed successfully');
+            });
+            if (!task.finished) {
+              completeMessageTaskOfAHACarePlan(task);
+            }
+          }
           break;
         case 'Animation':
           debugPrint('URL ==> ${task.action!.url!.replaceAll(' ', '%20')}');

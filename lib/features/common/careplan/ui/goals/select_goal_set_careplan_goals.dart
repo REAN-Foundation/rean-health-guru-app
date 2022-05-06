@@ -1,13 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/careplan/models/create_goal_response.dart';
+import 'package:patient/features/common/careplan/models/create_health_priority_response.dart';
+import 'package:patient/features/common/careplan/models/get_goals_by_priority.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
+//ignore: must_be_immutable
 class SelectGoalsForCarePlanView extends StatefulWidget {
+  CreateHealthPriorityResponse? createHealthPriorityResponse;
+
+  SelectGoalsForCarePlanView(this.createHealthPriorityResponse);
+
   @override
   _SelectGoalsForCarePlanViewState createState() =>
       _SelectGoalsForCarePlanViewState();
@@ -21,40 +30,27 @@ class _SelectGoalsForCarePlanViewState
   int id1 = 10;
   String radioButtonItem = 'ONE';
   String radioButtonItem1 = '';
-/*  late GetGoalPriorities _getBiometricGoalPriorities;
-  late GetGoalPriorities _getBehavioralGoalPriorities;*/
-  ProgressDialog? progressDialog;
-  List<CheckBoxModel> biometricGoalList = <CheckBoxModel>[];
-  List<CheckBoxModel> behaviouralGoalList = <CheckBoxModel>[];
+  late ProgressDialog progressDialog;
+  List<Goals> goals = <Goals>[];
 
   @override
   void initState() {
     model.setBusy(true);
-    //getBiometricGoal();
+    getBiometricGoal();
     super.initState();
   }
 
-/*  getBiometricGoal() async {
+  getBiometricGoal() async {
     try {
-      _getBiometricGoalPriorities = await model.getBiometricGoal(
-          carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
-              .elementAt(0)
-              .enrollmentId
-              .toString());
+      GetGoalsByPriority _getGoalsByPriority = await model.getAllGoal(widget
+          .createHealthPriorityResponse!.data!.healthPriority!.id
+          .toString());
 
-      if (_getBiometricGoalPriorities.status == 'success') {
-        debugPrint('AHA Care Plan ==> ${_getBiometricGoalPriorities.toJson()}');
-
-        for (int i = 0;
-            i < _getBiometricGoalPriorities.data!.goals!.length;
-            i++) {
-          biometricGoalList.add(CheckBoxModel(
-              _getBiometricGoalPriorities.data!.goals!.elementAt(i), false));
-        }
-
-        getBehavioralGoal();
+      if (_getGoalsByPriority.status == 'success') {
+        debugPrint('AHA Care Plan ==> ${_getGoalsByPriority.toJson()}');
+        goals.addAll(_getGoalsByPriority.data!.goals as List<Goals>);
       } else {
-        showToast(_getBiometricGoalPriorities.message!, context);
+        showToast(_getGoalsByPriority.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -63,35 +59,10 @@ class _SelectGoalsForCarePlanViewState
     }
   }
 
-  getBehavioralGoal() async {
-    try {
-      _getBehavioralGoalPriorities = await model.getBehavioralGoal(
-          carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
-              .elementAt(0)
-              .enrollmentId
-              .toString());
-
-      if (_getBehavioralGoalPriorities.status == 'success') {
-        debugPrint(
-            'AHA Care Plan ==> ${_getBehavioralGoalPriorities.toJson()}');
-        for (int i = 0;
-            i < _getBehavioralGoalPriorities.data!.goals!.length;
-            i++) {
-          behaviouralGoalList.add(CheckBoxModel(
-              _getBehavioralGoalPriorities.data!.goals!.elementAt(i), false));
-        }
-      } else {
-        showToast(_getBehavioralGoalPriorities.message!, context);
-      }
-    } catch (CustomException) {
-      model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint(CustomException.toString());
-    }
-  }*/
 
   @override
   Widget build(BuildContext context) {
+    progressDialog = ProgressDialog(context: context);
     return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
@@ -99,16 +70,17 @@ class _SelectGoalsForCarePlanViewState
           key: _scaffoldKey,
           backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            elevation: 0,
+            backgroundColor: primaryColor,
+            brightness: Brightness.dark,
             title: Text(
               'Set Care Plan Goals',
               style: TextStyle(
                   fontSize: 16.0,
-                  color: primaryColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.w600),
             ),
-            iconTheme: IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.white),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -122,59 +94,99 @@ class _SelectGoalsForCarePlanViewState
               )*/
             ],
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: model!.busy
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        currentScreenCount(),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        Text(
-                          "You can add your time-bound measurable goals around Life's Simple 7 as defined by the American Heart Association.",
-                          style: TextStyle(
-                              color: textBlack,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        biometricGoal(),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        behaviouralGoal(),
-                        const SizedBox(
-                          height: 32,
-                        ),
-                        submitButton(),
-                      ],
-                    ),
+          body: Stack(
+            children: [
+              Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    color: primaryColor,
+                    height: 100,
+                    width: MediaQuery.of(context).size.width,
+                  )),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    color: primaryColor,
+                    height: 0,
+                    width: MediaQuery.of(context).size.width,
                   ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(0.0),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(12),
+                              topLeft: Radius.circular(12))),
+                      child: body(),
+                    ),
+                  )
+                ],
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
+  Widget body() {
+    return Padding(
+      padding: const EdgeInsets.all(0.0),
+      child: model.busy
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                currentScreenCount(),
+                /*const SizedBox(
+                height: 16,
+              ),
+              Text(
+                "You can add your time-bound measurable goals around Life's Simple 7 as defined by the American Heart Association.",
+                style: TextStyle(
+                    color: textBlack,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
+              ),*/
+                const SizedBox(
+                  height: 16,
+                ),
+                behaviouralGoal(),
+                const SizedBox(
+                  height: 16,
+                ),
+                submitButton(),
+                const SizedBox(
+                  height: 16,
+                ),
+              ],
+            ),
+    );
+  }
+
   Widget currentScreenCount() {
     return Container(
+      padding: const EdgeInsets.all(16.0),
       width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          color: primaryLightColor,
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(12), topLeft: Radius.circular(12))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            height: 56,
-            width: 56,
+            height: 32,
+            width: 32,
             decoration: BoxDecoration(
                 color: primaryColor,
                 borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -185,7 +197,7 @@ class _SelectGoalsForCarePlanViewState
                 '2',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 32,
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Montserrat',
                 ),
@@ -196,104 +208,32 @@ class _SelectGoalsForCarePlanViewState
             height: 16,
           ),
           Text(
-            'Set Priorities',
-            style: TextStyle(
-                color: primaryColor, fontSize: 20, fontWeight: FontWeight.w600),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget biometricGoal() {
-    debugPrint('Biometric Goals Count = ${biometricGoalList.length}');
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 230,
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-          border: Border.all(width: 1, color: Colors.grey),
-          borderRadius: BorderRadius.all(Radius.circular(8))),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Biometric Goals',
+            'Set Goals',
             style: TextStyle(
                 color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
           ),
-          SizedBox(
-            height: 16.0,
-          ),
-          Expanded(
-            child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: biometricGoalList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return CheckboxListTile(
-                      value: biometricGoalList[index].isCheck,
-                      title: Text(biometricGoalList[index].title),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool? val) {
-                        biometricGoalItemChange(val, index);
-                      });
-                }),
-          ),
         ],
       ),
     );
   }
 
-  void biometricGoalItemChange(bool? val, int index) {
-    setState(() {
-      biometricGoalList[index].isCheck = val;
-    });
-  }
-
   Widget behaviouralGoal() {
-    return Container(
-        width: MediaQuery.of(context).size.width,
-        height: 300,
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-            border: Border.all(width: 1, color: Colors.grey),
-            borderRadius: BorderRadius.all(Radius.circular(8))),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Behavioral Goals',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600),
-              ),
-              SizedBox(
-                height: 16.0,
-              ),
-              Expanded(
-                child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: behaviouralGoalList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CheckboxListTile(
-                          value: behaviouralGoalList[index].isCheck,
-                          title: Text(behaviouralGoalList[index].title),
-                          controlAffinity: ListTileControlAffinity.leading,
-                          onChanged: (bool? val) {
-                            behaviouralGoalItemChange(val, index);
-                          });
-                    }),
-              ),
-            ]));
-  }
-
-  void behaviouralGoalItemChange(bool? val, int index) {
-    setState(() {
-      behaviouralGoalList[index].isCheck = val;
-    });
+    return Expanded(
+      child: ListView.builder(
+          itemCount: goals.length,
+          itemBuilder: (BuildContext context, int index) {
+            return CheckboxListTile(
+                value: goals[index].isChecked,
+                title: Text(goals[index].title.toString()),
+                controlAffinity: ListTileControlAffinity.leading,
+                onChanged: (bool? val) {
+                  goals[index].isCheck = true;
+                  setState(() {});
+                  setPriorityGoal(goals[index]);
+                  /*behaviouralGoalItemChange(val, index);*/
+                });
+          }),
+    );
   }
 
   Widget submitButton() {
@@ -303,24 +243,8 @@ class _SelectGoalsForCarePlanViewState
           )
         : InkWell(
             onTap: () {
-              goalPlanScreenStack.clear();
-              for (int i = 0; i < biometricGoalList.length; i++) {
-                if (biometricGoalList.elementAt(i).isCheck!) {
-                  goalPlanScreenStack.add(biometricGoalList.elementAt(i).title);
-                }
-              }
-
-              for (int i = 0; i < behaviouralGoalList.length; i++) {
-                if (behaviouralGoalList.elementAt(i).isCheck!) {
-                  goalPlanScreenStack
-                      .add(behaviouralGoalList.elementAt(i).title);
-                }
-              }
-
-              goalPlanScreenStack.remove('Medication Adherence');
-              goalPlanScreenStack.remove('Nutrition');
-              navigateToScreen();
-              //Navigator.pushNamed(context, RoutePaths.Determine_Action_For_Care_Plan);
+              Navigator.pushNamed(
+                  context, RoutePaths.Determine_Action_For_Care_Plan);
             },
             child: Container(
               height: 40,
@@ -358,6 +282,55 @@ class _SelectGoalsForCarePlanViewState
               ),
             ),
           );
+  }
+
+  setPriorityGoal(Goals goal) async {
+    try {
+      final body = <String, dynamic>{};
+      body['HealthPriorityId'] = widget
+          .createHealthPriorityResponse!.data!.healthPriority!.id
+          .toString();
+      body['Source'] = 'Careplan';
+      body['Provider'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .provider
+          .toString();
+      body['ProviderEnrollmentId'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .enrollmentId
+          .toString();
+      body['ProviderCareplanCode'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .planCode
+          .toString();
+      body['ProviderCareplanName'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .planName
+          .toString();
+      body['PatientUserId'] = patientUserId;
+      body['Sequence'] = goal.sequence;
+      body['Title'] = goal.title;
+      body['GoalAchieved'] = false;
+      body['GoalAbandoned'] = false;
+
+      final CreateGoalResponse baseResponse = await model.createGoal(body);
+
+      if (baseResponse.status == 'success') {
+        createdGoalsIds.add(baseResponse.data!.goal!.id.toString());
+        debugPrint('CreatedGoalsIds size ==> ${createdGoalsIds.length}');
+      } else {
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      progressDialog.close();
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
   }
 
   navigateToScreen() {

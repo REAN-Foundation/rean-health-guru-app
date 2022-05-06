@@ -291,17 +291,18 @@ class PatientCarePlanViewModel extends BaseModel {
     return StartTaskOfAHACarePlanResponse.fromJson(response);
   }
 
-  Future<BaseResponse> finishUserTask(String userTaskId) async {
+  Future<BaseResponse> finishUserTask(String userTaskId,
+      {Map<String, String>? bodyMap}) async {
     setBusy(true);
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
 
-    final body = <String, String>{};
-
-    final response = await apiProvider!
-        .put('/user-tasks/' + userTaskId + '/finish', body: body, header: map);
+    final response = await apiProvider!.put(
+        '/user-tasks/' + userTaskId + '/finish',
+        body: bodyMap,
+        header: map);
 
     setBusy(false);
     // Convert and return
@@ -408,8 +409,7 @@ class PatientCarePlanViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider!
-        .get('/aha/care-plan/' + planId + '/goal-priority-types', header: map);
+    final response = await apiProvider!.get('/types/priorities', header: map);
 
     debugPrint(response.toString());
     setBusy(false);

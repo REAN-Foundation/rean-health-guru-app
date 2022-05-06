@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:patient/core/constants/route_paths.dart';
-import 'package:patient/features/common/careplan/models/get_goal_priorities.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -22,8 +21,8 @@ class _SelectGoalsForCarePlanViewState
   int id1 = 10;
   String radioButtonItem = 'ONE';
   String radioButtonItem1 = '';
-  late GetGoalPriorities _getBiometricGoalPriorities;
-  late GetGoalPriorities _getBehavioralGoalPriorities;
+/*  late GetGoalPriorities _getBiometricGoalPriorities;
+  late GetGoalPriorities _getBehavioralGoalPriorities;*/
   ProgressDialog? progressDialog;
   List<CheckBoxModel> biometricGoalList = <CheckBoxModel>[];
   List<CheckBoxModel> behaviouralGoalList = <CheckBoxModel>[];
@@ -31,11 +30,11 @@ class _SelectGoalsForCarePlanViewState
   @override
   void initState() {
     model.setBusy(true);
-    getBiometricGoal();
+    //getBiometricGoal();
     super.initState();
   }
 
-  getBiometricGoal() async {
+/*  getBiometricGoal() async {
     try {
       _getBiometricGoalPriorities = await model.getBiometricGoal(
           carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
@@ -89,7 +88,7 @@ class _SelectGoalsForCarePlanViewState
       showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {

@@ -157,7 +157,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
       ),
       child: Center(
         child: Text(
-          'AHA Heart Failure Care Plan\nAHAHF',
+          widget.assortedViewConfigs!.task!.action!.planName.toString(),
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
@@ -383,7 +383,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
 
   Widget iMageView() {
     debugPrint(
-        'Image Visible ==> ${widget.assortedViewConfigs!.task!.action!.type == 'Infographics'}');
+        'Image Visible ==> ${widget.assortedViewConfigs!.task!.action!.type == 'Infographic'}');
     debugPrint(
         'Image URL ==> ${widget.assortedViewConfigs!.task!.action!.url}');
     return Scrollbar(
@@ -397,7 +397,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
             if (widget.assortedViewConfigs!.task!.action!.url != null) ...[
               Visibility(
                 visible: widget.assortedViewConfigs!.task!.action!.type ==
-                    'Infographics',
+                    'Infographic',
                 child: Container(
                     padding: const EdgeInsets.all(16.0),
                     child: Image.network(

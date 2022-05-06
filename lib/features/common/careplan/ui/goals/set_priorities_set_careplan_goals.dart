@@ -45,8 +45,8 @@ class _SetPrioritiesGoalsForCarePlanViewState
       if (_getGoalPriorities.status == 'success') {
         debugPrint('AHA Care Plan ==> ${_getGoalPriorities.toJson()}');
 
-        _carePlanMenuItems =
-            buildDropDownMenuItemsForCarePlan(_getGoalPriorities.data!.goals!);
+        _carePlanMenuItems = buildDropDownMenuItemsForCarePlan(
+            _getGoalPriorities.data!.priorityTypes!);
       } else {
         showToast(_getGoalPriorities.message!, context);
       }
@@ -58,12 +58,12 @@ class _SetPrioritiesGoalsForCarePlanViewState
   }
 
   List<DropdownMenuItem<String>> buildDropDownMenuItemsForCarePlan(
-      List<String> list) {
+      List<PriorityTypes> list) {
     final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < list.length; i++) {
       items.add(DropdownMenuItem(
-        child: Text(list.elementAt(i)),
-        value: list.elementAt(i),
+        child: Text(list.elementAt(i).type.toString()),
+        value: list.elementAt(i).type.toString(),
       ));
     }
     return items;
@@ -77,10 +77,11 @@ class _SetPrioritiesGoalsForCarePlanViewState
       builder: (context, model, child) => Container(
         child: Scaffold(
           key: _scaffoldKey,
-          backgroundColor: Colors.white,
+          backgroundColor: primaryColor,
           appBar: AppBar(
-            backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            elevation: 0,
+            backgroundColor: primaryColor,
+            brightness: Brightness.dark,
             title: Text(
               'Set Care Plan Goals',
               style: TextStyle(
@@ -88,7 +89,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
                   color: primaryColor,
                   fontWeight: FontWeight.w600),
             ),
-            iconTheme: IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.white),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -102,26 +103,64 @@ class _SetPrioritiesGoalsForCarePlanViewState
               )*/
             ],
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+          body: Stack(
+            children: [
+              Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    color: primaryColor,
+                    height: 100,
+                    width: MediaQuery.of(context).size.width,
+                  )),
+              Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  currentScreenCount(),
-                  const SizedBox(
-                    height: 16,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    color: primaryColor,
+                    height: 0,
+                    width: MediaQuery.of(context).size.width,
                   ),
-                  priorityDetails(),
-                  const SizedBox(
-                    height: 48,
-                  ),
-                  submitButton(),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(12),
+                              topLeft: Radius.circular(12))),
+                      child: body(),
+                    ),
+                  )
                 ],
               ),
-            ),
+            ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget body() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            currentScreenCount(),
+            const SizedBox(
+              height: 16,
+            ),
+            priorityDetails(),
+            const SizedBox(
+              height: 48,
+            ),
+            submitButton(),
+          ],
         ),
       ),
     );

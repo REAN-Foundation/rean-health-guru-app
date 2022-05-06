@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
-import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
+import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -12,11 +12,9 @@ import '../../../misc/ui/home_view.dart';
 
 //ignore: must_be_immutable
 class ChallengeCarePlanView extends StatefulWidget {
-  Task? task;
+  UserTask? task;
 
-  ChallengeCarePlanView(task) {
-    this.task = task;
-  }
+  ChallengeCarePlanView(this.task);
 
   @override
   _ChallengeCarePlanViewState createState() => _ChallengeCarePlanViewState();
@@ -30,12 +28,12 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
 
   @override
   void initState() {
-    if (widget.task!.details!.challengeNotes != null) {
-      _textController.text = widget.task!.details!.challengeNotes.toString();
+    /*if (widget.task!.action!.description != null) {
+      _textController.text = widget.task!.action!.description.toString();
       _textController.selection = TextSelection.fromPosition(
         TextPosition(offset: _textController.text.length),
       );
-    }
+    }*/
     super.initState();
   }
 
@@ -46,18 +44,19 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
       builder: (context, model, child) => Container(
         child: Scaffold(
           key: _scaffoldKey,
-          backgroundColor: Colors.white,
+          backgroundColor: primaryColor,
           appBar: AppBar(
-            backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            elevation: 0,
+            backgroundColor: primaryColor,
+            brightness: Brightness.dark,
             title: Text(
               'Challenge',
               style: TextStyle(
                   fontSize: 16.0,
-                  color: primaryColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.w600),
             ),
-            iconTheme: IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.white),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -71,19 +70,57 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
               )*/
             ],
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                //headerText(),
-                questionText(),
-                _entryField(),
-                _submitButton(),
-              ],
-            ),
+          body: Stack(
+            children: [
+              Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    color: primaryColor,
+                    height: 100,
+                    width: MediaQuery.of(context).size.width,
+                  )),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    color: primaryColor,
+                    height: 0,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(0.0),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(12),
+                              topLeft: Radius.circular(12))),
+                      child: body(),
+                    ),
+                  )
+                ],
+              ),
+            ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget body() {
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          //headerText(),
+          questionText(),
+          _entryField(),
+          _submitButton(),
+        ],
       ),
     );
   }
@@ -97,7 +134,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
       ),
       child: Center(
         child: Text(
-          widget.task!.details!.challengeText!,
+          widget.task!.action!.title.toString(),
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
@@ -107,19 +144,17 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
 
   Widget questionText() {
     return Container(
-      height: 100,
+      height: 80,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        color: primaryLightColor,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Text(
-            widget.task!.details!.subTitle!,
-            style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
-            textAlign: TextAlign.center,
-          ),
+          color: primaryLightColor,
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(12), topLeft: Radius.circular(12))),
+      child: Center(
+        child: Text(
+          '\n' + widget.task!.action!.description.toString(),
+          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
+          textAlign: TextAlign.center,
         ),
       ),
     );
@@ -140,7 +175,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
           ),
         ),
         child: TextFormField(
-            enabled: !widget.task!.finished!,
+            enabled: !widget.task!.finished,
             obscureText: false,
             controller: _textController,
             keyboardType: TextInputType.multiline,
@@ -173,17 +208,17 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
           // Add This
           child: MaterialButton(
             minWidth: 200,
-            child: Text(!widget.task!.finished! ? 'Save' : 'Done',
+            child: Text(!widget.task!.finished ? 'Save' : 'Done',
                 style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
             onPressed: () {
-              if (!widget.task!.finished!) {
+              if (!widget.task!.finished) {
                 if (_textController.text == '') {
                   showToast('Please enter challenge text', context);
                 } else {
-                  completeChallengeTaskOfAHACarePlan(widget.task!);
+                  completeChallengeTaskOfAHACarePlan(widget.task);
                 }
               } else {
                 Navigator.pop(context);
@@ -195,25 +230,23 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
     );
   }
 
-  completeChallengeTaskOfAHACarePlan(Task task) async {
+  completeChallengeTaskOfAHACarePlan(UserTask? task) async {
     try {
       final map = <String, String>{};
-      map['ChallengeNotes'] = _textController.text;
+      map['UserResponse'] = _textController.text;
 
-      final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
-          await model.completeChallengeTask(
-              task.details!.carePlanId.toString(), task.details!.id!, map);
+      final BaseResponse response = await model
+          .finishUserTask(task!.action!.userTaskId.toString(), bodyMap: map);
 
-      if (_startTaskOfAHACarePlanResponse.status == 'success') {
+      if (response.status == 'success') {
         assrotedUICount = 0;
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(1);
         }), (Route<dynamic> route) => false);
-        debugPrint(
-            'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
+        debugPrint('AHA Care Plan ==> ${response.toJson()}');
       } else {
-        showToast(_startTaskOfAHACarePlanResponse.message!, context);
+        showToast(response.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);

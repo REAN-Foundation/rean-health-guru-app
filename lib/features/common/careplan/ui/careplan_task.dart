@@ -41,7 +41,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
       userTaskResponse = await model.getUserTasks(
           query,
-          dateQueryFormat.format(DateTime.now()),
+          dateQueryFormat.format(DateTime.now().subtract(Duration(days: 0))),
           //dateQueryFormat.format(dateTill.add(Duration(days: 0))));
           dateQueryFormat.format(dateTill.add(Duration(days: 82))));
 
@@ -321,13 +321,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   Widget _makeTaskCard(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
     debugPrint(
-        'Category Name ==> ${task.action!.category} && Task Tittle ==> ${task.task}');
+        'Category Name ==> ${task.action!.type} && Task Tittle ==> ${task.task}');
     return Card(
       semanticContainer: false,
       elevation: 0,
       child: InkWell(
         onTap: () {
-          debugPrint('Task Type ==> ${task.action!.category}');
+          debugPrint('Task Type ==> ${task.action!.type}');
           if (!task.finished) {
             debugPrint('Task ID ==> ${task.id}');
             getUserTaskDetails(task.action!.userTaskId.toString());
@@ -1131,7 +1131,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             Navigator.pushNamed(
                     context, RoutePaths.Set_Prority_For_Goals_Care_Plan)
                 .then((value) {
-              getUserTask();
+              //getUserTask();
               //showToast('Task completed successfully');
             });
           } else {
@@ -1221,15 +1221,31 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             completeMessageTaskOfAHACarePlan(task);
           }
           break;
-        case 'Infographics':
+        case 'Infographic':
           debugPrint('URL ==> ${task.action!.url!.replaceAll(' ', '%20')}');
-          _launchURL(task.action!.url!.replaceAll(' ', '%20')).then((value) {
+          assrotedUICount = 3;
+          final AssortedViewConfigs newAssortedViewConfigs =
+              AssortedViewConfigs();
+          newAssortedViewConfigs.toShow = '1';
+          newAssortedViewConfigs.testToshow = '2';
+          newAssortedViewConfigs.isNextButtonVisible = false;
+          newAssortedViewConfigs.header = task.task;
+          newAssortedViewConfigs.task = task;
+
+          Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
+                  arguments: newAssortedViewConfigs)
+              .then((value) {
             getUserTask();
             //showToast('Task completed successfully');
           });
+          /*
+          _launchURL(task.action!.url!.replaceAll(' ', '%20')).then((value) {
+            //getUserTask();
+            //showToast('Task completed successfully');
+          });
           if (!task.finished) {
-            completeMessageTaskOfAHACarePlan(task);
-          }
+            //completeMessageTaskOfAHACarePlan(task);
+          }*/
           break;
         case 'Animation':
           debugPrint('URL ==> ${task.action!.url!.replaceAll(' ', '%20')}');
@@ -1240,6 +1256,26 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           if (!task.finished) {
             completeMessageTaskOfAHACarePlan(task);
           }
+          break;
+        case 'Web':
+          final AssortedViewConfigs newAssortedViewConfigs =
+              AssortedViewConfigs();
+          newAssortedViewConfigs.toShow = '1';
+          newAssortedViewConfigs.testToshow = '2';
+          newAssortedViewConfigs.isNextButtonVisible = false;
+          newAssortedViewConfigs.header = task.task;
+          newAssortedViewConfigs.task = task;
+
+          Navigator.pushNamed(context, RoutePaths.RSS_FEED_LIST,
+                  arguments: newAssortedViewConfigs)
+              .then((value) {
+            //getUserTask();
+            //showToast('Task completed successfully');
+          });
+
+          /*if (!task.finished) {
+            completeMessageTaskOfAHACarePlan(task);
+          }*/
           break;
       }
     }

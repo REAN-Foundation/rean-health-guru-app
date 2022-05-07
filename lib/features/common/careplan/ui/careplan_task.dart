@@ -1090,16 +1090,16 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           });
           break;
         case 'Assessment':
-          if (task.finished) {
-            Navigator.pushNamed(context, RoutePaths.Assessment_Navigator,
-                    arguments: task)
-                .then((value) {
-              getUserTask();
-              //showToast('Task completed successfully');
-            });
-          } else {
+            debugPrint("Assessment 1");
+          Navigator.pushNamed(context, RoutePaths.Assessment_Navigator,
+                  arguments: task)
+              .then((value) {
+            getUserTask();
+            showToast('Task completed successfully', context);
+          });
+          /*} else {
             showToast('Task is already completed', context);
-          }
+          }*/
           //Navigator.pushNamed(context, RoutePaths.Assessment_Start_Care_Plan);
           break;
         case 'Link':

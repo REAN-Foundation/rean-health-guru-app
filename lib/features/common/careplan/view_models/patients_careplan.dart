@@ -6,6 +6,7 @@ import 'package:patient/features/common/appointment_booking/models/doctor_list_a
 import 'package:patient/features/common/appointment_booking/models/pharmacy_list_api_response.dart';
 import 'package:patient/features/common/careplan/models/add_team_member_response.dart';
 import 'package:patient/features/common/careplan/models/answer_assessment_response.dart';
+import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/models/create_goal_response.dart';
 import 'package:patient/features/common/careplan/models/create_health_priority_response.dart';
 import 'package:patient/features/common/careplan/models/enroll_care_clan_response.dart';
@@ -17,7 +18,6 @@ import 'package:patient/features/common/careplan/models/get_goal_priorities.dart
 import 'package:patient/features/common/careplan/models/get_goals_by_priority.dart';
 import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
-import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
 import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/team_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/user_task_response.dart';
@@ -334,10 +334,8 @@ class PatientCarePlanViewModel extends BaseModel {
     return StartTaskOfAHACarePlanResponse.fromJson(response);
   }
 
-  Future<StartAssesmentResponse> startAssesmentResponse(
-      String ahaCarePlanId, String taskId) async {
+  Future<AssesmentResponse> startAssesmentResponse(String taskId) async {
     setBusy(true);
-
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
@@ -345,21 +343,34 @@ class PatientCarePlanViewModel extends BaseModel {
     final body = <String, String>{};
 
     final response = await apiProvider!.post(
-        '/aha/care-plan/' +
-            ahaCarePlanId +
-            '/assessment-task/' +
-            taskId +
-            '/start',
+        '/clinical/assessments/' + taskId + '/start',
         body: body,
         header: map);
 
     setBusy(false);
     // Convert and return
-    return StartAssesmentResponse.fromJson(response);
+    return AssesmentResponse.fromJson(response);
   }
 
-  Future<AnswerAssesmentResponse> answerAssesmentResponse(
-      String ahaCarePlanId, String taskId, String qNaId, Map body) async {
+  Future<AssesmentResponse> getNextQuestiontResponse(String taskId) async {
+    setBusy(true);
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final body = <String, String>{};
+
+    final response = await apiProvider!.get(
+        '/clinical/assessments/' + taskId + '/questions/next',
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return AssesmentResponse.fromJson(response);
+  }
+
+  Future<AssesmentResponse> answerAssesmentResponse(
+      String assesmentId, String qNaId, Map body) async {
     setBusy(true);
 
     final map = <String, String>{};
@@ -367,18 +378,17 @@ class PatientCarePlanViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.post(
-        '/aha/care-plan/' +
-            ahaCarePlanId +
-            '/assessment-task/' +
-            taskId +
-            '/answer-question/' +
-            qNaId,
+        '/clinical/assessments/' +
+            assesmentId +
+            '/questions/' +
+            qNaId +
+            '/answer',
         body: body,
         header: map);
 
     setBusy(false);
     // Convert and return
-    return AnswerAssesmentResponse.fromJson(response);
+    return AssesmentResponse.fromJson(response);
   }
 
   Future<BaseResponse> addBiometricTask(

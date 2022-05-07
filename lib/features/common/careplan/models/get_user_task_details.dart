@@ -306,6 +306,7 @@ class Action {
     int? frequency,
     String? status,
     dynamic rawContent,
+    Assessment? assessment,
   }) {
     _id = id;
     _userTaskId = userTaskId;
@@ -328,6 +329,7 @@ class Action {
     _frequency = frequency;
     _status = status;
     _rawContent = rawContent;
+    _assessment = assessment;
   }
 
   Action.fromJson(dynamic json) {
@@ -352,6 +354,9 @@ class Action {
     _frequency = json['Frequency'];
     _status = json['Status'];
     _rawContent = json['RawContent'];
+    _assessment = json['Assessment'] != null
+        ? Assessment.fromJson(json['Assessment'])
+        : null;
   }
 
   String? _id;
@@ -375,6 +380,7 @@ class Action {
   int? _frequency;
   String? _status;
   dynamic _rawContent;
+  Assessment? _assessment;
 
   String? get id => _id;
 
@@ -418,6 +424,8 @@ class Action {
 
   String? get rawContent => _rawContent.toString();
 
+  Assessment? get assessment => _assessment;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
@@ -441,6 +449,143 @@ class Action {
     map['Frequency'] = _frequency;
     map['Status'] = _status;
     map['RawContent'] = _rawContent;
+    if (_assessment != null) {
+      map['Assessment'] = _assessment?.toJson();
+    }
+    return map;
+  }
+}
+
+class Assessment {
+  Assessment({
+    String? id,
+    String? type,
+    String? displayCode,
+    String? title,
+    dynamic description,
+    String? patientUserId,
+    String? assessmentTemplateId,
+    String? provider,
+    String? providerEnrollmentId,
+    String? providerAssessmentCode,
+    dynamic providerAssessmentId,
+    String? status,
+    String? scheduledAt,
+    String? createdAt,
+    String? parentActivityId,
+    String? userTaskId,
+    String? currentNodeId,
+  }) {
+    _id = id;
+    _type = type;
+    _displayCode = displayCode;
+    _title = title;
+    _description = description;
+    _patientUserId = patientUserId;
+    _assessmentTemplateId = assessmentTemplateId;
+    _provider = provider;
+    _providerEnrollmentId = providerEnrollmentId;
+    _providerAssessmentCode = providerAssessmentCode;
+    _providerAssessmentId = providerAssessmentId;
+    _status = status;
+    _scheduledAt = scheduledAt;
+    _createdAt = createdAt;
+    _parentActivityId = parentActivityId;
+    _userTaskId = userTaskId;
+    _currentNodeId = currentNodeId;
+  }
+
+  Assessment.fromJson(dynamic json) {
+    _id = json['id'];
+    _type = json['Type'];
+    _displayCode = json['DisplayCode'];
+    _title = json['Title'];
+    _description = json['Description'];
+    _patientUserId = json['PatientUserId'];
+    _assessmentTemplateId = json['AssessmentTemplateId'];
+    _provider = json['Provider'];
+    _providerEnrollmentId = json['ProviderEnrollmentId'];
+    _providerAssessmentCode = json['ProviderAssessmentCode'];
+    _providerAssessmentId = json['ProviderAssessmentId'];
+    _status = json['Status'];
+    _scheduledAt = json['ScheduledAt'];
+    _createdAt = json['CreatedAt'];
+    _parentActivityId = json['ParentActivityId'];
+    _userTaskId = json['UserTaskId'];
+    _currentNodeId = json['CurrentNodeId'];
+  }
+
+  String? _id;
+  String? _type;
+  String? _displayCode;
+  String? _title;
+  dynamic _description;
+  String? _patientUserId;
+  String? _assessmentTemplateId;
+  String? _provider;
+  String? _providerEnrollmentId;
+  String? _providerAssessmentCode;
+  dynamic _providerAssessmentId;
+  String? _status;
+  String? _scheduledAt;
+  String? _createdAt;
+  String? _parentActivityId;
+  String? _userTaskId;
+  String? _currentNodeId;
+
+  String? get id => _id;
+
+  String? get type => _type;
+
+  String? get displayCode => _displayCode;
+
+  String? get title => _title;
+
+  dynamic get description => _description;
+
+  String? get patientUserId => _patientUserId;
+
+  String? get assessmentTemplateId => _assessmentTemplateId;
+
+  String? get provider => _provider;
+
+  String? get providerEnrollmentId => _providerEnrollmentId;
+
+  String? get providerAssessmentCode => _providerAssessmentCode;
+
+  dynamic get providerAssessmentId => _providerAssessmentId;
+
+  String? get status => _status;
+
+  String? get scheduledAt => _scheduledAt;
+
+  String? get createdAt => _createdAt;
+
+  String? get parentActivityId => _parentActivityId;
+
+  String? get userTaskId => _userTaskId;
+
+  String? get currentNodeId => _currentNodeId;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = _id;
+    map['Type'] = _type;
+    map['DisplayCode'] = _displayCode;
+    map['Title'] = _title;
+    map['Description'] = _description;
+    map['PatientUserId'] = _patientUserId;
+    map['AssessmentTemplateId'] = _assessmentTemplateId;
+    map['Provider'] = _provider;
+    map['ProviderEnrollmentId'] = _providerEnrollmentId;
+    map['ProviderAssessmentCode'] = _providerAssessmentCode;
+    map['ProviderAssessmentId'] = _providerAssessmentId;
+    map['Status'] = _status;
+    map['ScheduledAt'] = _scheduledAt;
+    map['CreatedAt'] = _createdAt;
+    map['ParentActivityId'] = _parentActivityId;
+    map['UserTaskId'] = _userTaskId;
+    map['CurrentNodeId'] = _currentNodeId;
     return map;
   }
 }

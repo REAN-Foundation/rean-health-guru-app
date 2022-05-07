@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
+import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 
 //ignore: must_be_immutable
 class AssessmentStartCarePlanView extends StatefulWidget {
-  Assessmment? assesment;
+  Next? next;
 
-  AssessmentStartCarePlanView(assesmentC) {
-    assesment = assesmentC;
+  AssessmentStartCarePlanView(nextQue) {
+    next = nextQue;
   }
 
   @override
@@ -93,7 +93,7 @@ class _AssessmentStartCarePlanViewState
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                widget.assesment!.question!.questionText!,
+                widget.next!.title!,
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w600,

@@ -251,7 +251,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => QuizForCarePlanView());
       case RoutePaths.Assessment_Navigator:
         return MaterialPageRoute(
-            builder: (_) => AssesmentTaskNavigatorView(settings.arguments));
+            builder: (_) =>
+                AssesmentTaskNavigatorView(settings.arguments as UserTask));
       case RoutePaths.Biometric_Care_Plan_Line:
         return MaterialPageRoute(
             builder: (_) => BiomatricTask(settings.arguments));

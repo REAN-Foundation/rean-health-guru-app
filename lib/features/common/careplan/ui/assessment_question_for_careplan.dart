@@ -39,7 +39,7 @@ class _AssessmentQuestionCarePlanViewState
   processAnswer() {
     for (int i = 0; i < widget.assesment!.options!.length; i++) {
       answers.add(Answer(
-          widget.assesment!.options!.elementAt(i)!.sequence as int,
+          widget.assesment!.options!.elementAt(i).sequence as int,
           widget.assesment!.options!.elementAt(i).text.toString()));
     }
     setState(() {});

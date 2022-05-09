@@ -263,7 +263,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
               child: DropdownButton<String>(
                 isExpanded: true,
                 hint: Text(
-                  'Select Primary Goal',
+                  'Select Primary Priority',
                   style: TextStyle(
                       color: textBlack,
                       fontSize: 14,
@@ -301,7 +301,7 @@ class _SetPrioritiesGoalsForCarePlanViewState
               child: DropdownButton<String>(
                 isExpanded: true,
                 hint: Text(
-                  'Select Secondary Goal',
+                  'Select Secondary Priority',
                   style: TextStyle(
                       color: textBlack,
                       fontSize: 14,
@@ -330,8 +330,13 @@ class _SetPrioritiesGoalsForCarePlanViewState
           )
         : InkWell(
             onTap: () {
-              if (selectedPrimaryGoal == selectedSecondaryGoal) {
-                showToast('Please select different secondary goal', context);
+              if (selectedPrimaryGoal == '') {
+                showToast('Please select primary goal', context);
+              } else if (selectedSecondaryGoal == '') {
+                showToast('Please select secondary goal', context);
+              } else if (selectedPrimaryGoal == selectedSecondaryGoal) {
+                showToast(
+                    'Please select different secondary priority', context);
               } else {
                 setPriorityGoal();
               }

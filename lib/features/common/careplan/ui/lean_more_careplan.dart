@@ -110,7 +110,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(0.0),
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -155,10 +155,12 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         color: colorF6F6FF,
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(12), topLeft: Radius.circular(12)),
       ),
       child: Center(
         child: Text(
-          widget.assortedViewConfigs!.task!.action!.planName.toString(),
+          widget.assortedViewConfigs!.task!.action!.category.toString(),
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),

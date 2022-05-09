@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/careplan/models/answer_assessment_response.dart';
 import 'package:patient/features/common/careplan/models/assesment_response.dart';
@@ -427,99 +426,4 @@ class _AssesmentTaskNavigatorViewState
     }
   }
 
-  Widget _positiveFeedBack(Assessmment assessmment) {
-    return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              color: colorF6F6FF,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      '',
-                      style: TextStyle(
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w600,
-                          color: primaryColor,
-                          fontSize: 16.0),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Icon(
-              FontAwesomeIcons.solidThumbsUp,
-              size: 64,
-              color: Colors.green,
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                assessmment.question!.questionText!,
-                style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600,
-                    color: primaryColor,
-                    fontSize: 16.0),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: InkWell(
-                onTap: () {
-                  if (assessmment.question!.questionType == 'statement') {
-                    completeMessageTaskOfAHACarePlan(widget.task!);
-                    /*Navigator.pushAndRemoveUntil(context,
-                        MaterialPageRoute(builder: (context) {
-                          return HomeView( 1 );
-                        }), (Route<dynamic> route) => false);*/
-                  } else {
-                    Navigator.pop(context);
-                    nextQuestion(0);
-                  }
-                  //Navigator.pushNamed(context, RoutePaths.Assessment_Final_Care_Plan);
-                },
-                child: Container(
-                    height: 40,
-                    width: 120,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24.0),
-                      border: Border.all(color: primaryColor, width: 1),
-                      color: primaryColor,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Ok',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12),
-                        textAlign: TextAlign.center,
-                      ),
-                    )),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

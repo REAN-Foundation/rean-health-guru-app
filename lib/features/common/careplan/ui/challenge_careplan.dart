@@ -198,18 +198,20 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Material(
-          //Wrap with Material
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
-          elevation: 4.0,
-          color: primaryColor,
-          clipBehavior: Clip.antiAlias,
-          // Add This
-          child: MaterialButton(
-            minWidth: 200,
-            child: Text(!widget.task!.finished ? 'Save' : 'Done',
-                style: TextStyle(
+        model.busy
+            ? CircularProgressIndicator()
+            : Material(
+                //Wrap with Material
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24.0)),
+                elevation: 4.0,
+                color: primaryColor,
+                clipBehavior: Clip.antiAlias,
+                // Add This
+                child: MaterialButton(
+                  minWidth: 200,
+                  child: Text(!widget.task!.finished ? 'Save' : 'Done',
+                      style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
@@ -232,6 +234,8 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
 
   completeChallengeTaskOfAHACarePlan(UserTask? task) async {
     try {
+      model.setBusy(true);
+      setState(() {});
       final map = <String, String>{};
       map['UserResponse'] = _textController.text;
 
@@ -239,6 +243,8 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
           .finishUserTask(task!.action!.userTaskId.toString(), bodyMap: map);
 
       if (response.status == 'success') {
+        model.setBusy(false);
+        setState(() {});
         assrotedUICount = 0;
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
@@ -246,6 +252,8 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
         }), (Route<dynamic> route) => false);
         debugPrint('AHA Care Plan ==> ${response.toJson()}');
       } else {
+        model.setBusy(false);
+        setState(() {});
         showToast(response.message!, context);
       }
     } catch (CustomException) {

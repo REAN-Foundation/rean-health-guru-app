@@ -358,7 +358,6 @@ class PatientCarePlanViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
 
-    final body = <String, String>{};
 
     final response = await apiProvider!.get(
         '/clinical/assessments/' + taskId + '/questions/next',

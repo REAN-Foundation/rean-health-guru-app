@@ -1089,17 +1089,35 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             //showToast('Task completed successfully');
           });
           break;
-        case 'Assessment':
-            debugPrint("Assessment 1");
-          Navigator.pushNamed(context, RoutePaths.Assessment_Navigator,
-                  arguments: task)
+        case 'Professional':
+          assrotedUICount = 3;
+          final AssortedViewConfigs newAssortedViewConfigs =
+              AssortedViewConfigs();
+          newAssortedViewConfigs.toShow = '1';
+          newAssortedViewConfigs.testToshow = '2';
+          newAssortedViewConfigs.isNextButtonVisible = false;
+          newAssortedViewConfigs.header = task.task;
+          newAssortedViewConfigs.task = task;
+
+          Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
+                  arguments: newAssortedViewConfigs)
               .then((value) {
             getUserTask();
-            showToast('Task completed successfully', context);
+            //showToast('Task completed successfully');
           });
-          /*} else {
+          break;
+        case 'Assessment':
+          if (!task.finished) {
+            debugPrint("Assessment 1");
+            Navigator.pushNamed(context, RoutePaths.Assessment_Navigator,
+                    arguments: task)
+                .then((value) {
+              getUserTask();
+              //showToast('Task completed successfully', context);
+            });
+          } else {
             showToast('Task is already completed', context);
-          }*/
+          }
           //Navigator.pushNamed(context, RoutePaths.Assessment_Start_Care_Plan);
           break;
         case 'Link':
@@ -1120,12 +1138,16 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           });
           break;
         case 'Challenge':
-          Navigator.pushNamed(context, RoutePaths.Challenge_Care_Plan,
-                  arguments: task)
-              .then((value) {
-            getUserTask();
-            //showToast('Task completed successfully');
-          });
+          if (!task.finished) {
+            Navigator.pushNamed(context, RoutePaths.Challenge_Care_Plan,
+                    arguments: task)
+                .then((value) {
+              getUserTask();
+              //showToast('Task completed successfully');
+            });
+          } else {
+            showToast('Task is already completed', context);
+          }
           break;
         case 'Goal':
           if (!task.finished) {

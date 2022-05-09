@@ -45,7 +45,7 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
             backgroundColor: primaryColor,
             brightness: Brightness.dark,
             title: Text(
-              'Challenge',
+              'Assessment',
               style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.white,

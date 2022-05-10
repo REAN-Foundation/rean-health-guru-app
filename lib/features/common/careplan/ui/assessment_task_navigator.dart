@@ -104,18 +104,14 @@ class _AssesmentTaskNavigatorViewState
                           ),
                           Expanded(
                             child: Container(
-                              padding: const EdgeInsets.all(8.0),
-                              width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.only(
                                       topRight: Radius.circular(12),
                                       topLeft: Radius.circular(12))),
-                              child: Expanded(
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: primaryColor,
-                                  ),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: primaryColor,
                                 ),
                               ),
                             ),

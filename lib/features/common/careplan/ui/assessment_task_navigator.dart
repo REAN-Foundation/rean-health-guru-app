@@ -6,6 +6,7 @@ import 'package:patient/features/common/careplan/models/assesment_response.dart'
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
 import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
 import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
+import 'package:patient/features/common/careplan/ui/assessment_multi_choice_question.dart';
 import 'package:patient/features/common/careplan/ui/assessment_question_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/assessment_start_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/biometric_assignment_task.dart';
@@ -194,7 +195,13 @@ class _AssesmentTaskNavigatorViewState
         'Single Choice Selection') {
       //showToast('Biometric Task');
       menuQuestion(questionType);
-    } else {}
+    } else if (questionType.expectedResponseType! == 'Multi Choice Selection') {
+      //showToast('Biometric Task');
+      multiChoiseQuestion(questionType);
+    } else {
+      Navigator.pop(context);
+      showToast('Opps something went wrong!', context);
+    }
   }
 
   oldCode() {
@@ -256,6 +263,28 @@ class _AssesmentTaskNavigatorViewState
       nextQuestion(id);
     }
     //}
+  }
+
+  multiChoiseQuestion(Next assessmment) async {
+    final id = await Navigator.push(
+      context,
+      CupertinoPageRoute(
+          fullscreenDialog: true,
+          builder: (context) => AssessmentMultiChoiceQuestionView(assessmment)),
+    );
+    debugPrint('Question Index ==> $id');
+    /*if(this.assessmment.question.isLastQuestion){
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+            return HomeView( 1 );
+          }), (Route<dynamic> route) => false);
+    }else {*/
+    if (id == null) {
+      Navigator.pop(context);
+      showToast('Please complete assessment from start', context);
+    } else {
+      nextQuestion(id);
+    }
   }
 
   textQuestion(Next assessmment) async {

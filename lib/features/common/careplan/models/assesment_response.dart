@@ -217,6 +217,7 @@ class Options {
     String? providerGivenCode,
     String? text,
     dynamic imageUrl,
+    bool? isCheck,
     int? sequence,
   }) {
     _id = id;
@@ -224,6 +225,7 @@ class Options {
     _displayCode = displayCode;
     _providerGivenCode = providerGivenCode;
     _text = text;
+    isCheck = false;
     _imageUrl = imageUrl;
     _sequence = sequence;
   }
@@ -245,6 +247,7 @@ class Options {
   String? _text;
   dynamic _imageUrl;
   int? _sequence;
+  bool? isCheck;
 
   String? get id => _id;
 
@@ -259,6 +262,8 @@ class Options {
   dynamic get imageUrl => _imageUrl;
 
   int? get sequence => _sequence;
+
+  bool? get isChecked => isCheck ?? false;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

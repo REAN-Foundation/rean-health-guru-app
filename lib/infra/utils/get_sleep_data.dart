@@ -63,6 +63,7 @@ class GetSleepData {
       //HealthDataType.HEIGHT,
       //HealthDataType.ACTIVE_ENERGY_BURNED,
       HealthDataType.SLEEP_ASLEEP,
+      HealthDataType.SLEEP_IN_BED,
       //HealthDataType.SLEEP_AWAKE,
       //HealthDataType.BASAL_ENERGY_BURNED,
       //HealthDataType.DISTANCE_WALKING_RUNNING,

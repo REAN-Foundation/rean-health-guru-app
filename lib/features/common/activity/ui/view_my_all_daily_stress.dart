@@ -275,7 +275,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
               backgroundColor: primaryColor,
               brightness: Brightness.dark,
               title: Text(
-                'Stress',
+                'Mental Health Management',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,

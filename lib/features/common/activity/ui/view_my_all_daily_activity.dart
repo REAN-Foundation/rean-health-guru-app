@@ -55,6 +55,8 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
   final durationInMin = Duration(minutes: 3);
   late AndroidDeviceInfo androidInfo;
   late IosDeviceInfo iosInfo;
+  late Timer _timerRefrehs;
+  late Timer _timerRefreh;
 
   getDeviceData() async {
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -84,12 +86,21 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
       fetchData();
       sleepData = GetSleepData();
       data = GetHealthData();
-      Timer.periodic(durationInMin, (Timer t) => fetchData());
-      Timer.periodic(Duration(seconds: 1), (Timer t) {
-        setState(() {});
-      });
+      try {
+        _timerRefrehs = Timer.periodic(durationInMin, (Timer t) => fetchData());
+        _timerRefreh = Timer.periodic(Duration(seconds: 1), (Timer t) {
+          setState(() {});
+        });
+      } catch (e) {}
     }
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timerRefreh.cancel();
+    _timerRefrehs.cancel();
+    super.dispose();
   }
 
   Future<void> fetchData() async {
@@ -365,7 +376,7 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
               backgroundColor: primaryColor,
               brightness: Brightness.dark,
               title: Text(
-                'Activity',
+                'Physical Health Management',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,

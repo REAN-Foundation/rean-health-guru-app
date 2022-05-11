@@ -108,6 +108,28 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
               InkWell(
                 onTap: () {
+                  Navigator.popAndPushNamed(
+                      context, RoutePaths.My_Medical_Profile);
+                },
+                child: Container(
+                  height: 48,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        'Medical Profile',
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.My_Vitals);
                 },
                 child: Container(
@@ -119,7 +141,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'Vitals',
+                        'Vital Management',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),
@@ -144,28 +166,6 @@ class _AppDrawerState extends State<AppDrawer> {
               ),*/
               InkWell(
                 onTap: () {
-                  Navigator.popAndPushNamed(
-                      context, RoutePaths.My_Medical_Profile);
-                },
-                child: Container(
-                  height: 48,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 40,
-                      ),
-                      Text(
-                        'Medical Profile',
-                        style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.My_Medications);
                 },
                 child: Container(
@@ -177,7 +177,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'Medications',
+                        'Medication Management',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),
@@ -199,7 +199,7 @@ class _AppDrawerState extends State<AppDrawer> {
                           width: 40,
                         ),
                         Text(
-                          'Activity',
+                          'Physical Health Management',
                           style: TextStyle(
                               color: primaryColor, fontWeight: FontWeight.w600),
                         ),
@@ -222,7 +222,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'Nutrition',
+                        'Nutrition Management',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),

@@ -277,7 +277,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   SizedBox(
                     width: 8,
                   ),
-                  Text('Symptom management',
+                  Text('Symptom Management',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
@@ -796,7 +796,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 12,
                       ),
-                      Text('Medication management',
+                      Text('Medication Management',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
@@ -1345,7 +1345,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Vital management',
+                      Text('Vital Management',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
@@ -1600,7 +1600,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Nutrition management',
+                      Text('Nutrition Management',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
@@ -1846,11 +1846,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Physical exercise management',
+                      Text('Physical Health Management',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
                     ],
                   ),
@@ -2089,11 +2089,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Mental health management',
+                      Text('Mental Health Management',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
                     ],
                   ),

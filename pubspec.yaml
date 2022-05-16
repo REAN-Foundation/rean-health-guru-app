@@ -87,6 +87,7 @@ dependencies:
   flutter_sim_country_code: ^0.1.2
   device_info_plus: ^3.2.2
   webfeed: ^0.7.0
+  pinch_zoom: ^1.0.0
 
 dev_dependencies:
   #test: any

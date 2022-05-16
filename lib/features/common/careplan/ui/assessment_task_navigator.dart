@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/careplan/models/answer_assessment_response.dart';
 import 'package:patient/features/common/careplan/models/assesment_response.dart';
@@ -198,6 +199,12 @@ class _AssesmentTaskNavigatorViewState
     } else if (questionType.expectedResponseType! == 'Multi Choice Selection') {
       //showToast('Biometric Task');
       multiChoiseQuestion(questionType);
+    } else if (questionType.expectedResponseType! == 'Boolean') {
+      //showToast('Biometric Task');
+      yesNoQuestion(questionType);
+    } else if (questionType.expectedResponseType! == 'Ok') {
+      //showToast('Biometric Task');
+      showSuccessDialog(questionType);
     } else {
       Navigator.pop(context);
       showToast('Opps something went wrong!', context);
@@ -401,6 +408,7 @@ class _AssesmentTaskNavigatorViewState
       if (_answerAssesmentResponse.status == 'success') {
         if (_answerAssesmentResponse.message ==
             'Assessment has completed successfully!') {
+          showToast(_answerAssesmentResponse.message.toString(), context);
           Navigator.pop(context);
         } else {
           getNextQuestionAssesmentResponse();
@@ -451,4 +459,114 @@ class _AssesmentTaskNavigatorViewState
     }
   }
 
+  Widget _positiveFeedBack(Next question) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12), topRight: Radius.circular(12))),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12)),
+                color: colorF6F6FF,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      question.nodeType.toString(),
+                      style: TextStyle(
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w600,
+                          color: primaryColor,
+                          fontSize: 16.0),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Icon(
+              FontAwesomeIcons.solidThumbsUp,
+              size: 64,
+              color: Colors.green,
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                question.title.toString(),
+                style: TextStyle(
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w600,
+                    color: primaryColor,
+                    fontSize: 16.0),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: InkWell(
+                onTap: () {
+                  nextQuestion('Ok');
+                  Navigator.pop(context);
+                },
+                child: Container(
+                    height: 40,
+                    width: 120,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24.0),
+                      border: Border.all(color: primaryColor, width: 1),
+                      color: primaryColor,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Ok',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12),
+                        textAlign: TextAlign.center,
+                      ),
+                    )),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  showSuccessDialog(Next question) {
+    Dialog sucsessDialog = Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      //this right here
+      child: Container(
+        height: 300.0,
+        width: MediaQuery.of(context).size.width - 64,
+        child: _positiveFeedBack(question),
+      ),
+    );
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => sucsessDialog);
+  }
 }

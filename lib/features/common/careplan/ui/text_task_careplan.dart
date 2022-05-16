@@ -202,7 +202,7 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
           // Add This
           child: MaterialButton(
             minWidth: 200,
-            child: Text('Submit',
+            child: Text('Next',
                 style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.white,

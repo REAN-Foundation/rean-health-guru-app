@@ -416,6 +416,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
           await model.finishUserTask(task!.action!.userTaskId.toString());
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
+        showToast('Task completed successfully!', context);
         assrotedUICount = 0;
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {

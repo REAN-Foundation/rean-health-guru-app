@@ -451,6 +451,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
           await model.finishUserTask(task!.action!.userTaskId.toString());
 
       if (response.status == 'success') {
+        showToast('Task completed successfully!', context);
         assrotedUICount = 0;
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {

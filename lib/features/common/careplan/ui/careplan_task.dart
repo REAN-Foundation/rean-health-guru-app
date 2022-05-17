@@ -41,12 +41,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
       userTaskResponse = await model.getUserTasks(
           query,
-          dateQueryFormat.format(DateTime.parse(
+          /*dateQueryFormat.format(DateTime.parse(
               carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
                   .elementAt(0)
                   .startAt
-                  .toString())),
-          //dateQueryFormat.format(dateTill.add(Duration(days: 0))));
+                  .toString())),*/
+          dateQueryFormat.format(dateTill.add(Duration(days: 0))),
           dateQueryFormat.format(dateTill.add(Duration(days: 82))));
 
       if (userTaskResponse.status == 'success') {
@@ -1319,7 +1319,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;
-
+        showToast('Task completed successfully!', context);
         debugPrint(
             'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {

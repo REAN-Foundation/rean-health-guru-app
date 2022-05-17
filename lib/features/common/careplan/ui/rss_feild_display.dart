@@ -1,12 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
+import 'package:patient/features/common/careplan/models/rss_generated_aha_content.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:webfeed/domain/atom_feed.dart';
+import 'package:xml2json/xml2json.dart';
 
 //ignore: must_be_immutable
 class RSSFeildDisplayView extends StatefulWidget {
@@ -25,6 +27,7 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
   bool isAdVisible = true;
   bool isLoading = false;
   late AtomFeed rss = AtomFeed();
+  final myTransformer = Xml2Json();
 
   @override
   void initState() {
@@ -41,15 +44,21 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
       // This is an open REST API endpoint for testing purposes
       var api = widget.assortedViewConfigs!.task!.action!.url!.toString();
       final response = await get(Uri.parse(api));
-      debugPrint('RSS Feed ==> ${response.body.replaceAll('ï»¿', '')}');
-      var channel = AtomFeed.parse(response.body.replaceAll('ï»¿', ''));
-      setState(() {
+      //debugPrint('RSS Feed ==> ${response.body.replaceAll('ï»¿', '')}');
+      var channel = response.body.replaceAll('ï»¿', '');
+      myTransformer.parse(channel);
+      var json = myTransformer.toBadgerfish();
+      //debugPrint('RSS Feed JSON Convert==> ${json.toString()}');
+      Rss rss = Rss.fromJson(json);
+
+      debugPrint('RSS Feed Item title ==> ${rss.channel!.title}');
+
+      /*setState(() {
         rss = channel;
         isLoading = false;
-      });
-    } catch (err) {
-      debugPrint('Error ==> $err');
-      //throw err;
+      });*/
+    } on FetchDataException catch (e) {
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 
@@ -145,9 +154,6 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
                   return InkWell(
                       onTap: () {},
                       child: ListTile(
-                        leading: Image(
-                            image: CachedNetworkImageProvider(
-                                item.media!.contents![0].url.toString())),
                         title: Text(item.title.toString()),
                         subtitle: Row(
                           children: [

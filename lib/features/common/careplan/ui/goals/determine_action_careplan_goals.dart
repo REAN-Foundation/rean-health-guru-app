@@ -305,6 +305,7 @@ class _DeterminActionPlansForCarePlanViewState
           await model.finishUserTask(getTask().action!.userTaskId.toString());
 
       if (response.status == 'success') {
+        showToast('Task completed successfully!', context);
         assrotedUICount = 0;
         showSuccessDialog();
       } else {

@@ -1,8 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
-import 'package:patient/features/common/careplan/models/rss_generated_aha_content.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
@@ -47,11 +48,12 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
       //debugPrint('RSS Feed ==> ${response.body.replaceAll('ï»¿', '')}');
       var channel = response.body.replaceAll('ï»¿', '');
       myTransformer.parse(channel);
-      var json = myTransformer.toBadgerfish();
-      //debugPrint('RSS Feed JSON Convert==> ${json.toString()}');
-      Rss rss = Rss.fromJson(json);
+      var json = myTransformer.toGData();
+      log('RSS Feed JSON Convert==> ${json.toString()}');
 
-      debugPrint('RSS Feed Item title ==> ${rss.channel!.title}');
+      //Rss rss = Rss.fromJson(parsedJson);
+
+      //debugPrint('RSS Feed Item title ==> ${rss.channel!.item!.length.toString()}');
 
       /*setState(() {
         rss = channel;
@@ -142,30 +144,30 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
       children: [
         isLoading == false
             ? ListView.builder(
-                itemCount: rss.items!.length,
-                itemBuilder: (BuildContext context, index) {
-                  final item = rss.items![index];
-                  final feedItems = {
-                    'title': item.title,
-                    'link': item.links!.elementAt(0),
-                    'date': item.updated
-                  };
-                  print(feedItems);
-                  return InkWell(
-                      onTap: () {},
-                      child: ListTile(
-                        title: Text(item.title.toString()),
-                        subtitle: Row(
-                          children: [
-                            Text(DateFormat('MMM dd').format(
-                                DateTime.parse(item.updated.toString())))
-                          ],
-                        ),
-                      ));
-                })
+            itemCount: rss.items!.length,
+            itemBuilder: (BuildContext context, index) {
+              final item = rss.items![index];
+              final feedItems = {
+                'title': item.title,
+                'link': item.links!.elementAt(0),
+                'date': item.updated
+              };
+              print(feedItems);
+              return InkWell(
+                  onTap: () {},
+                  child: ListTile(
+                    title: Text(item.title.toString()),
+                    subtitle: Row(
+                      children: [
+                        Text(DateFormat('MMM dd').format(
+                            DateTime.parse(item.updated.toString())))
+                      ],
+                    ),
+                  ));
+            })
             : Center(
-                child: CircularProgressIndicator(),
-              ),
+          child: CircularProgressIndicator(),
+        ),
       ],
     );
   }

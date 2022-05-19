@@ -332,13 +332,13 @@ class _DeterminActionPlansForCarePlanViewState
               label: 'Success image',
               image: true,
               child: Image.asset(
-                'res/images/ic_careplan_success_tick.png',
+                'res/images/ic_careplan_success_tumbs_up.png',
                 width: 200,
                 height: 200,
               ),
             ),
             Text(
-              'Congratulations!',
+              'Thank You!',
               style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w700,
@@ -379,7 +379,7 @@ class _DeterminActionPlansForCarePlanViewState
                     color: primaryColor),
                 child: Center(
                   child: Text(
-                    'Home',
+                    'Go to my task',
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,

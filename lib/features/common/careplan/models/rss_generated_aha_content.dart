@@ -31,7 +31,6 @@ class RssGeneratedAhaContent {
 
 class Rss {
   Rss({
-    String? xmlnsa10,
     Channel? channel,
   }) {
     _channel = channel;
@@ -84,12 +83,12 @@ class Channel {
     _generator = json['generator'];
     _image = json['image'] != null ? Image.fromJson(json['image']) : null;
     _a10id = json['a10:id'];
-    if (json['item'] != null) {
+    /*if (json['item'] != null) {
       _item = [];
       json['item'].forEach((v) {
         _item?.add(Item.fromJson(v));
       });
-    }
+    }*/
   }
 
   String? _title;

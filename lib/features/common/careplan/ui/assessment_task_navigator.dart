@@ -204,7 +204,7 @@ class _AssesmentTaskNavigatorViewState
       yesNoQuestion(questionType);
     } else if (questionType.expectedResponseType! == 'Ok') {
       //showToast('Biometric Task');
-      showSuccessDialog(questionType);
+      showOkDialog(questionType);
     } else {
       Navigator.pop(context);
       showToast('Opps something went wrong!', context);
@@ -408,8 +408,8 @@ class _AssesmentTaskNavigatorViewState
       if (_answerAssesmentResponse.status == 'success') {
         if (_answerAssesmentResponse.message ==
             'Assessment has completed successfully!') {
-          showToast(_answerAssesmentResponse.message.toString(), context);
-          Navigator.pop(context);
+          //showToast(_answerAssesmentResponse.message.toString(), context);
+          showSuccessDialog();
         } else {
           getNextQuestionAssesmentResponse();
           debugPrint(
@@ -554,7 +554,7 @@ class _AssesmentTaskNavigatorViewState
     );
   }
 
-  showSuccessDialog(Next question) {
+  showOkDialog(Next question) {
     Dialog sucsessDialog = Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       //this right here
@@ -562,6 +562,89 @@ class _AssesmentTaskNavigatorViewState
         height: 300.0,
         width: MediaQuery.of(context).size.width - 64,
         child: _positiveFeedBack(question),
+      ),
+    );
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => sucsessDialog);
+  }
+
+  showSuccessDialog() {
+    Dialog sucsessDialog = Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      //this right here
+      child: Container(
+        height: 380.0,
+        width: 300.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Semantics(
+              label: 'Success image',
+              image: true,
+              child: Image.asset(
+                'res/images/ic_careplan_success_tumbs_up.png',
+                width: 200,
+                height: 200,
+              ),
+            ),
+            Text(
+              'Thank You!',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Montserrat",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 20.0),
+            ),
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                'You have successfully completed your assessment',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 14.0),
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(top: 20.0)),
+            InkWell(
+              onTap: () {
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (context) {
+                  return HomeView(1);
+                }), (Route<dynamic> route) => false);
+              },
+              child: Container(
+                height: 48,
+                width: 260,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    border: Border.all(color: primaryColor, width: 1),
+                    color: primaryColor),
+                child: Center(
+                  child: Text(
+                    'Go to my task',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 14),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: 20,
+            ),
+          ],
+        ),
       ),
     );
     showDialog(

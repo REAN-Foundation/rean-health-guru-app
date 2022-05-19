@@ -421,7 +421,8 @@ class PatientCarePlanViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider!.get('/types/priorities', header: map);
+    final response = await apiProvider!
+        .get('/types/priorities?tags=HeartFailure', header: map);
 
     debugPrint(response.toString());
     setBusy(false);

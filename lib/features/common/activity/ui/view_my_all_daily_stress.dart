@@ -17,6 +17,7 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/conversion.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/get_sleep_data.dart';
+import 'package:patient/infra/utils/get_sleep_data_in_bed.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 
@@ -33,7 +34,8 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
   List<HealthDataPoint> _healthDataList = [];
   AppState _state = AppState.DATA_NOT_FETCHED;
   var dateFormat = DateFormat('yyyy-MM-dd');
-  GetSleepData? sleepData;
+  GetSleepData? sleepDataASleep;
+  GetSleepDataInBed? sleepDataInBed;
   int steps = 0;
   double weight = 0;
   double height = 0;
@@ -83,7 +85,8 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
     //loadWaterConsuption();
     if (Platform.isIOS) {
       fetchData();
-      sleepData = GetSleepData();
+      sleepDataASleep = GetSleepData();
+      sleepDataInBed = GetSleepDataInBed();
       Timer.periodic(Duration(seconds: 3), (Timer t) {
         setState(() {});
       });
@@ -349,7 +352,20 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
   }
 
   Widget sleepTime() {
-    debugPrint('Inside Sleep ==>${sleepData!.getSleepDuration().abs()} ');
+    debugPrint(
+        'Sleep in Bed ==>${sleepDataInBed!.getSleepDurationInBed().abs()} ');
+    debugPrint('ASleep ==>${sleepDataASleep!.getSleepDurationASleep().abs()} ');
+
+    var sleepInBed = sleepDataInBed!.getSleepDurationInBed().abs();
+    var aSleep = sleepDataASleep!.getSleepDurationASleep().abs();
+
+    var sleepToDisplay = 0;
+
+    if (sleepInBed > aSleep) {
+      sleepToDisplay = sleepInBed;
+    } else {
+      sleepToDisplay = aSleep;
+    }
 
     return Container(
       height: 240,
@@ -382,11 +398,9 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
             SizedBox(
               height: 16,
             ),
-            Text(
-                Conversion.durationFromMinToHrsToString(
-                    sleepData!.getSleepDuration().abs()),
-                semanticsLabel: Conversion.durationFromMinToHrsToString(
-                    sleepData!.getSleepDuration().abs()),
+            Text(Conversion.durationFromMinToHrsToString(sleepToDisplay),
+                semanticsLabel:
+                    Conversion.durationFromMinToHrsToString(sleepToDisplay),
                 style: const TextStyle(
                     color: textBlack,
                     fontWeight: FontWeight.w700,
@@ -406,7 +420,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
             SizedBox(
               height: 8,
             ),
-            if (sleepData!.getSleepDuration().abs() < 420)
+            if (sleepToDisplay < 420)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(

@@ -757,9 +757,9 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
             ),
             Text(
                 Conversion.durationFromMinToHrsToString(
-                    sleepData!.getSleepDuration().abs()),
+                    sleepData!.getSleepDurationASleep().abs()),
                 semanticsLabel: Conversion.durationFromMinToHrsToString(
-                    sleepData!.getSleepDuration().abs()),
+                    sleepData!.getSleepDurationASleep().abs()),
                 style: const TextStyle(
                     color: textBlack,
                     fontWeight: FontWeight.w700,
@@ -779,7 +779,7 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
             SizedBox(
               height: 8,
             ),
-            if (sleepData!.getSleepDuration().abs() < 360)
+            if (sleepData!.getSleepDurationASleep().abs() < 360)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(

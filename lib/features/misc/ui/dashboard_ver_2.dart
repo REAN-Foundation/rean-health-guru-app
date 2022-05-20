@@ -823,11 +823,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
             Container(
               color: primaryLightColor,
               padding: const EdgeInsets.all(16),
-              child: model.busy
+              child:
+                  /*model.busy
                   ? Center(
                 child: CircularProgressIndicator(),
               )
-                  : Row(
+                  : */
+                  Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -1225,7 +1227,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   SizedBox(
                     width: 8,
                   ),
-                  Text('Health Insights',
+                  Text('Knowledge Manegement',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,

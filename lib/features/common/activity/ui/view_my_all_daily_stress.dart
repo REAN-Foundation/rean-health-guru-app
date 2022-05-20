@@ -54,6 +54,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
   GetHealthData? data;
   DashboardTile? mindfulnessTimeDashboardTile;
   int oldStoreSec = 0;
+  late Timer _timerRefrehs;
 
   loadSharedPrefs() async {
     try {
@@ -87,12 +88,18 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       fetchData();
       sleepDataASleep = GetSleepData();
       sleepDataInBed = GetSleepDataInBed();
-      Timer.periodic(Duration(seconds: 3), (Timer t) {
+      _timerRefrehs = Timer.periodic(Duration(seconds: 3), (Timer t) {
         setState(() {});
       });
       //data = GetHealthData();
     }
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timerRefrehs.cancel();
+    super.dispose();
   }
 
   Future<void> fetchData() async {
@@ -361,10 +368,10 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
 
     var sleepToDisplay = 0;
 
-    if (sleepInBed > aSleep) {
-      sleepToDisplay = sleepInBed;
-    } else {
+    if (aSleep > 0) {
       sleepToDisplay = aSleep;
+    } else {
+      sleepToDisplay = sleepInBed;
     }
 
     return Container(

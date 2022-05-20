@@ -91,7 +91,9 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
         _timerRefreh = Timer.periodic(Duration(seconds: 1), (Timer t) {
           setState(() {});
         });
-      } catch (e) {}
+      } catch (e) {
+        debugPrint(e.toString());
+      }
     }
     super.initState();
   }

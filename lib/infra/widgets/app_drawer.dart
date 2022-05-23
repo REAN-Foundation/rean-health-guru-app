@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -128,7 +127,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),
-              InkWell(
+              /*InkWell(
                 onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.My_Vitals);
                 },
@@ -148,7 +147,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     ],
                   ),
                 ),
-              ),
+              ),*/
               /*InkWell(
                 onTap:(){
                   Navigator.popAndPushNamed(context, RoutePaths.My_Vitals_By_Device_Framework);
@@ -164,7 +163,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),*/
-              InkWell(
+              /*InkWell(
                 onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.My_Medications);
                 },
@@ -259,7 +258,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     ),
                   ),
                 ),
-              ),
+              ),*/
               /*InkWell(
                 onTap: (){
                   //Navigator.popAndPushNamed(context, RoutePaths.Set_Goals_Care_Plan);

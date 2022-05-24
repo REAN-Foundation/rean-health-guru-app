@@ -1227,7 +1227,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   SizedBox(
                     width: 8,
                   ),
-                  Text('Knowledge Manegement',
+                  Text('Knowledge Management',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,

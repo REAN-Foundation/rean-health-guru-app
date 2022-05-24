@@ -1,12 +1,12 @@
 class UserData {
-  String status;
-  String message;
-  int httpCode;
-  Data data;
-  Client client;
-  String context;
-  List<String> clientIps;
-  String aPIVersion;
+  String? status;
+  String? message;
+  int? httpCode;
+  Data? data;
+  Client? client;
+  String? context;
+  List<String>? clientIps;
+  String? aPIVersion;
 
   UserData(
       {this.status,
@@ -35,10 +35,10 @@ class UserData {
     data['Message'] = message;
     data['HttpCode'] = httpCode;
     if (this.data != null) {
-      data['Data'] = this.data.toJson();
+      data['Data'] = this.data!.toJson();
     }
     if (client != null) {
-      data['Client'] = client.toJson();
+      data['Client'] = client!.toJson();
     }
     data['Context'] = context;
     data['ClientIps'] = clientIps;
@@ -48,10 +48,10 @@ class UserData {
 }
 
 class Data {
-  String accessToken;
-  User user;
-  int roleId;
-  bool isProfileComplete;
+  String? accessToken;
+  User? user;
+  int? roleId;
+  bool? isProfileComplete;
 
   Data({this.accessToken, this.user, this.roleId, this.isProfileComplete});
 
@@ -66,7 +66,7 @@ class Data {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['AccessToken'] = accessToken;
     if (user != null) {
-      data['User'] = user.toJson();
+      data['User'] = user!.toJson();
     }
     data['RoleId'] = roleId;
     data['IsProfileComplete'] = isProfileComplete;
@@ -75,15 +75,15 @@ class Data {
 }
 
 class User {
-  String id;
-  String userName;
-  String personId;
-  Person person;
-  String lastLogin;
-  String defaultTimeZone;
-  String currentTimeZone;
-  int roleId;
-  Role role;
+  String? id;
+  String? userName;
+  String? personId;
+  Person? person;
+  String? lastLogin;
+  String? defaultTimeZone;
+  String? currentTimeZone;
+  int? roleId;
+  Role? role;
 
   User(
       {this.id,
@@ -114,35 +114,35 @@ class User {
     data['UserName'] = userName;
     data['PersonId'] = personId;
     if (person != null) {
-      data['Person'] = person.toJson();
+      data['Person'] = person!.toJson();
     }
     data['LastLogin'] = lastLogin;
     data['DefaultTimeZone'] = defaultTimeZone;
     data['CurrentTimeZone'] = currentTimeZone;
     data['RoleId'] = roleId;
     if (role != null) {
-      data['Role'] = role.toJson();
+      data['Role'] = role!.toJson();
     }
     return data;
   }
 }
 
 class Person {
-  String id;
-  String prefix;
-  String firstName;
-  String middleName;
-  String lastName;
-  String displayName;
-  String gender;
-  String birthDate;
-  String age;
-  String phone;
-  String email;
-  String imageResourceId;
-  String activeSince;
-  List<String> roles;
-  List<String> addresses;
+  String? id;
+  String? prefix;
+  String? firstName;
+  String? middleName;
+  String? lastName;
+  String? displayName;
+  String? gender;
+  String? birthDate;
+  String? age;
+  String? phone;
+  String? email;
+  String? imageResourceId;
+  String? activeSince;
+  List<String>? roles;
+  List<String>? addresses;
 
   Person(
       {this.id,
@@ -201,8 +201,8 @@ class Person {
 }
 
 class Role {
-  int id;
-  String roleName;
+  int? id;
+  String? roleName;
 
   Role({this.id, this.roleName});
 
@@ -220,8 +220,8 @@ class Role {
 }
 
 class Client {
-  String clientName;
-  String clientCode;
+  String? clientName;
+  String? clientCode;
 
   Client({this.clientName, this.clientCode});
 

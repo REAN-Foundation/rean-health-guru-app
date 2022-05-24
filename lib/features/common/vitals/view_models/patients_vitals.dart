@@ -1,15 +1,15 @@
 import 'package:get_it/get_it.dart';
-import 'package:paitent/features/common/vitals/models/GetMyVitalsHistory.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/infra/networking/ApiProvider.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:patient/features/common/vitals/models/get_my_vitals_history.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 
 import '../../../../infra/view_models/base_model.dart';
 
 class PatientVitalsViewModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();
 
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   Future<BaseResponse> addMyVitals(String path, Map body) async {
     // Get user profile for id
@@ -17,17 +17,15 @@ class PatientVitalsViewModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
     body['PatientUserId'] = patientUserId;
     //body['RecordedByUserId'] = recordedByUserId;
 
     print('body:');
 
-    final response = await apiProvider.post(
-        '/clinical/biometrics/' + path,
-        header: map,
-        body: body);
+    final response = await apiProvider!
+        .post('/clinical/biometrics/' + path, header: map, body: body);
 
     setBusy(false);
     // Convert and return
@@ -40,10 +38,13 @@ class PatientVitalsViewModel extends BaseModel {
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
-    map['authorization'] = 'Bearer ' + auth;
+    map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider.get(
-        '/clinical/biometrics/' + path + '/search?patientUserId=' + patientUserId,
+    final response = await apiProvider!.get(
+        '/clinical/biometrics/' +
+            path +
+            '/search?patientUserId=' +
+            patientUserId!,
         header: map);
 
     setBusy(false);

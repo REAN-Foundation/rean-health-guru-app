@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:paitent/features/common/medication/models/MyMedicationSummaryRespose.dart';
-import 'package:paitent/features/common/medication/view_models/patients_medication.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:patient/features/common/medication/models/my_medication_summary_respose.dart';
+import 'package:patient/features/common/medication/view_models/patients_medication.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 
 class MyMedicationHistoryView extends StatefulWidget {
   @override
@@ -26,14 +26,14 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
       if (myMedicationSummaryRespose.status == 'success') {
         summarys.clear();
         for (final item
-            in myMedicationSummaryRespose.data.medicationConsumptionSummary) {
-          if (item.summaryForMonth.isNotEmpty) {
+            in myMedicationSummaryRespose.data!.medicationConsumptionSummary!) {
+          if (item.summaryForMonth!.isNotEmpty) {
             summarys.add(item);
           }
         }
         debugPrint('Summary Length ==> ${summarys.length}');
       } else {
-        showToast(myMedicationSummaryRespose.message, context);
+        showToast(myMedicationSummaryRespose.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -50,7 +50,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientMedicationViewModel>(
+    return BaseWidget<PatientMedicationViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -58,7 +58,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
           backgroundColor: Colors.white,
           body: Padding(
             padding: EdgeInsets.all(16.0),
-            child: model.busy
+            child: model!.busy
                 ? Center(
                     child: SizedBox(
                         height: 32,
@@ -127,7 +127,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                         label: summary.month,
                         readOnly: true,
                         child: ExcludeSemantics(
-                          child: Text(summary.month,
+                          child: Text(summary.month!,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -188,7 +188,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  for (var item in summary.summaryForMonth) ...[
+                  for (var item in summary.summaryForMonth!) ...[
                     MergeSemantics(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -200,7 +200,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                               label: item.drug,
                               readOnly: true,
                               child: ExcludeSemantics(
-                                child: Text(item.drug,
+                                child: Text(item.drug!,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -223,9 +223,10 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Text(item.summaryForDrug.taken.toString(),
+                                      Text(
+                                          item.summaryForDrug!.taken.toString(),
                                           semanticsLabel: item
-                                                  .summaryForDrug.taken
+                                                  .summaryForDrug!.taken
                                                   .toString() +
                                               ' drug taken',
                                           maxLines: 1,
@@ -238,9 +239,10 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                                         width: 8,
                                       ),
                                       Text(
-                                          item.summaryForDrug.missed.toString(),
+                                          item.summaryForDrug!.missed
+                                              .toString(),
                                           semanticsLabel: item
-                                                  .summaryForDrug.missed
+                                                  .summaryForDrug!.missed
                                                   .toString() +
                                               ' drug missed',
                                           maxLines: 1,
@@ -253,10 +255,10 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                                         width: 8,
                                       ),
                                       Text(
-                                          item.summaryForDrug.unknown
+                                          item.summaryForDrug!.unknown
                                               .toString(),
                                           semanticsLabel: item
-                                                  .summaryForDrug.unknown
+                                                  .summaryForDrug!.unknown
                                                   .toString() +
                                               ' drug unknown',
                                           maxLines: 1,

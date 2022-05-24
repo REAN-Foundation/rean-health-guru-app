@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:paitent/features/common/careplan/view_models/patients_care_plan.dart';
-import 'package:paitent/features/misc/models/PatientApiDetails.dart';
-import 'package:paitent/features/misc/models/user_data.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:paitent/infra/widgets/bezierContainer.dart';
+import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
+import 'package:patient/features/misc/models/patient_api_details.dart';
+import 'package:patient/features/misc/models/user_data.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/bezier_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SupportView extends StatefulWidget {
@@ -27,7 +27,7 @@ class _SupportViewState extends State<SupportView> {
   String email = 'support@reanfoundation.org';
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   String name = ' ';
-  String userPhone = ' ';
+  String? userPhone = ' ';
 
   loadSharedPrefs() async {
     try {
@@ -35,18 +35,19 @@ class _SupportViewState extends State<SupportView> {
           UserData.fromJson(await _sharedPrefUtils.read('user'));
       final Patient patient =
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
-      auth = user.data.accessToken;
-      patientUserId = user.data.user.id;
+      auth = user.data!.accessToken;
+      patientUserId = user.data!.user!.id;
       //debugPrint(user.toJson().toString());
 
       setState(() {
-        name =
-            patient.user.person.firstName + ' ' + patient.user.person.lastName;
-        userPhone = patient.user.person.phone;
+        name = patient.user!.person!.firstName! +
+            ' ' +
+            patient.user!.person!.lastName!;
+        userPhone = patient.user!.person!.phone;
       });
     } catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }
   }
 
@@ -60,7 +61,7 @@ class _SupportViewState extends State<SupportView> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    return BaseWidget<PatientCarePlanViewModel>(
+    return BaseWidget<PatientCarePlanViewModel?>(
       //model: model,
       builder: (context, model, child) => Container(
           child: Scaffold(
@@ -223,7 +224,7 @@ class _SupportViewState extends State<SupportView> {
                                                 '%20App&body=Hey Team,%20\n\n' +
                                                 name +
                                                 '%20wants%20to%20get%20in%20touch%20with%20you.\n\nContact%20Number:%20' +
-                                                userPhone +
+                                                userPhone! +
                                                 '\n\n';
                                             if (await canLaunch(
                                                 link.toString())) {
@@ -242,7 +243,7 @@ class _SupportViewState extends State<SupportView> {
                                                         name +
                                                         ' wants to get in touch with you. ---- '
                                                             'Contact Number:' +
-                                                        userPhone +
+                                                        userPhone! +
                                                         ''
                                                             '',
                                                   });

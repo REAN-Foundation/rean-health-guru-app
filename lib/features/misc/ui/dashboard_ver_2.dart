@@ -1,28 +1,30 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/features/common/medication/models/GetMyMedicationsResponse.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/models/DashboardTile.dart';
-import 'package:paitent/features/misc/models/KnowledgeTopicResponse.dart';
-import 'package:paitent/features/misc/models/SearchSymptomAssesmentTempleteResponse.dart';
-import 'package:paitent/features/misc/models/TaskSummaryResponse.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/features/misc/view_models/dashboard_summary_model.dart';
-import 'package:paitent/infra/networking/CustomException.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
+import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/medication/models/get_my_medications_response.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/models/dashboard_tile.dart';
+import 'package:patient/features/misc/models/knowledge_topic_response.dart';
+import 'package:patient/features/misc/models/search_symptom_assessment_templete_response.dart';
+import 'package:patient/features/misc/models/task_summary_response.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/features/misc/view_models/dashboard_summary_model.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable
 class DashBoardVer2View extends StatefulWidget {
-  Function positionToChangeNavigationBar;
+  late Function positionToChangeNavigationBar;
 
-  DashBoardVer2View({Key key, @required Function positionToChangeNavigationBar})
+  DashBoardVer2View({Key? key, required Function positionToChangeNavigationBar})
       : super(key: key) {
     this.positionToChangeNavigationBar = positionToChangeNavigationBar;
   }
@@ -45,10 +47,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
       end: Alignment.centerRight,
       colors: [primaryLightColor, colorF6F6FF]);
   var dateFormat = DateFormat('yyyy-MM-dd');
-  int completedTaskCount = 0;
-  int incompleteTaskCount = 0;
+  int? completedTaskCount = 0;
+  int? incompleteTaskCount = 0;
   int completedMedicationCount = 0;
   int incompleteMedicationCount = 0;
+
 /*  Weight weight;
   BloodPressure bloodPressure;
   BloodSugar bloodSugar;
@@ -56,12 +59,12 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   Pulse pulse;
   Temperature temperature;*/
   String unit = 'Kg';
-  String topicId;
-  String topicName = '';
-  String briefInformation = '';
+  String? topicId;
+  String? topicName = '';
+  String? briefInformation = '';
   var emergencyDetailsTextControler = TextEditingController();
   List<Schedules> currentMedicationList = <Schedules>[];
-  DashboardTile emergencyDashboardTile;
+  DashboardTile? emergencyDashboardTile;
 
   loadSharedPrefs() async {
     try {
@@ -73,7 +76,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     }
     /*catch (Excepetion) {
       // do something
-      debugPrint(Excepetion);
+      debugPrint(Excepetion.toString());
     }*/
   }
 
@@ -83,7 +86,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     model.setBusy(true);
     Future.delayed(
       Duration(seconds: 4),
-      () {
+          () {
         getTodaysKnowledgeTopic();
         //getTaskPlanSummary();
         getMyMedications();
@@ -95,13 +98,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
     super.initState();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
@@ -117,13 +120,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   getTaskPlanSummary() async {
     try {
       final TaskSummaryResponse taskSummaryResponse =
-          await model.getTaskPlanSummary();
+      await model.getTaskPlanSummary();
       debugPrint('Task Summary ==> ${taskSummaryResponse.toJson()}');
       if (taskSummaryResponse.status == 'success') {
         completedTaskCount =
-            taskSummaryResponse.data.summary.completedTaskCount;
+            taskSummaryResponse.data!.summary!.completedTaskCount;
         incompleteTaskCount =
-            taskSummaryResponse.data.summary.incompleteTaskCount;
+            taskSummaryResponse.data!.summary!.incompleteTaskCount;
         setState(() {});
         //showToast(startCarePlanResponse.message);
       } else {
@@ -138,7 +141,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
 
   sortMyMedication(GetMyMedicationsResponse response) {
     for (final medSummary
-        in response.data.medicationSchedulesForDay.schedules) {
+    in response.data!.medicationSchedulesForDay!.schedules!) {
       if (medSummary.status == 'Unknown' ||
           medSummary.status == 'Upcoming' ||
           medSummary.status == 'Overdue') {
@@ -155,14 +158,15 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   getMedicationSummary() async {
     try {
       final TaskSummaryResponse taskSummaryResponse =
-          await model.getMedicationSummary(dateFormat.format(DateTime.now()));
+      await model.getMedicationSummary(dateFormat.format(DateTime.now()));
       debugPrint('Medication Summary ==> ${taskSummaryResponse.toJson()}');
       if (taskSummaryResponse.status == 'success') {
-        completedMedicationCount = taskSummaryResponse.data.summary.taken +
-            taskSummaryResponse.data.summary.missed;
-        incompleteMedicationCount = taskSummaryResponse.data.summary.unknown +
-            taskSummaryResponse.data.summary.overdue +
-            taskSummaryResponse.data.summary.upcoming;
+        completedMedicationCount = taskSummaryResponse.data!.summary!.taken! +
+            taskSummaryResponse.data!.summary!.missed!;
+        incompleteMedicationCount =
+            taskSummaryResponse.data!.summary!.unknown! +
+                taskSummaryResponse.data!.summary!.overdue! +
+                taskSummaryResponse.data!.summary!.upcoming!;
         setState(() {});
         //showToast(startCarePlanResponse.message);
       } else {
@@ -203,7 +207,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<DashboardSummaryModel>(
+    return BaseWidget<DashboardSummaryModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -221,8 +225,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                 //   Container(),
                 myBiometrics(),
                 myNutrition(),
-                //myActivity(),
-                //myStress(),
+                if (Platform.isIOS) ...[
+                  myActivity(),
+                  myStress(),
+                ],
                 knowledgeTree(),
                 //myTasks(),
                 //searchNearMe(),
@@ -271,7 +277,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   SizedBox(
                     width: 8,
                   ),
-                  Text('How are your symptoms? ',
+                  Text('Symptom Management',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
@@ -659,24 +665,24 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                           child: Center(
                             child: model.busy
                                 ? SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      valueColor:
-                                      AlwaysStoppedAnimation<Color>(
-                                          iconColor),
-                                    ))
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  valueColor:
+                                  AlwaysStoppedAnimation<Color>(
+                                      iconColor),
+                                ))
                                 : Semantics(
-                                    label: 'pendingTask',
-                                    child: Text(
-                                      incompleteTaskCount.toString(),
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'Montserrat',
-                                          color: Colors.orange),
-                                    ),
-                                  ),
+                              label: 'pendingTask',
+                              child: Text(
+                                incompleteTaskCount.toString(),
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.orange),
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -709,24 +715,24 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                           child: Center(
                             child: model.busy
                                 ? SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: CircularProgressIndicator(
-                                      valueColor:
-                                      AlwaysStoppedAnimation<Color>(
-                                          iconColor),
-                                    ))
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  valueColor:
+                                  AlwaysStoppedAnimation<Color>(
+                                      iconColor),
+                                ))
                                 : Semantics(
-                                    label: 'completedTask',
-                                    child: Text(
-                                      completedTaskCount.toString(),
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'Montserrat',
-                                          color: Color(0XFF007E1A)),
-                                    ),
-                                  ),
+                              label: 'completedTask',
+                              child: Text(
+                                completedTaskCount.toString(),
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Montserrat',
+                                    color: Color(0XFF007E1A)),
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -790,7 +796,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 12,
                       ),
-                      Text('Did you take your medications?',
+                      Text('Medication Management',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
@@ -817,22 +823,24 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
             Container(
               color: primaryLightColor,
               padding: const EdgeInsets.all(16),
-              child: model.busy
+              child:
+                  /*model.busy
                   ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Semantics(
-                          label: 'Yes I have taken my medications',
-                          button: true,
-                          child: InkWell(
-                            onTap: () {
-                              if (currentMedicationList.isEmpty) {
-                                showToast(
-                                    'Your medication list is empty. Please add your medications.',
+                child: CircularProgressIndicator(),
+              )
+                  : */
+                  Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Semantics(
+                    label: 'Yes I have taken my medications',
+                    button: true,
+                    child: InkWell(
+                      onTap: () {
+                        if (currentMedicationList.isEmpty) {
+                          showToast(
+                              'Your medication list is empty. Please add your medications.',
                               context);
                         } else {
                           markAllMedicationAsTaken();
@@ -903,12 +911,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   }
 
   Widget emergency() {
-    String discription = '';
+    String? discription = '';
 
     if (emergencyDashboardTile != null) {
       //debugPrint('Emergency ==> ${emergencyDashboardTile.date.difference(DateTime.now()).inDays}');
-      if (emergencyDashboardTile.date.difference(DateTime.now()).inDays == 0) {
-        discription = emergencyDashboardTile.discription;
+      if (emergencyDashboardTile!.date!.difference(DateTime.now()).inDays ==
+          0) {
+        discription = emergencyDashboardTile!.discription;
       }
     }
 
@@ -994,7 +1003,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(discription,
+                          Text(discription!,
                               maxLines: 4,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -1002,11 +1011,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: 'Montserrat')),
-                              Semantics(
-                                label: 'edit_emergency_text',
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.edit,
+                          Semantics(
+                            label: 'edit_emergency_text',
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.edit,
                                 size: 24,
                                 color: primaryColor,
                               ),
@@ -1034,19 +1043,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               color: primaryColor,
                               size: 36,
                             ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Yes',
-                                    style: TextStyle(
-                                        color: primaryColor,
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text('Yes',
+                                style: TextStyle(
+                                    color: primaryColor,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
                                     fontFamily: 'Montserrat')),
-                              ],
-                            ),
-                          ),
-                        )
+                          ],
+                        ),
+                      ),
+                    )
                 ],
               ),
             ),
@@ -1108,7 +1117,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             color: Colors.orange,
                             border: Border.all(color: Colors.white),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(16.0))),
+                            BorderRadius.all(Radius.circular(16.0))),
                         child: Center(
                           child: Text(
                             '1',
@@ -1147,7 +1156,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             color: Color(0XFF007E1A),
                             border: Border.all(color: Colors.white),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(16.0))),
+                            BorderRadius.all(Radius.circular(16.0))),
                         child: Center(
                           child: Text(
                             '3',
@@ -1218,11 +1227,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   SizedBox(
                     width: 8,
                   ),
-                  Text('Knowledge Tree',
+                  Text('Knowledge Management',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           fontFamily: 'Montserrat')),
                 ],
               ),
@@ -1249,18 +1258,18 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     text: 'Visit: ',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontSize: 16),
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 16),
                     children: <TextSpan>[
                       TextSpan(
                         text: 'https://supportnetwork.heart.org/s/',
                         style: TextStyle(
                           color: Colors.blue,
-                                fontSize: 16.0,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w500,
-                              ),
+                          fontSize: 16.0,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
+                        ),
                       )
                     ],
                   ),
@@ -1277,17 +1286,17 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   text: topicName.toString(),
                   style: TextStyle(
                       fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                                fontSize: 14),
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontSize: 14),
                   children: <TextSpan>[
                     TextSpan(
                         text: ' ' + briefInformation.toString(),
                         style: TextStyle(
                             fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                      fontFamily: 'Montserrat')),
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                            fontFamily: 'Montserrat')),
                   ],
                 ),
               ),
@@ -1338,7 +1347,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Vitals',
+                      Text('Vital Management',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
@@ -1436,7 +1445,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                                           Radius.circular(12.0))),
                                   child: ImageIcon(
                                     AssetImage(
-                                        'res/images/ic_blood_presure.png'),
+                                        'res/images/ic_blood_pressure.png'),
                                     size: 32,
                                     color: iconColor,
                                   ),
@@ -1593,7 +1602,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Nutrition',
+                      Text('Nutrition Management',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
@@ -1773,7 +1782,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(12.0))),
                                   child: ImageIcon(
-                                    AssetImage('res/images/ic_snacks.png'),
+                                    AssetImage('res/images/ic_snack.png'),
                                     size: 32,
                                     color: iconColor,
                                   ),
@@ -1839,15 +1848,15 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Activity',
+                      Text('Physical Health Management',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  IconButton(
+                  /*IconButton(
                       icon: Icon(
                         Icons.add_circle,
                         size: 32,
@@ -1856,7 +1865,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       onPressed: () {
                         Navigator.pushNamed(context, RoutePaths.My_Activity,
                             arguments: '');
-                      })
+                      })*/
                 ],
               ),
             ),
@@ -1867,121 +1876,132 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Semantics(
+                    /* Semantics(
                       label: "Stand",
+                      button: true,
                       child: InkWell(
                         onTap: () {
                           Navigator.pushNamed(context, RoutePaths.My_Activity);
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(4.0),
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage(
-                                      'res/images/ic_stand_activity.png'),
-                                  size: 24,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Stand',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(4.0),
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage(
+                                        'res/images/ic_stand_activity.png'),
+                                    size: 24,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Stand',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    ),*/
                     Semantics(
                       label: 'Steps',
+                      button: true,
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity);
+                          Navigator.pushNamed(context, RoutePaths.My_Activity,
+                              arguments: 'Steps');
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_steps.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Steps',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_steps.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Steps',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                     Semantics(
                       label: 'Exercise',
+                      button: true,
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity);
+                          Navigator.pushNamed(context, RoutePaths.My_Activity,
+                              arguments: 'Exercise');
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_exercise.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Exercise',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_exercise.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Exercise',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -2071,11 +2091,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Stress',
+                      Text('Mental Health Management',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
                     ],
                   ),
@@ -2101,78 +2121,84 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   children: [
                     Semantics(
                       label: 'Sleep',
+                      button: true,
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.MySleepData);
+                          Navigator.pushNamed(context, RoutePaths.MY_STRESS);
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_sleep.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Sleep',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_sleep.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Sleep',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                     Semantics(
-                      label: "Meditation",
+                      label: "Mindfulness",
+                      button: true,
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.Meditation);
+                          Navigator.pushNamed(context, RoutePaths.MY_STRESS);
                         },
                         child: Container(
                           height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_medication.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Meditation',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
                                       color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_medication.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Mindfulness',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -2265,7 +2291,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
 
   _emergencyDetailDialog(bool isEdit) async {
     if (isEdit) {
-      emergencyDetailsTextControler.text = emergencyDashboardTile.discription;
+      emergencyDetailsTextControler.text = emergencyDashboardTile!.discription!;
       emergencyDetailsTextControler.selection = TextSelection.fromPosition(
         TextPosition(offset: emergencyDetailsTextControler.text.length),
       );
@@ -2319,15 +2345,16 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   getTodaysKnowledgeTopic() async {
     try {
       final KnowledgeTopicResponse knowledgeTopicResponse =
-          await model.getTodaysKnowledgeTopic();
+      await model.getTodaysKnowledgeTopic();
       debugPrint(
           'Today Knowledge Topic ==> ${knowledgeTopicResponse.toJson()}');
       if (knowledgeTopicResponse.status == 'success') {
         //final Items topic =
-         //knowledgeTopicResponse.data.knowledgeNuggetRecords.items.elementAt(0);
-        topicId = knowledgeTopicResponse.data.knowledgeNugget.id;
-        topicName = knowledgeTopicResponse.data.knowledgeNugget.topicName;
-        briefInformation = knowledgeTopicResponse.data.knowledgeNugget.briefInformation;
+        //knowledgeTopicResponse.data.knowledgeNuggetRecords.items.elementAt(0);
+        topicId = knowledgeTopicResponse.data!.knowledgeNugget!.id;
+        topicName = knowledgeTopicResponse.data!.knowledgeNugget!.topicName;
+        briefInformation =
+            knowledgeTopicResponse.data!.knowledgeNugget!.briefInformation;
         setState(() {});
       } else {
         //showToast(knowledgeTopicResponse.message);
@@ -2341,13 +2368,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
 
   addMedicalEmergencyEvent(String emergencyBreif) async {
     try {
-      final map = <String, String>{};
+      final map = <String, String?>{};
       map['PatientUserId'] = patientUserId;
       map['Details'] = emergencyBreif;
       map['EmergencyDate'] = dateFormat.format(DateTime.now());
 
       final BaseResponse baseResponse =
-          await model.addMedicalEmergencyEvent(map);
+      await model.addMedicalEmergencyEvent(map);
       debugPrint('Base Response ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         _sharedPrefUtils.save(
@@ -2371,15 +2398,15 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     try {
       currentMedicationList.clear();
       final GetMyMedicationsResponse getMyMedicationsResponse =
-          await model.getMyMedications(dateFormat.format(DateTime.now()));
+      await model.getMyMedications(dateFormat.format(DateTime.now()));
       debugPrint('Medication ==> ${getMyMedicationsResponse.toJson()}');
       if (getMyMedicationsResponse.status == 'success') {
         debugPrint(
-            'Medication Length ==> ${getMyMedicationsResponse.data.medicationSchedulesForDay.schedules.length}');
+            'Medication Length ==> ${getMyMedicationsResponse.data!.medicationSchedulesForDay!.schedules!.length}');
         if (getMyMedicationsResponse
-            .data.medicationSchedulesForDay.schedules.isNotEmpty) {
+            .data!.medicationSchedulesForDay!.schedules!.isNotEmpty) {
           currentMedicationList.addAll(getMyMedicationsResponse
-              .data.medicationSchedulesForDay.schedules);
+              .data!.medicationSchedulesForDay!.schedules!);
           sortMyMedication(getMyMedicationsResponse);
         }
       } else {
@@ -2395,10 +2422,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   markAllMedicationAsTaken() async {
     try {
       debugPrint(currentMedicationList.length.toString());
-      final medicationIds = <String>[];
+      final medicationIds = <String?>[];
       for (final item in currentMedicationList) {
         //debugPrint(item.timeScheduleEnd.toString() +'  '+ DateTime.now().toString() +'  '+DateTime.now().isAfter(DateTime.parse(item.timeScheduleEnd)).toString());
-        if (DateTime.now().isAfter(item.timeScheduleStart) &&
+        if (DateTime.now().isAfter(item.timeScheduleStart!) &&
             item.status != 'Taken') {
           medicationIds.add(item.id);
           debugPrint(item.id);
@@ -2410,22 +2437,22 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
         body['MedicationConsumptionIds'] = medicationIds;
 
         final BaseResponse baseResponse =
-            await model.markAllMedicationsAsTaken(body);
+        await model.markAllMedicationsAsTaken(body);
         debugPrint('Medication ==> ${baseResponse.toJson()}');
         if (baseResponse.status == 'success') {
-          //progressDialog.hide();
-          showToast(baseResponse.message, context);
+          //progressDialog.close();
+          showToast(baseResponse.message!, context);
           getMyMedications();
         } else {
-          showToast(baseResponse.message, context);
-          //progressDialog.hide();
-          showToast(baseResponse.message, context);
+          showToast(baseResponse.message!, context);
+          //progressDialog.close();
+          showToast(baseResponse.message!, context);
         }
       } else {
         showToast('You have taken all the medication till now.', context);
       }
     } catch (CustomException) {
-      //progressDialog.hide();
+      //progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
@@ -2442,10 +2469,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
       body['SymptomAssessmentId'] = '';
 
       final BaseResponse baseResponse =
-          await model.recordHowAreYouFeeling(body);
+      await model.recordHowAreYouFeeling(body);
       debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
-        //progressDialog.hide();
+        //progressDialog.close();
         //showToast(baseResponse.message, context);
         if (feeling == 1) {
           showToast('Good to hear that', context);
@@ -2455,12 +2482,12 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
           getSymptomAssesmentTemplete();
         }
       } else {
-        showToast(baseResponse.error, context);
-        //progressDialog.hide();
+        showToast(baseResponse.error!, context);
+        //progressDialog.close();
         // showToast(baseResponse.message, context);
       }
     } catch (CustomException) {
-      //progressDialog.hide();
+      //progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
@@ -2470,14 +2497,14 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   getSymptomAssesmentTemplete() async {
     try {
       final SearchSymptomAssesmentTempleteResponse
-          searchSymptomAssesmentTempleteResponse =
-          await model.searchSymptomAssesmentTemplete('heart');
+      searchSymptomAssesmentTempleteResponse =
+      await model.searchSymptomAssesmentTemplete('heart');
       debugPrint(
           'Search Symptom Assesment Templete Response ==> ${searchSymptomAssesmentTempleteResponse.toJson()}');
       if (searchSymptomAssesmentTempleteResponse.status == 'success') {
         Navigator.pushNamed(context, RoutePaths.Symptoms,
             arguments: searchSymptomAssesmentTempleteResponse
-                .data.symptomAssessmentTemplates.items
+                .data!.symptomAssessmentTemplates!.items!
                 .elementAt(0)
                 .id);
         setState(() {});

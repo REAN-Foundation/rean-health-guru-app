@@ -257,8 +257,8 @@ class _AppDrawerState extends State<AppDrawer> {
                     ],
                   ),
                 ),
-              ),
-              Visibility(
+              ),*/
+          Visibility(
                 visible: true,
                 child: InkWell(
                   onTap: () {
@@ -277,17 +277,17 @@ class _AppDrawerState extends State<AppDrawer> {
                       children: <Widget>[
                         SizedBox(
                           width: 40,
-                        ),
-                        Text(
-                          'Care Plan',
-                          style: TextStyle(
-                              color: primaryColor, fontWeight: FontWeight.w600),
-                        ),
-                      ],
                     ),
-                  ),
+                    Text(
+                      'Care Plan',
+                      style: TextStyle(
+                          color: primaryColor, fontWeight: FontWeight.w600),
+                    ),
+                  ],
                 ),
-              ),*/
+              ),
+            ),
+          ),
           /*InkWell(
                 onTap: (){
                   //Navigator.popAndPushNamed(context, RoutePaths.Set_Goals_Care_Plan);

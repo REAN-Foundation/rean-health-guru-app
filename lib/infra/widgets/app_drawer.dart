@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -80,33 +79,84 @@ class _AppDrawerState extends State<AppDrawer> {
     return Drawer(
       child: Container(
         color: colorF6F6FF,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            _createHeader(),
+            _menuItems(),
+            _footer(),
+
+            /* _createDrawerItem(
+                icon: Icons.note,
+                text: 'Notes',
+                onTap: () =>
+                    Navigator.pushReplacementNamed(context, RoutePaths.notes)),
+            Divider(),
+            _createDrawerItem(icon: Icons.collections_bookmark, text: 'Steps'),
+            _createDrawerItem(icon: Icons.face, text: 'Authors'),
+            _createDrawerItem(
+                icon: Icons.account_box, text: 'Flutter Documentation'),
+            _createDrawerItem(icon: Icons.stars, text: 'Useful Links'),
+            Divider(),
+            _createDrawerItem(icon: Icons.bug_report, text: 'Report an issue'),*/
+            /* ListTile(
+              title: Text('0.0.1'),
+              onTap: () {},
+            ),*/
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _menuItems() {
+    return Expanded(
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              _createHeader(),
-              InkWell(
-                onTap: () {
-                  Navigator.popAndPushNamed(context, RoutePaths.Edit_Profile);
-                },
-                child: Container(
-                  height: 48,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 40,
-                      ),
-                      Text(
-                        'Profile',
-                        style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w600),
-                      ),
-                    ],
+      child: Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.popAndPushNamed(context, RoutePaths.Edit_Profile);
+            },
+            child: Container(
+              height: 48,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    width: 40,
                   ),
-                ),
+                  Text(
+                    'Profile',
+                    style: TextStyle(
+                        color: primaryColor, fontWeight: FontWeight.w600),
+                  ),
+                ],
               ),
-              InkWell(
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.popAndPushNamed(context, RoutePaths.My_Medical_Profile);
+            },
+            child: Container(
+              height: 48,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    width: 40,
+                  ),
+                  Text(
+                    'Medical Profile',
+                    style: TextStyle(
+                        color: primaryColor, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          /*InkWell(
                 onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.My_Vitals);
                 },
@@ -119,15 +169,15 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'Vitals',
+                        'Vital Management',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
                 ),
-              ),
-              /*InkWell(
+              ),*/
+          /*InkWell(
                 onTap:(){
                   Navigator.popAndPushNamed(context, RoutePaths.My_Vitals_By_Device_Framework);
                 },
@@ -142,50 +192,28 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),*/
-              InkWell(
-                onTap: () {
-                  Navigator.popAndPushNamed(
-                      context, RoutePaths.My_Medical_Profile);
-                },
-                child: Container(
-                  height: 48,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 40,
-                      ),
-                      Text(
-                        'Medical Profile',
-                        style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w600),
-                      ),
-                    ],
+          InkWell(
+            onTap: () {
+              Navigator.popAndPushNamed(context, RoutePaths.My_Medications);
+            },
+            child: Container(
+              height: 48,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    width: 40,
                   ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.popAndPushNamed(context, RoutePaths.My_Medications);
-                },
-                child: Container(
-                  height: 48,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 40,
-                      ),
-                      Text(
-                        'Medications',
-                        style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w600),
-                      ),
-                    ],
+                  Text(
+                    'Medication Management',
+                    style: TextStyle(
+                        color: primaryColor, fontWeight: FontWeight.w600),
                   ),
-                ),
+                ],
               ),
-              if (Platform.isIOS) ...[
+            ),
+          ),
+          /*if (Platform.isIOS) ...[
                 InkWell(
                   onTap: () {
                     Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
@@ -199,7 +227,7 @@ class _AppDrawerState extends State<AppDrawer> {
                           width: 40,
                         ),
                         Text(
-                          'Activity',
+                          'Physical Health Management',
                           style: TextStyle(
                               color: primaryColor, fontWeight: FontWeight.w600),
                         ),
@@ -222,7 +250,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'Nutrition',
+                        'Nutrition Management',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),
@@ -259,8 +287,8 @@ class _AppDrawerState extends State<AppDrawer> {
                     ),
                   ),
                 ),
-              ),
-              /*InkWell(
+              ),*/
+          /*InkWell(
                 onTap: (){
                   //Navigator.popAndPushNamed(context, RoutePaths.Set_Goals_Care_Plan);
                   Navigator.popAndPushNamed(context, RoutePaths.Self_Reflection_For_Goals_Care_Plan);
@@ -276,7 +304,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),*/
-              /*InkWell(
+          /*InkWell(
                 onTap: (){
                   Navigator.popAndPushNamed(context, RoutePaths.Quiz_Care_Plan);
                 },
@@ -322,7 +350,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
 
-              /* InkWell(
+          /* InkWell(
                 onTap: (){
 
                 },
@@ -337,124 +365,111 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),*/
-              InkWell(
-                onTap: () {
-                  Navigator.popAndPushNamed(
-                      context, RoutePaths.ABOUT_REAN_CARE);
-                },
-                child: Container(
-                  height: 48,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 40,
-                      ),
-                      Text(
-                        getAppType() == 'AHA' ? 'About Us' : 'About REAN',
-                        style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w600),
-                      ),
-                    ],
+          InkWell(
+            onTap: () {
+              Navigator.popAndPushNamed(context, RoutePaths.ABOUT_REAN_CARE);
+            },
+            child: Container(
+              height: 48,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    width: 40,
                   ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.popAndPushNamed(context, RoutePaths.CONTACT_US);
-                },
-                child: Container(
-                  height: 48,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 40,
-                      ),
-                      Text(
-                        'Contact Us',
-                        style: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w600),
-                      ),
-                    ],
+                  Text(
+                    getAppType() == 'AHA' ? 'About Us' : 'About REAN',
+                    style: TextStyle(
+                        color: primaryColor, fontWeight: FontWeight.w600),
                   ),
-                ),
+                ],
               ),
-              SizedBox(
-                height: 48,
-              ),
-              Semantics(
-                child: InkWell(
-                  onTap: () {
-                    _logoutConfirmation();
-                  },
-                  child: Container(
-                    color: primaryColor,
-                    height: 48,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 40,
-                        ),
-                        Text(
-                          'Logout',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w600),
-                        ),
-                      ],
-                    ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.popAndPushNamed(context, RoutePaths.CONTACT_US);
+            },
+            child: Container(
+              height: 48,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    width: 40,
                   ),
-                ),
-              ),
-              Semantics(
-                child: Container(
-                  height: 56,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: 40,
-                      ),
-                      Text(
-                        'Version ' +
-                            (_baseUrl!.contains('dev')
-                                ? 'Dev_'
-                                : _baseUrl!.contains('uat')
-                                ? 'Alpha_'
-                                : '') +
-                            _packageInfo.version,
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w200,
-                            color: primaryColor),
-                      ),
-                    ],
+                  Text(
+                    'Contact Us',
+                    style: TextStyle(
+                        color: primaryColor, fontWeight: FontWeight.w600),
                   ),
-                ),
+                ],
               ),
+            ),
+          ),
+          SizedBox(
+            height: 48,
+          ),
+        ],
+      ),
+    ));
+  }
 
-              /* _createDrawerItem(
-                  icon: Icons.note,
-                  text: 'Notes',
-                  onTap: () =>
-                      Navigator.pushReplacementNamed(context, RoutePaths.notes)),
-              Divider(),
-              _createDrawerItem(icon: Icons.collections_bookmark, text: 'Steps'),
-              _createDrawerItem(icon: Icons.face, text: 'Authors'),
-              _createDrawerItem(
-                  icon: Icons.account_box, text: 'Flutter Documentation'),
-              _createDrawerItem(icon: Icons.stars, text: 'Useful Links'),
-              Divider(),
-              _createDrawerItem(icon: Icons.bug_report, text: 'Report an issue'),*/
-              /* ListTile(
-                title: Text('0.0.1'),
-                onTap: () {},
-              ),*/
-            ],
+  Widget _footer() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Semantics(
+          child: InkWell(
+            onTap: () {
+              _logoutConfirmation();
+            },
+            child: Container(
+              color: primaryColor,
+              height: 48,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    width: 40,
+                  ),
+                  Text(
+                    'Logout',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
-      ),
+        Semantics(
+          child: Container(
+            height: 56,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  width: 40,
+                ),
+                Text(
+                  'Version ' +
+                      (_baseUrl!.contains('dev')
+                          ? 'Dev_'
+                          : _baseUrl!.contains('uat')
+                              ? 'Alpha_'
+                              : '') +
+                      _packageInfo.version,
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w200,
+                      color: primaryColor),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 

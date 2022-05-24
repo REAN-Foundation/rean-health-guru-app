@@ -150,7 +150,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
               backgroundColor: primaryColor,
               brightness: Brightness.dark,
               title: Text(
-                'Nutrition',
+                'Nutrition Management',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,

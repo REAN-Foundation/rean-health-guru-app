@@ -55,6 +55,8 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
   final durationInMin = Duration(minutes: 3);
   late AndroidDeviceInfo androidInfo;
   late IosDeviceInfo iosInfo;
+  late Timer _timerRefrehs;
+  late Timer _timerRefreh;
 
   getDeviceData() async {
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -84,12 +86,23 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
       fetchData();
       sleepData = GetSleepData();
       data = GetHealthData();
-      Timer.periodic(durationInMin, (Timer t) => fetchData());
-      Timer.periodic(Duration(seconds: 1), (Timer t) {
-        setState(() {});
-      });
+      try {
+        _timerRefrehs = Timer.periodic(durationInMin, (Timer t) => fetchData());
+        _timerRefreh = Timer.periodic(Duration(seconds: 1), (Timer t) {
+          setState(() {});
+        });
+      } catch (e) {
+        debugPrint(e.toString());
+      }
     }
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timerRefreh.cancel();
+    _timerRefrehs.cancel();
+    super.dispose();
   }
 
   Future<void> fetchData() async {
@@ -365,7 +378,7 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
               backgroundColor: primaryColor,
               brightness: Brightness.dark,
               title: Text(
-                'Activity',
+                'Physical Health Management',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,
@@ -746,9 +759,9 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
             ),
             Text(
                 Conversion.durationFromMinToHrsToString(
-                    sleepData!.getSleepDuration().abs()),
+                    sleepData!.getSleepDurationASleep().abs()),
                 semanticsLabel: Conversion.durationFromMinToHrsToString(
-                    sleepData!.getSleepDuration().abs()),
+                    sleepData!.getSleepDurationASleep().abs()),
                 style: const TextStyle(
                     color: textBlack,
                     fontWeight: FontWeight.w700,
@@ -768,7 +781,7 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
             SizedBox(
               height: 8,
             ),
-            if (sleepData!.getSleepDuration().abs() < 360)
+            if (sleepData!.getSleepDurationASleep().abs() < 360)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(

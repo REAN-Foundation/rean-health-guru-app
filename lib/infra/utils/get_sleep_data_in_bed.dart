@@ -7,7 +7,7 @@ import 'package:patient/infra/utils/shared_prefUtils.dart';
 
 import 'common_utils.dart';
 
-class GetSleepData {
+class GetSleepDataInBed {
   List<HealthDataPoint> _healthDataList = [];
   AppState _state = AppState.DATA_NOT_FETCHED;
   var dateFormat = DateFormat('yyyy-MM-dd');
@@ -26,7 +26,7 @@ class GetSleepData {
   late DateTime endDate;
   double totalSleepInMin = 0;
 
-  GetSleepData() {
+  GetSleepDataInBed() {
     //String startDateString = dateFormat.format(DateTime.now().subtract(Duration(days: 1)))+', 21, 59, 59';
     //startDate = DateTime.parse(startDateString);
     startDate = DateTime(DateTime.now().year, DateTime.now().month,
@@ -62,8 +62,8 @@ class GetSleepData {
       //HealthDataType.WEIGHT,
       //HealthDataType.HEIGHT,
       //HealthDataType.ACTIVE_ENERGY_BURNED,
-      HealthDataType.SLEEP_ASLEEP,
-      //HealthDataType.SLEEP_IN_BED,
+      //HealthDataType.SLEEP_ASLEEP,
+      HealthDataType.SLEEP_IN_BED,
       //HealthDataType.SLEEP_AWAKE,
       //HealthDataType.BASAL_ENERGY_BURNED,
       //HealthDataType.DISTANCE_WALKING_RUNNING,
@@ -79,7 +79,7 @@ class GetSleepData {
       try {
         /// Fetch new data
         final List<HealthDataPoint> healthData =
-        await health.getHealthDataFromTypes(startDate, endDate, types);
+            await health.getHealthDataFromTypes(startDate, endDate, types);
 
         /// Save all the new data points
         _healthDataList.addAll(healthData);
@@ -145,7 +145,8 @@ class GetSleepData {
       }
     }
 
-    if (height == 0.0 || weight == 0.0) {} else {
+    if (height == 0.0 || weight == 0.0) {
+    } else {
       calculetBMI();
     }
 
@@ -189,7 +190,7 @@ class GetSleepData {
     }
   }
 
-  int getSleepDurationASleep() {
+  int getSleepDurationInBed() {
     try {
       debugPrint(
           'Sleep Start time ${_healthDataList.elementAt(_healthDataList.length - 1).dateFrom}');

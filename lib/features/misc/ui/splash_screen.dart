@@ -11,6 +11,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/get_sleep_data.dart';
+import 'package:patient/infra/utils/get_sleep_data_in_bed.dart';
 
 class SplashScreen extends StatefulWidget {
   final int seconds;
@@ -85,6 +86,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
     GetIt.instance.registerSingleton<GetSleepData>(GetSleepData());
+    GetIt.instance.registerSingleton<GetSleepDataInBed>(GetSleepDataInBed());
     _initPackageInfo();
     getDailyCheckInDate();
     super.initState();

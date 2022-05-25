@@ -81,10 +81,10 @@ class ApiProvider {
       headers['x-api-key'] = _api_key as String;
     }
 
-    Map<String, String>? contentBody = <String, String>{};
+    Map<String, dynamic>? contentBody = <String, dynamic>{};
 
     if (body != null) {
-      contentBody.addAll(body as Map<String, String>);
+      contentBody.addAll(body as Map<String, dynamic>);
     }
 
     debugPrint('Base Url ==> PUT ${_baseUrl! + url}');

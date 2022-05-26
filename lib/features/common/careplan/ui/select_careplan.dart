@@ -536,27 +536,31 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      height: 48,
-                      width: MediaQuery.of(context).size.width - 32,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                      ),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6.0),
-                          border: Border.all(color: primaryColor, width: 1),
-                          color: primaryColor),
-                      child: Center(
-                        child: Text(
-                          'Alright',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                              fontSize: 14),
+                  Semantics(
+                    button: true,
+                    label: 'Alright',
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: 48,
+                        width: MediaQuery.of(context).size.width - 32,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                        ),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6.0),
+                            border: Border.all(color: primaryColor, width: 1),
+                            color: primaryColor),
+                        child: Center(
+                          child: Text(
+                            'Alright',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                                fontSize: 14),
+                          ),
                         ),
                       ),
                     ),
@@ -663,33 +667,37 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            InkWell(
-              onTap: () {
-                if (selectedCarePlan == '') {
-                  showToast('Please select care plan', context);
-                } else if (startDate == '') {
-                  showToast('Please select start date', context);
-                } else {
-                  startCarePlan();
-                }
-              },
-              child: Container(
-                height: 48,
-                width: MediaQuery.of(context).size.width - 32,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                ),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.0),
-                    border: Border.all(color: primaryColor, width: 1),
-                    color: primaryColor),
-                child: Center(
-                  child: Text(
-                    'Register',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontSize: 14),
+            Semantics(
+              label: 'Register',
+              button: true,
+              child: InkWell(
+                onTap: () {
+                  if (selectedCarePlan == '') {
+                    showToast('Please select care plan', context);
+                  } else if (startDate == '') {
+                    showToast('Please select start date', context);
+                  } else {
+                    startCarePlan();
+                  }
+                },
+                child: Container(
+                  height: 48,
+                  width: MediaQuery.of(context).size.width - 32,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                  ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6.0),
+                      border: Border.all(color: primaryColor, width: 1),
+                      color: primaryColor),
+                  child: Center(
+                    child: Text(
+                      'Register',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          fontSize: 14),
+                    ),
                   ),
                 ),
               ),
@@ -725,76 +733,83 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     Dialog sucsessDialog = Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       //this right here
-      child: Container(
-        height: 380.0,
-        width: 300.0,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Semantics(
-              label: 'Care Plan image',
-              image: true,
-              child: Image.asset(
-                'res/images/ic_careplan_success_tick.png',
-                width: 200,
-                height: 200,
+      child: Card(
+        elevation: 0,
+        child: Container(
+          height: 380.0,
+          width: 300.0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Semantics(
+                label: 'Care Plan image',
+                image: true,
+                child: Image.asset(
+                  'res/images/ic_careplan_success_tick.png',
+                  width: 200,
+                  height: 200,
+                ),
               ),
-            ),
-            Text(
-              'Congratulations!',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Montserrat",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 20.0),
-            ),
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                'You Have Successfully registered with\nAHAHF Care Plan ',
-                textAlign: TextAlign.center,
+              Text(
+                'Congratulations!',
                 style: TextStyle(
                     color: Colors.black,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w700,
                     fontFamily: "Montserrat",
                     fontStyle: FontStyle.normal,
-                    fontSize: 14.0),
+                    fontSize: 20.0),
               ),
-            ),
-            Padding(padding: EdgeInsets.only(top: 20.0)),
-            InkWell(
-              onTap: () {
-                Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (context) {
-                  return HomeView(0);
-                }), (Route<dynamic> route) => false);
-              },
-              child: Container(
-                height: 48,
-                width: 260,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.0,
+              Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Text(
+                  'You Have Successfully registered with\nAHAHF Care Plan ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "Montserrat",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14.0),
                 ),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.0),
-                    border: Border.all(color: primaryColor, width: 1),
-                    color: primaryColor),
-                child: Center(
-                  child: Text(
-                    'Home',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontSize: 14),
+              ),
+              Padding(padding: EdgeInsets.only(top: 20.0)),
+              Semantics(
+                button: true,
+                label: 'Home',
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(context,
+                        MaterialPageRoute(builder: (context) {
+                      return HomeView(0);
+                    }), (Route<dynamic> route) => false);
+                  },
+                  child: Container(
+                    height: 48,
+                    width: 260,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6.0),
+                        border: Border.all(color: primaryColor, width: 1),
+                        color: primaryColor),
+                    child: Center(
+                      child: Text(
+                        'Home',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            fontSize: 14),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              height: 20,
-            ),
-          ],
+              Container(
+                height: 20,
+              ),
+            ],
+          ),
         ),
       ),
     );

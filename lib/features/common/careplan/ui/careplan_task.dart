@@ -25,6 +25,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     with WidgetsBindingObserver {
   var model = PatientCarePlanViewModel();
   var dateFormat = DateFormat('MMM dd, hh:mm a');
+  var dateFormatOnlyDate = DateFormat('MMM dd');
   var dateQueryFormat = DateFormat('yyyy-MM-dd');
   late UserTaskResponse userTaskResponse;
   List<Items> tasksList = <Items>[];
@@ -164,8 +165,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                 ),
               ),
               Container(
+                color: colorF6F6FF,
                 height: 40,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Expanded(
                       flex: 1,
@@ -182,6 +185,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
+                                SizedBox(
+                                  height: 6,
+                                ),
                                 Text(
                                   "To Do",
                                   style: TextStyle(
@@ -195,12 +201,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 ),
                                 isUpCommingSelected
                                     ? SizedBox(
-                                        width: 40,
-                                        child: Divider(
-                                          thickness: 2,
-                                          color: primaryColor,
-                                        ),
-                                      )
+                                  width: 40,
+                                  child: Divider(
+                                    thickness: 2,
+                                    color: primaryColor,
+                                  ),
+                                )
                                     : Container(),
                               ],
                             ),
@@ -223,6 +229,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
+                                SizedBox(
+                                  height: 6,
+                                ),
                                 Text(
                                   'Completed',
                                   style: TextStyle(
@@ -237,12 +246,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 isUpCommingSelected
                                     ? Container()
                                     : SizedBox(
-                                        width: 40,
-                                        child: Divider(
-                                          thickness: 2,
-                                          color: primaryColor,
-                                        ),
-                                      ),
+                                  width: 40,
+                                  child: Divider(
+                                    thickness: 2,
+                                    color: primaryColor,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -253,16 +262,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                 ),
               ),
               Expanded(
-                  child: Container(
-                color: colorF5F5F5,
-                child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: model!.busy
-                        ? Center(child: CircularProgressIndicator())
-                        : tasksList.isEmpty
-                            ? noTaskFound()
-                            : listWidget()),
-              )),
+                  child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: model!.busy
+                          ? Center(child: CircularProgressIndicator())
+                          : tasksList.isEmpty
+                              ? noTaskFound()
+                              : listWidget())),
             ],
           ),
         ),
@@ -322,7 +328,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             : Container();
   }
 
-  Widget _makeTaskCard(BuildContext context, int index) {
+  /*Widget _makeTaskCard(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
     debugPrint(
         'Category Name ==> ${task.action!.type} && Task Tittle ==> ${task.task}');
@@ -512,6 +518,155 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         ),
       ),
     );
+  }*/
+
+  Widget _makeTaskCard(BuildContext context, int index) {
+    final Items task = tasksList.elementAt(index);
+    debugPrint(
+        'Category Name ==> ${task.action!.type} && Task Tittle ==> ${task.task}');
+    return InkWell(
+      onTap: () {
+        debugPrint('Task Type ==> ${task.action!.type}');
+        if (!task.finished) {
+          debugPrint('Task ID ==> ${task.id}');
+          getUserTaskDetails(task.action!.userTaskId.toString());
+          //_taskNavigator(task);
+          //showToast('Task completed already');
+        } else {
+          getUserTaskDetails(task.action!.userTaskId.toString());
+          //startAHACarePlanSummary(task);
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: primaryLightColor),
+            borderRadius: BorderRadius.all(Radius.circular(4.0))),
+        child: Column(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                  color: colorF6F6FF,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(4.0),
+                      topRight: Radius.circular(4.0))),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 6,
+                      child: ExcludeSemantics(
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 8,
+                            ),
+                            //ImageIcon(AssetImage('res/images/ic_drug_purpul.png'), size: 16, color: primaryColor,),
+                            //SizedBox(width: 4,),
+                            Container(
+                              width: MediaQuery.of(context).size.width - 200,
+                              child: Text(task.action!.type.toString(),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: primaryColor)),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: ExcludeSemantics(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                                dateFormatOnlyDate.format(DateTime.parse(
+                                        task.scheduledStartTime.toString())
+                                    .toLocal()),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: primaryColor)),
+                            SizedBox(
+                              width: 8,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            ExcludeSemantics(
+              child: Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 8,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(task.task ?? '',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w200,
+                                    color: textBlack)),
+                            SizedBox(
+                              height: 4,
+                            ),
+                            Text(task.description ?? '',
+                                maxLines: 4,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w300,
+                                    color: Color(0XFF909CAC))),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                        flex: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              task.finished ? Icons.check : Icons.chevron_right,
+                              size: 32,
+                              color: task.finished ? Colors.green : Colors.grey,
+                            ),
+                          ],
+                        )),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _makeMedicineCard(BuildContext context, int index) {
@@ -524,6 +679,289 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         DateTime.parse(task.scheduledStartTime).toLocal();
     debugPrint(
         'Medication Taken ==> ${task.status}  && Start Time ==> ${DateTime.now().isAfter(startTime)} ');*/
+    return Card(
+      semanticContainer: false,
+      elevation: 0,
+      child: Container(
+        height: 100,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: primaryLightColor),
+            borderRadius: BorderRadius.all(Radius.circular(4.0))),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              flex: 3,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: colorF6F6FF,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(4.0),
+                        topRight: Radius.circular(4.0))),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 8,
+                        ),
+                        ImageIcon(
+                          AssetImage('res/images/ic_drug_purpul.png'),
+                          size: 16,
+                          color: primaryColor,
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text('Medication',
+                            semanticsLabel: 'Medication',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: primaryColor)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                            dateFormat.format(
+                                DateTime.parse(task.scheduledStartTime!)
+                                    .toLocal()),
+                            semanticsLabel: dateFormat.format(
+                                DateTime.parse(task.scheduledStartTime!)
+                                    .toLocal()),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: primaryColor)),
+                        SizedBox(
+                          width: 8,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 8,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(task.task!,
+                                maxLines: 1,
+                                semanticsLabel: task.task,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w200,
+                                    color: textBlack)),
+                            SizedBox(
+                              height: 4,
+                            ),
+                            if (task.status != 'Completed') ...[
+                              Text(
+                                  'Consume before : ' +
+                                      dateFormat.format(
+                                          DateTime.parse(task.scheduledEndTime!)
+                                              .toLocal()),
+                                  semanticsLabel: 'Consume before : ' +
+                                      dateFormat.format(
+                                          DateTime.parse(task.scheduledEndTime!)
+                                              .toLocal()),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.w300,
+                                      color: Color(0XFF909CAC))),
+                            ],
+                            if (task.status == 'Completed') ...[
+                              Text(
+                                  'Consumed at : ' +
+                                      dateFormat.format(
+                                          DateTime.parse(task.finishedAt!)
+                                              .toLocal()),
+                                  semanticsLabel: 'Consumed at : ' +
+                                      dateFormat.format(
+                                          DateTime.parse(task.finishedAt!)
+                                              .toLocal()),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.w300,
+                                      color: Color(0XFF909CAC))),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    if (!task.action!.isTaken! && !task.action!.isMissed!) ...[
+                      Visibility(
+                        visible:
+                            !(DateTime.parse(task.action!.timeScheduleStart!)
+                                    .toLocal())
+                                .isAfter(DateTime.now()),
+                        child: Expanded(
+                          flex: 2,
+                          child: Semantics(
+                            button: true,
+                            label: 'Mark as Taken',
+                            child: InkWell(
+                              onTap: () {
+                                markMedicationsAsTaken(task.actionId!);
+                              },
+                              child: ExcludeSemantics(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(4)),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.check,
+                                        size: 24,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(
+                                        height: 0,
+                                      ),
+                                      Text(
+                                        'Mark As\nTaken',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 10),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                    if (task.action!.isTaken!) ...[
+                      Expanded(
+                        flex: 2,
+                        child: Semantics(
+                          label: 'Taken',
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(4)),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.done,
+                                  size: 32,
+                                  color: Colors.green,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                    if (task.action!.isMissed!) ...[
+                      Expanded(
+                        flex: 2,
+                        child: Semantics(
+                          label: 'Missed',
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(4)),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.clear,
+                                  size: 32,
+                                  color: Colors.red,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]
+                    /*Visibility(
+                      visible: index != 0 ? true : false,
+                      child: Expanded(
+                        flex: 3,
+                        child: Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Text("Due in 13 hours",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 10.0,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),*/
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+/*  Widget _makeMedicineCard(BuildContext context, int index) {
+    final Items task = tasksList.elementAt(index);
+    //debugPrint('Medication Pojo ${task.toJson().toString()}');
+    */ /*if (task.scheduledStartTime == null) {
+      return Container();
+    }*/ /*
+    */ /* final DateTime startTime =
+        DateTime.parse(task.scheduledStartTime).toLocal();
+    debugPrint(
+        'Medication Taken ==> ${task.status}  && Start Time ==> ${DateTime.now().isAfter(startTime)} ');*/ /*
     return Card(
       semanticContainer: false,
       elevation: 0,
@@ -782,7 +1220,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         ),
       ),
     );
-  }
+  }*/
 
   getUserTaskDetails(String userTaskId) async {
     progressDialog.show(max: 100, msg: 'Loading...');

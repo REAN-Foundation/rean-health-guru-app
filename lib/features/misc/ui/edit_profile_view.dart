@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/models/delete_my_account.dart';
 import 'package:patient/features/misc/models/file_upload_public_resource_response.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/user_data.dart';
@@ -245,12 +246,13 @@ class _EditProfileState extends State<EditProfile> {
       map['Content-Type'] = 'application/json';
       map['authorization'] = 'Bearer ' + auth!;
 
-      final BaseResponse baseResponse =
-          await apiProvider!.delete('/patients/$userId', header: map);
+      var respose = await apiProvider!.delete('/patients/$userId', header: map);
 
-      if (baseResponse.status == 'success') {
+      final DeleteMyAccount deleteMyAccount = DeleteMyAccount.fromJson(respose);
+
+      if (deleteMyAccount.status == 'success') {
         progressDialog.close();
-        showToast(baseResponse.message!, context);
+        showToast(deleteMyAccount.message!, context);
         startCarePlanResponseGlob = null;
         _sharedPrefUtils.save('CarePlan', null);
         _sharedPrefUtils.saveBoolean('login', null);
@@ -262,7 +264,7 @@ class _EditProfileState extends State<EditProfile> {
         }), (Route<dynamic> route) => false);
       } else {
         progressDialog.close();
-        showToast(baseResponse.message!, context);
+        showToast(deleteMyAccount.message!, context);
       }
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');

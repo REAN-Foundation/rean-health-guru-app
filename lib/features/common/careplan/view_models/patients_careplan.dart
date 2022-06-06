@@ -390,6 +390,28 @@ class PatientCarePlanViewModel extends BaseModel {
     return AssesmentResponse.fromJson(response);
   }
 
+  Future<AssesmentResponse> listNodeAnswerAssesmentResponse(
+      String assesmentId, String qNaId, Map body) async {
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.post(
+        '/clinical/assessments/' +
+            assesmentId +
+            '/question-lists/' +
+            qNaId +
+            '/answer',
+        body: body,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return AssesmentResponse.fromJson(response);
+  }
+
   Future<BaseResponse> addBiometricTask(
       String ahaCarePlanId, String biometricId, Map body) async {
     // Get user profile for id

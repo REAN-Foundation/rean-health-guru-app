@@ -67,7 +67,7 @@ class _AssessmentQuestionCarePlanViewState
               'Assessment',
               style: TextStyle(
                   fontSize: 16.0,
-                  color: primaryColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.w600),
             ),
             iconTheme: IconThemeData(color: Colors.white),

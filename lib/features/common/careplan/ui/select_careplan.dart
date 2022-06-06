@@ -734,7 +734,8 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       //this right here
       child: Card(
-        elevation: 0,
+        elevation: 0.0,
+        semanticContainer: false,
         child: Container(
           height: 380.0,
           width: 300.0,

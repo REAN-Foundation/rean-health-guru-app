@@ -5,27 +5,27 @@ import 'package:patient/features/common/careplan/models/start_assessment_respons
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 
 //ignore: must_be_immutable
-class AssessmentMultiChoiceQuestionView extends StatefulWidget {
+class AssessmentNodeListQuestionView extends StatefulWidget {
   Next? assesment;
 
-  AssessmentMultiChoiceQuestionView(assesmentC) {
+  AssessmentNodeListQuestionView(assesmentC) {
     assesment = assesmentC;
   }
 
   @override
-  _AssessmentMultiChoiceQuestionViewState createState() =>
-      _AssessmentMultiChoiceQuestionViewState();
+  _AssessmentNodeListQuestionViewState createState() =>
+      _AssessmentNodeListQuestionViewState();
 }
 
-class _AssessmentMultiChoiceQuestionViewState
-    extends State<AssessmentMultiChoiceQuestionView> {
+class _AssessmentNodeListQuestionViewState
+    extends State<AssessmentNodeListQuestionView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Default Radio Button Selected Item When App Questions.
-  var answers = <Answer>[];
 
   Map<String, bool> numbers = {
     'Chest pain, or pain in your jaw,\nshoulder or arm': false,
@@ -36,8 +36,14 @@ class _AssessmentMultiChoiceQuestionViewState
     'Dry or frequent hacking cough': false,
   };
 
+  var nodeAnswer = <int>[];
+
   @override
   void initState() {
+    for (int i = 0; i < widget.assesment!.childrenQuestions!.length; i++) {
+      nodeAnswer.insert(i, 0);
+    }
+
     super.initState();
   }
 
@@ -114,12 +120,6 @@ class _AssessmentMultiChoiceQuestionViewState
     );
   }
 
-  // Default Radio Button Item
-  String radioItem = '';
-
-  // Group Value for Radio Button.
-  List<int> id = <int>[];
-
   Widget quizQuestionOne() {
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -153,41 +153,30 @@ class _AssessmentMultiChoiceQuestionViewState
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: ListView.builder(
-                  itemCount: widget.assesment!.options!.length,
+                  itemCount: widget.assesment!.childrenQuestions!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return CheckboxListTile(
-                        value: widget.assesment!.options!
-                            .elementAt(index)
-                            .isChecked,
-                        title: Text(widget.assesment!.options!
-                            .elementAt(index)
-                            .text
-                            .toString()),
-                        controlAffinity: ListTileControlAffinity.leading,
-                        onChanged: (bool? val) {
-                          widget.assesment!.options!.elementAt(index).isCheck =
-                              val;
-                          setState(() {});
-                        });
+                    return _makeAQuestionBlock(
+                        widget.assesment!.childrenQuestions!.elementAt(index),
+                        index);
                   }),
             ),
           ),
           SizedBox(
-            height: 32,
+            height: 16,
           ),
           InkWell(
             onTap: () {
               //Navigator.pushNamed(context, RoutePaths.Assessment_Question_Two_Care_Plan);
 
-              for (int i = 0; i < widget.assesment!.options!.length; i++) {
-                if (widget.assesment!.options!.elementAt(i).isChecked ??
-                    false) {
-                  id.add(
-                      widget.assesment!.options!.elementAt(i).sequence as int);
+              for (int i = 0; i < nodeAnswer.length; i++) {
+                if (nodeAnswer[i] == 0) {
+                  showToastMsg('Please answer all the question', context);
+                } else {
+                  debugPrint('Node List ==> ${nodeAnswer.length}');
+                  Navigator.pop(context, nodeAnswer);
                 }
+                break;
               }
-
-              Navigator.pop(context, id);
             },
             child: Container(
                 height: 40,
@@ -215,6 +204,74 @@ class _AssessmentMultiChoiceQuestionViewState
             height: 16,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _makeAQuestionBlock(ChildrenQuestions childrenQuestions, int index) {
+    var childAnswer = <Answer>[];
+    for (int i = 0; i < childrenQuestions.options!.length; i++) {
+      childAnswer.add(Answer(
+          childrenQuestions.options!.elementAt(i).sequence as int,
+          childrenQuestions.options!.elementAt(i).text.toString()));
+    }
+
+    // Default Radio Button Item
+    //String radioItem = '';
+
+    // Group Value for Radio Button.
+    int id = 1;
+
+    return Card(
+      elevation: 0,
+      semanticContainer: false,
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              childrenQuestions.title.toString(),
+              style: TextStyle(
+                  color: primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16),
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: childAnswer
+                    .map((data) => RadioListTile(
+                          title: Text(data.text),
+                          groupValue: nodeAnswer[index],
+                          value: data.index,
+                          onChanged: (dynamic val) {
+                            setState(() {
+                              //radioItem = data.text;
+                              id = data.index;
+                              /*for(int i = 0 ; i < nodeAnswer.length ; i++){
+                        if(nodeAnswer.elementAt(i) == index){
+                          nodeAnswer.remove(i);
+                        }
+                      }*/
+                              nodeAnswer.insert(index, id);
+
+                              debugPrint(
+                                  'Select Answer ==>  $id  Node List Answer ==> ${nodeAnswer[index]}');
+                            });
+                          },
+                        ))
+                    .toList(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

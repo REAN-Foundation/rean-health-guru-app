@@ -576,7 +576,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                 BottomNavigationBarItem(
                   icon: Semantics(
                     key: _keyUploadReports,
-                    label: 'upload files',
+                    label: 'medical record',
                     selected: true,
                     child: ImageIcon(
                       AssetImage('res/images/ic_upload_files_colored.png'),

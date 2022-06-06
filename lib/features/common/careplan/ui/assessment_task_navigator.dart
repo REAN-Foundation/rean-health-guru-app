@@ -10,7 +10,6 @@ import 'package:patient/features/common/careplan/models/start_task_of_aha_carepl
 import 'package:patient/features/common/careplan/ui/assessment_multi_choice_question.dart';
 import 'package:patient/features/common/careplan/ui/assessment_question_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/assessment_start_for_careplan.dart';
-import 'package:patient/features/common/careplan/ui/biometric_assignment_task.dart';
 import 'package:patient/features/common/careplan/ui/text_task_careplan.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -19,6 +18,8 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
+
+import 'assessment_node_list_question.dart';
 
 //ignore: must_be_immutable
 class AssesmentTaskNavigatorView extends StatefulWidget {
@@ -186,7 +187,9 @@ class _AssesmentTaskNavigatorViewState
 
   navigateScreen(Next questionType) {
     progressDialog.close();
-    if (questionType.expectedResponseType! == 'Biometrics') {
+    if (questionType.nodeType == 'Node list') {
+      nodeListTask(questionType);
+    } else if (questionType.expectedResponseType! == 'Biometrics') {
       //showToast('Biometric Task');
       //assignmentTask(assessmment);
     } else if (questionType.expectedResponseType! == 'Text') {
@@ -234,18 +237,23 @@ class _AssesmentTaskNavigatorViewState
     }*/
   }
 
-  assignmentTask(Assessmment assessmment) async {
+  nodeListTask(Next assessmment) async {
     final id = await Navigator.push(
       context,
       CupertinoPageRoute(
           fullscreenDialog: true,
-          builder: (context) => BiomatricAssignmentTask(assessmment)),
+          builder: (context) => AssessmentNodeListQuestionView(assessmment)),
     );
+
+    var nodeAnswer = <int>[];
+
+    nodeAnswer.addAll(id);
+
     if (id == null) {
       Navigator.pop(context);
       showToast('Please complete assessment from start', context);
     } else {
-      assesmentNextQuestion(id, assessmment);
+      nextQuestionIfListNodeAnswer(nodeAnswer);
     }
   }
 
@@ -427,6 +435,47 @@ class _AssesmentTaskNavigatorViewState
     }
   }
 
+  nextQuestionIfListNodeAnswer(List<int> index) async {
+    try {
+      var answer = <ListNodeAnswer>[];
+      for (int i = 0; i < assessmment!.childrenQuestions!.length; i++) {
+        answer.add(ListNodeAnswer(
+            assessmment!.childrenQuestions![i].id.toString(),
+            assessmment!.childrenQuestions![i].expectedResponseType.toString(),
+            index[i]));
+      }
+
+      final map = <String, dynamic>{};
+      map['Answers'] = answer;
+
+      final AssesmentResponse _answerAssesmentResponse =
+          await model.listNodeAnswerAssesmentResponse(
+              assessmment!.assessmentId.toString(),
+              assessmment!.id.toString(),
+              map);
+
+      if (_answerAssesmentResponse.status == 'success') {
+        if (_answerAssesmentResponse.message ==
+            'Assessment has completed successfully!') {
+          //showToast(_answerAssesmentResponse.message.toString(), context);
+          showSuccessDialog();
+        } else {
+          getNextQuestionAssesmentResponse();
+          debugPrint(
+              'AHA Assesment Care Plan Task ==> ${_answerAssesmentResponse.toJson()}');
+        }
+      } else {
+        progressDialog.close();
+        showToast(_answerAssesmentResponse.message!, context);
+      }
+    } catch (e) {
+      progressDialog.close();
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
   completeMessageTaskOfAHACarePlan(UserTask task) async {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
@@ -574,76 +623,80 @@ class _AssesmentTaskNavigatorViewState
     Dialog sucsessDialog = Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       //this right here
-      child: Container(
-        height: 380.0,
-        width: 300.0,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Semantics(
-              label: 'Success image',
-              image: true,
-              child: Image.asset(
-                'res/images/ic_careplan_success_tumbs_up.png',
-                width: 200,
-                height: 200,
+      child: Card(
+        elevation: 0.0,
+        semanticContainer: false,
+        child: Container(
+          height: 380.0,
+          width: 300.0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Semantics(
+                label: 'Success image',
+                image: true,
+                child: Image.asset(
+                  'res/images/ic_careplan_success_tumbs_up.png',
+                  width: 200,
+                  height: 200,
+                ),
               ),
-            ),
-            Text(
-              'Thank You!',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Montserrat",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 20.0),
-            ),
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                'You have successfully completed your assessment',
-                textAlign: TextAlign.center,
+              Text(
+                'Thank You!',
                 style: TextStyle(
                     color: Colors.black,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w700,
                     fontFamily: "Montserrat",
                     fontStyle: FontStyle.normal,
-                    fontSize: 14.0),
+                    fontSize: 20.0),
               ),
-            ),
-            Padding(padding: EdgeInsets.only(top: 20.0)),
-            InkWell(
-              onTap: () {
-                Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (context) {
-                  return HomeView(1);
-                }), (Route<dynamic> route) => false);
-              },
-              child: Container(
-                height: 48,
-                width: 260,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.0,
+              Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Text(
+                  'You have successfully completed your assessment',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "Montserrat",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14.0),
                 ),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.0),
-                    border: Border.all(color: primaryColor, width: 1),
-                    color: primaryColor),
-                child: Center(
-                  child: Text(
-                    'Go to my task',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontSize: 14),
+              ),
+              Padding(padding: EdgeInsets.only(top: 20.0)),
+              InkWell(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (context) {
+                    return HomeView(1);
+                  }), (Route<dynamic> route) => false);
+                },
+                child: Container(
+                  height: 48,
+                  width: 260,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                  ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6.0),
+                      border: Border.all(color: primaryColor, width: 1),
+                      color: primaryColor),
+                  child: Center(
+                    child: Text(
+                      'Go to my task',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          fontSize: 14),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              height: 20,
-            ),
-          ],
+              Container(
+                height: 20,
+              ),
+            ],
+          ),
         ),
       ),
     );

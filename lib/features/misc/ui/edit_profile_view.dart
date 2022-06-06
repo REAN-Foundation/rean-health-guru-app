@@ -31,6 +31,7 @@ import 'package:status_alert/status_alert.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import 'base_widget.dart';
+import 'login_with_otp_view.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -96,6 +97,7 @@ class _EditProfileState extends State<EditProfile> {
   void initState() {
     debugPrint('TimeZone ==> ${DateTime.now().timeZoneOffset}');
     _api_key = dotenv.env['Patient_API_KEY'];
+    progressDialog = ProgressDialog(context: context);
     super.initState();
     loadSharedPrefs();
   }
@@ -188,9 +190,88 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
+  void overFlowHandleClick(String value) {
+    switch (value) {
+      case 'Delete Account':
+        _accountDeleteConfirmation();
+        break;
+    }
+  }
+
+  _accountDeleteConfirmation() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: ListTile(
+          title: Text(
+            'Alert!',
+            style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontStyle: FontStyle.normal,
+                fontSize: 18.0,
+                color: Colors.black),
+          ),
+          contentPadding: EdgeInsets.all(4.0),
+          subtitle: Text(
+            '\nI understand that this will permanently delete my account, and this information cannot be recovered ever again.\nI understand that I will permanently lose access to all my data, with my account. \n \nAre you sure you want to delete your account?',
+            style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontStyle: FontStyle.normal,
+                fontSize: 16.0,
+                color: Colors.black),
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Yes'),
+            onPressed: () {
+              deleteAccount();
+            },
+          ),
+          TextButton(
+            child: Text('No'),
+            onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  deleteAccount() async {
+    try {
+      progressDialog.show(max: 100, msg: 'Loading...');
+
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth!;
+
+      final BaseResponse baseResponse =
+          await apiProvider!.delete('/patients/$userId', header: map);
+
+      if (baseResponse.status == 'success') {
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
+        startCarePlanResponseGlob = null;
+        _sharedPrefUtils.save('CarePlan', null);
+        _sharedPrefUtils.saveBoolean('login', null);
+        _sharedPrefUtils.clearAll();
+        chatList.clear();
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (context) {
+          return LoginWithOTPView();
+        }), (Route<dynamic> route) => false);
+      } else {
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      showToast(e.toString(), context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context: context);
     return BaseWidget<LoginViewModel?>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       child: LoginHeader(
@@ -212,17 +293,35 @@ class _EditProfileState extends State<EditProfile> {
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                   brightness: Brightness.light,
-                  backgroundColor: Colors.white,
-                  title: Text(
-                    isEditable ? 'Edit Profile' : 'View Profile',
-                    semanticsLabel: isEditable ? 'Edit Profile' : 'View Profile',
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        color: primaryColor,
-                        fontWeight: FontWeight.w600),
+              backgroundColor: Colors.white,
+              title: Text(
+                isEditable ? 'Edit Profile' : 'View Profile',
+                semanticsLabel: isEditable ? 'Edit Profile' : 'View Profile',
+                style: TextStyle(
+                    fontSize: 16.0,
+                    color: primaryColor,
+                    fontWeight: FontWeight.w600),
+              ),
+              iconTheme: IconThemeData(color: Colors.black),
+              actions: [
+                if (!isEditable)
+                  PopupMenuButton<String>(
+                    onSelected: overFlowHandleClick,
+                    itemBuilder: (BuildContext context) {
+                      return {'Delete Account'}.map((String choice) {
+                        return PopupMenuItem<String>(
+                          value: choice,
+                          child: Text(
+                            choice,
+                            style: TextStyle(
+                                fontSize: 16.0, fontWeight: FontWeight.w500),
+                          ),
+                        );
+                      }).toList();
+                    },
                   ),
-                  iconTheme: IconThemeData(color: Colors.black),
-                ),
+              ],
+            ),
                 body: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: SingleChildScrollView(
@@ -276,7 +375,14 @@ class _EditProfileState extends State<EditProfile> {
       context: context,
       builder: (context) => AlertDialog(
         title: Semantics(
-          child: Text('Alert!'),
+          child: Text(
+            'Alert!',
+            style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontStyle: FontStyle.normal,
+                fontSize: 18.0,
+                color: Colors.black),
+          ),
           header: true,
           readOnly: true,
         ),
@@ -1330,7 +1436,6 @@ class _EditProfileState extends State<EditProfile> {
                     showToast('Please enter postal code', context);
                   } */
                   else {
-                    progressDialog.show(max: 100, msg: 'Loading...');
                     progressDialog.show(max: 100, msg: 'Loading...');
 
                     final map = <String, dynamic>{};

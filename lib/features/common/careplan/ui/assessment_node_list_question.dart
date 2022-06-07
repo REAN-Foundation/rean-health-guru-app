@@ -167,15 +167,20 @@ class _AssessmentNodeListQuestionViewState
           InkWell(
             onTap: () {
               //Navigator.pushNamed(context, RoutePaths.Assessment_Question_Two_Care_Plan);
-
-              for (int i = 0; i < nodeAnswer.length; i++) {
+              bool vaildation = false;
+              for (int i = 0;
+                  i < widget.assesment!.childrenQuestions!.length;
+                  i++) {
                 if (nodeAnswer[i] == 0) {
-                  showToastMsg('Please answer all the question', context);
-                } else {
-                  debugPrint('Node List ==> ${nodeAnswer.length}');
-                  Navigator.pop(context, nodeAnswer);
+                  vaildation = true;
                 }
-                break;
+              }
+
+              if (vaildation) {
+                showToastMsg('Please answer all the question', context);
+              } else {
+                debugPrint('Node List ==> ${nodeAnswer.length}');
+                Navigator.pop(context, nodeAnswer);
               }
             },
             child: Container(

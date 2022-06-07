@@ -245,15 +245,29 @@ class _AssesmentTaskNavigatorViewState
           builder: (context) => AssessmentNodeListQuestionView(assessmment)),
     );
 
-    var nodeAnswer = <int>[];
+    debugPrint('Hello ==> $id');
+    if (id != null) {
+      var nodeAnswer = <int>[];
 
-    nodeAnswer.addAll(id);
+      nodeAnswer.addAll(id);
 
-    if (id == null) {
+      bool vaildation = false;
+
+      for (int i = 0; i < assessmment.childrenQuestions!.length; i++) {
+        if (nodeAnswer[i] == 0) {
+          vaildation = true;
+        }
+      }
+
+      if (vaildation) {
+        Navigator.pop(context);
+        showToast('Please complete assessment from start', context);
+      } else {
+        nextQuestionIfListNodeAnswer(nodeAnswer);
+      }
+    } else {
       Navigator.pop(context);
       showToast('Please complete assessment from start', context);
-    } else {
-      nextQuestionIfListNodeAnswer(nodeAnswer);
     }
   }
 
@@ -627,7 +641,7 @@ class _AssesmentTaskNavigatorViewState
         elevation: 0.0,
         semanticContainer: false,
         child: Container(
-          height: 380.0,
+          height: 400.0,
           width: 300.0,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

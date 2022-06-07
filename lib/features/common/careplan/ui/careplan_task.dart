@@ -525,10 +525,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   Widget _makeTaskCard(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
     debugPrint(
-        'Category Name ==> ${task.category} && Task Tittle ==> ${task.task}');
+        'Category Name ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()} && Task Tittle ==> ${task.task}');
     return InkWell(
       onTap: () {
-        debugPrint('Task Type ==> ${task.category}');
+        debugPrint(
+            'Task Type ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()}');
         if (!task.finished) {
           debugPrint('Task ID ==> ${task.id}');
           getUserTaskDetails(task.id.toString());
@@ -573,7 +574,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                               //SizedBox(width: 4,),
                               Container(
                                 width: MediaQuery.of(context).size.width - 200,
-                                child: Text(task.category.toString(),
+                                child: Text(
+                                    task.action != null
+                                        ? task.action!.type.toString()
+                                        : task.category.toString(),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(

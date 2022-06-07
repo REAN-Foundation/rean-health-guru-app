@@ -137,7 +137,7 @@ class _AssessmentStartCarePlanViewState
                     color: primaryColor,
                     fontWeight: FontWeight.w600,
                     fontSize: 16),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
               ),
             ),
           ),

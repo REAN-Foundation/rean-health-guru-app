@@ -235,13 +235,29 @@ class _AssessmentNodeListQuestionViewState
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              childrenQuestions.title.toString(),
-              style: TextStyle(
-                  color: primaryColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16),
-              textAlign: TextAlign.left,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  String.fromCharCode(97 + index).toString() + '. ',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16),
+                  textAlign: TextAlign.left,
+                ),
+                Expanded(
+                  child: Text(
+                    childrenQuestions.title.toString(),
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: 8,

@@ -1686,12 +1686,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         case 'Survey':
           _launchURL(task.action!.details!.link!.replaceAll(' ', '%20'))
               .then((value) {
-            getUserTask();
+            //getUserTask();
             //showToast('Task completed successfully');
           });
           //}
           if (!task.finished) {
-            completeMessageTaskOfAHACarePlan(task);
+            completeMessageTaskOfAHACarePlan(task.id.toString());
           }
           break;
       }
@@ -1759,7 +1759,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             //showToast('Task completed successfully');
           });
           if (!task.finished) {
-            completeMessageTaskOfAHACarePlan(task);
+            completeMessageTaskOfAHACarePlan(
+                task.action!.userTaskId.toString());
           }
           break;
         case 'Biometrics':
@@ -1874,7 +1875,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           });
           //}
           if (!task.finished) {
-            completeMessageTaskOfAHACarePlan(task);
+            completeMessageTaskOfAHACarePlan(
+                task.action!.userTaskId.toString());
           }
           break;
         case 'Infographic':
@@ -1903,7 +1905,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               //showToast('Task completed successfully');
             });
             if (!task.finished) {
-              completeMessageTaskOfAHACarePlan(task);
+              completeMessageTaskOfAHACarePlan(
+                  task.action!.userTaskId.toString());
             }
           }
           break;
@@ -1914,7 +1917,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             //showToast('Task completed successfully');
           });
           if (!task.finished) {
-            completeMessageTaskOfAHACarePlan(task);
+            completeMessageTaskOfAHACarePlan(
+                task.action!.userTaskId.toString());
           }
           break;
         case 'Web':
@@ -1941,10 +1945,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     }
   }
 
-  completeMessageTaskOfAHACarePlan(UserTask task) async {
+  completeMessageTaskOfAHACarePlan(String taskId) async {
     try {
       final BaseResponse _startTaskOfAHACarePlanResponse =
-          await model.finishUserTask(task.action!.userTaskId.toString());
+          await model.finishUserTask(taskId);
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;

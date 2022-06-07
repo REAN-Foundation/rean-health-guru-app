@@ -131,7 +131,7 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
         child: Text(
           widget.next!.nodeType.toString(),
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.left,
         ),
       ),
     );

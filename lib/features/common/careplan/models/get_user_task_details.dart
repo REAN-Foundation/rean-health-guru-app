@@ -298,6 +298,7 @@ class Action {
     String? title,
     String? description,
     String? url,
+    Details? details,
     String? scheduledAt,
     dynamic startedAt,
     dynamic completedAt,
@@ -319,6 +320,7 @@ class Action {
     _category = category;
     _providerActionId = providerActionId;
     _title = title;
+    _details = details;
     _description = description;
     _url = url;
     _scheduledAt = scheduledAt;
@@ -345,6 +347,8 @@ class Action {
     _providerActionId = json['ProviderActionId'];
     _title = json['Title'];
     _description = json['Description'];
+    _details =
+        json['Details'] != null ? Details.fromJson(json['Details']) : null;
     _url = json['Url'];
     _scheduledAt = json['ScheduledAt'];
     _startedAt = json['StartedAt'];
@@ -368,6 +372,7 @@ class Action {
   String? _planCode;
   String? _type;
   String? _category;
+  Details? _details;
   String? _providerActionId;
   String? _title;
   String? _description;
@@ -397,6 +402,8 @@ class Action {
   String? get planCode => _planCode;
 
   String? get type => _type;
+
+  Details? get details => _details;
 
   String? get category => _category;
 
@@ -439,6 +446,9 @@ class Action {
     map['Category'] = _category;
     map['ProviderActionId'] = _providerActionId;
     map['Title'] = _title;
+    if (_details != null) {
+      map['Details'] = _details?.toJson();
+    }
     map['Description'] = _description;
     map['Url'] = _url;
     map['ScheduledAt'] = _scheduledAt;
@@ -586,6 +596,30 @@ class Assessment {
     map['ParentActivityId'] = _parentActivityId;
     map['UserTaskId'] = _userTaskId;
     map['CurrentNodeId'] = _currentNodeId;
+    return map;
+  }
+}
+
+/// Link : "https://americanheart.co1.qualtrics.com/jfe/form/SV_b1anZr9DUmEOsce"
+
+class Details {
+  Details({
+    String? link,
+  }) {
+    _link = link;
+  }
+
+  Details.fromJson(dynamic json) {
+    _link = json['Link'];
+  }
+
+  String? _link;
+
+  String? get link => _link;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['Link'] = _link;
     return map;
   }
 }

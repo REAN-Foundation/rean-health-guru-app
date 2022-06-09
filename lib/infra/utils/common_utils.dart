@@ -32,6 +32,7 @@ String? _baseUrl = '';
 late UserTask _task;
 String? countryCodeGlobe = '';
 var dummyNumberList = <String>[];
+bool isDummyNumber = false;
 String? _currentLocale = '';
 String _appName = '';
 dynamic _roleId = '';

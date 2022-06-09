@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
@@ -1063,19 +1064,47 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       Expanded(
                         flex: 8,
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text(task.task ?? '',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w200,
-                                      color: textBlack)),
-                              SizedBox(
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(task.task ?? '',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w200,
+                                          color: textBlack)),
+                                  task.task == 'Survey'
+                                      ? IconButton(
+                                          onPressed: () {
+                                            showMaterialModalBottomSheet(
+                                                isDismissible: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.vertical(
+                                                          top: Radius.circular(
+                                                              25.0)),
+                                                ),
+                                                context: context,
+                                                builder: (context) => _info());
+                                          },
+                                          icon: Icon(
+                                            Icons.info_outline_rounded,
+                                            color: primaryColor,
+                                            size: 24,
+                                          ))
+                                      : Container(),
+                                ],
+                              ),
+                              /*SizedBox(
                                 height: 4,
                               ),
                               Text(task.description ?? '',
@@ -1084,7 +1113,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
-                                      color: Color(0XFF909CAC))),
+                                      color: Color(0XFF909CAC))),*/
                             ],
                           ),
                         ),
@@ -1691,7 +1720,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           });
           //}
           if (!task.finished) {
-            completeMessageTaskOfAHACarePlan(task.id.toString());
+            //completeMessageTaskOfAHACarePlan(task.id.toString());
           }
           break;
       }
@@ -1972,5 +2001,91 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       showToast('Could not launch $url', context);
       //throw 'Could not launch $url';
     }
+  }
+
+  Widget _info() {
+    return Container(
+      height: 320,
+      color: Colors.transparent,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+              left: 16.0, right: 16.0, top: 16.0, bottom: 16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Info',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 18.0),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              RichText(
+                text: TextSpan(
+                  text:
+                      'As a part of the American Heart Association’s focus on heart failure, we are asking patients to complete a 5- to 10-minute confidential survey. This will help us better understand how different resources can support patients in managing their heart failure. You will receive a \u002410 e-gift card to thank you for completing the survey. You can earn additional e-gift cards by participating in follow-up surveys. ',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: textGrey,
+                  ),
+                  children: <TextSpan>[],
+                ),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Semantics(
+                    button: true,
+                    label: 'Alright',
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: 48,
+                        width: MediaQuery.of(context).size.width - 32,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                        ),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6.0),
+                            border: Border.all(color: primaryColor, width: 1),
+                            color: primaryColor),
+                        child: Center(
+                          child: Text(
+                            'Alright',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                                fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -30,6 +33,20 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
   late AtomFeed rss = AtomFeed();
   final myTransformer = Xml2Json();
 
+  var discards = [
+    '<rss',
+    '</rss',
+    'channel>',
+    '<description>',
+    '<copyright>',
+    '<lastBuildDate>',
+    '<generator',
+    '<url>',
+    'image>',
+    '<guid',
+    '<a10'
+  ];
+
   @override
   void initState() {
     loadData();
@@ -37,6 +54,9 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
   }
 
   loadData() async {
+    final Directory directory = await getApplicationSupportDirectory();
+    final File file = File('${directory.path}/old_xml.xml');
+
     try {
       setState(() {
         isLoading = true;
@@ -47,10 +67,12 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
       final response = await get(Uri.parse(api));
       //debugPrint('RSS Feed ==> ${response.body.replaceAll('ï»¿', '')}');
       var channel = response.body.replaceAll('ï»¿', '');
-      myTransformer.parse(channel);
+      /*myTransformer.parse(channel);
       var json = myTransformer.toGData();
-      log('RSS Feed JSON Convert==> ${json.toString()}');
+      log('RSS Feed JSON Convert==> ${json.toString()}');*/
 
+      await file.writeAsString(channel);
+      cleaningXML(file);
       //Rss rss = Rss.fromJson(parsedJson);
 
       //debugPrint('RSS Feed Item title ==> ${rss.channel!.item!.length.toString()}');
@@ -64,6 +86,35 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
     }
   }
 
+  cleaningXML(File unCleandXmlFile) async {
+    final Directory directory = await getApplicationSupportDirectory();
+    final File cleanXmlFile = File('${directory.path}/new_xml.xml');
+
+    unCleandXmlFile
+        .openRead()
+        .map(utf8.decode)
+        .transform(LineSplitter())
+        .forEach((str) => () async {
+              bool skip = false;
+              for (int i = 0; i < discards.length; i++) {
+                var discard = discards[i];
+                if (str.contains(discard)) {
+                  skip = true;
+                  break;
+                }
+              }
+              if (skip == false) {
+                await cleanXmlFile.writeAsString(str, mode: FileMode.append);
+              }
+            });
+
+    final File readyFile = File('${directory.path}/new_xml.xml');
+
+    String cleanedXML = await readyFile.readAsString();
+
+    log('Clean XML ==> $cleanedXML');
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseWidget<PatientCarePlanViewModel?>(
@@ -74,20 +125,20 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
           backgroundColor: primaryColor,
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: primaryColor,
-            brightness: Brightness.dark,
-            title: Text(
-              widget.assortedViewConfigs!.header == ''
-                  ? 'News Feed!'
-                  : widget.assortedViewConfigs!.header!,
-              style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600),
-            ),
-            iconTheme: IconThemeData(color: Colors.white),
-            actions: <Widget>[
-              /*IconButton(
+                backgroundColor: primaryColor,
+                brightness: Brightness.dark,
+                title: Text(
+                  widget.assortedViewConfigs!.header == ''
+                      ? 'News Feed!'
+                      : widget.assortedViewConfigs!.header!,
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600),
+                ),
+                iconTheme: IconThemeData(color: Colors.white),
+                actions: <Widget>[
+                  /*IconButton(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.black,
@@ -97,45 +148,45 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
                   debugPrint("Clicked on profile icon");
                 },
               )*/
-            ],
-          ),
-          body: Stack(
-            children: [
-              Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Container(
-                    color: primaryColor,
-                    height: 100,
-                    width: MediaQuery.of(context).size.width,
-                  )),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    color: primaryColor,
-                    height: 0,
-                    width: MediaQuery.of(context).size.width,
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(12),
-                              topLeft: Radius.circular(12))),
-                      child: body(),
-                    ),
-                  )
                 ],
               ),
-            ],
+              body: Stack(
+                children: [
+                  Positioned(
+                      top: 0,
+                      right: 0,
+                      child: Container(
+                        color: primaryColor,
+                        height: 100,
+                        width: MediaQuery.of(context).size.width,
+                      )),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        color: primaryColor,
+                        height: 0,
+                        width: MediaQuery.of(context).size.width,
+                      ),
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.all(8.0),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(12),
+                                  topLeft: Radius.circular(12))),
+                          child: body(),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
     );
   }
 
@@ -144,30 +195,30 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
       children: [
         isLoading == false
             ? ListView.builder(
-            itemCount: rss.items!.length,
-            itemBuilder: (BuildContext context, index) {
-              final item = rss.items![index];
-              final feedItems = {
-                'title': item.title,
-                'link': item.links!.elementAt(0),
-                'date': item.updated
-              };
-              print(feedItems);
-              return InkWell(
-                  onTap: () {},
-                  child: ListTile(
-                    title: Text(item.title.toString()),
-                    subtitle: Row(
-                      children: [
-                        Text(DateFormat('MMM dd').format(
-                            DateTime.parse(item.updated.toString())))
-                      ],
-                    ),
-                  ));
-            })
+                itemCount: rss.items!.length,
+                itemBuilder: (BuildContext context, index) {
+                  final item = rss.items![index];
+                  final feedItems = {
+                    'title': item.title,
+                    'link': item.links!.elementAt(0),
+                    'date': item.updated
+                  };
+                  print(feedItems);
+                  return InkWell(
+                      onTap: () {},
+                      child: ListTile(
+                        title: Text(item.title.toString()),
+                        subtitle: Row(
+                          children: [
+                            Text(DateFormat('MMM dd').format(
+                                DateTime.parse(item.updated.toString())))
+                          ],
+                        ),
+                      ));
+                })
             : Center(
-          child: CircularProgressIndicator(),
-        ),
+                child: CircularProgressIndicator(),
+              ),
       ],
     );
   }

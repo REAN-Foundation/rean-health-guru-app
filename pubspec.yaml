@@ -12,7 +12,7 @@ description: A new Flutter application.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.8.57+97
+version: 1.8.58+97
 
 
 environment:
@@ -90,6 +90,7 @@ dependencies:
   webfeed: ^0.7.0
   pinch_zoom: ^1.0.0
   xml2json: ^5.3.2
+  path_provider: ^2.0.2
 
 dev_dependencies:
   #test: any

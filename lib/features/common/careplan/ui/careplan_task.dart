@@ -320,15 +320,17 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   Widget _createToDos(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
 
-    return task.actionType == 'Careplan'
-        ? _makeTaskCard(context, index)
-        : task.actionType == 'Medication'
-            ? _makeMedicineCard(context, index)
-            /*: task.categoryName == 'Appointment-task'
+    return task.task == 'News feed'
+        ? Container()
+        : task.actionType == 'Careplan'
+            ? _makeTaskCard(context, index)
+            : task.actionType == 'Medication'
+                ? _makeMedicineCard(context, index)
+                /*: task.categoryName == 'Appointment-task'
                 ? _makeUpcommingAppointmentCard(context, index)*/
-            : task.actionType == 'Custom'
-                ? _makeCustomTaskCard(context, index)
-                : Container();
+                : task.actionType == 'Custom'
+                    ? _makeCustomTaskCard(context, index)
+                    : Container();
   }
 
   /*Widget _makeTaskCard(BuildContext context, int index) {
@@ -1720,7 +1722,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           });
           //}
           if (!task.finished) {
-            //completeMessageTaskOfAHACarePlan(task.id.toString());
+            completeMessageTaskOfAHACarePlan(task.id.toString());
           }
           break;
       }

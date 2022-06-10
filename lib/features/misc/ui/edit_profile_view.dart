@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -199,6 +198,129 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
+  Widget _delete() {
+    return Container(
+      height: 300,
+      color: Colors.transparent,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+              left: 24.0, right: 24.0, top: 24.0, bottom: 24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Are you sure you want to delete your account?',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 18.0),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              RichText(
+                text: TextSpan(
+                  text:
+                      'I understand that this will permanently delete my account, and this information cannot be recovered ever again.\n\nI understand that I will permanently lose access to all my data, with my account.',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    color: textGrey,
+                  ),
+                  children: <TextSpan>[],
+                ),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Semantics(
+                      button: true,
+                      label: 'Yes',
+                      child: InkWell(
+                        onTap: () {
+                          deleteAccount();
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 48,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6.0),
+                            border: Border.all(color: primaryColor, width: 1),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Yes',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: primaryColor,
+                                  fontSize: 14),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Semantics(
+                      button: true,
+                      label: 'No',
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 48,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                          ),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6.0),
+                              border: Border.all(color: primaryColor, width: 1),
+                              color: primaryColor),
+                          child: Center(
+                            child: Text(
+                              'No',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                  fontSize: 14),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   _accountDeleteConfirmation() {
     showDialog(
       context: context,
@@ -214,7 +336,7 @@ class _EditProfileState extends State<EditProfile> {
           ),
           contentPadding: EdgeInsets.all(4.0),
           subtitle: Text(
-            '\nI understand that this will permanently delete my account, and this information cannot be recovered ever again.\nI understand that I will permanently lose access to all my data, with my account. \n \nAre you sure you want to delete your account?',
+            '\n \n \n',
             style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontStyle: FontStyle.normal,
@@ -305,7 +427,7 @@ class _EditProfileState extends State<EditProfile> {
                     fontWeight: FontWeight.w600),
               ),
               iconTheme: IconThemeData(color: Colors.black),
-              actions: [
+                  /*actions: [
                 if (!isEditable)
                   PopupMenuButton<String>(
                     onSelected: overFlowHandleClick,
@@ -322,7 +444,7 @@ class _EditProfileState extends State<EditProfile> {
                       }).toList();
                     },
                   ),
-              ],
+              ],*/
             ),
                 body: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -331,20 +453,24 @@ class _EditProfileState extends State<EditProfile> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        /* SizedBox(height: height * .2),
+                    /* SizedBox(height: height * .2),
                       _title(),
                       SizedBox(height: 50),*/
-                        _profileIcon(),
-                        _textFeildWidget(),
-                        SizedBox(height: 20),
-                        Visibility(
-                          visible: isEditable,
-                          child: model!.busy
+                    _profileIcon(),
+                    _textFeildWidget(),
+                    SizedBox(height: 20),
+                    Visibility(
+                      visible: !isEditable,
+                      child: _deleteButton(),
+                    ),
+                    Visibility(
+                      visible: isEditable,
+                      child: model!.busy
                           ? CircularProgressIndicator()
                           : _submitButton(model),
-                        ),
-                        SizedBox(height: 20),
-                      ],
+                    ),
+                    SizedBox(height: 20),
+                  ],
                     ),
                   ),
                 ),
@@ -361,14 +487,42 @@ class _EditProfileState extends State<EditProfile> {
                       onPressed: () {
                         isEditable = true;
                         setState(() {});
-                      },
-                      child: Icon(Icons.edit),
-                    ),
-                  ),
+                  },
+                  child: Icon(Icons.edit),
                 ),
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  _deleteButton() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: TextButton.icon(
+        onPressed: () {
+          showMaterialModalBottomSheet(
+              isDismissible: true,
+              backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+              ),
+              context: context,
+              builder: (context) => _delete());
+        },
+        icon: Icon(
+          Icons.delete_rounded,
+          size: 32,
+          color: primaryColor,
+        ),
+        label: Text(
+          "Delete My Account",
+          style: TextStyle(
+              fontWeight: FontWeight.w600, fontSize: 15, color: primaryColor),
+        ),
+      ),
     );
   }
 
@@ -512,77 +666,83 @@ class _EditProfileState extends State<EditProfile> {
   Widget _profileIcon() {
     debugPrint('Profile Pic ==> $profileImagePath');
     return Container(
-      height: 200,
+      height: 100,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Container(
-            height: 88,
-            width: 88,
-            child: Stack(
-              children: <Widget>[
-                /*CircleAvatar(
-                  radius: 48,
-                  backgroundColor: primaryLightColor,
-                  child: CircleAvatar(
-                      radius: 48,
-                      backgroundImage: profileImagePath == ""
-                          ? AssetImage('res/images/profile_placeholder.png')
-                          : new NetworkImage(profileImagePath)),
-                ),*/
-                Container(
-                  width: 120.0,
-                  height: 120.0,
-                  decoration: BoxDecoration(
-                    color: const Color(0xff7c94b6),
-                    image: DecorationImage(
-                      image: (profileImagePath == ''
-                              ? AssetImage('res/images/profile_placeholder.png')
-                              : NetworkImage(profileImagePath!))
-                          as ImageProvider<Object>,
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                    border: Border.all(
-                      color: primaryColor,
-                      width: 2.0,
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Visibility(
-                    visible: isEditable,
-                    child: Semantics(
-                      label: 'Add profile picture',
-                      button: true,
-                      child: InkWell(
-                          onTap: () {
-                            FocusManager.instance.primaryFocus?.unfocus();
-                            showMaterialModalBottomSheet(
-                                isDismissible: true,
-                                backgroundColor: Colors.transparent,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(25.0)),
-                                ),
-                                context: context,
-                                builder: (context) => _uploadImageSelector());
-                            //getFile();
-                          },
-                          child: Image.asset(
-                            'res/images/ic_camera.png',
-                            height: 32,
-                            width: 32,
-                          )),
+          SizedBox(
+            height: 12,
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              height: 74,
+              width: 74,
+              child: Stack(
+                children: <Widget>[
+                  /*CircleAvatar(
+                    radius: 48,
+                    backgroundColor: primaryLightColor,
+                    child: CircleAvatar(
+                        radius: 48,
+                        backgroundImage: profileImagePath == ""
+                            ? AssetImage('res/images/profile_placeholder.png')
+                            : new NetworkImage(profileImagePath)),
+                  ),*/
+                  Container(
+                    width: 60.0,
+                    height: 60.0,
+                    decoration: BoxDecoration(
+                      color: const Color(0xff7c94b6),
+                      image: DecorationImage(
+                        image: (profileImagePath == ''
+                            ? AssetImage('res/images/profile_placeholder.png')
+                            : NetworkImage(
+                                profileImagePath!)) as ImageProvider<Object>,
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                      border: Border.all(
+                        color: primaryColor,
+                        width: 2.0,
+                      ),
                     ),
                   ),
-                )
-              ],
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Visibility(
+                      visible: isEditable,
+                      child: Semantics(
+                        label: 'Add profile picture',
+                        button: true,
+                        child: InkWell(
+                            onTap: () {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              showMaterialModalBottomSheet(
+                                  isDismissible: true,
+                                  backgroundColor: Colors.transparent,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(25.0)),
+                                  ),
+                                  context: context,
+                                  builder: (context) => _uploadImageSelector());
+                              //getFile();
+                            },
+                            child: Image.asset(
+                              'res/images/ic_camera.png',
+                              height: 32,
+                              width: 32,
+                            )),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-          SizedBox(
+          /*SizedBox(
             height: 8,
           ),
           Text(fullName,
@@ -600,7 +760,7 @@ class _EditProfileState extends State<EditProfile> {
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color: primaryColor)),
+                  color: primaryColor)),*/
         ],
       ),
     );
@@ -711,7 +871,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _entryLocalityField(String title, {bool isPassword = false}) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -765,7 +925,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _entryCountryField(String title, {bool isPassword = false}) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -820,7 +980,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _entryPostalField(String title, {bool isPassword = false}) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -876,7 +1036,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _entryAddressField(String title, {bool isPassword = false}) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -931,7 +1091,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _entryEmailField(String title) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -983,7 +1143,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _entryMobileNoField(String title) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -1621,7 +1781,7 @@ class _EditProfileState extends State<EditProfile> {
     debugPrint('Gender: $selectedGender');
     return Container(
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -1632,32 +1792,69 @@ class _EditProfileState extends State<EditProfile> {
           SizedBox(
             height: 10,
           ),
-          Semantics(
-            label: selectedGender,
-            child: AbsorbPointer(
-                absorbing: !isEditable,
-                child: ToggleSwitch(
-                    minWidth: 120.0,
-                    cornerRadius: 20,
-                    initialLabelIndex: selectedGender == 'Male' ? 0 : 1,
-                    totalSwitches: 2,
-                    activeBgColor: [Colors.green],
-                    inactiveBgColor: Colors.grey,
-                    labels: ['Male', 'Female'],
-                    icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
-                    activeBgColors: [
-                      [Colors.blue],
-                      [Colors.pink]
-                    ],
-                    onToggle: (index) {
-                      debugPrint('switched to: $index');
-                      if (index == 0) {
-                        selectedGender = 'Male';
-                      } else {
-                        selectedGender = 'Female';
-                      }
-                    })),
-          )
+          isEditable
+              ? Semantics(
+                  label: selectedGender,
+                  child: AbsorbPointer(
+                      absorbing: !isEditable,
+                      child: ToggleSwitch(
+                          minWidth: 80.0,
+                          cornerRadius: 20,
+                          initialLabelIndex: selectedGender == 'Male' ? 0 : 1,
+                          totalSwitches: 2,
+                          activeBgColor: [Colors.green],
+                          inactiveBgColor: Colors.grey,
+                          labels: ['Male', 'Female'],
+                          /*icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],*/
+                          activeBgColors: [
+                            [Colors.blue],
+                            [Colors.pink]
+                          ],
+                          onToggle: (index) {
+                            debugPrint('switched to: $index');
+                            if (index == 0) {
+                              selectedGender = 'Male';
+                            } else {
+                              selectedGender = 'Female';
+                            }
+                          })),
+                )
+              : Semantics(
+                  label: 'Gender ' + selectedGender.toString(),
+                  readOnly: true,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 48.0,
+                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      border: Border.all(
+                        color: Color(0XFF909CAC),
+                        width: 1.0,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                      child: ExcludeSemantics(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                selectedGender.toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 16,
+                                    color: textGrey),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
         ],
       ),
     );
@@ -1665,7 +1862,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget _dateOfBirthField(String title) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -1726,17 +1923,61 @@ class _EditProfileState extends State<EditProfile> {
   Widget _textFeildWidget() {
     return Column(
       children: <Widget>[
-        _entryFirstNameField('First Name'),
-        _entryLastNameField('Last Name'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(flex: 1, child: _entryFirstNameField('First Name')),
+            SizedBox(
+              width: 8,
+            ),
+            Expanded(flex: 1, child: _entryLastNameField('Last Name')),
+          ],
+        ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 1,
+              child: _genderWidget(),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Expanded(
+              flex: 1,
+              child: _dateOfBirthField('Date Of Birth'),
+            ),
+          ],
+        ),
+
         _entryMobileNoField('Mobile Number'),
-        _dateOfBirthField('Date Of Birth'),
-        _genderWidget(),
+
         _entryEmailField('Email*'),
         //_entryBloodGroupField("Blood Group"),
         //_entryEmergencyMobileNoField('Emergency Contact Number'),
         _entryAddressField('Address*'),
-        _entryLocalityField('City*'),
-        _entryCountryField('Country*'),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 1,
+              child: _entryLocalityField('City*'),
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            Expanded(
+              flex: 1,
+              child: _entryCountryField('Country*'),
+            ),
+          ],
+        ),
+
         _entryPostalField('Postal Code'),
       ],
     );

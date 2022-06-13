@@ -218,7 +218,7 @@ class _EditProfileState extends State<EditProfile> {
               Text(
                 'Are you sure you want to delete your account?',
                 style: TextStyle(
-                    color: primaryColor,
+                    color: Colors.black,
                     fontWeight: FontWeight.w700,
                     fontFamily: "Montserrat",
                     fontStyle: FontStyle.normal,
@@ -250,7 +250,6 @@ class _EditProfileState extends State<EditProfile> {
                     flex: 1,
                     child: Semantics(
                       button: true,
-                      label: 'Yes',
                       child: InkWell(
                         onTap: () {
                           deleteAccount();
@@ -285,7 +284,6 @@ class _EditProfileState extends State<EditProfile> {
                     flex: 1,
                     child: Semantics(
                       button: true,
-                      label: 'No',
                       child: InkWell(
                         onTap: () {
                           Navigator.pop(context);

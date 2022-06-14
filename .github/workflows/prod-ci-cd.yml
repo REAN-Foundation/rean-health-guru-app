@@ -33,7 +33,7 @@ jobs:
         with:
           fastlane-dir: android
       - name: Promote to Playstore
-        run: bundle exec fastlane promote_beta_to_production
+        run: bundle exec fastlane promote_beta_to_production_rf
         env:
           PLAYSTORE_JSON_KEY_DATA: ${{ secrets.PLAYSTORE_JSON_KEY_DATA }}
 
@@ -57,7 +57,7 @@ jobs:
           fastlane-dir: ios
           
       - name: Promote to Appstore
-        run: bundle exec fastlane submit_beta_to_app_store
+        run: bundle exec fastlane submit_beta_to_app_store_rf
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}

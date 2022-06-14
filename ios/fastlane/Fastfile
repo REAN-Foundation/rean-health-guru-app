@@ -92,11 +92,11 @@ platform :ios do
 
   lane :build_aha do |options|
     app_identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
-    if(options[:flavor] != "prod")
+    if(options[:flavor] != "aha")
       app_identifier = app_identifier + ".#{options[:flavor].partition('_').last}"
     end
 
-    if(options[:flavor].partition('_').last == "prod" or (options[:flavor].partition('_').last == "uat" and options[:mode] == "release"))
+    if(options[:flavor].partition('_').last == "prod" or (options[:flavor].partition('_').last == "uat" and options[:mode] == "release") or (options[:flavor] == "aha" and options[:mode] == "release"))
       profile_type = "appstore"
       export_option = "app-store"
     else
@@ -165,7 +165,11 @@ platform :ios do
   end
 
   lane :upload_build_to_testflight_aha do |options|
-    upload_build_to_testflight(flavorId: options[:flavor].partition('_').last , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog: "HF Helper Test Build", description: "HF Helper")
+    if options[:flavor]["_"]
+      upload_build_to_testflight(flavorId: options[:flavor].partition('_').last , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog: "HF Helper Test Build", description: "HF Helper")
+    else
+      upload_build_to_testflight(flavorId: options[:flavor] , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog: "HF Helper Build", description: "HF Helper")
+    end
   end
 
   desc "Upload Build to TestFlight"
@@ -203,8 +207,8 @@ platform :ios do
     )
   end
 
-  desc "Submit to App Store"
-  lane :submit_beta_to_app_store do
+  desc "Submit to App Store RF"
+  lane :submit_beta_to_app_store_rf do
     latest_testflight_build_number(
       api_key: get_api_key,
       app_identifier: "org.reanfoundation.patient"
@@ -218,6 +222,7 @@ platform :ios do
       skip_metadata: false,
       force: true, # Skip HTMl report verification
       skip_screenshots: true,
+      metadata_path: "./fastlane/metadata/rf_prod",
       platform: "ios",
       submission_information: {
         add_id_info_uses_idfa: false,
@@ -230,5 +235,35 @@ platform :ios do
       app_version: lane_context[SharedValues::LATEST_TESTFLIGHT_VERSION],
     )
   end
+
+  desc "Submit to App Store AHA"
+  lane :submit_beta_to_app_store_aha do
+    latest_testflight_build_number(
+      api_key: get_api_key,
+      app_identifier: "org.heart.hfpatient"
+    )
+    upload_to_app_store(
+      app_identifier: "org.heart.hfpatient",
+      precheck_include_in_app_purchases: false,
+      submit_for_review: true,
+      skip_binary_upload: true,
+      automatic_release: true,
+      skip_metadata: false,
+      force: true, # Skip HTMl report verification
+      skip_screenshots: true,
+      platform: "ios",
+      metadata_path: "./fastlane/metadata/aha_prod",
+      submission_information: {
+        add_id_info_uses_idfa: false,
+        add_id_info_serves_ads: false,
+        add_id_info_tracks_install: false,
+        add_id_info_tracks_action: false,
+        add_id_info_limits_tracking: false
+      },
+      api_key: get_api_key,
+      app_version: lane_context[SharedValues::LATEST_TESTFLIGHT_VERSION],
+    )
+  end
+
 
 end

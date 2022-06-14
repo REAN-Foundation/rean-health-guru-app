@@ -2,10 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_driver/driver_extension.dart';
-import 'package:paitent/provider_setup.dart';
-import 'package:paitent/ui/router.dart';
-import 'package:paitent/ui/views/AfterSplashScreen.dart';
-import 'package:paitent/ui/views/splashScreen.dart';
+import 'package:patient/features/misc/ui/after_splash_screen.dart';
+import 'package:patient/features/misc/ui/splash_screen.dart';
+import 'package:patient/infra/provider_setup.dart';
+import 'package:patient/infra/router.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //https://medium.com/@LohaniDamodar/flutter-separating-build-environment-with-multiple-firebase-environment-92e40e26d275
@@ -15,7 +15,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool login = prefs.getBool('login1.5');
+  bool? login = prefs.getBool('login1.8');
   login ??= false;
   debugPrint('Main >> Login Session: $login');
 
@@ -23,7 +23,7 @@ Future<void> main() async {
 }
 //ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  bool isLogin;
+  bool? isLogin;
 
   MyApp(bool isLogin) {
     this.isLogin = isLogin;
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
                   fontSize: 28,
                   fontWeight: FontWeight.w600,
                   color: Colors.white)),
-          image: Image.asset('res/images/app_logo_tranparent.png'),
+          image: Image.asset('res/images/app_logo_transparent.png'),
           backgroundColor: Colors.deepPurple,
           styleTextUnderTheLoader: TextStyle(),
           photoSize: 100.0,

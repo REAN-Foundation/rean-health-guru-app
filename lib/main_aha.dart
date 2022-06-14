@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
-import 'package:paitent/networking/ChatApiProvider.dart';
-import 'package:paitent/provider_setup.dart';
-import 'package:paitent/ui/router.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
-import 'package:paitent/utils/CommonUtils.dart';
+import 'package:patient/infra/networking/chat_api_provider.dart';
+import 'package:patient/infra/provider_setup.dart';
+import 'package:patient/infra/router.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'core/constants/app_contstants.dart';
-import 'networking/ApiProvider.dart';
+import 'core/constants/route_paths.dart';
+import 'infra/networking/api_provider.dart';
 
 Future<void> main() async {
   //enableFlutterDriverExtension();
@@ -22,7 +22,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool login = prefs.getBool('login1.5');
+  bool? login = prefs.getBool('login1.8');
   login ??= false;
   primaryColor = Color(0XFFc10e21);
   primaryLightColor = Color(0XFFFFFFFF);
@@ -31,9 +31,9 @@ Future<void> main() async {
 
 //ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  bool isLogin;
-  String _baseUrl;
-  String _botBaseUrl;
+  bool? isLogin;
+  String? _baseUrl;
+  String? _botBaseUrl;
   FirebaseAnalytics analytics = FirebaseAnalytics();
   Map<int, Color> color = {
     50: Color(0xFFFFEBEE),
@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
             seconds: 3,
             navigateAfterSeconds: AfterSplashScreen(isLogin),
             title: new Text('REAN Care\n\nDev-Build' , style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600, color: Colors.white)),
-            image: new Image.asset('res/images/app_logo_tranparent.png'),
+            image: new Image.asset('res/images/app_logo_transparent.png'),
             backgroundColor: primaryColor,
             styleTextUnderTheLoader: new TextStyle(),
             photoSize: 100.0,

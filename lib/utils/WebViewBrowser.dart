@@ -1,19 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:paitent/ui/shared/app_colors.dart';
+import 'package:patient/infra/themes/app_colors.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 //ignore: must_be_immutable
 class WebViewBrowser extends StatefulWidget {
-  String _url;
-  String _tittle;
+  String? _url;
+  String? _tittle;
 
   WebViewBrowser({
-    Key key,
-    @required String tittle,
-    String url,
-  }) : super(key: key) {
+    @required String? tittle,
+    String? url,
+  }) {
     _tittle = tittle;
     _url = url;
   }
@@ -40,8 +39,8 @@ class _WebViewBrowserState extends State<WebViewBrowser> {
         backgroundColor: primaryColor,
         brightness: Brightness.dark,
         title: Text(
-          widget._tittle.substring(0, 1).toUpperCase() +
-              widget._tittle.substring(1),
+          widget._tittle!.substring(0, 1).toUpperCase() +
+              widget._tittle!.substring(1),
           style: TextStyle(
               fontSize: 16.0, color: Colors.white, fontWeight: FontWeight.w600),
         ),

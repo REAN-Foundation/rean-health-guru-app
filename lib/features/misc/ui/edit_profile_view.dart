@@ -84,6 +84,7 @@ class _EditProfileState extends State<EditProfile> {
   String fullName = '';
   var dateFormat = DateFormat('MMM dd, yyyy');
   late Patient patient;
+  bool deleteApiCall = false;
 
   //String profileImage = "";
   String emergencymobileNumber = '';
@@ -243,28 +244,31 @@ class _EditProfileState extends State<EditProfile> {
               const SizedBox(
                 height: 24,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Semantics(
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          deleteAccount();
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          height: 48,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16.0,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6.0),
-                            border: Border.all(color: primaryColor, width: 1),
-                          ),
-                          child: Center(
+              deleteApiCall
+                  ? CircularProgressIndicator()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Semantics(
+                            button: true,
+                            child: InkWell(
+                              onTap: () {
+                                deleteAccount();
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                height: 48,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border:
+                                      Border.all(color: primaryColor, width: 1),
+                                ),
+                                child: Center(
                             child: Text(
                               'Yes',
                               style: TextStyle(
@@ -360,8 +364,9 @@ class _EditProfileState extends State<EditProfile> {
 
   deleteAccount() async {
     try {
-      progressDialog.show(max: 100, msg: 'Loading...');
-
+      progressDialog.show(max: 100, msg: 'Deleting your account...');
+      deleteApiCall = true;
+      setState(() {});
       final map = <String, String>{};
       map['Content-Type'] = 'application/json';
       map['authorization'] = 'Bearer ' + auth!;
@@ -372,24 +377,40 @@ class _EditProfileState extends State<EditProfile> {
 
       if (deleteMyAccount.status == 'success') {
         progressDialog.close();
-        showToast(deleteMyAccount.message!, context);
-        startCarePlanResponseGlob = null;
+        showDeleteAlert("Success", deleteMyAccount.message!);
         _sharedPrefUtils.save('CarePlan', null);
         _sharedPrefUtils.saveBoolean('login', null);
         _sharedPrefUtils.clearAll();
         chatList.clear();
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) {
-          return LoginWithOTPView();
-        }), (Route<dynamic> route) => false);
       } else {
         progressDialog.close();
         showToast(deleteMyAccount.message!, context);
       }
+      deleteApiCall = false;
+      setState(() {});
     } on FetchDataException catch (e) {
+      deleteApiCall = false;
+      setState(() {});
       debugPrint('error caught: $e');
       showToast(e.toString(), context);
     }
+  }
+
+  showDeleteAlert(String title, String subtitle) {
+    StatusAlert.show(
+      context,
+      duration: Duration(seconds: 5),
+      title: title,
+      subtitle: subtitle,
+      configuration: IconConfiguration(icon: Icons.check_circle_outline),
+    );
+
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+        return LoginWithOTPView();
+      }), (Route<dynamic> route) => false);
+    });
   }
 
   @override

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/activity/ui/meditation_timmer_view.dart';
-import 'package:patient/features/common/activity/ui/view_my_all_daily_activity.dart';
 import 'package:patient/features/common/activity/ui/view_my_all_daily_stress.dart';
+import 'package:patient/features/common/activity/ui/view_my_daily_activity.dart';
 import 'package:patient/features/common/activity/ui/view_my_daily_sleep.dart';
 import 'package:patient/features/common/appointment_booking/ui/booking_appointment_confirmation.dart';
 import 'package:patient/features/common/appointment_booking/ui/booking_confirm_screen.dart';
@@ -160,9 +160,8 @@ class Routers {
       case RoutePaths.MY_STRESS:
         return MaterialPageRoute(builder: (_) => ViewMyAllDailyStress());
       case RoutePaths.My_Activity:
-        return MaterialPageRoute(
-            builder: (_) =>
-                ViewMyAllDailyActivity(settings.arguments as String?));
+        return MaterialPageRoute(builder: (_) => ViewMyDailyActivity());
+      //ViewMyAllDailyActivity(settings.arguments as String?));
       case RoutePaths.MySleepData:
         return MaterialPageRoute(builder: (_) => ViewMyDailySleep());
       case RoutePaths.My_Nutrition:

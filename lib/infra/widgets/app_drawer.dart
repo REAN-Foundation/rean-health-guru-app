@@ -1,3 +1,4 @@
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -213,30 +214,30 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
             ),
           ),
-          /*if (Platform.isIOS) ...[
-                InkWell(
-                  onTap: () {
-                    Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
-                  },
-                  child: Container(
-                    height: 48,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 40,
+          if (Platform.isIOS) ...[
+            InkWell(
+              onTap: () {
+                Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
+              },
+              child: Container(
+                height: 48,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 40,
                         ),
                         Text(
-                          'Physical Health Management',
-                          style: TextStyle(
-                              color: primaryColor, fontWeight: FontWeight.w600),
-                        ),
+                          'Activity',
+                      style: TextStyle(
+                          color: primaryColor, fontWeight: FontWeight.w600),
+                    ),
                       ],
                     ),
                   ),
                 ),
               ],
-              InkWell(
+          /*InkWell(
                 onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.My_Nutrition,
                       arguments: '');

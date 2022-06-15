@@ -260,18 +260,17 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
           Visibility(
-                visible: true,
-                child: InkWell(
-                  onTap: () {
-                    if (carePlanEnrollmentForPatientGlobe == null) {
-                      Navigator.popAndPushNamed(
-                          context, RoutePaths.Select_Care_Plan);
-                    } else {
-                      Navigator.popAndPushNamed(
-                          context, RoutePaths.My_Care_Plan);
-                    }
-                  },
-                  child: Container(
+                visible: false,
+            child: InkWell(
+              onTap: () {
+                if (carePlanEnrollmentForPatientGlobe == null) {
+                  Navigator.popAndPushNamed(
+                      context, RoutePaths.Select_Care_Plan);
+                } else {
+                  Navigator.popAndPushNamed(context, RoutePaths.My_Care_Plan);
+                }
+              },
+              child: Container(
                     height: 48,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,

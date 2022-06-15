@@ -145,7 +145,7 @@ class _AssessmentNodeListQuestionViewState
                     color: primaryColor,
                     fontWeight: FontWeight.w600,
                     fontSize: 16),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
               ),
             ),
           ),
@@ -239,14 +239,14 @@ class _AssessmentNodeListQuestionViewState
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                /*Text(
                   String.fromCharCode(97 + index).toString() + '. ',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w600,
                       fontSize: 16),
                   textAlign: TextAlign.left,
-                ),
+                ),*/
                 Expanded(
                   child: Text(
                     childrenQuestions.title.toString(),

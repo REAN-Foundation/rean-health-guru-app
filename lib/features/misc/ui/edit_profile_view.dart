@@ -189,6 +189,8 @@ class _EditProfileState extends State<EditProfile> {
     } catch (e) {
       debugPrint('error caught: $e');
     }
+
+    //showDeleteAlert("Success","Patient records deleted successfully!");
   }
 
   void overFlowHandleClick(String value) {
@@ -377,7 +379,7 @@ class _EditProfileState extends State<EditProfile> {
 
       if (deleteMyAccount.status == 'success') {
         progressDialog.close();
-        showDeleteAlert("Success", deleteMyAccount.message!);
+        showDeleteAlert("Success", "Your account is getting deleted.");
         _sharedPrefUtils.save('CarePlan', null);
         _sharedPrefUtils.saveBoolean('login', null);
         _sharedPrefUtils.clearAll();
@@ -402,7 +404,11 @@ class _EditProfileState extends State<EditProfile> {
       duration: Duration(seconds: 5),
       title: title,
       subtitle: subtitle,
-      configuration: IconConfiguration(icon: Icons.check_circle_outline),
+      dismissOnBackgroundTap: false,
+      backgroundColor: Colors.white,
+      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+      configuration: IconConfiguration(
+          icon: Icons.check_circle_outline, color: primaryColor),
     );
 
     Future.delayed(const Duration(seconds: 5), () {

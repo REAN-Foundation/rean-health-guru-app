@@ -189,7 +189,7 @@ class _EditProfileState extends State<EditProfile> {
     } catch (e) {
       debugPrint('error caught: $e');
     }
-
+    showDeleteDialog();
     //showDeleteAlert("Success","Patient records deleted successfully!");
   }
 
@@ -379,7 +379,7 @@ class _EditProfileState extends State<EditProfile> {
 
       if (deleteMyAccount.status == 'success') {
         progressDialog.close();
-        showDeleteAlert("Success", "Your account is getting deleted.");
+        //showDeleteDialog();
         _sharedPrefUtils.save('CarePlan', null);
         _sharedPrefUtils.saveBoolean('login', null);
         _sharedPrefUtils.clearAll();
@@ -396,6 +396,74 @@ class _EditProfileState extends State<EditProfile> {
       debugPrint('error caught: $e');
       showToast(e.toString(), context);
     }
+  }
+
+  showDeleteDialog() {
+    Dialog sucsessDialog = Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      //this right here
+      child: Card(
+        elevation: 0.0,
+        semanticContainer: false,
+        child: Container(
+          height: 300.0,
+          width: 200.0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Semantics(
+                label: 'Success',
+                image: true,
+                child: Image.asset(
+                  'res/images/successfully.png',
+                  width: 120,
+                  height: 120,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Success',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 20.0),
+              ),
+              Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Text(
+                  'Your account is getting deleted.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "Montserrat",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 16.0),
+                ),
+              ),
+              Container(
+                height: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => sucsessDialog);
+
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+        return LoginWithOTPView();
+      }), (Route<dynamic> route) => false);
+    });
   }
 
   showDeleteAlert(String title, String subtitle) {

@@ -7,20 +7,20 @@ import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 
 //ignore: must_be_immutable
-class AssessmentQuestionCarePlanView extends StatefulWidget {
+class AssessmentMultiChoiceQuestionView extends StatefulWidget {
   Next? assesment;
 
-  AssessmentQuestionCarePlanView(assesmentC) {
+  AssessmentMultiChoiceQuestionView(assesmentC) {
     assesment = assesmentC;
   }
 
   @override
-  _AssessmentQuestionCarePlanViewState createState() =>
-      _AssessmentQuestionCarePlanViewState();
+  _AssessmentMultiChoiceQuestionViewState createState() =>
+      _AssessmentMultiChoiceQuestionViewState();
 }
 
-class _AssessmentQuestionCarePlanViewState
-    extends State<AssessmentQuestionCarePlanView> {
+class _AssessmentMultiChoiceQuestionViewState
+    extends State<AssessmentMultiChoiceQuestionView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -36,19 +36,9 @@ class _AssessmentQuestionCarePlanViewState
     'Dry or frequent hacking cough': false,
   };
 
-  processAnswer() {
-    for (int i = 0; i < widget.assesment!.options!.length; i++) {
-      answers.add(Answer(
-          widget.assesment!.options!.elementAt(i).sequence as int,
-          widget.assesment!.options!.elementAt(i).text.toString()));
-    }
-    setState(() {});
-  }
-
   @override
   void initState() {
     super.initState();
-    processAnswer();
   }
 
   @override
@@ -112,16 +102,7 @@ class _AssessmentQuestionCarePlanViewState
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(12),
                               topLeft: Radius.circular(12))),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            quizQuestionOne(),
-                            /*  SizedBox(height: 20,),
-                    quizQuestionTwo(),*/
-                          ],
-                        ),
-                      ),
+                      child: quizQuestionOne(),
                     ),
                   )
                 ],
@@ -137,11 +118,10 @@ class _AssessmentQuestionCarePlanViewState
   String radioItem = '';
 
   // Group Value for Radio Button.
-  int id = 1;
+  List<int> id = <int>[];
 
   Widget quizQuestionOne() {
     return Container(
-      height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -169,22 +149,27 @@ class _AssessmentQuestionCarePlanViewState
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: answers
-                  .map((data) => RadioListTile(
-                title: Text(data.text),
-                        groupValue: id,
-                        value: data.index,
-                onChanged: (dynamic val) {
-                          setState(() {
-                            radioItem = data.text;
-                            id = data.index;
-                          });
-                        },
-                      ))
-                  .toList(),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView.builder(
+                  itemCount: widget.assesment!.options!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CheckboxListTile(
+                        value: widget.assesment!.options!
+                            .elementAt(index)
+                            .isChecked,
+                        title: Text(widget.assesment!.options!
+                            .elementAt(index)
+                            .text
+                            .toString()),
+                        controlAffinity: ListTileControlAffinity.leading,
+                        onChanged: (bool? val) {
+                          widget.assesment!.options!.elementAt(index).isCheck =
+                              val;
+                          setState(() {});
+                        });
+                  }),
             ),
           ),
           SizedBox(
@@ -193,6 +178,15 @@ class _AssessmentQuestionCarePlanViewState
           InkWell(
             onTap: () {
               //Navigator.pushNamed(context, RoutePaths.Assessment_Question_Two_Care_Plan);
+
+              for (int i = 0; i < widget.assesment!.options!.length; i++) {
+                if (widget.assesment!.options!.elementAt(i).isChecked ??
+                    false) {
+                  id.add(
+                      widget.assesment!.options!.elementAt(i).sequence as int);
+                }
+              }
+
               Navigator.pop(context, id);
             },
             child: Container(

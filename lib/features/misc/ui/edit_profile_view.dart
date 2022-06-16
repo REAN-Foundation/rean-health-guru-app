@@ -84,6 +84,7 @@ class _EditProfileState extends State<EditProfile> {
   String fullName = '';
   var dateFormat = DateFormat('MMM dd, yyyy');
   late Patient patient;
+  bool deleteApiCall = false;
 
   //String profileImage = "";
   String emergencymobileNumber = '';
@@ -188,6 +189,8 @@ class _EditProfileState extends State<EditProfile> {
     } catch (e) {
       debugPrint('error caught: $e');
     }
+    //showDeleteDialog();
+    //showDeleteAlert("Success","Patient records deleted successfully!");
   }
 
   void overFlowHandleClick(String value) {
@@ -243,28 +246,31 @@ class _EditProfileState extends State<EditProfile> {
               const SizedBox(
                 height: 24,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Semantics(
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          deleteAccount();
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          height: 48,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16.0,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6.0),
-                            border: Border.all(color: primaryColor, width: 1),
-                          ),
-                          child: Center(
+              deleteApiCall
+                  ? CircularProgressIndicator()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Semantics(
+                            button: true,
+                            child: InkWell(
+                              onTap: () {
+                                deleteAccount();
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                height: 48,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border:
+                                      Border.all(color: primaryColor, width: 1),
+                                ),
+                                child: Center(
                             child: Text(
                               'Yes',
                               style: TextStyle(
@@ -360,8 +366,9 @@ class _EditProfileState extends State<EditProfile> {
 
   deleteAccount() async {
     try {
-      progressDialog.show(max: 100, msg: 'Loading...');
-
+      progressDialog.show(max: 100, msg: 'Deleting your account...');
+      deleteApiCall = true;
+      setState(() {});
       final map = <String, String>{};
       map['Content-Type'] = 'application/json';
       map['authorization'] = 'Bearer ' + auth!;
@@ -372,24 +379,112 @@ class _EditProfileState extends State<EditProfile> {
 
       if (deleteMyAccount.status == 'success') {
         progressDialog.close();
-        showToast(deleteMyAccount.message!, context);
-        startCarePlanResponseGlob = null;
+        showDeleteDialog();
         _sharedPrefUtils.save('CarePlan', null);
         _sharedPrefUtils.saveBoolean('login', null);
         _sharedPrefUtils.clearAll();
         chatList.clear();
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) {
-          return LoginWithOTPView();
-        }), (Route<dynamic> route) => false);
       } else {
         progressDialog.close();
         showToast(deleteMyAccount.message!, context);
       }
+      deleteApiCall = false;
+      setState(() {});
     } on FetchDataException catch (e) {
+      deleteApiCall = false;
+      setState(() {});
       debugPrint('error caught: $e');
       showToast(e.toString(), context);
     }
+  }
+
+  showDeleteDialog() {
+    Dialog sucsessDialog = Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      //this right here
+      child: Card(
+        elevation: 0.0,
+        semanticContainer: false,
+        child: Container(
+          height: 300.0,
+          width: 200.0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Semantics(
+                label: 'Success',
+                image: true,
+                child: Image.asset(
+                  'res/images/successfully.png',
+                  width: 120,
+                  height: 120,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Success',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 20.0),
+              ),
+              Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Text(
+                  'Your account is getting deleted.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "Montserrat",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 16.0),
+                ),
+              ),
+              Container(
+                height: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => sucsessDialog);
+
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+        return LoginWithOTPView();
+      }), (Route<dynamic> route) => false);
+    });
+  }
+
+  showDeleteAlert(String title, String subtitle) {
+    StatusAlert.show(
+      context,
+      duration: Duration(seconds: 5),
+      title: title,
+      subtitle: subtitle,
+      dismissOnBackgroundTap: false,
+      backgroundColor: Colors.white,
+      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+      configuration: IconConfiguration(
+          icon: Icons.check_circle_outline, color: primaryColor),
+    );
+
+    Future.delayed(const Duration(seconds: 5), () {
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+        return LoginWithOTPView();
+      }), (Route<dynamic> route) => false);
+    });
   }
 
   @override

@@ -15,6 +15,9 @@ import 'package:patient/features/common/appointment_booking/ui/lab_detail_view.d
 import 'package:patient/features/common/appointment_booking/ui/payment_confirmation.dart';
 import 'package:patient/features/common/appointment_booking/ui/search_doctor_list_view.dart';
 import 'package:patient/features/common/appointment_booking/ui/search_lab_list_view.dart';
+import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
+import 'package:patient/features/common/careplan/models/create_health_priority_response.dart';
+import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
 import 'package:patient/features/common/careplan/ui/add_goals_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/approve_doctor_for_goal_careplan.dart';
 import 'package:patient/features/common/careplan/ui/assessment_final_for_careplan.dart';
@@ -38,6 +41,7 @@ import 'package:patient/features/common/careplan/ui/lean_more_careplan.dart';
 import 'package:patient/features/common/careplan/ui/mindfulness_moment_careplan.dart';
 import 'package:patient/features/common/careplan/ui/my_careplan.dart';
 import 'package:patient/features/common/careplan/ui/quiz_for_careplan.dart';
+import 'package:patient/features/common/careplan/ui/rss_feild_display.dart';
 import 'package:patient/features/common/careplan/ui/select_careplan.dart';
 import 'package:patient/features/common/careplan/ui/self_reflection_week_1.dart';
 import 'package:patient/features/common/careplan/ui/set_goals_for_careplan.dart';
@@ -222,8 +226,12 @@ class Routers {
             builder: (_) => SuccessfullySetupCarePlanView());
       case RoutePaths.Learn_More_Care_Plan:
         return MaterialPageRoute(
+            builder: (_) => LearnMoreCarePlanView(
+                settings.arguments as AssortedViewConfigs));
+      case RoutePaths.RSS_FEED_LIST:
+        return MaterialPageRoute(
             builder: (_) =>
-                LearnMoreCarePlanView(settings.arguments.runtimeType));
+                RSSFeildDisplayView(settings.arguments as AssortedViewConfigs));
       case RoutePaths.Video_More_Care_Plan:
         return MaterialPageRoute(
             builder: (_) =>
@@ -233,7 +241,7 @@ class Routers {
       case RoutePaths.Challenge_Care_Plan:
         return MaterialPageRoute(
             builder: (_) =>
-                ChallengeCarePlanView(settings.arguments.runtimeType));
+                ChallengeCarePlanView(settings.arguments as UserTask));
       case RoutePaths.Word_Of_The_Week_Care_Plan:
         return MaterialPageRoute(
             builder: (_) =>
@@ -242,7 +250,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => QuizForCarePlanView());
       case RoutePaths.Assessment_Navigator:
         return MaterialPageRoute(
-            builder: (_) => AssesmentTaskNavigatorView(settings.arguments));
+            builder: (_) =>
+                AssesmentTaskNavigatorView(settings.arguments as UserTask));
       case RoutePaths.Biometric_Care_Plan_Line:
         return MaterialPageRoute(
             builder: (_) => BiomatricTask(settings.arguments));
@@ -261,7 +270,9 @@ class Routers {
         return MaterialPageRoute(
             builder: (_) => SetPrioritiesGoalsForCarePlanView());
       case RoutePaths.Select_Goals_Care_Plan:
-        return MaterialPageRoute(builder: (_) => SelectGoalsForCarePlanView());
+        return MaterialPageRoute(
+            builder: (_) => SelectGoalsForCarePlanView(
+                settings.arguments as CreateHealthPriorityResponse));
       case RoutePaths.Determine_Action_For_Care_Plan:
         return MaterialPageRoute(
             builder: (_) => DeterminActionPlansForCarePlanView());

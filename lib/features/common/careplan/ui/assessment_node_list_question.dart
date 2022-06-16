@@ -5,27 +5,27 @@ import 'package:patient/features/common/careplan/models/start_assessment_respons
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 
 //ignore: must_be_immutable
-class AssessmentQuestionCarePlanView extends StatefulWidget {
+class AssessmentNodeListQuestionView extends StatefulWidget {
   Next? assesment;
 
-  AssessmentQuestionCarePlanView(assesmentC) {
+  AssessmentNodeListQuestionView(assesmentC) {
     assesment = assesmentC;
   }
 
   @override
-  _AssessmentQuestionCarePlanViewState createState() =>
-      _AssessmentQuestionCarePlanViewState();
+  _AssessmentNodeListQuestionViewState createState() =>
+      _AssessmentNodeListQuestionViewState();
 }
 
-class _AssessmentQuestionCarePlanViewState
-    extends State<AssessmentQuestionCarePlanView> {
+class _AssessmentNodeListQuestionViewState
+    extends State<AssessmentNodeListQuestionView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Default Radio Button Selected Item When App Questions.
-  var answers = <Answer>[];
 
   Map<String, bool> numbers = {
     'Chest pain, or pain in your jaw,\nshoulder or arm': false,
@@ -36,19 +36,15 @@ class _AssessmentQuestionCarePlanViewState
     'Dry or frequent hacking cough': false,
   };
 
-  processAnswer() {
-    for (int i = 0; i < widget.assesment!.options!.length; i++) {
-      answers.add(Answer(
-          widget.assesment!.options!.elementAt(i).sequence as int,
-          widget.assesment!.options!.elementAt(i).text.toString()));
-    }
-    setState(() {});
-  }
+  var nodeAnswer = <int>[];
 
   @override
   void initState() {
+    for (int i = 0; i < widget.assesment!.childrenQuestions!.length; i++) {
+      nodeAnswer.insert(i, 0);
+    }
+
     super.initState();
-    processAnswer();
   }
 
   @override
@@ -112,16 +108,7 @@ class _AssessmentQuestionCarePlanViewState
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(12),
                               topLeft: Radius.circular(12))),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            quizQuestionOne(),
-                            /*  SizedBox(height: 20,),
-                    quizQuestionTwo(),*/
-                          ],
-                        ),
-                      ),
+                      child: quizQuestionOne(),
                     ),
                   )
                 ],
@@ -133,15 +120,8 @@ class _AssessmentQuestionCarePlanViewState
     );
   }
 
-  // Default Radio Button Item
-  String radioItem = '';
-
-  // Group Value for Radio Button.
-  int id = 1;
-
   Widget quizQuestionOne() {
     return Container(
-      height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -169,31 +149,39 @@ class _AssessmentQuestionCarePlanViewState
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: answers
-                  .map((data) => RadioListTile(
-                title: Text(data.text),
-                        groupValue: id,
-                        value: data.index,
-                onChanged: (dynamic val) {
-                          setState(() {
-                            radioItem = data.text;
-                            id = data.index;
-                          });
-                        },
-                      ))
-                  .toList(),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView.builder(
+                  itemCount: widget.assesment!.childrenQuestions!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _makeAQuestionBlock(
+                        widget.assesment!.childrenQuestions!.elementAt(index),
+                        index);
+                  }),
             ),
           ),
           SizedBox(
-            height: 32,
+            height: 16,
           ),
           InkWell(
             onTap: () {
               //Navigator.pushNamed(context, RoutePaths.Assessment_Question_Two_Care_Plan);
-              Navigator.pop(context, id);
+              bool vaildation = false;
+              for (int i = 0;
+                  i < widget.assesment!.childrenQuestions!.length;
+                  i++) {
+                if (nodeAnswer[i] == 0) {
+                  vaildation = true;
+                }
+              }
+
+              if (vaildation) {
+                showToastMsg('Please answer all the question', context);
+              } else {
+                debugPrint('Node List ==> ${nodeAnswer.length}');
+                Navigator.pop(context, nodeAnswer);
+              }
             },
             child: Container(
                 height: 40,
@@ -221,6 +209,90 @@ class _AssessmentQuestionCarePlanViewState
             height: 16,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _makeAQuestionBlock(ChildrenQuestions childrenQuestions, int index) {
+    var childAnswer = <Answer>[];
+    for (int i = 0; i < childrenQuestions.options!.length; i++) {
+      childAnswer.add(Answer(
+          childrenQuestions.options!.elementAt(i).sequence as int,
+          childrenQuestions.options!.elementAt(i).text.toString()));
+    }
+
+    // Default Radio Button Item
+    //String radioItem = '';
+
+    // Group Value for Radio Button.
+    int id = 1;
+
+    return Card(
+      elevation: 0,
+      semanticContainer: false,
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /*Text(
+                  String.fromCharCode(97 + index).toString() + '. ',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16),
+                  textAlign: TextAlign.left,
+                ),*/
+                Expanded(
+                  child: Text(
+                    childrenQuestions.title.toString(),
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: childAnswer
+                    .map((data) => RadioListTile(
+                          title: Text(data.text),
+                          groupValue: nodeAnswer[index],
+                          value: data.index,
+                          onChanged: (dynamic val) {
+                            setState(() {
+                              //radioItem = data.text;
+                              id = data.index;
+                              /*for(int i = 0 ; i < nodeAnswer.length ; i++){
+                        if(nodeAnswer.elementAt(i) == index){
+                          nodeAnswer.remove(i);
+                        }
+                      }*/
+                              nodeAnswer.insert(index, id);
+
+                              debugPrint(
+                                  'Select Answer ==>  $id  Node List Answer ==> ${nodeAnswer[index]}');
+                            });
+                          },
+                        ))
+                    .toList(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

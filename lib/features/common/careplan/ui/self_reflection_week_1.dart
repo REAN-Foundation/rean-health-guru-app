@@ -846,7 +846,10 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
       map['ReadyToProceedFurther'] = answer7 == 'Yes';
 
       final BaseResponse baseResponse = await model.statusCheck(
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+          carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+              .elementAt(0)
+              .enrollmentId
+              .toString(),
           widget.task!.details!.id!,
           map);
 

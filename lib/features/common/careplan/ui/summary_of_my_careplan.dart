@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:patient/features/common/careplan/models/get_careplan_summary_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -16,32 +15,13 @@ class SummaryOfMyCarePlanView extends StatefulWidget {
 class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  late GetCarePlanSummaryResponse _getCarePlanSummaryResponse;
   var dateFormat = DateFormat('MMMM, dd yyyy');
   int? currentWeek = 0;
 
-  getAHACarePlanSummary() async {
-    try {
-      _getCarePlanSummaryResponse = await model.getAHACarePlanSummary(
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString());
-
-      if (_getCarePlanSummaryResponse.status == 'success') {
-        debugPrint('AHA Care Plan ==> ${_getCarePlanSummaryResponse.toJson()}');
-        currentWeek =
-            _getCarePlanSummaryResponse.data!.carePlanSummary!.currentWeek;
-      } else {
-        showToast(_getCarePlanSummaryResponse.message!, context);
-      }
-    } catch (CustomException) {
-      model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint(CustomException.toString());
-    }
-  }
 
   @override
   void initState() {
-    getAHACarePlanSummary();
+    currentWeek = weeklyCarePlanStatusGlobe!.data!.careplanStatus!.currentWeek;
     super.initState();
   }
 
@@ -73,8 +53,11 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                         ),
                         Expanded(
                           child: Text(
-                            startCarePlanResponseGlob!
-                                .data!.carePlan!.carePlanName!,
+                            carePlanEnrollmentForPatientGlobe!
+                                .data!.patientEnrollments!
+                                .elementAt(0)
+                                .planName
+                                .toString(),
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -87,7 +70,11 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                           width: 8,
                         ),
                         Text(
-                          startCarePlanResponseGlob!.data!.carePlan!.displayId!,
+                          carePlanEnrollmentForPatientGlobe!
+                              .data!.patientEnrollments!
+                              .elementAt(0)
+                              .enrollmentId
+                              .toString(),
                           style: TextStyle(
                               fontSize: 10, fontWeight: FontWeight.w200),
                           maxLines: 1,
@@ -116,10 +103,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                               ),
                               Stack(
                                 children: <Widget>[
-                                  if (_getCarePlanSummaryResponse
-                                          .data!.carePlanSummary!.currentWeek
-                                          .toString() ==
-                                      '-1')
+                                  if (currentWeek.toString() == '-1')
                                     Container()
                                   else
                                     currentWeekCount(),
@@ -142,36 +126,43 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
     return Positioned(
       left: 40,
       top: 40,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            height: 80,
-            width: 80,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(50)),
-                border: Border.all(
-                    width: 5, color: Colors.grey, style: BorderStyle.solid)),
-            child: Center(
-              child: Text(
+      child: Card(
+        elevation: 8,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+        child: Container(
+          height: 80,
+          width: 80,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
                 currentWeek.toString(),
                 style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 48,
-                    fontWeight: FontWeight.w300),
+                    color: textBlack,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 30.0),
               ),
-            ),
+              Text(
+                'Week',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  fontStyle: FontStyle.normal,
+                ),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+            ],
           ),
-          SizedBox(
-            height: 8,
-          ),
-          Text(
-            'Week',
-            style: TextStyle(
-                color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -714,8 +705,8 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                         ),
                         Expanded(
                           child: Text(
-                            dateFormat.format(_getCarePlanSummaryResponse
-                                .data!.carePlanSummary!.carePlanStartDate!
+                            dateFormat.format(weeklyCarePlanStatusGlobe!
+                                .data!.careplanStatus!.startDate!
                                 .toLocal()),
                             style: TextStyle(
                                 color: primaryLightColor,

@@ -423,15 +423,26 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                         side: BorderSide(color: primaryColor)))),
             onPressed: () {
+              isDummyNumber = false;
               if (mobileNumber!.trim().isEmpty) {
                 showToast('Please enter phone number', context);
               } else if (mobileNumber!.length == maxLengthOfPhone) {
                 countryCodeGlobe = countryCode;
                 model.setBusy(true);
                 if (dummyNumberList.contains(mobileNumber)) {
+                  isDummyNumber = true;
                   Navigator.pushNamed(context, RoutePaths.OTP_Screen,
                       arguments: mobileNumber);
                   model.setBusy(false);
+                } else if (mobileNumber!.startsWith('100000')) {
+                  isDummyNumber = true;
+                  var numberEnding = int.parse(mobileNumber!.substring(5));
+                  debugPrint('Number Ending ==> $numberEnding');
+                  if (numberEnding >= 1 && numberEnding <= 1000) {
+                    Navigator.pushNamed(context, RoutePaths.OTP_Screen,
+                        arguments: mobileNumber);
+                    model.setBusy(false);
+                  }
                 } else {
                   checkUserExistsOrNot(model);
                 }

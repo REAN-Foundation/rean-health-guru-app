@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/route_paths.dart';
-import 'package:patient/features/common/careplan/models/start_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/enroll_care_clan_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -279,7 +279,7 @@ class _StartCarePlanViewState extends State<StartCarePlanView> {
       map['CarePlanCode'] = widget.selectedCarePlan;
       map['StartDate'] = startDate;
 
-      final StartCarePlanResponse startCarePlanResponse =
+      final EnrollCarePlanResponse startCarePlanResponse =
           await model.startCarePlan(map);
       debugPrint('Registered Care Plan ==> ${startCarePlanResponse.toJson()}');
       if (startCarePlanResponse.status == 'success') {

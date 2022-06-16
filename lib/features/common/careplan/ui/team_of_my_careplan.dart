@@ -32,8 +32,11 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
   getAHACarePlanSummary() async {
     try {
       final TeamCarePlanReesponse teamCarePlanReesponse =
-          await model.getAHACarePlanTeam(
-              startCarePlanResponseGlob!.data!.carePlan!.id.toString());
+          await model.getAHACarePlanTeam(carePlanEnrollmentForPatientGlobe!
+              .data!.patientEnrollments!
+              .elementAt(0)
+              .enrollmentId
+              .toString());
 
       if (teamCarePlanReesponse.status == 'success') {
         doctorTeam.clear();
@@ -831,8 +834,11 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       data['Gender'] = '';
 
       final map = <String, dynamic>{};
-      map['CarePlanId'] =
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString();
+      map['CarePlanId'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .enrollmentId
+          .toString();
       map['IsEmergencyContact'] = true;
       map['TeamMemberType'] = 'Doctor';
       map['Details'] = data;
@@ -936,8 +942,11 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       data['Gender'] = '';
 
       final map = <String, dynamic>{};
-      map['CarePlanId'] =
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString();
+      map['CarePlanId'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .enrollmentId
+          .toString();
       map['IsEmergencyContact'] = true;
       map['TeamMemberType'] = 'Pharmacy';
       map['Details'] = data;
@@ -1103,8 +1112,11 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
       data['Relation'] = relation;
 
       final map = <String, dynamic>{};
-      map['CarePlanId'] =
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString();
+      map['CarePlanId'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .enrollmentId
+          .toString();
       map['IsEmergencyContact'] = true;
       map['TeamMemberType'] = type;
       map['Details'] = data;

@@ -6,17 +6,21 @@ import 'package:patient/features/common/appointment_booking/models/doctor_list_a
 import 'package:patient/features/common/appointment_booking/models/pharmacy_list_api_response.dart';
 import 'package:patient/features/common/careplan/models/add_team_member_response.dart';
 import 'package:patient/features/common/careplan/models/answer_assessment_response.dart';
+import 'package:patient/features/common/careplan/models/assesment_response.dart';
+import 'package:patient/features/common/careplan/models/create_goal_response.dart';
+import 'package:patient/features/common/careplan/models/create_health_priority_response.dart';
+import 'package:patient/features/common/careplan/models/enroll_care_clan_response.dart';
+import 'package:patient/features/common/careplan/models/get_action_plan_list.dart';
 import 'package:patient/features/common/careplan/models/get_aha_careplans_response.dart';
-import 'package:patient/features/common/careplan/models/get_action_of_goal_plan.dart';
 import 'package:patient/features/common/careplan/models/get_careplan_my_response.dart';
 import 'package:patient/features/common/careplan/models/get_careplan_summary_response.dart';
 import 'package:patient/features/common/careplan/models/get_goal_priorities.dart';
+import 'package:patient/features/common/careplan/models/get_goals_by_priority.dart';
 import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
-import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
-import 'package:patient/features/common/careplan/models/start_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
+import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/team_careplan_response.dart';
 import 'package:patient/features/common/careplan/models/user_task_response.dart';
-import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/utils/string_utility.dart';
@@ -37,14 +41,14 @@ class PatientCarePlanViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response =
-        await apiProvider!.get('/aha/care-plan/types', header: map);
+        await apiProvider!.get('/care-plans?provider=AHA', header: map);
 
     setBusy(false);
     // Convert and return
     return GetAHACarePlansResponse.fromJson(response);
   }
 
-  Future<StartCarePlanResponse> startCarePlan(Map body) async {
+  Future<EnrollCarePlanResponse> startCarePlan(Map body) async {
     // Get user profile for id
 
     debugPrint(json.encode(body).toString());
@@ -53,11 +57,13 @@ class PatientCarePlanViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider!
-        .post('/aha/care-plan/enroll', body: body, header: map);
+    final response = await apiProvider!.post(
+        '/care-plans/patients/' + patientUserId! + '/enroll',
+        body: body,
+        header: map);
     setBusy(false);
     // Convert and return
-    return StartCarePlanResponse.fromJson(response);
+    return EnrollCarePlanResponse.fromJson(response);
   }
 
   Future<AddTeamMemberResponse> addTeamMembers(Map body) async {
@@ -204,15 +210,30 @@ class PatientCarePlanViewModel extends BaseModel {
             query +
             '?userId=' +
             patientUserId! +
-            '&orderBy=ScheduledStartTime&order=descending&scheduledFrom=' +
+            '&orderBy=ScheduledStartTime&order=ascending&scheduledFrom=' +
             dateFrom +
             '&scheduledTo=' +
-            dateTo,
+            dateTo +
+            '&itemsPerPage=200',
         header: map);
 
     setBusy(false);
     // Convert and return
     return UserTaskResponse.fromJson(response);
+  }
+
+  Future<GetUserTaskDetails> getUserTaskDetails(String userTaskId) async {
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    //var response = await apiProvider.get('/aha/care-plan/'+ahaCarePlanId+'/fetch-daily-tasks', header: map);
+    final response =
+        await apiProvider!.get('/user-tasks/' + userTaskId, header: map);
+
+    setBusy(false);
+    // Convert and return
+    return GetUserTaskDetails.fromJson(response);
   }
 
   Future<GetTaskOfAHACarePlanResponse> getTaskOfpatient(String state) async {
@@ -273,28 +294,22 @@ class PatientCarePlanViewModel extends BaseModel {
     return StartTaskOfAHACarePlanResponse.fromJson(response);
   }
 
-  Future<StartTaskOfAHACarePlanResponse> completeMessageTaskOfAHACarePlan(
-      String ahaCarePlanId, String taskId) async {
+  Future<BaseResponse> finishUserTask(String userTaskId,
+      {Map<String, String>? bodyMap}) async {
     setBusy(true);
 
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
 
-    final body = <String, String>{};
-
-    final response = await apiProvider!.post(
-        '/aha/care-plan/' +
-            ahaCarePlanId +
-            '/message-task/' +
-            taskId +
-            '/mark-as-read',
-        body: body,
+    final response = await apiProvider!.put(
+        '/user-tasks/' + userTaskId + '/finish',
+        body: bodyMap,
         header: map);
 
     setBusy(false);
     // Convert and return
-    return StartTaskOfAHACarePlanResponse.fromJson(response);
+    return BaseResponse.fromJson(response);
   }
 
   Future<StartTaskOfAHACarePlanResponse> completeChallengeTask(
@@ -319,10 +334,8 @@ class PatientCarePlanViewModel extends BaseModel {
     return StartTaskOfAHACarePlanResponse.fromJson(response);
   }
 
-  Future<StartAssesmentResponse> startAssesmentResponse(
-      String ahaCarePlanId, String taskId) async {
+  Future<AssesmentResponse> startAssesmentResponse(String taskId) async {
     setBusy(true);
-
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
@@ -330,21 +343,33 @@ class PatientCarePlanViewModel extends BaseModel {
     final body = <String, String>{};
 
     final response = await apiProvider!.post(
-        '/aha/care-plan/' +
-            ahaCarePlanId +
-            '/assessment-task/' +
-            taskId +
-            '/start',
+        '/clinical/assessments/' + taskId + '/start',
         body: body,
         header: map);
 
     setBusy(false);
     // Convert and return
-    return StartAssesmentResponse.fromJson(response);
+    return AssesmentResponse.fromJson(response);
   }
 
-  Future<AnswerAssesmentResponse> answerAssesmentResponse(
-      String ahaCarePlanId, String taskId, String qNaId, Map body) async {
+  Future<AssesmentResponse> getNextQuestiontResponse(String taskId) async {
+    setBusy(true);
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+
+    final response = await apiProvider!.get(
+        '/clinical/assessments/' + taskId + '/questions/next',
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return AssesmentResponse.fromJson(response);
+  }
+
+  Future<AssesmentResponse> answerAssesmentResponse(
+      String assesmentId, String qNaId, Map body) async {
     setBusy(true);
 
     final map = <String, String>{};
@@ -352,18 +377,39 @@ class PatientCarePlanViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.post(
-        '/aha/care-plan/' +
-            ahaCarePlanId +
-            '/assessment-task/' +
-            taskId +
-            '/answer-question/' +
-            qNaId,
+        '/clinical/assessments/' +
+            assesmentId +
+            '/questions/' +
+            qNaId +
+            '/answer',
         body: body,
         header: map);
 
     setBusy(false);
     // Convert and return
-    return AnswerAssesmentResponse.fromJson(response);
+    return AssesmentResponse.fromJson(response);
+  }
+
+  Future<AssesmentResponse> listNodeAnswerAssesmentResponse(
+      String assesmentId, String qNaId, Map body) async {
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.post(
+        '/clinical/assessments/' +
+            assesmentId +
+            '/question-lists/' +
+            qNaId +
+            '/answer',
+        body: body,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return AssesmentResponse.fromJson(response);
   }
 
   Future<BaseResponse> addBiometricTask(
@@ -398,7 +444,7 @@ class PatientCarePlanViewModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!
-        .get('/aha/care-plan/' + planId + '/goal-priority-types', header: map);
+        .get('/types/priorities?tags=HeartFailure', header: map);
 
     debugPrint(response.toString());
     setBusy(false);
@@ -406,7 +452,7 @@ class PatientCarePlanViewModel extends BaseModel {
     return GetGoalPriorities.fromJson(response);
   }
 
-  Future<BaseResponse> setGoalsPriority(String planId, Map body) async {
+  Future<CreateHealthPriorityResponse> setGoalsPriority(Map body) async {
     // Get user profile for id
 
     debugPrint(json.encode(body).toString());
@@ -415,10 +461,32 @@ class PatientCarePlanViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider!.post(
-        '/aha/care-plan/' + planId + '/goal-priorities',
-        body: body,
-        header: map);
+    final response = await apiProvider!
+        .post('/patient-health-priorities', body: body, header: map);
+    setBusy(false);
+    // Convert and return
+    return CreateHealthPriorityResponse.fromJson(response);
+  }
+
+  Future<CreateGoalResponse> createGoal(Map body) async {
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response =
+        await apiProvider!.post('/patient-goals', body: body, header: map);
+    setBusy(false);
+    // Convert and return
+    return CreateGoalResponse.fromJson(response);
+  }
+
+  Future<BaseResponse> createActionPlan(Map body) async {
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response =
+        await apiProvider!.post('/action-plans', body: body, header: map);
     setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);
@@ -442,7 +510,7 @@ class PatientCarePlanViewModel extends BaseModel {
     return GetGoalPriorities.fromJson(response);
   }
 
-  Future<GetGoalPriorities> getBiometricGoal(String planCode) async {
+  Future<GetGoalsByPriority> getAllGoal(String healthId) async {
     // Get user profile for id
     setBusy(true);
 
@@ -450,14 +518,13 @@ class PatientCarePlanViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider!.get(
-        '/aha/care-plan/' + planCode + '/biometric-goal-types',
-        header: map);
+    final response = await apiProvider!
+        .get('/patient-goals/by-priority/' + healthId, header: map);
 
     debugPrint(response.toString());
     setBusy(false);
     // Convert and return
-    return GetGoalPriorities.fromJson(response);
+    return GetGoalsByPriority.fromJson(response);
   }
 
   Future<BaseResponse> addGoalsTask(
@@ -479,7 +546,7 @@ class PatientCarePlanViewModel extends BaseModel {
     return BaseResponse.fromJson(response);
   }
 
-  Future<GetActionOfGoalPlan> getActionOfGoalPlan(String planId) async {
+  Future<GetActionPlanList> getActionOfGoalPlan(String goalId) async {
     // Get user profile for id
     setBusy(true);
 
@@ -487,13 +554,13 @@ class PatientCarePlanViewModel extends BaseModel {
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
 
-    final response = await apiProvider!
-        .get('/aha/care-plan/' + planId + '/plan-action-types', header: map);
+    final response =
+        await apiProvider!.get('/action-plans/by-goal/' + goalId, header: map);
 
     debugPrint(response.toString());
     setBusy(false);
     // Convert and return
-    return GetActionOfGoalPlan.fromJson(response);
+    return GetActionPlanList.fromJson(response);
   }
 
   Future<BaseResponse> updateWeeklyReflection(

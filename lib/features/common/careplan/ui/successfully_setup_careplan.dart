@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:patient/features/common/careplan/models/start_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
@@ -23,7 +23,7 @@ class _SuccessfullySetupCarePlanViewState
   String unformatedDOB = '';
   var dateFormat = DateFormat('dd MMM, yyyy');
 
-  StartCarePlanResponse? startCarePlanResponse;
+  GetCarePlanEnrollmentForPatient? startCarePlanResponse;
 
   /*loadSharedPrefrance() async {
     try {
@@ -38,7 +38,7 @@ class _SuccessfullySetupCarePlanViewState
   @override
   void initState() {
     //loadSharedPrefrance();
-    startCarePlanResponse = startCarePlanResponseGlob;
+    startCarePlanResponse = carePlanEnrollmentForPatientGlobe;
     super.initState();
   }
 
@@ -54,7 +54,10 @@ class _SuccessfullySetupCarePlanViewState
             backgroundColor: Colors.white,
             brightness: Brightness.light,
             title: Text(
-              startCarePlanResponse!.data!.carePlan!.carePlanCode!,
+              carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+                  .elementAt(0)
+                  .enrollmentId
+                  .toString(),
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
@@ -91,8 +94,11 @@ class _SuccessfullySetupCarePlanViewState
                         children: [
                           Text(
                             'Plan ID: ' +
-                                startCarePlanResponse!
-                                    .data!.carePlan!.displayId!,
+                                carePlanEnrollmentForPatientGlobe!
+                                    .data!.patientEnrollments!
+                                    .elementAt(0)
+                                    .enrollmentId
+                                    .toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 color: primaryColor),
@@ -111,8 +117,11 @@ class _SuccessfullySetupCarePlanViewState
                           ),
                           Text(
                             'You have successfully set up your\n' +
-                                startCarePlanResponse!
-                                    .data!.carePlan!.carePlanName!,
+                                carePlanEnrollmentForPatientGlobe!
+                                    .data!.patientEnrollments!
+                                    .elementAt(0)
+                                    .enrollmentId
+                                    .toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 color: textBlack,

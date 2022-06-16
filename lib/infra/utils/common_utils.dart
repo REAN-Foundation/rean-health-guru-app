@@ -6,14 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart' as date;
-import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
-import 'package:patient/features/common/careplan/models/start_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
+import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
+import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/chat_bot/models/faq_chat_model_pojo.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:phone_number/phone_number.dart';
 
-StartCarePlanResponse? startCarePlanResponseGlob;
+GetCarePlanEnrollmentForPatient? carePlanEnrollmentForPatientGlobe;
+GetWeeklyCarePlanStatus? weeklyCarePlanStatusGlobe;
 List<String> goalPlanScreenStack = <String>[];
 /*StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponseGlobe;
 
@@ -27,9 +29,10 @@ StartTaskOfAHACarePlanResponse getStartTaskOfAHACarePlanResponse() {
 
 bool _isLogin = false;
 String? _baseUrl = '';
-Task? _task;
+late UserTask _task;
 String? countryCodeGlobe = '';
 var dummyNumberList = <String>[];
+bool isDummyNumber = false;
 String? _currentLocale = '';
 String _appName = '';
 dynamic _roleId = '';
@@ -42,6 +45,7 @@ PhoneNumberUtil plugin = PhoneNumberUtil();
 String dailyMood = '';
 String dailyFeeling = '';
 List<String> dailyEnergyLevels = [];
+List<String> createdGoalsIds = [];
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');
@@ -71,17 +75,61 @@ setUpDummyNumbers() {
   dummyNumberList.add('1231231254');
   dummyNumberList.add('1231231255');
   dummyNumberList.add('1231231256');
+  dummyNumberList.add('1231231257');
+  dummyNumberList.add('1231231258');
+  dummyNumberList.add('1231231259');
+  dummyNumberList.add('1231231260');
+  dummyNumberList.add('1231231261');
+  dummyNumberList.add('1231231262');
+  dummyNumberList.add('1231231263');
+  dummyNumberList.add('1231231264');
+  dummyNumberList.add('1231231265');
+  dummyNumberList.add('1231231266');
+  dummyNumberList.add('1231231267');
+  dummyNumberList.add('1231231268');
+  dummyNumberList.add('1231231269');
+  dummyNumberList.add('1231231270');
+  dummyNumberList.add('1231231271');
+  dummyNumberList.add('1231231272');
+  dummyNumberList.add('1231231273');
+  dummyNumberList.add('1231231274');
+  dummyNumberList.add('1231231275');
+  dummyNumberList.add('1231231276');
+  dummyNumberList.add('1231231277');
+  dummyNumberList.add('1231231278');
+  dummyNumberList.add('1231231279');
+  dummyNumberList.add('1231231280');
+  dummyNumberList.add('1231231281');
+  dummyNumberList.add('1231231282');
+  dummyNumberList.add('1231231283');
+  dummyNumberList.add('1231231284');
+  dummyNumberList.add('1231231285');
+  dummyNumberList.add('1231231286');
+  dummyNumberList.add('1231231287');
+  dummyNumberList.add('1231231289');
+  dummyNumberList.add('1231231289');
+  dummyNumberList.add('1231231290');
+  dummyNumberList.add('1231231291');
+  dummyNumberList.add('1231231292');
+  dummyNumberList.add('1231231293');
+  dummyNumberList.add('1231231294');
+  dummyNumberList.add('1231231295');
+  dummyNumberList.add('1231231296');
+  dummyNumberList.add('1231231297');
+  dummyNumberList.add('1231231298');
+  dummyNumberList.add('1231231299');
+  dummyNumberList.add('1231231200');
   dummyNumberList.add('6123612361');
   dummyNumberList.add('5512355123');
   dummyNumberList.add('1234567890');
   dummyNumberList.add('123456789');
 }
 
-void setTask(Task response) {
+void setTask(UserTask response) {
   _task = response;
 }
 
-Task? getTask() {
+UserTask getTask() {
   return _task;
 }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:patient/features/common/careplan/models/get_action_of_goal_plan.dart';
-import 'package:patient/features/common/careplan/models/start_task_of_aha_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/get_action_plan_list.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -9,7 +8,6 @@ import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
-import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class DeterminActionPlansForCarePlanView extends StatefulWidget {
   @override
@@ -21,28 +19,29 @@ class _DeterminActionPlansForCarePlanViewState
     extends State<DeterminActionPlansForCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  int id = 0;
-  String radioButtonItem = 'ONE';
-  late GetActionOfGoalPlan getActionOfGoalPlan;
-  List<int?> action = <int?>[];
-  late ProgressDialog progressDialog;
+  List<ActionPlans> list = <ActionPlans>[];
 
   @override
   void initState() {
     model.setBusy(true);
-    getActionOfGoalPlanApi();
+    triggerApiCall();
     super.initState();
   }
 
-  getActionOfGoalPlanApi() async {
-    try {
-      getActionOfGoalPlan = await model.getActionOfGoalPlan(
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString());
+  triggerApiCall() {
+    for (int i = 0; i < createdGoalsIds.length; i++) {
+      getActionOfGoalPlanApi(createdGoalsIds[i]);
+    }
+  }
 
-      if (getActionOfGoalPlan.status == 'success') {
-        debugPrint('AHA Care Plan ==> ${getActionOfGoalPlan.toJson()}');
+  getActionOfGoalPlanApi(String goalIds) async {
+    try {
+      GetActionPlanList response = await model.getActionOfGoalPlan(goalIds);
+      if (response.status == 'success') {
+        debugPrint('AHA Care Plan ==> ${response.toJson()}');
+        list.addAll(response.data!.actionPlans as List<ActionPlans>);
       } else {
-        showToast(getActionOfGoalPlan.message!, context);
+        showToast(response.message!, context);
       }
     } catch (CustomException) {
       model.setBusy(false);
@@ -53,7 +52,6 @@ class _DeterminActionPlansForCarePlanViewState
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context: context);
     return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
@@ -61,16 +59,17 @@ class _DeterminActionPlansForCarePlanViewState
           key: _scaffoldKey,
           backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            elevation: 0,
+            backgroundColor: primaryColor,
+            brightness: Brightness.dark,
             title: Text(
-              'Set Care Plan Goals',
+              'Set Action for Goals',
               style: TextStyle(
                   fontSize: 16.0,
-                  color: primaryColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.w600),
             ),
-            iconTheme: IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.white),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -84,104 +83,99 @@ class _DeterminActionPlansForCarePlanViewState
               )*/
             ],
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+          body: Stack(
+            children: [
+              Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    color: primaryColor,
+                    height: 100,
+                    width: MediaQuery.of(context).size.width,
+                  )),
+              Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  currentScreenCount(),
-                  const SizedBox(
-                    height: 16,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    color: primaryColor,
+                    height: 0,
+                    width: MediaQuery.of(context).size.width,
                   ),
-                  Text(
-                    "It's time to act now! Please select or add the actions you will take to achieve your goals.",
-                    style: TextStyle(
-                        color: textBlack,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  chooseActionPlans(),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  submitButton(),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(0.0),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(12),
+                              topLeft: Radius.circular(12))),
+                      child: body(),
+                    ),
+                  )
                 ],
               ),
-            ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget chooseActionPlans() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height - 350,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 16,
-          ),
-          Text(
-            'Select your action for goal plan',
-            style: TextStyle(
-                color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          if (model.busy)
-            Center(
+  Widget body() {
+    return Padding(
+      padding: const EdgeInsets.all(0.0),
+      child: model.busy
+          ? Center(
               child: CircularProgressIndicator(),
             )
-          else
-            Expanded(
-              child: ListView.builder(
-                  //physics: const NeverScrollableScrollPhysics(),
-                  itemCount: getActionOfGoalPlan.data!.goals!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CheckboxListTile(
-                        value: getActionOfGoalPlan.data!.goals!
-                            .elementAt(index)
-                            .isChecked,
-                        title: Text(getActionOfGoalPlan.data!.goals!
-                            .elementAt(index)
-                            .assetName!),
-                        controlAffinity: ListTileControlAffinity.leading,
-                        onChanged: (bool? val) {
-                          itemChange(val, index);
-                        });
-                  }),
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                currentScreenCount(),
+                /*const SizedBox(
+                height: 16,
+              ),
+              Text(
+                "You can add your time-bound measurable goals around Life's Simple 7 as defined by the American Heart Association.",
+                style: TextStyle(
+                    color: textBlack,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
+              ),*/
+                const SizedBox(
+                  height: 16,
                 ),
-        ],
-      ),
+                behaviouralGoal(),
+                const SizedBox(
+                  height: 16,
+                ),
+                submitButton(),
+                const SizedBox(
+                  height: 16,
+                ),
+              ],
+            ),
     );
-  }
-
-  void itemChange(bool? val, int index) {
-    setState(() {
-      getActionOfGoalPlan.data!.goals!.elementAt(index).isChecked = val;
-    });
   }
 
   Widget currentScreenCount() {
     return Container(
+      padding: const EdgeInsets.all(16.0),
       width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          color: primaryLightColor,
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(12), topLeft: Radius.circular(12))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            height: 56,
-            width: 56,
+            height: 32,
+            width: 32,
             decoration: BoxDecoration(
                 color: primaryColor,
                 borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -192,7 +186,7 @@ class _DeterminActionPlansForCarePlanViewState
                 '3',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 32,
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Montserrat',
                 ),
@@ -205,23 +199,77 @@ class _DeterminActionPlansForCarePlanViewState
           Text(
             'Determine Your Action Plan',
             style: TextStyle(
-                color: primaryColor, fontSize: 18, fontWeight: FontWeight.w600),
+                color: primaryColor, fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ],
       ),
     );
   }
 
+  Widget behaviouralGoal() {
+    return Expanded(
+      child: ListView.builder(
+          itemCount: list.length,
+          itemBuilder: (BuildContext context, int index) {
+            return CheckboxListTile(
+                value: list[index].isChecked,
+                title: Text(list[index].title.toString()),
+                controlAffinity: ListTileControlAffinity.leading,
+                onChanged: (bool? val) {
+                  list[index].isCheck = true;
+                  setState(() {});
+                  setActionPlan(list[index]);
+                  /*behaviouralGoalItemChange(val, index);*/
+                });
+          }),
+    );
+  }
+
+  setActionPlan(ActionPlans actionPlans) async {
+    try {
+      final body = <String, dynamic>{};
+      body['Source'] = 'Self';
+      body['Provider'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .provider
+          .toString();
+      body['ProviderEnrollmentId'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .enrollmentId
+          .toString();
+      body['ProviderCareplanCode'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .planCode
+          .toString();
+      body['ProviderCareplanName'] = carePlanEnrollmentForPatientGlobe!
+          .data!.patientEnrollments!
+          .elementAt(0)
+          .planName
+          .toString();
+      body['PatientUserId'] = patientUserId;
+      body['GoalId'] = actionPlans.goalId;
+      body['Title'] = actionPlans.title;
+
+      final BaseResponse baseResponse = await model.createActionPlan(body);
+
+      if (baseResponse.status == 'success') {
+      } else {
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
   Widget submitButton() {
     return InkWell(
       onTap: () {
-        action.clear();
-        for (int i = 0; i < getActionOfGoalPlan.data!.goals!.length; i++) {
-          if (getActionOfGoalPlan.data!.goals!.elementAt(i).isChecked!) {
-            action.add(getActionOfGoalPlan.data!.goals!.elementAt(i).id);
-          }
-        }
-        setGoals();
+        completeMessageTaskOfAHACarePlan();
       },
       child: Container(
         height: 40,
@@ -235,25 +283,15 @@ class _DeterminActionPlansForCarePlanViewState
           color: primaryColor,
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              Icons.arrow_back_ios,
-              color: primaryColor,
-              size: 16,
-            ),
             Text(
-              'Next',
+              'Done',
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
                   fontSize: 14),
-            ),
-            Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.white,
-              size: 16,
             ),
           ],
         ),
@@ -261,168 +299,105 @@ class _DeterminActionPlansForCarePlanViewState
     );
   }
 
-  setGoals() async {
-    try {
-      progressDialog.show(max: 100, msg: 'Loading...');
-      progressDialog.show(max: 100, msg: 'Loading...');
-      final body = <String, dynamic>{};
-      body['Actions'] = action;
-
-      final BaseResponse baseResponse = await model.addGoalsTask(
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
-          'goal-actions',
-          body);
-
-      if (baseResponse.status == 'success') {
-        progressDialog.close();
-        showDialog(
-            context: context,
-            builder: (_) {
-              return _dialog(context);
-            });
-      } else {
-        progressDialog.close();
-        if (baseResponse.error!
-            .contains('goal already exists for this care plan')) {
-          showDialog(
-              context: context,
-              builder: (_) {
-                return _dialog(context);
-              });
-        } else {
-          showToast(baseResponse.message!, context);
-        }
-      }
-    } catch (e) {
-      progressDialog.close();
-      model.setBusy(false);
-      showToast(e.toString(), context);
-      debugPrint('Error ==> ' + e.toString());
-    }
-  }
-
-  Widget _dialog(BuildContext context) {
-    return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-        //child: addOrEditAllergiesDialog(context),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                color: colorF6F6FF,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        'Done!',
-                        style: TextStyle(
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w600,
-                            color: primaryColor,
-                            fontSize: 16.0),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 24,
-              ),
-              Icon(
-                Icons.thumb_up,
-                size: 48,
-                color: primaryColor,
-              ),
-              SizedBox(
-                height: 24,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'You are all set to Go!',
-                  style: TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w600,
-                      color: primaryColor,
-                      fontSize: 16.0),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context, rootNavigator: true).pop();
-                    completeMessageTaskOfAHACarePlan();
-                  },
-                  child: Container(
-                      height: 40,
-                      width: 120,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24.0),
-                        border: Border.all(color: primaryColor, width: 1),
-                        color: primaryColor,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Close',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12),
-                          textAlign: TextAlign.center,
-                        ),
-                      )),
-                ),
-              ),
-            ],
-          ),
-        ));
-  }
-
   completeMessageTaskOfAHACarePlan() async {
     try {
-      progressDialog.show(max: 100, msg: 'Loading...');
-      progressDialog.show(max: 100, msg: 'Loading...');
-      final StartTaskOfAHACarePlanResponse _startTaskOfAHACarePlanResponse =
-          await model.stopTaskOfAHACarePlan(
-              startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
-              getTask()!.details!.id!);
+      final BaseResponse response =
+          await model.finishUserTask(getTask().action!.userTaskId.toString());
 
-      if (_startTaskOfAHACarePlanResponse.status == 'success') {
-        progressDialog.close();
+      if (response.status == 'success') {
+        showToast('Task completed successfully!', context);
         assrotedUICount = 0;
-        //Navigator.of(context, rootNavigator: true).pop();
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) {
-          return HomeView(1);
-        }), (Route<dynamic> route) => false);
-        debugPrint(
-            'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
+        showSuccessDialog();
       } else {
-        progressDialog.close();
-        showToast(_startTaskOfAHACarePlanResponse.message!, context);
+        showToast(response.message!, context);
       }
     } catch (CustomException) {
-      progressDialog.close();
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint(CustomException.toString());
     }
+  }
+
+  showSuccessDialog() {
+    Dialog sucsessDialog = Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      //this right here
+      child: Container(
+        height: 380.0,
+        width: 300.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Semantics(
+              label: 'Success image',
+              image: true,
+              child: Image.asset(
+                'res/images/ic_careplan_success_tumbs_up.png',
+                width: 200,
+                height: 200,
+              ),
+            ),
+            Text(
+              'Thank You!',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Montserrat",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 20.0),
+            ),
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                'Goals setup successfully',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 14.0),
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(top: 20.0)),
+            InkWell(
+              onTap: () {
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder: (context) {
+                  return HomeView(1);
+                }), (Route<dynamic> route) => false);
+              },
+              child: Container(
+                height: 48,
+                width: 260,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    border: Border.all(color: primaryColor, width: 1),
+                    color: primaryColor),
+                child: Center(
+                  child: Text(
+                    'Go to my task',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 14),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: 20,
+            ),
+          ],
+        ),
+      ),
+    );
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => sucsessDialog);
   }
 }

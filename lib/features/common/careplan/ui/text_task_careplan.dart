@@ -1,26 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
+import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
-import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
-import 'package:patient/infra/utils/common_utils.dart';
-import 'package:patient/infra/utils/string_utility.dart';
-
-import '../../../misc/ui/home_view.dart';
 
 //ignore: must_be_immutable
-class ChallengeCarePlanView extends StatefulWidget {
-  UserTask? task;
+class TextTaskView extends StatefulWidget {
+  Next? next;
 
-  ChallengeCarePlanView(this.task);
+  TextTaskView(this.next);
 
   @override
   _ChallengeCarePlanViewState createState() => _ChallengeCarePlanViewState();
 }
 
-class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
+class _ChallengeCarePlanViewState extends State<TextTaskView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -50,7 +45,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
             backgroundColor: primaryColor,
             brightness: Brightness.dark,
             title: Text(
-              'Challenge',
+              'Assessment',
               style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.white,
@@ -134,9 +129,9 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
       ),
       child: Center(
         child: Text(
-          widget.task!.action!.title.toString(),
+          widget.next!.nodeType.toString(),
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.left,
         ),
       ),
     );
@@ -152,7 +147,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
               topRight: Radius.circular(12), topLeft: Radius.circular(12))),
       child: Center(
         child: Text(
-          '\n' + widget.task!.action!.description.toString(),
+          '\n' + widget.next!.title.toString(),
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
@@ -175,7 +170,6 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
           ),
         ),
         child: TextFormField(
-            enabled: !widget.task!.finished,
             obscureText: false,
             controller: _textController,
             keyboardType: TextInputType.multiline,
@@ -185,7 +179,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
             ),
             onFieldSubmitted: (term) {},
             decoration: InputDecoration(
-                hintText: 'Write down your notes here...',
+                hintText: widget.next!.description ?? '',
                 border: InputBorder.none,
                 fillColor: Colors.white,
                 filled: true)),
@@ -198,69 +192,27 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        model.busy
-            ? CircularProgressIndicator()
-            : Material(
-                //Wrap with Material
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(24.0)),
-                elevation: 4.0,
-                color: primaryColor,
-                clipBehavior: Clip.antiAlias,
-                // Add This
-                child: MaterialButton(
-                  minWidth: 200,
-                  child: Text(!widget.task!.finished ? 'Save' : 'Done',
-                      style: TextStyle(
+        Material(
+          //Wrap with Material
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+          elevation: 4.0,
+          color: primaryColor,
+          clipBehavior: Clip.antiAlias,
+          // Add This
+          child: MaterialButton(
+            minWidth: 200,
+            child: Text('Next',
+                style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
             onPressed: () {
-              if (!widget.task!.finished) {
-                if (_textController.text == '') {
-                  showToast('Please enter challenge text', context);
-                } else {
-                  completeChallengeTaskOfAHACarePlan(widget.task);
-                }
-              } else {
-                Navigator.pop(context);
-              }
+              Navigator.pop(context, _textController.text.toString());
             },
           ),
         ),
       ],
     );
-  }
-
-  completeChallengeTaskOfAHACarePlan(UserTask? task) async {
-    try {
-      model.setBusy(true);
-      setState(() {});
-      final map = <String, String>{};
-      map['UserResponse'] = _textController.text;
-
-      final BaseResponse response = await model
-          .finishUserTask(task!.action!.userTaskId.toString(), bodyMap: map);
-
-      if (response.status == 'success') {
-        showToast('Task completed successfully!', context);
-        model.setBusy(false);
-        setState(() {});
-        assrotedUICount = 0;
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) {
-          return HomeView(1);
-        }), (Route<dynamic> route) => false);
-        debugPrint('AHA Care Plan ==> ${response.toJson()}');
-      } else {
-        model.setBusy(false);
-        setState(() {});
-        showToast(response.message!, context);
-      }
-    } catch (CustomException) {
-      model.setBusy(false);
-      showToast(CustomException.toString(), context);
-      debugPrint(CustomException.toString());
-    }
   }
 }

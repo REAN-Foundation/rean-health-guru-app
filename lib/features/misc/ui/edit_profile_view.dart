@@ -189,7 +189,7 @@ class _EditProfileState extends State<EditProfile> {
     } catch (e) {
       debugPrint('error caught: $e');
     }
-    showDeleteDialog();
+    //showDeleteDialog();
     //showDeleteAlert("Success","Patient records deleted successfully!");
   }
 
@@ -379,7 +379,7 @@ class _EditProfileState extends State<EditProfile> {
 
       if (deleteMyAccount.status == 'success') {
         progressDialog.close();
-        //showDeleteDialog();
+        showDeleteDialog();
         _sharedPrefUtils.save('CarePlan', null);
         _sharedPrefUtils.saveBoolean('login', null);
         _sharedPrefUtils.clearAll();

@@ -431,21 +431,20 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                 model.setBusy(true);
                 if (dummyNumberList.contains(mobileNumber)) {
                   isDummyNumber = true;
-                  Navigator.pushNamed(context, RoutePaths.OTP_Screen,
+                  /*Navigator.pushNamed(context, RoutePaths.OTP_Screen,
                       arguments: mobileNumber);
-                  model.setBusy(false);
+                  model.setBusy(false);*/
                 } else if (mobileNumber!.startsWith('100000')) {
                   isDummyNumber = true;
-                  var numberEnding = int.parse(mobileNumber!.substring(5));
+                  /*var numberEnding = int.parse(mobileNumber!.substring(5));
                   debugPrint('Number Ending ==> $numberEnding');
                   if (numberEnding >= 1 && numberEnding <= 1000) {
                     Navigator.pushNamed(context, RoutePaths.OTP_Screen,
                         arguments: mobileNumber);
                     model.setBusy(false);
-                  }
-                } else {
-                  checkUserExistsOrNot(model);
+                  }*/
                 }
+                checkUserExistsOrNot(model);
               } else {
                 debugPrint('Please enter valid number');
                 showToast('Please enter valid number', context);

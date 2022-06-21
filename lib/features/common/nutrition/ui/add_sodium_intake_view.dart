@@ -145,6 +145,7 @@ class _MySodiumIntakeViewState extends State<AddSodiumIntakeView> {
                   controller: _nutritionNameController,
                   focusNode: _nutritionNameFocus,
                   maxLines: 1,
+                  autofocus: true,
                   textInputAction: TextInputAction.done,
                   keyboardType: TextInputType.number,
                   onFieldSubmitted: (term) {},

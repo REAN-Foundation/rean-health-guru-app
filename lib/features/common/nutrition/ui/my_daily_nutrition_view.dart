@@ -744,13 +744,31 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                           SizedBox(
                             height: 16,
                           ),
-                          Text(
-                            'Water',
-                            semanticsLabel: 'Water',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16.0,
-                                color: Colors.black),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Water',
+                                semanticsLabel: 'Water',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16.0,
+                                    color: Colors.black),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                '( 1 glass = 8 ounces of water )',
+                                semanticsLabel: '1 glass = 8 ounces of water',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 14.0,
+                                    color: primaryColor),
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: 8,

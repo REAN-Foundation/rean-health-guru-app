@@ -32,6 +32,7 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
   bool isLoading = false;
   late AtomFeed rss = AtomFeed();
   final myTransformer = Xml2Json();
+  //List<RawContentForRss>? _rawContent;
 
   var discards = [
     '<rss',
@@ -49,8 +50,16 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
 
   @override
   void initState() {
-    loadData();
+    viewJsonData();
     super.initState();
+  }
+
+  viewJsonData() {
+    var rawContent = widget.assortedViewConfigs!.task!.action!.rawContent;
+
+    var jsonRawContent = jsonEncode(rawContent);
+
+    debugPrint('RAW Content ==> $jsonRawContent');
   }
 
   loadData() async {
@@ -172,14 +181,14 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
                       Expanded(
                         child: Container(
                           padding: const EdgeInsets.all(8.0),
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(12),
-                                  topLeft: Radius.circular(12))),
-                          child: body(),
-                        ),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(12),
+                              topLeft: Radius.circular(12))),
+                      child: Container(),
+                    ),
                       )
                     ],
                   ),

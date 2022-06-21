@@ -43,12 +43,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
       userTaskResponse = await model.getUserTasks(
           query,
-          /*dateQueryFormat.format(DateTime.parse(
+          dateQueryFormat.format(DateTime.parse(
               carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
                   .elementAt(0)
                   .startAt
-                  .toString())),*/
-          dateQueryFormat.format(dateTill.add(Duration(days: 0))),
+                  .toString())),
+          //dateQueryFormat.format(dateTill.add(Duration(days: 0))),
           dateQueryFormat.format(dateTill.add(Duration(days: 82))));
 
       if (userTaskResponse.status == 'success') {
@@ -320,9 +320,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   Widget _createToDos(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
 
-    return task.task == 'News feed'
+    return /*task.task == 'News feed'
         ? Container()
-        : task.actionType == 'Careplan'
+        : */
+        task.actionType == 'Careplan'
             ? _makeTaskCard(context, index)
             : task.actionType == 'Medication'
                 ? _makeMedicineCard(context, index)

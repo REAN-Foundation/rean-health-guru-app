@@ -82,20 +82,22 @@ class _OnBoardingAhaPageState extends State<OnBoardingAhaPage> {
       ),*/
       pages: [
         PageViewModel(
-          title: 'Medications',
-          body: 'Include medication reminders in your daily tasks.',
+          title: 'Medication Reminders',
+          body:
+              'Set your medication reminders. Don\'t forget even a single dose!',
           image: _buildImage('walkthrough_img_1.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: 'Vitals',
-          body: 'Keep a close watch on your vitals.',
+          title: 'Vital Management',
+          body:
+              'Monitor your body vitals. Keep a close watch over your health.',
           image: _buildImage('walkthrough_img_2.png'),
           decoration: pageDecoration,
         ),
         PageViewModel(
           title: 'Medical Records',
-          body: 'Have all your documents safe in one place.',
+          body: 'Access and share your medical history on the go.',
           image: _buildImage('walkthrough_img_3.png'),
           decoration: pageDecoration,
         ),

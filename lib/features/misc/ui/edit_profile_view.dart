@@ -412,7 +412,7 @@ class _EditProfileState extends State<EditProfile> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Semantics(
-                label: 'Success',
+                label: 'Account successfully deleted',
                 image: true,
                 child: Image.asset(
                   'res/images/successfully.png',

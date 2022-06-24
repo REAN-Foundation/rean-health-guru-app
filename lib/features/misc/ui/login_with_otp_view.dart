@@ -502,7 +502,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       debugPrint('Mobile = $mobileNumber');
 
       final body = <String, dynamic>{};
-      body['Phone'] = countryCode! + '-' + mobileNumber!;
+      body['Phone'] =
+          isDummyNumber ? mobileNumber : countryCode! + '-' + mobileNumber!;
       body['Purpose'] = 'Login';
       body['RoleId'] = getRoleId();
 
@@ -543,7 +544,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       debugPrint('Mobile = $mobileNumber');
 
       final body = <String, dynamic>{};
-      body['Phone'] = countryCode! + '-' + mobileNumber!;
+      body['Phone'] =
+          isDummyNumber ? mobileNumber : countryCode! + '-' + mobileNumber!;
       body['GenerateLoginOTP'] = true;
 
       final response =

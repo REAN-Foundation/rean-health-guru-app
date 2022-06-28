@@ -5,9 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
-import 'package:paitent/features/common/nutrition/view_models/patients_health_marker.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/GetSleepData.dart';
+import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/get_sleep_data.dart';
 
 import '../../../misc/ui/base_widget.dart';
 
@@ -21,7 +21,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<HealthDataPoint> _healthDataList = [];
   var dateFormat = DateFormat('yyyy-MM-dd');
-  GetSleepData sleepData;
+  GetSleepData? sleepData;
   int steps = 0;
   double weight = 0;
   double height = 0;
@@ -32,8 +32,8 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
   int waterGlass = 0;
   String bmiResult = '';
   Color bmiResultColor = Colors.black87;
-  DateTime startDate;
-  DateTime endDate;
+  late DateTime startDate;
+  late DateTime endDate;
   int heartRateBmp = 0;
 
   @override
@@ -112,7 +112,7 @@ class _ViewMyDailySleepState extends State<ViewMyDailySleep> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientHealthMarkerViewModel>(
+    return BaseWidget<PatientHealthMarkerViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(

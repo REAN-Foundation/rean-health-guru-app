@@ -8,28 +8,29 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:paitent/core/constants/route_paths.dart';
-import 'package:paitent/features/common/careplan/models/StartCarePlanResponse.dart';
-import 'package:paitent/features/common/daily_check_in/ui/howAreYouFeeling.dart';
-import 'package:paitent/features/common/emergency/ui/emergency_contact.dart';
-import 'package:paitent/features/misc/models/PatientApiDetails.dart';
-import 'package:paitent/features/misc/models/user_data.dart';
-import 'package:paitent/features/misc/ui/myReportsUpload.dart';
-import 'package:paitent/features/misc/view_models/common_config_model.dart';
-import 'package:paitent/infra/networking/ApiProvider.dart';
-import 'package:paitent/infra/networking/CustomException.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CoachMarkUtilities.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/infra/utils/GetAllConfigrations.dart';
-import 'package:paitent/infra/utils/GetHealthData.dart';
-import 'package:paitent/infra/utils/SharedPrefUtils.dart';
-import 'package:paitent/infra/utils/StringConstant.dart';
-import 'package:paitent/infra/utils/StringUtility.dart';
-import 'package:paitent/infra/widgets/app_drawer.dart';
+import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
+import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
+import 'package:patient/features/common/daily_check_in/ui/how_are_you_feeling.dart';
+import 'package:patient/features/common/emergency/ui/emergency_contact.dart';
+import 'package:patient/features/misc/models/patient_api_details.dart';
+import 'package:patient/features/misc/models/user_data.dart';
+import 'package:patient/features/misc/ui/my_reports_upload.dart';
+import 'package:patient/features/misc/view_models/common_config_model.dart';
+import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/coach_mark_utilities.dart';
+import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/get_all_configurations.dart';
+import 'package:patient/infra/utils/get_health_data.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
+import 'package:patient/infra/utils/string_constant.dart';
+import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/app_drawer.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
-import '../../common/careplan/ui/care_plan_task.dart';
+import '../../common/careplan/ui/careplan_task.dart';
 import 'base_widget.dart';
 import 'dashboard_ver_2.dart';
 
@@ -53,24 +54,24 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   List<Address> addresses;
   Address first;*/
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  String name = '';
+  String? name = '';
   int _currentNav = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String pathPDF = '';
   var model = CommonConfigModel();
   GlobalKey drawerKey = GlobalKey();
   GlobalKey key = GlobalKey();
-  GetHealthData healthData;
+  GetHealthData? healthData;
   String profileImage = '';
   var dateFormat = DateFormat('yyyy-MM-dd');
   final GlobalKey _keyNavigation_drawer = GlobalKey();
   final GlobalKey _keyMyTasks = GlobalKey();
   final GlobalKey _keyUploadReports = GlobalKey();
   final GlobalKey _keyEmergencyContacts = GlobalKey();
-  TutorialCoachMark tutorialCoachMark;
+  TutorialCoachMark? tutorialCoachMark;
   List<TargetFocus> targets = [];
   CoachMarkUtilites coackMarkUtilites = CoachMarkUtilites();
-  ApiProvider apiProvider = GetIt.instance<ApiProvider>();
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   String imageResourceId = '';
 
   _HomeViewState(int screenPosition) {
@@ -83,21 +84,21 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           UserData.fromJson(await _sharedPrefUtils.read('user'));
       final Patient patient =
           Patient.fromJson(await _sharedPrefUtils.read('patientDetails'));
-      auth = user.data.accessToken;
+      auth = user.data!.accessToken;
 
-      patientUserId = patient.user.id;
-      patientGender = patient.user.person.gender;
+      patientUserId = patient.user!.id;
+      patientGender = patient.user!.person!.gender;
       //debugPrint('Address ==> ${patient.user.person.addresses.elementAt(0).city}');
       //debugPrint(user.toJson().toString());
       final dynamic roleId = await _sharedPrefUtils.read('roleId');
       setRoleId(roleId);
       /* */
       setState(() {
-        debugPrint('FirstName ==> ${patient.user.person.firstName}');
-        name = patient.user.person.firstName;
-        imageResourceId = patient.user.person.imageResourceId ?? '';
+        debugPrint('FirstName ==> ${patient.user!.person!.firstName}');
+        name = patient.user!.person!.firstName;
+        imageResourceId = patient.user!.person!.imageResourceId ?? '';
         profileImage = imageResourceId != ''
-            ? apiProvider.getBaseUrl() +
+            ? apiProvider!.getBaseUrl()! +
                 '/file-resources/' +
                 imageResourceId +
                 '/download'
@@ -128,20 +129,27 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     try {
       if (_sharedPrefUtils.read('CarePlan') == null) {
       } else {
-        startCarePlanResponseGlob = StartCarePlanResponse.fromJson(
-            await _sharedPrefUtils.read('CarePlan'));
+        carePlanEnrollmentForPatientGlobe =
+            GetCarePlanEnrollmentForPatient.fromJson(
+                await _sharedPrefUtils.read('CarePlan'));
         //debugPrint("CarePlan ==> ${startCarePlanResponseGlob.data.carePlan.carePlanCode}");
       }
-      Timer(Duration(seconds: 3), () {
-        //getCarePlan();
+      if (_sharedPrefUtils.read('CarePlanWeekly') == null) {
+      } else {
+        weeklyCarePlanStatusGlobe = GetWeeklyCarePlanStatus.fromJson(
+            await _sharedPrefUtils.read('CarePlanWeekly'));
+        //debugPrint("CarePlan ==> ${startCarePlanResponseGlob.data.carePlan.carePlanCode}");
+      }
+      Timer(Duration(seconds: 2), () {
+        getCarePlan();
       });
       Future.delayed(
         Duration(seconds: 4),
         () => GetAllConfigrations(),
       );
     } catch (Excepetion) {
-      Timer(Duration(seconds: 3), () {
-        //getCarePlan();
+      Timer(Duration(seconds: 2), () {
+        getCarePlan();
       });
       Future.delayed(
         Duration(seconds: 4),
@@ -152,15 +160,41 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   getCarePlan() async {
     try {
-      final StartCarePlanResponse startCarePlanResponse =
+      final GetCarePlanEnrollmentForPatient carePlanEnrollmentForPatient =
           await model.getCarePlan();
-      debugPrint('Registered Care Plan ==> ${startCarePlanResponse.toJson()}');
-      if (startCarePlanResponse.status == 'success') {
-        if (startCarePlanResponse.data.carePlan != null) {
+      debugPrint(
+          'Registered Care Plan ==> ${carePlanEnrollmentForPatient.toJson()}');
+      if (carePlanEnrollmentForPatient.status == 'success') {
+        if (carePlanEnrollmentForPatient.data!.patientEnrollments!.isNotEmpty) {
           debugPrint('Care Plan');
-          _sharedPrefUtils.save('CarePlan', startCarePlanResponse.toJson());
-          startCarePlanResponseGlob = startCarePlanResponse;
+          carePlanEnrollmentForPatientGlobe = carePlanEnrollmentForPatient;
+          _sharedPrefUtils.save(
+              'CarePlan', carePlanEnrollmentForPatient.toJson());
+          getCarePlanWeeklyStatus(carePlanEnrollmentForPatient
+              .data!.patientEnrollments!
+              .elementAt(0)
+              .id
+              .toString());
         }
+        //showToast(startCarePlanResponse.message);
+      } else {
+        //showToast(startCarePlanResponse.message);
+      }
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  getCarePlanWeeklyStatus(String carePlanId) async {
+    try {
+      final GetWeeklyCarePlanStatus weeklyCarePlanStatus =
+          await model.getCarePlanWeeklyStatus(carePlanId);
+      debugPrint('Weekly Care Plan ==> ${weeklyCarePlanStatus.toJson()}');
+      if (weeklyCarePlanStatus.status == 'success') {
+        weeklyCarePlanStatusGlobe = weeklyCarePlanStatus;
+        _sharedPrefUtils.save('CarePlanWeekly', weeklyCarePlanStatus.toJson());
         //showToast(startCarePlanResponse.message);
       } else {
         //showToast(startCarePlanResponse.message);
@@ -307,10 +341,11 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   Future<void> _initPackageInfo() async {
     if (getCurrentLocale() == '') {
-      final Locale countryLocale = await Devicelocale.currentAsLocale;
-      setCurrentLocale(countryLocale.countryCode.toUpperCase());
+      final Locale countryLocale =
+          await (Devicelocale.currentAsLocale as FutureOr<Locale>);
+      setCurrentLocale(countryLocale.countryCode!.toUpperCase());
       debugPrint(
-          'Country Local ==> ${countryLocale.countryCode.toUpperCase()}');
+          'Country Local ==> ${countryLocale.countryCode!.toUpperCase()}');
     }
   }
 
@@ -322,14 +357,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
     getCarePlanSubscribe();
     initTargets();
-    WidgetsBinding.instance.addPostFrameCallback(_layout);
+    WidgetsBinding.instance!.addPostFrameCallback(_layout);
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
@@ -344,6 +379,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   showDailyCheckIn() {
     debugPrint('Inside Daily Check In');
+    healthData = GetIt.instance<GetHealthData>();
     if (dailyCheckInDate != dateFormat.format(DateTime.now())) {
       showMaterialModalBottomSheet(
           isDismissible: true,
@@ -361,7 +397,12 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     //UserData data = UserData.fromJson(_sharedPrefUtils.read("user"));
     //debugPrint(_sharedPrefUtils.read("user"));
 
-    Widget screen;
+    Widget screen = DashBoardVer2View(
+      positionToChangeNavigationBar: (int tabPosition) {
+        debugPrint('Tapped Tab $tabPosition');
+        _selectedTab(tabPosition);
+      },
+    );
     switch (_currentNav) {
       case 0:
         screen = DashBoardVer2View(
@@ -385,7 +426,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         break;
     }
 
-    return BaseWidget<CommonConfigModel>(
+    return BaseWidget<CommonConfigModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -421,7 +462,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
               iconTheme: IconThemeData(color: Colors.black),
               leading: InkWell(
                 onTap: () {
-                  _scaffoldKey.currentState.openDrawer();
+                  _scaffoldKey.currentState!.openDrawer();
                 },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 8.0, 0.0, 8.0),
@@ -442,9 +483,10 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                       decoration: BoxDecoration(
                         color: const Color(0xff7c94b6),
                         image: DecorationImage(
-                          image: profileImage == ''
+                          image: (profileImage == ''
                               ? AssetImage('res/images/profile_placeholder.png')
-                              : CachedNetworkImageProvider(profileImage),
+                              : CachedNetworkImageProvider(
+                                  profileImage)) as ImageProvider<Object>,
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(50.0)),
@@ -534,7 +576,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                 BottomNavigationBarItem(
                   icon: Semantics(
                     key: _keyUploadReports,
-                    label: 'upload files',
+                    label: 'medical record',
                     selected: true,
                     child: ImageIcon(
                       AssetImage('res/images/ic_upload_files_colored.png'),

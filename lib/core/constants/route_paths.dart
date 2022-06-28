@@ -35,6 +35,8 @@ class RoutePaths {
       'patientEditMedicalProfile';
   static const String My_Medications = 'MyMedications';
   static const String My_Activity = 'MyActivity';
+  static const String MY_STRESS = 'MyStress';
+  static const String MyExcersiceData = 'MyExcersiceData';
   static const String MySleepData = 'MySleepData';
   static const String Meditation = 'Meditation';
   static const String My_Nutrition = 'MyNutrition';
@@ -50,6 +52,7 @@ class RoutePaths {
       'SetupFamilyMemberCarePlan';
   static const String Successfully_Setup_For_Care_Plan =
       'SuccessfullySetupCarePlan';
+  static const String RSS_FEED_LIST = 'RssFeedList';
   static const String Learn_More_Care_Plan = 'LearnMoreForCarePlan';
   static const String Video_More_Care_Plan = 'VideoMoreForCarePlan';
   static const String Mindfull_Moment_Care_Plan = 'MindfullMomentCarePlan';

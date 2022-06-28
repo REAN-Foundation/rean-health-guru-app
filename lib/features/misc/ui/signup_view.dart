@@ -4,12 +4,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:paitent/features/misc/models/BaseResponse.dart';
-import 'package:paitent/features/misc/view_models/login_view_model.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
-import 'package:paitent/infra/widgets/bezierContainer.dart';
-import 'package:paitent/infra/widgets/login_header.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/view_models/login_view_model.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/widgets/bezier_container.dart';
+import 'package:patient/infra/widgets/login_header.dart';
 import 'package:provider/provider.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -30,7 +30,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   var dateFormat = DateFormat('dd-MM-yyyy');
 
-  String mobileNumber = '';
+  String? mobileNumber = '';
 
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
@@ -38,13 +38,13 @@ class _SignUpViewState extends State<SignUpView> {
   final _emailFocus = FocusNode();
   String selectedGender = 'Male';
   String selectedDate = '';
-  DateTime selectedDateObject;
-  String countryCode = '';
+  late DateTime selectedDateObject;
+  String? countryCode = '';
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    return BaseWidget<LoginViewModel>(
+    return BaseWidget<LoginViewModel?>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       child: LoginHeader(
         mobileNumberController: _mobileNumberController,
@@ -73,7 +73,7 @@ class _SignUpViewState extends State<SignUpView> {
                             SizedBox(height: 50),
                             _textFeildWidget(),
                             SizedBox(height: 20),
-                            if (model.busy)
+                            if (model!.busy)
                               CircularProgressIndicator()
                             else
                               _submitButton(model),
@@ -538,12 +538,12 @@ class _SignUpViewState extends State<SignUpView> {
             showToast('Please select gender', context);
           } else if (selectedDate == '') {
             showToast('Please select date of birth', context);
-          } else if (mobileNumber.length != 10) {
+          } else if (mobileNumber!.length != 10) {
             showToast('Please enter valid mobile number', context);
           } else if (_passwordController.text == '') {
             showToast('Please enter password', context);
           } else {
-            final map = <String, String>{};
+            final map = <String, String?>{};
             map['FirstName'] = _firstNameController.text;
             map['LastName'] = _lastNameController.text;
             map['PhoneNumber'] = mobileNumber;
@@ -565,7 +565,7 @@ class _SignUpViewState extends State<SignUpView> {
                 }
                 //Navigator.pushNamed(context, RoutePaths.Home);
               } else {
-                showToast(signUpSuccess.error, context);
+                showToast(signUpSuccess.error!, context);
               }
             } catch (CustomException) {
               model.setBusy(false);
@@ -704,7 +704,7 @@ class _SignUpViewState extends State<SignUpView> {
   bool validateEmail(String value) {
     const Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    final RegExp regex = RegExp(pattern);
+    final RegExp regex = RegExp(pattern as String);
     if (regex.hasMatch(value)) {
       return false;
     } else {

@@ -4,13 +4,13 @@ class LoginHeader extends StatelessWidget {
   final TextEditingController mobileNumberController;
   final TextEditingController passwordController;
   final FocusNode _passwordFocus = FocusNode();
-  final String validationMessage;
+  final String? validationMessage;
 
-  String mobileNumber;
+  String? mobileNumber;
 
   LoginHeader(
-      {@required this.mobileNumberController,
-      @required this.passwordController,
+      {required this.mobileNumberController,
+      required this.passwordController,
       this.validationMessage});
 
   @override

@@ -120,13 +120,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.11.0"
-  check_radio_group:
-    dependency: "direct main"
-    description:
-      name: check_radio_group
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.2"
   checked_yaml:
     dependency: transitive
     description:
@@ -308,14 +301,14 @@ packages:
       name: firebase_core_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.0"
+    version: "4.2.4"
   firebase_core_web:
     dependency: transitive
     description:
       name: firebase_core_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.6.0"
   firebase_messaging:
     dependency: "direct main"
     description:
@@ -356,13 +349,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_autolink_text:
-    dependency: "direct main"
-    description:
-      name: flutter_autolink_text
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0+1"
   flutter_blurhash:
     dependency: transitive
     description:
@@ -431,6 +417,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  flutter_linkify:
+    dependency: "direct main"
+    description:
+      name: flutter_linkify
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -516,6 +509,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  group_radio_button:
+    dependency: "direct main"
+    description:
+      name: group_radio_button
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   health:
     dependency: "direct main"
     description:
@@ -600,6 +600,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.4"
+  linkify:
+    dependency: transitive
+    description:
+      name: linkify
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.1.0"
   lints:
     dependency: transitive
     description:
@@ -621,13 +628,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  masked_text_input_formatter:
-    dependency: "direct main"
-    description:
-      name: masked_text_input_formatter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1"
   matcher:
     dependency: transitive
     description:
@@ -706,7 +706,7 @@ packages:
     source: hosted
     version: "1.8.0"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       url: "https://pub.dartlang.org"
@@ -782,6 +782,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.0"
+  pinch_zoom:
+    dependency: "direct main"
+    description:
+      name: pinch_zoom
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   platform:
     dependency: transitive
     description:
@@ -803,13 +810,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.1"
-  progress_dialog:
-    dependency: "direct main"
-    description:
-      name: progress_dialog
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.4"
   provider:
     dependency: "direct main"
     description:
@@ -892,6 +892,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sn_progress_dialog:
+    dependency: "direct main"
+    description:
+      name: sn_progress_dialog
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6"
   source_gen:
     dependency: transitive
     description:
@@ -1116,6 +1123,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  webfeed:
+    dependency: "direct main"
+    description:
+      name: webfeed
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.0"
   win32:
     dependency: transitive
     description:
@@ -1137,6 +1151,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.1.2"
+  xml2json:
+    dependency: "direct main"
+    description:
+      name: xml2json
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.3.2"
   yaml:
     dependency: transitive
     description:

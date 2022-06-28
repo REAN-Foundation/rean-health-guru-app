@@ -1,22 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:paitent/features/common/nutrition/view_models/patients_health_marker.dart';
-import 'package:paitent/features/misc/ui/base_widget.dart';
-import 'package:paitent/infra/db_utils/DatabaseHelper.dart';
-import 'package:paitent/infra/themes/app_colors.dart';
-import 'package:paitent/infra/utils/CommonUtils.dart';
+import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
+import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/db_utils/database_helper.dart';
+import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 
 //ignore: must_be_immutable
 class AddDailyNutritionView extends StatefulWidget {
-  String mode;
-  Function _submitButtonListner;
-  String _nutritionName;
+  String? mode;
+  late Function _submitButtonListner;
+  String? _nutritionName;
 
   AddDailyNutritionView({
-    Key key,
-    @required Function submitButtonListner,
-    String nutritionName,
+    Key? key,
+    required Function submitButtonListner,
+    String? nutritionName,
   }) : super(key: key) {
     _submitButtonListner = submitButtonListner;
     _nutritionName = nutritionName;
@@ -78,7 +78,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidget<PatientHealthMarkerViewModel>(
+    return BaseWidget<PatientHealthMarkerViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
         child: Scaffold(
@@ -89,8 +89,8 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
               backgroundColor: primaryColor,
               brightness: Brightness.dark,
               title: Text(
-                widget._nutritionName.substring(0, 1).toUpperCase() +
-                    widget._nutritionName.substring(1),
+                widget._nutritionName!.substring(0, 1).toUpperCase() +
+                    widget._nutritionName!.substring(1),
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,
@@ -203,14 +203,14 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
                   focusNode: _nutritionNameFocus,
                   maxLines: 1,
                   textInputAction: TextInputAction.next,
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.text,
                   onFieldSubmitted: (term) {
                     _fieldFocusChange(
                         context, _nutritionNameFocus, __consumedCaloriesFocus);
                   },
-                  inputFormatters: [
+                  /*inputFormatters: [
                     FilteringTextInputFormatter.deny(RegExp('[\\,|\\+|\\-]')),
-                  ],
+                  ],*/
                   decoration: InputDecoration(
                       hintStyle:
                           TextStyle(fontSize: 14, color: Colors.grey[400]),
@@ -419,7 +419,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Daily ' + widget._nutritionName + ' food',
+            'Daily ' + widget._nutritionName! + ' food',
             style: TextStyle(
                 color: textBlack, fontWeight: FontWeight.w600, fontSize: 14),
             textAlign: TextAlign.center,

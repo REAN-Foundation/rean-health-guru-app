@@ -4,6 +4,8 @@ import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/misc/models/patient_medical_profile_pojo.dart';
 import 'package:patient/features/misc/view_models/patients_observation.dart';
 import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/conversion.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 
 import 'base_widget.dart';
@@ -34,11 +36,25 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
   final _nationalityFocus = FocusNode();
   final _procedureHistoryFocus = FocusNode();
 
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  double weight = 0;
+  double height = 0;
+  double heightInFeet = 0;
+
   /* final _ethnicityFocus = FocusNode();*/
+
+  loadSharedPref() async {
+    height = await _sharedPrefUtils.readDouble('height');
+
+    if (height != 0.0) {
+      heightInFeet = Conversion.cmToFeet(height);
+    }
+  }
 
   @override
   void initState() {
     _getPatientMedicalProfile();
+    loadSharedPref();
     super.initState();
   }
 
@@ -68,6 +84,40 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Height',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: textBlack)),
+                              ),
+                              Text(': ',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Expanded(
+                                child: Text(
+                                    height == 0
+                                        ? ''
+                                        : heightInFeet.toString() + ' Foot',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
+                            ],
+                          ),
                           SizedBox(
                             height: 8,
                           ),

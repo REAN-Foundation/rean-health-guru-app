@@ -6,6 +6,8 @@ import 'package:patient/features/misc/models/patient_medical_profile_pojo.dart';
 import 'package:patient/features/misc/view_models/patients_observation.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/conversion.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import 'base_widget.dart';
@@ -36,6 +38,13 @@ class _EditPatientMedicalProfileViewState
   ];
 
   var model = PatientObservationsViewModel();
+
+  final _heightInFeetController = TextEditingController();
+  final _heightInInchesController = TextEditingController();
+  final _weightFocus = FocusNode();
+  final _heightInFeetFocus = FocusNode();
+  final _heightInInchesFocus = FocusNode();
+
   final TextEditingController _majorAilmentController = TextEditingController();
   final TextEditingController _bloodGroupController = TextEditingController();
   final TextEditingController _ocupationController = TextEditingController();
@@ -65,11 +74,34 @@ class _EditPatientMedicalProfileViewState
   var isSmoker;
   var isDrinker;
   String maritalStatus = '';
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  double height = 0;
+  late var heightArray;
 
   @override
   void initState() {
     setData();
+    loadSharedPref();
     super.initState();
+  }
+
+  loadSharedPref() async {
+    height = await _sharedPrefUtils.readDouble('height');
+
+    if (height != 0.0) {
+      double heightInFeet = Conversion.cmToFeet(height);
+
+      heightArray = heightInFeet.toString().split('.');
+
+      _heightInFeetController.text = heightArray[0].toString();
+      _heightInFeetController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _heightInFeetController.text.length),
+      );
+      _heightInInchesController.text = heightArray[1].toString();
+      _heightInInchesController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _heightInInchesController.text.length),
+      );
+    }
   }
 
   setData() {
@@ -169,15 +201,49 @@ class _EditPatientMedicalProfileViewState
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      _sizedBoxHeight(),
                       SizedBox(
-                        width: 24,
+                        width: 150,
+                        child: Text('Height*',
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w600,
+                                color: textBlack)),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: _textFeilds('Feet', _heightInFeetController,
+                                _heightInFeetFocus, _heightInInchesFocus),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: _textFeilds(
+                                'Inches',
+                                _heightInInchesController,
+                                _heightInInchesFocus,
+                                _majorAilmentFocus),
+                          ),
+                        ],
                       ),
                       _sizedBoxHeight(),
                       _textFeilds('Major Ailment', _majorAilmentController,
                           _majorAilmentFocus, _otherConditionsFocus),
                       _sizedBoxHeight(),
-                      _textFeilds('Other Conditions', _otherConditionsController,
-                          _otherConditionsFocus, _ethnicityFocus),
+                      _textFeilds(
+                          'Other Conditions',
+                          _otherConditionsController,
+                          _otherConditionsFocus,
+                          _ethnicityFocus),
                       _sizedBoxHeight(),
                       _textFeilds('Ethnicity', _ethnicityController,
                           _ethnicityFocus, _bloodGroupFocus),
@@ -333,7 +399,40 @@ class _EditPatientMedicalProfileViewState
                             height: 40,
                             child: ElevatedButton(
                               onPressed: () {
-                                _updatePatientMedicalProfile();
+                                if (_heightInFeetController.text
+                                    .trim()
+                                    .isEmpty) {
+                                  showToast("Please enter your height in feet",
+                                      context);
+                                } else if (double.parse(
+                                        _heightInFeetController.text) >
+                                    15) {
+                                  showToast("Please enter valid height in feet",
+                                      context);
+                                } else if (_heightInInchesController.text
+                                    .trim()
+                                    .isEmpty) {
+                                  showToast(
+                                      "Please enter your height in inches",
+                                      context);
+                                } else if (double.parse(
+                                        _heightInInchesController.text) >
+                                    12) {
+                                  showToast(
+                                      "Please enter valid height in inches",
+                                      context);
+                                } else {
+                                  _sharedPrefUtils.saveDouble(
+                                      'height',
+                                      double.parse(Conversion.FeetToCm(
+                                              double.parse(
+                                                  _heightInFeetController.text +
+                                                      '.' +
+                                                      _heightInInchesController
+                                                          .text))
+                                          .toString()));
+                                  _updatePatientMedicalProfile();
+                                }
                               },
                               style: ButtonStyle(
                                   foregroundColor:
@@ -429,6 +528,9 @@ class _EditPatientMedicalProfileViewState
       if (baseResponse.status == 'success') {
         progressDialog.close();
         Navigator.pop(context);
+        Navigator.pop(
+          context,
+        );
         showToast('Medical Profile updated successfully!', context);
       } else {
         showToast(baseResponse.message!, context);

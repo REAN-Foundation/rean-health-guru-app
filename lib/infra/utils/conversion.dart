@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Conversion {
   static double kgToLbs(double weightInKg) {
     return weightInKg * 2.20462;
@@ -8,10 +10,12 @@ class Conversion {
   }
 
   static double cmToFeet(double lenghtInCm) {
+    debugPrint('Height In cm ==> $lenghtInCm');
     return double.parse((lenghtInCm / 30.48).toStringAsFixed(1));
   }
 
   static double FeetToCm(double lenghtInFeet) {
+    debugPrint('Height In Feet ==> $lenghtInFeet');
     return double.parse((lenghtInFeet * 30.48).toStringAsFixed(3));
   }
 

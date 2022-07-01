@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -19,6 +21,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/widgets/primary_light_color_container.dart';
+import 'package:patient/utils/WebViewBrowser.dart';
 import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -41,6 +44,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   final _mobileNumberFocus = FocusNode();
   late ProgressDialog progressDialog;
   int? maxLengthOfPhone = 0;
+  bool? isPrivacyPolicyChecked = false;
+  bool privacyPolicyErrorVisibility = false;
 
   @override
   void initState() {
@@ -289,7 +294,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                     CircularProgressIndicator()
                   else
                     _getOTPButton(model),
-                  SizedBox(height: 80),
+                  SizedBox(height: 08),
+                  _privacyPolicy(),
                 ],
               ),
             ),
@@ -299,6 +305,71 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     );
   }
 
+  Widget _privacyPolicy() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Checkbox(
+                value: isPrivacyPolicyChecked,
+                onChanged: (value) {
+                  isPrivacyPolicyChecked = value;
+                  if (value!) {
+                    privacyPolicyErrorVisibility = false;
+                  }
+                  setState(() {});
+                }),
+            Expanded(
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                        text: getAppType() == "AHA"
+                            ? 'I agree to the American Heart Association’s '
+                            : "I agree to the REAN HealthGuru ",
+                        style: TextStyle(fontSize: 14, color: textBlack)),
+                    TextSpan(
+                        text: 'privacy policy',
+                        style: TextStyle(fontSize: 14, color: primaryColor),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            navigateToPrivacyPolicy();
+                          }),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+        Visibility(
+          visible: privacyPolicyErrorVisibility,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'You must accept the privacy policy to continue.',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontFamily: "Montserrat",
+                fontStyle: FontStyle.normal,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  navigateToPrivacyPolicy() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return WebViewBrowser(
+          tittle: 'privacy Policy', url: dotenv.env['PRIVACY_POLICY_URL']);
+    }));
+  }
 
   Widget _textFeild(String title, LoginViewModel model) {
     return Container(
@@ -426,14 +497,21 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
               if (mobileNumber!.trim().isEmpty) {
                 showToast('Please enter phone number', context);
               } else if (mobileNumber!.length == maxLengthOfPhone) {
-                countryCodeGlobe = countryCode;
-                model.setBusy(true);
-                if (dummyNumberList.contains(mobileNumber)) {
-                  Navigator.pushNamed(context, RoutePaths.OTP_Screen,
-                      arguments: mobileNumber);
-                  model.setBusy(false);
+                if (isPrivacyPolicyChecked!) {
+                  privacyPolicyErrorVisibility = false;
+                  setState(() {});
+                  countryCodeGlobe = countryCode;
+                  model.setBusy(true);
+                  if (dummyNumberList.contains(mobileNumber)) {
+                    Navigator.pushNamed(context, RoutePaths.OTP_Screen,
+                        arguments: mobileNumber);
+                    model.setBusy(false);
+                  } else {
+                    checkUserExistsOrNot(model);
+                  }
                 } else {
-                  checkUserExistsOrNot(model);
+                  privacyPolicyErrorVisibility = true;
+                  setState(() {});
                 }
               } else {
                 debugPrint('Please enter valid number');
@@ -702,6 +780,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   }
 
   _clearFeilds() {
+    isPrivacyPolicyChecked = false;
     progressDialog.close();
     mobileNumber = '';
     _mobileNumberController.clear();

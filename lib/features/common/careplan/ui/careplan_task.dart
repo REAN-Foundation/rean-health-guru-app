@@ -48,7 +48,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                   .elementAt(0)
                   .startAt
                   .toString())),*/
-          dateQueryFormat.format(dateTill.add(Duration(days: 0))),
+          dateQueryFormat.format(dateTill.subtract(Duration(days: 3))),
           dateQueryFormat.format(dateTill.add(Duration(days: 82))));
 
       if (userTaskResponse.status == 'success') {

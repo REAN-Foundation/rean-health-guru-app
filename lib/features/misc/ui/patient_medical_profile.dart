@@ -49,6 +49,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
     if (height != 0.0) {
       heightInFeet = Conversion.cmToFeet(height);
     }
+    setState(() {});
   }
 
   @override
@@ -84,40 +85,6 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              SizedBox(
-                                width: 150,
-                                child: Text('Height',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: textBlack)),
-                              ),
-                              Text(': ',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: textBlack)),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Expanded(
-                                child: Text(
-                                    height == 0
-                                        ? ''
-                                        : heightInFeet.toString() + ' Foot',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: textBlack)),
-                              ),
-                            ],
-                          ),
                           SizedBox(
                             height: 8,
                           ),
@@ -522,6 +489,43 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                           SizedBox(
                             height: 8,
                           ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Height',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: textBlack)),
+                              ),
+                              Text(': ',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Expanded(
+                                child: Text(
+                                    height == 0
+                                        ? ''
+                                        : heightInFeet
+                                                .toString()
+                                                .replaceAll('.', "'") +
+                                            '"',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
                         ],
                       ),
                     ),
@@ -566,6 +570,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
 
       if (allergiesPojo.status == 'success') {
         healthProfile = allergiesPojo.data!.healthProfile;
+        loadSharedPref();
       } else {}
     } catch (CustomException) {
       debugPrint('Error ' + CustomException.toString());

@@ -264,21 +264,27 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
             if (bmiValue == 0.0)
               model.busy
                   ? Container()
-                  : InkWell(
-                      onTap: () {
-                        showToast(
-                            "Please add height by clicking on edit", context);
-                        Navigator.popAndPushNamed(
-                            context, RoutePaths.My_Medical_Profile);
-                      },
-                      child: Text(
-                        'Add height to see BMI',
-                        semanticsLabel: bmiValue.toStringAsFixed(2),
-                        style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            fontWeight: FontWeight.w500,
-                            fontSize: bmiValue == 0.0 ? 14 : 28.0,
-                            color: Colors.lightBlueAccent),
+                  : Semantics(
+                      button: true,
+                      label: 'Add height to see BMI',
+                      child: ExcludeSemantics(
+                        child: InkWell(
+                          onTap: () {
+                            showToast("Please add height by clicking on edit",
+                                context);
+                            Navigator.popAndPushNamed(
+                                context, RoutePaths.My_Medical_Profile);
+                          },
+                          child: Text(
+                            'Add height to see BMI',
+                            semanticsLabel: bmiValue.toStringAsFixed(2),
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.w500,
+                                fontSize: bmiValue == 0.0 ? 14 : 28.0,
+                                color: Colors.lightBlueAccent),
+                          ),
+                        ),
                       ),
                     ),
             if (bmiValue != 0.0)
@@ -848,8 +854,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
-        _sharedPrefUtils.saveDouble(
-            'weight', double.parse(entertedWeight.toString()));
+        _sharedPrefUtils.saveDouble('weight', entertedWeight.toString());
         showToast(baseResponse.message!, context);
         Navigator.pop(context);
       } else {
@@ -871,8 +876,11 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
       if (getMyVitalsHistory.status == 'success') {
         records.clear();
         records.addAll(getMyVitalsHistory.data!.bodyWeightRecords!.items!);
-        weight = records.elementAt(0).bodyWeight;
-        _sharedPrefUtils.saveDouble('weight', weight);
+
+        if (records.length > 0) {
+          weight = double.parse(records.elementAt(0).bodyWeight.toString());
+          _sharedPrefUtils.saveDouble('weight', weight);
+        }
         if (height != 0) {
           debugPrint('Inside');
           calculetBMI();

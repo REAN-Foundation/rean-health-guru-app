@@ -132,3 +132,35 @@ class Answer {
 
   Answer(this.index, this.text);
 }
+
+class ListNodeAnswer {
+  ListNodeAnswer(String? questionId, String? responseType, int? answer) {
+    _questionId = questionId;
+    _responseType = responseType;
+    _answer = answer;
+  }
+
+  ListNodeAnswer.fromJson(dynamic json) {
+    _questionId = json['QuestionId'];
+    _responseType = json['ResponseType'];
+    _answer = json['Answer'];
+  }
+
+  String? _questionId;
+  String? _responseType;
+  int? _answer;
+
+  String? get questionId => _questionId;
+
+  String? get responseType => _responseType;
+
+  int? get answer => _answer;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['QuestionId'] = _questionId;
+    map['ResponseType'] = _responseType;
+    map['Answer'] = _answer;
+    return map;
+  }
+}

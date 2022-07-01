@@ -304,7 +304,10 @@ class _AddQuitSmokingGoalsForCarePlanViewState
       body['GoalSettingTaskId'] = 'e73575f5-cd5d-4177-9af8-ae1565a576a8';
 
       final BaseResponse baseResponse = await model.addGoalsTask(
-          startCarePlanResponseGlob!.data!.carePlan!.id.toString(),
+          carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+              .elementAt(0)
+              .enrollmentId
+              .toString(),
           'physical-activity-goal',
           body);
 

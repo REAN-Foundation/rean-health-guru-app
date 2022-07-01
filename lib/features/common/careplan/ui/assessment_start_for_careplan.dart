@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
+import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 
 //ignore: must_be_immutable
 class AssessmentStartCarePlanView extends StatefulWidget {
-  Assessmment? assesment;
+  Next? next;
 
-  AssessmentStartCarePlanView(assesmentC) {
-    assesment = assesmentC;
+  AssessmentStartCarePlanView(nextQue) {
+    next = nextQue;
   }
 
   @override
@@ -38,16 +38,17 @@ class _AssessmentStartCarePlanViewState
           key: _scaffoldKey,
           backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            elevation: 0,
+            backgroundColor: primaryColor,
+            brightness: Brightness.dark,
             title: Text(
               'Assessment',
               style: TextStyle(
                   fontSize: 16.0,
-                  color: primaryColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.w600),
             ),
-            iconTheme: IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.white),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -61,20 +62,58 @@ class _AssessmentStartCarePlanViewState
               )*/
             ],
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  height: 40,
-                ),
-                quizQuestionOne(),
-                /*  SizedBox(height: 20,),
-                    quizQuestionTwo(),*/
-              ],
-            ),
+          body: Stack(
+            children: [
+              Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    color: primaryColor,
+                    height: 100,
+                    width: MediaQuery.of(context).size.width,
+                  )),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    color: primaryColor,
+                    height: 0,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(0.0),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(12),
+                              topLeft: Radius.circular(12))),
+                      child: body(),
+                    ),
+                  )
+                ],
+              ),
+            ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget body() {
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(
+            height: 40,
+          ),
+          quizQuestionOne(),
+          /*  SizedBox(height: 20,),
+                    quizQuestionTwo(),*/
+        ],
       ),
     );
   }
@@ -93,12 +132,12 @@ class _AssessmentStartCarePlanViewState
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                widget.assesment!.question!.questionText!,
+                widget.next!.title!,
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w600,
                     fontSize: 16),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
               ),
             ),
           ),
@@ -139,7 +178,7 @@ class _AssessmentStartCarePlanViewState
                 padding: const EdgeInsets.all(16.0),
                 child: InkWell(
                   onTap: () {
-                    Navigator.pop(context, 0);
+                    Navigator.pop(context, true);
                   },
                   child: Container(
                       height: 40,
@@ -171,7 +210,7 @@ class _AssessmentStartCarePlanViewState
                 padding: const EdgeInsets.all(16.0),
                 child: InkWell(
                   onTap: () {
-                    Navigator.pop(context, 1);
+                    Navigator.pop(context, false);
                     //Navigator.pushNamed(context, RoutePaths.Assessment_Question_Care_Plan);
                   },
                   child: Container(

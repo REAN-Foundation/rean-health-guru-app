@@ -52,6 +52,7 @@ class RoutePaths {
       'SetupFamilyMemberCarePlan';
   static const String Successfully_Setup_For_Care_Plan =
       'SuccessfullySetupCarePlan';
+  static const String RSS_FEED_LIST = 'RssFeedList';
   static const String Learn_More_Care_Plan = 'LearnMoreForCarePlan';
   static const String Video_More_Care_Plan = 'VideoMoreForCarePlan';
   static const String Mindfull_Moment_Care_Plan = 'MindfullMomentCarePlan';

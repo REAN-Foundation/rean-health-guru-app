@@ -1,4 +1,4 @@
-import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
+import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
 
 class AssortedViewConfigs {
   //toShow
@@ -9,5 +9,5 @@ class AssortedViewConfigs {
   String testToshow = '';
   bool isNextButtonVisible = false;
   String? header = '';
-  late Task task;
+  late UserTask? task;
 }

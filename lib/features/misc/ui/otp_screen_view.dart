@@ -435,7 +435,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       debugPrint('OTP = $otp');
 
       final body = <String, dynamic>{};
-      body['Phone'] = dummyNumberList.contains(mobileNumber)
+      body['Phone'] = isDummyNumber
           ? mobileNumber
           : countryCodeGlobe! + '-' + mobileNumber!;
       body['Otp'] = otp;

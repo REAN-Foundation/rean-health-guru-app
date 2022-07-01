@@ -213,30 +213,30 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
             ),
           ),
-          /*if (Platform.isIOS) ...[
-                InkWell(
-                  onTap: () {
-                    Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
-                  },
-                  child: Container(
-                    height: 48,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 40,
+          /*if (Platform.isIOS) ...[*/
+          InkWell(
+              onTap: () {
+                Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
+              },
+              child: Container(
+                height: 48,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 40,
                         ),
                         Text(
-                          'Physical Health Management',
-                          style: TextStyle(
-                              color: primaryColor, fontWeight: FontWeight.w600),
-                        ),
+                          'Activity',
+                      style: TextStyle(
+                          color: primaryColor, fontWeight: FontWeight.w600),
+                    ),
                       ],
                     ),
                   ),
                 ),
-              ],
-              InkWell(
+          //],
+          /*InkWell(
                 onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.My_Nutrition,
                       arguments: '');
@@ -257,37 +257,36 @@ class _AppDrawerState extends State<AppDrawer> {
                     ],
                   ),
                 ),
-              ),
-              Visibility(
+              ),*/
+          Visibility(
                 visible: false,
-                child: InkWell(
-                  onTap: () {
-                    if (startCarePlanResponseGlob == null) {
-                      Navigator.popAndPushNamed(
-                          context, RoutePaths.Select_Care_Plan);
-                    } else {
-                      Navigator.popAndPushNamed(
-                          context, RoutePaths.My_Care_Plan);
-                    }
-                  },
-                  child: Container(
+            child: InkWell(
+              onTap: () {
+                if (carePlanEnrollmentForPatientGlobe == null) {
+                  Navigator.popAndPushNamed(
+                      context, RoutePaths.Select_Care_Plan);
+                } else {
+                  Navigator.popAndPushNamed(context, RoutePaths.My_Care_Plan);
+                }
+              },
+              child: Container(
                     height: 48,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         SizedBox(
                           width: 40,
-                        ),
-                        Text(
-                          'Care Plan',
-                          style: TextStyle(
-                              color: primaryColor, fontWeight: FontWeight.w600),
-                        ),
-                      ],
                     ),
-                  ),
+                    Text(
+                      'Care Plan',
+                      style: TextStyle(
+                          color: primaryColor, fontWeight: FontWeight.w600),
+                    ),
+                  ],
                 ),
-              ),*/
+              ),
+            ),
+          ),
           /*InkWell(
                 onTap: (){
                   //Navigator.popAndPushNamed(context, RoutePaths.Set_Goals_Care_Plan);
@@ -500,15 +499,15 @@ class _AppDrawerState extends State<AppDrawer> {
           TextButton(
             child: Text('Yes'),
             onPressed: () {
-              startCarePlanResponseGlob = null;
+              carePlanEnrollmentForPatientGlobe = null;
               _sharedPrefUtils.save('CarePlan', null);
               _sharedPrefUtils.saveBoolean('login', null);
               _sharedPrefUtils.clearAll();
               chatList.clear();
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (context) {
-                    return LoginWithOTPView();
-                  }), (Route<dynamic> route) => false);
+                return LoginWithOTPView();
+              }), (Route<dynamic> route) => false);
             },
           ),
           TextButton(

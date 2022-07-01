@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -7,7 +8,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 
 //ignore: must_be_immutable
 class AssessmentQuestionCarePlanView extends StatefulWidget {
-  Assessmment? assesment;
+  Next? assesment;
 
   AssessmentQuestionCarePlanView(assesmentC) {
     assesment = assesmentC;
@@ -35,29 +36,11 @@ class _AssessmentQuestionCarePlanViewState
     'Dry or frequent hacking cough': false,
   };
 
-  var holder_1 = [];
-
-  getItems() {
-    numbers.forEach((key, value) {
-      if (value == true) {
-        holder_1.add(key);
-      }
-    });
-
-    // Printing all selected items on Terminal screen.
-    debugPrint(holder_1.toString());
-    // Here you will get all your selected Checkbox items.
-
-    // Clear array after use.
-    holder_1.clear();
-  }
-
   processAnswer() {
-    for (int i = 0;
-        i < widget.assesment!.question!.answerOptions!.length;
-        i++) {
-      answers.add(
-          Answer(i, widget.assesment!.question!.answerOptions!.elementAt(i)));
+    for (int i = 0; i < widget.assesment!.options!.length; i++) {
+      answers.add(Answer(
+          widget.assesment!.options!.elementAt(i).sequence as int,
+          widget.assesment!.options!.elementAt(i).text.toString()));
     }
     setState(() {});
   }
@@ -77,16 +60,17 @@ class _AssessmentQuestionCarePlanViewState
           key: _scaffoldKey,
           backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            elevation: 0,
+            backgroundColor: primaryColor,
+            brightness: Brightness.dark,
             title: Text(
               'Assessment',
               style: TextStyle(
                   fontSize: 16.0,
-                  color: primaryColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.w600),
             ),
-            iconTheme: IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: Colors.white),
             actions: <Widget>[
               /*IconButton(
                 icon: Icon(
@@ -100,15 +84,49 @@ class _AssessmentQuestionCarePlanViewState
               )*/
             ],
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                quizQuestionOne(),
-                /*  SizedBox(height: 20,),
+          body: Stack(
+            children: [
+              Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    color: primaryColor,
+                    height: 100,
+                    width: MediaQuery.of(context).size.width,
+                  )),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    color: primaryColor,
+                    height: 0,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(0.0),
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(12),
+                              topLeft: Radius.circular(12))),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            quizQuestionOne(),
+                            /*  SizedBox(height: 20,),
                     quizQuestionTwo(),*/
-              ],
-            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -125,22 +143,29 @@ class _AssessmentQuestionCarePlanViewState
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(12), topLeft: Radius.circular(12))),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            color: colorF6F6FF,
+            decoration: BoxDecoration(
+                color: colorF6F6FF,
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(12),
+                    topLeft: Radius.circular(12))),
             width: MediaQuery.of(context).size.width,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                widget.assesment!.question!.questionText!,
+                widget.assesment!.title.toString(),
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w600,
                     fontSize: 16),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
               ),
             ),
           ),

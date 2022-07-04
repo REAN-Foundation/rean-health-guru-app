@@ -345,7 +345,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
             )
           ],
         ),
-        Visibility(
+        /*Visibility(
           visible: privacyPolicyErrorVisibility,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -359,7 +359,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
               ),
             ),
           ),
-        ),
+        ),*/
       ],
     );
   }
@@ -520,6 +520,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   }
                   checkUserExistsOrNot(model);
                 } else {
+                  showToast('You must accept the privacy policy to continue',
+                      context);
                   privacyPolicyErrorVisibility = true;
                   setState(() {});
                 }

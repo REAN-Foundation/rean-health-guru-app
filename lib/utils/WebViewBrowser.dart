@@ -34,6 +34,7 @@ class _WebViewBrowserState extends State<WebViewBrowser> {
     debugPrint('URL ==> ${widget._url}');
     return Scaffold(
       backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: primaryColor,
@@ -92,7 +93,7 @@ class _WebViewBrowserState extends State<WebViewBrowser> {
                     children: [
                       isLoading
                           ? Expanded(
-                              flex: 10,
+                          flex: 3000,
                               child: Center(child: CircularProgressIndicator()))
                           : Container(),
                       Expanded(

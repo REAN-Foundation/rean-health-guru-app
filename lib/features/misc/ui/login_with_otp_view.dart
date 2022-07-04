@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
@@ -345,7 +346,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
             )
           ],
         ),
-        /*Visibility(
+        Visibility(
           visible: privacyPolicyErrorVisibility,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -359,7 +360,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
               ),
             ),
           ),
-        ),*/
+        ),
       ],
     );
   }
@@ -520,8 +521,14 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   }
                   checkUserExistsOrNot(model);
                 } else {
-                  showToast('You must accept the privacy policy to continue',
-                      context);
+                  /*showToast('You must accept the privacy policy to continue',
+                      context);*/
+                  Future.delayed(const Duration(seconds: 2), () {
+                    debugPrint('Inside Delay');
+                    SemanticsService.announce(
+                        'You must accept the privacy policy to continue',
+                        TextDirection.ltr);
+                  });
                   privacyPolicyErrorVisibility = true;
                   setState(() {});
                 }
@@ -678,7 +685,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
             'OTP has been successfully sent on your mobile number', context);
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
-        _sharedPrefUtils.saveBoolean('login1.8', true);
+        _sharedPrefUtils.saveBoolean('login1.8.70', true);
         _clearFeilds();
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {

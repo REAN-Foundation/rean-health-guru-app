@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -19,6 +22,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/widgets/primary_light_color_container.dart';
+import 'package:patient/utils/WebViewBrowser.dart';
 import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -41,6 +45,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   final _mobileNumberFocus = FocusNode();
   late ProgressDialog progressDialog;
   int? maxLengthOfPhone = 0;
+  bool? isPrivacyPolicyChecked = false;
+  bool privacyPolicyErrorVisibility = false;
 
   @override
   void initState() {
@@ -289,7 +295,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                     CircularProgressIndicator()
                   else
                     _getOTPButton(model),
-                  SizedBox(height: 80),
+                  SizedBox(height: 08),
+                  _privacyPolicy(),
                 ],
               ),
             ),
@@ -299,6 +306,71 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     );
   }
 
+  Widget _privacyPolicy() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Checkbox(
+                value: isPrivacyPolicyChecked,
+                onChanged: (value) {
+                  isPrivacyPolicyChecked = value;
+                  if (value!) {
+                    privacyPolicyErrorVisibility = false;
+                  }
+                  setState(() {});
+                }),
+            Expanded(
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                        text: getAppType() == "AHA"
+                            ? 'I agree to the American Heart Association’s '
+                            : "I agree to the REAN HealthGuru ",
+                        style: TextStyle(fontSize: 14, color: textBlack)),
+                    TextSpan(
+                        text: 'privacy policy',
+                        style: TextStyle(fontSize: 14, color: primaryColor),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            navigateToPrivacyPolicy();
+                          }),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+        Visibility(
+          visible: privacyPolicyErrorVisibility,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'You must accept the privacy policy to continue.',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontFamily: "Montserrat",
+                fontStyle: FontStyle.normal,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  navigateToPrivacyPolicy() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return WebViewBrowser(
+          tittle: 'privacy Policy', url: dotenv.env['PRIVACY_POLICY_URL']);
+    }));
+  }
 
   Widget _textFeild(String title, LoginViewModel model) {
     return Container(
@@ -427,24 +499,39 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
               if (mobileNumber!.trim().isEmpty) {
                 showToast('Please enter phone number', context);
               } else if (mobileNumber!.length == maxLengthOfPhone) {
-                countryCodeGlobe = countryCode;
-                model.setBusy(true);
-                if (dummyNumberList.contains(mobileNumber)) {
-                  isDummyNumber = true;
-                  /*Navigator.pushNamed(context, RoutePaths.OTP_Screen,
+                if (isPrivacyPolicyChecked!) {
+                  privacyPolicyErrorVisibility = false;
+                  setState(() {});
+                  countryCodeGlobe = countryCode;
+                  model.setBusy(true);
+                  if (dummyNumberList.contains(mobileNumber)) {
+                    isDummyNumber = true;
+                    /*Navigator.pushNamed(context, RoutePaths.OTP_Screen,
                       arguments: mobileNumber);
                   model.setBusy(false);*/
-                } else if (mobileNumber!.startsWith('100000')) {
-                  isDummyNumber = true;
-                  /*var numberEnding = int.parse(mobileNumber!.substring(5));
+                  } else if (mobileNumber!.startsWith('100000')) {
+                    isDummyNumber = true;
+                    /*var numberEnding = int.parse(mobileNumber!.substring(5));
                   debugPrint('Number Ending ==> $numberEnding');
                   if (numberEnding >= 1 && numberEnding <= 1000) {
                     Navigator.pushNamed(context, RoutePaths.OTP_Screen,
                         arguments: mobileNumber);
                     model.setBusy(false);
                   }*/
+                  }
+                  checkUserExistsOrNot(model);
+                } else {
+                  /*showToast('You must accept the privacy policy to continue',
+                      context);*/
+                  Future.delayed(const Duration(seconds: 2), () {
+                    debugPrint('Inside Delay');
+                    SemanticsService.announce(
+                        'You must accept the privacy policy to continue',
+                        TextDirection.ltr);
+                  });
+                  privacyPolicyErrorVisibility = true;
+                  setState(() {});
                 }
-                checkUserExistsOrNot(model);
               } else {
                 debugPrint('Please enter valid number');
                 showToast('Please enter valid number', context);
@@ -598,7 +685,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
             'OTP has been successfully sent on your mobile number', context);
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
-        _sharedPrefUtils.saveBoolean('login1.8', true);
+        _sharedPrefUtils.saveBoolean('login1.8.70', true);
         _clearFeilds();
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
@@ -714,6 +801,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   }
 
   _clearFeilds() {
+    isPrivacyPolicyChecked = false;
     progressDialog.close();
     mobileNumber = '';
     _mobileNumberController.clear();

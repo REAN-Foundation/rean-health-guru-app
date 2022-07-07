@@ -5,8 +5,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
+import 'package:group_radio_button/group_radio_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -24,7 +24,6 @@ import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:status_alert/status_alert.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 import 'base_widget.dart';
 
@@ -55,6 +54,8 @@ class _CreateProfileState extends State<CreateProfile> {
   late ProgressDialog progressDialog;
   String fullName = '';
   var dateFormat = DateFormat('MMM dd, yyyy');
+
+  final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
 
   //Patient patient;
   //String profileImage = "";
@@ -629,15 +630,14 @@ class _CreateProfileState extends State<CreateProfile> {
           SizedBox(
             height: 10,
           ),
-          ToggleSwitch(
+          /*ToggleSwitch(
               minWidth: 120.0,
               cornerRadius: 20,
               initialLabelIndex: 0,
               totalSwitches: 2,
               activeBgColor: [Colors.green],
               inactiveBgColor: Colors.grey,
-              labels: ['Male', 'Female'],
-              icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
+              labels: ['Male', 'Female', 'Intersex'],
               activeBgColors: [
                 [Colors.blue],
                 [Colors.pink]
@@ -646,10 +646,27 @@ class _CreateProfileState extends State<CreateProfile> {
                 debugPrint('switched to: $index');
                 if (index == 0) {
                   selectedGender = 'Male';
-                } else {
+                } else if(index == 1) {
                   selectedGender = 'Female';
+                } else {
+                  selectedGender = 'Intersex';
                 }
-              })
+              })*/
+          RadioGroup<String>.builder(
+            items: radioItemsForGender,
+            groupValue: selectedGender.toString(),
+            direction: Axis.horizontal,
+            horizontalAlignment: MainAxisAlignment.start,
+            onChanged: (item) {
+              debugPrint(item);
+              selectedGender = item.toString();
+              setState(() {});
+            },
+            itemBuilder: (item) => RadioButtonBuilder(
+              item,
+              textPosition: RadioButtonTextPosition.right,
+            ),
+          ),
         ],
       ),
     );

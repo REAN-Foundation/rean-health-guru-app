@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:patient/features/common/careplan/models/check_careplan_eligibility.dart';
 import 'package:patient/features/common/careplan/models/enroll_care_clan_response.dart';
 import 'package:patient/features/common/careplan/models/get_aha_careplans_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
@@ -31,6 +32,8 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   var dateFormat = DateFormat('dd MMM, yyyy');
   var dateFormatStandard = DateFormat('yyyy-MM-dd');
   String startDate = '';
+  bool? carePlanEligibility = false;
+  String? carePlanEligibilityMsg = '';
 
   @override
   void initState() {
@@ -87,6 +90,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             _ahaCarePlansResponse.data!.availablePlans!.elementAt(i);
       }
     }
+    _checkCareplanEligibility(carePlanTypes!.code.toString());
   }
 
   @override
@@ -676,8 +680,10 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     showToast('Please select care plan', context);
                   } else if (startDate == '') {
                     showToast('Please select start date', context);
-                  } else {
+                  } else if (carePlanEligibility!) {
                     startCarePlan();
+                  } else {
+                    showToast(carePlanEligibilityMsg.toString(), context);
                   }
                 },
                 child: Container(
@@ -729,6 +735,27 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     }
   }
 
+  _checkCareplanEligibility(String code) async {
+    try {
+      final CheckCareplanEligibility response =
+          await model.checkCarePlanEligibility(code);
+      debugPrint('Eligibility of Care Plan ==> ${response.toJson()}');
+      if (response.status == 'success') {
+        carePlanEligibility = response.data!.eligibility!.eligible;
+        carePlanEligibilityMsg = response.data!.eligibility!.reason;
+        if (!carePlanEligibility!) {
+          showToast(carePlanEligibilityMsg.toString(), context);
+        }
+      } else {
+        showToast(response.message!, context);
+      }
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
   showSuccessDialog() {
     Dialog sucsessDialog = Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
@@ -763,7 +790,8 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               Padding(
                 padding: EdgeInsets.all(15.0),
                 child: Text(
-                  'You Have Successfully registered with\nAHAHF Care Plan ',
+                  'You Have Successfully registered with\n' +
+                      carePlanTypes!.displayName.toString(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.black,

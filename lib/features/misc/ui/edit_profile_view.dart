@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:group_radio_button/group_radio_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +29,6 @@ import 'package:patient/infra/widgets/login_header.dart';
 import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:status_alert/status_alert.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 import 'base_widget.dart';
 import 'login_with_otp_view.dart';
@@ -93,6 +93,8 @@ class _EditProfileState extends State<EditProfile> {
   String countryCode = '';
   String? imageResourceId = '';
   var _api_key;
+
+  final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
 
   @override
   void initState() {
@@ -1000,9 +1002,9 @@ class _EditProfileState extends State<EditProfile> {
                     keyboardType: TextInputType.streetAddress,
                     maxLines: 1,
                     enabled: isEditable,
-                    textInputAction: TextInputAction.done,
+                    textInputAction: TextInputAction.next,
                     onFieldSubmitted: (term) {
-                      //_fieldFocusChange(context, _cityFocus, _addressFocus);
+                      _fieldFocusChange(context, _cityFocus, _countryFocus);
                     },
                     decoration: InputDecoration(
                         border: InputBorder.none,
@@ -1054,9 +1056,9 @@ class _EditProfileState extends State<EditProfile> {
                     keyboardType: TextInputType.streetAddress,
                     maxLines: 1,
                     enabled: isEditable,
-                    textInputAction: TextInputAction.done,
+                    textInputAction: TextInputAction.next,
                     onFieldSubmitted: (term) {
-                      //_fieldFocusChange(context, _cityFocus, _addressFocus);
+                      _fieldFocusChange(context, _countryFocus, _postalFocus);
                     },
                     decoration: InputDecoration(
                         border: InputBorder.none,
@@ -1887,30 +1889,25 @@ class _EditProfileState extends State<EditProfile> {
           ),
           isEditable
               ? Semantics(
-                  label: selectedGender,
+            label: selectedGender,
                   child: AbsorbPointer(
-                      absorbing: !isEditable,
-                      child: ToggleSwitch(
-                          minWidth: 80.0,
-                          cornerRadius: 20,
-                          initialLabelIndex: selectedGender == 'Male' ? 0 : 1,
-                          totalSwitches: 2,
-                          activeBgColor: [Colors.green],
-                          inactiveBgColor: Colors.grey,
-                          labels: ['Male', 'Female'],
-                          /*icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],*/
-                          activeBgColors: [
-                            [Colors.blue],
-                            [Colors.pink]
-                          ],
-                          onToggle: (index) {
-                            debugPrint('switched to: $index');
-                            if (index == 0) {
-                              selectedGender = 'Male';
-                            } else {
-                              selectedGender = 'Female';
-                            }
-                          })),
+                    absorbing: !isEditable,
+                    child: RadioGroup<String>.builder(
+                      items: radioItemsForGender,
+                      groupValue: selectedGender.toString(),
+                      direction: Axis.horizontal,
+                      horizontalAlignment: MainAxisAlignment.start,
+                      onChanged: (item) {
+                        debugPrint(item);
+                        selectedGender = item;
+                        setState(() {});
+                      },
+                      itemBuilder: (item) => RadioButtonBuilder(
+                        item,
+                        textPosition: RadioButtonTextPosition.right,
+                      ),
+                    ),
+                  ),
                 )
               : Semantics(
                   label: 'Gender ' + selectedGender.toString(),
@@ -2027,25 +2024,8 @@ class _EditProfileState extends State<EditProfile> {
             Expanded(flex: 1, child: _entryLastNameField('Last Name')),
           ],
         ),
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 1,
-              child: _genderWidget(),
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            Expanded(
-              flex: 1,
-              child: _dateOfBirthField('Date Of Birth'),
-            ),
-          ],
-        ),
-
+        _genderWidget(),
+        _dateOfBirthField('Date Of Birth'),
         _entryMobileNoField('Mobile Number'),
 
         _entryEmailField('Email*'),

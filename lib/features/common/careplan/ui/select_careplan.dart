@@ -790,7 +790,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               Padding(
                 padding: EdgeInsets.all(15.0),
                 child: Text(
-                  'You Have Successfully registered with\n' +
+                  'You have successfully registered with\n' +
                       carePlanTypes!.displayName.toString(),
                   textAlign: TextAlign.center,
                   style: TextStyle(

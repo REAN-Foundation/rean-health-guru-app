@@ -11,16 +11,12 @@ import 'package:patient/infra/utils/conversion.dart';
 class AddHeightDialog extends StatefulWidget {
   late Function _submitButtonListner;
   double? _height;
-  double? _weight;
 
   // ignore
   //AllergiesDialog(@required this._allergiesCategoryMenuItems,@required this._allergiesSeveretyMenuItems, @required Function this.submitButtonListner, this.patientId);
 
   AddHeightDialog(
-      {Key? key,
-      required Function submitButtonListner,
-      double? height,
-      double? weight})
+      {Key? key, required Function submitButtonListner, double? height})
       : super(key: key) {
     _submitButtonListner = submitButtonListner;
     _height = height;

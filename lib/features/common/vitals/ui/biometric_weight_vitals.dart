@@ -877,7 +877,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         records.clear();
         records.addAll(getMyVitalsHistory.data!.bodyWeightRecords!.items!);
 
-        if (records.length > 0) {
+        if (records.isNotEmpty) {
           weight = double.parse(records.elementAt(0).bodyWeight.toString());
           _sharedPrefUtils.saveDouble('weight', weight);
         }

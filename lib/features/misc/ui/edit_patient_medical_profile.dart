@@ -41,7 +41,6 @@ class _EditPatientMedicalProfileViewState
 
   final _heightInFeetController = TextEditingController();
   final _heightInInchesController = TextEditingController();
-  final _weightFocus = FocusNode();
   final _heightInFeetFocus = FocusNode();
   final _heightInInchesFocus = FocusNode();
 

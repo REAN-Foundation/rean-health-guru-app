@@ -241,7 +241,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                     ImageIcon(
                       AssetImage('res/images/ic_bmi.png'),
                       size: 24,
-                      color: colorGreen,
+                      color: primaryColor,
                     ),
                     SizedBox(
                       width: 8,
@@ -252,7 +252,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 18.0,
-                          color: colorGreen),
+                          color: primaryColor),
                     ),
                   ],
                 ),

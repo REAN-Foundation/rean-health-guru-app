@@ -7,6 +7,7 @@ import 'package:patient/features/common/appointment_booking/models/pharmacy_list
 import 'package:patient/features/common/careplan/models/add_team_member_response.dart';
 import 'package:patient/features/common/careplan/models/answer_assessment_response.dart';
 import 'package:patient/features/common/careplan/models/assesment_response.dart';
+import 'package:patient/features/common/careplan/models/check_careplan_eligibility.dart';
 import 'package:patient/features/common/careplan/models/create_goal_response.dart';
 import 'package:patient/features/common/careplan/models/create_health_priority_response.dart';
 import 'package:patient/features/common/careplan/models/enroll_care_clan_response.dart';
@@ -46,6 +47,25 @@ class PatientCarePlanViewModel extends BaseModel {
     setBusy(false);
     // Convert and return
     return GetAHACarePlansResponse.fromJson(response);
+  }
+
+  Future<CheckCareplanEligibility> checkCarePlanEligibility(
+      String planCode) async {
+    // Get user profile for id
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/care-plans/eligibility/' +
+            patientUserId! +
+            '/providers/AHA/careplans/' +
+            planCode,
+        header: map);
+    setBusy(false);
+    // Convert and return
+    return CheckCareplanEligibility.fromJson(response);
   }
 
   Future<EnrollCarePlanResponse> startCarePlan(Map body) async {

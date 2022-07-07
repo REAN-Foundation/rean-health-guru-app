@@ -1771,6 +1771,40 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             //showToast('Task completed successfully');
           });
           break;
+        case 'ActionPlan':
+          assrotedUICount = 3;
+          final AssortedViewConfigs newAssortedViewConfigs =
+              AssortedViewConfigs();
+          newAssortedViewConfigs.toShow = '1';
+          newAssortedViewConfigs.testToshow = '2';
+          newAssortedViewConfigs.isNextButtonVisible = false;
+          newAssortedViewConfigs.header = task.action!.type;
+          newAssortedViewConfigs.task = task;
+
+          Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
+                  arguments: newAssortedViewConfigs)
+              .then((value) {
+            getUserTask();
+            //showToast('Task completed successfully');
+          });
+          break;
+        case 'WordBank':
+          assrotedUICount = 3;
+          final AssortedViewConfigs newAssortedViewConfigs =
+              AssortedViewConfigs();
+          newAssortedViewConfigs.toShow = '1';
+          newAssortedViewConfigs.testToshow = '2';
+          newAssortedViewConfigs.isNextButtonVisible = false;
+          newAssortedViewConfigs.header = task.action!.type;
+          newAssortedViewConfigs.task = task;
+
+          Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
+                  arguments: newAssortedViewConfigs)
+              .then((value) {
+            getUserTask();
+            //showToast('Task completed successfully');
+          });
+          break;
         case 'Assessment':
           if (!task.finished) {
             debugPrint("Assessment 1");

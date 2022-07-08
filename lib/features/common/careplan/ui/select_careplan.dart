@@ -662,21 +662,21 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     );
   }
 
-  _launchURL(String _url) async {
+/*  _launchURL(String _url) async {
     if (!await launch(_url)) {
     } else {
       throw 'Could not launch $_url';
     }
-  }
+  }*/
 
   Widget registerFooter() {
     return Container(
-        height: carePlanEligibilityMsg != '' ? 120 : 64,
+        height: carePlanEligibilityMsg != '' ? 120 : 82,
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            carePlanEligibilityMsg != ''
+            carePlanEligibilityMsg != '' || carePlanEligibilityMsg != null
                 ? Linkify(
                     onOpen: (link) async {
                       if (await canLaunch(link.url)) {
@@ -686,7 +686,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                       }
                     },
                     options: LinkifyOptions(humanize: false),
-                    text: carePlanEligibilityMsg.toString() + '\n   asd',
+                    text: carePlanEligibilityMsg.toString(),
                     maxLines: 2,
                     style: TextStyle(color: Colors.red),
                     linkStyle: TextStyle(color: Colors.lightBlueAccent),
@@ -765,10 +765,12 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       debugPrint('Eligibility of Care Plan ==> ${response.toJson()}');
       if (response.status == 'success') {
         carePlanEligibility = response.data!.eligibility!.eligible;
-        carePlanEligibilityMsg = response.data!.eligibility!.reason;
-        if (!carePlanEligibility!) {
-          showToast(carePlanEligibilityMsg.toString(), context);
+        if (response.data!.eligibility!.reason != null) {
+          carePlanEligibilityMsg = response.data!.eligibility!.reason;
         }
+        // if (!carePlanEligibility!) {
+        //showToast(carePlanEligibilityMsg.toString(), context);
+        //}
       } else {
         showToast(response.message!, context);
       }

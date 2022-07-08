@@ -49,6 +49,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
   @override
   void initState() {
+    progressDialog = ProgressDialog(context: context);
     getVitalsHistory();
     debugPrint('Country Local ==> ${getCurrentLocale()}');
     if (getCurrentLocale() == 'US') {
@@ -84,7 +85,6 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
   @override
   Widget build(BuildContext context) {
-    progressDialog = ProgressDialog(context: context);
     return BaseWidget<PatientVitalsViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
@@ -598,9 +598,9 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
               child: Text(
                 unit == 'lbs'
                     ? (double.parse(record.bodyWeight.toString()) * 2.20462)
-                    .toStringAsFixed(1) +
-                    ' lbs'
-                    : record.bodyWeight.toString() + ' Kgs',
+                            .toStringAsFixed(1) +
+                        ' lbs'
+                    : record.bodyWeight.toStringAsFixed(1) + ' Kgs',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -853,8 +853,11 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
       await model.addMyVitals('body-weights', map);
 
       if (baseResponse.status == 'success') {
-        progressDialog.close();
-        _sharedPrefUtils.saveDouble('weight', entertedWeight.toString());
+        if (progressDialog.isOpen()) {
+          progressDialog.close();
+        }
+        _sharedPrefUtils.saveDouble(
+            'weight', double.parse(entertedWeight.toString()));
         showToast(baseResponse.message!, context);
         Navigator.pop(context);
       } else {

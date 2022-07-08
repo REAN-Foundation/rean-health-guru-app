@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_medical_profile_pojo.dart';
@@ -245,15 +246,18 @@ class _EditPatientMedicalProfileViewState
                         children: [
                           Expanded(
                             flex: 1,
-                            child: _textFeilds('Feet', _heightInFeetController,
-                                _heightInFeetFocus, _heightInInchesFocus),
+                            child: _textFeildsNumber(
+                                'Feet',
+                                _heightInFeetController,
+                                _heightInFeetFocus,
+                                _heightInInchesFocus),
                           ),
                           SizedBox(
                             width: 8,
                           ),
                           Expanded(
                             flex: 1,
-                            child: _textFeilds(
+                            child: _textFeildsNumber(
                                 'Inches',
                                 _heightInInchesController,
                                 _heightInInchesFocus,
@@ -476,6 +480,40 @@ class _EditPatientMedicalProfileViewState
       controller: editingController,
       focusNode: focusNode,
       textAlign: TextAlign.left,
+      textInputAction: focusNode == _obstetricHistoryFocus
+          ? TextInputAction.done
+          : TextInputAction.next,
+      onFieldSubmitted: (term) {
+        focusNode != _obstetricHistoryFocus
+            ? _fieldFocusChange(context, focusNode, nextFocusNode)
+            : '  ';
+      },
+      decoration: InputDecoration(
+        labelText: hint,
+        labelStyle: TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: primaryColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: primaryColor),
+        ),
+      ),
+    );
+  }
+
+  Widget _textFeildsNumber(String hint, TextEditingController editingController,
+      FocusNode focusNode, FocusNode nextFocusNode) {
+    return TextFormField(
+      controller: editingController,
+      focusNode: focusNode,
+      textAlign: TextAlign.left,
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+      inputFormatters: [
+        FilteringTextInputFormatter.deny(RegExp('[\\,|\\+|\\-|\\|\\. ]')),
+      ],
       textInputAction: focusNode == _obstetricHistoryFocus
           ? TextInputAction.done
           : TextInputAction.next,

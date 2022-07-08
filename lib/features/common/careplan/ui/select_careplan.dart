@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
@@ -34,6 +33,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   String startDate = '';
   bool? carePlanEligibility = false;
   String? carePlanEligibilityMsg = '';
+  String? decription = '';
 
   @override
   void initState() {
@@ -88,6 +88,9 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               .displayName) {
         carePlanTypes =
             _ahaCarePlansResponse.data!.availablePlans!.elementAt(i);
+        decription = _ahaCarePlansResponse.data!.availablePlans!
+            .elementAt(i)
+            .description;
       }
     }
     _checkCareplanEligibility(carePlanTypes!.code.toString());
@@ -186,7 +189,9 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                                         /* if (selectedCarePlan == '')
                                           Container()
                                         else*/
-                                        descriptionOfCarePlan(),
+                                        decription != ''
+                                            ? descriptionOfCarePlan()
+                                            : Container(),
                                         //eligibilityOfCarePlan(),
                                         //recomandationForCarePlan(),
                                       ],
@@ -424,15 +429,14 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     color: textBlack, fontSize: 16, fontFamily: 'Montserrat', fontWeight: FontWeight.w200,),),*/
                 RichText(
                   text: TextSpan(
-                    text:
-                        'Cardiac rehab is a medically supervised programme designed by American Heart ',
+                    text: decription.toString(),
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
                       color: textGrey,
                     ),
-                    children: <TextSpan>[
+                    /*children: <TextSpan>[
                       TextSpan(
                         text: '(https://www.heart.org)',
                         style: TextStyle(
@@ -453,7 +457,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                               color: textGrey,
                               fontSize: 14,
                               fontFamily: 'Montserrat')),
-                    ],
+                    ],*/
                   ),
                 ),
               ],

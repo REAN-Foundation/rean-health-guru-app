@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/features/common/careplan/models/check_careplan_eligibility.dart';
@@ -670,11 +671,29 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   Widget registerFooter() {
     return Container(
-        height: 60,
+        height: carePlanEligibilityMsg != '' ? 120 : 64,
         padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            carePlanEligibilityMsg != ''
+                ? Linkify(
+                    onOpen: (link) async {
+                      if (await canLaunch(link.url)) {
+                        await launch(link.url);
+                      } else {
+                        throw 'Could not launch $link';
+                      }
+                    },
+                    options: LinkifyOptions(humanize: false),
+                    text: carePlanEligibilityMsg.toString() + '\n   asd',
+                    maxLines: 2,
+                    style: TextStyle(color: Colors.red),
+                    linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                  )
+                : SizedBox(
+                    height: 0,
+                  ),
             Semantics(
               label: 'Register',
               button: true,

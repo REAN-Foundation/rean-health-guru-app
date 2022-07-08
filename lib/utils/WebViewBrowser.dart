@@ -110,6 +110,8 @@ class _WebViewBrowserState extends State<WebViewBrowser> {
                             setState(() {});
                           },
                           gestureNavigationEnabled: true,
+                          allowsInlineMediaPlayback: true,
+                          javascriptMode: JavascriptMode.unrestricted,
                         ),
                       ),
                     ],

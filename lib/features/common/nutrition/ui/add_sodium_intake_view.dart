@@ -10,7 +10,6 @@ import 'package:patient/infra/utils/common_utils.dart';
 class AddSodiumIntakeView extends StatefulWidget {
   String? mode;
   late Function _submitButtonListner;
-  String? _nutritionName;
 
   AddSodiumIntakeView({
     Key? key,

@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -214,8 +213,8 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
             ),
           ),
-          if (Platform.isIOS) ...[
-            InkWell(
+          /*if (Platform.isIOS) ...[*/
+          InkWell(
               onTap: () {
                 Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
               },
@@ -236,7 +235,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     ),
                   ),
                 ),
-              ],
+          //],
           /*InkWell(
                 onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.My_Nutrition,

@@ -254,6 +254,20 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                           fontSize: 18.0,
                           color: primaryColor),
                     ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    records.isNotEmpty
+                        ? Container()
+                        : Text(
+                            '(Add your weight to see BMI)',
+                            semanticsLabel: 'Add your weight to see BMI',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontStyle: FontStyle.italic,
+                                fontSize: 12.0,
+                                color: textBlack),
+                          ),
                   ],
                 ),
               ],
@@ -265,8 +279,10 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
               model.busy
                   ? Container()
                   : Semantics(
-                      button: true,
-                      label: 'Add height to see BMI',
+                button: true,
+                      label: height == 0
+                          ? 'Add height to see BMI'
+                          : 'Update height to see BMI',
                       child: ExcludeSemantics(
                         child: InkWell(
                           onTap: () {
@@ -276,7 +292,9 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                                 context, RoutePaths.My_Medical_Profile);
                           },
                           child: Text(
-                            'Add height to see BMI',
+                            height == 0
+                                ? 'Add height to see BMI'
+                                : 'Update height to see BMI',
                             semanticsLabel: bmiValue.toStringAsFixed(2),
                             style: TextStyle(
                                 decoration: TextDecoration.underline,

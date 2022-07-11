@@ -312,58 +312,61 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           const SizedBox(
             height: 4,
           ),
-          GestureDetector(
-            child: ExcludeSemantics(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 48.0,
-                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  border: Border.all(
-                    color: Color(0XFF909CAC),
-                    width: 1.0,
+          Semantics(
+            label: 'Select start date',
+            child: GestureDetector(
+              child: ExcludeSemantics(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 48.0,
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    border: Border.all(
+                      color: Color(0XFF909CAC),
+                      width: 1.0,
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          dob,
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal, fontSize: 16),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            dob,
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal, fontSize: 16),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: Image.asset('res/images/ic_calender.png')),
-                    ],
+                        SizedBox(
+                            height: 24,
+                            width: 24,
+                            child: Image.asset('res/images/ic_calender.png')),
+                      ],
+                    ),
                   ),
                 ),
               ),
+              onTap: () {
+                DatePicker.showDatePicker(context,
+                    showTitleActions: true,
+                    minTime: DateTime.now().subtract(Duration(days: 0)),
+                    onChanged: (date) {
+                  debugPrint('change $date');
+                }, onConfirm: (date) {
+                  unformatedDOB = date.toIso8601String();
+                  setState(() {
+                    dob = dateFormat.format(date);
+                    startDate =
+                        dateFormatStandard.format(date) + 'T00:00:00.000Z';
+                  });
+                  debugPrint('confirm $date');
+                  debugPrint('confirm formated $startDate');
+                }, currentTime: DateTime.now(), locale: LocaleType.en);
+              },
             ),
-            onTap: () {
-              DatePicker.showDatePicker(context,
-                  showTitleActions: true,
-                  minTime: DateTime.now().subtract(Duration(days: 0)),
-                  onChanged: (date) {
-                debugPrint('change $date');
-              }, onConfirm: (date) {
-                unformatedDOB = date.toIso8601String();
-                setState(() {
-                  dob = dateFormat.format(date);
-                  startDate =
-                      dateFormatStandard.format(date) + 'T00:00:00.000Z';
-                });
-                debugPrint('confirm $date');
-                debugPrint('confirm formated $startDate');
-              }, currentTime: DateTime.now(), locale: LocaleType.en);
-            },
           ),
         ],
       ),
@@ -375,22 +378,30 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       padding: const EdgeInsets.only(left: 16.0),
       child: Align(
         alignment: Alignment.centerLeft,
-        child: GestureDetector(
-          onTap: () {
-            showMaterialModalBottomSheet(
-                isDismissible: true,
-                backgroundColor: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(25.0)),
-                ),
-                context: context,
-                builder: (context) => eligibilityOfCarePlan());
-          },
-          child: Text(
-            'Check Eligibility',
-            style: TextStyle(
-                fontWeight: FontWeight.w600, color: primaryColor, fontSize: 14),
+        child: Semantics(
+          label: 'Check Eligibility',
+          button: true,
+          child: ExcludeSemantics(
+            child: GestureDetector(
+              onTap: () {
+                showMaterialModalBottomSheet(
+                    isDismissible: true,
+                    backgroundColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(25.0)),
+                    ),
+                    context: context,
+                    builder: (context) => eligibilityOfCarePlan());
+              },
+              child: Text(
+                'Check Eligibility',
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: primaryColor,
+                    fontSize: 14),
+              ),
+            ),
           ),
         ),
       ),
@@ -697,35 +708,37 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             Semantics(
               label: 'Register',
               button: true,
-              child: InkWell(
-                onTap: () {
-                  if (selectedCarePlan == '') {
-                    showToast('Please select care plan', context);
-                  } else if (startDate == '') {
-                    showToast('Please select start date', context);
-                  } else if (carePlanEligibility!) {
-                    startCarePlan();
-                  } else {
-                    showToast(carePlanEligibilityMsg.toString(), context);
-                  }
-                },
-                child: Container(
-                  height: 48,
-                  width: MediaQuery.of(context).size.width - 32,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                  ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0),
-                      border: Border.all(color: primaryColor, width: 1),
-                      color: primaryColor),
-                  child: Center(
-                    child: Text(
-                      'Register',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                          fontSize: 14),
+              child: ExcludeSemantics(
+                child: InkWell(
+                  onTap: () {
+                    if (selectedCarePlan == '') {
+                      showToast('Please select care plan', context);
+                    } else if (startDate == '') {
+                      showToast('Please select start date', context);
+                    } else if (carePlanEligibility!) {
+                      startCarePlan();
+                    } else {
+                      //showToast(carePlanEligibilityMsg.toString(), context);
+                    }
+                  },
+                  child: Container(
+                    height: 48,
+                    width: MediaQuery.of(context).size.width - 32,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6.0),
+                        border: Border.all(color: primaryColor, width: 1),
+                        color: primaryColor),
+                    child: Center(
+                      child: Text(
+                        'Register',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            fontSize: 14),
+                      ),
                     ),
                   ),
                 ),
@@ -830,30 +843,32 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               Semantics(
                 button: true,
                 label: 'Home',
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushAndRemoveUntil(context,
-                        MaterialPageRoute(builder: (context) {
-                      return HomeView(0);
-                    }), (Route<dynamic> route) => false);
-                  },
-                  child: Container(
-                    height: 48,
-                    width: 260,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                    ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0),
-                        border: Border.all(color: primaryColor, width: 1),
-                        color: primaryColor),
-                    child: Center(
-                      child: Text(
-                        'Home',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                            fontSize: 14),
+                child: ExcludeSemantics(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(context,
+                          MaterialPageRoute(builder: (context) {
+                        return HomeView(0);
+                      }), (Route<dynamic> route) => false);
+                    },
+                    child: Container(
+                      height: 48,
+                      width: 260,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6.0),
+                          border: Border.all(color: primaryColor, width: 1),
+                          color: primaryColor),
+                      child: Center(
+                        child: Text(
+                          'Home',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              fontSize: 14),
+                        ),
                       ),
                     ),
                   ),

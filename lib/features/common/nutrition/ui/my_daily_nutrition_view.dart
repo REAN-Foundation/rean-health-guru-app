@@ -948,7 +948,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                         icon: Icon(
                                           Icons.add,
                                           color: primaryColor,
-                                          semanticLabel: 'Add water glass',
+                                          semanticLabel: 'Add sodium intake',
                                           size: 32,
                                         ),
                                       ),

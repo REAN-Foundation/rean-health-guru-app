@@ -258,33 +258,31 @@ class _SearchNihMedicationViewState extends State<SearchNihMedicationView> {
       height: MediaQuery.of(context).size.height - 220,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Expanded(
-          child: ListView.builder(
-            itemBuilder: (context, index) => Card(
-              semanticContainer: false,
-              elevation: 0.0,
-              child: Container(
-                height: 40,
-                child: ListTile(
-                  onTap: () {
-                    widget._submitButtonListner(
-                        drugsList.elementAt(index).toString());
-                    Navigator.pop(context);
-                  },
-                  title: Text(
-                    drugsList.elementAt(index).toString(),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16.0,
-                        color: textBlack),
-                  ),
+        child: ListView.builder(
+          itemBuilder: (context, index) => Card(
+            semanticContainer: false,
+            elevation: 0.0,
+            child: Container(
+              height: 40,
+              child: ListTile(
+                onTap: () {
+                  widget._submitButtonListner(
+                      drugsList.elementAt(index).toString());
+                  Navigator.pop(context);
+                },
+                title: Text(
+                  drugsList.elementAt(index).toString(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16.0,
+                      color: textBlack),
                 ),
               ),
             ),
-            itemCount: drugsList.length,
           ),
+          itemCount: drugsList.length,
         ),
       ),
     );

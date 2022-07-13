@@ -112,18 +112,42 @@ class _AssessmentQuestionCarePlanViewState
                           borderRadius: BorderRadius.only(
                               topRight: Radius.circular(12),
                               topLeft: Radius.circular(12))),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            quizQuestionOne(),
-                            /*  SizedBox(height: 20,),
-                    quizQuestionTwo(),*/
-                          ],
-                        ),
-                      ),
+                      child: quizQuestionOne(),
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: 32,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      //Navigator.pushNamed(context, RoutePaths.Assessment_Question_Two_Care_Plan);
+                      Navigator.pop(context, id);
+                    },
+                    child: Container(
+                        height: 40,
+                        width: 120,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(24.0),
+                          border: Border.all(color: primaryColor, width: 1),
+                          color: primaryColor,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Next',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12),
+                            textAlign: TextAlign.center,
+                          ),
+                        )),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
                 ],
               ),
             ],
@@ -146,81 +170,50 @@ class _AssessmentQuestionCarePlanViewState
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(12), topLeft: Radius.circular(12))),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                color: colorF6F6FF,
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(12),
-                    topLeft: Radius.circular(12))),
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                widget.assesment!.title.toString(),
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16),
-                textAlign: TextAlign.left,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: colorF6F6FF,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(12),
+                      topLeft: Radius.circular(12))),
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  widget.assesment!.title.toString(),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16),
+                  textAlign: TextAlign.left,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: answers
-                  .map((data) => RadioListTile(
-                title: Text(data.text),
-                        groupValue: id,
-                        value: data.index,
-                onChanged: (dynamic val) {
-                          setState(() {
-                            radioItem = data.text;
-                            id = data.index;
-                          });
-                        },
-                      ))
-                  .toList(),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: answers
+                    .map((data) => RadioListTile(
+                          title: Text(data.text),
+                          groupValue: id,
+                          value: data.index,
+                          onChanged: (dynamic val) {
+                            setState(() {
+                              radioItem = data.text;
+                              id = data.index;
+                            });
+                          },
+                        ))
+                    .toList(),
+              ),
             ),
-          ),
-          SizedBox(
-            height: 32,
-          ),
-          InkWell(
-            onTap: () {
-              //Navigator.pushNamed(context, RoutePaths.Assessment_Question_Two_Care_Plan);
-              Navigator.pop(context, id);
-            },
-            child: Container(
-                height: 40,
-                width: 120,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24.0),
-                  border: Border.all(color: primaryColor, width: 1),
-                  color: primaryColor,
-                ),
-                child: Center(
-                  child: Text(
-                    'Next',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12),
-                    textAlign: TextAlign.center,
-                  ),
-                )),
-          ),
-          SizedBox(
-            height: 16,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

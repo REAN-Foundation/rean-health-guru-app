@@ -50,7 +50,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
     height = await _sharedPrefUtils.readDouble('height');
     weight = await _sharedPrefUtils.readDouble('weight');
 
-    if (height == 0.0 || weight == 0.0) {
+    /*if (height == 0.0 || weight == 0.0) {
       showDialog(
           context: context,
           builder: (_) {
@@ -58,7 +58,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
           });
     } else {
       calculetBMI();
-    }
+    }*/
   }
 
   loadWaterConsuption() async {
@@ -368,7 +368,9 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [_content(), bmi()], //, glassForWater()
+                  children: [
+                    _content() /*, bmi()*/
+                  ], //, glassForWater()
                 ),
               ),
             )),

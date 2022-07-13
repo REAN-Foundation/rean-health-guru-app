@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/nutrition/models/glass_of_water_consumption.dart';
 import 'package:patient/features/common/nutrition/models/nutrition_response_store.dart';
+import 'package:patient/features/common/nutrition/models/sodium_intake_consumption.dart';
+import 'package:patient/features/common/nutrition/ui/add_sodium_intake_view.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -12,7 +14,6 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
-
 import 'add_daily_nutrition_view.dart';
 
 //ignore: must_be_immutable
@@ -40,6 +41,8 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
   Color buttonColor = primaryLightColor;
   int? waterGlass = 0;
   GlassOfWaterConsumption? glassOfWaterConsumption;
+  int? sodiumIntakeInMiligram = 0;
+  SodiumIntakeConsumption? _sodiumIntakeConsumption;
   late NutritionResponseStore nutritionResponseStore;
   DateTime? startDate;
   final dbHelper = DatabaseHelper.instance;
@@ -67,6 +70,21 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
     if (glassOfWaterConsumption != null) {
       if (startDate == glassOfWaterConsumption!.date) {
         waterGlass = glassOfWaterConsumption!.count;
+      }
+    }
+  }
+
+  loadSodiumIntake() async {
+    final sodiumIntake = await _sharedPrefUtils.read('sodiumIntake');
+
+    if (sodiumIntake != null) {
+      _sodiumIntakeConsumption = SodiumIntakeConsumption.fromJson(sodiumIntake);
+    }
+
+    if (_sodiumIntakeConsumption != null) {
+      if (startDate == _sodiumIntakeConsumption!.date) {
+        sodiumIntakeInMiligram = _sodiumIntakeConsumption!.count;
+
       }
     }
   }
@@ -127,6 +145,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
 
     loadSharedPref();
     loadWaterConsuption();
+    loadSodiumIntake();
 
     if (getAppType() == 'AHA') {
       buttonColor = redLightAha;
@@ -725,13 +744,31 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                           SizedBox(
                             height: 16,
                           ),
-                          Text(
-                            'Water',
-                            semanticsLabel: 'Water',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16.0,
-                                color: Colors.black),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Water',
+                                semanticsLabel: 'Water',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16.0,
+                                    color: Colors.black),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                '( 1 glass = 8 ounces of water )',
+                                semanticsLabel: '1 glass = 8 ounces of water',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 14.0,
+                                    color: primaryColor),
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: 8,
@@ -798,6 +835,115 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                       child: IconButton(
                                         onPressed: () {
                                           recordMyWaterConsumptions();
+                                        },
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: primaryColor,
+                                          semanticLabel: 'Add water glass',
+                                          size: 32,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            'Sodium Intake',
+                            semanticsLabel: 'Sodium Intake',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16.0,
+                                color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Container(
+                            height: 56,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Semantics(
+                                    label: sodiumIntakeInMiligram!
+                                            .toStringAsFixed(0) +
+                                        (sodiumIntakeInMiligram! > 1
+                                            ? 'mg'
+                                            : 'mg'),
+                                    child: ExcludeSemantics(
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(
+                                            sodiumIntakeInMiligram.toString(),
+                                            semanticsLabel: '',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            sodiumIntakeInMiligram! > 1
+                                                ? 'mg'
+                                                : 'mg',
+                                            semanticsLabel:
+                                                waterGlass! > 1 ? 'mg' : 'mg',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 48,
+                                    width: 48,
+                                    decoration: BoxDecoration(
+                                        color: buttonColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12))),
+                                    child: Center(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                              fullscreenDialog: true,
+                                              builder: (context) =>
+                                                  AddSodiumIntakeView(
+                                                submitButtonListner:
+                                                    (sodiumConsumed) {
+                                                  debugPrint(sodiumConsumed);
+                                                  recordMySodiumIntake(
+                                                      int.parse(
+                                                          sodiumConsumed));
+                                                  Navigator.of(context,
+                                                          rootNavigator: true)
+                                                      .pop();
+                                                },
+                                              ),
+                                            ),
+                                          );
                                         },
                                         icon: Icon(
                                           Icons.add,
@@ -1009,6 +1155,30 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
       final BaseResponse baseResponse = await model.recordMyWaterCount(map);
       if (baseResponse.status == 'success') {
       } else {}
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  recordMySodiumIntake(int sodiumInMiligram) async {
+    try {
+      sodiumIntakeInMiligram = sodiumIntakeInMiligram! + sodiumInMiligram;
+
+      _sharedPrefUtils.save(
+          'sodiumIntake',
+          SodiumIntakeConsumption(startDate, sodiumIntakeInMiligram, '')
+              .toJson());
+      setState(() {});
+      /* final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['Volume'] = waterGlass;
+      map['Time'] = dateFormat.format(DateTime.now());
+
+      final BaseResponse baseResponse = await model.recordMyWaterCount(map);
+      if (baseResponse.status == 'success') {
+      } else {}*/
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);

@@ -15,9 +15,8 @@ class SummaryOfMyCarePlanView extends StatefulWidget {
 class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  var dateFormat = DateFormat('MMMM, dd yyyy');
+  var dateFormat = DateFormat('MMMM dd, yyyy');
   int? currentWeek = 0;
-
 
   @override
   void initState() {

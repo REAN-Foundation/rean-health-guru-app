@@ -516,6 +516,10 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                                 .toString()
                                                 .replaceAll('.', "'") +
                                             '"',
+                                    semanticsLabel: heightInFeet
+                                            .toString()
+                                            .replaceAll('.', 'Feet ') +
+                                        ' inches',
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,

@@ -905,7 +905,9 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                                 ? 'mg'
                                                 : 'mg',
                                             semanticsLabel:
-                                                waterGlass! > 1 ? 'mg' : 'mg',
+                                                sodiumIntakeInMiligram! > 1
+                                                    ? 'mg'
+                                                    : 'mg',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 16.0,

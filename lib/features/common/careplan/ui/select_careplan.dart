@@ -313,7 +313,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             height: 4,
           ),
           Semantics(
-            label: 'Select start date',
+            label: 'Select start date ' + dob,
             child: GestureDetector(
               child: ExcludeSemantics(
                 child: Container(

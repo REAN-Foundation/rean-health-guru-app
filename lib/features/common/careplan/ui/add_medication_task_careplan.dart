@@ -220,7 +220,7 @@ class _AddMedicationTaskViewState extends State<AddMedicationTaskView> {
           clipBehavior: Clip.antiAlias,
           // Add This
           child: MaterialButton(
-            minWidth: 200,
+            minWidth: 120,
             child: Text('Next',
                 style: TextStyle(
                     fontSize: 14.0,

@@ -340,6 +340,18 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                           ..onTap = () {
                             navigateToPrivacyPolicy();
                           }),
+                    if (getAppType() == "AHA") ...[
+                      TextSpan(
+                          text: " and ",
+                          style: TextStyle(fontSize: 14, color: textBlack)),
+                      TextSpan(
+                          text: 'terms of service',
+                          style: TextStyle(fontSize: 14, color: primaryColor),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              navigateToTermsOfService();
+                            }),
+                    ]
                   ],
                 ),
               ),
@@ -369,6 +381,13 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return WebViewBrowser(
           tittle: 'privacy Policy', url: dotenv.env['PRIVACY_POLICY_URL']);
+    }));
+  }
+
+  navigateToTermsOfService() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return WebViewBrowser(
+          tittle: 'Terms of Service', url: dotenv.env['TERMS_OF_SERVICE_URL']);
     }));
   }
 

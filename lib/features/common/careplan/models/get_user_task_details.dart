@@ -306,7 +306,7 @@ class Action {
     int? sequence,
     int? frequency,
     String? status,
-    dynamic rawContent,
+    RawContent? rawContent,
     Assessment? assessment,
   }) {
     _id = id;
@@ -357,7 +357,9 @@ class Action {
     _sequence = json['Sequence'];
     _frequency = json['Frequency'];
     _status = json['Status'];
-    _rawContent = json['RawContent'];
+    _rawContent = json['RawContent'] != null
+        ? RawContent.fromJson(json['RawContent'])
+        : null;
     _assessment = json['Assessment'] != null
         ? Assessment.fromJson(json['Assessment'])
         : null;
@@ -384,7 +386,7 @@ class Action {
   int? _sequence;
   int? _frequency;
   String? _status;
-  dynamic _rawContent;
+  RawContent? _rawContent;
   Assessment? _assessment;
 
   String? get id => _id;
@@ -429,7 +431,7 @@ class Action {
 
   String? get status => _status;
 
-  String? get rawContent => _rawContent.toString();
+  RawContent? get rawContent => _rawContent;
 
   Assessment? get assessment => _assessment;
 
@@ -458,7 +460,9 @@ class Action {
     map['Sequence'] = _sequence;
     map['Frequency'] = _frequency;
     map['Status'] = _status;
-    map['RawContent'] = _rawContent;
+    if (_rawContent != null) {
+      map['RawContent'] = _rawContent?.toJson();
+    }
     if (_assessment != null) {
       map['Assessment'] = _assessment?.toJson();
     }
@@ -619,6 +623,69 @@ class Details {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['Link'] = _link;
+    return map;
+  }
+}
+
+/// Newsfeed : [{"Title":"Kitchen magnet with list of heart attack symptoms convinced him to go to the hospital","Link":"https://www.heart.org/en/news/2022/06/17/kitchen-magnet-with-list-of-heart-attack-symptoms-convinced-him-to-go-to-the-hospital"},{"Title":"Can the groan-up humor of 'dad jokes' possibly be good for health?","Link":"https://www.heart.org/en/news/2022/06/15/can-the-groan-up-humor-of-dad-jokes-possibly-be-good-for-health"},{"Title":"Why the world of LGBTQ health doesn't fit under a single label","Link":"https://www.heart.org/en/news/2022/06/14/why-the-world-of-lgbtq-health-doesnt-fit-under-a-single-label"},{"Title":"She thought she had bronchitis, but the problem was her heart","Link":"https://www.heart.org/en/news/2022/06/13/she-thought-she-had-bronchitis-but-the-problem-was-her-heart"},{"Title":"High exposure to 'forever chemicals' may raise women's blood pressure","Link":"https://www.heart.org/en/news/2022/06/13/high-exposure-to-forever-chemicals-may-raise-womens-blood-pressure"},{"Title":"After stroke at 32, young mom's small town pitched in to help","Link":"https://www.heart.org/en/news/2022/06/09/after-stroke-at-32-young-moms-small-town-pitched-in-to-help"},{"Title":"Cardiovascular risk factors undertreated in childhood cancer survivors","Link":"https://www.heart.org/en/news/2022/06/08/cardiovascular-risk-factors-undertreated-in-childhood-cancer-survivors"},{"Title":"Tiny sprouts provide big nutrition","Link":"https://www.heart.org/en/news/2022/06/07/tiny-sprouts-provide-big-nutrition"},{"Title":"Grammy winner, chart-topping producer – and kidney transplant recipient","Link":"https://www.heart.org/en/news/2022/06/06/grammy-winner-chart-topping-producer-and-kidney-transplant-recipient"},{"Title":"New research sheds light on a leading cause of heart attacks related to pregnancy","Link":"https://www.heart.org/en/news/2022/06/03/new-research-sheds-light-on-a-leading-cause-of-heart-attacks-related-to-pregnancy"},{"Title":"Gender gap in some heart risk factors widens among young adults","Link":"https://www.heart.org/en/news/2022/06/02/gender-gap-in-some-heart-risk-factors-widens-among-young-adults"},{"Title":"Consuming about 3 grams of omega-3 fatty acids a day may lower blood pressure","Link":"https://www.heart.org/en/news/2022/06/01/consuming-about-3-grams-of-omega-3-fatty-acids-a-day-may-lower-blood-pressure"},{"Title":"In secondhand vape, scientists smell risk","Link":"https://www.heart.org/en/news/2022/05/31/in-secondhand-vape-scientists-smell-risk"},{"Title":"Her 2-year-old niece noticed something wrong during a video chat. It was a mini-stroke.","Link":"https://www.heart.org/en/news/2022/05/26/her-2-year-old-niece-noticed-something-wrong-during-a-video-chat-it-was-a-mini-stroke"},{"Title":"Asian American, Native Hawaiian and Pacific Islander adults less likely to receive mental health services despite growing need","Link":"https://www.heart.org/en/news/2022/05/25/asian-american-native-hawaiian-and-pacific-islander-adults-less-likely-to-receive-mental-health"},{"Title":"New study looks at heart defect risk in children of people with heart defects","Link":"https://www.heart.org/en/news/2022/05/24/new-study-looks-at-heart-defect-risk-in-children-of-people-with-heart-defects"},{"Title":"Family's heart disease history inspired her fitness – and got her to the base of Mount Everest","Link":"https://www.heart.org/en/news/2022/05/24/familys-heart-disease-history-inspired-her-fitness-and-got-her-to-the-base-of-mount-everest"},{"Title":"She was a prime candidate for a heart attack, if only she'd realized it","Link":"https://www.heart.org/en/news/2022/05/20/she-was-a-prime-candidate-for-a-heart-attack-if-only-shed-realized-it"},{"Title":"Falls can be a serious, poorly understood threat to people with heart disease","Link":"https://www.heart.org/en/news/2022/05/19/falls-can-be-a-serious-poorly-understood-threat-to-people-with-heart-disease"},{"Title":"Rate of high blood pressure disorders in pregnancy doubled in 12 years","Link":"https://www.heart.org/en/news/2022/05/18/rate-of-high-blood-pressure-disorders-in-pregnancy-doubled-in-12-years"},{"Title":"At 23 days old, he had open-heart surgery","Link":"https://www.heart.org/en/news/2022/05/17/at-23-days-old-he-had-open-heart-surgery"},{"Title":"Updated guidelines rethink care for people with bleeding stroke","Link":"https://www.heart.org/en/news/2022/05/17/updated-guidelines-rethink-care-for-people-with-bleeding-stroke"},{"Title":"Stroke hospitalizations rising among younger adults, but deaths falling","Link":"https://www.heart.org/en/news/2022/05/16/stroke-hospitalizations-rising-among-younger-adults-but-deaths-falling"},{"Title":"Improved fitness gave man chance to walk daughter down the aisle after heart attack","Link":"https://www.heart.org/en/news/2022/05/13/improved-fitness-gave-man-chance-to-walk-daughter-down-the-aisle-after-heart-attack"},{"Title":"College athletes rarely develop heart problems one year after having COVID-19","Link":"https://www.heart.org/en/news/2022/05/12/college-athletes-rarely-develop-heart-problems-one-year-after-having-covid19"},{"Title":"Theater director has a stroke the day after a crushing fall","Link":"https://www.heart.org/en/news/2022/05/10/theater-director-has-a-stroke-the-day-after-a-crushing-fall"},{"Title":"Report calls out gaps in women's heart disease research, care","Link":"https://www.heart.org/en/news/2022/05/09/report-calls-out-gaps-in-womens-heart-disease-research-care"},{"Title":"She's been a nurse for 50 years; the last 30, she's also been a heart patient","Link":"https://www.heart.org/en/news/2022/05/06/shes-been-a-nurse-for-50-years-the-last-30-shes-also-been-a-heart-patient"},{"Title":"Smoking both traditional and e-cigarettes may carry same heart risks as cigarettes alone","Link":"https://www.heart.org/en/news/2022/05/06/smoking-both-traditional-and-e-cigarettes-may-carry-same-heart-risks-as-cigarettes-alone"},{"Title":"The healing power of music for stroke survivors","Link":"https://www.heart.org/en/news/2022/05/04/the-healing-power-of-music-for-stroke-survivors"}]
+
+class RawContent {
+  RawContent({
+    List<Newsfeed>? newsfeed,
+  }) {
+    _newsfeed = newsfeed;
+  }
+
+  RawContent.fromJson(dynamic json) {
+    if (json['Newsfeed'] != null) {
+      _newsfeed = [];
+      json['Newsfeed'].forEach((v) {
+        _newsfeed?.add(Newsfeed.fromJson(v));
+      });
+    }
+  }
+
+  List<Newsfeed>? _newsfeed;
+
+  List<Newsfeed>? get newsfeed => _newsfeed;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (_newsfeed != null) {
+      map['Newsfeed'] = _newsfeed?.map((v) => v.toJson()).toList();
+    }
+    return map;
+  }
+}
+
+/// Title : "Kitchen magnet with list of heart attack symptoms convinced him to go to the hospital"
+/// Link : "https://www.heart.org/en/news/2022/06/17/kitchen-magnet-with-list-of-heart-attack-symptoms-convinced-him-to-go-to-the-hospital"
+
+class Newsfeed {
+  Newsfeed({
+    String? title,
+    String? link,
+  }) {
+    _title = title;
+    _link = link;
+  }
+
+  Newsfeed.fromJson(dynamic json) {
+    _title = json['Title'];
+    _link = json['Link'];
+  }
+
+  String? _title;
+  String? _link;
+
+  String? get title => _title;
+
+  String? get link => _link;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['Title'] = _title;
     map['Link'] = _link;
     return map;
   }

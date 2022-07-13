@@ -321,9 +321,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   Widget _createToDos(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
 
-    return task.task == 'News feed'
+    return /*task.task == 'News feed'
         ? Container()
-        : task.actionType == 'Careplan'
+        : */
+        task.actionType == 'Careplan'
             ? _makeTaskCard(context, index)
             : task.actionType == 'Medication'
                 ? _makeMedicineCard(context, index)

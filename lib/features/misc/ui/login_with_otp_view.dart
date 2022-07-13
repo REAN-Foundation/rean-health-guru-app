@@ -290,13 +290,13 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   ),
                   SizedBox(height: 20),
                   _textFeild('Enter your phone', model),
-                  SizedBox(height: 20),
+                  SizedBox(height: 08),
+                  _privacyPolicy(),
+                  SizedBox(height: 08),
                   if (model.busy)
                     CircularProgressIndicator()
                   else
                     _getOTPButton(model),
-                  SizedBox(height: 08),
-                  _privacyPolicy(),
                 ],
               ),
             ),
@@ -493,7 +493,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
   Widget _getOTPButton(LoginViewModel model) {
     return Semantics(
-      label: 'Get OTP',
+      label: 'Get One Time PIN',
       button: true,
       //hint: 'press to get OTP',
       child: SizedBox(
@@ -501,7 +501,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
         height: 50,
         child: ExcludeSemantics(
           child: ElevatedButton(
-            child: Text('Get OTP',
+            child: Text('Get One-Time PIN',
                 style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,

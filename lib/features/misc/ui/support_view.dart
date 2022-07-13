@@ -90,6 +90,7 @@ class _SupportViewState extends State<SupportView> {
                                     child: getAppType() == 'AHA'
                                         ? Image.asset(
                                             'res/images/support_us_aha.png',
+                                            semanticLabel: 'Contact us image',
                                           )
                                         : Lottie.asset(
                                             'res/lottiefiles/support_us.json',

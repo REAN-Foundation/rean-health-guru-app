@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:group_radio_button/group_radio_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -12,7 +12,6 @@ import 'package:patient/features/misc/models/upload_image_response.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../../misc/ui/base_widget.dart';
 
@@ -47,6 +46,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
   String? mobileNumber = '';
   String? countryCode = '';
   int? maxLengthOfPhone = 0;
+  final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
 
   @override
   Widget build(BuildContext context) {
@@ -302,27 +302,21 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
             SizedBox(
               height: 10,
             ),
-            ToggleSwitch(
-                minWidth: 120.0,
-                cornerRadius: 20,
-                initialLabelIndex: 0,
-                totalSwitches: 2,
-                activeBgColor: [Colors.green],
-                inactiveBgColor: Colors.grey,
-                labels: ['Male', 'Female'],
-                icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
-                activeBgColors: [
-                  [Colors.blue],
-                  [Colors.pink]
-                ],
-                onToggle: (index) {
-                  debugPrint('switched to: $index');
-                  if (index == 0) {
-                    selectedGender = 'Male';
-                  } else {
-                    selectedGender = 'Female';
-                  }
-                })
+            RadioGroup<String>.builder(
+              items: radioItemsForGender,
+              groupValue: selectedGender.toString(),
+              direction: Axis.horizontal,
+              horizontalAlignment: MainAxisAlignment.start,
+              onChanged: (item) {
+                debugPrint(item);
+                selectedGender = item.toString();
+                setState(() {});
+              },
+              itemBuilder: (item) => RadioButtonBuilder(
+                item,
+                textPosition: RadioButtonTextPosition.right,
+              ),
+            ),
           ],
         ),
       ),

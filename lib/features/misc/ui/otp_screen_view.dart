@@ -211,14 +211,14 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            ' Enter 6 digit OTP',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+            ' Enter 6 digit one-time PIN',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
           SizedBox(
             height: 4,
           ),
           Text(
-            '  OTP has been sent to your mobile number\n  ' +
+            '  One-Time PIN has been sent to your \n  mobile number ' +
                 (dummyNumberList.contains(mobileNumber)
                     ? mobileNumber!
                     : countryCodeGlobe! + '-' + mobileNumber!),

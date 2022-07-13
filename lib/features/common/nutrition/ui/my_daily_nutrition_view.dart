@@ -14,6 +14,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+
 import 'add_daily_nutrition_view.dart';
 
 //ignore: must_be_immutable
@@ -905,7 +906,9 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                                 ? 'mg'
                                                 : 'mg',
                                             semanticsLabel:
-                                                waterGlass! > 1 ? 'mg' : 'mg',
+                                                sodiumIntakeInMiligram! > 1
+                                                    ? 'mg'
+                                                    : 'mg',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 16.0,
@@ -948,7 +951,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                         icon: Icon(
                                           Icons.add,
                                           color: primaryColor,
-                                          semanticLabel: 'Add water glass',
+                                          semanticLabel: 'Add sodium intake',
                                           size: 32,
                                         ),
                                       ),
@@ -1165,11 +1168,11 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
   recordMySodiumIntake(int sodiumInMiligram) async {
     try {
       sodiumIntakeInMiligram = sodiumIntakeInMiligram! + sodiumInMiligram;
-
       _sharedPrefUtils.save(
           'sodiumIntake',
           SodiumIntakeConsumption(startDate, sodiumIntakeInMiligram, '')
               .toJson());
+      showToast("Sodium intake added successfully", context);
       setState(() {});
       /* final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;

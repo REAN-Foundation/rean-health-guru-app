@@ -1,25 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
+import 'package:patient/features/common/medication/ui/search_nih_medication.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 
 //ignore: must_be_immutable
-class TextTaskView extends StatefulWidget {
+class AddMedicationTaskView extends StatefulWidget {
   Next? next;
 
-  TextTaskView(this.next);
+  AddMedicationTaskView(this.next);
 
   @override
-  _ChallengeCarePlanViewState createState() => _ChallengeCarePlanViewState();
+  _AddMedicationTaskViewState createState() => _AddMedicationTaskViewState();
 }
 
-class _ChallengeCarePlanViewState extends State<TextTaskView> {
+class _AddMedicationTaskViewState extends State<AddMedicationTaskView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final _textController = TextEditingController();
+  List<String> records = <String>[];
 
   @override
   void initState() {
@@ -106,17 +107,38 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
   }
 
   Widget body() {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          //headerText(),
-          questionText(),
-          _entryField(),
-          _submitButton(),
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        questionText(),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                //headerText(),
+                SizedBox(
+                  height: 4,
+                ),
+                _addMedicationButton(),
+                SizedBox(
+                  height: 4,
+                ),
+                _listFieldForMedicationAdded(),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        _submitButton(),
+        SizedBox(
+          height: 16,
+        ),
+      ],
     );
   }
 
@@ -155,35 +177,32 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
     );
   }
 
-  Widget _entryField() {
-    return Container(
-      margin: EdgeInsets.all(16.0),
-      height: 360,
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          border: Border.all(
-            color: Colors.black54,
-            width: 1.0,
-          ),
-        ),
-        child: TextFormField(
-            obscureText: false,
-            controller: _textController,
-            keyboardType: TextInputType.multiline,
-            maxLines: null,
-            style: TextStyle(
-              color: Colors.black54,
-            ),
-            onFieldSubmitted: (term) {},
-            decoration: InputDecoration(
-                hintText: widget.next!.description ?? '',
-                border: InputBorder.none,
-                fillColor: Colors.white,
-                filled: true)),
-      ),
+  Widget _listFieldForMedicationAdded() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: ListView.builder(
+          itemBuilder: (context, index) => Card(
+                semanticContainer: false,
+                elevation: 0.0,
+                child: Container(
+                  height: 30,
+                  child: ListTile(
+                    title: Text(
+                      records.elementAt(index),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16.0,
+                          color: textBlack),
+                    ),
+                  ),
+                ),
+              ),
+          itemCount: records.length,
+          physics: NeverScrollableScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true),
     );
   }
 
@@ -208,9 +227,68 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
                     color: Colors.white,
                     fontWeight: FontWeight.normal)),
             onPressed: () {
-              Navigator.pop(context, _textController.text.toString());
+              var stringList = records.join(", ");
+              debugPrint("Medication Selected ==> $stringList");
+              Navigator.pop(context, stringList);
             },
           ),
+        ),
+      ],
+    );
+  }
+
+  Widget _addMedicationButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Semantics(
+          label: 'Search Medication',
+          button: true,
+          child: ExcludeSemantics(
+            child: InkWell(
+              onTap: () {
+                showMaterialModalBottomSheet(
+                    isDismissible: true,
+                    backgroundColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(25.0)),
+                    ),
+                    context: context,
+                    builder: (context) => SearchNihMedicationView(
+                            submitButtonListner: (String medicationName) {
+                          debugPrint(
+                              'Added Medication List Name ==> $medicationName');
+                          records.add(medicationName);
+                          setState(() {});
+                        }));
+              },
+              child: Container(
+                height: 32,
+                width: 180,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    border: Border.all(color: primaryColor, width: 1),
+                    color: primaryColor),
+                child: Center(
+                  child: Text(
+                    'Search Medication',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                        fontSize: 14),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 16,
         ),
       ],
     );

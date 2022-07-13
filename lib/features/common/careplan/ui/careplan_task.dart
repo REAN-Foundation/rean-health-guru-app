@@ -43,12 +43,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
       userTaskResponse = await model.getUserTasks(
           query,
-          /*dateQueryFormat.format(DateTime.parse(
-              carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
-                  .elementAt(0)
-                  .startAt
-                  .toString())),*/
-          dateQueryFormat.format(dateTill.add(Duration(days: 0))),
+          carePlanEnrollmentForPatientGlobe != null
+              ? dateQueryFormat.format(DateTime.parse(
+                  carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+                      .elementAt(0)
+                      .startAt
+                      .toString()))
+              : dateQueryFormat.format(dateTill.subtract(Duration(days: 0))),
           dateQueryFormat.format(dateTill.add(Duration(days: 82))));
 
       if (userTaskResponse.status == 'success') {
@@ -320,9 +321,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   Widget _createToDos(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
 
-    return task.task == 'News feed'
+    return /*task.task == 'News feed'
         ? Container()
-        : task.actionType == 'Careplan'
+        : */
+        task.actionType == 'Careplan'
             ? _makeTaskCard(context, index)
             : task.actionType == 'Medication'
                 ? _makeMedicineCard(context, index)
@@ -529,45 +531,52 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     final Items task = tasksList.elementAt(index);
     debugPrint(
         'Category Name ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()} && Task Tittle ==> ${task.task}');
-    return InkWell(
-      onTap: () {
-        debugPrint(
-            'Task Type ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()}');
-        if (!task.finished) {
-          debugPrint('Task ID ==> ${task.id}');
-          getUserTaskDetails(task.id.toString());
-          //_taskNavigator(task);
-          //showToast('Task completed already');
-        } else {
-          getUserTaskDetails(task.id.toString());
-          //startAHACarePlanSummary(task);
-        }
-      },
-      child: Card(
-        elevation: 0.0,
-        semanticContainer: false,
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: primaryLightColor),
-              borderRadius: BorderRadius.all(Radius.circular(4.0))),
-          child: Column(
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                    color: colorF6F6FF,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(4.0),
-                        topRight: Radius.circular(4.0))),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 12.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 6,
-                        child: ExcludeSemantics(
+    return Semantics(
+      hint: task.finished
+          ? task.action != null
+              ? task.action!.type.toString() + ' task is already completed'
+              : task.category.toString() + ' task is already completed'
+          : task.action != null
+              ? task.action!.type.toString() + ' task double click to activate'
+              : task.category.toString() + ' task double click to activate',
+      child: InkWell(
+        onTap: () {
+          debugPrint(
+              'Task Type ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()}');
+          if (!task.finished) {
+            debugPrint('Task ID ==> ${task.id}');
+            getUserTaskDetails(task.id.toString());
+            //_taskNavigator(task);
+            //showToast('Task completed already');
+          } else {
+            getUserTaskDetails(task.id.toString());
+            //startAHACarePlanSummary(task);
+          }
+        },
+        child: Card(
+          semanticContainer: false,
+          elevation: 0.0,
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: primaryLightColor),
+                borderRadius: BorderRadius.all(Radius.circular(4.0))),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                      color: colorF6F6FF,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(4.0),
+                          topRight: Radius.circular(4.0))),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 6,
                           child: Row(
                             children: [
                               SizedBox(
@@ -581,6 +590,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                     task.action != null
                                         ? task.action!.type.toString()
                                         : task.category.toString(),
+                                    semanticsLabel: task.action != null
+                                        ? task.action!.type.toString()
+                                        : task.category.toString(),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -591,10 +603,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             ],
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: ExcludeSemantics(
+                        Expanded(
+                          flex: 4,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -603,6 +613,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                   dateFormatOnlyDate.format(DateTime.parse(
                                           task.scheduledStartTime.toString())
                                       .toLocal()),
+                                  semanticsLabel: dateFormatOnlyDate.format(
+                                      DateTime.parse(task.scheduledStartTime
+                                              .toString())
+                                          .toLocal()),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -615,13 +629,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             ],
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              ExcludeSemantics(
-                child: Padding(
+                Padding(
                   padding: const EdgeInsets.all(0.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -635,6 +647,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(task.task ?? '',
+                                  semanticsLabel: task.task ?? '',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -645,6 +658,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 height: 4,
                               ),
                               Text(task.description ?? '',
+                                  semanticsLabel: task.description ?? '',
                                   maxLines: 4,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -677,8 +691,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -970,44 +984,51 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   Widget _makeCustomTaskCard(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
-    return InkWell(
-      onTap: () {
-        debugPrint('Task Type ==> ${task.category}');
-        if (!task.finished) {
-          debugPrint('Task ID ==> ${task.id}');
-          getUserTaskDetails(task.id.toString());
-          //_taskNavigator(task);
-          //showToast('Task completed already');
-        } else {
-          getUserTaskDetails(task.id.toString());
-          //startAHACarePlanSummary(task);
-        }
-      },
-      child: Card(
-        elevation: 0.0,
-        semanticContainer: false,
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: primaryLightColor),
-              borderRadius: BorderRadius.all(Radius.circular(4.0))),
-          child: Column(
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                    color: colorF6F6FF,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(4.0),
-                        topRight: Radius.circular(4.0))),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 12.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 6,
-                        child: ExcludeSemantics(
+    return Semantics(
+      hint: task.finished
+          ? task.action != null
+              ? task.action!.type.toString() + ' task is already completed'
+              : task.category.toString() + ' task is already completed'
+          : task.action != null
+              ? task.action!.type.toString() + ' task double click to activate'
+              : task.category.toString() + ' task double click to activate',
+      child: InkWell(
+        onTap: () {
+          debugPrint('Task Type ==> ${task.category}');
+          if (!task.finished) {
+            debugPrint('Task ID ==> ${task.id}');
+            getUserTaskDetails(task.id.toString());
+            //_taskNavigator(task);
+            //showToast('Task completed already');
+          } else {
+            getUserTaskDetails(task.id.toString());
+            //startAHACarePlanSummary(task);
+          }
+        },
+        child: Card(
+          elevation: 0.0,
+          semanticContainer: false,
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: primaryLightColor),
+                borderRadius: BorderRadius.all(Radius.circular(4.0))),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                      color: colorF6F6FF,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(4.0),
+                          topRight: Radius.circular(4.0))),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 6,
                           child: Row(
                             children: [
                               SizedBox(
@@ -1028,10 +1049,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             ],
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: ExcludeSemantics(
+                        Expanded(
+                          flex: 4,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -1052,13 +1071,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                             ],
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              ExcludeSemantics(
-                child: Padding(
+                Padding(
                   padding: const EdgeInsets.all(0.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -1142,8 +1159,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -1761,6 +1778,40 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           newAssortedViewConfigs.testToshow = '2';
           newAssortedViewConfigs.isNextButtonVisible = false;
           newAssortedViewConfigs.header = task.task;
+          newAssortedViewConfigs.task = task;
+
+          Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
+                  arguments: newAssortedViewConfigs)
+              .then((value) {
+            getUserTask();
+            //showToast('Task completed successfully');
+          });
+          break;
+        case 'ActionPlan':
+          assrotedUICount = 3;
+          final AssortedViewConfigs newAssortedViewConfigs =
+              AssortedViewConfigs();
+          newAssortedViewConfigs.toShow = '1';
+          newAssortedViewConfigs.testToshow = '2';
+          newAssortedViewConfigs.isNextButtonVisible = false;
+          newAssortedViewConfigs.header = task.action!.type;
+          newAssortedViewConfigs.task = task;
+
+          Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,
+                  arguments: newAssortedViewConfigs)
+              .then((value) {
+            getUserTask();
+            //showToast('Task completed successfully');
+          });
+          break;
+        case 'WordBank':
+          assrotedUICount = 3;
+          final AssortedViewConfigs newAssortedViewConfigs =
+              AssortedViewConfigs();
+          newAssortedViewConfigs.toShow = '1';
+          newAssortedViewConfigs.testToshow = '2';
+          newAssortedViewConfigs.isNextButtonVisible = false;
+          newAssortedViewConfigs.header = task.action!.type;
           newAssortedViewConfigs.task = task;
 
           Navigator.pushNamed(context, RoutePaths.Learn_More_Care_Plan,

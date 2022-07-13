@@ -259,7 +259,8 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
           Visibility(
-                visible: false,
+            visible: getAppType() == 'AHA',
+            //visible: true,
             child: InkWell(
               onTap: () {
                 if (carePlanEnrollmentForPatientGlobe == null) {
@@ -270,7 +271,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 }
               },
               child: Container(
-                    height: 48,
+                height: 48,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[

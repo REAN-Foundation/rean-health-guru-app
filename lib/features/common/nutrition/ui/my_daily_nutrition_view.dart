@@ -1167,11 +1167,11 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
   recordMySodiumIntake(int sodiumInMiligram) async {
     try {
       sodiumIntakeInMiligram = sodiumIntakeInMiligram! + sodiumInMiligram;
-
       _sharedPrefUtils.save(
           'sodiumIntake',
           SodiumIntakeConsumption(startDate, sodiumIntakeInMiligram, '')
               .toJson());
+      showToastMsg("Sodium intake added successfully", context);
       setState(() {});
       /* final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;

@@ -118,32 +118,38 @@ class _AssessmentQuestionCarePlanViewState
                   SizedBox(
                     height: 32,
                   ),
-                  InkWell(
-                    onTap: () {
-                      //Navigator.pushNamed(context, RoutePaths.Assessment_Question_Two_Care_Plan);
-                      Navigator.pop(context, id);
-                    },
-                    child: Container(
-                        height: 40,
-                        width: 120,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24.0),
-                          border: Border.all(color: primaryColor, width: 1),
-                          color: primaryColor,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Next',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12),
-                            textAlign: TextAlign.center,
-                          ),
-                        )),
+                  Semantics(
+                    label: 'Next',
+                    button: true,
+                    child: ExcludeSemantics(
+                      child: InkWell(
+                        onTap: () {
+                          //Navigator.pushNamed(context, RoutePaths.Assessment_Question_Two_Care_Plan);
+                          Navigator.pop(context, id);
+                        },
+                        child: Container(
+                            height: 40,
+                            width: 120,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24.0),
+                              border: Border.all(color: primaryColor, width: 1),
+                              color: primaryColor,
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Next',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12),
+                                textAlign: TextAlign.center,
+                              ),
+                            )),
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: 16,

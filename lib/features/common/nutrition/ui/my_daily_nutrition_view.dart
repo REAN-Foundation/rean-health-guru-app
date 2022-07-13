@@ -4,7 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:patient/features/common/nutrition/models/glass_of_water_consumption.dart';
 import 'package:patient/features/common/nutrition/models/nutrition_response_store.dart';
 import 'package:patient/features/common/nutrition/models/sodium_intake_consumption.dart';
+import 'package:patient/features/common/nutrition/models/alcohol_consumption.dart';
 import 'package:patient/features/common/nutrition/ui/add_sodium_intake_view.dart';
+import 'package:patient/features/common/nutrition/ui/add_alcohol_consumption_view.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -44,6 +46,8 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
   GlassOfWaterConsumption? glassOfWaterConsumption;
   int? sodiumIntakeInMiligram = 0;
   SodiumIntakeConsumption? _sodiumIntakeConsumption;
+  int? alcoholIntakeInMililitre = 0;
+  AlcoholConsumption? _alcoholConsumption;
   late NutritionResponseStore nutritionResponseStore;
   DateTime? startDate;
   final dbHelper = DatabaseHelper.instance;
@@ -89,7 +93,20 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
       }
     }
   }
+  loadAlcohol() async {
+    final alcoholIntake = await _sharedPrefUtils.read('alcoholIntake');
 
+    if (alcoholIntake != null) {
+      _alcoholConsumption = AlcoholConsumption.fromJson(alcoholIntake);
+    }
+
+    if (_alcoholConsumption != null) {
+      if (startDate == _alcoholConsumption!.date) {
+        alcoholIntakeInMililitre = _alcoholConsumption!.count;
+
+      }
+    }
+  }
   setUpData() {
     debugPrint('Todays Date ==> ${dateFormat.format(DateTime.now())}');
     if (dateFormat.format(DateTime.now()) == nutritionResponseStore.date) {
@@ -147,6 +164,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
     loadSharedPref();
     loadWaterConsuption();
     loadSodiumIntake();
+    loadAlcohol();
 
     if (getAppType() == 'AHA') {
       buttonColor = redLightAha;
@@ -961,6 +979,117 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            'Alcohol',
+                            semanticsLabel: 'Alcohol',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16.0,
+                                color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Container(
+                            height: 56,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(12))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Semantics(
+                                    label: alcoholIntakeInMililitre!
+                                        .toStringAsFixed(0) +
+                                        (alcoholIntakeInMililitre! > 1
+                                            ? 'ml'
+                                            : 'ml'),
+                                    child: ExcludeSemantics(
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(
+                                            alcoholIntakeInMililitre.toString(),
+                                            semanticsLabel: '',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            alcoholIntakeInMililitre! > 1
+                                                ? 'ml'
+                                                : 'ml',
+                                            semanticsLabel:
+                                            alcoholIntakeInMililitre! > 1
+                                                ? 'ml'
+                                                : 'ml',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 48,
+                                    width: 48,
+                                    decoration: BoxDecoration(
+                                        color: buttonColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12))),
+                                    child: Center(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                              fullscreenDialog: true,
+                                              builder: (context) =>
+                                                  AddAlcoholConsumptionView(
+                                                    submitButtonListner:
+                                                        (alcoholConsumed) {
+                                                      debugPrint(alcoholConsumed);
+                                                      recordMyAlcoholConsumption(
+                                                          int.parse(
+                                                              alcoholConsumed));
+                                                      Navigator.of(context,
+                                                          rootNavigator: true)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                            ),
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: primaryColor,
+                                          semanticLabel: 'Add alcohol intake',
+                                          size: 32,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -1173,6 +1302,30 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
           SodiumIntakeConsumption(startDate, sodiumIntakeInMiligram, '')
               .toJson());
       showToast("Sodium intake added successfully", context);
+      setState(() {});
+      /* final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['Volume'] = waterGlass;
+      map['Time'] = dateFormat.format(DateTime.now());
+
+      final BaseResponse baseResponse = await model.recordMyWaterCount(map);
+      if (baseResponse.status == 'success') {
+      } else {}*/
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  recordMyAlcoholConsumption(int alcoholInMililitre) async {
+    try {
+      alcoholIntakeInMililitre = alcoholIntakeInMililitre! + alcoholInMililitre;
+      _sharedPrefUtils.save(
+          'alcoholIntake',
+          AlcoholConsumption(startDate, alcoholIntakeInMililitre, '')
+              .toJson());
+      showToast("Alcohol intake added successfully", context);
       setState(() {});
       /* final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;

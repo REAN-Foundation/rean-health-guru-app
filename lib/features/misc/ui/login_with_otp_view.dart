@@ -704,7 +704,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
             'OTP has been successfully sent on your mobile number', context);
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
-        _sharedPrefUtils.saveBoolean('login1.8.70', true);
+        _sharedPrefUtils.saveBoolean('login1.8.81', true);
         _clearFeilds();
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {

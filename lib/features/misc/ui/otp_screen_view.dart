@@ -448,7 +448,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       if (userData.status == 'success') {
         _sharedPrefUtils.save('user', userData.toJson());
         if (userData.data!.isProfileComplete!) {
-          /* _sharedPrefUtils.saveBoolean("login1.8.70", true);
+          /* _sharedPrefUtils.saveBoolean("login1.8.81", true);
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
                 return HomeView(0);
@@ -500,7 +500,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         }
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
-        _sharedPrefUtils.saveBoolean('login1.8.70', true);
+        _sharedPrefUtils.saveBoolean('login1.8.81', true);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);

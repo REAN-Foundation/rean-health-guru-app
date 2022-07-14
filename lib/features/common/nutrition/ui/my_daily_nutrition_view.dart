@@ -1427,6 +1427,8 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
 
   recordMySodiumIntake(int sodiumInMiligram) async {
     try {
+      recordMyMonitoringFoodConsumtion(
+          'Sodium', 'mg', sodiumInMiligram.toDouble());
       sodiumIntakeInMiligram = sodiumIntakeInMiligram! + sodiumInMiligram;
       _sharedPrefUtils.save(
           'sodiumIntake',
@@ -1451,11 +1453,11 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
 
   recordMyAlcoholConsumption(int alcoholInMililitre) async {
     try {
+      recordMyMonitoringFoodConsumtion(
+          'Alcohol', 'ml', alcoholInMililitre.toDouble());
       alcoholIntakeInMililitre = alcoholIntakeInMililitre! + alcoholInMililitre;
-      _sharedPrefUtils.save(
-          'alcoholIntake',
-          AlcoholConsumption(startDate, alcoholIntakeInMililitre, '')
-              .toJson());
+      _sharedPrefUtils.save('alcoholIntake',
+          AlcoholConsumption(startDate, alcoholIntakeInMililitre, '').toJson());
       showToast("Alcohol intake added successfully", context);
       setState(() {});
       /* final map = <String, dynamic>{};
@@ -1474,11 +1476,11 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
   }
   recordMyTobaccoConsumption(int tobaccoInGram) async {
     try {
+      recordMyMonitoringFoodConsumtion(
+          'Tobaco', 'gm', tobaccoInGram.toDouble());
       tobaccoIntakeInGram = tobaccoIntakeInGram! + tobaccoInGram;
-      _sharedPrefUtils.save(
-          'tobaccoIntake',
-          TobaccoConsumption(startDate, tobaccoIntakeInGram, '')
-              .toJson());
+      _sharedPrefUtils.save('tobaccoIntake',
+          TobaccoConsumption(startDate, tobaccoIntakeInGram, '').toJson());
       showToast("Tobacco intake added successfully", context);
       setState(() {});
       /* final map = <String, dynamic>{};
@@ -1494,5 +1496,31 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
+  }
+
+  recordMyMonitoringFoodConsumtion(
+      String foodName, String unit, double amount) async {
+    try {
+      final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['MonitoredFoodComponent'] = foodName;
+      map['Unit'] = unit;
+      map['Amount'] = amount;
+
+      final BaseResponse baseResponse =
+          await model.recordMyMonitoringFoodConsumtion(map);
+      if (baseResponse.status == 'success') {
+        //showToast(baseResponse.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+    /*catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ==> ' + CustomException.toString());
+    }*/
   }
 }

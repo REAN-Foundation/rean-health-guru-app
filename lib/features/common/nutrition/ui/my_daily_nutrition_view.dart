@@ -5,8 +5,10 @@ import 'package:patient/features/common/nutrition/models/glass_of_water_consumpt
 import 'package:patient/features/common/nutrition/models/nutrition_response_store.dart';
 import 'package:patient/features/common/nutrition/models/sodium_intake_consumption.dart';
 import 'package:patient/features/common/nutrition/models/alcohol_consumption.dart';
+import 'package:patient/features/common/nutrition/models/tobacco_consumption.dart';
 import 'package:patient/features/common/nutrition/ui/add_sodium_intake_view.dart';
 import 'package:patient/features/common/nutrition/ui/add_alcohol_consumption_view.dart';
+import 'package:patient/features/common/nutrition/ui/add_tobacco_consumption_view.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -48,6 +50,8 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
   SodiumIntakeConsumption? _sodiumIntakeConsumption;
   int? alcoholIntakeInMililitre = 0;
   AlcoholConsumption? _alcoholConsumption;
+  int? tobaccoIntakeInGram = 0;
+  TobaccoConsumption? _tobaccoConsumption;
   late NutritionResponseStore nutritionResponseStore;
   DateTime? startDate;
   final dbHelper = DatabaseHelper.instance;
@@ -107,6 +111,21 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
       }
     }
   }
+  loadTobacco() async {
+    final tobaccoIntake = await _sharedPrefUtils.read('tobaccoIntake');
+
+    if (tobaccoIntake != null) {
+      _tobaccoConsumption = TobaccoConsumption.fromJson(tobaccoIntake);
+    }
+
+    if (_tobaccoConsumption != null) {
+      if (startDate == _tobaccoConsumption!.date) {
+        tobaccoIntakeInGram = _tobaccoConsumption!.count;
+
+      }
+    }
+  }
+
   setUpData() {
     debugPrint('Todays Date ==> ${dateFormat.format(DateTime.now())}');
     if (dateFormat.format(DateTime.now()) == nutritionResponseStore.date) {
@@ -1090,6 +1109,117 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            'Tobacco',
+                            semanticsLabel: 'Tobacco',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16.0,
+                                color: Colors.black),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Container(
+                            height: 56,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(12))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Semantics(
+                                    label: tobaccoIntakeInGram!
+                                        .toStringAsFixed(0) +
+                                        (tobaccoIntakeInGram! > 1
+                                            ? 'gm'
+                                            : 'gm'),
+                                    child: ExcludeSemantics(
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(
+                                            tobaccoIntakeInGram.toString(),
+                                            semanticsLabel: '',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            tobaccoIntakeInGram! > 1
+                                                ? 'gm'
+                                                : 'gm',
+                                            semanticsLabel:
+                                            tobaccoIntakeInGram! > 1
+                                                ? 'gm'
+                                                : 'gm',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 48,
+                                    width: 48,
+                                    decoration: BoxDecoration(
+                                        color: buttonColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12))),
+                                    child: Center(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                              fullscreenDialog: true,
+                                              builder: (context) =>
+                                                  AddTobaccoConsumptionView(
+                                                    submitButtonListner:
+                                                        (tobaccoConsumed) {
+                                                      debugPrint(tobaccoConsumed);
+                                                      recordMyTobaccoConsumption(
+                                                          int.parse(
+                                                              tobaccoConsumed));
+                                                      Navigator.of(context,
+                                                          rootNavigator: true)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                            ),
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: primaryColor,
+                                          semanticLabel: 'Add tobacco intake',
+                                          size: 32,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -1326,6 +1456,29 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
           AlcoholConsumption(startDate, alcoholIntakeInMililitre, '')
               .toJson());
       showToast("Alcohol intake added successfully", context);
+      setState(() {});
+      /* final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['Volume'] = waterGlass;
+      map['Time'] = dateFormat.format(DateTime.now());
+
+      final BaseResponse baseResponse = await model.recordMyWaterCount(map);
+      if (baseResponse.status == 'success') {
+      } else {}*/
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+  recordMyTobaccoConsumption(int tobaccoInGram) async {
+    try {
+      tobaccoIntakeInGram = tobaccoIntakeInGram! + tobaccoInGram;
+      _sharedPrefUtils.save(
+          'tobaccoIntake',
+          TobaccoConsumption(startDate, tobaccoIntakeInGram, '')
+              .toJson());
+      showToast("Tobacco intake added successfully", context);
       setState(() {});
       /* final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;

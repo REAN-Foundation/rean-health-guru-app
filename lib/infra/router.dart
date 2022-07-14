@@ -55,8 +55,11 @@ import 'package:patient/features/common/careplan/ui/successfully_setup_careplan.
 import 'package:patient/features/common/careplan/ui/video_more_careplan.dart';
 import 'package:patient/features/common/careplan/ui/word_of_the_week_careplan.dart';
 import 'package:patient/features/common/chat_bot/ui/faq_chat_screen.dart';
+import 'package:patient/features/common/lab_management/ui/biometric_cholesterol_trends_view.dart';
 import 'package:patient/features/common/lab_management/ui/lipid_profile_hdl.dart';
 import 'package:patient/features/common/lab_management/ui/lipid_profile_ldl.dart';
+import 'package:patient/features/common/lab_management/ui/lipid_profile_total_cholesterol.dart';
+import 'package:patient/features/common/lab_management/ui/lipid_profile_triglycerides.dart';
 import 'package:patient/features/common/medication/ui/add_my_medication.dart';
 import 'package:patient/features/common/medication/ui/my_medication.dart';
 import 'package:patient/features/common/nutrition/ui/my_daily_nutrition_view.dart';
@@ -201,9 +204,14 @@ class Routers {
       case RoutePaths.Lipid_Profile_HDL:
         return MaterialPageRoute(builder: (_) => LipidProfileHdlView(true));
       case RoutePaths.Lipid_Profile_Total_Cholesterol:
-        return MaterialPageRoute(builder: (_) => LipidProfileLDLView(true));
+        return MaterialPageRoute(
+            builder: (_) => LipidProfileTotalCholesterolView(true));
       case RoutePaths.Lipid_Profile_Triglyceroid:
-        return MaterialPageRoute(builder: (_) => LipidProfileLDLView(true));
+        return MaterialPageRoute(
+            builder: (_) => LipidProfileTriglyceridesView(true));
+      case RoutePaths.Lipid_Profile:
+        return MaterialPageRoute(
+            builder: (_) => BiometricCholesterolTrendsView());
       case RoutePaths.My_Medical_Profile:
         return MaterialPageRoute(builder: (_) => PatientMedicalProfileView());
       case RoutePaths.Patient_EDIT_MEDIACL_PROFILE:

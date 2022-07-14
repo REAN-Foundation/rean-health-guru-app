@@ -1618,7 +1618,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         semanticLabel: 'Add Cholesterol records',
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, RoutePaths.My_Vitals);
+                        Navigator.pushNamed(context, RoutePaths.Lipid_Profile);
                       })
                 ],
               ),

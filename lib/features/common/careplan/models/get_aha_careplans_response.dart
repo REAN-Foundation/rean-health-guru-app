@@ -54,6 +54,7 @@ class AvailablePlans {
   String? name;
   String? code;
   String? displayName;
+  String? description;
   int? defaultDurationDays;
 
   AvailablePlans(
@@ -61,6 +62,7 @@ class AvailablePlans {
       this.name,
       this.code,
       this.displayName,
+      this.description,
       this.defaultDurationDays});
 
   AvailablePlans.fromJson(Map<String, dynamic> json) {
@@ -68,6 +70,7 @@ class AvailablePlans {
     name = json['Name'];
     code = json['Code'];
     displayName = json['DisplayName'];
+    description = json['Description'];
     defaultDurationDays = json['DefaultDurationDays'];
   }
 
@@ -77,6 +80,7 @@ class AvailablePlans {
     data['Name'] = name;
     data['Code'] = code;
     data['DisplayName'] = displayName;
+    data['Description'] = description;
     data['DefaultDurationDays'] = defaultDurationDays;
     return data;
   }

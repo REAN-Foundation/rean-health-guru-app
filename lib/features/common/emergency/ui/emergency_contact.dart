@@ -1173,6 +1173,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   Widget _addEmergencyDoctorDialog(BuildContext context) {
     return Dialog(
+        insetPadding: EdgeInsets.all(10),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
@@ -1180,7 +1181,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         backgroundColor: Colors.white,
         //child: addOrEditAllergiesDialog(context),
         child: Container(
-          width: MediaQuery.of(context).size.width,
+          width: double.infinity,
           height: 640,
           child: Column(
             children: [
@@ -1281,6 +1282,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   Widget _addNurseDialog(BuildContext context) {
     return Dialog(
+        insetPadding: EdgeInsets.all(10),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
@@ -1288,7 +1290,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         backgroundColor: Colors.white,
         //child: addOrEditAllergiesDialog(context),
         child: Container(
-          width: MediaQuery.of(context).size.width,
+          width: double.infinity,
           height: 580,
           child: Column(
             children: [
@@ -1348,6 +1350,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   Widget _addFamilyMemberDialog(BuildContext context) {
     return Dialog(
+        insetPadding: EdgeInsets.all(10),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
@@ -1355,7 +1358,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         backgroundColor: Colors.white,
         //child: addOrEditAllergiesDialog(context),
         child: Container(
-          width: MediaQuery.of(context).size.width,
+          width: double.infinity,
           height: 660,
           child: Column(
             children: [
@@ -1403,7 +1406,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 child: AddFamilyMemberDialog(submitButtonListner:
                     (String firstName, String lastName, String phoneNumber,
                         String gender, String relation) {
-                      debugPrint('Team Member ==> $firstName');
+                  debugPrint('Team Member ==> $firstName');
                   addTeamMembers(firstName, lastName, phoneNumber, gender,
                       relation, 'FamilyMember');
                   Navigator.of(context, rootNavigator: true).pop();

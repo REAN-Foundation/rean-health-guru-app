@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:patient/features/common/careplan/models/check_careplan_eligibility.dart';
 import 'package:patient/features/common/careplan/models/enroll_care_clan_response.dart';
 import 'package:patient/features/common/careplan/models/get_aha_careplans_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
@@ -31,6 +32,9 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   var dateFormat = DateFormat('dd MMM, yyyy');
   var dateFormatStandard = DateFormat('yyyy-MM-dd');
   String startDate = '';
+  bool? carePlanEligibility = false;
+  String? carePlanEligibilityMsg = '';
+  String? decription = '';
 
   @override
   void initState() {
@@ -85,8 +89,12 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               .displayName) {
         carePlanTypes =
             _ahaCarePlansResponse.data!.availablePlans!.elementAt(i);
+        decription = _ahaCarePlansResponse.data!.availablePlans!
+            .elementAt(i)
+            .description;
       }
     }
+    _checkCareplanEligibility(carePlanTypes!.code.toString());
   }
 
   @override
@@ -182,7 +190,9 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                                         /* if (selectedCarePlan == '')
                                           Container()
                                         else*/
-                                        descriptionOfCarePlan(),
+                                        decription != ''
+                                            ? descriptionOfCarePlan()
+                                            : Container(),
                                         //eligibilityOfCarePlan(),
                                         //recomandationForCarePlan(),
                                       ],
@@ -302,58 +312,61 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           const SizedBox(
             height: 4,
           ),
-          GestureDetector(
-            child: ExcludeSemantics(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 48.0,
-                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  border: Border.all(
-                    color: Color(0XFF909CAC),
-                    width: 1.0,
+          Semantics(
+            label: 'Select start date ' + dob,
+            child: GestureDetector(
+              child: ExcludeSemantics(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 48.0,
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    border: Border.all(
+                      color: Color(0XFF909CAC),
+                      width: 1.0,
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          dob,
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal, fontSize: 16),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            dob,
+                            style: TextStyle(
+                                fontWeight: FontWeight.normal, fontSize: 16),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: Image.asset('res/images/ic_calender.png')),
-                    ],
+                        SizedBox(
+                            height: 24,
+                            width: 24,
+                            child: Image.asset('res/images/ic_calender.png')),
+                      ],
+                    ),
                   ),
                 ),
               ),
+              onTap: () {
+                DatePicker.showDatePicker(context,
+                    showTitleActions: true,
+                    minTime: DateTime.now().subtract(Duration(days: 0)),
+                    onChanged: (date) {
+                  debugPrint('change $date');
+                }, onConfirm: (date) {
+                  unformatedDOB = date.toIso8601String();
+                  setState(() {
+                    dob = dateFormat.format(date);
+                    startDate =
+                        dateFormatStandard.format(date) + 'T00:00:00.000Z';
+                  });
+                  debugPrint('confirm $date');
+                  debugPrint('confirm formated $startDate');
+                }, currentTime: DateTime.now(), locale: LocaleType.en);
+              },
             ),
-            onTap: () {
-              DatePicker.showDatePicker(context,
-                  showTitleActions: true,
-                  minTime: DateTime.now().subtract(Duration(days: 0)),
-                  onChanged: (date) {
-                debugPrint('change $date');
-              }, onConfirm: (date) {
-                unformatedDOB = date.toIso8601String();
-                setState(() {
-                  dob = dateFormat.format(date);
-                  startDate =
-                      dateFormatStandard.format(date) + 'T00:00:00.000Z';
-                });
-                debugPrint('confirm $date');
-                debugPrint('confirm formated $startDate');
-              }, currentTime: DateTime.now(), locale: LocaleType.en);
-            },
           ),
         ],
       ),
@@ -365,22 +378,30 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       padding: const EdgeInsets.only(left: 16.0),
       child: Align(
         alignment: Alignment.centerLeft,
-        child: GestureDetector(
-          onTap: () {
-            showMaterialModalBottomSheet(
-                isDismissible: true,
-                backgroundColor: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(25.0)),
-                ),
-                context: context,
-                builder: (context) => eligibilityOfCarePlan());
-          },
-          child: Text(
-            'Check Eligibility',
-            style: TextStyle(
-                fontWeight: FontWeight.w600, color: primaryColor, fontSize: 14),
+        child: Semantics(
+          label: 'Check Eligibility',
+          button: true,
+          child: ExcludeSemantics(
+            child: GestureDetector(
+              onTap: () {
+                showMaterialModalBottomSheet(
+                    isDismissible: true,
+                    backgroundColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(25.0)),
+                    ),
+                    context: context,
+                    builder: (context) => eligibilityOfCarePlan());
+              },
+              child: Text(
+                'Check Eligibility',
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: primaryColor,
+                    fontSize: 14),
+              ),
+            ),
           ),
         ),
       ),
@@ -420,15 +441,14 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     color: textBlack, fontSize: 16, fontFamily: 'Montserrat', fontWeight: FontWeight.w200,),),*/
                 RichText(
                   text: TextSpan(
-                    text:
-                        'Cardiac rehab is a medically supervised programme designed by American Heart ',
+                    text: decription.toString(),
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
                       color: textGrey,
                     ),
-                    children: <TextSpan>[
+                    /*children: <TextSpan>[
                       TextSpan(
                         text: '(https://www.heart.org)',
                         style: TextStyle(
@@ -449,7 +469,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                               color: textGrey,
                               fontSize: 14,
                               fontFamily: 'Montserrat')),
-                    ],
+                    ],*/
                   ),
                 ),
               ],
@@ -653,50 +673,72 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     );
   }
 
-  _launchURL(String _url) async {
+/*  _launchURL(String _url) async {
     if (!await launch(_url)) {
     } else {
       throw 'Could not launch $_url';
     }
-  }
+  }*/
 
   Widget registerFooter() {
     return Container(
-        height: 60,
+        height: carePlanEligibilityMsg != '' ? 120 : 82,
         padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            carePlanEligibilityMsg != '' || carePlanEligibilityMsg != null
+                ? Linkify(
+                    onOpen: (link) async {
+                      if (await canLaunch(link.url)) {
+                        await launch(link.url);
+                      } else {
+                        throw 'Could not launch $link';
+                      }
+                    },
+                    options: LinkifyOptions(humanize: false),
+                    text: carePlanEligibilityMsg.toString(),
+                    maxLines: 2,
+                    style: TextStyle(color: Colors.red),
+                    linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                  )
+                : SizedBox(
+                    height: 0,
+                  ),
             Semantics(
               label: 'Register',
               button: true,
-              child: InkWell(
-                onTap: () {
-                  if (selectedCarePlan == '') {
-                    showToast('Please select care plan', context);
-                  } else if (startDate == '') {
-                    showToast('Please select start date', context);
-                  } else {
-                    startCarePlan();
-                  }
-                },
-                child: Container(
-                  height: 48,
-                  width: MediaQuery.of(context).size.width - 32,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                  ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0),
-                      border: Border.all(color: primaryColor, width: 1),
-                      color: primaryColor),
-                  child: Center(
-                    child: Text(
-                      'Register',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                          fontSize: 14),
+              child: ExcludeSemantics(
+                child: InkWell(
+                  onTap: () {
+                    if (selectedCarePlan == '') {
+                      showToast('Please select care plan', context);
+                    } else if (startDate == '') {
+                      showToast('Please select start date', context);
+                    } else if (carePlanEligibility!) {
+                      startCarePlan();
+                    } else {
+                      //showToast(carePlanEligibilityMsg.toString(), context);
+                    }
+                  },
+                  child: Container(
+                    height: 48,
+                    width: MediaQuery.of(context).size.width - 32,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6.0),
+                        border: Border.all(color: primaryColor, width: 1),
+                        color: primaryColor),
+                    child: Center(
+                      child: Text(
+                        'Register',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            fontSize: 14),
+                      ),
                     ),
                   ),
                 ),
@@ -719,6 +761,29 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       if (response.status == 'success') {
         showSuccessDialog();
         //showToast(response.message!, context);
+      } else {
+        showToast(response.message!, context);
+      }
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  _checkCareplanEligibility(String code) async {
+    try {
+      final CheckCareplanEligibility response =
+          await model.checkCarePlanEligibility(code);
+      debugPrint('Eligibility of Care Plan ==> ${response.toJson()}');
+      if (response.status == 'success') {
+        carePlanEligibility = response.data!.eligibility!.eligible;
+        if (response.data!.eligibility!.reason != null) {
+          carePlanEligibilityMsg = response.data!.eligibility!.reason;
+        }
+        // if (!carePlanEligibility!) {
+        //showToast(carePlanEligibilityMsg.toString(), context);
+        //}
       } else {
         showToast(response.message!, context);
       }
@@ -763,7 +828,8 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               Padding(
                 padding: EdgeInsets.all(15.0),
                 child: Text(
-                  'You Have Successfully registered with\nAHAHF Care Plan ',
+                  'You have successfully registered with\n' +
+                      carePlanTypes!.displayName.toString(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.black,
@@ -777,30 +843,32 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               Semantics(
                 button: true,
                 label: 'Home',
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushAndRemoveUntil(context,
-                        MaterialPageRoute(builder: (context) {
-                      return HomeView(0);
-                    }), (Route<dynamic> route) => false);
-                  },
-                  child: Container(
-                    height: 48,
-                    width: 260,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                    ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0),
-                        border: Border.all(color: primaryColor, width: 1),
-                        color: primaryColor),
-                    child: Center(
-                      child: Text(
-                        'Home',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                            fontSize: 14),
+                child: ExcludeSemantics(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(context,
+                          MaterialPageRoute(builder: (context) {
+                        return HomeView(0);
+                      }), (Route<dynamic> route) => false);
+                    },
+                    child: Container(
+                      height: 48,
+                      width: 260,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6.0),
+                          border: Border.all(color: primaryColor, width: 1),
+                          color: primaryColor),
+                      child: Center(
+                        child: Text(
+                          'Home',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                              fontSize: 14),
+                        ),
                       ),
                     ),
                   ),

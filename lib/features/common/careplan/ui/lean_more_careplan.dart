@@ -160,7 +160,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
       ),
       child: Center(
         child: Text(
-          widget.assortedViewConfigs!.task!.action!.category.toString(),
+          widget.assortedViewConfigs!.task!.action!.title.toString(),
           style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),

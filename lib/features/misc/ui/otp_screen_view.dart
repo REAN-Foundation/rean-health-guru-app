@@ -211,14 +211,14 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            ' Enter 6 digit OTP',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+            ' Enter 6 digit one-time PIN',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
           SizedBox(
             height: 4,
           ),
           Text(
-            '  OTP has been sent to your mobile number\n  ' +
+            '  One-Time PIN has been sent to your \n  mobile number ' +
                 (dummyNumberList.contains(mobileNumber)
                     ? mobileNumber!
                     : countryCodeGlobe! + '-' + mobileNumber!),
@@ -448,7 +448,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       if (userData.status == 'success') {
         _sharedPrefUtils.save('user', userData.toJson());
         if (userData.data!.isProfileComplete!) {
-          /* _sharedPrefUtils.saveBoolean("login1.8.70", true);
+          /* _sharedPrefUtils.saveBoolean("login1.8.81", true);
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
                 return HomeView(0);
@@ -500,7 +500,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         }
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
-        _sharedPrefUtils.saveBoolean('login1.8.70', true);
+        _sharedPrefUtils.saveBoolean('login1.8.81', true);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
           return HomeView(0);

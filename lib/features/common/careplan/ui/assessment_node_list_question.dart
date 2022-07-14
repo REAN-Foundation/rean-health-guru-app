@@ -164,46 +164,52 @@ class _AssessmentNodeListQuestionViewState
           SizedBox(
             height: 16,
           ),
-          InkWell(
-            onTap: () {
-              //Navigator.pushNamed(context, RoutePaths.Assessment_Question_Two_Care_Plan);
-              bool vaildation = false;
-              for (int i = 0;
-                  i < widget.assesment!.childrenQuestions!.length;
-                  i++) {
-                if (nodeAnswer[i] == 0) {
-                  vaildation = true;
-                }
-              }
+          Semantics(
+            label: 'Next',
+            button: true,
+            child: ExcludeSemantics(
+              child: InkWell(
+                onTap: () {
+                  //Navigator.pushNamed(context, RoutePaths.Assessment_Question_Two_Care_Plan);
+                  bool vaildation = false;
+                  for (int i = 0;
+                      i < widget.assesment!.childrenQuestions!.length;
+                      i++) {
+                    if (nodeAnswer[i] == 0) {
+                      vaildation = true;
+                    }
+                  }
 
-              if (vaildation) {
-                showToastMsg('Please answer all the question', context);
-              } else {
-                debugPrint('Node List ==> ${nodeAnswer.length}');
-                Navigator.pop(context, nodeAnswer);
-              }
-            },
-            child: Container(
-                height: 40,
-                width: 120,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24.0),
-                  border: Border.all(color: primaryColor, width: 1),
-                  color: primaryColor,
-                ),
-                child: Center(
-                  child: Text(
-                    'Next',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12),
-                    textAlign: TextAlign.center,
-                  ),
-                )),
+                  if (vaildation) {
+                    showToastMsg('Please answer all the question', context);
+                  } else {
+                    debugPrint('Node List ==> ${nodeAnswer.length}');
+                    Navigator.pop(context, nodeAnswer);
+                  }
+                },
+                child: Container(
+                    height: 40,
+                    width: 120,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24.0),
+                      border: Border.all(color: primaryColor, width: 1),
+                      color: primaryColor,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Next',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12),
+                        textAlign: TextAlign.center,
+                      ),
+                    )),
+              ),
+            ),
           ),
           SizedBox(
             height: 16,

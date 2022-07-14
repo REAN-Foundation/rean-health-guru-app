@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:patient/features/common/nutrition/models/alcohol_consumption.dart';
 import 'package:patient/features/common/nutrition/models/glass_of_water_consumption.dart';
 import 'package:patient/features/common/nutrition/models/nutrition_response_store.dart';
 import 'package:patient/features/common/nutrition/models/sodium_intake_consumption.dart';
-import 'package:patient/features/common/nutrition/models/alcohol_consumption.dart';
 import 'package:patient/features/common/nutrition/models/tobacco_consumption.dart';
-import 'package:patient/features/common/nutrition/ui/add_sodium_intake_view.dart';
 import 'package:patient/features/common/nutrition/ui/add_alcohol_consumption_view.dart';
+import 'package:patient/features/common/nutrition/ui/add_sodium_intake_view.dart';
 import 'package:patient/features/common/nutrition/ui/add_tobacco_consumption_view.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -184,6 +184,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
     loadWaterConsuption();
     loadSodiumIntake();
     loadAlcohol();
+    loadTobacco();
 
     if (getAppType() == 'AHA') {
       buttonColor = redLightAha;

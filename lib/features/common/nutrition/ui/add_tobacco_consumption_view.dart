@@ -153,8 +153,8 @@ class _MyAddTobaccoViewState extends State<AddTobaccoConsumptionView> {
                   ],*/
                   decoration: InputDecoration(
                       hintStyle:
-                      TextStyle(fontSize: 14, color: Colors.grey[400]),
-                      hintText: '5 ml',
+                          TextStyle(fontSize: 14, color: Colors.grey[400]),
+                      hintText: '5 gm',
                       contentPadding: EdgeInsets.all(0),
                       border: InputBorder.none,
                       fillColor: Colors.white,

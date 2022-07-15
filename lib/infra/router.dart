@@ -5,7 +5,6 @@ import 'package:patient/features/common/activity/ui/all_movements_view.dart';
 import 'package:patient/features/common/activity/ui/meditation_timmer_view.dart';
 import 'package:patient/features/common/activity/ui/view_my_all_daily_activity.dart';
 import 'package:patient/features/common/activity/ui/view_my_all_daily_stress.dart';
-import 'package:patient/features/common/activity/ui/view_my_daily_activity.dart';
 import 'package:patient/features/common/activity/ui/view_my_daily_sleep.dart';
 import 'package:patient/features/common/appointment_booking/ui/booking_appointment_confirmation.dart';
 import 'package:patient/features/common/appointment_booking/ui/booking_confirm_screen.dart';

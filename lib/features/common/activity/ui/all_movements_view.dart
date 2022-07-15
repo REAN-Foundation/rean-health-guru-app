@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patient/features/common/activity/ui/enter_all_movements_view.dart';
-import 'package:patient/features/common/activity/ui/view_my_all_daily_activity.dart';
 import 'package:patient/features/common/activity/ui/view_my_all_daily_activity_trends.dart';
-import 'package:patient/features/common/vitals/ui/biometric_trends_view.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 

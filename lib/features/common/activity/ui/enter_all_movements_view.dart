@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/activity/models/movements_tracking.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
-import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
-import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';

@@ -339,7 +339,8 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _content(),
+                              if (Platform.isIOS) _content(),
+                              if (Platform.isAndroid) _contentDataReady(),
                             ],
                           ),
                         ),
@@ -359,19 +360,23 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
   }
 
   Widget sleepTime() {
-    debugPrint(
-        'Sleep in Bed ==>${sleepDataInBed!.getSleepDurationInBed().abs()} ');
-    debugPrint('ASleep ==>${sleepDataASleep!.getSleepDurationASleep().abs()} ');
-
-    var sleepInBed = sleepDataInBed!.getSleepDurationInBed().abs();
-    var aSleep = sleepDataASleep!.getSleepDurationASleep().abs();
-
     var sleepToDisplay = 0;
+    if (Platform.isIOS) {
+      debugPrint(
+          'Sleep in Bed ==>${sleepDataInBed!.getSleepDurationInBed().abs()} ');
+      debugPrint(
+          'ASleep ==>${sleepDataASleep!.getSleepDurationASleep().abs()} ');
 
-    if (aSleep > 0) {
-      sleepToDisplay = aSleep;
+      var sleepInBed = sleepDataInBed!.getSleepDurationInBed().abs();
+      var aSleep = sleepDataASleep!.getSleepDurationASleep().abs();
+
+      if (aSleep > 0) {
+        sleepToDisplay = aSleep;
+      } else {
+        sleepToDisplay = sleepInBed;
+      }
     } else {
-      sleepToDisplay = sleepInBed;
+      //https://pub.dev/packages/time_range_picker
     }
 
     return Container(

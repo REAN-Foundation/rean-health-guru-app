@@ -35,6 +35,7 @@ class RoutePaths {
       'patientEditMedicalProfile';
   static const String My_Medications = 'MyMedications';
   static const String My_Activity = 'MyActivity';
+  static const String My_Activity_Trends = 'MyActivityTrends';
   static const String MY_STRESS = 'MyStress';
   static const String MyExcersiceData = 'MyExcersiceData';
   static const String MySleepData = 'MySleepData';
@@ -105,4 +106,10 @@ class RoutePaths {
   static const String My_Reports = 'MyReports';
   static const String My_Vitals_By_Device_Framework = 'MyVitalsByDeviceFamwork';
   static const String FAQ_BOT = 'FAQBOT';
+  static const String Lipid_Profile_LDL = 'lipid_Profile_LDL';
+  static const String Lipid_Profile_HDL = 'lipid_Profile_HDL';
+  static const String Lipid_Profile_Total_Cholesterol =
+      'lipid_Profile_Total_cholesterol';
+  static const String Lipid_Profile_Triglyceroid = 'lipid_Profile_Triglyceroid';
+  static const String Lipid_Profile = 'lipid_Profile';
 }

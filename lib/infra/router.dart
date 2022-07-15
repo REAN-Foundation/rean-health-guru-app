@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/activity/ui/all_movements_view.dart';
 import 'package:patient/features/common/activity/ui/meditation_timmer_view.dart';
+import 'package:patient/features/common/activity/ui/view_my_all_daily_activity.dart';
 import 'package:patient/features/common/activity/ui/view_my_all_daily_stress.dart';
 import 'package:patient/features/common/activity/ui/view_my_daily_activity.dart';
 import 'package:patient/features/common/activity/ui/view_my_daily_sleep.dart';
@@ -55,6 +57,11 @@ import 'package:patient/features/common/careplan/ui/successfully_setup_careplan.
 import 'package:patient/features/common/careplan/ui/video_more_careplan.dart';
 import 'package:patient/features/common/careplan/ui/word_of_the_week_careplan.dart';
 import 'package:patient/features/common/chat_bot/ui/faq_chat_screen.dart';
+import 'package:patient/features/common/lab_management/ui/biometric_cholesterol_trends_view.dart';
+import 'package:patient/features/common/lab_management/ui/lipid_profile_hdl.dart';
+import 'package:patient/features/common/lab_management/ui/lipid_profile_ldl.dart';
+import 'package:patient/features/common/lab_management/ui/lipid_profile_total_cholesterol.dart';
+import 'package:patient/features/common/lab_management/ui/lipid_profile_triglycerides.dart';
 import 'package:patient/features/common/medication/ui/add_my_medication.dart';
 import 'package:patient/features/common/medication/ui/my_medication.dart';
 import 'package:patient/features/common/nutrition/ui/my_daily_nutrition_view.dart';
@@ -164,8 +171,11 @@ class Routers {
       case RoutePaths.MY_STRESS:
         return MaterialPageRoute(builder: (_) => ViewMyAllDailyStress());
       case RoutePaths.My_Activity:
-        return MaterialPageRoute(builder: (_) => ViewMyDailyActivity());
-      //ViewMyAllDailyActivity(settings.arguments as String?));
+        return MaterialPageRoute(
+            builder: (_) => //ViewMyDailyActivity());
+                ViewMyAllDailyActivity(settings.arguments as String?));
+      case RoutePaths.My_Activity_Trends:
+        return MaterialPageRoute(builder: (_) => AllMovementsView());
       case RoutePaths.MySleepData:
         return MaterialPageRoute(builder: (_) => ViewMyDailySleep());
       case RoutePaths.My_Nutrition:
@@ -194,6 +204,19 @@ class Routers {
       case RoutePaths.Biometric_Temperature_Vitals_Care_Plan:
         return MaterialPageRoute(
             builder: (_) => BiometricBodyTemperatureVitalsView());
+      case RoutePaths.Lipid_Profile_LDL:
+        return MaterialPageRoute(builder: (_) => LipidProfileLDLView(true));
+      case RoutePaths.Lipid_Profile_HDL:
+        return MaterialPageRoute(builder: (_) => LipidProfileHdlView(true));
+      case RoutePaths.Lipid_Profile_Total_Cholesterol:
+        return MaterialPageRoute(
+            builder: (_) => LipidProfileTotalCholesterolView(true));
+      case RoutePaths.Lipid_Profile_Triglyceroid:
+        return MaterialPageRoute(
+            builder: (_) => LipidProfileTriglyceridesView(true));
+      case RoutePaths.Lipid_Profile:
+        return MaterialPageRoute(
+            builder: (_) => BiometricCholesterolTrendsView());
       case RoutePaths.My_Medical_Profile:
         return MaterialPageRoute(builder: (_) => PatientMedicalProfileView());
       case RoutePaths.Patient_EDIT_MEDIACL_PROFILE:

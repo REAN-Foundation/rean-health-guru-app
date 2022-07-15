@@ -21,16 +21,14 @@ import 'package:patient/infra/utils/string_utility.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 //ignore: must_be_immutable
-class ViewMyAllDailyActivity extends StatefulWidget {
-  String? path = '';
-
-  ViewMyAllDailyActivity(this.path);
-
+class ViewMyAllDailyActivityTrends extends StatefulWidget {
   @override
-  _ViewMyAllDailyActivityState createState() => _ViewMyAllDailyActivityState();
+  _ViewMyAllDailyActivityTrendsState createState() =>
+      _ViewMyAllDailyActivityTrendsState();
 }
 
-class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
+class _ViewMyAllDailyActivityTrendsState
+    extends State<ViewMyAllDailyActivityTrends> {
   var model = PatientHealthMarkerViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<HealthDataPoint> _healthDataList = [];
@@ -296,31 +294,6 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
     );
   }
 
-  movetoPosition() {
-    switch (widget.path) {
-      case "Steps":
-        _scrollController!
-            .animateTo(0, duration: Duration(seconds: 0), curve: Curves.ease);
-        break;
-      case "Exercise":
-        _scrollController!
-            .animateTo(340, duration: Duration(seconds: 1), curve: Curves.ease);
-        break;
-      case "Sleep":
-        _scrollController!
-            .animateTo(680, duration: Duration(seconds: 2), curve: Curves.ease);
-        break;
-      case "Calories":
-        _scrollController!.animateTo(1020,
-            duration: Duration(seconds: 2), curve: Curves.ease);
-        break;
-      default:
-        _scrollController!
-            .animateTo(0, duration: Duration(seconds: 2), curve: Curves.ease);
-        break;
-    }
-  }
-
   Widget _contentNotFetched() {
     return Text(''); //Press the download button to fetch data
   }
@@ -456,31 +429,6 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
         child: Scaffold(
             key: _scaffoldKey,
             backgroundColor: Colors.white,
-            appBar: AppBar(
-              elevation: 0,
-              backgroundColor: primaryColor,
-              brightness: Brightness.dark,
-              title: Text(
-                'Physical Health Management',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600),
-              ),
-              iconTheme: IconThemeData(color: Colors.white),
-              actions: <Widget>[
-                /*IconButton(
-                icon: Icon(
-                  Icons.person_pin,
-                  color: Colors.black,
-                  size: 32.0,
-                ),
-                onPressed: () {
-                  debugPrint("Clicked on profile icon");
-                },
-              )*/
-              ],
-            ),
             body: Stack(
               children: [
                 Positioned(
@@ -507,8 +455,8 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
                         decoration: BoxDecoration(
                             color: Color(0XFFf7f5f5),
                             borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(12),
-                                topLeft: Radius.circular(12))),
+                                topRight: Radius.circular(0),
+                                topLeft: Radius.circular(0))),
                         child: SingleChildScrollView(
                           controller: _scrollController,
                           child: Column(

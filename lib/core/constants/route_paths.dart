@@ -106,4 +106,10 @@ class RoutePaths {
   static const String My_Reports = 'MyReports';
   static const String My_Vitals_By_Device_Framework = 'MyVitalsByDeviceFamwork';
   static const String FAQ_BOT = 'FAQBOT';
+  static const String Lipid_Profile_LDL = 'lipid_Profile_LDL';
+  static const String Lipid_Profile_HDL = 'lipid_Profile_HDL';
+  static const String Lipid_Profile_Total_Cholesterol =
+      'lipid_Profile_Total_cholesterol';
+  static const String Lipid_Profile_Triglyceroid = 'lipid_Profile_Triglyceroid';
+  static const String Lipid_Profile = 'lipid_Profile';
 }

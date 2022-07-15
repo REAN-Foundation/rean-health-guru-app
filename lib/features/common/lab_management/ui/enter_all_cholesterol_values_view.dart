@@ -608,9 +608,9 @@ class _EnterAllCholesterolValuesViewState
       final BaseResponse baseResponse = await model.addMylipidProfile(map);
 
       if (baseResponse.status == 'success') {
+        showToast(baseResponse.message!, context);
         progressDialog!.close();
         clearAllFeilds();
-        showToast(baseResponse.message!, context);
         Navigator.pop(context);
       } else {
         progressDialog!.close();

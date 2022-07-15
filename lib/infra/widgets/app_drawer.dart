@@ -259,8 +259,8 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
           Visibility(
-            visible: getAppType() == 'AHA',
-            //visible: true,
+            //visible: getAppType() == 'AHA',
+            visible: true,
             child: InkWell(
               onTap: () {
                 if (carePlanEnrollmentForPatientGlobe == null) {

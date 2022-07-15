@@ -96,4 +96,22 @@ class PatientHealthMarkerViewModel extends BaseModel {
     // Convert and return
     return BaseResponse.fromJson(response);
   }
+
+  Future<BaseResponse> recordMyMonitoringFoodConsumtion(Map body) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!
+        .post('/wellness/food-components-monitoring/', header: map, body: body);
+
+    debugPrint(response.toString());
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
 }

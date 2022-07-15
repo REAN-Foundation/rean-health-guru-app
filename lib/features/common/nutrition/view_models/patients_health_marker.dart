@@ -45,6 +45,22 @@ class PatientHealthMarkerViewModel extends BaseModel {
     return BaseResponse.fromJson(response);
   }
 
+  Future<BaseResponse> recordMyStand(Map body) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!
+        .post('/wellness/daily-records/stand', header: map, body: body);
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
+
   Future<BaseResponse> recordMyWaterCount(Map body) async {
     // Get user profile for id
     setBusy(true);

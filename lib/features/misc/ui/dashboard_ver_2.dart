@@ -224,10 +224,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                 //   Container(),
                 myBiometrics(),
                 myNutrition(),
-                /*if (Platform.isIOS) ...[
-                  myActivity(),
+                /*if (Platform.isIOS) ...[*/
+                myActivity(),
                   myStress(),
-                ],*/
+                //],
                 knowledgeTree(),
                 //myTasks(),
                 //searchNearMe(),
@@ -1855,16 +1855,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  /*IconButton(
+                  IconButton(
                       icon: Icon(
                         Icons.add_circle,
                         size: 32,
                         color: iconColor,
+                        semanticLabel: 'Add Movements',
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, RoutePaths.My_Activity,
-                            arguments: '');
-                      })*/
+                        Navigator.pushNamed(
+                          context,
+                          RoutePaths.My_Activity_Trends,
+                        );
+                      })
                 ],
               ),
             ),
@@ -1875,7 +1878,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    /* Semantics(
+                    Semantics(
                       label: "Stand",
                       button: true,
                       child: InkWell(
@@ -1918,7 +1921,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                           ),
                         ),
                       ),
-                    ),*/
+                    ),
                     Semantics(
                       label: 'Steps',
                       button: true,

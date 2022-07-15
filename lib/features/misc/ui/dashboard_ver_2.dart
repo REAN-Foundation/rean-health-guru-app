@@ -1615,7 +1615,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         Icons.add_circle,
                         size: 32,
                         color: iconColor,
-                        semanticLabel: 'Add Cholesterol records',
+                        semanticLabel: 'Add Lab Management records',
                       ),
                       onPressed: () {
                         Navigator.pushNamed(context, RoutePaths.Lipid_Profile);

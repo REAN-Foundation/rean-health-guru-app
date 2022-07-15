@@ -58,7 +58,7 @@ class _LipidProfileTriglyceridesViewState
                   backgroundColor: Colors.white,
                   brightness: Brightness.light,
                   title: Text(
-                    'Triglycerides',
+                    'triglycerides',
                     style: TextStyle(
                         fontSize: 16.0,
                         color: primaryColor,

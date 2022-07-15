@@ -131,7 +131,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
             height: 16,
           ),
           Text(
-            'Enter your Hdl:',
+            'Enter your HDL:',
             style: TextStyle(
                 color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
             textAlign: TextAlign.center,

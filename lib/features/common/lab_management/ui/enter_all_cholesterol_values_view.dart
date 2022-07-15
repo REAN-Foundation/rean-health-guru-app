@@ -335,7 +335,7 @@ class _EnterAllCholesterolValuesViewState
                   width: 8,
                 ),
                 Text(
-                  'Enter your Total Cholesterol',
+                  'Enter your total cholesterol',
                   style: TextStyle(
                       color: textBlack,
                       fontWeight: FontWeight.w600,
@@ -426,7 +426,7 @@ class _EnterAllCholesterolValuesViewState
                   width: 8,
                 ),
                 Text(
-                  'Enter your Triglycerides',
+                  'Enter your triglycerides',
                   style: TextStyle(
                       color: textBlack,
                       fontWeight: FontWeight.w600,
@@ -591,11 +591,16 @@ class _EnterAllCholesterolValuesViewState
     try {
       progressDialog!.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
-      map['LDL'] = _ldlController.text.toString();
-      map['HDL'] = _hdlcontroller.text.toString();
-      map['TotalCholesterol'] = _totalCholesterolController.text.toString();
-      map['TriglycerideLevel'] = _triglyceridesController.text.toString();
-      map['Ratio'] = _ratioController.text.toString();
+      if (_ldlController.text.toString().isNotEmpty)
+        map['LDL'] = _ldlController.text.toString();
+      if (_hdlcontroller.text.toString().isNotEmpty)
+        map['HDL'] = _hdlcontroller.text.toString();
+      if (_totalCholesterolController.text.toString().isNotEmpty)
+        map['TotalCholesterol'] = _totalCholesterolController.text.toString();
+      if (_triglyceridesController.text.toString().isNotEmpty)
+        map['TriglycerideLevel'] = _triglyceridesController.text.toString();
+      if (_ratioController.text.toString().isNotEmpty)
+        map['Ratio'] = _ratioController.text.toString();
       map['PatientUserId'] = "";
       map['Unit'] = "mg/dl";
       //map['RecordedByUserId'] = null;

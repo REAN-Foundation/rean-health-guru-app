@@ -133,7 +133,7 @@ class _LipidProfileTotalCholesterolViewState
             height: 16,
           ),
           Text(
-            'Enter your Total Cholesterol:',
+            'Enter your total cholesterol:',
             style: TextStyle(
                 color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
             textAlign: TextAlign.center,

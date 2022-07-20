@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -216,7 +215,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           /*if (Platform.isIOS) ...[*/
           Visibility(
-            visible: Platform.isIOS,
+            visible: false,
             child: InkWell(
               onTap: () {
                 Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
@@ -263,7 +262,8 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
           Visibility(
-            visible: getBaseUrl()!.contains('aha-api-uat'),
+            visible: getBaseUrl()!.contains('aha-api-uat') ||
+                getBaseUrl()!.contains('reancare-api-dev'),
             //visible: true,
             child: InkWell(
               onTap: () {

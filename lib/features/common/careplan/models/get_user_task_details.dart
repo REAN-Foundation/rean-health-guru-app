@@ -358,7 +358,9 @@ class Action {
     _frequency = json['Frequency'];
     _status = json['Status'];
     _rawContent = json['RawContent'] != null
-        ? RawContent.fromJson(json['RawContent'])
+        ? json['RawContent'].toString().contains('Newsfeed')
+            ? RawContent.fromJson(json['RawContent'])
+            : null
         : null;
     _assessment = json['Assessment'] != null
         ? Assessment.fromJson(json['Assessment'])

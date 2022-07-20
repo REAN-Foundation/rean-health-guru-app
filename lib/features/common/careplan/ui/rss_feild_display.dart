@@ -5,8 +5,7 @@ import 'package:patient/features/common/careplan/models/get_user_task_details.da
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
-import 'package:patient/infra/utils/common_utils.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:patient/utils/WebViewBrowser.dart';
 
 //ignore: must_be_immutable
 class RSSFeildDisplayView extends StatefulWidget {
@@ -125,10 +124,19 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
                 itemBuilder: (BuildContext context, index) {
                   return InkWell(
                       onTap: () {
-                        _launchURL(_newsfeed!
+                        /*_launchURL(_newsfeed!
                             .elementAt(index)
                             .link!
-                            .replaceAll(' ', '%20'));
+                            .replaceAll(' ', '%20'));*/
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return WebViewBrowser(
+                              tittle: 'News Feed',
+                              url: _newsfeed!
+                                  .elementAt(index)
+                                  .link!
+                                  .replaceAll(' ', '%20'));
+                        }));
                       },
                       child: Card(
                         color: Colors.white,
@@ -177,12 +185,12 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
     );
   }
 
-  _launchURL(String url) async {
+/*  _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
       showToast('Could not launch $url', context);
       //throw 'Could not launch $url';
     }
-  }
+  }*/
 }

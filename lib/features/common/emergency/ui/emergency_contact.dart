@@ -312,30 +312,33 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   else
                     Semantics(
                       label: 'Yes, I had an emergency',
-                      child: InkWell(
-                        onTap: () {
-                          _emergencyDetailDialog(false);
-                        },
-                        child: ExcludeSemantics(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                FontAwesomeIcons.ambulance,
-                                color: primaryColor,
-                                size: 36,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Yes',
-                                  style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                      button: true,
+                      child: ExcludeSemantics(
+                        child: InkWell(
+                          onTap: () {
+                            _emergencyDetailDialog(false);
+                          },
+                          child: ExcludeSemantics(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  FontAwesomeIcons.ambulance,
+                                  color: primaryColor,
+                                  size: 36,
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Yes',
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),

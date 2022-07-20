@@ -6,7 +6,14 @@ import 'package:patient/infra/themes/app_colors.dart';
 
 import '../../../misc/ui/base_widget.dart';
 
+//ignore: must_be_immutable
 class AllMovementsView extends StatefulWidget {
+  var _currentIndex = 0;
+
+  AllMovementsView(int index) {
+    _currentIndex = index;
+  }
+
   @override
   _AllMovementsViewState createState() => _AllMovementsViewState();
 }
@@ -15,12 +22,10 @@ class _AllMovementsViewState extends State<AllMovementsView> {
   var model = PatientVitalsViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     late Widget screen;
-    switch (_currentIndex) {
+    switch (widget._currentIndex) {
       case 0:
         screen = EnterAllMovementsView();
         break;
@@ -92,7 +97,7 @@ class _AllMovementsViewState extends State<AllMovementsView> {
               child: InkWell(
                 onTap: () {
                   setState(() {
-                    _currentIndex = 0;
+                    widget._currentIndex = 0;
                   });
                 },
                 child: ExcludeSemantics(
@@ -103,7 +108,9 @@ class _AllMovementsViewState extends State<AllMovementsView> {
                       ImageIcon(
                         AssetImage('res/images/ic_activity.png'),
                         size: 24,
-                        color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                        color: widget._currentIndex == 0
+                            ? Colors.white
+                            : Colors.grey,
                       ),
                       SizedBox(
                         height: 4,
@@ -111,8 +118,9 @@ class _AllMovementsViewState extends State<AllMovementsView> {
                       Text(
                         'Record Movements',
                         style: TextStyle(
-                            color:
-                                _currentIndex == 0 ? Colors.white : Colors.grey,
+                            color: widget._currentIndex == 0
+                                ? Colors.white
+                                : Colors.grey,
                             fontSize: 10),
                       ),
                     ],
@@ -129,7 +137,7 @@ class _AllMovementsViewState extends State<AllMovementsView> {
               child: InkWell(
                 onTap: () {
                   setState(() {
-                    _currentIndex = 1;
+                    widget._currentIndex = 1;
                   });
                 },
                 child: ExcludeSemantics(
@@ -140,16 +148,19 @@ class _AllMovementsViewState extends State<AllMovementsView> {
                       ImageIcon(
                         AssetImage('res/images/ic_stand.png'),
                         size: 28,
-                        color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                        color: widget._currentIndex == 1
+                            ? Colors.white
+                            : Colors.grey,
                       ),
                       SizedBox(
                         height: 4,
                       ),
                       Text(
-                        'View Moments',
+                        'View Movements',
                         style: TextStyle(
-                            color:
-                                _currentIndex == 1 ? Colors.white : Colors.grey,
+                            color: widget._currentIndex == 1
+                                ? Colors.white
+                                : Colors.grey,
                             fontSize: 10),
                       ),
                     ],

@@ -507,7 +507,7 @@ class _EnterAllCholesterolValuesViewState
             Row(
               children: [
                 ImageIcon(
-                  AssetImage('res/images/ic_triglycerides.png'),
+                  AssetImage('res/images/ic_ratio.png'),
                   color: primaryColor,
                 ),
                 SizedBox(

@@ -174,7 +174,8 @@ class Routers {
             builder: (_) => //ViewMyDailyActivity());
                 ViewMyAllDailyActivity(settings.arguments as String?));
       case RoutePaths.My_Activity_Trends:
-        return MaterialPageRoute(builder: (_) => AllMovementsView());
+        return MaterialPageRoute(
+            builder: (_) => AllMovementsView(settings.arguments as int));
       case RoutePaths.MySleepData:
         return MaterialPageRoute(builder: (_) => ViewMyDailySleep());
       case RoutePaths.My_Nutrition:

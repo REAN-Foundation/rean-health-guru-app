@@ -241,7 +241,7 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
             Row(
               children: [
                 ImageIcon(
-                  AssetImage('res/images/ic_triglycerides.png'),
+                  AssetImage('res/images/ic_ratio.png'),
                   size: 24,
                   color: primaryColor,
                 ),

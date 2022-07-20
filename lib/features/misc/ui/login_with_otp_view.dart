@@ -622,7 +622,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       if (doctorListApiResponse.status == 'success') {
         progressDialog.close();
         showToast(
-            'OTP has been successfully sent on your mobile number', context);
+            'One-time PIN has been successfully sent on your mobile number',
+            context);
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,
             arguments: mobileNumber);
         _clearFeilds();
@@ -662,7 +663,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
       if (doctorListApiResponse.status == 'success') {
         progressDialog.close();
         showToast(
-            'OTP has been successfully sent on your mobile number', context);
+            'One-time PIN has been successfully sent on your mobile number',
+            context);
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,

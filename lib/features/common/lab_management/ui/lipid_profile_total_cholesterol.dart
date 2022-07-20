@@ -204,7 +204,7 @@ class _LipidProfileTotalCholesterolViewState
               child: InkWell(
                 onTap: () {
                   if (_controller.text.toString().isEmpty) {
-                    showToast('Please enter your Total Cholesterol', context);
+                    showToast('Please enter your total cholesterol', context);
                   } else {
                     addvitals();
                   }

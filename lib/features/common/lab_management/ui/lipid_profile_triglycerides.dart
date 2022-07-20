@@ -58,7 +58,7 @@ class _LipidProfileTriglyceridesViewState
                   backgroundColor: Colors.white,
                   brightness: Brightness.light,
                   title: Text(
-                    'triglycerides',
+                    'Triglycerides',
                     style: TextStyle(
                         fontSize: 16.0,
                         color: primaryColor,
@@ -133,7 +133,7 @@ class _LipidProfileTriglyceridesViewState
             height: 16,
           ),
           Text(
-            'Enter your Triglycerides:',
+            'Enter your triglycerides:',
             style: TextStyle(
                 color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
             textAlign: TextAlign.center,
@@ -204,7 +204,7 @@ class _LipidProfileTriglyceridesViewState
               child: InkWell(
                 onTap: () {
                   if (_controller.text.toString().isEmpty) {
-                    showToast('Please enter your Triglycerides', context);
+                    showToast('Please enter your total triglycerides', context);
                   } else {
                     addvitals();
                   }

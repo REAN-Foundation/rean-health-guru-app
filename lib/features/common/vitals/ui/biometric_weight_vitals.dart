@@ -332,8 +332,9 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                                 ? ''
                                 : /*getCurrentLocale() == 'US'
                               ? 'lbs / m sq'
-                              : */
-                                'kg/m sq',
+                              :
+                                'kg/m sq'*/
+                                '',
                             style: TextStyle(
                                 fontSize: 14.0, color: Colors.black87),
                           ),

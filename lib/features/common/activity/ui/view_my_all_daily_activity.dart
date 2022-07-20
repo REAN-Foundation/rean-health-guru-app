@@ -288,7 +288,7 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
         SizedBox(
           height: 16,
         ),*/
-        burnedCalories(),
+        //burnedCalories(),
         SizedBox(
           height: 16,
         ),

@@ -202,7 +202,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
               child: InkWell(
                 onTap: () {
                   if (_controller.text.toString().isEmpty) {
-                    showToast('Please enter your Hdl', context);
+                    showToast('Please enter your HDL', context);
                   } else {
                     addvitals();
                   }

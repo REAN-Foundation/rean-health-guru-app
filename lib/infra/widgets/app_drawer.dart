@@ -214,7 +214,9 @@ class _AppDrawerState extends State<AppDrawer> {
             ),
           ),
           /*if (Platform.isIOS) ...[*/
-          InkWell(
+          Visibility(
+            visible: false,
+            child: InkWell(
               onTap: () {
                 Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
               },
@@ -225,16 +227,17 @@ class _AppDrawerState extends State<AppDrawer> {
                   children: <Widget>[
                     SizedBox(
                       width: 40,
-                        ),
-                        Text(
-                          'Activity',
+                    ),
+                    Text(
+                      'Activity',
                       style: TextStyle(
                           color: primaryColor, fontWeight: FontWeight.w600),
                     ),
-                      ],
-                    ),
-                  ),
+                  ],
                 ),
+              ),
+            ),
+          ),
           //],
           /*InkWell(
                 onTap: () {
@@ -259,8 +262,9 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
           Visibility(
-            //visible: getAppType() == 'AHA',
-            visible: true,
+            visible: getBaseUrl()!.contains('aha-api-uat') ||
+                getBaseUrl()!.contains('reancare-api-dev'),
+            //visible: true,
             child: InkWell(
               onTap: () {
                 if (carePlanEnrollmentForPatientGlobe == null) {

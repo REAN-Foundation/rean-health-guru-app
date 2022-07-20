@@ -293,82 +293,100 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      recordHowAreYouFeeling(1);
-                      //Navigator.pushNamed(context, RoutePaths.Symptoms);
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ImageIcon(
-                          AssetImage('res/images/ic_better_emoji.png'),
-                          size: 48,
-                          color: Color(0XFF007E1A),
+                  Semantics(
+                    label: 'Better',
+                    button: true,
+                    child: ExcludeSemantics(
+                      child: InkWell(
+                        onTap: () {
+                          recordHowAreYouFeeling(1);
+                          //Navigator.pushNamed(context, RoutePaths.Symptoms);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ImageIcon(
+                              AssetImage('res/images/ic_better_emoji.png'),
+                              size: 48,
+                              color: Color(0XFF007E1A),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text('Better',
+                                style: TextStyle(
+                                    color: Color(0XFF007E1A),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Montserrat')),
+                          ],
                         ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text('Better',
-                            style: TextStyle(
-                                color: Color(0XFF007E1A),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Montserrat')),
-                      ],
+                      ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      recordHowAreYouFeeling(0);
-                      //Navigator.pushNamed(context, RoutePaths.Symptoms);
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ImageIcon(
-                          AssetImage('res/images/ic_same_emoji.png'),
-                          size: 48,
-                          color: textGrey,
+                  Semantics(
+                    label: 'Same',
+                    button: true,
+                    child: ExcludeSemantics(
+                      child: InkWell(
+                        onTap: () {
+                          recordHowAreYouFeeling(0);
+                          //Navigator.pushNamed(context, RoutePaths.Symptoms);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ImageIcon(
+                              AssetImage('res/images/ic_same_emoji.png'),
+                              size: 48,
+                              color: textGrey,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text('Same',
+                                style: TextStyle(
+                                    color: textGrey,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Montserrat')),
+                          ],
                         ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text('Same',
-                            style: TextStyle(
-                                color: textGrey,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Montserrat')),
-                      ],
+                      ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      recordHowAreYouFeeling(-1);
-                      //Navigator.pushNamed(context, RoutePaths.Symptoms);
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ImageIcon(
-                          AssetImage('res/images/ic_worse_emoji.png'),
-                          size: 48,
-                          color: Color(0XFFC10E21),
+                  Semantics(
+                    label: 'Worse',
+                    button: true,
+                    child: ExcludeSemantics(
+                      child: InkWell(
+                        onTap: () {
+                          recordHowAreYouFeeling(-1);
+                          //Navigator.pushNamed(context, RoutePaths.Symptoms);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ImageIcon(
+                              AssetImage('res/images/ic_worse_emoji.png'),
+                              size: 48,
+                              color: Color(0XFFC10E21),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text('Worse',
+                                style: TextStyle(
+                                    color: Color(0XFFC10E21),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Montserrat')),
+                          ],
                         ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text('Worse',
-                            style: TextStyle(
-                                color: Color(0XFFC10E21),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Montserrat')),
-                      ],
+                      ),
                     ),
                   )
                 ],
@@ -1717,7 +1735,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       ),
                     ),
                     Semantics(
-                      label: 'Total Cholesterol',
+                      label: 'Add total cholestrol',
                       button: true,
                       child: InkWell(
                         onTap: () {
@@ -1761,7 +1779,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       ),
                     ),
                     Semantics(
-                      label: 'Triglycerides',
+                      label: 'Add triglycerides',
                       button: true,
                       child: InkWell(
                         onTap: () {
@@ -2108,13 +2126,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         Icons.add_circle,
                         size: 32,
                         color: iconColor,
-                        semanticLabel: 'Add Movements',
+                        semanticLabel: 'Add physical health record',
                       ),
                       onPressed: () {
                         Navigator.pushNamed(
                           context,
                           RoutePaths.My_Activity_Trends,
-                        );
+                            arguments: 0);
                       })
                 ],
               ),
@@ -2131,7 +2149,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       button: true,
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity);
+                          Navigator.pushNamed(
+                              context, RoutePaths.My_Activity_Trends,
+                              arguments: 1);
                         },
                         child: Container(
                           height: 96,
@@ -2175,8 +2195,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       button: true,
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity,
-                              arguments: 'Steps');
+                          Navigator.pushNamed(
+                              context, RoutePaths.My_Activity_Trends,
+                              arguments: 1);
                         },
                         child: Container(
                           height: 96,
@@ -2218,8 +2239,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       button: true,
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity,
-                              arguments: 'Exercise');
+                          Navigator.pushNamed(
+                              context, RoutePaths.My_Activity_Trends,
+                              arguments: 1);
                         },
                         child: Container(
                           height: 96,

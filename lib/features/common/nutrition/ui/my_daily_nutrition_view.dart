@@ -14,7 +14,6 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
-
 import 'add_daily_nutrition_view.dart';
 
 //ignore: must_be_immutable

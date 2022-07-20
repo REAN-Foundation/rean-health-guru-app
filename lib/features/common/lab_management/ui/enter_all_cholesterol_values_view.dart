@@ -90,7 +90,7 @@ class _EnterAllCholesterolValuesViewState
                             button: true,
                             child: InkWell(
                               onTap: () {
-                                addvitals();
+                                validate();
                               },
                               child: ExcludeSemantics(
                                 child: Container(
@@ -579,6 +579,30 @@ class _EnterAllCholesterolValuesViewState
         ),
       ),
     );
+  }
+
+  validate() {
+    bool ifRecordsEnterted = false;
+
+    if (_ldlController.text.isNotEmpty) {
+      ifRecordsEnterted = true;
+    }
+    if (_hdlcontroller.text.isNotEmpty) {
+      ifRecordsEnterted = true;
+    }
+    if (_totalCholesterolController.text.isNotEmpty) {
+      ifRecordsEnterted = true;
+    }
+    if (_triglyceridesController.text.isNotEmpty) {
+      ifRecordsEnterted = true;
+    }
+    if (_ratioController.text.isNotEmpty) {
+      ifRecordsEnterted = true;
+    }
+
+    if (ifRecordsEnterted) {
+      addvitals();
+    }
   }
 
   _fieldFocusChange(

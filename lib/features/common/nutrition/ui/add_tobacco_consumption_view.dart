@@ -51,7 +51,7 @@ class _MyAddTobaccoViewState extends State<AddTobaccoConsumptionView> {
               backgroundColor: primaryColor,
               brightness: Brightness.dark,
               title: Text(
-                'Tobacco',
+                'Tobacco Intake',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,

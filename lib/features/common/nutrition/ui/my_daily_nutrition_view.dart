@@ -1003,8 +1003,8 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                             height: 16,
                           ),
                           Text(
-                            'Alcohol',
-                            semanticsLabel: 'Alcohol',
+                            'Alcohol Intake',
+                            semanticsLabel: 'Alcohol Intake',
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16.0,
@@ -1114,8 +1114,8 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                             height: 16,
                           ),
                           Text(
-                            'Tobacco',
-                            semanticsLabel: 'Tobacco',
+                            'Tobacco Intake',
+                            semanticsLabel: 'Tobacco Intake',
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16.0,

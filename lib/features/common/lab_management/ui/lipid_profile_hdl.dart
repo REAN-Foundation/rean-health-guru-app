@@ -151,7 +151,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Hdl measures in mg/dl',
+                    label: 'HDL measures in mg/dl',
                     child: TextFormField(
                         controller: _controller,
                         maxLines: 1,
@@ -269,7 +269,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            'Hdl',
+                            'HDL',
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -341,7 +341,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
               overflow: TextOverflow.ellipsis,
             ),
             Semantics(
-              label: 'Hdl ',
+              label: 'HDL ',
               child: Text(
                 record.hdl.toString() + ' mg/dl',
                 style: TextStyle(
@@ -385,7 +385,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
               height: 8,
             ),
             Text(
-              'Hdl',
+              'HDL',
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
@@ -416,7 +416,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'Hdl',
+        id: 'HDL',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -576,7 +576,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
-      map['Hdl'] = _controller.text.toString();
+      map['HDL'] = _controller.text.toString();
       map['PatientUserId'] = "";
       map['Unit'] = "mg/dl";
       //map['RecordedByUserId'] = null;

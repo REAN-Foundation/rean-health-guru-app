@@ -333,14 +333,16 @@ class _SymptomsViewState extends State<SymptomsView> {
             debugPrint('${symptomTypes.symptom} clicked');
           },
           child: ListTile(
-            leading: SizedBox(
-              height: 40,
-              width: 40,
-              child: CachedNetworkImage(
-                imageUrl: apiProvider!.getBaseUrl()! +
-                    '/file-resources/' +
-                    symptomTypes.imageResourceId! +
-                    '/download-by-version-name/1',
+            leading: ExcludeSemantics(
+              child: SizedBox(
+                height: 40,
+                width: 40,
+                child: CachedNetworkImage(
+                  imageUrl: apiProvider!.getBaseUrl()! +
+                      '/file-resources/' +
+                      symptomTypes.imageResourceId! +
+                      '/download-by-version-name/1',
+                ),
               ),
             ),
             title: Text(

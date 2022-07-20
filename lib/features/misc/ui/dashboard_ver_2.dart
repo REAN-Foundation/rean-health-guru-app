@@ -294,7 +294,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Semantics(
-                    label: 'Better',
+                    label: 'Symptom is Better',
                     button: true,
                     child: ExcludeSemantics(
                       child: InkWell(
@@ -326,7 +326,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     ),
                   ),
                   Semantics(
-                    label: 'Same',
+                    label: 'Symptom is Same',
                     button: true,
                     child: ExcludeSemantics(
                       child: InkWell(
@@ -358,7 +358,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     ),
                   ),
                   Semantics(
-                    label: 'Worse',
+                    label: 'Symptom is Worse',
                     button: true,
                     child: ExcludeSemantics(
                       child: InkWell(

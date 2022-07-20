@@ -522,7 +522,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: primaryLightColor),
+          border: Border.all(
+              color: getAppType() == 'AHA' ? primaryColor : primaryLightColor),
           borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
@@ -762,7 +763,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       height: 80,
       decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: primaryLightColor),
+          border: Border.all(
+              color: getAppType() == 'AHA' ? primaryColor : primaryLightColor),
           borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
@@ -860,7 +862,9 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         height: 80,
         decoration: BoxDecoration(
             color: Colors.white,
-            border: Border.all(color: primaryLightColor),
+            border: Border.all(
+                color:
+                    getAppType() == 'AHA' ? primaryColor : primaryLightColor),
             borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.all(4.0),
@@ -1038,7 +1042,9 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         height: 80,
         decoration: BoxDecoration(
             color: Colors.white,
-            border: Border.all(color: primaryLightColor),
+            border: Border.all(
+                color:
+                    getAppType() == 'AHA' ? primaryColor : primaryLightColor),
             borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.all(4.0),

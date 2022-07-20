@@ -103,7 +103,7 @@ class _MyDialogState extends State<AddNurseDialog> {
 
   Widget _submitButton(BuildContext context) {
     return Semantics(
-      label: 'Save',
+      label: 'Add',
       button: true,
       child: ElevatedButton(
         onPressed: () async {

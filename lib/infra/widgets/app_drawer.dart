@@ -227,17 +227,16 @@ class _AppDrawerState extends State<AppDrawer> {
                   children: <Widget>[
                     SizedBox(
                       width: 40,
-                    ),
-                    Text(
-                      'Activity',
+                        ),
+                        Text(
+                          'Activity',
                       style: TextStyle(
                           color: primaryColor, fontWeight: FontWeight.w600),
                     ),
-                  ],
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
           //],
           /*InkWell(
                 onTap: () {

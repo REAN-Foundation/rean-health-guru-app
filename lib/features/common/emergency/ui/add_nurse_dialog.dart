@@ -103,7 +103,7 @@ class _MyDialogState extends State<AddNurseDialog> {
 
   Widget _submitButton(BuildContext context) {
     return Semantics(
-      label: 'Save',
+      label: 'Add',
       button: true,
       child: ElevatedButton(
         onPressed: () async {
@@ -237,7 +237,7 @@ class _MyDialogState extends State<AddNurseDialog> {
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Semantics(
-        label: 'Gender of the nurse',
+        label: 'Gender of nurse',
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

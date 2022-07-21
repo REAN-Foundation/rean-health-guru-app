@@ -118,33 +118,33 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                   topLeft: Radius.circular(12))),
                           child: Padding(
                             padding: const EdgeInsets.all(0.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                    height: 260,
-                                    child: getAppType() == 'AHA'
-                                        ? Image.asset(
-                                            'res/images/medication_aha_bg.png')
-                                        : Image.asset(
-                                            'res/images/medication_rean_bg.png')),
-                                SizedBox(
-                                  height: 16,
-                                ),
-                                if (_timer != null) ...[
-                                  _timer!.isActive
-                                      ? countUpTimmer()
-                                      : mindfulnessMessage()
-                                ],
-                                if (_timer == null) ...[
-                                  mindfulnessMessage(),
-                                ],
-                                SizedBox(
-                                  height: 32,
-                                ),
-                                Expanded(
-                                  child: Stack(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                      height: 200,
+                                      child: getAppType() == 'AHA'
+                                          ? Image.asset(
+                                              'res/images/medication_aha_bg.png')
+                                          : Image.asset(
+                                              'res/images/medication_rean_bg.png')),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  if (_timer != null) ...[
+                                    _timer!.isActive
+                                        ? countUpTimmer()
+                                        : mindfulnessMessage()
+                                  ],
+                                  if (_timer == null) ...[
+                                    mindfulnessMessage(),
+                                  ],
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Stack(
                                     children: [
                                       getAppType() == 'AHA'
                                           ? Image.asset(
@@ -351,8 +351,8 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           )),
                     )

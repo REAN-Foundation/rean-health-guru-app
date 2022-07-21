@@ -312,30 +312,33 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   else
                     Semantics(
                       label: 'Yes, I had an emergency',
-                      child: InkWell(
-                        onTap: () {
-                          _emergencyDetailDialog(false);
-                        },
-                        child: ExcludeSemantics(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                FontAwesomeIcons.ambulance,
-                                color: primaryColor,
-                                size: 36,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Yes',
-                                  style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                      button: true,
+                      child: ExcludeSemantics(
+                        child: InkWell(
+                          onTap: () {
+                            _emergencyDetailDialog(false);
+                          },
+                          child: ExcludeSemantics(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  FontAwesomeIcons.ambulance,
+                                  color: primaryColor,
+                                  size: 36,
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Yes',
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -519,7 +522,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: primaryLightColor),
+          border: Border.all(
+              color: getAppType() == 'AHA' ? primaryColor : primaryLightColor),
           borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
@@ -759,7 +763,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       height: 80,
       decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: primaryLightColor),
+          border: Border.all(
+              color: getAppType() == 'AHA' ? primaryColor : primaryLightColor),
           borderRadius: BorderRadius.all(Radius.circular(8.0))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
@@ -857,7 +862,9 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         height: 80,
         decoration: BoxDecoration(
             color: Colors.white,
-            border: Border.all(color: primaryLightColor),
+            border: Border.all(
+                color:
+                    getAppType() == 'AHA' ? primaryColor : primaryLightColor),
             borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.all(4.0),
@@ -1035,7 +1042,9 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         height: 80,
         decoration: BoxDecoration(
             color: Colors.white,
-            border: Border.all(color: primaryLightColor),
+            border: Border.all(
+                color:
+                    getAppType() == 'AHA' ? primaryColor : primaryLightColor),
             borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Padding(
           padding: const EdgeInsets.all(4.0),

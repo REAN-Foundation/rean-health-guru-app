@@ -1,10 +1,17 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:http/http.dart' as http;
 import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
-import 'package:patient/features/common/medication/ui/search_nih_medication.dart';
+import 'package:patient/features/common/medication/models/drugs_library_pojo.dart';
+import 'package:patient/features/common/medication/models/nih_medication_search_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 
 //ignore: must_be_immutable
@@ -21,6 +28,10 @@ class _AddMedicationTaskViewState extends State<AddMedicationTaskView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<String> records = <String>[];
+  bool searchForDrug = false;
+  List<Items> drugs = [];
+  List<String?> drugsList = [];
+  final _typeAheadController = TextEditingController();
 
   @override
   void initState() {
@@ -122,7 +133,7 @@ class _AddMedicationTaskViewState extends State<AddMedicationTaskView> {
                 SizedBox(
                   height: 4,
                 ),
-                _addMedicationButton(),
+                _drugName(),
                 SizedBox(
                   height: 4,
                 ),
@@ -182,23 +193,23 @@ class _AddMedicationTaskViewState extends State<AddMedicationTaskView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: ListView.builder(
           itemBuilder: (context, index) => Card(
-                semanticContainer: false,
-                elevation: 0.0,
-                child: Container(
-                  height: 30,
-                  child: ListTile(
-                    title: Text(
-                      records.elementAt(index),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.0,
-                          color: textBlack),
-                    ),
-                  ),
+            semanticContainer: false,
+            elevation: 0.0,
+            child: Container(
+              height: 30,
+              child: ListTile(
+                title: Text(
+                  records.elementAt(index),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16.0,
+                      color: textBlack),
                 ),
               ),
+            ),
+          ),
           itemCount: records.length,
           physics: NeverScrollableScrollPhysics(),
           scrollDirection: Axis.vertical,
@@ -214,7 +225,7 @@ class _AddMedicationTaskViewState extends State<AddMedicationTaskView> {
         Material(
           //Wrap with Material
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
           elevation: 4.0,
           color: primaryColor,
           clipBehavior: Clip.antiAlias,
@@ -237,7 +248,213 @@ class _AddMedicationTaskViewState extends State<AddMedicationTaskView> {
     );
   }
 
-  Widget _addMedicationButton() {
+  Widget _drugName() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Drug Name',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: textBlack,
+                  fontWeight: FontWeight.w600)),
+          SizedBox(
+            height: 8,
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 8, right: 8),
+            height: 48,
+            decoration: BoxDecoration(
+                border: Border.all(color: primaryColor, width: 1),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(4),
+                ),
+                color: Colors.white),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Semantics(
+                    label: 'Drug Name',
+                    focusable: true,
+                    child: TypeAheadFormField(
+                      textFieldConfiguration: TextFieldConfiguration(
+                        controller: _typeAheadController,
+                        onChanged: (text) {
+                          debugPrint(text);
+                          _getDrugsByName();
+                        },
+                        /*decoration: InputDecoration(
+                                                  labelText: 'City'
+                                              )*/
+                      ),
+                      suggestionsCallback: (pattern) {
+                        return Future.delayed(
+                          Duration(seconds: 4),
+                          () => getDrugsSuggestions(pattern),
+                        );
+                      },
+                      itemBuilder: (context, dynamic suggestion) {
+                        return ListTile(
+                          title: Text(
+                            suggestion,
+                            semanticsLabel: suggestion,
+                          ),
+                        );
+                      },
+                      transitionBuilder: (context, suggestionsBox, controller) {
+                        return suggestionsBox;
+                      },
+                      onSuggestionSelected: (dynamic suggestion) {
+                        debugPrint(suggestion);
+                        records.add(suggestion);
+                        _typeAheadController.text = '';
+                        setState(() {});
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please select a drug';
+                        } else {
+                          return '';
+                        }
+                      },
+                      onSaved: (value) {
+                        debugPrint(value);
+                      },
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(0.0),
+                  height: 40.0,
+                  width: 40.0,
+                  child: Center(
+                    child: Semantics(
+                      label: 'Search new drug',
+                      button: true,
+                      child: InkWell(
+                        onTap: () {
+                          _getDrugsByName();
+                        },
+                        child: searchForDrug
+                            ? CircularProgressIndicator()
+                            : Icon(
+                                Icons.search,
+                                color: primaryColor,
+                                size: 32.0,
+                              ),
+                      ),
+                    ),
+                  ),
+                ),
+                /*Container(
+                  padding: const EdgeInsets.all(0.0),
+                  height: 40.0,
+                  width: 40.0,
+                  child: Center(
+                    child: Semantics(
+                      label: 'Add new drug',
+                      button: true,
+                      child: InkWell(
+                        onTap: () {
+                          if (_typeAheadController.text.isNotEmpty) {
+                            FocusScope.of(context).unfocus();
+                            _addDrugConfirmDialog(context);
+                          }
+                        },
+                        child: Icon(
+                          Icons.add,
+                          color: primaryColor,
+                          size: 32.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),*/
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  List<String?> getDrugsSuggestions(String query) {
+    final List<String?> matches = [];
+    matches.addAll(drugsList);
+    matches.retainWhere((s) => s!.toLowerCase().contains(query.toLowerCase()));
+    return matches;
+  }
+
+  _getDrugsByName() async {
+    setState(() {
+      searchForDrug = true;
+    });
+    Map<String, String>? headers = <String, String>{};
+    var responseJson;
+    try {
+      final response = await http
+          .get(
+              Uri.parse(
+                  'https://nctr-crs.fda.gov/fdalabel/services/product/names-containing/' +
+                      _typeAheadController.text +
+                      '?l=10&t=TRADE'),
+              headers: headers)
+          .timeout(const Duration(seconds: 40));
+      responseJson = json.decode('{ "data" :' + response.body.toString() + '}');
+
+      debugPrint(
+          'Nih Medication Response ==> ${'{ "data" :' + response.body.toString() + '}'}');
+
+      NihMedicationSearchResponse searchResponse =
+          NihMedicationSearchResponse.fromJson(responseJson);
+
+      debugPrint(
+          'Nih Medication List Lenght ==> ${searchResponse.nihMedicationList!.length.toString()}');
+
+      setState(() {
+        searchForDrug = false;
+      });
+
+      _sortDrugs(searchResponse);
+      /*if (baseResponse.status == 'success') {
+        setState(() {
+          searchForDrug = false;
+        });
+        drugs.clear();
+        setState(() {
+          drugs.addAll(baseResponse.data!.drugs!.items!);
+        });
+        _sortDrugs();
+      } else {
+        setState(() {
+          searchForDrug = false;
+        });
+        showToast('Please try again', context);
+      }*/
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    } on TimeoutException catch (_) {
+      // A timeout occurred.
+      throw FetchDataException('No Internet connection');
+    } catch (CustomException) {
+      setState(() {
+        searchForDrug = false;
+      });
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  _sortDrugs(NihMedicationSearchResponse searchResponse) {
+    drugsList.clear();
+    for (int i = 0; i < searchResponse.nihMedicationList!.length; i++) {
+      drugsList.add(searchResponse.nihMedicationList!.elementAt(i).name);
+    }
+    setState(() {});
+  }
+
+/*Widget _addMedicationButton() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -292,5 +509,5 @@ class _AddMedicationTaskViewState extends State<AddMedicationTaskView> {
         ),
       ],
     );
-  }
+  }*/
 }

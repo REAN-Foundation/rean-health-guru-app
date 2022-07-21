@@ -11,19 +11,19 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/get_all_record_response.dart';
 import 'package:patient/features/misc/models/get_sharable_public_link.dart';
 import 'package:patient/features/misc/models/upload_document_response.dart';
-import 'package:patient/features/misc/ui/image_viewer.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/features/misc/ui/image_viewer.dart';
 import 'package:patient/features/misc/ui/pdf_viewer.dart';
 import 'package:patient/features/misc/view_models/common_config_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -628,7 +628,8 @@ class _MyReportsViewState extends State<MyReportsView> {
                 itemCount: documentType.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
-                    title: Text(documentType[index]),
+                    title: Semantics(
+                        button: true, child: Text(documentType[index])),
                     onTap: () {
                       debugPrint('Document Type ==> ${documentType[index]}');
                       String documentTypeCode = '';
@@ -833,45 +834,48 @@ class _MyReportsViewState extends State<MyReportsView> {
               children: [
                 Semantics(
                   label: 'Camera',
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                      openCamera();
-                    },
-                    child: Container(
-                      child: ExcludeSemantics(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 60,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                color: primaryLightColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(50.0)),
-                                border: Border.all(
-                                  color: primaryColor,
-                                  width: 1.0,
+                  button: true,
+                  child: ExcludeSemantics(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                        openCamera();
+                      },
+                      child: Container(
+                        child: ExcludeSemantics(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 60,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  color: primaryLightColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50.0)),
+                                  border: Border.all(
+                                    color: primaryColor,
+                                    width: 1.0,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.camera_alt,
+                                    color: primaryColor,
+                                    size: 24,
+                                  ),
                                 ),
                               ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.camera_alt,
-                                  color: primaryColor,
-                                  size: 24,
-                                ),
+                              SizedBox(
+                                height: 8,
                               ),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              'Camera',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
+                              Text(
+                                'Camera',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -879,45 +883,48 @@ class _MyReportsViewState extends State<MyReportsView> {
                 ),
                 Semantics(
                   label: 'Gallery',
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                      openGallery();
-                    },
-                    child: Container(
-                      child: ExcludeSemantics(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 60,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                color: primaryLightColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(50.0)),
-                                border: Border.all(
-                                  color: primaryColor,
-                                  width: 1.0,
+                  button: true,
+                  child: ExcludeSemantics(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                        openGallery();
+                      },
+                      child: Container(
+                        child: ExcludeSemantics(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 60,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  color: primaryLightColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50.0)),
+                                  border: Border.all(
+                                    color: primaryColor,
+                                    width: 1.0,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.image,
+                                    color: primaryColor,
+                                    size: 24,
+                                  ),
                                 ),
                               ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.image,
-                                  color: primaryColor,
-                                  size: 24,
-                                ),
+                              SizedBox(
+                                height: 8,
                               ),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              'Gallery',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
+                              Text(
+                                'Gallery',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -925,51 +932,54 @@ class _MyReportsViewState extends State<MyReportsView> {
                 ),
                 Semantics(
                   label: 'Files',
-                  child: InkWell(
-                    onTap: () async {
-                      Navigator.pop(context);
-                      final String? type = await _askForDocsType();
-                      debugPrint('File Type $type');
-                      if (type != null) {
-                        getFile(type);
-                      } else {
-                        showToast('Please select document type', context);
-                      }
-                    },
-                    child: Container(
-                      child: ExcludeSemantics(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 60,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                color: primaryLightColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(50.0)),
-                                border: Border.all(
-                                  color: primaryColor,
-                                  width: 1.0,
+                  button: true,
+                  child: ExcludeSemantics(
+                    child: InkWell(
+                      onTap: () async {
+                        Navigator.pop(context);
+                        final String? type = await _askForDocsType();
+                        debugPrint('File Type $type');
+                        if (type != null) {
+                          getFile(type);
+                        } else {
+                          showToast('Please select document type', context);
+                        }
+                      },
+                      child: Container(
+                        child: ExcludeSemantics(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 60,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                  color: primaryLightColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50.0)),
+                                  border: Border.all(
+                                    color: primaryColor,
+                                    width: 1.0,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.file_copy,
+                                    color: primaryColor,
+                                    size: 24,
+                                  ),
                                 ),
                               ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.file_copy,
-                                  color: primaryColor,
-                                  size: 24,
-                                ),
+                              SizedBox(
+                                height: 8,
                               ),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              'Files',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
+                              Text(
+                                'Files',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

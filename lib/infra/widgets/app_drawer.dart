@@ -276,11 +276,11 @@ class _AppDrawerState extends State<AppDrawer> {
               },
               child: Container(
                 height: 48,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          width: 40,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 40,
                     ),
                     Text(
                       'Care Plan',
@@ -354,9 +354,8 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
 
-          /* InkWell(
+              /* InkWell(
                 onTap: (){
-
                 },
                 child: Container(
                   height: 48,

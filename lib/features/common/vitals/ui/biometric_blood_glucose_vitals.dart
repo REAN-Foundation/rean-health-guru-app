@@ -98,9 +98,33 @@ class _BiometricBloodSugarVitalsViewState
                           height: 16,
                         ),
                         weightFeilds(),
-                        const SizedBox(
-                          height: 16,
-                        ),
+                        records.isEmpty ||
+                                records.elementAt(0).a1cLevel.toString() ==
+                                    'null'
+                            ? const SizedBox(
+                                height: 16,
+                              )
+                            : Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                    'A1C Level : ' +
+                                        records
+                                            .elementAt(0)
+                                            .a1cLevel
+                                            .toString() +
+                                        ' %',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: textBlack,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
                         weightHistoryListFeilds(),
                         const SizedBox(
                           height: 16,
@@ -120,6 +144,29 @@ class _BiometricBloodSugarVitalsViewState
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
+                    records.isEmpty ||
+                            records.elementAt(0).a1cLevel.toString() == 'null'
+                        ? const SizedBox(
+                            height: 16,
+                          )
+                        : Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                'A1C Level : ' +
+                                    records.elementAt(0).a1cLevel.toString() +
+                                    ' %',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: textBlack,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
                     weightHistoryListFeilds(),
                     const SizedBox(
                       height: 16,

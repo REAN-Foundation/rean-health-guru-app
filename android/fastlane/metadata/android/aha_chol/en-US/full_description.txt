@@ -1,5 +1,5 @@
-The new HF Helper app can help heart failure patients stay healthy between office visits by tracking their symptoms, managing medication, and sharing health information with their doctor - all in one place.
-With HF Helper you can:
+The new Lipid Helper app can help heart failure patients stay healthy between office visits by tracking their symptoms, managing medication, and sharing health information with their doctor - all in one place.
+With Lipid Helper you can:
  Track symptoms, medications and other health metrics.
  Share health information your doctor in real-time.
  Connect with other people living with heart failure.

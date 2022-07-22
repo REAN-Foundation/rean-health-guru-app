@@ -68,6 +68,13 @@ android {
             versionName flutterVersionName
         }
 
+        aha_sac {
+            dimension "app"
+            applicationId "org.heart.lipidprofile"
+            versionCode flutterVersionCode.toInteger()
+            versionName flutterVersionName
+        }
+
         aha {
             dimension "app"
             applicationId "org.heart.hfpatient"

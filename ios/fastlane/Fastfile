@@ -107,6 +107,17 @@ platform :ios do
     build(flavor: options[:flavor] , mode: options[:mode], app_identifier: app_identifier, profile_type: profile_type, export_option: export_option)
   end
 
+  lane :build_aha_chol do |options|
+    app_identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+
+    # if(options[:flavor].partition('_').last == "sac" or (options[:flavor].partition('_').last == "uat" and options[:mode] == "release") or (options[:flavor] == "aha" and options[:mode] == "release"))
+    profile_type = "appstore"
+    export_option = "app-store"
+    # end
+
+    build(flavor: options[:flavor] , mode: options[:mode], app_identifier: app_identifier, profile_type: profile_type, export_option: export_option)
+  end
+
   desc "Build the ipa file as per the flavor"
   lane :build do |options|
 
@@ -165,6 +176,14 @@ platform :ios do
   end
 
   lane :upload_build_to_testflight_aha do |options|
+    if options[:flavor]["_"]
+      upload_build_to_testflight(flavorId: options[:flavor].partition('_').last , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog: "HF Helper Test Build", description: "HF Helper")
+    else
+      upload_build_to_testflight(flavorId: options[:flavor] , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog: "HF Helper Build", description: "HF Helper")
+    end
+  end
+
+  lane :upload_build_to_testflight_aha_chol do |options|
     if options[:flavor]["_"]
       upload_build_to_testflight(flavorId: options[:flavor].partition('_').last , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog: "HF Helper Test Build", description: "HF Helper")
     else

@@ -102,11 +102,11 @@ jobs:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_JSON }}
           KEYSTORE_TOKEN: ${{ secrets.KEYSTORE_TOKEN_BASE64 }}
         run: |
-          echo $FIREBASE_CONFIG > ./android/app/src/aha/google-services.json
+          echo $FIREBASE_CONFIG > ./android/app/src/aha_sac/google-services.json
           echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
 
       - name: Flutter Build
-        run: flutter build appbundle --release --flavor aha -t "lib/main_aha.dart"
+        run: flutter build appbundle --release --flavor aha_sac -t "lib/main_aha_sac.dart"
 
       # Upload Artifacts
       - name: Upload build Artifacts
@@ -146,7 +146,7 @@ jobs:
           path: android/build/app/outputs
 
       - name: Publish to Playstore
-        run: bundle exec fastlane release_beta_aha aab_path:"build/app/outputs/bundle/ahaRelease/app-aha-release.aab"
+        run: bundle exec fastlane release_beta_aha_chol aab_path:"build/app/outputs/bundle/aha_sacRelease/app-aha_sac-release.aab"
         env:
           PLAYSTORE_JSON_KEY_DATA: ${{ secrets.PLAYSTORE_JSON_KEY_DATA }}
 
@@ -184,15 +184,15 @@ jobs:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_PLIST }}
         run: |
 
-          mkdir -p ./ios/config/aha/
-          echo $FIREBASE_CONFIG > ./ios/config/aha/GoogleService-Info.plist
+          mkdir -p ./ios/config/aha_sac/
+          echo $FIREBASE_CONFIG > ./ios/config/aha_sac/GoogleService-Info.plist
 
       # Flutter Build Artifact
       - name: Flutter Build
-        run: flutter build ios --release --no-codesign --flavor aha -t "lib/main_aha.dart"
+        run: flutter build ios --release --no-codesign --flavor aha_sac -t "lib/main_aha_sac.dart"
 
       - name: Generate Signed Build
-        run: bundle exec fastlane build_aha flavor:aha mode:release
+        run: bundle exec fastlane build_aha_chol flavor:aha_sac mode:release
 
         working-directory: ios
         env:

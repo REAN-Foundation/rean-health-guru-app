@@ -15,3 +15,7 @@ end
 for_lane :build_aha do |options|
     git_url "https://github.com/REAN-Foundation/aha-ios-certificates.git"
 end
+
+for_lane :build_aha_chol do |options|
+    git_url "https://github.com/REAN-Foundation/aha-ios-certificates.git"
+end

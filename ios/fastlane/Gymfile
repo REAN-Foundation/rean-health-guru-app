@@ -19,3 +19,8 @@ for_lane :build_aha do |options|
     codesigning_identity("Apple Distribution: American Heart Association (44HU6X9V79)")
     export_team_id("44HU6X9V79")
 end
+
+for_lane :build_aha_chol do |options|
+    codesigning_identity("Apple Distribution: American Heart Association (44HU6X9V79)")
+    export_team_id("44HU6X9V79")
+end

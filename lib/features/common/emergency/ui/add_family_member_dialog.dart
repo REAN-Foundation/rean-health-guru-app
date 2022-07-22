@@ -148,7 +148,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Semantics(
-        label: 'Gender of the family member or frieds',
+        label: 'Gender of the family member or friend',
         enabled: true,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

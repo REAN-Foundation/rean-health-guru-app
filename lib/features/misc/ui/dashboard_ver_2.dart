@@ -223,11 +223,12 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                 // else
                 //   Container(),
                 myBiometrics(),
+                mylipidProfile(),
                 myNutrition(),
-                /*if (Platform.isIOS) ...[
-                  myActivity(),
+                /*if (Platform.isIOS) ...[*/
+                myActivity(),
                   myStress(),
-                ],*/
+                //],
                 knowledgeTree(),
                 //myTasks(),
                 //searchNearMe(),
@@ -292,82 +293,100 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      recordHowAreYouFeeling(1);
-                      //Navigator.pushNamed(context, RoutePaths.Symptoms);
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ImageIcon(
-                          AssetImage('res/images/ic_better_emoji.png'),
-                          size: 48,
-                          color: Color(0XFF007E1A),
+                  Semantics(
+                    label: 'Symptom is Better',
+                    button: true,
+                    child: ExcludeSemantics(
+                      child: InkWell(
+                        onTap: () {
+                          recordHowAreYouFeeling(1);
+                          //Navigator.pushNamed(context, RoutePaths.Symptoms);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ImageIcon(
+                              AssetImage('res/images/ic_better_emoji.png'),
+                              size: 48,
+                              color: Color(0XFF007E1A),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text('Better',
+                                style: TextStyle(
+                                    color: Color(0XFF007E1A),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Montserrat')),
+                          ],
                         ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text('Better',
-                            style: TextStyle(
-                                color: Color(0XFF007E1A),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Montserrat')),
-                      ],
+                      ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      recordHowAreYouFeeling(0);
-                      //Navigator.pushNamed(context, RoutePaths.Symptoms);
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ImageIcon(
-                          AssetImage('res/images/ic_same_emoji.png'),
-                          size: 48,
-                          color: textGrey,
+                  Semantics(
+                    label: 'Symptom is Same',
+                    button: true,
+                    child: ExcludeSemantics(
+                      child: InkWell(
+                        onTap: () {
+                          recordHowAreYouFeeling(0);
+                          //Navigator.pushNamed(context, RoutePaths.Symptoms);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ImageIcon(
+                              AssetImage('res/images/ic_same_emoji.png'),
+                              size: 48,
+                              color: textGrey,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text('Same',
+                                style: TextStyle(
+                                    color: textGrey,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Montserrat')),
+                          ],
                         ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text('Same',
-                            style: TextStyle(
-                                color: textGrey,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Montserrat')),
-                      ],
+                      ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      recordHowAreYouFeeling(-1);
-                      //Navigator.pushNamed(context, RoutePaths.Symptoms);
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ImageIcon(
-                          AssetImage('res/images/ic_worse_emoji.png'),
-                          size: 48,
-                          color: Color(0XFFC10E21),
+                  Semantics(
+                    label: 'Symptom is Worse',
+                    button: true,
+                    child: ExcludeSemantics(
+                      child: InkWell(
+                        onTap: () {
+                          recordHowAreYouFeeling(-1);
+                          //Navigator.pushNamed(context, RoutePaths.Symptoms);
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ImageIcon(
+                              AssetImage('res/images/ic_worse_emoji.png'),
+                              size: 48,
+                              color: Color(0XFFC10E21),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text('Worse',
+                                style: TextStyle(
+                                    color: Color(0XFFC10E21),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Montserrat')),
+                          ],
                         ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text('Worse',
-                            style: TextStyle(
-                                color: Color(0XFFC10E21),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Montserrat')),
-                      ],
+                      ),
                     ),
                   )
                 ],
@@ -1563,6 +1582,253 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     );
   }
 
+  Widget mylipidProfile() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: widgetBackgroundColor),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 48,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  color: widgetBackgroundColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(3.0),
+                      topRight: Radius.circular(3.0))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 16,
+                      ),
+                      ImageIcon(
+                        AssetImage('res/images/ic_lab_management.png'),
+                        size: 24,
+                        color: iconColor,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text('Lab Management',
+                          style: TextStyle(
+                              color: textColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Montserrat')),
+                    ],
+                  ),
+                  IconButton(
+                      icon: Icon(
+                        Icons.add_circle,
+                        size: 32,
+                        color: iconColor,
+                        semanticLabel: 'Add Lab Management records',
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, RoutePaths.Lipid_Profile);
+                      })
+                ],
+              ),
+            ),
+            Container(
+                color: primaryLightColor,
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Semantics(
+                      label: 'Add LDL',
+                      button: true,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RoutePaths.Lipid_Profile_LDL);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
+                                      color: primaryColor,
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_ldl.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('LDL',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Semantics(
+                      label: "Add HDL",
+                      button: true,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RoutePaths.Lipid_Profile_HDL);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
+                                      color: primaryColor,
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage('res/images/ic_hdl.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('HDL',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Semantics(
+                      label: 'Add total cholestrol',
+                      button: true,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context,
+                              RoutePaths.Lipid_Profile_Total_Cholesterol);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
+                                      color: primaryColor,
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage(
+                                        'res/images/ic_total_cholesterol.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Total\nCholesterol',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Semantics(
+                      label: 'Add triglycerides',
+                      button: true,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RoutePaths.Lipid_Profile_Triglyceroid);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
+                                      color: primaryColor,
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage(
+                                        'res/images/ic_triglycerides.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Triglycerides',
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget myNutrition() {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
@@ -1855,16 +2121,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  /*IconButton(
+                  IconButton(
                       icon: Icon(
                         Icons.add_circle,
                         size: 32,
                         color: iconColor,
+                        semanticLabel: 'Add physical health record',
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, RoutePaths.My_Activity,
-                            arguments: '');
-                      })*/
+                        Navigator.pushNamed(
+                          context,
+                          RoutePaths.My_Activity_Trends,
+                            arguments: 0);
+                      })
                 ],
               ),
             ),
@@ -1875,12 +2144,14 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    /* Semantics(
+                    Semantics(
                       label: "Stand",
                       button: true,
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity);
+                          Navigator.pushNamed(
+                              context, RoutePaths.My_Activity_Trends,
+                              arguments: 1);
                         },
                         child: Container(
                           height: 96,
@@ -1918,14 +2189,15 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                           ),
                         ),
                       ),
-                    ),*/
+                    ),
                     Semantics(
                       label: 'Steps',
                       button: true,
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity,
-                              arguments: 'Steps');
+                          Navigator.pushNamed(
+                              context, RoutePaths.My_Activity_Trends,
+                              arguments: 1);
                         },
                         child: Container(
                           height: 96,
@@ -1967,8 +2239,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       button: true,
                       child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity,
-                              arguments: 'Exercise');
+                          Navigator.pushNamed(
+                              context, RoutePaths.My_Activity_Trends,
+                              arguments: 1);
                         },
                         child: Container(
                           height: 96,

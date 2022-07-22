@@ -481,113 +481,126 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   }
 
   Widget eligibilityOfCarePlan() {
-    return Container(
-      height: 400,
-      color: Colors.transparent,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
+    return Card(
+      semanticContainer: false,
+      elevation: 0.0,
+      shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-              left: 16.0, right: 16.0, top: 16.0, bottom: 16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Check Eligibility',
-                style: TextStyle(
-                    color: textBlack,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "Montserrat",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 18.0),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              RichText(
-                text: TextSpan(
-                  text:
-                      'People of all ages with heart conditions can benefit from a cardiac rehab program. You may benefit if you have or have experienced a:',
+              topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+          side: BorderSide(width: 0, color: Colors.white)),
+      margin: EdgeInsets.zero,
+      child: Container(
+        height: 400,
+        color: Colors.transparent,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(24.0),
+                topRight: Radius.circular(24.0)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(
+                left: 16.0, right: 16.0, top: 16.0, bottom: 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Check Eligibility',
                   style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: textGrey,
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: '\n\n\n• heart attack (myocardial infarction)',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                        color: textGrey,
-                      ),
-                    ),
-                    TextSpan(
-                        text:
-                            '\n• heart condition, such as coronary artery disease (CAD), angina or heart failure',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                          color: textGrey,
-                        )),
-                    TextSpan(
-                        text:
-                            '\n• heart procedure or surgery, including coronary artery bypass graft (CABG) surgery, percutaneous coronary intervention (PCI, including coronary or balloon angioplasty and stenting), valve replacement, a pacemaker or implantable cardioverter defibrillator (ICD)',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                          color: textGrey,
-                        )),
-                  ],
+                      color: textBlack,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "Montserrat",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 18.0),
                 ),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Semantics(
-                    button: true,
-                    label: 'Alright',
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        height: 48,
-                        width: MediaQuery.of(context).size.width - 32,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.0,
+                const SizedBox(
+                  height: 24,
+                ),
+                RichText(
+                  text: TextSpan(
+                    text:
+                        'People of all ages with heart conditions can benefit from a cardiac rehab program. You may benefit if you have or have experienced a:',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      color: textGrey,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '\n\n\n• heart attack (myocardial infarction)',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          color: textGrey,
                         ),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6.0),
-                            border: Border.all(color: primaryColor, width: 1),
-                            color: primaryColor),
-                        child: Center(
-                          child: Text(
-                            'Alright',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                                fontSize: 14),
+                      ),
+                      TextSpan(
+                          text:
+                              '\n• heart condition, such as coronary artery disease (CAD), angina or heart failure',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                            color: textGrey,
+                          )),
+                      TextSpan(
+                          text:
+                              '\n• heart procedure or surgery, including coronary artery bypass graft (CABG) surgery, percutaneous coronary intervention (PCI, including coronary or balloon angioplasty and stenting), valve replacement, a pacemaker or implantable cardioverter defibrillator (ICD)',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                            color: textGrey,
+                          )),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Semantics(
+                      button: true,
+                      label: 'Alright',
+                      child: ExcludeSemantics(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            height: 48,
+                            width: MediaQuery.of(context).size.width - 40,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                            ),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6.0),
+                                border:
+                                    Border.all(color: primaryColor, width: 1),
+                                color: primaryColor),
+                            child: Center(
+                              child: Text(
+                                'Alright',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    fontSize: 14),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

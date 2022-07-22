@@ -218,7 +218,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             height: 4,
           ),
           Text(
-            '  One-Time PIN has been sent to your \n  mobile number ' +
+            '  One-time PIN has been sent to your \n  mobile number ' +
                 (dummyNumberList.contains(mobileNumber)
                     ? mobileNumber!
                     : countryCodeGlobe! + '-' + mobileNumber!),
@@ -305,7 +305,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
                 showToast('Please enter valid mobile number', context);
               } else*/
               if (otp.toString() == '') {
-                showToast('Please enter otp', context);
+                showToast('Please enter one-time PIN', context);
               } else {
                 model.setBusy(true);
                 loginWithOTP(model);
@@ -370,7 +370,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
 
       if (doctorListApiResponse.status == 'success') {
         showToast(
-            'OTP has been successfully sent on your mobile number', context);
+            'One-time PIN has been successfully sent on your mobile number',
+            context);
         model.setBusy(false);
       } else {
         model.setBusy(false);

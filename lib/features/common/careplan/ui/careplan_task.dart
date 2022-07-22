@@ -57,13 +57,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         tasksList.clear();
         //tasksList.addAll(userTaskResponse.data.userTasks.items);
         if (userTaskResponse.data!.userTasks!.items!.isEmpty) {
-          getUserTask();
+          debugPrint('Debug ==> 1');
+          getAllUserTask();
         } else {
-          if (userTaskResponse.data!.userTasks!.items! == 1) {
-            getUserTask();
-          } else {
-            _sortUserTask(userTaskResponse.data!.userTasks!.items!);
-          }
+          debugPrint('Debug ==> 3');
+          _sortUserTask(
+              userTaskResponse.data!.userTasks!.items!, 'Educational');
         }
 
         debugPrint('User Educational Tasks ==> ${userTaskResponse.toJson()}');
@@ -94,12 +93,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       .startAt
                       .toString()))
               : dateQueryFormat.format(dateTill.subtract(Duration(days: 0))),
-          dateQueryFormat.format(dateTill.add(Duration(days: 82))));
+          dateQueryFormat.format(dateTill.add(Duration(days: 0))));
 
       if (userTaskResponse.status == 'success') {
         tasksList.clear();
         //tasksList.addAll(userTaskResponse.data.userTasks.items);
-        _sortUserTask(userTaskResponse.data!.userTasks!.items!);
+        _sortUserTask(userTaskResponse.data!.userTasks!.items!, 'allTask');
         debugPrint('User Tasks ==> ${userTaskResponse.toJson()}');
         debugPrint(
             'User Tasks Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');
@@ -126,7 +125,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     getEducationUserTask();
   }
 
-  _sortUserTask(List<Items> tasks) {
+  _sortUserTask(List<Items> tasks, String fromMethod) {
     for (final task in tasks) {
       if (query == 'pending') {
         if (task.status == 'Delayed' ||
@@ -134,13 +133,19 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             task.status == 'Pending' ||
             task.status == 'Upcoming' ||
             task.status == 'Overdue') {
+          debugPrint('Debug ==> 4');
           tasksList.add(task);
         }
       } else {
         if (task.status == 'Completed' || task.status == 'Cancelled') {
+          debugPrint('Debug ==> 5');
           tasksList.add(task);
         }
       }
+    }
+
+    if (fromMethod == 'Educational' && tasksList.length == 1) {
+      getAllUserTask();
     }
   }
 

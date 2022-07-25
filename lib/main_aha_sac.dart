@@ -22,7 +22,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool? login = prefs.getBool('login1.8.70');
+  bool? login = prefs.getBool('login1.8.81');
   login ??= false;
   primaryColor = Color(0XFFc10e21);
   primaryLightColor = Color(0XFFFFFFFF);
@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget {
     this.isLogin = isLogin;
     setSessionFlag(isLogin);
     setAppType('AHA');
+    setAppName('Lipid Helper');
     setBaseUrl(_baseUrl);
     GetIt.instance.registerSingleton<ApiProvider>(ApiProvider(_baseUrl));
     GetIt.instance
@@ -78,7 +79,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: providers,
       child: MaterialApp(
-        title: 'HF Helper',
+        title: 'Lipid Helper',
         showSemanticsDebugger: false,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(primarySwatch: colorCustom, fontFamily: 'Montserrat'),

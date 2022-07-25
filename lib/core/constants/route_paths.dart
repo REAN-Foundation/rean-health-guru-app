@@ -111,5 +111,6 @@ class RoutePaths {
   static const String Lipid_Profile_Total_Cholesterol =
       'lipid_Profile_Total_cholesterol';
   static const String Lipid_Profile_Triglyceroid = 'lipid_Profile_Triglyceroid';
+  static const String Lipid_Profile_A1CLevel = 'lipid_Profile_A1CLevel';
   static const String Lipid_Profile = 'lipid_Profile';
 }

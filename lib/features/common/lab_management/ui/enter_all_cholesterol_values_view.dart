@@ -23,8 +23,10 @@ class _EnterAllCholesterolValuesViewState
   final _hdlcontroller = TextEditingController();
   final _totalCholesterolController = TextEditingController();
   final _triglyceridesController = TextEditingController();
+  final _a1cLevelController = TextEditingController();
   final _ratioController = TextEditingController();
   final _ratioFocus = FocusNode();
+  final _a1cLevelFocus = FocusNode();
   final _triglyceridesFocus = FocusNode();
   final _totalCholesterolFocus = FocusNode();
   final _hdlFocus = FocusNode();
@@ -55,6 +57,10 @@ class _EnterAllCholesterolValuesViewState
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   //const SizedBox(height: 16,),
+                  totalCholesterolFeilds(),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   ldlFeilds(),
                   const SizedBox(
                     height: 8,
@@ -66,11 +72,11 @@ class _EnterAllCholesterolValuesViewState
                   const SizedBox(
                     height: 8,
                   ),
-                  totalCholesterolFeilds(),
+                  triglyceridesFeilds(),
                   const SizedBox(
                     height: 8,
                   ),
-                  triglyceridesFeilds(),
+                  a1cLevelFeilds(),
                   const SizedBox(
                     height: 8,
                   ),
@@ -470,7 +476,97 @@ class _EnterAllCholesterolValuesViewState
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {
                             _fieldFocusChange(
-                                context, _triglyceridesFocus, _ratioFocus);
+                                context, _triglyceridesFocus, _a1cLevelFocus);
+                          },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(
+                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                          ],
+                          decoration: InputDecoration(
+                              //hintText: '(65 to 95)',
+                              hintStyle: TextStyle(fontSize: 12),
+                              contentPadding: EdgeInsets.all(0),
+                              border: InputBorder.none,
+                              fillColor: Colors.white,
+                              filled: true)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget a1cLevelFeilds() {
+    return Card(
+      semanticContainer: false,
+      elevation: 8,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                ImageIcon(
+                  AssetImage('res/images/ic_a1c_level.png'),
+                  size: 24,
+                  color: primaryColor,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  'Enter your A1C Level',
+                  style: TextStyle(
+                      color: textBlack,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14),
+                  textAlign: TextAlign.center,
+                ),
+                RichText(
+                  text: TextSpan(
+                    text: ' % ',
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w600,
+                        color: textBlack,
+                        fontSize: 12),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 8,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: textGrey, width: 1),
+                        color: Colors.white),
+                    child: Semantics(
+                      label: 'A1C Level measures in %',
+                      child: TextFormField(
+                          focusNode: _a1cLevelFocus,
+                          controller: _a1cLevelController,
+                          maxLines: 1,
+                          textInputAction: TextInputAction.next,
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          onFieldSubmitted: (term) {
+                            _fieldFocusChange(
+                                context, _a1cLevelFocus, _ratioFocus);
                           },
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
@@ -514,7 +610,7 @@ class _EnterAllCholesterolValuesViewState
                   width: 10,
                 ),
                 Text(
-                  'Enter your Ratio',
+                  'Enter your ratio',
                   style: TextStyle(
                       color: textBlack,
                       fontWeight: FontWeight.w600,
@@ -523,7 +619,7 @@ class _EnterAllCholesterolValuesViewState
                 ),
                 RichText(
                   text: TextSpan(
-                    text: ' (mg/dl) ',
+                    text: ' % ',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
@@ -549,13 +645,14 @@ class _EnterAllCholesterolValuesViewState
                         border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Ratio messures in mg/dl',
+                      label: 'Ratio messures in %',
                       child: TextFormField(
                           focusNode: _ratioFocus,
                           controller: _ratioController,
                           maxLines: 1,
                           textInputAction: TextInputAction.done,
-                          keyboardType: TextInputType.number,
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
                           onFieldSubmitted: (term) {},
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
@@ -600,6 +697,10 @@ class _EnterAllCholesterolValuesViewState
       ifRecordsEnterted = true;
     }
 
+    if (_a1cLevelController.text.isNotEmpty) {
+      ifRecordsEnterted = true;
+    }
+
     if (ifRecordsEnterted) {
       addvitals();
     }
@@ -623,6 +724,8 @@ class _EnterAllCholesterolValuesViewState
         map['TotalCholesterol'] = _totalCholesterolController.text.toString();
       if (_triglyceridesController.text.toString().isNotEmpty)
         map['TriglycerideLevel'] = _triglyceridesController.text.toString();
+      if (_a1cLevelController.text.toString().isNotEmpty)
+        map['A1CLevel'] = _a1cLevelController.text.toString();
       if (_ratioController.text.toString().isNotEmpty)
         map['Ratio'] = _ratioController.text.toString();
       map['PatientUserId'] = "";
@@ -676,6 +779,11 @@ class _EnterAllCholesterolValuesViewState
     _triglyceridesController.text = '';
     _triglyceridesController.selection = TextSelection.fromPosition(
       TextPosition(offset: _triglyceridesController.text.length),
+    );
+
+    _a1cLevelController.text = '';
+    _a1cLevelController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _a1cLevelController.text.length),
     );
 
     _ratioController.text = '';

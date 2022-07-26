@@ -71,11 +71,32 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       List<AvailablePlans> list) {
     final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < list.length; i++) {
-      items.add(DropdownMenuItem(
-        child: Text(list.elementAt(i).displayName!),
-        value: list.elementAt(i).displayName,
-      ));
+      debugPrint('App Name ==> ${getAppName()}');
+      debugPrint(
+          'Plan Code ==> ${list.elementAt(i).code == 'CholesterolMini'}');
+
+      if (getAppName() == 'Lipid Helper' &&
+          list.elementAt(i).code == 'CholesterolMini') {
+        items.add(DropdownMenuItem(
+          child: Text(list.elementAt(i).displayName!),
+          value: list.elementAt(i).displayName,
+        ));
+      } else if (getAppName() == 'HF Helper' &&
+          list.elementAt(i).code == 'HeartFailure') {
+        items.add(DropdownMenuItem(
+          child: Text(list.elementAt(i).displayName!),
+          value: list.elementAt(i).displayName,
+        ));
+      } else if (getAppType() != 'AHA') {
+        items.add(DropdownMenuItem(
+          child: Text(list.elementAt(i).displayName!),
+          value: list.elementAt(i).displayName,
+        ));
+      }
     }
+
+    debugPrint('List Length ${items.length}');
+
     return items;
   }
 

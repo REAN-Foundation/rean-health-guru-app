@@ -565,15 +565,19 @@ class _MyReportsViewState extends State<MyReportsView> {
     try {
       final FlutterDocumentPickerParams params = FlutterDocumentPickerParams(
           allowedMimeTypes: [
-            'application/pdf',
-            'application/docs',
-            'application/ppt'
-          ],
+        'application/pdf',
+        'application/docs',
+        'application/docx',
+        'application/doc',
+        'application/ppt'
+      ],
           allowedFileExtensions: [
-            'pdf',
-            'docs',
-            'ppt'
-          ]);
+        'pdf',
+        'docs',
+        'docx',
+        'doc',
+        'ppt'
+      ]);
 
       result = await FlutterDocumentPicker.openDocument(params: params);
       debugPrint('File Result ==> $result');

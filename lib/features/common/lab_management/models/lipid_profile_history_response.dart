@@ -173,11 +173,12 @@ class Items {
     String? id,
     dynamic ehrId,
     String? patientUserId,
-    int? totalCholesterol,
-    int? hdl,
-    int? ldl,
-    int? triglycerideLevel,
-    int? ratio,
+    dynamic totalCholesterol,
+    dynamic hdl,
+    dynamic ldl,
+    dynamic triglycerideLevel,
+    dynamic ratio,
+    dynamic a1cLevel,
     String? unit,
     String? recordDate,
     String? recordedByUserId,
@@ -190,6 +191,7 @@ class Items {
     _ldl = ldl;
     _triglycerideLevel = triglycerideLevel;
     _ratio = ratio;
+    _a1cLevel = a1cLevel;
     _unit = unit;
     _recordDate = recordDate;
     _recordedByUserId = recordedByUserId;
@@ -204,6 +206,7 @@ class Items {
     _ldl = json['LDL'];
     _triglycerideLevel = json['TriglycerideLevel'];
     _ratio = json['Ratio'];
+    _a1cLevel = json['A1CLevel'];
     _unit = json['Unit'];
     _recordDate = json['RecordDate'];
     _recordedByUserId = json['RecordedByUserId'];
@@ -212,11 +215,12 @@ class Items {
   String? _id;
   dynamic _ehrId;
   String? _patientUserId;
-  int? _totalCholesterol;
-  int? _hdl;
-  int? _ldl;
-  int? _triglycerideLevel;
-  int? _ratio;
+  dynamic _totalCholesterol;
+  dynamic _hdl;
+  dynamic _ldl;
+  dynamic _triglycerideLevel;
+  dynamic _ratio;
+  dynamic _a1cLevel;
   String? _unit;
   String? _recordDate;
   String? _recordedByUserId;
@@ -227,15 +231,17 @@ class Items {
 
   String? get patientUserId => _patientUserId;
 
-  int? get totalCholesterol => _totalCholesterol;
+  dynamic get totalCholesterol => _totalCholesterol;
 
-  int? get hdl => _hdl;
+  dynamic get hdl => _hdl;
 
-  int? get ldl => _ldl;
+  dynamic get ldl => _ldl;
 
-  int? get triglycerideLevel => _triglycerideLevel;
+  dynamic get triglycerideLevel => _triglycerideLevel;
 
-  int? get ratio => _ratio;
+  dynamic get ratio => _ratio;
+
+  dynamic get a1cLevel => _a1cLevel;
 
   String? get unit => _unit;
 
@@ -253,6 +259,7 @@ class Items {
     map['LDL'] = _ldl;
     map['TriglycerideLevel'] = _triglycerideLevel;
     map['Ratio'] = _ratio;
+    map['A1CLevel'] = _a1cLevel;
     map['Unit'] = _unit;
     map['RecordDate'] = _recordDate;
     map['RecordedByUserId'] = _recordedByUserId;

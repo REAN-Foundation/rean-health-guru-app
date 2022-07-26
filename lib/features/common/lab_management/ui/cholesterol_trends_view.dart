@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:patient/features/common/lab_management/ui/lipid_profile_a1clevel.dart';
 import 'package:patient/features/common/lab_management/ui/lipid_profile_hdl.dart';
 import 'package:patient/features/common/lab_management/ui/lipid_profile_ldl.dart';
 import 'package:patient/features/common/lab_management/ui/lipid_profile_ratio.dart';
@@ -54,6 +55,10 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                           height: 8,
                         ),
                         triglyceridesTrends(),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        a1cLevelTrends(),
                         const SizedBox(
                           height: 8,
                         ),
@@ -222,6 +227,46 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
               height: 8,
             ),
             LipidProfileTriglyceridesView(false)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget a1cLevelTrends() {
+    return Card(
+      semanticContainer: false,
+      elevation: 8,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                ImageIcon(
+                  AssetImage('res/images/ic_a1c_level.png'),
+                  size: 24,
+                  color: primaryColor,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  'A1C Level',
+                  style: TextStyle(
+                      color: textBlack,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            LipidProfileA1CLevelView(false)
           ],
         ),
       ),

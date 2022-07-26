@@ -14,18 +14,19 @@ import 'package:patient/infra/utils/simple_time_series_chart.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
-class LipidProfileRatioView extends StatefulWidget {
+class LipidProfileA1CLevelView extends StatefulWidget {
   bool allUIViewsVisible = false;
 
-  LipidProfileRatioView(bool allUIViewsVisible) {
+  LipidProfileA1CLevelView(bool allUIViewsVisible) {
     this.allUIViewsVisible = allUIViewsVisible;
   }
 
   @override
-  _LipidProfileRatioViewState createState() => _LipidProfileRatioViewState();
+  _LipidProfileA1CLevelViewState createState() =>
+      _LipidProfileA1CLevelViewState();
 }
 
-class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
+class _LipidProfileA1CLevelViewState extends State<LipidProfileA1CLevelView> {
   var model = PatientLipidProfileViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
@@ -56,7 +57,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
                   backgroundColor: Colors.white,
                   brightness: Brightness.light,
                   title: Text(
-                    'Ratio',
+                    'A1C Level',
                     style: TextStyle(
                         fontSize: 16.0,
                         color: primaryColor,
@@ -131,7 +132,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
             height: 16,
           ),
           Text(
-            'Enter your Ratio:',
+            'Enter your A1C Level:',
             style: TextStyle(
                 color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
             textAlign: TextAlign.center,
@@ -151,7 +152,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Ratio measures in %',
+                    label: 'A1CLevel measures in mg/dl',
                     child: TextFormField(
                         controller: _controller,
                         maxLines: 1,
@@ -202,7 +203,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
               child: InkWell(
                 onTap: () {
                   if (_controller.text.toString().isEmpty) {
-                    showToast('Please enter your Ratio', context);
+                    showToast('Please enter your A1C Level', context);
                   } else {
                     addvitals();
                   }
@@ -269,7 +270,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            'Ratio',
+                            'A1C Level',
                             style: TextStyle(
                                 color: primaryColor,
                                 fontSize: 14,
@@ -341,9 +342,9 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
               overflow: TextOverflow.ellipsis,
             ),
             Semantics(
-              label: 'Ratio ',
+              label: 'A1C Level ',
               child: Text(
-                record.ratio.toString() + ' %',
+                record.a1cLevel.toString() + ' %',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -385,7 +386,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
               height: 8,
             ),
             Text(
-              'Ratio',
+              'A1C Level',
               style: TextStyle(
                   color: primaryColor,
                   fontSize: 14,
@@ -411,12 +412,12 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(
           DateTime.parse(records.elementAt(i).recordDate!).toLocal(),
-          double.parse(records.elementAt(i).ratio.toString())));
+          double.parse(records.elementAt(i).a1cLevel.toString())));
     }
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'Ratio',
+        id: 'A1C Level',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -576,7 +577,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
-      map['Ratio'] = _controller.text.toString();
+      map['A1CLevel'] = _controller.text.toString();
       map['PatientUserId'] = "";
       map['Unit'] = "%";
       //map['RecordedByUserId'] = null;
@@ -612,7 +613,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
             i++) {
           if (lipidProfileHistoryResponse.data!.bloodCholesterolRecords!.items!
                   .elementAt(i)
-                  .ratio !=
+                  .a1cLevel !=
               null) {
             records.add(lipidProfileHistoryResponse
                 .data!.bloodCholesterolRecords!.items!

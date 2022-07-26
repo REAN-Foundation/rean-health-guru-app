@@ -215,7 +215,7 @@ class _SupportViewState extends State<SupportView> {
                                             String appName =
                                                 'REAN%20HealthGuru';
                                             if (getAppType() == 'AHA') {
-                                              appName = 'HF%20Helper';
+                                              appName = getAppName();
                                             }
 
                                             final link = 'mailto:' +

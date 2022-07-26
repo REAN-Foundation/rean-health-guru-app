@@ -480,6 +480,9 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                     /*if(mobileNumber.length == 10){
                       _fieldFocusChange(context, _mobileNumberFocus, _passwordFocus);
                     }*/
+                    if (phone.number!.length == maxLengthOfPhone) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    }
                   },
                   onCountryChanged: (phone) {
                     _clearFeilds();

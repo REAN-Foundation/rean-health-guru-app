@@ -217,8 +217,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                                 context, _standFocus, _stepsFocus);
                           },
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
                           decoration: InputDecoration(
                               /*hintText: unit == 'lbs'
@@ -310,8 +309,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                                 context, _stepsFocus, _exerciseFocus);
                           },
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
                           decoration: InputDecoration(
                               //hintText: '(100 to 125)',
@@ -398,8 +396,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                           keyboardType: TextInputType.number,
                           onFieldSubmitted: (term) {},
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
                           decoration: InputDecoration(
                               //hintText: '(92 to 100)',

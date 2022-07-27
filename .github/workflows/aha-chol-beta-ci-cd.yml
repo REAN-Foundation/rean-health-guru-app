@@ -1,0 +1,251 @@
+# This workflow will triage pull requests and apply a label based on the
+# paths that are modified in the pull request.
+#
+# To use this workflow, you will need to set up a .github/labeler.yml
+# file with configuration.  For more information, see:
+# https://github.com/actions/labeler
+
+name: AHA-CHOL-BETA-Workflow
+
+# Controls when the workflow will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  workflow_dispatch:
+
+jobs:
+  gitguardian-scanning:
+    name: GitGuardian Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # fetch all history so multiple commits can be scanned
+      - name: GitGuardian Scan
+        uses: GitGuardian/gg-shield-action@master
+        env:
+          GITHUB_PUSH_BEFORE_SHA: ${{ github.event.before }}
+          GITHUB_PUSH_BASE_SHA: ${{ github.event.base }}
+          GITHUB_PULL_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          GITHUB_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
+
+  CodeScan-FlutterAnalyze:
+    environment: aha-chol-prod
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Flutter
+        uses: ./.github/actions/setup_flutter
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Create env file
+        run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
+
+      - name: Run Flutter Analyze
+        run: |
+          flutter clean
+          flutter analyze --preamble --congratulate
+
+  Android-BuildApp:
+    environment: aha-chol-prod
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: android
+
+      # Setting up jdk
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11"
+          distribution: "adopt"
+          cache: gradle
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Setup Flutter
+        uses: ./.github/actions/setup_flutter
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Create env file
+        run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
+
+      - name: Import Build Environment Dependencies
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_JSON }}
+          KEYSTORE_TOKEN: ${{ secrets.KEYSTORE_TOKEN_BASE64 }}
+        run: |
+          echo $FIREBASE_CONFIG > ./android/app/src/aha_sac/google-services.json
+          echo $KEYSTORE_TOKEN | base64 -di | tee ./android/keystore.jks android/app/keystore.jks > /dev/null
+
+      - name: Flutter Build
+        run: flutter build appbundle --release --flavor aha_sac -t "lib/main_aha_sac.dart"
+
+      # Upload Artifacts
+      - name: Upload build Artifacts
+        id: upload_build_artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: android-artifacts
+          path: |
+            build/app/outputs
+          if-no-files-found: error
+          retention-days: 14
+
+  Android-Release-Alpha:
+    environment: aha-chol-prod
+    needs: Android-BuildApp
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: android
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: android
+
+      - uses: actions/download-artifact@v2
+        id: download
+        with:
+          name: android-artifacts
+          path: android/build/app/outputs
+
+      - name: Publish to Playstore
+        run: bundle exec fastlane release_beta_aha_chol aab_path:"build/app/outputs/bundle/aha_sacRelease/app-aha_sac-release.aab"
+        env:
+          PLAYSTORE_JSON_KEY_DATA: ${{ secrets.PLAYSTORE_JSON_KEY_DATA }}
+
+
+  iOS-BuildApp:
+    environment: aha-chol-prod
+    runs-on: macos-latest
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: ios
+
+      - name: Setup Flutter
+        uses: ./.github/actions/setup_flutter
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Create env file
+        run: aws s3 cp s3://${{ secrets.APP_ENV_BUCKET_PATH }}/.env ./res/.env
+
+      - name: Import Build Environment Dependencies
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_SECRET_PLIST }}
+        run: |
+
+          mkdir -p ./ios/config/aha_sac/
+          echo $FIREBASE_CONFIG > ./ios/config/aha_sac/GoogleService-Info.plist
+
+      # Flutter Build Artifact
+      - name: Flutter Build
+        run: flutter build ios --release --no-codesign --flavor aha_sac -t "lib/main_aha_sac.dart"
+
+      - name: Generate Signed Build
+        run: bundle exec fastlane build_aha_chol flavor:aha_sac mode:release
+
+        working-directory: ios
+        env:
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+
+      # Upload Artifacts
+      - name: Upload build Artifacts
+        id: upload_build_artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ios-artifacts
+          path: |
+            ios/output
+          if-no-files-found: error
+          retention-days: 14
+
+  iOS-Release-Alpha:
+    environment: aha-chol-prod
+    needs: iOS-BuildApp
+    runs-on: macos-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ios
+    steps:
+      # Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Fastlane
+        uses: ./.github/actions/setup_fastlane
+        with:
+          fastlane-dir: ios
+
+      - uses: actions/download-artifact@v2
+        id: download
+        with:
+          name: ios-artifacts
+          path: ios/output
+
+      - name: Publish to Appstore
+
+        run: bundle exec fastlane upload_build_to_testflight_aha_chol flavor:aha_sac mode:release
+
+        env:
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets. APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
+          IOS_DEMO_USER: ${{ secrets.IOS_DEMO_USER }}
+          IOS_DEMO_PASSWORD: ${{ secrets.IOS_DEMO_PASSWORD }}

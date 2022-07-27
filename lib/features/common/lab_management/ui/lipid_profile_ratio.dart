@@ -151,7 +151,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
                       border: Border.all(color: textGrey, width: 1),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Ratio measures in mg/dl',
+                    label: 'Ratio measures in %',
                     child: TextFormField(
                         controller: _controller,
                         maxLines: 1,
@@ -180,7 +180,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
                         fontSize: 14),
                     children: <TextSpan>[
                       TextSpan(
-                          text: '    mg/dl    ',
+                          text: '    %    ',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -343,7 +343,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
             Semantics(
               label: 'Ratio ',
               child: Text(
-                record.ratio.toString() + ' mg/dl',
+                record.ratio.toString() + ' %',
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -578,7 +578,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
       final map = <String, dynamic>{};
       map['Ratio'] = _controller.text.toString();
       map['PatientUserId'] = "";
-      map['Unit'] = "mg/dl";
+      map['Unit'] = "%";
       //map['RecordedByUserId'] = null;
 
       final BaseResponse baseResponse = await model.addMylipidProfile(map);

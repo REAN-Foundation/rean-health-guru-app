@@ -1649,6 +1649,50 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Semantics(
+                      label: 'Add total cholestrol',
+                      button: true,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context,
+                              RoutePaths.Lipid_Profile_Total_Cholesterol);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
+                                      color: primaryColor,
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage(
+                                        'res/images/ic_total_cholesterol.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Total\nCholesterol',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Semantics(
                       label: 'Add LDL',
                       button: true,
                       child: InkWell(
@@ -1735,50 +1779,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       ),
                     ),
                     Semantics(
-                      label: 'Add total cholestrol',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context,
-                              RoutePaths.Lipid_Profile_Total_Cholesterol);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage(
-                                        'res/images/ic_total_cholesterol.png'),
-                                    size: 32,
-                                    color: iconColor,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Total\nCholesterol',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'Montserrat')),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Semantics(
                       label: 'Add triglycerides',
                       button: true,
                       child: InkWell(
@@ -1821,6 +1821,49 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         ),
                       ),
                     ),
+                    /*Semantics(
+                      label: 'Add A1C Level',
+                      button: true,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RoutePaths.Lipid_Profile_A1CLevel);
+                        },
+                        child: Container(
+                          height: 96,
+                          child: ExcludeSemantics(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  decoration: BoxDecoration(
+                                      color: primaryColor,
+                                      border: Border.all(color: primaryColor),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0))),
+                                  child: ImageIcon(
+                                    AssetImage(
+                                        'res/images/ic_a1c_level.png'),
+                                    size: 32,
+                                    color: iconColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('A1C Level',
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),*/
                   ],
                 )),
           ],

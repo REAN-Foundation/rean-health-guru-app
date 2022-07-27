@@ -407,7 +407,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         body['OSType'] = 'iOS';
         body['OSVersion'] = Platform.operatingSystemVersion;
       }
-      body['AppName'] = getAppType() == "AHA" ? "HF Helper" : "REAN HealthGuru";
+      body['AppName'] =
+          getAppType() == "AHA" ? getAppType() : "REAN HealthGuru";
       body['AppVersion'] = _packageInfo.version;
 
       final response = await apiProvider!
@@ -495,7 +496,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
 
       if (doctorListApiResponse.status == 'success') {
         if (getAppType() == 'AHA') {
-          showToast('Welcome to HF Helper', context);
+          showToast('Welcome to ' + getAppName(), context);
         } else {
           showToast('Welcome to REAN HealthGuru', context);
         }

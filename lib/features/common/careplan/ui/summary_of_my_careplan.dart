@@ -189,7 +189,9 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             ? Colors.green
                             : currentWeek! > 12
                                 ? primaryColor
-                                : primaryLightColor,
+                                : getAppType() == 'AHA'
+                                    ? Color(0XFFEBE0FF)
+                                    : primaryLightColor,
                         borderRadius:
                             BorderRadius.only(topLeft: Radius.circular(8)),
                         border:
@@ -244,7 +246,9 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             ? Colors.green
                             : currentWeek! > 11
                                 ? primaryColor
-                                : primaryLightColor,
+                                : getAppType() == 'AHA'
+                                    ? Color(0XFFEBE0FF)
+                                    : primaryLightColor,
                         borderRadius:
                             BorderRadius.only(topLeft: Radius.circular(8)),
                         border:
@@ -299,7 +303,9 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             ? Colors.green
                             : currentWeek! > 10
                                 ? primaryColor
-                                : primaryLightColor,
+                                : getAppType() == 'AHA'
+                                    ? Color(0XFFEBE0FF)
+                                    : primaryLightColor,
                         borderRadius:
                             BorderRadius.only(topLeft: Radius.circular(8)),
                         border:
@@ -350,7 +356,9 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             ? Colors.green
                             : currentWeek! > 9
                                 ? primaryColor
-                                : primaryLightColor,
+                                : getAppType() == 'AHA'
+                                    ? Color(0XFFEBE0FF)
+                                    : primaryLightColor,
                         borderRadius:
                             BorderRadius.only(topLeft: Radius.circular(8)),
                         border:
@@ -401,7 +409,9 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             ? Colors.green
                             : currentWeek! > 8
                                 ? primaryColor
-                                : primaryLightColor,
+                                : getAppType() == 'AHA'
+                                    ? Color(0XFFEBE0FF)
+                                    : primaryLightColor,
                         borderRadius:
                             BorderRadius.only(topLeft: Radius.circular(8)),
                         border:
@@ -452,7 +462,9 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             ? Colors.green
                             : currentWeek! > 7
                                 ? primaryColor
-                                : primaryLightColor,
+                                : getAppType() == 'AHA'
+                                    ? Color(0XFFEBE0FF)
+                                    : primaryLightColor,
                         borderRadius:
                             BorderRadius.only(topLeft: Radius.circular(8)),
                         border:
@@ -503,7 +515,9 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             ? Colors.green
                             : currentWeek! > 6
                                 ? primaryColor
-                                : primaryLightColor,
+                                : getAppType() == 'AHA'
+                                    ? Color(0XFFEBE0FF)
+                                    : primaryLightColor,
                         borderRadius:
                             BorderRadius.only(topLeft: Radius.circular(8)),
                         border:
@@ -554,7 +568,9 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             ? Colors.green
                             : currentWeek! > 5
                                 ? primaryColor
-                                : primaryLightColor,
+                                : getAppType() == 'AHA'
+                                    ? Color(0XFFEBE0FF)
+                                    : primaryLightColor,
                         borderRadius:
                             BorderRadius.only(topLeft: Radius.circular(8)),
                         border:
@@ -605,7 +621,9 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             ? Colors.green
                             : currentWeek! > 4
                                 ? primaryColor
-                                : primaryLightColor,
+                                : getAppType() == 'AHA'
+                                    ? Color(0XFFEBE0FF)
+                                    : primaryLightColor,
                         borderRadius:
                             BorderRadius.only(topLeft: Radius.circular(8)),
                         border:
@@ -656,7 +674,9 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             ? Colors.green
                             : currentWeek! > 3
                                 ? primaryColor
-                                : primaryLightColor,
+                                : getAppType() == 'AHA'
+                                    ? Color(0XFFEBE0FF)
+                                    : primaryLightColor,
                         borderRadius:
                             BorderRadius.only(topLeft: Radius.circular(8)),
                         border:
@@ -707,7 +727,9 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             ? Colors.green
                             : currentWeek! > 2
                                 ? primaryColor
-                                : primaryLightColor,
+                                : getAppType() == 'AHA'
+                                    ? Color(0XFFEBE0FF)
+                                    : primaryLightColor,
                         borderRadius:
                             BorderRadius.only(topLeft: Radius.circular(8)),
                         border:
@@ -761,7 +783,9 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                             ? Colors.green
                             : currentWeek! > 1
                                 ? primaryColor
-                                : primaryLightColor,
+                                : getAppType() == 'AHA'
+                                    ? Color(0XFFEBE0FF)
+                                    : primaryLightColor,
                         borderRadius:
                             BorderRadius.only(topLeft: Radius.circular(8)),
                         border:

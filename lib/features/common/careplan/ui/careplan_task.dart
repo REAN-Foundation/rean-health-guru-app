@@ -209,13 +209,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                     SizedBox(
                       width: 16,
                     ),
-                    Semantics(
+                    /*Semantics(
                       label: 'taskCount',
                       child: Text(
                         tasksList.length.toString(),
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ),
@@ -1081,7 +1081,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           child: Container(
             decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: primaryLightColor),
+                border: Border.all(
+                    color: getAppType() == 'AHA'
+                        ? Color(0XFFEBE0FF)
+                        : primaryLightColor),
                 borderRadius: BorderRadius.all(Radius.circular(4.0))),
             child: Column(
               children: <Widget>[

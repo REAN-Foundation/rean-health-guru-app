@@ -35,6 +35,7 @@ var dummyNumberList = <String>[];
 bool isDummyNumber = false;
 String? _currentLocale = '';
 String _appName = '';
+String _appType = '';
 dynamic _roleId = '';
 final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
 String knowledgeLinkDisplayedDate = '';
@@ -142,10 +143,18 @@ dynamic getRoleId() {
 }
 
 void setAppType(String name) {
-  _appName = name;
+  _appType = name;
 }
 
 String getAppType() {
+  return _appType;
+}
+
+void setAppName(String name) {
+  _appName = name;
+}
+
+String getAppName() {
   return _appName;
 }
 

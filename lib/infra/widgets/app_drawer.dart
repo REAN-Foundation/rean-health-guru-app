@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -263,7 +262,8 @@ class _AppDrawerState extends State<AppDrawer> {
               ),*/
           Visibility(
             visible: getBaseUrl()!.contains('aha-api-uat') ||
-                getBaseUrl()!.contains('reancare-api-dev'),
+                getBaseUrl()!.contains('reancare-api-dev') ||
+                getAppName() == 'Lipid Helper',
             //visible: true,
             child: InkWell(
               onTap: () {
@@ -368,24 +368,27 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),*/
-          InkWell(
-            onTap: () {
-              Navigator.popAndPushNamed(context, RoutePaths.ABOUT_REAN_CARE);
-            },
-            child: Container(
-              height: 48,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: 40,
-                  ),
-                  Text(
-                    getAppType() == 'AHA' ? 'About Us' : 'About REAN',
-                    style: TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.w600),
-                  ),
-                ],
+          Visibility(
+            visible: getAppName() != 'Lipid Helper',
+            child: InkWell(
+              onTap: () {
+                Navigator.popAndPushNamed(context, RoutePaths.ABOUT_REAN_CARE);
+              },
+              child: Container(
+                height: 48,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 40,
+                    ),
+                    Text(
+                      getAppType() == 'AHA' ? 'About Us' : 'About REAN',
+                      style: TextStyle(
+                          color: primaryColor, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

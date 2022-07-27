@@ -4,3 +4,4 @@ With HF Helper you can:
  Share health information with your doctor in real-time.
  Connect with other people living with heart failure.
 The American Heart Association’s National Heart Failure Initiative, IMPLEMENT-HF, is made possible with funding by founding sponsor, Novartis, and national sponsor, Boehringer Ingelheim and Eli Lilly and Company.
+Healthkit and Google Fit data integration with the other datapoints being collected by our app will help users track, review and take actions on various interconnected health parameters.

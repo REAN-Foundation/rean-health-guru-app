@@ -204,8 +204,7 @@ class _EnterAllCholesterolValuesViewState
                             _fieldFocusChange(context, _ldlFocus, _hdlFocus);
                           },
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
                           decoration: InputDecoration(
                               /*hintText: unit == 'lbs'
@@ -297,8 +296,7 @@ class _EnterAllCholesterolValuesViewState
                                 context, _hdlFocus, _totalCholesterolFocus);
                           },
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
                           decoration: InputDecoration(
                               //hintText: '(100 to 125)',
@@ -388,8 +386,7 @@ class _EnterAllCholesterolValuesViewState
                                 _triglyceridesFocus);
                           },
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
                           decoration: InputDecoration(
                               //hintText: '(92 to 100)',
@@ -479,8 +476,7 @@ class _EnterAllCholesterolValuesViewState
                                 context, _triglyceridesFocus, _a1cLevelFocus);
                           },
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
                           decoration: InputDecoration(
                               //hintText: '(65 to 95)',

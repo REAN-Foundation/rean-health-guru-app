@@ -82,7 +82,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   getAllUserTask() async {
     try {
-      var dateTill = DateTime.now();
+      var dateTill;
+      if (getBaseUrl()!.contains('aha-api-uat.services') ||
+          getAppName() == 'Lipid Helper') {
+        dateTill = DateTime.now();
+      } else {
+        dateTill = DateTime.now().add(Duration(days: 82));
+      }
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
       userTaskResponse = await model.getUserTasks(
           query,
@@ -93,7 +99,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       .startAt
                       .toString()))
               : dateQueryFormat.format(dateTill.subtract(Duration(days: 0))),
-          dateQueryFormat.format(dateTill.add(Duration(days: 0))));
+          dateQueryFormat.format(dateTill));
 
       if (userTaskResponse.status == 'success') {
         tasksList.clear();
@@ -122,7 +128,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   }
 
   getUserTask() async {
-    getEducationUserTask();
+    if (getBaseUrl()!.contains('aha-api-uat.services') ||
+        getAppName() == 'Lipid Helper') {
+      getEducationUserTask();
+    } else {
+      getAllUserTask();
+    }
   }
 
   _sortUserTask(List<Items> tasks, String fromMethod) {

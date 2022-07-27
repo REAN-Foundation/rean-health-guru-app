@@ -140,7 +140,6 @@ class Items {
   String? ehrId;
   String? patientUserId;
   dynamic bloodGlucose;
-  dynamic a1cLevel;
   dynamic systolic;
   dynamic diastolic;
   dynamic pulse;
@@ -156,7 +155,6 @@ class Items {
       this.ehrId,
       this.patientUserId,
       this.bloodGlucose,
-      this.a1cLevel,
       this.systolic,
       this.diastolic,
       this.pulse,
@@ -172,7 +170,6 @@ class Items {
     ehrId = json['EhrId'];
     patientUserId = json['PatientUserId'];
     bloodGlucose = json['BloodGlucose'];
-    a1cLevel = json['A1CLevel'];
     systolic = json['Systolic'];
     diastolic = json['Diastolic'];
     pulse = json['Pulse'];
@@ -190,7 +187,6 @@ class Items {
     data['EhrId'] = ehrId;
     data['PatientUserId'] = patientUserId;
     data['BloodGlucose'] = bloodGlucose;
-    data['A1CLevel'] = a1cLevel;
     data['Systolic'] = systolic;
     data['Diastolic'] = diastolic;
     data['Pulse'] = pulse;

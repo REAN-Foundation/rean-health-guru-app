@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/activity/ui/add_height_dialog.dart';
 import 'package:patient/features/common/vitals/models/get_my_vitals_history.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -286,10 +286,15 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                       child: ExcludeSemantics(
                         child: InkWell(
                           onTap: () {
-                            showToast("Please add height by clicking on edit",
+                            showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return _addBMIDetailsDialog(context);
+                                });
+                            /*showToast("Please add height by clicking on edit",
                                 context);
                             Navigator.popAndPushNamed(
-                                context, RoutePaths.My_Medical_Profile);
+                                context, RoutePaths.My_Medical_Profile);*/
                           },
                           child: Text(
                             height == 0
@@ -853,6 +858,78 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     );
   }
 
+  Widget _addBMIDetailsDialog(BuildContext context) {
+    return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        //child: addOrEditAllergiesDialog(context),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 240,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Biometrics',
+                        semanticsLabel: 'Biometrics',
+                        style: TextStyle(
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                            fontSize: 18.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    alignment: Alignment.topRight,
+                    icon: Icon(
+                      Icons.close,
+                      color: primaryColor,
+                      semanticLabel: 'Close',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: AddHeightDialog(
+                  submitButtonListner: (double height) {
+                    _sharedPrefUtils.saveDouble('height', height);
+                    this.height = height;
+                    calculetBMI();
+                    debugPrint('Height : $height');
+                    Navigator.of(context, rootNavigator: true).pop();
+                    setState(() {});
+                  },
+                  height: height,
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+
   addvitals() async {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
@@ -875,10 +952,13 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
+        _weightController.clear();
         _sharedPrefUtils.saveDouble(
             'weight', double.parse(entertedWeight.toString()));
         showToast(baseResponse.message!, context);
-        Navigator.pop(context);
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
       } else {
         progressDialog.close();
         showToast(baseResponse.message!, context);

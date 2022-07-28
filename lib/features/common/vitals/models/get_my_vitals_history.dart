@@ -160,10 +160,10 @@ class Items {
       this.pulse,
       this.bodyTemperature,
       this.bodyWeight,
-        this.bloodOxygenSaturation,
-        this.unit,
-        this.recordDate,
-        this.recordedByUserId});
+      this.bloodOxygenSaturation,
+      this.unit,
+      this.recordDate,
+      this.recordedByUserId});
 
   Items.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -120,6 +120,9 @@ class _BiometricBloodSugarVitalsViewState
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
+                    const SizedBox(
+                      height: 16,
+                    ),
                     weightHistoryListFeilds(),
                     const SizedBox(
                       height: 16,

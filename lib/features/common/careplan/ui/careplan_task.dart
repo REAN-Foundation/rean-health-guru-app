@@ -37,7 +37,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
 
-  getUserTask() async {
+  getEducationUserTask() async {
     try {
       var dateTill = DateTime.now();
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
@@ -50,12 +50,61 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       .startAt
                       .toString()))
               : dateQueryFormat.format(dateTill.subtract(Duration(days: 0))),
-          dateQueryFormat.format(dateTill.add(Duration(days: 82))));
+          dateQueryFormat.format(dateTill.subtract(Duration(days: 1))) +
+              '&category=Educational');
 
       if (userTaskResponse.status == 'success') {
         tasksList.clear();
         //tasksList.addAll(userTaskResponse.data.userTasks.items);
-        _sortUserTask(userTaskResponse.data!.userTasks!.items!);
+        if (userTaskResponse.data!.userTasks!.items!.isEmpty) {
+          debugPrint('Debug ==> 1');
+          getAllUserTask();
+        } else {
+          debugPrint('Debug ==> 3');
+          _sortUserTask(
+              userTaskResponse.data!.userTasks!.items!, 'Educational');
+        }
+
+        debugPrint('User Educational Tasks ==> ${userTaskResponse.toJson()}');
+        debugPrint(
+            'User Tasks Educational Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');
+      } else {
+        tasksList.clear();
+        showToast(userTaskResponse.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      tasksList.clear();
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+  }
+
+  getAllUserTask() async {
+    try {
+      var dateTill;
+      if (getBaseUrl()!.contains('aha-api-uat.services') ||
+          getAppName() == 'Lipid Helper') {
+        dateTill = DateTime.now();
+      } else {
+        dateTill = DateTime.now().add(Duration(days: 82));
+      }
+      //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
+      userTaskResponse = await model.getUserTasks(
+          query,
+          carePlanEnrollmentForPatientGlobe != null
+              ? dateQueryFormat.format(DateTime.parse(
+                  carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+                      .elementAt(0)
+                      .startAt
+                      .toString()))
+              : dateQueryFormat.format(dateTill.subtract(Duration(days: 0))),
+          dateQueryFormat.format(dateTill));
+
+      if (userTaskResponse.status == 'success') {
+        tasksList.clear();
+        //tasksList.addAll(userTaskResponse.data.userTasks.items);
+        _sortUserTask(userTaskResponse.data!.userTasks!.items!, 'allTask');
         debugPrint('User Tasks ==> ${userTaskResponse.toJson()}');
         debugPrint(
             'User Tasks Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');
@@ -78,7 +127,16 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     }*/
   }
 
-  _sortUserTask(List<Items> tasks) {
+  getUserTask() async {
+    if (getBaseUrl()!.contains('aha-api-uat.services') ||
+        getAppName() == 'Lipid Helper') {
+      getEducationUserTask();
+    } else {
+      getAllUserTask();
+    }
+  }
+
+  _sortUserTask(List<Items> tasks, String fromMethod) {
     for (final task in tasks) {
       if (query == 'pending') {
         if (task.status == 'Delayed' ||
@@ -86,13 +144,19 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             task.status == 'Pending' ||
             task.status == 'Upcoming' ||
             task.status == 'Overdue') {
+          debugPrint('Debug ==> 4');
           tasksList.add(task);
         }
       } else {
         if (task.status == 'Completed' || task.status == 'Cancelled') {
+          debugPrint('Debug ==> 5');
           tasksList.add(task);
         }
       }
+    }
+
+    if (fromMethod == 'Educational' && tasksList.length == 1) {
+      getAllUserTask();
     }
   }
 
@@ -529,6 +593,14 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   Widget _makeTaskCard(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
+
+    /*  if(DateTime.parse(task.scheduledEndTime!).isBefore(DateTime.now())) {
+      if (task.category!.contains('Educational') && !task.category!.contains('Educational-NewsFeed')) {
+        debugPrint('Education task found Category ==> ${task.category}, Date ==> ${task.scheduledStartTime}');
+        isPreviousEducationalTaskIsPending = true;
+      }
+    }*/
+
     debugPrint(
         'Category Name ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()} && Task Tittle ==> ${task.task}');
     return Semantics(
@@ -545,7 +617,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               'Task Type ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()}');
           if (!task.finished) {
             debugPrint('Task ID ==> ${task.id}');
+            /*if(DateTime.parse(task.scheduledStartTime!).isBefore(DateTime.now())) {
+              getUserTaskDetails(task.id.toString());
+            }else if(isPreviousEducationalTaskIsPending && !task.category!.contains('Educational')){
+              showToast('Please complete educational task before starting new task', context);
+            } else {*/
             getUserTaskDetails(task.id.toString());
+            //}
             //_taskNavigator(task);
             //showToast('Task completed already');
           } else {

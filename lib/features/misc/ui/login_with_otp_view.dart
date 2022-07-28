@@ -39,6 +39,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+  double height = 0;
+  final _scrollController = ScrollController();
 
   //String _fcmToken ="";
   final TextEditingController _mobileNumberController = TextEditingController();
@@ -112,7 +114,8 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   @override
   Widget build(BuildContext context) {
     checkItenetConnection();
-    final height = MediaQuery.of(context).size.height;
+    height = MediaQuery.of(context).size.height;
+    //debugPrint('Height ==> $height');
     return BaseWidget<LoginViewModel?>(
       model: LoginViewModel(authenticationService: Provider.of(context)),
       builder: (context, model, child) => Container(
@@ -264,40 +267,49 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
                   scale: 0.9,
                 ),
               )),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+          Scrollbar(
+            controller: _scrollController,
+            isAlwaysShown: true,
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  /*getAppType() == 'AHA' ? _titleAha() : _title(),*/
-                  /*Semantics(
-                      label: 'Mobile number',
-                      readOnly: true,
-                      child: SizedBox(height: 100)),*/
-                  //_emailPasswordWidget(),
-                  SizedBox(height: 60),
-                  Text(
-                    'Let\’s get started',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: primaryColor,
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w700,
+              controller: _scrollController,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    /*getAppType() == 'AHA' ? _titleAha() : _title(),*/
+                    /*Semantics(
+                        label: 'Mobile number',
+                        readOnly: true,
+                        child: SizedBox(height: 100)),*/
+                    //_emailPasswordWidget(),
+                    SizedBox(height: 60),
+                    Text(
+                      'Let\’s get started',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: primaryColor,
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  _textFeild('Enter your phone', model),
-                  SizedBox(height: 08),
-                  _privacyPolicy(),
-                  SizedBox(height: 08),
-                  if (model.busy)
-                    CircularProgressIndicator()
-                  else
-                    _getOTPButton(model),
-                ],
+                    SizedBox(height: 20),
+                    _textFeild('Enter your phone', model),
+                    SizedBox(height: 08),
+                    _privacyPolicy(),
+                    SizedBox(height: 08),
+                    if (model.busy)
+                      CircularProgressIndicator()
+                    else
+                      _getOTPButton(model),
+                    if (height < 700)
+                      SizedBox(
+                        height: 240,
+                      ),
+                  ],
+                ),
               ),
             ),
           ),

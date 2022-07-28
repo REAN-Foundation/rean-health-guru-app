@@ -297,7 +297,8 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           focusNode: _weightFocus,
                           maxLines: 1,
                           textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.number,
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
                           onFieldSubmitted: (term) {
                             _fieldFocusChange(
                                 context, _weightFocus, _systolicFocus);
@@ -409,8 +410,8 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         label: 'Systolic measures in mm Hg',
                         child: TextFormField(
                             inputFormatters: [
-                              FilteringTextInputFormatter.deny(
-                                  RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                              FilteringTextInputFormatter.allow(
+                                  RegExp("[0-9]")),
                             ],
                             controller: _systolicController,
                             focusNode: _systolicFocus,
@@ -452,8 +453,8 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                             maxLines: 1,
                             textInputAction: TextInputAction.next,
                             inputFormatters: [
-                              FilteringTextInputFormatter.deny(
-                                  RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                              FilteringTextInputFormatter.allow(
+                                  RegExp("[0-9]")),
                             ],
                             keyboardType: TextInputType.number,
                             onFieldSubmitted: (term) {
@@ -648,8 +649,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 _bloodOxygenSaturationFocus);
                           },
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
                           decoration: InputDecoration(
                             //hintText: '(100 to 125)',
@@ -733,7 +733,8 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           controller: _bloodOxygenSaturationController,
                           maxLines: 1,
                           textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.number,
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
                           onFieldSubmitted: (term) {
                             _fieldFocusChange(context,
                                 _bloodOxygenSaturationFocus, _pulseRateFocus);
@@ -743,7 +744,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
-                            //hintText: '(92 to 100)',
+                              //hintText: '(92 to 100)',
                               hintStyle: TextStyle(
                                 fontSize: 12,
                               ),
@@ -830,8 +831,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 context, _pulseRateFocus, _bodyTempratureFocus);
                           },
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(
-                                RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
+                            FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                           ],
                           decoration: InputDecoration(
                             //hintText: '(65 to 95)',
@@ -912,14 +912,15 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                           controller: _bodyTempratureController,
                           maxLines: 1,
                           textInputAction: TextInputAction.done,
-                          keyboardType: TextInputType.number,
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
                           onFieldSubmitted: (term) {},
                           inputFormatters: [
                             FilteringTextInputFormatter.deny(
                                 RegExp('[\\,|\\+|\\-|\\a-zA-Z|\\ ]')),
                           ],
                           decoration: InputDecoration(
-                            //hintText: '(95 to 100)',
+                              //hintText: '(95 to 100)',
                               hintStyle: TextStyle(
                                 fontSize: 12,
                               ),

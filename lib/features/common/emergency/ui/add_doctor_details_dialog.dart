@@ -168,6 +168,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                 color: Colors.white),
             child: Semantics(
               label: 'first name of doctor',
+              hint: 'required',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _firstNameController,
@@ -212,6 +213,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                 color: Colors.white),
             child: Semantics(
               label: 'last name of doctor',
+              hint: 'required',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _lastNameController,
@@ -263,6 +265,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
             ),
             child: Semantics(
               label: "Email of Doctor",
+              hint: 'required',
               child: TextFormField(
                   controller: _emailController,
                   focusNode: _emailFocus,
@@ -433,7 +436,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                 autoValidate: false,
                 decoration: InputDecoration(
                     counterText: '',
-                    hintText: 'mobile number of doctor',
+                    hintText: 'mobile number of doctor required',
                     hintStyle: TextStyle(color: Colors.transparent),
                     border: InputBorder.none,
                     fillColor: Colors.white,

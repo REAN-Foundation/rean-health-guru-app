@@ -689,6 +689,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
             children: [
               Semantics(
                 label: medicationName,
+                image: true,
                 child: Center(
                     child: SizedBox(
                   width: 32,

@@ -141,7 +141,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
             Expanded(
               flex: 1,
               child: Semantics(
-                label: 'Add Medication 2 of 3',
+                label: 'Medication list 2 of 3',
                 child: InkWell(
                   onTap: () {
                     setState(() {
@@ -163,7 +163,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                           height: 4,
                         ),
                         Text(
-                          'Add Medication',
+                          'Medication list',
                           style: TextStyle(
                               color: _currentIndex == 1
                                   ? Colors.white

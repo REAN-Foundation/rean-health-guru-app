@@ -81,6 +81,12 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           child: Text(list.elementAt(i).displayName!),
           value: list.elementAt(i).displayName,
         ));
+      } else if (getAppFlavour() == 'Lipid Helper' &&
+          list.elementAt(i).code == 'Stroke') {
+        items.add(DropdownMenuItem(
+          child: Text(list.elementAt(i).displayName!),
+          value: list.elementAt(i).displayName,
+        ));
       } else if (getAppFlavour() == 'HF Helper' &&
           list.elementAt(i).code == 'HeartFailure') {
         items.add(DropdownMenuItem(

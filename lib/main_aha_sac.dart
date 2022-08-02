@@ -59,6 +59,7 @@ class MyApp extends StatelessWidget {
     setSessionFlag(isLogin);
     setAppType('AHA');
     setAppName('Lipid Helper');
+    setAppFlavour('Lipid Helper');
     setBaseUrl(_baseUrl);
     GetIt.instance.registerSingleton<ApiProvider>(ApiProvider(_baseUrl));
     GetIt.instance

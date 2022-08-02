@@ -75,19 +75,28 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       debugPrint(
           'Plan Code ==> ${list.elementAt(i).code == 'CholesterolMini'}');
 
-      if (getAppName() == 'Lipid Helper' &&
+      if (getAppFlavour() == 'Lipid Helper' &&
           list.elementAt(i).code == 'CholesterolMini') {
         items.add(DropdownMenuItem(
           child: Text(list.elementAt(i).displayName!),
           value: list.elementAt(i).displayName,
         ));
-      } else if (getAppName() == 'HF Helper' &&
+      } else if (getAppFlavour() == 'Lipid Helper' &&
+          list.elementAt(i).code == 'Stroke') {
+        items.add(DropdownMenuItem(
+          child: Text(list.elementAt(i).displayName!),
+          value: list.elementAt(i).displayName,
+        ));
+      } else if (getAppFlavour() == 'HF Helper' &&
           list.elementAt(i).code == 'HeartFailure') {
         items.add(DropdownMenuItem(
           child: Text(list.elementAt(i).displayName!),
           value: list.elementAt(i).displayName,
         ));
-      } else if (getAppType() != 'AHA') {
+      } else if (getAppFlavour() == 'AHA-UAT' ||
+          getAppFlavour() == 'RHG-UAT' ||
+          getAppFlavour() == 'RHG-Dev' ||
+          getAppFlavour() == 'REAN HealthGuru') {
         items.add(DropdownMenuItem(
           child: Text(list.elementAt(i).displayName!),
           value: list.elementAt(i).displayName,

@@ -1191,7 +1191,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         //child: addOrEditAllergiesDialog(context),
         child: Container(
           width: double.infinity,
-          height: 540,
+          height: 640,
           child: Column(
             children: [
               Row(

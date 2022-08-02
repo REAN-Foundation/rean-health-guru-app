@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
     this.isLogin = isLogin;
     setSessionFlag(isLogin);
     setBaseUrl(_baseUrl);
+    setAppFlavour('RHG-UAT');
     GetIt.instance.registerSingleton<ApiProvider>(ApiProvider(_baseUrl));
     GetIt.instance
         .registerSingleton<ChatApiProvider>(ChatApiProvider(_botBaseUrl));

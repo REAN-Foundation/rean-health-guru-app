@@ -888,8 +888,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        'Biometrics',
-                        semanticsLabel: 'Biometrics',
+                        'Height',
+                        semanticsLabel: 'Height',
                         style: TextStyle(
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.w600,
@@ -917,6 +917,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                   submitButtonListner: (double height) {
                     _sharedPrefUtils.saveDouble('height', height);
                     this.height = height;
+                    showToast('Height record created successfully!', context);
                     calculetBMI();
                     debugPrint('Height : $height');
                     Navigator.of(context, rootNavigator: true).pop();

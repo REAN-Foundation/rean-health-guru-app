@@ -1600,7 +1600,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   Widget _showInfo() {
     return Container(
-      height: 120,
+      height: 208,
       color: Colors.transparent,
       child: Container(
         padding: const EdgeInsets.all(16.0),
@@ -1610,16 +1610,73 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
               topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 16),
             Text(
-              'To share your health information with your doctor, you must include their email address in the profile',
+              'Info',
               style: TextStyle(
-                  fontWeight: FontWeight.w600, fontSize: 14, color: textBlack),
+                  color: primaryColor,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Montserrat",
+                  fontStyle: FontStyle.normal,
+                  fontSize: 18.0),
             ),
-            SizedBox(height: 8),
+            const SizedBox(
+              height: 24,
+            ),
+            RichText(
+              text: TextSpan(
+                text:
+                    'To share your health information with your doctor, you must include their email address in the doctor profile. ',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: textGrey,
+                ),
+                children: <TextSpan>[],
+              ),
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Semantics(
+                  button: true,
+                  label: 'Alright',
+                  child: ExcludeSemantics(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: 48,
+                        width: MediaQuery.of(context).size.width - 32,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                        ),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6.0),
+                            border: Border.all(color: primaryColor, width: 1),
+                            color: primaryColor),
+                        child: Center(
+                          child: Text(
+                            'Alright',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                                fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),

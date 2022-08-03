@@ -103,7 +103,7 @@ class _MyDialogState extends State<AddNurseDialog> {
 
   Widget _submitButton(BuildContext context) {
     return Semantics(
-      label: 'Add',
+      label: 'Save',
       button: true,
       child: ElevatedButton(
         onPressed: () async {
@@ -134,7 +134,7 @@ class _MyDialogState extends State<AddNurseDialog> {
                     borderRadius: BorderRadius.circular(24),
                     side: BorderSide(color: primaryColor)))),
         child: Text(
-          '      Add       ',
+          '      Save       ',
           style: TextStyle(
               color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
         ),

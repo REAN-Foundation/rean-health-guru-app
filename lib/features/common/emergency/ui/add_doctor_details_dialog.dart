@@ -134,7 +134,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
         }
       },
       child: Text(
-        '      Add       ',
+        '      Save       ',
         style: TextStyle(
             color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
       ),

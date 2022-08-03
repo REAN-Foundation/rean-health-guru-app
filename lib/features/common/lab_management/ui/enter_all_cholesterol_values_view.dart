@@ -734,7 +734,7 @@ class _EnterAllCholesterolValuesViewState
         showToast(baseResponse.message!, context);
         progressDialog!.close();
         clearAllFeilds();
-        Navigator.pop(context);
+        //Navigator.pop(context);
       } else {
         progressDialog!.close();
         showToast(baseResponse.message!, context);

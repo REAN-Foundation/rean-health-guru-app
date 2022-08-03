@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/features/common/appointment_booking/models/doctor_list_api_response.dart';
 import 'package:patient/features/common/emergency/models/emergency_contact_response.dart';
 import 'package:patient/features/common/emergency/ui/add_doctor_details_dialog.dart';
@@ -433,46 +434,83 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 Expanded(
-                  child: Semantics(
-                    label: 'Add ' + tittle + ' details',
-                    button: true,
-                    child: InkWell(
-                      onTap: () {
-                        //showToast(tittle);
-                        if (tittle == 'Doctors') {
-                          showDialog(
-                              context: context,
-                              builder: (_) {
-                                return _addEmergencyDoctorDialog(context);
-                              });
-                        } else if (tittle == 'Pharmacies') {
-                        } else if (tittle == 'Nurses / Social Health Workers') {
-                          showDialog(
-                              context: context,
-                              builder: (_) {
-                                return _addNurseDialog(context);
-                              });
-                        } else if (tittle == 'Family Members / Friends') {
-                          showDialog(
-                              context: context,
-                              builder: (_) {
-                                return _addFamilyMemberDialog(context);
-                              });
-                        }
-                      },
-                      child: Container(
-                        key: Key(tittle),
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.add_circle,
-                            color: primaryColor,
-                            size: 24,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      if (tittle == 'Doctors')
+                        Semantics(
+                          label: 'information',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              showMaterialModalBottomSheet(
+                                  isDismissible: true,
+                                  backgroundColor: Colors.transparent,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(25.0)),
+                                  ),
+                                  context: context,
+                                  builder: (context) => _showInfo());
+                            },
+                            child: Container(
+                              key: Key(tittle),
+                              alignment: Alignment.centerRight,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.info,
+                                  color: primaryColor,
+                                  size: 24,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      Semantics(
+                        label: 'Add ' + tittle + ' details',
+                        button: true,
+                        child: InkWell(
+                          onTap: () {
+                            //showToast(tittle);
+                            if (tittle == 'Doctors') {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) {
+                                    return _addEmergencyDoctorDialog(context);
+                                  });
+                            } else if (tittle == 'Pharmacies') {
+                            } else if (tittle ==
+                                'Nurses / Social Health Workers') {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) {
+                                    return _addNurseDialog(context);
+                                  });
+                            } else if (tittle == 'Family Members / Friends') {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) {
+                                    return _addFamilyMemberDialog(context);
+                                  });
+                            }
+                          },
+                          child: Container(
+                            key: Key(tittle),
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.add_circle,
+                                color: primaryColor,
+                                size: 24,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
                 const SizedBox(
@@ -1191,7 +1229,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         //child: addOrEditAllergiesDialog(context),
         child: Container(
           width: double.infinity,
-          height: 640,
+          height: 540,
           child: Column(
             children: [
               Row(
@@ -1558,5 +1596,33 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
     }
+  }
+
+  Widget _showInfo() {
+    return Container(
+      height: 120,
+      color: Colors.transparent,
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 16),
+            Text(
+              'To share your health information with your doctor, you must include their email address in the profile',
+              style: TextStyle(
+                  fontWeight: FontWeight.w600, fontSize: 14, color: textBlack),
+            ),
+            SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
   }
 }

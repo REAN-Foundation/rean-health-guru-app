@@ -144,8 +144,8 @@ class _SupportViewState extends State<SupportView> {
                                         child: InkWell(
                                           onTap: () async {
                                             final String url = 'tel://' + phone;
-                                            if (await canLaunch(url)) {
-                                              await launch(url);
+                                            if (await canLaunchUrl(Uri.parse(url))) {
+                                              await launchUrl(Uri.parse(url));
                                             } else {
                                               showToast('Unable to dial number',
                                                   context);
@@ -227,9 +227,9 @@ class _SupportViewState extends State<SupportView> {
                                                 '%20wants%20to%20get%20in%20touch%20with%20you.\n\nContact%20Number:%20' +
                                                 userPhone! +
                                                 '\n\n';
-                                            if (await canLaunch(
-                                                link.toString())) {
-                                              await launch(link.toString());
+                                            if (await canLaunchUrl(Uri.parse(
+                                                link.toString()))) {
+                                              await launchUrl(Uri.parse(link.toString()));
                                             } else {
                                               final Uri _emailLaunchUri = Uri(
                                                   scheme: 'mailto',
@@ -248,9 +248,9 @@ class _SupportViewState extends State<SupportView> {
                                                         ''
                                                             '',
                                                   });
-                                              await launch(_emailLaunchUri
+                                              await launchUrl(Uri.parse(_emailLaunchUri
                                                   .toString()
-                                                  .replaceAll('+', '%20'));
+                                                  .replaceAll('+', '%20')));
 
                                               debugPrint(
                                                   'Could not launch ${link.toString()}');

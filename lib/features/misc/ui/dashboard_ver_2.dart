@@ -970,7 +970,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     color: iconColor,
                   ),*/
                   Icon(
-                    FontAwesomeIcons.firstAid,
+                    FontAwesomeIcons.kitMedical,
                     color: Colors.white,
                     size: 24,
                   ),
@@ -1057,7 +1057,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(
-                              FontAwesomeIcons.ambulance,
+                              FontAwesomeIcons.truckMedical,
                               color: primaryColor,
                               size: 36,
                             ),
@@ -1265,8 +1265,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   final String url =
                       'https://supportnetwork.heart.org/s/';
 
-                  if (await canLaunch(url)) {
-                    await launch(url);
+                  if (await canLaunchUrl(Uri.parse(url))) {
+                    await launchUrl(Uri.parse(url));
                   } else {
                     throw 'Could not launch $url';
                   }

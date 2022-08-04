@@ -304,7 +304,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       debugPrint('Coach Mark target click');
     }, onCoachMartkClickOverlay: () {
       debugPrint('Coach Mark overlay click');
-    }).show();
+    }).show(context: context);
   }
 
   void initTargets() {
@@ -606,7 +606,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                       label: 'emergency contact',
                       selected: true,
                       child: Icon(
-                        FontAwesomeIcons.ambulance,
+                        FontAwesomeIcons.truckMedical,
                         color: _currentNav == 3 ? Colors.white : Colors.white54,
                         size: 20,
                       )),

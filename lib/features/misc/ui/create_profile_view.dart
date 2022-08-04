@@ -24,7 +24,6 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
-import 'package:status_alert/status_alert.dart';
 
 import 'base_widget.dart';
 
@@ -770,15 +769,7 @@ class _CreateProfileState extends State<CreateProfile> {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  showAlert(String title, String subtitle) {
-    StatusAlert.show(
-      context,
-      duration: Duration(seconds: 10),
-      title: title,
-      subtitle: subtitle,
-      configuration: IconConfiguration(icon: Icons.check_circle_outline),
-    );
-  }
+
 
 
   openGallery() async {

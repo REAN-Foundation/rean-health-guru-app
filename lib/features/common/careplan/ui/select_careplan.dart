@@ -725,8 +725,8 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             carePlanEligibilityMsg != '' || carePlanEligibilityMsg != null
                 ? Linkify(
                     onOpen: (link) async {
-                      if (await canLaunch(link.url)) {
-                        await launch(link.url);
+                      if (await canLaunchUrl(Uri.parse(link.url))) {
+                        await launchUrl(Uri.parse(link.url));
                       } else {
                         throw 'Could not launch $link';
                       }

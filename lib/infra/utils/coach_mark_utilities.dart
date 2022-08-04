@@ -58,7 +58,6 @@ class CoachMarkUtilites {
       required Function onCoachMartkClickTarget,
       required Function onCoachMartkClickOverlay}) {
     return TutorialCoachMark(
-      context,
       targets: targets,
       colorShadow: Colors.black,
       alignSkip: Alignment.topRight,

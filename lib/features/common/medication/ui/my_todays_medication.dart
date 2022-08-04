@@ -71,7 +71,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
       debugPrint('Coach Mark target click');
     }, onCoachMartkClickOverlay: () {
       debugPrint('Coach Mark overlay click');
-    }).show();
+    }).show(context: context);
   }
 
 /*  _layout(_) async {

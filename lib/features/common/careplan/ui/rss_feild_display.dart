@@ -187,8 +187,8 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
   }
 
 /*  _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(Uri.parse(url))
     } else {
       showToast('Could not launch $url', context);
       //throw 'Could not launch $url';

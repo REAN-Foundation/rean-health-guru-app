@@ -240,8 +240,8 @@ class _AboutREANCareViewState extends State<AboutREANCareView> {
                                   if (getAppType() == 'AHA') {
                                     url = 'https://www.heart.org';
                                   }
-                                  if (await canLaunch(url)) {
-                                    await launch(url);
+                                  if (await canLaunchUrl(Uri.parse(url))) {
+                                    await launchUrl(Uri.parse(url));
                                   } else {
                                     throw 'Could not launch $url';
                                   }

@@ -225,8 +225,8 @@ class _LabDetailsViewState extends State<LabDetailsView> {
                               linkStyle: TextStyle(color: Colors.blue),
                               onPhoneTap: (link) async {
                                 final String url = 'tel://' + link;
-                                if (await canLaunch(url)) {
-                                  await launch(url);
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(Uri.parse(url))
                                 } else {
                                   throw 'Could not launch $url';
                                 }

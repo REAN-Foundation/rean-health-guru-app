@@ -59,6 +59,7 @@ class MyApp extends StatelessWidget {
     setSessionFlag(isLogin);
     setAppType('AHA');
     setAppName('HF Helper');
+    setAppFlavour('HF Helper');
     setBaseUrl(_baseUrl);
     GetIt.instance.registerSingleton<ApiProvider>(ApiProvider(_baseUrl));
     GetIt.instance

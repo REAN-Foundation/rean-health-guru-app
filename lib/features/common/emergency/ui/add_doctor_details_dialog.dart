@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:group_radio_button/group_radio_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -83,9 +82,9 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                   //_profileIcon(),
                   _entryFirstNameField('First Name*'),
                   _entryLastNameField('Last Name*'),
-                  _entryEmailField('Email'),
                   _entryMobileNoField('Phone*'),
-                  _genderWidget(),
+                  _entryEmailField('Email'),
+                  //_genderWidget(),
                   const SizedBox(
                     height: 32,
                   ),
@@ -121,19 +120,21 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
           showToastMsg('Enter mobile number', context);
         } else if (mobileNumber!.length != maxLengthOfPhone) {
           showToastMsg('Enter valid mobile number', context);
-        } else if (selectedGender == '') {
+        }
+        /* else if (selectedGender == '') {
           showToastMsg('Select gender', context);
-        } else {
+        } */
+        else {
           widget._submitButtonListner(
               _firstNameController.text.trim(),
               _lastNameController.text.trim(),
               _emailController.text.trim(),
               countryCode! + '-' + mobileNumber!,
-              selectedGender);
+              '');
         }
       },
       child: Text(
-        '      Add       ',
+        '      Save       ',
         style: TextStyle(
             color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
       ),
@@ -283,7 +284,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
     );
   }
 
-  Widget _genderWidget() {
+  /*Widget _genderWidget() {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -321,7 +322,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
         ),
       ),
     );
-  }
+  }*/
 
   Widget _entryMobileNoField(String title) {
     return Container(

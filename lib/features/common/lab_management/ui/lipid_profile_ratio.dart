@@ -586,7 +586,10 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
       if (baseResponse.status == 'success') {
         progressDialog.close();
         showToast(baseResponse.message!, context);
-        Navigator.pop(context);
+        _controller.clear();
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
       } else {
         progressDialog.close();
         showToast(baseResponse.message!, context);

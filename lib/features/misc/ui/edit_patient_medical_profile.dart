@@ -451,7 +451,7 @@ class _EditPatientMedicalProfileViewState
                                           side: BorderSide(
                                               color: primaryColor)))),
                               child: Text(
-                                'Submit',
+                                'Save',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,

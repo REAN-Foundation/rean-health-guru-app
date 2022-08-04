@@ -983,7 +983,11 @@ class _BiometricBloodPresureVitalsViewState
       if (baseResponse.status == 'success') {
         progressDialog.close();
         showToast(baseResponse.message!, context);
-        Navigator.pop(context);
+        _systolicController.clear();
+        _diastolicController.clear();
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
       } else {
         progressDialog.close();
         showToast(baseResponse.message!, context);

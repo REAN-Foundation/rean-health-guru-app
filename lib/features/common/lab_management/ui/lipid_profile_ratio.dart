@@ -54,7 +54,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                   backgroundColor: Colors.white,
-                  brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                   title: Text(
                     'Ratio',
                     style: TextStyle(
@@ -285,7 +285,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
                     ),
                     Expanded(
                       child: Scrollbar(
-                        isAlwaysShown: true,
+                        thumbVisibility: true,
                         controller: _scrollController,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),

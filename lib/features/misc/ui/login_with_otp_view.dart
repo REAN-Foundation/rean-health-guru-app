@@ -269,7 +269,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
               )),
           Scrollbar(
             controller: _scrollController,
-            isAlwaysShown: true,
+            thumbVisibility: true,
             child: SingleChildScrollView(
               controller: _scrollController,
               child: Padding(

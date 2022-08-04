@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/lab_management/ui/cholesterol_trends_view.dart';
 import 'package:patient/features/common/lab_management/ui/enter_all_cholesterol_values_view.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
@@ -38,7 +39,7 @@ class _BiometricCholesterolTrendsViewState
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Lab Management',
               style: TextStyle(

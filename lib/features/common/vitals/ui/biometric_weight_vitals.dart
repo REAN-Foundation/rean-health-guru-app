@@ -94,7 +94,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Weight',
               style: TextStyle(
@@ -551,7 +551,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           ),
           Expanded(
             child: Scrollbar(
-              isAlwaysShown: true,
+              thumbVisibility: true,
               controller: _scrollController,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

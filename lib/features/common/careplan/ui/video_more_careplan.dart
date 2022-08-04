@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
@@ -71,7 +72,7 @@ class _VideoMoreCarePlanViewState extends State<VideoMoreCarePlanView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               widget.assortedViewConfigs!.header == ''
                   ? 'Learn More!'

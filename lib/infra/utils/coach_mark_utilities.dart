@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 enum CoachMarkContentPosition { top, bottom }

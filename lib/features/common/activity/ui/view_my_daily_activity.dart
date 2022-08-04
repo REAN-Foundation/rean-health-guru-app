@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/activity/ui/add_bmi_details_dialog.dart';
@@ -340,7 +341,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
             backgroundColor: Colors.white,
             appBar: AppBar(
               backgroundColor: Colors.white,
-              brightness: Brightness.light,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
               title: Text(
                 'Activity',
                 style: TextStyle(

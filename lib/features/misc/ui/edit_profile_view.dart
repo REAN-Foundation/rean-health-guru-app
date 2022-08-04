@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
@@ -511,7 +511,7 @@ class _EditProfileState extends State<EditProfile> {
               child: Scaffold(
                 backgroundColor: Colors.white,
                 appBar: AppBar(
-                  brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
               backgroundColor: Colors.white,
               title: Text(
                 isEditable ? 'Edit Profile' : 'View Profile',

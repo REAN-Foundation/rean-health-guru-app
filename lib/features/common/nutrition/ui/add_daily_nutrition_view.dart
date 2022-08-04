@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
@@ -87,7 +87,7 @@ class _MyDailyNutritionViewState extends State<AddDailyNutritionView> {
             appBar: AppBar(
               elevation: 0,
               backgroundColor: primaryColor,
-              brightness: Brightness.dark,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
               title: Text(
                 widget._nutritionName!.substring(0, 1).toUpperCase() +
                     widget._nutritionName!.substring(1),

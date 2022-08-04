@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/route_paths.dart';
@@ -283,7 +284,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
             appBar: AppBar(
               elevation: 0,
               backgroundColor: primaryColor,
-              brightness: Brightness.dark,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
               title: Text(
                 'Mental Health Management',
                 style: TextStyle(

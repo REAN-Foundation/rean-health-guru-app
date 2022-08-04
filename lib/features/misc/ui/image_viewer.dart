@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:share/share.dart';
@@ -25,7 +26,7 @@ class ImageViewer extends StatelessWidget {
       key: _globalKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        brightness: Brightness.light,
+        systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
         iconTheme: IconThemeData(color: Colors.black),
         title: Text(
           'Reports',

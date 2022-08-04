@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:group_radio_button/group_radio_button.dart';
@@ -183,7 +183,7 @@ class _EditPatientMedicalProfileViewState
         model: model,
         builder: (context, model, child) => Scaffold(
               appBar: AppBar(
-                brightness: Brightness.light,
+                systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                 backgroundColor: Colors.white,
                 title: Text(
                   'Edit Medical Profile',

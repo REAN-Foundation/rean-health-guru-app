@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:share/share.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -23,7 +24,7 @@ class PDFScreen extends StatelessWidget {
         key: _globalKey,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          brightness: Brightness.light,
+          systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
           iconTheme: IconThemeData(color: Colors.black),
           title: Text(
             "Reports",

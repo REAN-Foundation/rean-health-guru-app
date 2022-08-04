@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -24,7 +25,7 @@ class _BiometricVitalsViewState extends State<BiometricVitalsView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Vitals',
               style: TextStyle(

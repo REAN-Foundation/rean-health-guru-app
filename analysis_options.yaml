@@ -66,7 +66,7 @@ linter:
     avoid_bool_literals_in_conditional_expressions: true
     # avoid_catches_without_on_clauses # we do this commonly : true
     # avoid_catching_errors # we do this commonly : true
-    avoid_classes_with_only_static_members: true
+    avoid_classes_with_only_static_members: false
     # avoid_double_and_int_checks # only useful when targeting JS runtime : true
     avoid_dynamic_calls: false
     avoid_empty_else: true
@@ -113,7 +113,7 @@ linter:
     # curly_braces_in_flow_control_structures # not required by flutter style : true
     deprecated_consistency: true
     # diagnostic_describe_all_properties # not yet tested : true
-    directives_ordering: true
+    directives_ordering: false
     # do_not_use_environment # we do this commonly : true
     empty_catches: true
     empty_constructor_bodies: true
@@ -129,7 +129,7 @@ linter:
     leading_newlines_in_multiline_strings: false
     library_names: true
     library_prefixes: true
-    library_private_types_in_public_api: true
+    library_private_types_in_public_api: false
     # lines_longer_than_80_chars # not required by flutter style : true
     list_remove_unrelated_type: true
     # literal_only_boolean_expressions # too many false positives: https://github.com/dart-lang/sdk/issues/34181 : true
@@ -140,7 +140,7 @@ linter:
     no_duplicate_case_values: true
     no_logic_in_create_state: false
     # no_runtimeType_toString # ok in tests; we enable this only in packages/ : true
-    noop_primitive_operations: true
+    noop_primitive_operations: false
     non_constant_identifier_names: false
     null_check_on_nullable_type_parameter: false
     null_closures: true

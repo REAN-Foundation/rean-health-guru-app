@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/medication/ui/my_current_medication.dart';
 import 'package:patient/features/common/medication/ui/my_medication_history.dart';
 import 'package:patient/features/common/medication/ui/my_medication_prescription.dart';
@@ -50,7 +51,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Medication Management',
               style: TextStyle(

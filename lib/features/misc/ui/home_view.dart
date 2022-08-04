@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:devicelocale/devicelocale.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -357,14 +357,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
     getCarePlanSubscribe();
     initTargets();
-    WidgetsBinding.instance!.addPostFrameCallback(_layout);
+    WidgetsBinding.instance.addPostFrameCallback(_layout);
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -437,7 +437,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             child: AppBar(
               elevation: 10.0,
               backgroundColor: Colors.white,
-              brightness: Brightness.light,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
               title: RichText(
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

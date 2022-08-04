@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:intl/intl.dart';
@@ -129,7 +130,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
               'Select Care Plan',
               style: TextStyle(

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -114,7 +114,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
           key: _scaffoldKey,
           backgroundColor: Colors.white,
           body: Scrollbar(
-            isAlwaysShown: true,
+            thumbVisibility: true,
             controller: _scrollController,
             child: SingleChildScrollView(
               child: Column(

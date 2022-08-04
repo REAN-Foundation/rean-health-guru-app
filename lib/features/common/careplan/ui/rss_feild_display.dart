@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
@@ -51,7 +52,7 @@ class _RSSFeildDisplayViewState extends State<RSSFeildDisplayView> {
           appBar: AppBar(
             elevation: 0,
                 backgroundColor: primaryColor,
-                brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
                 title: Text(
                   widget.assortedViewConfigs!.header == ''
                       ? 'News Feed!'

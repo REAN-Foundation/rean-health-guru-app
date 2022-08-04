@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/careplan/ui/summary_of_my_careplan.dart';
 import 'package:patient/features/common/medication/view_models/patients_medication.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -40,7 +41,7 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
               'My Care Plan',
               style: TextStyle(

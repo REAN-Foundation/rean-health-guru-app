@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/appointment_booking/models/labs_list_api_response.dart';
 import 'package:patient/features/common/appointment_booking/ui/lab_tile_widget.dart';
@@ -100,7 +101,7 @@ class _LabDetailsViewState extends State<LabDetailsView> {
             preferredSize: Size.fromHeight(60.0),
             child: AppBar(
               backgroundColor: Colors.white,
-              brightness: Brightness.light,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
               title: Text(
                 'Lab Profile',
                 style: TextStyle(

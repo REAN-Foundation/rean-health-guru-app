@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/nutrition/models/nutrition_response_store.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
@@ -107,7 +108,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
             backgroundColor: Colors.white,
             appBar: AppBar(
               backgroundColor: Colors.white,
-              brightness: Brightness.light,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
               title: Text(
                 'Nutrition',
                 style: TextStyle(

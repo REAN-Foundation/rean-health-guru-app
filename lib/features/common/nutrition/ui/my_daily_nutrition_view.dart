@@ -1,5 +1,7 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/nutrition/models/alcohol_consumption.dart';
 import 'package:patient/features/common/nutrition/models/glass_of_water_consumption.dart';
@@ -205,7 +207,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
             appBar: AppBar(
               elevation: 0,
               backgroundColor: primaryColor,
-              brightness: Brightness.dark,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
               title: Text(
                 'Nutrition Management',
                 style: TextStyle(

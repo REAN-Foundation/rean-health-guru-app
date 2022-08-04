@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/misc/models/patient_medical_profile_pojo.dart';
 import 'package:patient/features/misc/view_models/patients_observation.dart';
@@ -66,7 +67,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
         builder: (context, model, child) => Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              brightness: Brightness.light,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
               backgroundColor: Colors.white,
               title: Text(
                 'Medical Profile',

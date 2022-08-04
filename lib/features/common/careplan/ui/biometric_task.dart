@@ -91,7 +91,7 @@ class _BiomatricTaskViewState extends State<BiomatricTask> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Semantics(
               readOnly: true,
               child: Text(

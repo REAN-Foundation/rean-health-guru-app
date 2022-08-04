@@ -229,7 +229,7 @@ class _BiometricBodyTemperatureVitalsViewState
                     ),
                     Expanded(
                       child: Scrollbar(
-                        isAlwaysShown: true,
+                        thumbVisibility: true,
                         controller: _scrollController,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),

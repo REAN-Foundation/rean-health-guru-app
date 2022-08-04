@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -57,7 +58,7 @@ class _SelfReflactionWeek_1_ViewState extends State<SelfReflactionWeek_1_View> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Time to Reflect on Past Week',
               style: TextStyle(

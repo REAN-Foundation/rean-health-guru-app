@@ -55,7 +55,7 @@ class _LipidProfileA1CLevelViewState extends State<LipidProfileA1CLevelView> {
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                   backgroundColor: Colors.white,
-                  brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                   title: Text(
                     'A1C Level',
                     style: TextStyle(
@@ -286,7 +286,7 @@ class _LipidProfileA1CLevelViewState extends State<LipidProfileA1CLevelView> {
                     ),
                     Expanded(
                       child: Scrollbar(
-                        isAlwaysShown: true,
+                        thumbVisibility: true,
                         controller: _scrollController,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),

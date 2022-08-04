@@ -66,7 +66,7 @@ class _BiometricBloodSugarVitalsViewState
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                   backgroundColor: Colors.white,
-                  brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                   title: Text(
                     'Blood Glucose',
                     style: TextStyle(
@@ -300,7 +300,7 @@ class _BiometricBloodSugarVitalsViewState
                     ),
                     Expanded(
                       child: Scrollbar(
-                        isAlwaysShown: true,
+                        thumbVisibility: true,
                         controller: _scrollController,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),

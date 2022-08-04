@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
@@ -65,7 +66,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
               widget.assortedViewConfigs!.header == ''
                   ? 'Learn More!'
@@ -309,7 +310,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
 
   Widget audioView() {
     return Scrollbar(
-      isAlwaysShown: true,
+      thumbVisibility: true,
       controller: _scrollController,
       child: SingleChildScrollView(
         child: Column(
@@ -390,7 +391,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
     debugPrint(
         'Image URL ==> ${widget.assortedViewConfigs!.task!.action!.url}');
     return Scrollbar(
-      isAlwaysShown: true,
+      thumbVisibility: true,
       controller: _scrollController,
       child: SingleChildScrollView(
         child: Column(

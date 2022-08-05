@@ -98,7 +98,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       .elementAt(0)
                       .startAt
                       .toString()))
-              : dateQueryFormat.format(dateTill.subtract(Duration(days: 0))),
+              : dateQueryFormat.format(DateTime.now()),
           dateQueryFormat.format(dateTill));
 
       if (userTaskResponse.status == 'success') {
@@ -128,12 +128,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   }
 
   getUserTask() async {
-    if (getBaseUrl()!.contains('aha-api-uat.services') ||
+    /*if (getBaseUrl()!.contains('aha-api-uat.services') ||
         getAppName() == 'Lipid Helper') {
       getEducationUserTask();
-    } else {
-      getAllUserTask();
-    }
+    } else {*/
+    getAllUserTask();
+    //}
   }
 
   _sortUserTask(List<Items> tasks, String fromMethod) {

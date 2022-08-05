@@ -216,7 +216,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                                         ),
                                         selectCarePlanDropDown(),
                                         startCarePlanDate(),
-                                        checkElegibility(),
+                                        //checkElegibility(),
                                         /* if (selectedCarePlan == '')
                                           Container()
                                         else*/

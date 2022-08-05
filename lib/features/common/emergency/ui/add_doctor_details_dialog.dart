@@ -83,10 +83,37 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                   _entryFirstNameField('First Name*'),
                   _entryLastNameField('Last Name*'),
                   _entryMobileNoField('Phone*'),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    height: 1,
+                    width: MediaQuery.of(context).size.width - 16,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text:
+                          'To share your health information with your doctor, you must include their email address in the doctor profile. ',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                        color: textGrey,
+                      ),
+                      children: <TextSpan>[],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
                   _entryEmailField('Email'),
                   //_genderWidget(),
                   const SizedBox(
-                    height: 32,
+                    height: 24,
                   ),
                   _submitButton(context),
                 ],

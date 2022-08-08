@@ -205,6 +205,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                 color: Colors.white),
             child: Semantics(
               label: 'first name of family member or friend',
+              hint: 'required',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _firstNameController,
@@ -249,6 +250,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                 color: Colors.white),
             child: Semantics(
               label: 'last name of family or friend',
+              hint: 'required',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _lastNameController,
@@ -380,7 +382,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                 autoValidate: true,
                 decoration: InputDecoration(
                     counterText: '',
-                    hintText: 'mobile number of family or friend',
+                    hintText: 'mobile number of family or friend required',
                     hintStyle: TextStyle(color: Colors.transparent),
                     border: InputBorder.none,
                     fillColor: Colors.white,
@@ -465,6 +467,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                 color: Colors.white),
             child: Semantics(
               label: 'Relation of family or friend',
+              hint: 'required',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _descriptionController,

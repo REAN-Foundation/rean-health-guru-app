@@ -85,16 +85,24 @@ class _SupportViewState extends State<SupportView> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: getAppType() == 'AHA'
-                                        ? Image.asset(
-                                            'res/images/support_us_aha.png',
-                                            semanticLabel: 'Contact us image',
-                                          )
-                                        : Lottie.asset(
-                                            'res/lottiefiles/support_us.json',
-                                          ),
+                                  Semantics(
+                                    label: 'Contact us image',
+                                    image: true,
+                                    child: ExcludeSemantics(
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: getAppType() == 'AHA'
+                                            ? Image.asset(
+                                                'res/images/support_us_aha.png',
+                                                semanticLabel:
+                                                    'Contact us image',
+                                              )
+                                            : Lottie.asset(
+                                                'res/lottiefiles/support_us.json',
+                                              ),
+                                      ),
+                                    ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(

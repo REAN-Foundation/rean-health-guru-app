@@ -164,6 +164,7 @@ class _MyDialogState extends State<AddNurseDialog> {
                 color: Colors.white),
             child: Semantics(
               label: 'first name of nurse',
+              hint: 'required',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _firstNameController,
@@ -208,6 +209,7 @@ class _MyDialogState extends State<AddNurseDialog> {
                 color: Colors.white),
             child: Semantics(
               label: 'last name of nurse',
+              hint: 'required',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _lastNameController,
@@ -333,7 +335,7 @@ class _MyDialogState extends State<AddNurseDialog> {
                 autoValidate: true,
                 decoration: InputDecoration(
                     counterText: '',
-                    hintText: 'mobile number of Nurse',
+                    hintText: 'mobile number of Nurse required',
                     hintStyle: TextStyle(color: Colors.transparent),
                     border: InputBorder.none,
                     fillColor: Colors.white,

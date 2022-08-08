@@ -1678,9 +1678,11 @@ class _EditProfileState extends State<EditProfile> {
                         color: Colors.white,
                         fontWeight: FontWeight.w600)),
                 onPressed: () async {
-                  if (_emailController.text.toString() == '') {
-                    showToast('Please enter email', context);
-                  } else if (!_emailController.text.toString().isValidEmail()) {
+                  if (_emailController.text.toString() != '' &&
+                      !_emailController.text.toString().isValidEmail()) {
+                    showToast('Please enter valid email', context);
+                  }
+                  /*else if () {
                     showToast('Please enter valid email', context);
                   } else if (_addressController.text.toString().trim() == '') {
                     showToast('Please enter address', context);
@@ -1688,7 +1690,7 @@ class _EditProfileState extends State<EditProfile> {
                     showToast('Please enter city', context);
                   } else if (_countryController.text.toString().trim() == '') {
                     showToast('Please enter country', context);
-                  }
+                  }*/
                   /*else if (_postalCodeController.text.toString() == '') {
                     showToast('Please enter postal code', context);
                   } */
@@ -1714,10 +1716,12 @@ class _EditProfileState extends State<EditProfile> {
                     //map['Locality'] = _cityController.text;
                     //map['Address'] = _addressController.text;
                     map['ImageResourceId'] =
-                    imageResourceId == '' ? null : imageResourceId;
+                        imageResourceId == '' ? null : imageResourceId;
                     //map['EmergencyContactNumber'] =
                     //  _emergencyMobileNumberController.text;
-                    map['Email'] = _emailController.text;
+                    if (_emailController.text != '') {
+                      map['Email'] = _emailController.text;
+                    }
                     //map['LocationCoords_Longitude'] = null;
                     //map['LocationCoords_Lattitude'] = null;
 
@@ -2028,10 +2032,10 @@ class _EditProfileState extends State<EditProfile> {
         _dateOfBirthField('Date Of Birth'),
         _entryMobileNoField('Mobile Number'),
 
-        _entryEmailField('Email*'),
+        _entryEmailField('Email'),
         //_entryBloodGroupField("Blood Group"),
         //_entryEmergencyMobileNoField('Emergency Contact Number'),
-        _entryAddressField('Address*'),
+        _entryAddressField('Address'),
 
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -2039,14 +2043,14 @@ class _EditProfileState extends State<EditProfile> {
           children: [
             Expanded(
               flex: 1,
-              child: _entryLocalityField('City*'),
+              child: _entryLocalityField('City'),
             ),
             SizedBox(
               width: 8,
             ),
             Expanded(
               flex: 1,
-              child: _entryCountryField('Country*'),
+              child: _entryCountryField('Country'),
             ),
           ],
         ),

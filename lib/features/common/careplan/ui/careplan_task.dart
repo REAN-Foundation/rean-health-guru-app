@@ -36,6 +36,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   String query = 'pending';
   final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
+  bool isPreviousEducationalTaskIsPending = false;
 
   getEducationUserTask() async {
     try {
@@ -594,12 +595,14 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   Widget _makeTaskCard(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
 
-    /*  if(DateTime.parse(task.scheduledEndTime!).isBefore(DateTime.now())) {
-      if (task.category!.contains('Educational') && !task.category!.contains('Educational-NewsFeed')) {
-        debugPrint('Education task found Category ==> ${task.category}, Date ==> ${task.scheduledStartTime}');
+    if (DateTime.parse(task.scheduledEndTime!).isBefore(DateTime.now())) {
+      if (task.category!.contains('Educational') &&
+          !task.category!.contains('Educational-NewsFeed')) {
+        debugPrint(
+            'Education task found Category ==> ${task.category}, Date ==> ${task.scheduledStartTime}');
         isPreviousEducationalTaskIsPending = true;
       }
-    }*/
+    }
 
     debugPrint(
         'Category Name ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()} && Task Tittle ==> ${task.task}');
@@ -617,13 +620,17 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               'Task Type ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()}');
           if (!task.finished) {
             debugPrint('Task ID ==> ${task.id}');
-            /*if(DateTime.parse(task.scheduledStartTime!).isBefore(DateTime.now())) {
+            if (DateTime.parse(task.scheduledStartTime!)
+                .isBefore(DateTime.now())) {
               getUserTaskDetails(task.id.toString());
-            }else if(isPreviousEducationalTaskIsPending && !task.category!.contains('Educational')){
-              showToast('Please complete educational task before starting new task', context);
-            } else {*/
-            getUserTaskDetails(task.id.toString());
-            //}
+            } else if (isPreviousEducationalTaskIsPending &&
+                !task.category!.contains('Educational')) {
+              showToast(
+                  'Please complete educational task before starting new task',
+                  context);
+            } else {
+              getUserTaskDetails(task.id.toString());
+            }
             //_taskNavigator(task);
             //showToast('Task completed already');
           } else {

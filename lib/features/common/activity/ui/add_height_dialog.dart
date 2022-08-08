@@ -228,8 +228,8 @@ class _MyDialogState extends State<AddHeightDialog> {
                     borderRadius: BorderRadius.circular(24),
                     side: BorderSide(color: primaryColor)))),
         child: Text(
-          '      Add       ',
-          semanticsLabel: 'Add',
+          '      Save       ',
+          semanticsLabel: 'Save',
           style: TextStyle(
               color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
         ),

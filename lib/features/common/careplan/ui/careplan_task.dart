@@ -36,6 +36,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   String query = 'pending';
   final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 50.0);
+  bool isPreviousEducationalTaskIsPending = false;
 
   getEducationUserTask() async {
     try {
@@ -105,11 +106,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         tasksList.clear();
         //tasksList.addAll(userTaskResponse.data.userTasks.items);
         _sortUserTask(userTaskResponse.data!.userTasks!.items!, 'allTask');
-        debugPrint('User Tasks ==> ${userTaskResponse.toJson()}');
+        /*debugPrint('User Tasks ==> ${userTaskResponse.toJson()}');
         debugPrint(
             'User Tasks Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');
         debugPrint(
-            'User Tasks Action ==> ${userTaskResponse.data!.userTasks!.items!.elementAt(1).action!.patientUserId}');
+            'User Tasks Action ==> ${userTaskResponse.data!.userTasks!.items!.elementAt(1).action!.patientUserId}');*/
       } else {
         tasksList.clear();
         showToast(userTaskResponse.message!, context);
@@ -594,12 +595,16 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   Widget _makeTaskCard(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
 
-    /*  if(DateTime.parse(task.scheduledEndTime!).isBefore(DateTime.now())) {
-      if (task.category!.contains('Educational') && !task.category!.contains('Educational-NewsFeed')) {
-        debugPrint('Education task found Category ==> ${task.category}, Date ==> ${task.scheduledStartTime}');
-        isPreviousEducationalTaskIsPending = true;
+    if (task.scheduledEndTime != null) {
+      if (DateTime.parse(task.scheduledEndTime!).isBefore(DateTime.now())) {
+        if (task.category!.contains('Educational') &&
+            !task.category!.contains('Educational-NewsFeed')) {
+          debugPrint(
+              'Education task found Category ==> ${task.category}, Date ==> ${task.scheduledStartTime}');
+          isPreviousEducationalTaskIsPending = true;
+        }
       }
-    }*/
+    }
 
     debugPrint(
         'Category Name ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()} && Task Tittle ==> ${task.task}');
@@ -617,13 +622,17 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               'Task Type ==> ${task.action != null ? task.action!.type.toString() : task.category.toString()}');
           if (!task.finished) {
             debugPrint('Task ID ==> ${task.id}');
-            /*if(DateTime.parse(task.scheduledStartTime!).isBefore(DateTime.now())) {
+            if (DateTime.parse(task.scheduledStartTime!)
+                .isBefore(DateTime.now())) {
               getUserTaskDetails(task.id.toString());
-            }else if(isPreviousEducationalTaskIsPending && !task.category!.contains('Educational')){
-              showToast('Please complete educational task before starting new task', context);
-            } else {*/
-            getUserTaskDetails(task.id.toString());
-            //}
+            } else if (isPreviousEducationalTaskIsPending &&
+                !task.category!.contains('Educational')) {
+              showToast(
+                  'Please complete educational task before starting new task',
+                  context);
+            } else {
+              getUserTaskDetails(task.id.toString());
+            }
             //_taskNavigator(task);
             //showToast('Task completed already');
           } else {

@@ -103,7 +103,7 @@ class _MyDialogState extends State<AddNurseDialog> {
 
   Widget _submitButton(BuildContext context) {
     return Semantics(
-      label: 'Add',
+      label: 'Save',
       button: true,
       child: ElevatedButton(
         onPressed: () async {
@@ -134,7 +134,7 @@ class _MyDialogState extends State<AddNurseDialog> {
                     borderRadius: BorderRadius.circular(24),
                     side: BorderSide(color: primaryColor)))),
         child: Text(
-          '      Add       ',
+          '      Save       ',
           style: TextStyle(
               color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
         ),
@@ -164,6 +164,7 @@ class _MyDialogState extends State<AddNurseDialog> {
                 color: Colors.white),
             child: Semantics(
               label: 'first name of nurse',
+              hint: 'required',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _firstNameController,
@@ -208,6 +209,7 @@ class _MyDialogState extends State<AddNurseDialog> {
                 color: Colors.white),
             child: Semantics(
               label: 'last name of nurse',
+              hint: 'required',
               child: TextFormField(
                   obscureText: isPassword,
                   controller: _lastNameController,
@@ -333,7 +335,7 @@ class _MyDialogState extends State<AddNurseDialog> {
                 autoValidate: true,
                 decoration: InputDecoration(
                     counterText: '',
-                    hintText: 'mobile number of Nurse',
+                    hintText: 'mobile number of Nurse required',
                     hintStyle: TextStyle(color: Colors.transparent),
                     border: InputBorder.none,
                     fillColor: Colors.white,

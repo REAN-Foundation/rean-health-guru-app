@@ -530,7 +530,10 @@ class _BiometricBodyTemperatureVitalsViewState
       if (baseResponse.status == 'success') {
         showToast(baseResponse.message!, context);
         progressDialog.close();
-        Navigator.pop(context);
+        _controller.clear();
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
       } else {
         progressDialog.close();
         showToast(baseResponse.message!, context);

@@ -372,11 +372,11 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         showToast(
             'One-time PIN has been successfully sent on your mobile number',
             context);
-        model.setBusy(false);
+        //model.setBusy(false);
       } else {
-        model.setBusy(false);
+        //model.setBusy(false);
         showToast(doctorListApiResponse.message!, context);
-        setState(() {});
+        /*setState(() {});*/
       }
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');

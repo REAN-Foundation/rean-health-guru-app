@@ -36,6 +36,7 @@ bool isDummyNumber = false;
 String? _currentLocale = '';
 String _appName = '';
 String _appType = '';
+String _appFlavour = '';
 dynamic _roleId = '';
 final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
 String knowledgeLinkDisplayedDate = '';
@@ -148,6 +149,14 @@ void setAppType(String name) {
 
 String getAppType() {
   return _appType;
+}
+
+void setAppFlavour(String appFlavour) {
+  _appFlavour = appFlavour;
+}
+
+String getAppFlavour() {
+  return _appFlavour;
 }
 
 void setAppName(String name) {

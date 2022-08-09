@@ -587,7 +587,10 @@ class _LipidProfileA1CLevelViewState extends State<LipidProfileA1CLevelView> {
       if (baseResponse.status == 'success') {
         progressDialog.close();
         showToast(baseResponse.message!, context);
-        Navigator.pop(context);
+        _controller.clear();
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
       } else {
         progressDialog.close();
         showToast(baseResponse.message!, context);

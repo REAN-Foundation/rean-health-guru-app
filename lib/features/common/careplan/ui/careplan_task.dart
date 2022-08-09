@@ -1919,6 +1919,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           }
           //Navigator.pushNamed(context, RoutePaths.Assessment_Start_Care_Plan);
           break;
+        case 'Article':
         case 'Link':
           _launchURL(task.action!.url!.replaceAll(' ', '%20')).then((value) {
             getUserTask();

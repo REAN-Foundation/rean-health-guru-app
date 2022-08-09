@@ -81,12 +81,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   getAllUserTask() async {
     try {
       var dateTill;
-      if (getBaseUrl()!.contains('aha-api-uat.services') ||
+      /*if (getBaseUrl()!.contains('aha-api-uat.services') ||
           getAppName() == 'Lipid Helper') {
         dateTill = DateTime.now();
-      } else {
-        dateTill = DateTime.now().add(Duration(days: 91));
-      }
+      } else {*/
+      dateTill = DateTime.now().add(Duration(days: 91));
+      //}
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
       userTaskResponse = await model.getUserTasks(
           query,
@@ -97,7 +97,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       .startAt
                       .toString()))
               : dateQueryFormat.format(DateTime.now()),
-          dateQueryFormat.format(dateTill));
+          carePlanEnrollmentForPatientGlobe != null
+              ? dateQueryFormat.format(dateTill)
+              : dateQueryFormat.format(DateTime.now()));
 
       if (userTaskResponse.status == 'success') {
         tasksList.clear();

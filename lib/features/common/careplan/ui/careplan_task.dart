@@ -85,7 +85,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           getAppName() == 'Lipid Helper') {
         dateTill = DateTime.now();
       } else {
-        dateTill = DateTime.now().add(Duration(days: 82));
+        dateTill = DateTime.now().add(Duration(days: 91));
       }
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
       userTaskResponse = await model.getUserTasks(

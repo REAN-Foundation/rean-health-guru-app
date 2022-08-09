@@ -57,17 +57,15 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         tasksList.clear();
         //tasksList.addAll(userTaskResponse.data.userTasks.items);
         if (userTaskResponse.data!.userTasks!.items!.isEmpty) {
-          debugPrint('Debug ==> 1');
           getAllUserTask();
         } else {
-          debugPrint('Debug ==> 3');
           _sortUserTask(
               userTaskResponse.data!.userTasks!.items!, 'Educational');
         }
 
-        debugPrint('User Educational Tasks ==> ${userTaskResponse.toJson()}');
+       /* debugPrint('User Educational Tasks ==> ${userTaskResponse.toJson()}');
         debugPrint(
-            'User Tasks Educational Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');
+            'User Tasks Educational Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');*/
       } else {
         tasksList.clear();
         showToast(userTaskResponse.message!, context);
@@ -83,12 +81,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   getAllUserTask() async {
     try {
       var dateTill;
-      if (getBaseUrl()!.contains('aha-api-uat.services') ||
+      /*if (getBaseUrl()!.contains('aha-api-uat.services') ||
           getAppName() == 'Lipid Helper') {
         dateTill = DateTime.now();
-      } else {
-        dateTill = DateTime.now().add(Duration(days: 82));
-      }
+      } else {*/
+      dateTill = DateTime.now().add(Duration(days: 91));
+      //}
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
       userTaskResponse = await model.getUserTasks(
           query,
@@ -99,17 +97,19 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                       .startAt
                       .toString()))
               : dateQueryFormat.format(DateTime.now()),
-          dateQueryFormat.format(dateTill));
+          carePlanEnrollmentForPatientGlobe != null
+              ? dateQueryFormat.format(dateTill)
+              : dateQueryFormat.format(DateTime.now()));
 
       if (userTaskResponse.status == 'success') {
         tasksList.clear();
         //tasksList.addAll(userTaskResponse.data.userTasks.items);
         _sortUserTask(userTaskResponse.data!.userTasks!.items!, 'allTask');
-        debugPrint('User Tasks ==> ${userTaskResponse.toJson()}');
+        /* debugPrint('User Tasks ==> ${userTaskResponse.toJson()}');
         debugPrint(
             'User Tasks Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');
         debugPrint(
-            'User Tasks Action ==> ${userTaskResponse.data!.userTasks!.items!.elementAt(1).action!.patientUserId}');
+            'User Tasks Action ==> ${userTaskResponse.data!.userTasks!.items!.elementAt(1).action!.patientUserId}');*/
       } else {
         tasksList.clear();
         showToast(userTaskResponse.message!, context);
@@ -144,12 +144,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             task.status == 'Pending' ||
             task.status == 'Upcoming' ||
             task.status == 'Overdue') {
-          debugPrint('Debug ==> 4');
           tasksList.add(task);
         }
       } else {
         if (task.status == 'Completed' || task.status == 'Cancelled') {
-          debugPrint('Debug ==> 5');
           tasksList.add(task);
         }
       }
@@ -1919,6 +1917,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           }
           //Navigator.pushNamed(context, RoutePaths.Assessment_Start_Care_Plan);
           break;
+        case 'Article':
         case 'Link':
           _launchURL(task.action!.url!.replaceAll(' ', '%20')).then((value) {
             getUserTask();
@@ -2088,21 +2087,33 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           }
           break;
         case 'Web':
-          final AssortedViewConfigs newAssortedViewConfigs =
-              AssortedViewConfigs();
-          newAssortedViewConfigs.toShow = '1';
-          newAssortedViewConfigs.testToshow = '2';
-          newAssortedViewConfigs.isNextButtonVisible = false;
-          newAssortedViewConfigs.header = task.task;
-          newAssortedViewConfigs.task = task;
+          if (task.action!.category == 'Educational-NewsFeed') {
+            final AssortedViewConfigs newAssortedViewConfigs =
+                AssortedViewConfigs();
+            newAssortedViewConfigs.toShow = '1';
+            newAssortedViewConfigs.testToshow = '2';
+            newAssortedViewConfigs.isNextButtonVisible = false;
+            newAssortedViewConfigs.header = task.task;
+            newAssortedViewConfigs.task = task;
 
-          Navigator.pushNamed(context, RoutePaths.RSS_FEED_LIST,
-                  arguments: newAssortedViewConfigs)
-              .then((value) {
-            //getUserTask();
-            //showToast('Task completed successfully');
-          });
-
+            Navigator.pushNamed(context, RoutePaths.RSS_FEED_LIST,
+                    arguments: newAssortedViewConfigs)
+                .then((value) {
+              //getUserTask();
+              //showToast('Task completed successfully');
+            });
+          } else {
+            //Educational-Link
+            debugPrint('URL ==> ${task.action!.url!.replaceAll(' ', '%20')}');
+            _launchURL(task.action!.url!.replaceAll(' ', '%20')).then((value) {
+              getUserTask();
+              //showToast('Task completed successfully');
+            });
+            if (!task.finished) {
+              completeMessageTaskOfAHACarePlan(
+                  task.action!.userTaskId.toString());
+            }
+          }
           /*if (!task.finished) {
             completeMessageTaskOfAHACarePlan(task);
           }*/

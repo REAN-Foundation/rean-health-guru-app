@@ -76,7 +76,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           'Plan Code ==> ${list.elementAt(i).code == 'CholesterolMini'}');
 
       if (getAppFlavour() == 'Lipid Helper' &&
-          list.elementAt(i).code == 'CholesterolMini') {
+          list.elementAt(i).code == 'Cholesterol') {
         items.add(DropdownMenuItem(
           child: Text(list.elementAt(i).displayName!),
           value: list.elementAt(i).displayName,

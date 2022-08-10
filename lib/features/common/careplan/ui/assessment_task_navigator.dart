@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:patient/features/common/careplan/models/answer_assessment_response.dart';
 import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
@@ -662,26 +663,55 @@ class _AssesmentTaskNavigatorViewState
 
   showSuccessDialog() {
     Dialog sucsessDialog = Dialog(
+      insetPadding: EdgeInsets.all(10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       //this right here
       child: Card(
         elevation: 0.0,
         semanticContainer: false,
         child: Container(
-          height: 400.0,
-          width: 300.0,
+          height: 460.0,
+          width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Semantics(
-                label: 'Success image',
-                image: true,
-                child: Image.asset(
-                  'res/images/ic_careplan_success_tumbs_up.png',
-                  width: 200,
-                  height: 200,
-                ),
+              Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      height: 200,
+                      width: 200,
+                      child: Lottie.asset(
+                        'res/lottiefiles/celebration.json',
+                        height: 200,
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Semantics(
+                      label: 'Success image',
+                      image: true,
+                      child: Image.asset(
+                        'res/images/ic_careplan_success_tumbs_up.png',
+                        width: 200,
+                        height: 200,
+                      ),
+                    ),
+                  ),
+                ],
               ),
+              Text(
+                'Assessment Score : 100',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 22.0),
+              ),
+              Padding(padding: EdgeInsets.only(top: 20.0)),
               Text(
                 'Thank You!',
                 style: TextStyle(
@@ -743,7 +773,7 @@ class _AssesmentTaskNavigatorViewState
     );
     showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (BuildContext context) => sucsessDialog);
   }
 }

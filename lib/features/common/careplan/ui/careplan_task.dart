@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
@@ -10,6 +11,7 @@ import 'package:patient/features/common/careplan/models/user_task_response.dart'
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -208,12 +210,17 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
-                    Text(
-                      'My Tasks ',
-                      style: TextStyle(
-                          color: primaryColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16),
+                    InkWell(
+                      onTap: () {
+                        showSuccessDialog();
+                      },
+                      child: Text(
+                        'My Tasks ',
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
+                      ),
                     ),
                     SizedBox(
                       width: 16,
@@ -2248,5 +2255,121 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         ),
       ),
     );
+  }
+
+  showSuccessDialog() {
+    Dialog sucsessDialog = Dialog(
+      insetPadding: EdgeInsets.all(10),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      //this right here
+      child: Card(
+        elevation: 0.0,
+        semanticContainer: false,
+        child: Container(
+          height: 460.0,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      height: 200,
+                      width: 200,
+                      child: Lottie.asset(
+                        'res/lottiefiles/celebration.json',
+                        height: 200,
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Semantics(
+                      label: 'Success image',
+                      image: true,
+                      child: Image.asset(
+                        'res/images/ic_careplan_success_tumbs_up.png',
+                        width: 200,
+                        height: 200,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                'Assessment Score : 100',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 22.0),
+              ),
+              Padding(padding: EdgeInsets.only(top: 20.0)),
+              Text(
+                'Thank You!',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 20.0),
+              ),
+              Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Text(
+                  'You have successfully completed your assessment',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "Montserrat",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14.0),
+                ),
+              ),
+              Padding(padding: EdgeInsets.only(top: 20.0)),
+              InkWell(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (context) {
+                    return HomeView(1);
+                  }), (Route<dynamic> route) => false);
+                },
+                child: Container(
+                  height: 48,
+                  width: 260,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                  ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6.0),
+                      border: Border.all(color: primaryColor, width: 1),
+                      color: primaryColor),
+                  child: Center(
+                    child: Text(
+                      'Go to my task',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          fontSize: 14),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) => sucsessDialog);
   }
 }

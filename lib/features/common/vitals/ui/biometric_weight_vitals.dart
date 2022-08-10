@@ -1066,6 +1066,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           _sharedPrefUtils.saveDouble('height', localHeight);
           height = localHeight;
           conversion();
+          calculetBMI();
           debugPrint('Selected Height ==> $localHeight');
           setState(() {
             showToast('Height record created successfully!', context);
@@ -1101,6 +1102,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           _sharedPrefUtils.saveDouble('height', localHeight);
           height = localHeight;
           conversion();
+          calculetBMI();
           debugPrint('Selected Height ==> $localHeight');
           setState(() {
             showToast('Height record created successfully!', context);

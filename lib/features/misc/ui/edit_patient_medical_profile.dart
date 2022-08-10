@@ -96,17 +96,7 @@ class _EditPatientMedicalProfileViewState
 
     if (height != 0.0) {
       double heightInFeet = Conversion.cmToFeet(height);
-
-      heightArray = heightInFeet.toString().split('.');
-
-      _heightInFeetController.text = heightArray[0].toString();
-      _heightInFeetController.selection = TextSelection.fromPosition(
-        TextPosition(offset: _heightInFeetController.text.length),
-      );
-      _heightInInchesController.text = heightArray[1].toString();
-      _heightInInchesController.selection = TextSelection.fromPosition(
-        TextPosition(offset: _heightInInchesController.text.length),
-      );
+      conversion();
     }
   }
 
@@ -119,6 +109,19 @@ class _EditPatientMedicalProfileViewState
       heightInFt = int.parse(heightArry[0]);
       heightInInch = int.parse(heightArry[1]);
       debugPrint('Conversion Height => $heightInFt ft $heightInInch inch');
+
+      if (getCurrentLocale() == 'US') {
+        _heightInFeetController.text =
+            heightInDouble.toString().replaceAll('.', "'");
+        _heightInFeetController.selection = TextSelection.fromPosition(
+          TextPosition(offset: _heightInFeetController.text.length),
+        );
+      } else {
+        _heightInFeetController.text = height.toString();
+        _heightInFeetController.selection = TextSelection.fromPosition(
+          TextPosition(offset: _heightInFeetController.text.length),
+        );
+      }
     }
   }
 
@@ -247,18 +250,68 @@ class _EditPatientMedicalProfileViewState
                           _procedureHistoryFocus,
                           _heightInFeetFocus),
                       _sizedBoxHeight(),
-                      SizedBox(
-                        width: 150,
-                        child: Text('Height*',
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w600,
-                                color: textBlack)),
+                      /*Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 150,
+                            child: Text('Height*',
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w600,
+                                    color: textBlack)),
+                          ),
+
+                        ],
+                      ),*/
+                      Stack(
+                        children: [
+                          TextFormField(
+                            controller: _heightInFeetController,
+                            textAlign: TextAlign.left,
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              labelText: 'Height',
+                              labelStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
+                              ),
+                            ),
+                          ),
+                          Align(
+                              alignment: Alignment.bottomRight,
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 4,
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        if (getCurrentLocale() == 'US') {
+                                          showHeightPickerInFoot(context);
+                                        } else {
+                                          showHeightPickerCms(context);
+                                        }
+                                      },
+                                      child: Text(
+                                        height == 0 ? 'Select' : 'Change',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: primaryColor),
+                                      )),
+                                ],
+                              ))
+                        ],
                       ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Row(
+                      /*Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -282,7 +335,7 @@ class _EditPatientMedicalProfileViewState
                                 _obstetricHistoryFocus),
                           ),
                         ],
-                      ),
+                      ),*/
                       _sizedBoxHeight(),
                       Text('Marital Status',
                           style: TextStyle(
@@ -419,7 +472,7 @@ class _EditPatientMedicalProfileViewState
                             height: 40,
                             child: ElevatedButton(
                               onPressed: () {
-                                if (_heightInFeetController.text
+                                /*if (_heightInFeetController.text
                                     .trim()
                                     .isEmpty) {
                                   showToast("Please enter your height in feet",
@@ -451,8 +504,8 @@ class _EditPatientMedicalProfileViewState
                                                       _heightInInchesController
                                                           .text))
                                           .toString()));
-                                  _updatePatientMedicalProfile();
-                                }
+                                }*/
+                                _updatePatientMedicalProfile();
                               },
                               style: ButtonStyle(
                                   foregroundColor:

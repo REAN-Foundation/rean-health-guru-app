@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_picker/flutter_picker.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_medical_profile_pojo.dart';
@@ -78,6 +79,11 @@ class _EditPatientMedicalProfileViewState
   double height = 0;
   late var heightArray;
 
+  int heightInFt = 1;
+  int heightInInch = 0;
+  double heightInDouble = 0.0;
+  late var heightArry;
+
   @override
   void initState() {
     setData();
@@ -101,6 +107,18 @@ class _EditPatientMedicalProfileViewState
       _heightInInchesController.selection = TextSelection.fromPosition(
         TextPosition(offset: _heightInInchesController.text.length),
       );
+    }
+  }
+
+  conversion() {
+    if (height != 0.0) {
+      debugPrint('Conversion Height in cms => $height');
+      heightInDouble = Conversion.cmToFeet(height);
+      debugPrint('Conversion Height in ft & inch => $heightInDouble');
+      heightArry = heightInDouble.toString().split('.');
+      heightInFt = int.parse(heightArry[0]);
+      heightInInch = int.parse(heightArry[1]);
+      debugPrint('Conversion Height => $heightInFt ft $heightInInch inch');
     }
   }
 
@@ -536,6 +554,92 @@ class _EditPatientMedicalProfileViewState
         ),
       ),
     );
+  }
+
+  showHeightPickerInFoot(BuildContext context) {
+    Picker(
+        adapter: NumberPickerAdapter(data: [
+          NumberPickerColumn(
+            begin: 1,
+            end: 9,
+            initValue: heightInFt,
+            suffix: Text('  ft'),
+          ),
+          NumberPickerColumn(
+            begin: 0,
+            end: 11,
+            initValue: heightInInch,
+            suffix: Text('  inch'),
+          ),
+        ]),
+        delimiter: [
+          PickerDelimiter(
+              child: Container(
+            width: 30.0,
+            alignment: Alignment.center,
+            child: Icon(Icons.more_vert),
+          ))
+        ],
+        hideHeader: true,
+        title: Center(
+            child: Text(
+          " Height",
+          style: TextStyle(
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w600,
+              color: primaryColor,
+              fontSize: 18.0),
+          textAlign: TextAlign.center,
+        )),
+        selectedTextStyle: TextStyle(color: Colors.blue),
+        onConfirm: (Picker picker, List value) {
+          var localHeight = Conversion.FeetToCm(double.parse(
+              picker.getSelectedValues().elementAt(0).toString() +
+                  '.' +
+                  picker.getSelectedValues().elementAt(1).toString()));
+          _sharedPrefUtils.saveDouble('height', localHeight);
+          height = localHeight;
+          conversion();
+          debugPrint('Selected Height ==> $localHeight');
+          setState(() {
+            showToast('Height record created successfully!', context);
+          });
+        }).showDialog(context);
+  }
+
+  showHeightPickerCms(BuildContext context) {
+    Picker(
+        adapter: NumberPickerAdapter(data: [
+          NumberPickerColumn(
+            begin: 1,
+            end: 250,
+            initValue: height.toInt(),
+            suffix: Text('  cm'),
+          ),
+        ]),
+        hideHeader: true,
+        title: Center(
+            child: Text(
+          " Height",
+          style: TextStyle(
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w600,
+              color: primaryColor,
+              fontSize: 18.0),
+          textAlign: TextAlign.center,
+        )),
+        selectedTextStyle: TextStyle(color: Colors.blue),
+        onConfirm: (Picker picker, List value) {
+          var localHeight =
+              double.parse(picker.getSelectedValues().elementAt(0).toString());
+          _sharedPrefUtils.saveDouble('height', localHeight);
+          height = localHeight;
+          conversion();
+          debugPrint('Selected Height ==> $localHeight');
+          setState(() {
+            showToast('Height record created successfully!', context);
+          });
+        }).showDialog(context);
   }
 
   _updatePatientMedicalProfile() async {

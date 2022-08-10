@@ -11,7 +11,7 @@ class Conversion {
 
   static double cmToFeet(double lenghtInCm) {
     debugPrint('Height In cm ==> $lenghtInCm');
-    return double.parse((lenghtInCm / 30.48).toStringAsFixed(1));
+    return double.parse((lenghtInCm / 30.48).toStringAsFixed(2));
   }
 
   static double FeetToCm(double lenghtInFeet) {

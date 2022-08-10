@@ -663,7 +663,7 @@ class _AssesmentTaskNavigatorViewState
 
   showSuccessDialog() {
     Dialog sucsessDialog = Dialog(
-      insetPadding: EdgeInsets.all(10),
+      insetPadding: EdgeInsets.all(32),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       //this right here
       child: Card(
@@ -773,7 +773,7 @@ class _AssesmentTaskNavigatorViewState
     );
     showDialog(
         context: context,
-        barrierDismissible: true,
+        barrierDismissible: false,
         builder: (BuildContext context) => sucsessDialog);
   }
 }

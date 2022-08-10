@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
@@ -11,7 +10,6 @@ import 'package:patient/features/common/careplan/models/user_task_response.dart'
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
-import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -210,18 +208,19 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
-                    InkWell(
+                    /*InkWell(
                       onTap: () {
                         showSuccessDialog();
                       },
-                      child: Text(
-                        'My Tasks ',
-                        style: TextStyle(
-                            color: primaryColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16),
-                      ),
+                      child:*/
+                    Text(
+                      'My Tasks ',
+                      style: TextStyle(
+                          color: primaryColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
                     ),
+                    //),
                     SizedBox(
                       width: 16,
                     ),
@@ -2257,9 +2256,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     );
   }
 
-  showSuccessDialog() {
+/*showSuccessDialog() {
     Dialog sucsessDialog = Dialog(
-      insetPadding: EdgeInsets.all(10),
+      insetPadding: EdgeInsets.all(32),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       //this right here
       child: Card(
@@ -2371,5 +2370,5 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) => sucsessDialog);
-  }
+  }*/
 }

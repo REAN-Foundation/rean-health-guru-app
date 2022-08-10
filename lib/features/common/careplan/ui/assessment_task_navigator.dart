@@ -703,7 +703,7 @@ class _AssesmentTaskNavigatorViewState
                 ],
               ),
               Text(
-                'Assessment Score : 100',
+                'Score : KCCQ12',
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w700,

@@ -646,10 +646,20 @@ class _EditPatientMedicalProfileViewState
         )),
         selectedTextStyle: TextStyle(color: Colors.blue),
         onConfirm: (Picker picker, List value) {
+          print(picker.getSelectedValues());
+          debugPrint(
+              'Height in ft ==> ${double.parse(picker.getSelectedValues().elementAt(0).toString() + '.' + picker.getSelectedValues().elementAt(1).toString())}');
+          debugPrint(
+              'Height in inch ==> ${picker.getSelectedValues().elementAt(1).toString()}');
           var localHeight = Conversion.FeetToCm(double.parse(
               picker.getSelectedValues().elementAt(0).toString() +
                   '.' +
-                  picker.getSelectedValues().elementAt(1).toString()));
+                  picker.getSelectedValues().elementAt(1).toString() +
+                  '1'));
+          /*if(picker.getSelectedValues().elementAt(1) == 10){
+            localHeight = localHeight + 25.4;
+          }*/
+
           _sharedPrefUtils.saveDouble('height', localHeight);
           height = localHeight;
           conversion();

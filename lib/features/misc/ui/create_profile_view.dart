@@ -46,7 +46,7 @@ class _CreateProfileState extends State<CreateProfile> {
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _sharedPrefUtils = SharedPrefUtils();
-  String selectedGender = 'Male';
+  String selectedGender = '';
   String dob = '';
   String unformatedDOB = '';
   String userId = '';

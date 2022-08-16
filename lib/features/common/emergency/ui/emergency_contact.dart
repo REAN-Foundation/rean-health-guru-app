@@ -367,7 +367,6 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         content: Container(
           width: MediaQuery.of(context).size.width,
           child: Semantics(
-            label: 'updateEmergencyText',
             child: TextField(
               controller: emergencyDetailsTextControler,
               autofocus: true,

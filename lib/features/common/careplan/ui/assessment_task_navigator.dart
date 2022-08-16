@@ -265,13 +265,13 @@ class _AssesmentTaskNavigatorViewState
 
       if (vaildation) {
         Navigator.pop(context);
-        showToast('Please complete assessment from start', context);
+        showToast('Complete the assessment where you left off', context);
       } else {
         nextQuestionIfListNodeAnswer(nodeAnswer);
       }
     } else {
       Navigator.pop(context);
-      showToast('Please complete assessment from start', context);
+      showToast('Complete the assessment where you left off', context);
     }
   }
 
@@ -291,7 +291,7 @@ class _AssesmentTaskNavigatorViewState
     }else {*/
     if (id == null) {
       Navigator.pop(context);
-      showToast('Please complete assessment from start', context);
+      showToast('Complete the assessment where you left off', context);
     } else {
       nextQuestion(id);
     }
@@ -314,7 +314,7 @@ class _AssesmentTaskNavigatorViewState
     }else {*/
     if (id == null) {
       Navigator.pop(context);
-      showToast('Please complete assessment from start', context);
+      showToast('Complete the assessment where you left off', context);
     } else {
       nextQuestion(id);
     }
@@ -336,7 +336,7 @@ class _AssesmentTaskNavigatorViewState
     }else {*/
     if (id == null) {
       Navigator.pop(context);
-      showToast('Please complete assessment from start', context);
+      showToast('Complete the assessment where you left off', context);
     } else {
       nextQuestion(id);
     }
@@ -359,7 +359,7 @@ class _AssesmentTaskNavigatorViewState
     }else {*/
     if (id == null) {
       Navigator.pop(context);
-      showToast('Please complete assessment from start', context);
+      showToast('Complete the assessment where you left off', context);
     } else {
       nextQuestion(id);
     }
@@ -382,7 +382,7 @@ class _AssesmentTaskNavigatorViewState
     }else {*/
     if (id == null) {
       Navigator.pop(context);
-      showToast('Please complete assessment from start', context);
+      showToast('Complete the assessment where you left off', context);
     } else {
       nextQuestion(id);
     }

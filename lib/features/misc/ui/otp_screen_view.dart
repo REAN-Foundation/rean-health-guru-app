@@ -42,6 +42,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
   String? _fcmToken = '';
   bool loginOTP = false;
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+  OtpFieldController otpController = OtpFieldController();
 
   @override
   void initState() {
@@ -228,6 +229,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             height: 8,
           ),
           OTPTextField(
+            controller: otpController,
+            contentPadding: const EdgeInsets.symmetric(vertical: 16.0),
             length: 6,
             width: MediaQuery.of(context).size.width,
             fieldWidth: 40,
@@ -372,6 +375,9 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         showToast(
             'One-time PIN has been successfully sent on your mobile number',
             context);
+        otpController.clear();
+        otpController.setFocus(0);
+        setState(() {});
         //model.setBusy(false);
       } else {
         //model.setBusy(false);

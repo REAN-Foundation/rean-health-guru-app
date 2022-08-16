@@ -76,33 +76,42 @@ class _AppDrawerState extends State<AppDrawer> {
   Widget build(BuildContext context) {
     loadSharedPrefs();
     return Drawer(
-      child: Container(
-        color: colorF6F6FF,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _createHeader(),
-            _menuItems(),
-            _footer(),
+      child: Card(
+        margin: EdgeInsets.zero,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        semanticContainer: false,
+        elevation: 0,
+        child: Container(
+          color: colorF6F6FF,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              _createHeader(),
+              _menuItems(),
+              _footer(),
 
-            /* _createDrawerItem(
-                icon: Icons.note,
-                text: 'Notes',
-                onTap: () =>
-                    Navigator.pushReplacementNamed(context, RoutePaths.notes)),
-            Divider(),
-            _createDrawerItem(icon: Icons.collections_bookmark, text: 'Steps'),
-            _createDrawerItem(icon: Icons.face, text: 'Authors'),
-            _createDrawerItem(
-                icon: Icons.account_box, text: 'Flutter Documentation'),
-            _createDrawerItem(icon: Icons.stars, text: 'Useful Links'),
-            Divider(),
-            _createDrawerItem(icon: Icons.bug_report, text: 'Report an issue'),*/
-            /* ListTile(
-              title: Text('0.0.1'),
-              onTap: () {},
-            ),*/
-          ],
+              /* _createDrawerItem(
+                  icon: Icons.note,
+                  text: 'Notes',
+                  onTap: () =>
+                      Navigator.pushReplacementNamed(context, RoutePaths.notes)),
+              Divider(),
+              _createDrawerItem(icon: Icons.collections_bookmark, text: 'Steps'),
+              _createDrawerItem(icon: Icons.face, text: 'Authors'),
+              _createDrawerItem(
+                  icon: Icons.account_box, text: 'Flutter Documentation'),
+              _createDrawerItem(icon: Icons.stars, text: 'Useful Links'),
+              Divider(),
+              _createDrawerItem(icon: Icons.bug_report, text: 'Report an issue'),*/
+              /* ListTile(
+                title: Text('0.0.1'),
+                onTap: () {},
+              ),*/
+            ],
+          ),
         ),
       ),
     );

@@ -86,7 +86,7 @@ class _SupportViewState extends State<SupportView> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Semantics(
-                                    label: 'Contact us image',
+                                    label: 'Support',
                                     image: true,
                                     child: ExcludeSemantics(
                                       child: Container(

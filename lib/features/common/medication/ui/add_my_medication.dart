@@ -690,14 +690,16 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               Semantics(
                 label: medicationName,
                 image: true,
-                child: Center(
-                    child: SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: CachedNetworkImage(
-                    imageUrl: images.publicUrl!,
-                  ),
-                )),
+                child: ExcludeSemantics(
+                  child: Center(
+                      child: SizedBox(
+                    width: 32,
+                    height: 32,
+                    child: CachedNetworkImage(
+                      imageUrl: images.publicUrl!,
+                    ),
+                  )),
+                ),
               ),
               if (images.isSelected)
                 ExcludeSemantics(

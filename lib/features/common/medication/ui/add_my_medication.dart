@@ -1428,7 +1428,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     );
   }*/
 
-  _addDrugTolibrary() async {
+  /*_addDrugTolibrary() async {
     try {
       FocusScope.of(context).unfocus();
       final map = <String, String>{};
@@ -1445,7 +1445,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     } catch (CustomException) {
       debugPrint('Error ' + CustomException.toString());
     }
-  }
+  }*/
 
   _getMedicaionStockImages() async {
     try {

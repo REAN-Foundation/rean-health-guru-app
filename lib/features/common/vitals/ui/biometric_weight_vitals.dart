@@ -15,6 +15,7 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
@@ -268,6 +269,11 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                                 fontSize: 12.0,
                                 color: textBlack),
                           ),
+                    InfoScreen(
+                        tittle: 'Info',
+                        description:
+                            'BMI stands for Body Mass Index\nThis is a numerical value of your weight in relation to your height. A BMI between 18.5 and 25 kg/m² indicates a normal weight. A BMI of less than 18.5 kg/m² is considered underweight. A BMI between 25 kg/m² and 29.9 kg/m² is considered overweight. A BMI of 30 kg/m² or higher is considered obese. ',
+                        height: 300),
                   ],
                 ),
               ],
@@ -399,11 +405,27 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           const SizedBox(
             height: 16,
           ),
-          Text(
-            'Enter your weight:',
-            style: TextStyle(
-                color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
-            textAlign: TextAlign.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Enter your weight:',
+                style: TextStyle(
+                    color: textBlack,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              InfoScreen(
+                  tittle: 'Info',
+                  description:
+                      'Your doctor typically will record your weight during your regular health care visits. Please refer to your doctor\'s recommended frequency of measuring your weight at home.',
+                  height: 220),
+            ],
           ),
           const SizedBox(
             height: 16,

@@ -11,6 +11,7 @@ import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class MyCurrentMedicationView extends StatefulWidget {
@@ -109,12 +110,22 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
 
   Widget noMedicationFound() {
     return Center(
-      child: Text('No medication added',
-          style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 14,
-              fontFamily: 'Montserrat',
-              color: primaryColor)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text('No medication added',
+              style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  fontFamily: 'Montserrat',
+                  color: primaryColor)),
+          InfoScreen(
+              tittle: 'Info',
+              description: 'Add your medications by pressing the + sign.',
+              height: 180),
+        ],
+      ),
     );
   }
 

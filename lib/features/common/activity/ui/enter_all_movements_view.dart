@@ -9,6 +9,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class EnterAllMovementsView extends StatefulWidget {
@@ -187,6 +188,11 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                         fontSize: 12),
                   ),
                 ),
+                InfoScreen(
+                    tittle: 'Info',
+                    description:
+                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                    height: 260),
               ],
             ),
             const SizedBox(
@@ -279,6 +285,11 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                         fontSize: 12),
                   ),
                 ),
+                InfoScreen(
+                    tittle: 'Info',
+                    description:
+                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                    height: 260),
               ],
             ),
             const SizedBox(
@@ -369,6 +380,11 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                         fontSize: 12),
                   ),
                 ),
+                InfoScreen(
+                    tittle: 'Info',
+                    description:
+                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                    height: 260),
               ],
             ),
             const SizedBox(

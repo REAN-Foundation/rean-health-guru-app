@@ -11,6 +11,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
@@ -141,11 +142,27 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
           const SizedBox(
             height: 16,
           ),
-          Text(
-            'Enter your pulse rate:',
-            style: TextStyle(
-                color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
-            textAlign: TextAlign.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Enter your pulse rate:',
+                style: TextStyle(
+                    color: textBlack,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              InfoScreen(
+                  tittle: 'Info',
+                  description:
+                      'Your heart rate, or pulse, is the number of times your heart beats per minute. Normal heart rate varies from person to person. For most of us (adults), between 60 and 100 beats per minute (bpm) is normal.',
+                  height: 240),
+            ],
           ),
           const SizedBox(
             height: 16,

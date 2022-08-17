@@ -17,6 +17,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable
@@ -820,6 +821,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
+                      InfoScreen(
+                          tittle: 'Info',
+                          description:
+                              'Add your medications by pressing the + sign',
+                          height: 200),
                     ],
                   ),
                   Semantics(
@@ -1371,6 +1377,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
+                      InfoScreen(
+                        tittle: 'Info',
+                        description:
+                            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                        height: 260,
+                        infoIconcolor: Colors.white,
+                      ),
                     ],
                   ),
                   IconButton(
@@ -1626,6 +1639,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
+                      InfoScreen(
+                        tittle: 'Info',
+                        description:
+                            'Maintaining healthy cholesterol levels is a great way to keep your heart healthy. It can lower your chances of getting heart disease or having a stroke.',
+                        height: 220,
+                        infoIconcolor: Colors.white,
+                      ),
                     ],
                   ),
                   IconButton(
@@ -1916,6 +1936,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
+                      InfoScreen(
+                        tittle: 'Info',
+                        description:
+                            'Aim for an overall healthy eating pattern to keep your heart healthy such as eating whole foods, lots of fruits and vegetables, lean protein, nuts, seeds, and cooking in non-tropical oils.',
+                        height: 220,
+                        infoIconcolor: Colors.white,
+                      ),
                     ],
                   ),
                   IconButton(
@@ -2138,7 +2165,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       topLeft: Radius.circular(3.0),
                       topRight: Radius.circular(3.0))),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
@@ -2162,9 +2189,18 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
+                      InfoScreen(
+                        tittle: 'Info',
+                        description:
+                            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                        height: 260,
+                        infoIconcolor: Colors.white,
+                      ),
                     ],
                   ),
                   IconButton(
+                      padding: EdgeInsets.only(left: 6, bottom: 8),
+                      constraints: BoxConstraints(),
                       icon: Icon(
                         Icons.add_circle,
                         size: 32,
@@ -2173,8 +2209,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       ),
                       onPressed: () {
                         Navigator.pushNamed(
-                          context,
-                          RoutePaths.My_Activity_Trends,
+                            context, RoutePaths.My_Activity_Trends,
                             arguments: 0);
                       })
                 ],
@@ -2406,12 +2441,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Mental Health Management',
+                      Text('Mental Well-Being Management',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
+                      InfoScreen(
+                        tittle: 'Info',
+                        description:
+                            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                        height: 260,
+                        infoIconcolor: Colors.white,
+                      ),
                     ],
                   ),
                   /*IconButton(

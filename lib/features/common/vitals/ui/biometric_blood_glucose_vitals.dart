@@ -11,6 +11,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
@@ -145,11 +146,27 @@ class _BiometricBloodSugarVitalsViewState
           const SizedBox(
             height: 16,
           ),
-          Text(
-            'Enter your blood glucose:',
-            style: TextStyle(
-                color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
-            textAlign: TextAlign.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Enter your blood glucose:',
+                style: TextStyle(
+                    color: textBlack,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              InfoScreen(
+                  tittle: 'Info',
+                  description:
+                      'The American Diabetes Association recommends testing for prediabetes and risk for future diabetes for all people beginning at age 45 years. If tests are normal, it is reasonable to repeat testing at a minimum of 3-year intervals.',
+                  height: 240),
+            ],
           ),
           const SizedBox(
             height: 16,

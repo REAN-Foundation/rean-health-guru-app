@@ -1398,7 +1398,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     }
   }
 
-  Future _addDrugConfirmDialog(BuildContext context) async {
+/*  Future _addDrugConfirmDialog(BuildContext context) async {
     return showDialog(
       context: context,
       barrierDismissible: false, // user must tap button for close dialog!
@@ -1426,7 +1426,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         );
       },
     );
-  }
+  }*/
 
   _addDrugTolibrary() async {
     try {

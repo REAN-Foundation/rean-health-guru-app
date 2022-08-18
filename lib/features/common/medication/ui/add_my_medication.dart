@@ -209,10 +209,12 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   _frequencyUnit == 'Daily'
                       ? _drugTimeScheduledCheck()
                       : Container(),
-                _drugDuration(),
-                const SizedBox(
-                  height: 16,
-                ),
+                if (_frequencyUnit != 'Other') ...[
+                  _drugDuration(),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                ],
                 _drugUnit(),
                 const SizedBox(
                   height: 16,
@@ -918,19 +920,20 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   } else if (_frequencyUnit == '') {
                     showToast('Please select frequency', context);
                   } else if (_frequencyUnit == 'Daily' && frequency == 0) {
-                    showToast('Please select daily time schedule', context);
-                  } else if (_durationController.text.trim() == '') {
-                    showToast('Please enter duration', context);
-                  } else if (validationForDuration()) {
-                    if (_frequencyUnit == 'Daily') {
-                      showToast(
-                          'You can add medication for the next 180 days',
-                          context);
-                    } else if (_frequencyUnit == 'Weekly') {
-                      showToast(
-                          'You can add medication for the next 26 weeks',
-                          context);
-                    } else if (_frequencyUnit == 'Monthly') {
+                        showToast('Please select daily time schedule', context);
+                      } else if (_durationController.text.trim() == '' &&
+                          _frequencyUnit != 'Other') {
+                        showToast('Please enter duration', context);
+                      } else if (validationForDuration()) {
+                        if (_frequencyUnit == 'Daily') {
+                          showToast(
+                              'You can add medication for the next 180 days',
+                              context);
+                        } else if (_frequencyUnit == 'Weekly') {
+                          showToast(
+                              'You can add medication for the next 26 weeks',
+                              context);
+                        } else if (_frequencyUnit == 'Monthly') {
                       showToast(
                           'You can add medication for the next 6 months',
                           context);
@@ -1371,7 +1374,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       map['Route'] = ' ';
       map['Duration'] = int.parse(_durationController.text);
       map['DurationUnit'] = durationUnitValue;
-      map['StartDate'] = startOn;
+      //map['StartDate'] = startOn;
       map['RefillNeeded'] = false;
       map['Instructions'] = _instructionController.text;
       map['ImageResourceId'] = medcationResourceId;

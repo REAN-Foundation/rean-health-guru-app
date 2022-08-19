@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
@@ -200,8 +201,11 @@ class _AssessmentQuestionCarePlanViewState
                 ),
               ),
             ),
+            if (widget.assesment!.description.toString().contains('<ul>')) ...[
+              Html(data: widget.assesment!.description.toString()),
+            ],
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: answers
                     .map((data) => RadioListTile(

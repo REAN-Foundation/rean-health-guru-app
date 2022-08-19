@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:devicelocale/devicelocale.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -73,6 +74,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   CoachMarkUtilites coackMarkUtilites = CoachMarkUtilites();
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   String imageResourceId = '';
+  final remoteConfig = FirebaseRemoteConfig.instance;
 
   _HomeViewState(int screenPosition) {
     _currentNav = screenPosition;
@@ -360,6 +362,23 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     WidgetsBinding.instance!.addPostFrameCallback(_layout);
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
+  }
+
+  setupFirebaseConfig() async {
+    setupFirebaseConfig();
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(minutes: 1),
+      minimumFetchInterval: const Duration(minutes: 1),
+    ));
+
+    await remoteConfig.setDefaults(const {
+      "sample_string_value": "Hello, world!",
+    });
+
+    await remoteConfig.fetchAndActivate();
+
+    debugPrint(
+        'Firebase Remote Config ==> ${remoteConfig.getString('sample_string_value')}');
   }
 
   @override

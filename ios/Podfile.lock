@@ -11,6 +11,9 @@ PODS:
   - Firebase/Messaging (8.9.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 8.9.0)
+  - Firebase/RemoteConfig (8.9.0):
+    - Firebase/CoreOnly
+    - FirebaseRemoteConfig (~> 8.9.0)
   - firebase_analytics (8.3.4):
     - Firebase/AnalyticsWithoutAdIdSupport (= 8.9.0)
     - firebase_core
@@ -22,6 +25,12 @@ PODS:
     - Firebase/Messaging (= 8.9.0)
     - firebase_core
     - Flutter
+  - firebase_remote_config (2.0.1):
+    - Firebase/RemoteConfig (= 8.9.0)
+    - firebase_core
+    - Flutter
+  - FirebaseABTesting (8.15.0):
+    - FirebaseCore (~> 8.0)
   - FirebaseAnalytics/WithoutAdIdSupport (8.9.1):
     - FirebaseCore (~> 8.0)
     - FirebaseInstallations (~> 8.0)
@@ -54,6 +63,12 @@ PODS:
     - GoogleUtilities/Reachability (~> 7.6)
     - GoogleUtilities/UserDefaults (~> 7.6)
     - nanopb (~> 2.30908.0)
+  - FirebaseRemoteConfig (8.9.0):
+    - FirebaseABTesting (~> 8.0)
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.6)
+    - "GoogleUtilities/NSData+zlib (~> 7.6)"
   - Flutter (1.0.0)
   - flutter_document_picker (0.0.1):
     - Flutter
@@ -143,6 +158,7 @@ DEPENDENCIES:
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
+  - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
   - Flutter (from `Flutter`)
   - flutter_document_picker (from `.symlinks/plugins/flutter_document_picker/ios`)
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
@@ -164,11 +180,13 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Firebase
+    - FirebaseABTesting
     - FirebaseAnalytics
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseInstallations
     - FirebaseMessaging
+    - FirebaseRemoteConfig
     - FMDB
     - GoogleAppMeasurement
     - GoogleDataTransport
@@ -190,6 +208,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_messaging:
     :path: ".symlinks/plugins/firebase_messaging/ios"
+  firebase_remote_config:
+    :path: ".symlinks/plugins/firebase_remote_config/ios"
   Flutter:
     :path: Flutter
   flutter_document_picker:
@@ -232,11 +252,14 @@ SPEC CHECKSUMS:
   firebase_analytics: fc22c02d8c200e3600bc15899a34ac2264ddf763
   firebase_core: f770e033e790657b3505f04be4cb24c482912f11
   firebase_messaging: 0941f01d3a7d10fce65bec7e44a9b75088c6d2e3
+  firebase_remote_config: 9fc7b46cf2076c7ee4e8701c857b06e3ad6107e8
+  FirebaseABTesting: 10cbce8db9985ae2e3847ea44e9947dd18f94e10
   FirebaseAnalytics: 4ab446ce08a3fe52e8a4303dd997cf26276bf968
   FirebaseCore: 599ee609343eaf4941bd188f85e3aa077ffe325b
   FirebaseCoreDiagnostics: 5daa63f1c1409d981a2d5007daa100b36eac6a34
   FirebaseInstallations: caa7c8e0d3e2345b8829d2fa9ca1b4dfbf2fcc85
   FirebaseMessaging: 82c4a48638f53f7b184f3cc9f6cd2cbe533ab316
+  FirebaseRemoteConfig: a75c1bd44ebd3ed4ad3fa1ff09414a8b133be405
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_document_picker: 109ba1c4622e6e62bfced17c22ff544a9a3541f4
   flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721

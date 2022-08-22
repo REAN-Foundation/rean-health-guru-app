@@ -107,19 +107,20 @@ class _BiometricBloodPresureVitalsViewState
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         bloodPresureFeilds(),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        historyListFeilds(),
-                        const SizedBox(
-                          height: 16,
-                        ),
+
                         if (records.isEmpty) Container() else _systolicgraph(),
                         const SizedBox(
                           height: 16,
                         ),
                         if (records.isEmpty) Container() else _diastolicgraph(),
                         //allGoal(),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        historyListFeilds(),
                         const SizedBox(
                           height: 16,
                         ),
@@ -135,15 +136,15 @@ class _BiometricBloodPresureVitalsViewState
                   children: <Widget>[
                     /*bloodPresureFeilds(),
                     const SizedBox(height: 16,),*/
-                    historyListFeilds(),
-                    const SizedBox(
-                      height: 16,
-                    ),
                     if (records.isEmpty) Container() else _systolicgraph(),
                     const SizedBox(
                       height: 16,
                     ),
                     if (records.isEmpty) Container() else _diastolicgraph(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    historyListFeilds(),
                     //allGoal(),
                     //const SizedBox(height: 16,),
                   ],
@@ -179,7 +180,7 @@ class _BiometricBloodPresureVitalsViewState
                   width: 8,
                 ),
                 InfoScreen(
-                    tittle: 'Info',
+                    tittle: 'Blood Pressue Information',
                     description:
                         'Your blood pressure will be measured at your regular health care visits or at least once per year if blood pressure is less than 120/80 mm Hg.  Your doctor might recommend you monitor your blood pressure at home. Your blood pressure readings can be categorized as (in mm Hg): *Normal: Less than 120/80; Elevated: Systolic 120-129 AND Diastolic less than 80; *High Blood Pressure Stage 1: Systolic 130-139 OR Diastolic 80-89; *High Blood Pressure Stage 2: Sytsolic 140+ OR Diasotlic 90+; Hypertensive Crisis (Consult your doctor immediately): Systolic 180+ and/or Diastolic 180+.',
                     height: 380),
@@ -362,7 +363,7 @@ class _BiometricBloodPresureVitalsViewState
     return Container(
       color: colorF6F6FF,
       constraints: BoxConstraints(
-          minHeight: 100, minWidth: double.infinity, maxHeight: 160),
+          minHeight: 160, minWidth: double.infinity, maxHeight: 200),
       padding: EdgeInsets.only(left: 0.0, right: 0.0, top: 16, bottom: 16),
       height: 160,
       child: model.busy
@@ -380,55 +381,65 @@ class _BiometricBloodPresureVitalsViewState
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Expanded(
-                            flex: 1,
+                            flex: 4,
+                            child: Text(
+                              'Date',
+                              semanticsLabel: 'Date',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              maxLines: 1,
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
                             child: Center(
                               child: Text(
-                                'Date',
-                                semanticsLabel: 'Date',
+                                'Systolic\n(mm Hg)',
+                                semanticsLabel: 'Systolic\n(mm Hg)',
                                 style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600),
-                                maxLines: 1,
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Center(
+                              child: Text(
+                                'Diastolic\n(mm Hg)',
+                                semanticsLabel: 'Diastolic\n(mm Hg)',
+                                style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600),
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ),
                           Expanded(
                             flex: 1,
-                            child: Center(
-                              child: Text(
-                                'Systolic',
-                                semanticsLabel: 'Systolic',
-                                style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                            child: ExcludeSemantics(
+                              child: SizedBox(
+                                height: 32,
+                                width: 32,
                               ),
                             ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Center(
-                              child: Text(
-                                'Diastolic ',
-                                semanticsLabel: 'Diastolic',
-                                style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
+                          )
                         ],
                       ),
                     ),
                     const SizedBox(
-                      height: 16,
+                      height: 8,
                     ),
                     Expanded(
                       child: Padding(
@@ -442,7 +453,7 @@ class _BiometricBloodPresureVitalsViewState
                               separatorBuilder:
                                   (BuildContext context, int index) {
                                 return SizedBox(
-                                  height: 8,
+                                  height: 0,
                                 );
                               },
                               itemCount: records.length,
@@ -470,18 +481,18 @@ class _BiometricBloodPresureVitalsViewState
   Widget _makeWeightList(BuildContext context, int index) {
     final Items record = records.elementAt(index);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 0),
       child: Card(
         semanticContainer: false,
         elevation: 0,
         child: Container(
           color: colorF6F6FF,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                flex: 1,
+                flex: 3,
                 child: Text(
                   dateFormatStandard.format(DateTime.parse(record.recordDate!)),
                   style: TextStyle(
@@ -489,43 +500,57 @@ class _BiometricBloodPresureVitalsViewState
                       fontSize: 14,
                       fontWeight: FontWeight.w300),
                   maxLines: 1,
+                  textAlign: TextAlign.left,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Center(
                   child: Semantics(
                     label: 'Systolic Blood Pressure ',
                     child: Text(
-                      record.systolic.toString() + ' mm Hg',
+                      record.systolic.toString() + ' ',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
                           fontWeight: FontWeight.w300),
                       maxLines: 1,
+                      textAlign: TextAlign.left,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
               ),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Center(
                   child: Semantics(
                     label: 'Diastolic Blood Pressure ',
                     child: Text(
-                      record.diastolic.toString() + ' mm Hg',
+                      record.diastolic.toString(),
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
                           fontWeight: FontWeight.w500),
                       maxLines: 1,
+                      textAlign: TextAlign.left,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
               ),
+              IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints(),
+                  onPressed: () {
+                    deleteVitals(record.id.toString());
+                  },
+                  icon: Icon(
+                    Icons.delete_rounded,
+                    color: primaryColor,
+                    size: 24,
+                  ))
             ],
           ),
         ),
@@ -1002,6 +1027,33 @@ class _BiometricBloodPresureVitalsViewState
         showToast(baseResponse.message!, context);
         _systolicController.clear();
         _diastolicController.clear();
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
+      } else {
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      progressDialog.close();
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  deleteVitals(String recordId) async {
+    try {
+      progressDialog.show(max: 100, msg: 'Loading...');
+
+      final BaseResponse baseResponse =
+          await model.deleteVitalsRecord('blood-pressures', recordId);
+
+      if (baseResponse.status == 'success') {
+        if (progressDialog.isOpen()) {
+          progressDialog.close();
+        }
+        showToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);

@@ -1885,7 +1885,7 @@ class _EditProfileState extends State<EditProfile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Gender',
+            'Sex',
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
@@ -1914,7 +1914,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 )
               : Semantics(
-                  label: 'Gender ' + selectedGender.toString(),
+            label: 'Sex ' + selectedGender.toString(),
                   readOnly: true,
                   child: Container(
                     width: MediaQuery.of(context).size.width,

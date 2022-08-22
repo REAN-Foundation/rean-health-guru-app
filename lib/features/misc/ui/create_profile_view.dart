@@ -624,7 +624,7 @@ class _CreateProfileState extends State<CreateProfile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Gender',
+            'Sex',
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(

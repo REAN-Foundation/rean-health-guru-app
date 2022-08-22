@@ -242,7 +242,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   SizedBox(
                     width: 12,
                   ),
-                  Text('Did you have an emergency?',
+                  Text('Have you been hospitalised?',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
@@ -439,7 +439,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     children: [
                       if (tittle == 'Doctors')
                         InfoScreen(
-                            tittle: 'Info',
+                            tittle: 'Information',
                             description:
                                 'To share your health information with your doctor, you must include their email address in the doctor profile.',
                             height: 208),

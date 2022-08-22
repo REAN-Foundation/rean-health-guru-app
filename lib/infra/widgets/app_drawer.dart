@@ -177,7 +177,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'Vital Management',
+                        'Vital',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),
@@ -213,7 +213,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     width: 40,
                   ),
                   Text(
-                    'Medication Management',
+                    'Medication',
                     style: TextStyle(
                         color: primaryColor, fontWeight: FontWeight.w600),
                   ),
@@ -261,7 +261,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'Nutrition Management',
+                        'Nutrition',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),

@@ -40,7 +40,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
             backgroundColor: Colors.white,
             brightness: Brightness.light,
             title: Text(
-              'Vital Management',
+              'Vital',
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,

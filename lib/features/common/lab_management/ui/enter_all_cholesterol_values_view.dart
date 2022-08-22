@@ -180,7 +180,7 @@ class _EnterAllCholesterolValuesViewState
                   width: 0,
                 ),
                 InfoScreen(
-                    tittle: 'Info',
+                    tittle: 'LDL Information',
                     description:
                         'Since LDL is the bad kind of cholesterol, a low LDL level is considered good for your heart health.',
                     height: 200),
@@ -279,7 +279,7 @@ class _EnterAllCholesterolValuesViewState
                   width: 0,
                 ),
                 InfoScreen(
-                    tittle: 'Info',
+                    tittle: 'HDL Information',
                     description:
                         'HDL cholesterol is called “good” cholesterol. A healthy HDL-cholesterol level may protect against heart attack and stroke.',
                     height: 208),
@@ -377,7 +377,7 @@ class _EnterAllCholesterolValuesViewState
                   width: 0,
                 ),
                 InfoScreen(
-                    tittle: 'Info',
+                    tittle: 'Total Cholesterol Information',
                     description:
                         'You might have a fasting lipoprotein profile taken every four to six years, starting at age 20. This is a blood test that measures total cholesterol, LDL (bad) cholesterol and HDL (good) cholesterol. You may need to be tested more frequently if your doctor determines that you’re at an increased risk for heart disease or stroke. After age 40, your doctor will also want to use an equation to calculate your 10-year risk of experiencing cardiovascular disease or stroke.',
                     height: 320),
@@ -475,7 +475,7 @@ class _EnterAllCholesterolValuesViewState
                   width: 0,
                 ),
                 InfoScreen(
-                    tittle: 'Info',
+                    tittle: 'Triglycerides Information',
                     description:
                         'Triglycerides are the most common type of fat in your body. They come from food, and your body also makes them.\n\nNormal triglyceride levels vary by age and sex.',
                     height: 240),

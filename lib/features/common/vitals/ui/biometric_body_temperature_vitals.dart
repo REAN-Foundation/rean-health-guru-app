@@ -58,11 +58,11 @@ class _BiometricBodyTemperatureVitalsViewState
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                weightHistoryListFeilds(),
+                if (records.isEmpty) Container() else graph(),
                 const SizedBox(
                   height: 16,
                 ),
-                if (records.isEmpty) Container() else graph(),
+                weightHistoryListFeilds(),
               ],
             ),
           ),
@@ -203,29 +203,45 @@ class _BiometricBodyTemperatureVitalsViewState
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            'Date',
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Date',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                          Text(
-                            'Temperature',
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Temperature\n°F',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
+                          Expanded(
+                            flex: 1,
+                            child: ExcludeSemantics(
+                              child: SizedBox(
+                                height: 32,
+                                width: 32,
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
                     const SizedBox(
-                      height: 16,
+                      height: 8,
                     ),
                     Expanded(
                       child: Scrollbar(
@@ -239,7 +255,7 @@ class _BiometricBodyTemperatureVitalsViewState
                               separatorBuilder:
                                   (BuildContext context, int index) {
                                 return SizedBox(
-                                  height: 8,
+                                  height: 0,
                                 );
                               },
                               itemCount: records.length,
@@ -275,19 +291,10 @@ class _BiometricBodyTemperatureVitalsViewState
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              dateFormatStandard.format(DateTime.parse(record.recordDate!)),
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            Semantics(
-              label: 'Temperature ',
+            Expanded(
+              flex: 3,
               child: Text(
-                record.bodyTemperature.toString() + ' °F',
+                dateFormatStandard.format(DateTime.parse(record.recordDate!)),
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -296,6 +303,32 @@ class _BiometricBodyTemperatureVitalsViewState
                 overflow: TextOverflow.ellipsis,
               ),
             ),
+            Expanded(
+              flex: 2,
+              child: Semantics(
+                label: 'Temperature ',
+                child: Text(
+                  record.bodyTemperature.toString(),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            IconButton(
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(),
+                onPressed: () {
+                  deleteVitals(record.id.toString());
+                },
+                icon: Icon(
+                  Icons.delete_rounded,
+                  color: primaryColor,
+                  size: 24,
+                ))
           ],
         ),
       ),
@@ -531,6 +564,33 @@ class _BiometricBodyTemperatureVitalsViewState
         showToast(baseResponse.message!, context);
         progressDialog.close();
         _controller.clear();
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
+      } else {
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      progressDialog.close();
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  deleteVitals(String recordId) async {
+    try {
+      progressDialog.show(max: 100, msg: 'Loading...');
+
+      final BaseResponse baseResponse =
+          await model.deleteVitalsRecord('body-temperatures', recordId);
+
+      if (baseResponse.status == 'success') {
+        if (progressDialog.isOpen()) {
+          progressDialog.close();
+        }
+        showToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);

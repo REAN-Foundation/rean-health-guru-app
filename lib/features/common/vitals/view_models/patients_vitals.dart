@@ -51,4 +51,20 @@ class PatientVitalsViewModel extends BaseModel {
     // Convert and return
     return GetMyVitalsHistory.fromJson(response);
   }
+
+  Future<BaseResponse> deleteVitalsRecord(String path, String recordId) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!
+        .delete('/clinical/biometrics/' + path + '/' + recordId, header: map);
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
 }

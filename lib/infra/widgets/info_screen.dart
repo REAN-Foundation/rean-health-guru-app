@@ -29,7 +29,7 @@ class _InfoScreenState extends State<InfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: 'information',
+      label: widget.tittle ?? 'information',
       button: true,
       child: InkWell(
         onTap: () {

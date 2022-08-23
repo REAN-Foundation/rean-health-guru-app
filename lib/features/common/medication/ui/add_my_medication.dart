@@ -209,6 +209,18 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   _frequencyUnit == 'Daily'
                       ? _drugTimeScheduledCheck()
                       : Container(),
+                if (_frequencyUnit == 'Other') ...[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: Text(
+                        'Note: You will not get reminder for this option.',
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            color: textGrey,
+                            fontWeight: FontWeight.w500,
+                            fontStyle: FontStyle.italic)),
+                  ),
+                ],
                 if (_frequencyUnit != 'Other') ...[
                   _drugDuration(),
                   const SizedBox(

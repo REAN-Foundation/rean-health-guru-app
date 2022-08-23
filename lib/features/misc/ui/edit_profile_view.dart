@@ -11,6 +11,7 @@ import 'package:group_radio_button/group_radio_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:intl_phone_field/countries.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/delete_my_account.dart';
@@ -95,6 +96,9 @@ class _EditProfileState extends State<EditProfile> {
   var _api_key;
 
   final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
+  String _maritalStatusValue = '';
+  String _countryValue = '';
+  List<String> _countryList = [];
 
   @override
   void initState() {
@@ -103,6 +107,7 @@ class _EditProfileState extends State<EditProfile> {
     progressDialog = ProgressDialog(context: context);
     super.initState();
     loadSharedPrefs();
+    loadCountries();
   }
 
   loadSharedPrefs() async {
@@ -114,6 +119,18 @@ class _EditProfileState extends State<EditProfile> {
 
       dob = dateFormat.format(patient.user!.person!.birthDate!);
       unformatedDOB = patient.user!.person!.birthDate!.toIso8601String();
+      _maritalStatusValue =
+          patient.user!.person!.maritalStatus.toString() == 'null'
+              ? ''
+              : patient.user!.person!.maritalStatus.toString();
+      _countryValue = patient.user!.person!.addresses!
+                  .elementAt(0)
+                  .country
+                  .toString() ==
+              'null'
+          ? ''
+          : patient.user!.person!.addresses!.elementAt(0).country.toString();
+      //debugPrint('Marital Status ==> ${patient.user!.person!.maritalStatus.toString()}');
       userId = user.data!.user!.id.toString();
       auth = user.data!.accessToken;
 
@@ -193,6 +210,13 @@ class _EditProfileState extends State<EditProfile> {
     }
     //showDeleteDialog();
     //showDeleteAlert("Success","Patient records deleted successfully!");
+  }
+
+  loadCountries() {
+    for (int i = 0; i < countries.length; i++) {
+      _countryList.add(countries.elementAt(i)['name']);
+    }
+    debugPrint('Country Count ==> ${_countryList.length}');
   }
 
   void overFlowHandleClick(String value) {
@@ -590,6 +614,198 @@ class _EditProfileState extends State<EditProfile> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _maritalStatus() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Marital Status',
+            style: TextStyle(
+                fontSize: 15,
+                color: Colors.black87,
+                fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 8,
+        ),
+        isEditable
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.0),
+                            border:
+                                Border.all(color: primaryColor, width: 0.80),
+                            color: Colors.white),
+                        child: Semantics(
+                          label: 'Marital Status',
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            value: _maritalStatusValue == ''
+                                ? null
+                                : _maritalStatusValue,
+                            items: <String>[
+                              'Single',
+                              'Married',
+                              'Unmarried',
+                              'Widowed',
+                              'Divorcee',
+                              'Live-in',
+                              'Unknown'
+                            ].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            hint: Text('Select Marital Status'),
+                            onChanged: (data) {
+                              debugPrint(data);
+                              setState(() {
+                                _maritalStatusValue = data.toString();
+                              });
+                              setState(() {});
+                            },
+                          ),
+                        )),
+                  ),
+                ],
+              )
+            : Semantics(
+                label: 'Marital Status ' + _maritalStatusValue.toString(),
+                readOnly: true,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 48.0,
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    border: Border.all(
+                      color: Color(0XFF909CAC),
+                      width: 1.0,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                    child: ExcludeSemantics(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              _maritalStatusValue.toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 16,
+                                  color: textGrey),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+      ],
+    );
+  }
+
+  Widget _country() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Country',
+            style: TextStyle(
+                fontSize: 15,
+                color: Colors.black87,
+                fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 8,
+        ),
+        isEditable
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.0),
+                            border:
+                                Border.all(color: primaryColor, width: 0.80),
+                            color: Colors.white),
+                        child: Semantics(
+                          label: 'Country',
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            value: _countryValue == '' ? null : _countryValue,
+                            items: _countryList.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            hint: Text('Select Country'),
+                            onChanged: (data) {
+                              debugPrint(data);
+                              setState(() {
+                                _countryValue = data.toString();
+                              });
+                              setState(() {});
+                            },
+                          ),
+                        )),
+                  ),
+                ],
+              )
+            : Semantics(
+                label: 'Country ' + _countryValue.toString(),
+                readOnly: true,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 48.0,
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    border: Border.all(
+                      color: Color(0XFF909CAC),
+                      width: 1.0,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+                    child: ExcludeSemantics(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              _countryValue.toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 16,
+                                  color: textGrey),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+      ],
     );
   }
 
@@ -1843,10 +2059,11 @@ class _EditProfileState extends State<EditProfile> {
                     map['FirstName'] = _firstNameController.text;
                     map['MiddleName'] = _middleNameController.text;
                     map['LastName'] = _lastNameController.text;
+                    map['MaritalStatus'] = _maritalStatusValue;
                     final address = <String, String?>{};
                     address['AddressLine'] = _addressController.text.trim();
                     address['City'] = _cityController.text.trim();
-                    address['Country'] = _countryController.text.trim();
+                    address['Country'] = _countryValue.trim();
                     address['PostalCode'] = _postalCodeController.text.isEmpty
                         ? null
                         : _postalCodeController.text.trim();
@@ -2170,30 +2387,30 @@ class _EditProfileState extends State<EditProfile> {
         _genderWidget(),
         _dateOfBirthField('Date Of Birth'),
         _entryMobileNoField('Mobile Number'),
-
+        _maritalStatus(),
         _entryEmailField('Email'),
         //_entryBloodGroupField("Blood Group"),
         //_entryEmergencyMobileNoField('Emergency Contact Number'),
         _entryAddressField('Address'),
-
-        Row(
+        _entryLocalityField('City'),
+        _country(),
+        /* Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               flex: 1,
-              child: _entryLocalityField('City'),
+              child:
             ),
             SizedBox(
               width: 8,
             ),
             Expanded(
               flex: 1,
-              child: _entryCountryField('Country'),
+              child: ,//_entryCountryField('Country'),
             ),
           ],
-        ),
-
+        ),*/
         _entryPostalField('Postal Code'),
       ],
     );

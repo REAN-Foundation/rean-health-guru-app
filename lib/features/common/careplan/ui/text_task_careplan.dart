@@ -139,7 +139,7 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
 
   Widget questionText() {
     return Container(
-      height: 80,
+      height: 100,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
           color: primaryLightColor,

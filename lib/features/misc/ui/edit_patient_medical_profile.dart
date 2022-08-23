@@ -42,30 +42,18 @@ class _EditPatientMedicalProfileViewState
   var model = PatientObservationsViewModel();
 
   final _heightInFeetController = TextEditingController();
-  final _heightInFeetFocus = FocusNode();
 
   final TextEditingController _majorAilmentController = TextEditingController();
-  final TextEditingController _bloodGroupController = TextEditingController();
   final TextEditingController _ocupationController = TextEditingController();
-  final TextEditingController _nationalityController = TextEditingController();
-  final TextEditingController _otherConditionsController =
-      TextEditingController();
   final TextEditingController _procedureHistoryController =
       TextEditingController();
-  final TextEditingController _ethnicityController = TextEditingController();
 
   late ProgressDialog progressDialog;
 
   final _majorAilmentFocus = FocusNode();
-  final _ethnicityFocus = FocusNode();
-  final _bloodGroupFocus = FocusNode();
   final _ocupationFocus = FocusNode();
-  final _nationalityFocus = FocusNode();
 
-  //final _surgicalHistoryFocus = FocusNode();
   final _obstetricHistoryFocus = FocusNode();
-  final _otherConditionsFocus = FocusNode();
-  final _procedureHistoryFocus = FocusNode();
 
   var isDiabetic;
   var hasHeartAilment;
@@ -81,6 +69,9 @@ class _EditPatientMedicalProfileViewState
   int heightInInch = 0;
   String heightInDouble = '0.0';
   late var heightArry;
+  String _ethnicityValue = '';
+  String _raceValue = '';
+  String _bloodgroupValue = '';
 
   @override
   void initState() {
@@ -122,6 +113,7 @@ class _EditPatientMedicalProfileViewState
           TextPosition(offset: _heightInFeetController.text.length),
         );
       }
+      setState(() {});
     }
   }
 
@@ -131,20 +123,14 @@ class _EditPatientMedicalProfileViewState
       TextPosition(offset: _majorAilmentController.text.length),
     );
 
-    _bloodGroupController.text = widget.healthProfile!.bloodGroup ?? '';
-    _bloodGroupController.selection = TextSelection.fromPosition(
-      TextPosition(offset: _bloodGroupController.text.length),
-    );
-
     _ocupationController.text = widget.healthProfile!.occupation ?? '';
     _ocupationController.selection = TextSelection.fromPosition(
       TextPosition(offset: _ocupationController.text.length),
     );
 
-    _nationalityController.text = widget.healthProfile!.nationality ?? '';
-    _nationalityController.selection = TextSelection.fromPosition(
-      TextPosition(offset: _nationalityController.text.length),
-    );
+    isDiabetic = yesOrNo(widget.healthProfile!.isDiabetic!);
+    isSmoker = yesOrNo(widget.healthProfile!.isSmoker!);
+    hasHeartAilment = yesOrNo(widget.healthProfile!.hasHeartAilment!);
 
     _procedureHistoryController.text =
         widget.healthProfile!.procedureHistory ?? '';
@@ -152,43 +138,13 @@ class _EditPatientMedicalProfileViewState
       TextPosition(offset: _procedureHistoryController.text.length),
     );
 
-    /* _surgicalHistoryController.text = widget.medicalProfiles.surgicalHistory;
-    _surgicalHistoryController.selection = TextSelection.fromPosition(
-      TextPosition(offset: _surgicalHistoryController.text.length),
-    );*/
+    _ethnicityValue = widget.healthProfile!.ethnicity ?? '';
+    _raceValue = widget.healthProfile!.race ?? '';
+    _bloodgroupValue = widget.healthProfile!.bloodGroup ?? '';
 
     isDiabetic = yesOrNo(widget.healthProfile!.isDiabetic!);
     hasHeartAilment = yesOrNo(widget.healthProfile!.hasHeartAilment!);
     sedentaryLifestyle = yesOrNo(widget.healthProfile!.sedentaryLifestyle!);
-    isSmoker = yesOrNo(widget.healthProfile!.isSmoker!);
-    isDrinker = yesOrNo(widget.healthProfile!.isSmoker!);
-    maritalStatus = widget.healthProfile!.maritalStatus.toString();
-    _otherConditionsController.text =
-        widget.healthProfile!.otherConditions ?? '';
-    _otherConditionsController.selection = TextSelection.fromPosition(
-      TextPosition(offset: _otherConditionsController.text.length),
-    );
-
-    _procedureHistoryController.text =
-        widget.healthProfile!.procedureHistory ?? '';
-    _procedureHistoryController.selection = TextSelection.fromPosition(
-      TextPosition(offset: _procedureHistoryController.text.length),
-    );
-
-    _ethnicityController.text = widget.healthProfile!.ethnicity ?? '';
-    _ethnicityController.selection = TextSelection.fromPosition(
-      TextPosition(offset: _ethnicityController.text.length),
-    );
-
-    isDiabetic = yesOrNo(widget.healthProfile!.isDiabetic!);
-    hasHeartAilment = yesOrNo(widget.healthProfile!.hasHeartAilment!);
-    sedentaryLifestyle = yesOrNo(widget.healthProfile!.sedentaryLifestyle!);
-    isSmoker = yesOrNo(widget.healthProfile!.isSmoker!);
-    isDrinker = yesOrNo(widget.healthProfile!.isDrinker!);
-    maritalStatus = widget.healthProfile!.maritalStatus.toString();
-    if (maritalStatus == 'Unknown') {
-      maritalStatus = 'Single';
-    }
   }
 
   String yesOrNo(bool flag) {
@@ -223,32 +179,23 @@ class _EditPatientMedicalProfileViewState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _sizedBoxHeight(),
-                      _textFeilds('Major Ailment', _majorAilmentController,
-                          _majorAilmentFocus, _otherConditionsFocus),
+                      _textFeilds('Main Condition', _majorAilmentController,
+                          _majorAilmentFocus, _obstetricHistoryFocus),
                       _sizedBoxHeight(),
-                      _textFeilds(
+                      /*_textFeilds(
                           'Other Conditions',
                           _otherConditionsController,
                           _otherConditionsFocus,
                           _ethnicityFocus),
+                      _sizedBoxHeight(),*/
+                      _ethnicity(),
                       _sizedBoxHeight(),
-                      _textFeilds('Ethnicity', _ethnicityController,
-                          _ethnicityFocus, _bloodGroupFocus),
+                      _race(),
                       _sizedBoxHeight(),
-                      _textFeilds('Blood Group', _bloodGroupController,
-                          _bloodGroupFocus, _ocupationFocus),
+                      _bloodGroup(),
                       _sizedBoxHeight(),
                       _textFeilds('Occupation', _ocupationController,
-                          _ocupationFocus, _nationalityFocus),
-                      _sizedBoxHeight(),
-                      _textFeilds('Nationality', _nationalityController,
-                          _nationalityFocus, _procedureHistoryFocus),
-                      _sizedBoxHeight(),
-                      _textFeilds(
-                          'Procedure History',
-                          _procedureHistoryController,
-                          _procedureHistoryFocus,
-                          _heightInFeetFocus),
+                          _ocupationFocus, _obstetricHistoryFocus),
                       _sizedBoxHeight(),
                       /*Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -265,7 +212,8 @@ class _EditPatientMedicalProfileViewState
 
                         ],
                       ),*/
-                      Stack(
+                      _heightFeilds(),
+                      /*Stack(
                         children: [
                           TextFormField(
                             controller: _heightInFeetController,
@@ -310,46 +258,24 @@ class _EditPatientMedicalProfileViewState
                                 ],
                               ))
                         ],
-                      ),
-                      /*Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: _textFeildsNumber(
-                                'Feet',
-                                _heightInFeetController,
-                                _heightInFeetFocus,
-                                _heightInInchesFocus),
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: _textFeildsNumber(
-                                'Inches',
-                                _heightInInchesController,
-                                _heightInInchesFocus,
-                                _obstetricHistoryFocus),
-                          ),
-                        ],
                       ),*/
-                      _sizedBoxHeight(),
-                      Text('Marital Status',
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                          'Have you used tobacco products (such as cigarettes, electronic cigarettes, cigars, smokeless tobacco, or hookah) over the past year?',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
                               color: textBlack)),
                       RadioGroup<String>.builder(
-                        items: maritalStatusItems,
-                        groupValue: maritalStatus,
+                        items: radioItems,
+                        groupValue: isSmoker,
                         direction: Axis.horizontal,
                         horizontalAlignment: MainAxisAlignment.start,
                         onChanged: (item) {
                           debugPrint(item);
-                          maritalStatus = item.toString();
+                          isSmoker = item;
                           setState(() {});
                         },
                         itemBuilder: (item) => RadioButtonBuilder(
@@ -414,52 +340,7 @@ class _EditPatientMedicalProfileViewState
                     debugPrint(item.title);
                   },
                 ),*/
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text('Is Smoker?',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
-                              color: textBlack)),
-                      RadioGroup<String>.builder(
-                        items: radioItems,
-                        groupValue: isSmoker,
-                        direction: Axis.horizontal,
-                        horizontalAlignment: MainAxisAlignment.start,
-                        onChanged: (item) {
-                          debugPrint(item);
-                          isSmoker = item;
-                          setState(() {});
-                        },
-                        itemBuilder: (item) => RadioButtonBuilder(
-                          item,
-                          textPosition: RadioButtonTextPosition.right,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text('Is Drinker?',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
-                              color: textBlack)),
-                      RadioGroup<String>.builder(
-                        items: radioItems,
-                        groupValue: isDrinker,
-                        direction: Axis.horizontal,
-                        horizontalAlignment: MainAxisAlignment.start,
-                        onChanged: (item) {
-                          debugPrint(item);
-                          isDrinker = item;
-                          setState(() {});
-                        },
-                        itemBuilder: (item) => RadioButtonBuilder(
-                          item,
-                          textPosition: RadioButtonTextPosition.right,
-                        ),
-                      ),
+
                       SizedBox(
                         width: 24,
                       ),
@@ -539,6 +420,181 @@ class _EditPatientMedicalProfileViewState
             ));
   }
 
+  Widget _ethnicity() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Ethnicity',
+            style: TextStyle(
+                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 8,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(color: primaryColor, width: 0.80),
+                    color: Colors.white),
+                child: Semantics(
+                  label: 'Ethnicity',
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: _ethnicityValue == '' ? null : _ethnicityValue,
+                    items: <String>[
+                      'Hispanic/Latino',
+                      'Not Hispanic/Latino',
+                      'Prefer not to say'
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: Text('Select Ethnicity'),
+                    onChanged: (data) {
+                      debugPrint(data);
+                      setState(() {
+                        _ethnicityValue = data.toString();
+                      });
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _race() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Race',
+            style: TextStyle(
+                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 8,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(color: primaryColor, width: 0.80),
+                    color: Colors.white),
+                child: Semantics(
+                  label: 'Race',
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: _raceValue == '' ? null : _raceValue,
+                    items: <String>[
+                      'American Indian/Alaskan Native',
+                      'Asian',
+                      'Black/African American',
+                      'Native Hawaiian or Other Pacific Islander',
+                      'White'
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: Text('Select Race'),
+                    onChanged: (data) {
+                      debugPrint(data);
+                      setState(() {
+                        _raceValue = data.toString();
+                      });
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _bloodGroup() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Blood Group',
+            style: TextStyle(
+                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 8,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(color: primaryColor, width: 0.80),
+                    color: Colors.white),
+                child: Semantics(
+                  label: 'Blood Group',
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: _bloodgroupValue == '' ? null : _bloodgroupValue,
+                    items: <String>[
+                      'A+',
+                      'A-',
+                      'B+',
+                      'B-',
+                      'AB+',
+                      'AB-',
+                      'O+',
+                      'O-'
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: Text('Select Blood Group'),
+                    onChanged: (data) {
+                      debugPrint(data);
+                      setState(() {
+                        _bloodgroupValue = data.toString();
+                      });
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
   Widget _sizedBoxHeight() {
     return const SizedBox(
       height: 24,
@@ -547,7 +603,7 @@ class _EditPatientMedicalProfileViewState
 
   Widget _textFeilds(String hint, TextEditingController editingController,
       FocusNode focusNode, FocusNode nextFocusNode) {
-    return TextFormField(
+    /*return TextFormField(
       controller: editingController,
       focusNode: focusNode,
       textAlign: TextAlign.left,
@@ -572,6 +628,148 @@ class _EditPatientMedicalProfileViewState
           borderSide: BorderSide(color: primaryColor),
         ),
       ),
+    );*/
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(hint,
+            style: TextStyle(
+                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 8,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                height: 48,
+                decoration: BoxDecoration(
+                    border: Border.all(color: primaryColor, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(4),
+                    ),
+                    color: Colors.white),
+                child: Semantics(
+                  label: hint,
+                  child: TextFormField(
+                      controller: editingController,
+                      focusNode: focusNode,
+                      keyboardType: TextInputType.text,
+                      maxLines: null,
+                      enabled: true,
+                      style: TextStyle(fontFamily: 'Montserrat', fontSize: 14),
+                      textInputAction: focusNode == _obstetricHistoryFocus
+                          ? TextInputAction.done
+                          : TextInputAction.next,
+                      onFieldSubmitted: (term) {
+                        focusNode != _obstetricHistoryFocus
+                            ? _fieldFocusChange(
+                                context, focusNode, nextFocusNode)
+                            : '  ';
+                      },
+                      decoration: InputDecoration(
+                        hintStyle:
+                            TextStyle(fontFamily: 'Montserrat', fontSize: 14),
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.only(
+                            left: 15, bottom: 14, top: 11, right: 0),
+                      )),
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _heightFeilds() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Height",
+            style: TextStyle(
+                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 8,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                    border: Border.all(color: primaryColor, width: 1),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(4),
+                    ),
+                    color: Colors.white),
+                child: Semantics(
+                  label: 'height',
+                  child: Stack(
+                    children: [
+                      TextFormField(
+                          controller: _heightInFeetController,
+                          keyboardType: TextInputType.text,
+                          maxLines: null,
+                          readOnly: true,
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 14,
+                              color: primaryColor),
+                          decoration: InputDecoration(
+                            hintStyle: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 14,
+                                color: primaryColor),
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.only(
+                                left: 15, bottom: 14, top: 11, right: 0),
+                          )),
+                      Align(
+                          alignment: Alignment.bottomRight,
+                          child: Column(
+                            children: [
+                              TextButton(
+                                  onPressed: () {
+                                    if (getCurrentLocale() == 'US') {
+                                      showHeightPickerInFoot(context);
+                                    } else {
+                                      showHeightPickerCms(context);
+                                    }
+                                  },
+                                  child: Text(
+                                    height == 0 ? 'Select' : 'Change',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: primaryColor),
+                                  )),
+                            ],
+                          ))
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
     );
   }
 
@@ -698,21 +896,14 @@ class _EditPatientMedicalProfileViewState
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
       final Map<String, dynamic> data = <String, dynamic>{};
-      data['BloodGroup'] = _bloodGroupController.text.toUpperCase();
+      data['BloodGroup'] = _bloodgroupValue;
       data['MajorAilment'] = _majorAilmentController.text;
-      data['OtherConditions'] = _otherConditionsController.text;
       data['IsDiabetic'] = isDiabetic == 'Yes';
-      data['HasHeartAilment'] = hasHeartAilment == 'Yes';
-      data['MaritalStatus'] = maritalStatus;
-      data['Ethnicity'] = _ethnicityController.text;
-      data['Nationality'] = _nationalityController.text;
-      data['Occupation'] = _ocupationController.text;
-      data['SedentaryLifestyle'] = sedentaryLifestyle == 'Yes';
       data['IsSmoker'] = isSmoker == 'Yes';
-      data['IsDrinker'] = isDrinker == 'Yes';
-      //data['DrinkingSeverity'] = 'medium';
-      //data['DrinkingSince'] = null;
-      data['ProcedureHistory'] = _procedureHistoryController.text;
+      data['HasHeartAilment'] = hasHeartAilment == 'Yes';
+      data['Ethnicity'] = _ethnicityValue;
+      data['Race'] = _raceValue;
+      data['Occupation'] = _ocupationController.text;
 
       final BaseResponse baseResponse = await model.updatePatientMedicalProfile(
           widget.healthProfile!.id, data);
@@ -720,9 +911,9 @@ class _EditPatientMedicalProfileViewState
       if (baseResponse.status == 'success') {
         progressDialog.close();
         Navigator.pop(context);
-        Navigator.pop(
+        /* Navigator.pop(
           context,
-        );
+        );*/
         showToast('Medical Profile updated successfully!', context);
       } else {
         showToast(baseResponse.message!, context);

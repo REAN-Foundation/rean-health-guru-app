@@ -141,6 +141,7 @@ class Person {
   String? lastName;
   String? displayName;
   String? gender;
+  String? maritalStatus;
   DateTime? birthDate;
   String? age;
   String? phone;
@@ -157,13 +158,14 @@ class Person {
       this.lastName,
       this.displayName,
       this.gender,
+      this.maritalStatus,
       this.birthDate,
       this.age,
-        this.phone,
-        this.email,
-        this.imageResourceId,
-        this.activeSince,
-        this.addresses});
+      this.phone,
+      this.email,
+      this.imageResourceId,
+      this.activeSince,
+      this.addresses});
 
   Person.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -173,6 +175,7 @@ class Person {
     lastName = json['LastName'];
     displayName = json['DisplayName'];
     gender = json['Gender'];
+    maritalStatus = json['MaritalStatus'];
     if (json['BirthDate'] != null) {
       birthDate = DateTime.parse(json['BirthDate']);
     } else {
@@ -200,6 +203,7 @@ class Person {
     data['LastName'] = lastName;
     data['DisplayName'] = displayName;
     data['Gender'] = gender;
+    data['MaritalStatus'] = maritalStatus;
     if (birthDate == null) {
       data['BirthDate'] = birthDate;
     } else {

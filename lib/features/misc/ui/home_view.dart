@@ -312,7 +312,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         _keyNavigation_drawer,
         (targets.length + 1).toString(),
         'Navigation Menu',
-        'Update your profile, add vitals and medical information.',
+        'Update your profile and medical information.',
         CoachMarkContentPosition.bottom,
         ShapeLightFocus.Circle));
     targets.add(coackMarkUtilites.getTargetFocus(

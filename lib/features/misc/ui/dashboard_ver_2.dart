@@ -218,18 +218,18 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                howAreYoursymptoms(),
                 //if (incompleteMedicationCount > 0)
                 myMedication(),
                 // else
                 //   Container(),
-                myBiometrics(),
-                mylipidProfile(),
                 myNutrition(),
                 /*if (Platform.isIOS) ...[*/
                 myActivity(),
-                  myStress(),
+                myStress(),
                 //],
+                myBiometrics(),
+                howAreYoursymptoms(),
+                mylipidProfile(),
                 knowledgeTree(),
                 //myTasks(),
                 //searchNearMe(),

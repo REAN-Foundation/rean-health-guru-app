@@ -469,9 +469,9 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                       ),
                       Expanded(
                         child: Text(
-                            "You didn’t have enough sleep, Its better to sleep 7-9 hours everyday.",
+                            "You didn’t have enough sleep. It's better to sleep 7-9 hours everyday.",
                             semanticsLabel:
-                                'You didn’tt have enough sleep, Its better to sleep 7-9 hours everyday.',
+                                "You didn’tt have enough sleep. It's better to sleep 7-9 hours everyday.",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(

@@ -243,7 +243,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   SizedBox(
                     width: 12,
                   ),
-                  Text('Have you been hospitalised?',
+                  Text('Have you been hospitalized?',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,

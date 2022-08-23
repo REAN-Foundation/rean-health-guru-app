@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:patient/features/common/activity/ui/add_height_dialog.dart';
 import 'package:patient/features/common/vitals/models/get_my_vitals_history.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -44,13 +43,13 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   GetHealthData getHealthData = GetIt.instance<GetHealthData>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   double weight = 0;
-  double height = 0;
+  int height = 0;
   double bmiValue = 0;
   String bmiResult = '';
   Color bmiResultColor = Colors.black87;
   int heightInFt = 1;
   int heightInInch = 0;
-  double heightInDouble = 0.0;
+  String heightInDouble = '0.0';
   late var heightArry;
 
   @override
@@ -69,7 +68,9 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   }
 
   loadSharedPref() async {
-    height = await _sharedPrefUtils.readDouble('height');
+    var heightStored = await _sharedPrefUtils.readDouble('height');
+    debugPrint('Height Stored ==> $heightStored');
+    height = heightStored.toInt();
     weight = await _sharedPrefUtils.readDouble('weight');
 
     debugPrint('Height ==> $height');
@@ -84,7 +85,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   conversion() {
     if (height != 0.0) {
       debugPrint('Conversion Height in cms => $height');
-      heightInDouble = Conversion.cmToFeet(height);
+      heightInDouble = Conversion.cmToFeet(height.toInt());
       debugPrint('Conversion Height in ft & inch => $heightInDouble');
       heightArry = heightInDouble.toString().split('.');
       heightInFt = int.parse(heightArry[0]);
@@ -882,7 +883,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     );
   }
 
-  Widget _addBMIDetailsDialog(BuildContext context) {
+  /* Widget _addBMIDetailsDialog(BuildContext context) {
     return Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -947,13 +948,13 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                     Navigator.of(context, rootNavigator: true).pop();
                     setState(() {});
                   },
-                  height: height,
+                  height: height.toInt(),
                 ),
               )
             ],
           ),
         ));
-  }
+  }*/
 
   addvitals() async {
     try {
@@ -1059,12 +1060,11 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         )),
         selectedTextStyle: TextStyle(color: Colors.blue),
         onConfirm: (Picker picker, List value) {
-          var localHeight = Conversion.FeetToCm(double.parse(
-              picker.getSelectedValues().elementAt(0).toString() +
-                  '.' +
-                  picker.getSelectedValues().elementAt(1).toString()));
-          _sharedPrefUtils.saveDouble('height', localHeight);
-          height = localHeight;
+          var localHeight = Conversion.FeetAndInchToCm(
+              picker.getSelectedValues().elementAt(0),
+              picker.getSelectedValues().elementAt(1));
+          _sharedPrefUtils.saveDouble('height', double.parse(localHeight));
+          height = int.parse(localHeight);
           conversion();
           calculetBMI();
           debugPrint('Selected Height ==> $localHeight');
@@ -1100,7 +1100,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           var localHeight =
               double.parse(picker.getSelectedValues().elementAt(0).toString());
           _sharedPrefUtils.saveDouble('height', localHeight);
-          height = localHeight;
+          height = int.parse(localHeight.toString());
           conversion();
           calculetBMI();
           debugPrint('Selected Height ==> $localHeight');

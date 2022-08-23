@@ -39,7 +39,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   double weight = 0;
   double height = 0;
-  double heightInFeet = 0;
+  String heightInFeet = '0';
 
   /* final _ethnicityFocus = FocusNode();*/
 
@@ -47,7 +47,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
     height = await _sharedPrefUtils.readDouble('height');
 
     if (height != 0.0) {
-      heightInFeet = Conversion.cmToFeet(height);
+      heightInFeet = Conversion.cmToFeet(height.toInt());
     }
     setState(() {});
   }

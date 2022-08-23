@@ -42,9 +42,7 @@ class _EditPatientMedicalProfileViewState
   var model = PatientObservationsViewModel();
 
   final _heightInFeetController = TextEditingController();
-  final _heightInInchesController = TextEditingController();
   final _heightInFeetFocus = FocusNode();
-  final _heightInInchesFocus = FocusNode();
 
   final TextEditingController _majorAilmentController = TextEditingController();
   final TextEditingController _bloodGroupController = TextEditingController();
@@ -76,12 +74,12 @@ class _EditPatientMedicalProfileViewState
   var isDrinker;
   String maritalStatus = '';
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  double height = 0;
+  int height = 0;
   late var heightArray;
 
   int heightInFt = 1;
   int heightInInch = 0;
-  double heightInDouble = 0.0;
+  String heightInDouble = '0.0';
   late var heightArry;
 
   @override
@@ -92,10 +90,12 @@ class _EditPatientMedicalProfileViewState
   }
 
   loadSharedPref() async {
-    height = await _sharedPrefUtils.readDouble('height');
+    var heightStored = await _sharedPrefUtils.readDouble('height');
+    debugPrint('Height Stored ==> $heightStored');
+    height = heightStored.toInt();
 
     if (height != 0.0) {
-      double heightInFeet = Conversion.cmToFeet(height);
+      //double heightInFeet = Conversion.cmToFeet(height);
       conversion();
     }
   }
@@ -103,7 +103,7 @@ class _EditPatientMedicalProfileViewState
   conversion() {
     if (height != 0.0) {
       debugPrint('Conversion Height in cms => $height');
-      heightInDouble = Conversion.cmToFeet(height);
+      heightInDouble = Conversion.cmToFeet(height.toInt());
       debugPrint('Conversion Height in ft & inch => $heightInDouble');
       heightArry = heightInDouble.toString().split('.');
       heightInFt = int.parse(heightArry[0]);
@@ -575,7 +575,7 @@ class _EditPatientMedicalProfileViewState
     );
   }
 
-  Widget _textFeildsNumber(String hint, TextEditingController editingController,
+  /* Widget _textFeildsNumber(String hint, TextEditingController editingController,
       FocusNode focusNode, FocusNode nextFocusNode) {
     return TextFormField(
       controller: editingController,
@@ -607,7 +607,7 @@ class _EditPatientMedicalProfileViewState
         ),
       ),
     );
-  }
+  }*/
 
   showHeightPickerInFoot(BuildContext context) {
     Picker(
@@ -646,22 +646,11 @@ class _EditPatientMedicalProfileViewState
         )),
         selectedTextStyle: TextStyle(color: Colors.blue),
         onConfirm: (Picker picker, List value) {
-          print(picker.getSelectedValues());
-          debugPrint(
-              'Height in ft ==> ${double.parse(picker.getSelectedValues().elementAt(0).toString() + '.' + picker.getSelectedValues().elementAt(1).toString())}');
-          debugPrint(
-              'Height in inch ==> ${picker.getSelectedValues().elementAt(1).toString()}');
-          var localHeight = Conversion.FeetToCm(double.parse(
-              picker.getSelectedValues().elementAt(0).toString() +
-                  '.' +
-                  picker.getSelectedValues().elementAt(1).toString() +
-                  '1'));
-          /*if(picker.getSelectedValues().elementAt(1) == 10){
-            localHeight = localHeight + 25.4;
-          }*/
-
-          _sharedPrefUtils.saveDouble('height', localHeight);
-          height = localHeight;
+          var localHeight = Conversion.FeetAndInchToCm(
+              picker.getSelectedValues().elementAt(0),
+              picker.getSelectedValues().elementAt(1));
+          _sharedPrefUtils.saveDouble('height', double.parse(localHeight));
+          height = int.parse(localHeight);
           conversion();
           debugPrint('Selected Height ==> $localHeight');
           setState(() {
@@ -696,7 +685,7 @@ class _EditPatientMedicalProfileViewState
           var localHeight =
               double.parse(picker.getSelectedValues().elementAt(0).toString());
           _sharedPrefUtils.saveDouble('height', localHeight);
-          height = localHeight;
+          height = localHeight.toInt();
           conversion();
           debugPrint('Selected Height ==> $localHeight');
           setState(() {

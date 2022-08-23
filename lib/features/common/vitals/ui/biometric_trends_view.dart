@@ -107,7 +107,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   width: 8,
                 ),
                 InfoScreen(
-                    tittle: 'Weignt Information',
+                    tittle: 'Weight Information',
                     description:
                         'Your doctor typically will record your weight during your regular health care visits. Please refer to your doctor\'s recommended frequency of measuring your weight at home.',
                     height: 220),

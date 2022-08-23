@@ -181,7 +181,7 @@ class _BiometricBloodPresureVitalsViewState
                   width: 8,
                 ),
                 InfoScreen(
-                    tittle: 'Blood Pressue Information',
+                    tittle: 'Blood Pressure Information',
                     description:
                         'Your blood pressure will be measured at your regular health care visits or at least once per year if blood pressure is less than 120/80 mm Hg.  Your doctor might recommend you monitor your blood pressure at home. Your blood pressure readings can be categorized as (in mm Hg): *Normal: Less than 120/80; Elevated: Systolic 120-129 AND Diastolic less than 80; *High Blood Pressure Stage 1: Systolic 130-139 OR Diastolic 80-89; *High Blood Pressure Stage 2: Sytsolic 140+ OR Diasotlic 90+; Hypertensive Crisis (Consult your doctor immediately): Systolic 180+ and/or Diastolic 180+.',
                     height: 380),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_picker/flutter_picker.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_medical_profile_pojo.dart';
@@ -41,9 +42,7 @@ class _EditPatientMedicalProfileViewState
   var model = PatientObservationsViewModel();
 
   final _heightInFeetController = TextEditingController();
-  final _heightInInchesController = TextEditingController();
   final _heightInFeetFocus = FocusNode();
-  final _heightInInchesFocus = FocusNode();
 
   final TextEditingController _majorAilmentController = TextEditingController();
   final TextEditingController _bloodGroupController = TextEditingController();
@@ -75,8 +74,13 @@ class _EditPatientMedicalProfileViewState
   var isDrinker;
   String maritalStatus = '';
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  double height = 0;
+  int height = 0;
   late var heightArray;
+
+  int heightInFt = 1;
+  int heightInInch = 0;
+  String heightInDouble = '0.0';
+  late var heightArry;
 
   @override
   void initState() {
@@ -86,21 +90,38 @@ class _EditPatientMedicalProfileViewState
   }
 
   loadSharedPref() async {
-    height = await _sharedPrefUtils.readDouble('height');
+    var heightStored = await _sharedPrefUtils.readDouble('height');
+    debugPrint('Height Stored ==> $heightStored');
+    height = heightStored.toInt();
 
     if (height != 0.0) {
-      double heightInFeet = Conversion.cmToFeet(height);
+      //double heightInFeet = Conversion.cmToFeet(height);
+      conversion();
+    }
+  }
 
-      heightArray = heightInFeet.toString().split('.');
+  conversion() {
+    if (height != 0.0) {
+      debugPrint('Conversion Height in cms => $height');
+      heightInDouble = Conversion.cmToFeet(height.toInt());
+      debugPrint('Conversion Height in ft & inch => $heightInDouble');
+      heightArry = heightInDouble.toString().split('.');
+      heightInFt = int.parse(heightArry[0]);
+      heightInInch = int.parse(heightArry[1]);
+      debugPrint('Conversion Height => $heightInFt ft $heightInInch inch');
 
-      _heightInFeetController.text = heightArray[0].toString();
-      _heightInFeetController.selection = TextSelection.fromPosition(
-        TextPosition(offset: _heightInFeetController.text.length),
-      );
-      _heightInInchesController.text = heightArray[1].toString();
-      _heightInInchesController.selection = TextSelection.fromPosition(
-        TextPosition(offset: _heightInInchesController.text.length),
-      );
+      if (getCurrentLocale() == 'US') {
+        _heightInFeetController.text =
+            heightInDouble.toString().replaceAll('.', "'");
+        _heightInFeetController.selection = TextSelection.fromPosition(
+          TextPosition(offset: _heightInFeetController.text.length),
+        );
+      } else {
+        _heightInFeetController.text = height.toString();
+        _heightInFeetController.selection = TextSelection.fromPosition(
+          TextPosition(offset: _heightInFeetController.text.length),
+        );
+      }
     }
   }
 
@@ -229,18 +250,68 @@ class _EditPatientMedicalProfileViewState
                           _procedureHistoryFocus,
                           _heightInFeetFocus),
                       _sizedBoxHeight(),
-                      SizedBox(
-                        width: 150,
-                        child: Text('Height*',
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w600,
-                                color: textBlack)),
+                      /*Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 150,
+                            child: Text('Height*',
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w600,
+                                    color: textBlack)),
+                          ),
+
+                        ],
+                      ),*/
+                      Stack(
+                        children: [
+                          TextFormField(
+                            controller: _heightInFeetController,
+                            textAlign: TextAlign.left,
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              labelText: 'Height',
+                              labelStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: primaryColor),
+                              ),
+                            ),
+                          ),
+                          Align(
+                              alignment: Alignment.bottomRight,
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 4,
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        if (getCurrentLocale() == 'US') {
+                                          showHeightPickerInFoot(context);
+                                        } else {
+                                          showHeightPickerCms(context);
+                                        }
+                                      },
+                                      child: Text(
+                                        height == 0 ? 'Select' : 'Change',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: primaryColor),
+                                      )),
+                                ],
+                              ))
+                        ],
                       ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Row(
+                      /*Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -264,7 +335,7 @@ class _EditPatientMedicalProfileViewState
                                 _obstetricHistoryFocus),
                           ),
                         ],
-                      ),
+                      ),*/
                       _sizedBoxHeight(),
                       Text('Marital Status',
                           style: TextStyle(
@@ -401,7 +472,7 @@ class _EditPatientMedicalProfileViewState
                             height: 40,
                             child: ElevatedButton(
                               onPressed: () {
-                                if (_heightInFeetController.text
+                                /*if (_heightInFeetController.text
                                     .trim()
                                     .isEmpty) {
                                   showToast("Please enter your height in feet",
@@ -433,8 +504,8 @@ class _EditPatientMedicalProfileViewState
                                                       _heightInInchesController
                                                           .text))
                                           .toString()));
-                                  _updatePatientMedicalProfile();
-                                }
+                                }*/
+                                _updatePatientMedicalProfile();
                               },
                               style: ButtonStyle(
                                   foregroundColor:
@@ -504,7 +575,7 @@ class _EditPatientMedicalProfileViewState
     );
   }
 
-  Widget _textFeildsNumber(String hint, TextEditingController editingController,
+  /* Widget _textFeildsNumber(String hint, TextEditingController editingController,
       FocusNode focusNode, FocusNode nextFocusNode) {
     return TextFormField(
       controller: editingController,
@@ -536,6 +607,91 @@ class _EditPatientMedicalProfileViewState
         ),
       ),
     );
+  }*/
+
+  showHeightPickerInFoot(BuildContext context) {
+    Picker(
+        adapter: NumberPickerAdapter(data: [
+          NumberPickerColumn(
+            begin: 1,
+            end: 9,
+            initValue: heightInFt,
+            suffix: Text('  ft'),
+          ),
+          NumberPickerColumn(
+            begin: 0,
+            end: 11,
+            initValue: heightInInch,
+            suffix: Text('  inch'),
+          ),
+        ]),
+        delimiter: [
+          PickerDelimiter(
+              child: Container(
+            width: 30.0,
+            alignment: Alignment.center,
+            child: Icon(Icons.more_vert),
+          ))
+        ],
+        hideHeader: true,
+        title: Center(
+            child: Text(
+          " Height",
+          style: TextStyle(
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w600,
+              color: primaryColor,
+              fontSize: 18.0),
+          textAlign: TextAlign.center,
+        )),
+        selectedTextStyle: TextStyle(color: Colors.blue),
+        onConfirm: (Picker picker, List value) {
+          var localHeight = Conversion.FeetAndInchToCm(
+              picker.getSelectedValues().elementAt(0),
+              picker.getSelectedValues().elementAt(1));
+          _sharedPrefUtils.saveDouble('height', double.parse(localHeight));
+          height = int.parse(localHeight);
+          conversion();
+          debugPrint('Selected Height ==> $localHeight');
+          setState(() {
+            showToast('Height record created successfully!', context);
+          });
+        }).showDialog(context);
+  }
+
+  showHeightPickerCms(BuildContext context) {
+    Picker(
+        adapter: NumberPickerAdapter(data: [
+          NumberPickerColumn(
+            begin: 1,
+            end: 250,
+            initValue: height.toInt(),
+            suffix: Text('  cm'),
+          ),
+        ]),
+        hideHeader: true,
+        title: Center(
+            child: Text(
+          " Height",
+          style: TextStyle(
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w600,
+              color: primaryColor,
+              fontSize: 18.0),
+          textAlign: TextAlign.center,
+        )),
+        selectedTextStyle: TextStyle(color: Colors.blue),
+        onConfirm: (Picker picker, List value) {
+          var localHeight =
+              double.parse(picker.getSelectedValues().elementAt(0).toString());
+          _sharedPrefUtils.saveDouble('height', localHeight);
+          height = localHeight.toInt();
+          conversion();
+          debugPrint('Selected Height ==> $localHeight');
+          setState(() {
+            showToast('Height record created successfully!', context);
+          });
+        }).showDialog(context);
   }
 
   _updatePatientMedicalProfile() async {

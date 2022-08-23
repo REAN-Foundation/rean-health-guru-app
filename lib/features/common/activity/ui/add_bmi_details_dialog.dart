@@ -10,7 +10,7 @@ import 'package:patient/infra/utils/conversion.dart';
 // ignore: must_be_immutable
 class AddBMIDetailDialog extends StatefulWidget {
   late Function _submitButtonListner;
-  double? _height;
+  int? _height;
   double? _weight;
 
   // ignore
@@ -19,7 +19,7 @@ class AddBMIDetailDialog extends StatefulWidget {
   AddBMIDetailDialog(
       {Key? key,
       required Function submitButtonListner,
-      double? height,
+      int? height,
       double? weight})
       : super(key: key) {
     _submitButtonListner = submitButtonListner;
@@ -51,7 +51,7 @@ class _MyDialogState extends State<AddBMIDetailDialog> {
     }
 
     if (widget._height != 0.0) {
-      widget._height = Conversion.cmToFeet(widget._height!);
+      widget._height = int.parse(Conversion.cmToFeet(widget._height!));
 
       height = widget._height.toString().split('.');
 

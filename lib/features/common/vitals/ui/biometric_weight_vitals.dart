@@ -3,15 +3,16 @@ import 'dart:io';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_picker/flutter_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:patient/features/common/activity/ui/add_height_dialog.dart';
 import 'package:patient/features/common/vitals/models/get_my_vitals_history.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/conversion.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
@@ -44,10 +45,14 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   GetHealthData getHealthData = GetIt.instance<GetHealthData>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   double weight = 0;
-  double height = 0;
+  int height = 0;
   double bmiValue = 0;
   String bmiResult = '';
   Color bmiResultColor = Colors.black87;
+  int heightInFt = 1;
+  int heightInInch = 0;
+  String heightInDouble = '0.0';
+  late var heightArry;
 
   @override
   void initState() {
@@ -65,14 +70,29 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   }
 
   loadSharedPref() async {
-    height = await _sharedPrefUtils.readDouble('height');
+    var heightStored = await _sharedPrefUtils.readDouble('height');
+    debugPrint('Height Stored ==> $heightStored');
+    height = heightStored.toInt();
     weight = await _sharedPrefUtils.readDouble('weight');
 
     debugPrint('Height ==> $height');
 
     if (height != 0.0) {
       debugPrint('Height In ==> $height');
+      conversion();
       calculetBMI();
+    }
+  }
+
+  conversion() {
+    if (height != 0.0) {
+      debugPrint('Conversion Height in cms => $height');
+      heightInDouble = Conversion.cmToFeet(height.toInt());
+      debugPrint('Conversion Height in ft & inch => $heightInDouble');
+      heightArry = heightInDouble.toString().split('.');
+      heightInFt = int.parse(heightArry[0]);
+      heightInInch = int.parse(heightArry[1]);
+      debugPrint('Conversion Height => $heightInFt ft $heightInInch inch');
     }
   }
 
@@ -293,11 +313,16 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                       child: ExcludeSemantics(
                         child: InkWell(
                           onTap: () {
-                            showDialog(
+                            if (getCurrentLocale() == 'US') {
+                              showHeightPickerInFoot(context);
+                            } else {
+                              showHeightPickerCms(context);
+                            }
+                            /*showDialog(
                                 context: context,
                                 builder: (_) {
                                   return _addBMIDetailsDialog(context);
-                                });
+                                });*/
                             /*showToast("Please add height by clicking on edit",
                                 context);
                             Navigator.popAndPushNamed(
@@ -928,7 +953,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     );
   }
 
-  Widget _addBMIDetailsDialog(BuildContext context) {
+  /* Widget _addBMIDetailsDialog(BuildContext context) {
     return Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -993,13 +1018,13 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                     Navigator.of(context, rootNavigator: true).pop();
                     setState(() {});
                   },
-                  height: height,
+                  height: height.toInt(),
                 ),
               )
             ],
           ),
         ));
-  }
+  }*/
 
   addvitals() async {
     try {
@@ -1096,5 +1121,92 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
+  }
+
+  showHeightPickerInFoot(BuildContext context) {
+    Picker(
+        adapter: NumberPickerAdapter(data: [
+          NumberPickerColumn(
+            begin: 1,
+            end: 9,
+            initValue: heightInFt,
+            suffix: Text('  ft'),
+          ),
+          NumberPickerColumn(
+            begin: 0,
+            end: 11,
+            initValue: heightInInch,
+            suffix: Text('  inch'),
+          ),
+        ]),
+        delimiter: [
+          PickerDelimiter(
+              child: Container(
+            width: 30.0,
+            alignment: Alignment.center,
+            child: Icon(Icons.more_vert),
+          ))
+        ],
+        hideHeader: true,
+        title: Center(
+            child: Text(
+          " Height",
+          style: TextStyle(
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w600,
+              color: primaryColor,
+              fontSize: 18.0),
+          textAlign: TextAlign.center,
+        )),
+        selectedTextStyle: TextStyle(color: Colors.blue),
+        onConfirm: (Picker picker, List value) {
+          var localHeight = Conversion.FeetAndInchToCm(
+              picker.getSelectedValues().elementAt(0),
+              picker.getSelectedValues().elementAt(1));
+          _sharedPrefUtils.saveDouble('height', double.parse(localHeight));
+          height = int.parse(localHeight);
+          conversion();
+          calculetBMI();
+          debugPrint('Selected Height ==> $localHeight');
+          setState(() {
+            showToast('Height record created successfully!', context);
+          });
+        }).showDialog(context);
+  }
+
+  showHeightPickerCms(BuildContext context) {
+    Picker(
+        adapter: NumberPickerAdapter(data: [
+          NumberPickerColumn(
+            begin: 1,
+            end: 250,
+            initValue: height.toInt(),
+            suffix: Text('  cm'),
+          ),
+        ]),
+        hideHeader: true,
+        title: Center(
+            child: Text(
+          " Height",
+          style: TextStyle(
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w600,
+              color: primaryColor,
+              fontSize: 18.0),
+          textAlign: TextAlign.center,
+        )),
+        selectedTextStyle: TextStyle(color: Colors.blue),
+        onConfirm: (Picker picker, List value) {
+          var localHeight =
+              double.parse(picker.getSelectedValues().elementAt(0).toString());
+          _sharedPrefUtils.saveDouble('height', localHeight);
+          height = int.parse(localHeight.toString());
+          conversion();
+          calculetBMI();
+          debugPrint('Selected Height ==> $localHeight');
+          setState(() {
+            showToast('Height record created successfully!', context);
+          });
+        }).showDialog(context);
   }
 }

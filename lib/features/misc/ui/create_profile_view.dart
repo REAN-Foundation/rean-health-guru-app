@@ -46,7 +46,7 @@ class _CreateProfileState extends State<CreateProfile> {
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _sharedPrefUtils = SharedPrefUtils();
-  String selectedGender = 'Male';
+  String selectedGender = '';
   String dob = '';
   String unformatedDOB = '';
   String userId = '';
@@ -624,7 +624,7 @@ class _CreateProfileState extends State<CreateProfile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Gender',
+            'Sex',
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(

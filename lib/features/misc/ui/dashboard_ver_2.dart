@@ -17,6 +17,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable
@@ -217,18 +218,18 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                howAreYoursymptoms(),
                 //if (incompleteMedicationCount > 0)
                 myMedication(),
                 // else
                 //   Container(),
-                myBiometrics(),
-                mylipidProfile(),
                 myNutrition(),
                 /*if (Platform.isIOS) ...[*/
                 myActivity(),
-                  myStress(),
+                myStress(),
                 //],
+                myBiometrics(),
+                howAreYoursymptoms(),
+                mylipidProfile(),
                 knowledgeTree(),
                 //myTasks(),
                 //searchNearMe(),
@@ -277,7 +278,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   SizedBox(
                     width: 8,
                   ),
-                  Text('Symptom Management',
+                  Text('Symptom',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
@@ -814,12 +815,17 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 12,
                       ),
-                      Text('Medication Management',
+                      Text('Medication',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
+                      InfoScreen(
+                          tittle: 'Mediation Information',
+                          description:
+                              'Add your medications by pressing the + sign',
+                          height: 200),
                     ],
                   ),
                   Semantics(
@@ -1245,7 +1251,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   SizedBox(
                     width: 8,
                   ),
-                  Text('Knowledge Management',
+                  Text('Knowledge',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
@@ -1365,12 +1371,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Vital Management',
+                      Text('Vital',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
+                      InfoScreen(
+                        tittle: 'Vital Information',
+                        description:
+                            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                        height: 260,
+                        infoIconcolor: Colors.white,
+                      ),
                     ],
                   ),
                   IconButton(
@@ -1620,12 +1633,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Lab Management',
+                      Text('Lab Values',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
+                      InfoScreen(
+                        tittle: 'Lab Values Information',
+                        description:
+                            'Maintaining healthy cholesterol levels is a great way to keep your heart healthy. It can lower your chances of getting heart disease or having a stroke.',
+                        height: 220,
+                        infoIconcolor: Colors.white,
+                      ),
                     ],
                   ),
                   IconButton(
@@ -1633,7 +1653,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         Icons.add_circle,
                         size: 32,
                         color: iconColor,
-                        semanticLabel: 'Add Lab Management records',
+                        semanticLabel: 'Add Lab records',
                       ),
                       onPressed: () {
                         Navigator.pushNamed(context, RoutePaths.Lipid_Profile);
@@ -1910,12 +1930,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Nutrition Management',
+                      Text('Nutrition',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
+                      InfoScreen(
+                        tittle: 'Nutrition Information',
+                        description:
+                            'Aim for an overall healthy eating pattern to keep your heart healthy such as eating whole foods, lots of fruits and vegetables, lean protein, nuts, seeds, and cooking in non-tropical oils.',
+                        height: 220,
+                        infoIconcolor: Colors.white,
+                      ),
                     ],
                   ),
                   IconButton(
@@ -2156,15 +2183,24 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Physical Health Management',
+                      Text('Physical Health',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
+                      InfoScreen(
+                        tittle: 'Physical Health Information',
+                        description:
+                            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                        height: 260,
+                        infoIconcolor: Colors.white,
+                      ),
                     ],
                   ),
                   IconButton(
+                      padding: EdgeInsets.only(left: 6, bottom: 8, right: 16),
+                      constraints: BoxConstraints(),
                       icon: Icon(
                         Icons.add_circle,
                         size: 32,
@@ -2173,8 +2209,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       ),
                       onPressed: () {
                         Navigator.pushNamed(
-                          context,
-                          RoutePaths.My_Activity_Trends,
+                            context, RoutePaths.My_Activity_Trends,
                             arguments: 0);
                       })
                 ],
@@ -2406,12 +2441,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Mental Health Management',
+                      Text('Mental Well-Being',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
+                      InfoScreen(
+                        tittle: 'Mental Well-Being Information',
+                        description:
+                            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                        height: 260,
+                        infoIconcolor: Colors.white,
+                      ),
                     ],
                   ),
                   /*IconButton(

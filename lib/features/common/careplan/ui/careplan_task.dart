@@ -2087,6 +2087,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           }
           break;
         case 'Web':
+          debugPrint('Web Category ==> ${task.action!.category}');
           if (task.action!.category == 'Educational-NewsFeed') {
             final AssortedViewConfigs newAssortedViewConfigs =
                 AssortedViewConfigs();

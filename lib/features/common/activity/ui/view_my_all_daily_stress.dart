@@ -20,6 +20,7 @@ import 'package:patient/infra/utils/get_sleep_data.dart';
 import 'package:patient/infra/utils/get_sleep_data_in_bed.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 
 //ignore: must_be_immutable
 class ViewMyAllDailyStress extends StatefulWidget {
@@ -285,7 +286,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
               backgroundColor: primaryColor,
               brightness: Brightness.dark,
               title: Text(
-                'Mental Health Management',
+                'Mental Health',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,
@@ -390,14 +391,25 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Sleep',
-              semanticsLabel: 'Sleep',
-              style: TextStyle(
-                  fontFamily: "Montserrat",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.0,
-                  color: textBlack),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Sleep',
+                  semanticsLabel: 'Sleep',
+                  style: TextStyle(
+                      fontFamily: "Montserrat",
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18.0,
+                      color: textBlack),
+                ),
+                InfoScreen(
+                    tittle: 'Sleep Information',
+                    description:
+                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                    height: 260),
+              ],
             ),
             SizedBox(
               height: 16,
@@ -457,9 +469,9 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                       ),
                       Expanded(
                         child: Text(
-                            "You didn’t have enough sleep. Its better to sleep 7-9 hours everyday.",
+                            "You didn’t have enough sleep, Its better to sleep 7-9 hours everyday.",
                             semanticsLabel:
-                            'You didn’tt have enough sleep. Its better to sleep 7-9 hours everyday.',
+                                'You didn’tt have enough sleep, Its better to sleep 7-9 hours everyday.',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -496,14 +508,25 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Mindfulness',
-              semanticsLabel: 'Mindfulness',
-              style: TextStyle(
-                  fontFamily: "Montserrat",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.0,
-                  color: textBlack),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Mindfulness',
+                  semanticsLabel: 'Mindfulness',
+                  style: TextStyle(
+                      fontFamily: "Montserrat",
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18.0,
+                      color: textBlack),
+                ),
+                InfoScreen(
+                    tittle: 'Mindfulness Information',
+                    description:
+                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                    height: 260),
+              ],
             ),
             SizedBox(
               height: 16,

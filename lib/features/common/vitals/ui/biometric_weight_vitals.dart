@@ -16,6 +16,8 @@ import 'package:patient/infra/utils/conversion.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
@@ -172,14 +174,14 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              /*const SizedBox(height: 16,),
+                    /*const SizedBox(height: 16,),
                     weightFeilds(),
                     const SizedBox(height: 16,),*/
-              weightHistoryListFeilds(),
-              const SizedBox(
-                height: 16,
-              ),
                     if (records.isEmpty) Container() else graph(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    weightHistoryListFeilds(),
                     //allGoal(),
                     //const SizedBox(height: 16,),
                   ],
@@ -288,6 +290,11 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                                 fontSize: 12.0,
                                 color: textBlack),
                           ),
+                    InfoScreen(
+                        tittle: 'BMI Information',
+                        description:
+                            'BMI stands for Body Mass Index\nThis is a numerical value of your weight in relation to your height. A BMI between 18.5 and 25 kg/m² indicates a normal weight. A BMI of less than 18.5 kg/m² is considered underweight. A BMI between 25 kg/m² and 29.9 kg/m² is considered overweight. A BMI of 30 kg/m² or higher is considered obese. ',
+                        height: 300),
                   ],
                 ),
               ],
@@ -424,11 +431,27 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           const SizedBox(
             height: 16,
           ),
-          Text(
-            'Enter your weight:',
-            style: TextStyle(
-                color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
-            textAlign: TextAlign.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Enter your weight:',
+                style: TextStyle(
+                    color: textBlack,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              InfoScreen(
+                  tittle: 'Weight Information',
+                  description:
+                      'Your doctor typically will record your weight during your regular health care visits. Please refer to your doctor\'s recommended frequency of measuring your weight at home.',
+                  height: 220),
+            ],
           ),
           const SizedBox(
             height: 16,
@@ -538,47 +561,63 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     return Container(
       color: colorF6F6FF,
       constraints: BoxConstraints(
-          minHeight: 100, minWidth: double.infinity, maxHeight: 160),
+          minHeight: 160, minWidth: double.infinity, maxHeight: 200),
       padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16, bottom: 16),
       //height: 160,
       child: model.busy
           ? Center(
-        child: CircularProgressIndicator(),
-      )
+              child: CircularProgressIndicator(),
+            )
           : (records.isEmpty
-          ? noHistoryFound()
-          : Column(
-        children: [
-          Padding(
+              ? noHistoryFound()
+              : Column(
+                  children: [
+                    Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Date',
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  'Weight ',
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Date',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              unit == 'lbs' ? 'Weight\n(lbs)' : 'Weight\n(Kgs)',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: ExcludeSemantics(
+                              child: SizedBox(
+                                height: 32,
+                                width: 32,
+                              ),
+                            ),
+                          )
+                        ],
             ),
           ),
           const SizedBox(
-            height: 16,
-          ),
+            height: 8,
+                    ),
           Expanded(
             child: Scrollbar(
               isAlwaysShown: true,
@@ -591,8 +630,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                     separatorBuilder:
                         (BuildContext context, int index) {
                       return SizedBox(
-                        height: 8,
-                      );
+                        height: 0,
+                                );
                     },
                     itemCount: records.length,
                     scrollDirection: Axis.vertical,
@@ -627,37 +666,68 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Semantics(
-              child: Text(
-                dateFormatStandard.format(
-                    records.elementAt(index).recordDate == null
-                        ? DateTime.now()
-                        : DateTime.parse(records.elementAt(index).recordDate!)),
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+            Expanded(
+              flex: 3,
+              child: Semantics(
+                child: Text(
+                  dateFormatStandard.format(records
+                              .elementAt(index)
+                              .recordDate ==
+                          null
+                      ? DateTime.now()
+                      : DateTime.parse(records.elementAt(index).recordDate!)),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
-            Semantics(
-              label: 'Weight ',
-              readOnly: true,
-              child: Text(
-                unit == 'lbs'
-                    ? (double.parse(record.bodyWeight.toString()) * 2.20462)
-                            .toStringAsFixed(1) +
-                        ' lbs'
-                    : record.bodyWeight.toStringAsFixed(1) + ' Kgs',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+            Expanded(
+              flex: 2,
+              child: Semantics(
+                label: 'Weight ',
+                readOnly: true,
+                child: Text(
+                  unit == 'lbs'
+                      ? (double.parse(record.bodyWeight.toString()) * 2.20462)
+                          .toStringAsFixed(1)
+                      : record.bodyWeight.toString(),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300),
+                  maxLines: 1,
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
+            IconButton(
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(),
+                onPressed: () {
+                  ConfirmationBottomSheet(
+                      context: context,
+                      height: 180,
+                      onPositiveButtonClickListner: () {
+                        //debugPrint('Positive Button Click');
+                        deleteVitals(record.id.toString());
+                      },
+                      onNegativeButtonClickListner: () {
+                        //debugPrint('Negative Button Click');
+                      },
+                      question: 'Are you sure you want to delete this record?',
+                      tittle: 'Alert!');
+                },
+                icon: Icon(
+                  Icons.delete_rounded,
+                  color: primaryColor,
+                  size: 24,
+                  semanticLabel: 'Weight Delete',
+                ))
           ],
         ),
       ),
@@ -997,6 +1067,33 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     }
   }
 
+  deleteVitals(String recordId) async {
+    try {
+      progressDialog.show(max: 100, msg: 'Loading...');
+
+      final BaseResponse baseResponse =
+          await model.deleteVitalsRecord('body-weights', recordId);
+
+      if (baseResponse.status == 'success') {
+        if (progressDialog.isOpen()) {
+          progressDialog.close();
+        }
+        showToast(baseResponse.message!, context);
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
+      } else {
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      progressDialog.close();
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
   getVitalsHistory() async {
     try {
       final GetMyVitalsHistory getMyVitalsHistory =
@@ -1007,6 +1104,9 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
         if (records.isNotEmpty) {
           weight = double.parse(records.elementAt(0).bodyWeight.toString());
+          _sharedPrefUtils.saveDouble('weight', weight);
+        } else {
+          weight = 0.0;
           _sharedPrefUtils.saveDouble('weight', weight);
         }
         if (height != 0) {

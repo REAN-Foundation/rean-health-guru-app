@@ -6,6 +6,7 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class EnterAllCholesterolValuesView extends StatefulWidget {
@@ -80,10 +81,10 @@ class _EnterAllCholesterolValuesViewState
                   const SizedBox(
                     height: 8,
                   ),
-                  ratioFeilds(),
+                  /*ratioFeilds(),
                   const SizedBox(
                     height: 32,
-                  ),
+                  ),*/
                   Align(
                     alignment: Alignment.center,
                     child: model!.busy
@@ -175,6 +176,14 @@ class _EnterAllCholesterolValuesViewState
                         fontSize: 12),
                   ),
                 ),
+                SizedBox(
+                  width: 0,
+                ),
+                InfoScreen(
+                    tittle: 'LDL Information',
+                    description:
+                        'Since LDL is the bad kind of cholesterol, a low LDL level is considered good for your heart health.',
+                    height: 200),
               ],
             ),
             const SizedBox(
@@ -266,6 +275,14 @@ class _EnterAllCholesterolValuesViewState
                         fontSize: 12),
                   ),
                 ),
+                SizedBox(
+                  width: 0,
+                ),
+                InfoScreen(
+                    tittle: 'HDL Information',
+                    description:
+                        'HDL cholesterol is called “good” cholesterol. A healthy HDL-cholesterol level may protect against heart attack and stroke.',
+                    height: 208),
               ],
             ),
             const SizedBox(
@@ -348,7 +365,7 @@ class _EnterAllCholesterolValuesViewState
                 ),
                 RichText(
                   text: TextSpan(
-                    text: ' (mg/dl) ',
+                    text: ' (mg/dl)',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
@@ -356,6 +373,14 @@ class _EnterAllCholesterolValuesViewState
                         fontSize: 12),
                   ),
                 ),
+                SizedBox(
+                  width: 0,
+                ),
+                InfoScreen(
+                    tittle: 'Total Cholesterol Information',
+                    description:
+                        'You might have a fasting lipoprotein profile taken every four to six years, starting at age 20. This is a blood test that measures total cholesterol, LDL (bad) cholesterol and HDL (good) cholesterol. You may need to be tested more frequently if your doctor determines that you’re at an increased risk for heart disease or stroke. After age 40, your doctor will also want to use an equation to calculate your 10-year risk of experiencing cardiovascular disease or stroke.',
+                    height: 320),
               ],
             ),
             const SizedBox(
@@ -446,6 +471,14 @@ class _EnterAllCholesterolValuesViewState
                         fontSize: 12),
                   ),
                 ),
+                SizedBox(
+                  width: 0,
+                ),
+                InfoScreen(
+                    tittle: 'Triglycerides Information',
+                    description:
+                        'Triglycerides are the most common type of fat in your body. They come from food, and your body also makes them.\n\nNormal triglyceride levels vary by age and sex.',
+                    height: 240),
               ],
             ),
             const SizedBox(

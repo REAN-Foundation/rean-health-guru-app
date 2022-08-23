@@ -254,7 +254,8 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(width: 16),
-                Image.asset(imagePath, width: 24, height: 24),
+                ExcludeSemantics(
+                    child: Image.asset(imagePath, width: 24, height: 24)),
                 SizedBox(width: 8),
                 Text(tittle,
                     style: TextStyle(

@@ -40,7 +40,7 @@ class _BiometricCholesterolTrendsViewState
             backgroundColor: Colors.white,
             brightness: Brightness.light,
             title: Text(
-              'Lab Management',
+              'Lab Values',
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,

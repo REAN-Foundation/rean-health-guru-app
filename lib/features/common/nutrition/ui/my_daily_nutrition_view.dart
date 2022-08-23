@@ -18,6 +18,8 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
+
 import 'add_daily_nutrition_view.dart';
 
 //ignore: must_be_immutable
@@ -207,7 +209,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
               backgroundColor: primaryColor,
               brightness: Brightness.dark,
               title: Text(
-                'Nutrition Management',
+                'Nutrition',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,
@@ -1001,13 +1003,24 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                           SizedBox(
                             height: 16,
                           ),
-                          Text(
-                            'Alcohol Intake',
-                            semanticsLabel: 'Alcohol Intake',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16.0,
-                                color: Colors.black),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Alcohol Intake',
+                                semanticsLabel: 'Alcohol Intake',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16.0,
+                                    color: Colors.black),
+                              ),
+                              InfoScreen(
+                                  tittle: 'Alcohol Intake Information',
+                                  description:
+                                      'One drink is 12 ounces of beer, 4 ounces of wine, 1.5 ounces of 80-proof spirits or 1 ounce of 100-proof spirit.',
+                                  height: 200),
+                            ],
                           ),
                           SizedBox(
                             height: 8,
@@ -1018,7 +1031,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(12))),
+                                    BorderRadius.all(Radius.circular(12))),
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Row(

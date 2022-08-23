@@ -18,6 +18,7 @@ import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/get_sleep_data.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 //ignore: must_be_immutable
@@ -497,14 +498,25 @@ class _ViewMyAllDailyActivityTrendsState
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Stand',
-                  semanticsLabel: 'Stand',
-                  style: TextStyle(
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.0,
-                      color: textBlack),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Stand',
+                      semanticsLabel: 'Stand',
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.0,
+                          color: textBlack),
+                    ),
+                    InfoScreen(
+                        tittle: 'Stand Information',
+                        description:
+                            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                        height: 260),
+                  ],
                 ),
                 SizedBox(
                   height: 16,
@@ -591,14 +603,25 @@ class _ViewMyAllDailyActivityTrendsState
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Steps',
-                  semanticsLabel: 'Steps',
-                  style: TextStyle(
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.0,
-                      color: textBlack),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Steps',
+                      semanticsLabel: 'Steps',
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.0,
+                          color: textBlack),
+                    ),
+                    InfoScreen(
+                        tittle: 'Steps Information',
+                        description:
+                            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                        height: 260),
+                  ],
                 ),
                 SizedBox(
                   height: 16,
@@ -761,14 +784,25 @@ class _ViewMyAllDailyActivityTrendsState
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Exercise',
-              semanticsLabel: 'Exercise',
-              style: TextStyle(
-                  fontFamily: "Montserrat",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.0,
-                  color: textBlack),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Exercise',
+                  semanticsLabel: 'Exercise',
+                  style: TextStyle(
+                      fontFamily: "Montserrat",
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18.0,
+                      color: textBlack),
+                ),
+                InfoScreen(
+                    tittle: 'Exercise Information',
+                    description:
+                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                    height: 260),
+              ],
             ),
             SizedBox(
               height: 16,

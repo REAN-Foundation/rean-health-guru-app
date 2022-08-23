@@ -638,14 +638,14 @@ class _SignUpViewState extends State<SignUpView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Gender',
+            'Sex',
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
             height: 10,
           ),
           Semantics(
-              label: 'Gender',
+              label: 'Sex',
               child: ToggleSwitch(
                   totalSwitches: 2,
                   minWidth: 90.0,

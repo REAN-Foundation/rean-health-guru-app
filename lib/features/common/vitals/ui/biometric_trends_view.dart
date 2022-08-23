@@ -290,7 +290,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   width: 8,
                 ),
                 InfoScreen(
-                    tittle: 'Pulse Information',
+                    tittle: 'Pulse Rate Information',
                     description:
                         'Your heart rate, or pulse, is the number of times your heart beats per minute. Normal heart rate varies from person to person. For most of us (adults), between 60 and 100 beats per minute (bpm) is normal.',
                     height: 240),

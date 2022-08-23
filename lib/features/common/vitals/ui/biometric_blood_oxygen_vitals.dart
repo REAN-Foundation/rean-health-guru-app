@@ -11,6 +11,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class BiometricBloodOxygenVitalsView extends StatefulWidget {
@@ -320,12 +321,24 @@ class _BiometricBloodOxygenVitalsViewState
                 padding: EdgeInsets.zero,
                 constraints: BoxConstraints(),
                 onPressed: () {
-                  deleteVitals(record.id.toString());
+                  ConfirmationBottomSheet(
+                      context: context,
+                      height: 180,
+                      onPositiveButtonClickListner: () {
+                        //debugPrint('Positive Button Click');
+                        deleteVitals(record.id.toString());
+                      },
+                      onNegativeButtonClickListner: () {
+                        //debugPrint('Negative Button Click');
+                      },
+                      question: 'Are you sure you want to delete this record?',
+                      tittle: 'Alert!');
                 },
                 icon: Icon(
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
+                  semanticLabel: 'Blood Oxygen Delete',
                 ))
           ],
         ),

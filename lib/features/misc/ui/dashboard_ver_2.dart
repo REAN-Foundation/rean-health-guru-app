@@ -1633,14 +1633,14 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Lab',
+                      Text('Lab Values',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
                       InfoScreen(
-                        tittle: 'Lipid Profile Information',
+                        tittle: 'Lab Values Information',
                         description:
                             'Maintaining healthy cholesterol levels is a great way to keep your heart healthy. It can lower your chances of getting heart disease or having a stroke.',
                         height: 220,

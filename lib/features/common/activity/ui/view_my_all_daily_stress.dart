@@ -405,7 +405,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                       color: textBlack),
                 ),
                 InfoScreen(
-                    tittle: 'Stress Information',
+                    tittle: 'Sleep Information',
                     description:
                         'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
                     height: 260),
@@ -522,7 +522,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                       color: textBlack),
                 ),
                 InfoScreen(
-                    tittle: 'Stress Information',
+                    tittle: 'Mindfulness Information',
                     description:
                         'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
                     height: 260),

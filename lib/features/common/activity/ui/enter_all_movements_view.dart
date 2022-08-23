@@ -189,7 +189,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                   ),
                 ),
                 InfoScreen(
-                    tittle: 'Movement Information',
+                    tittle: 'Stand Information',
                     description:
                         'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
                     height: 260),
@@ -286,7 +286,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                   ),
                 ),
                 InfoScreen(
-                    tittle: 'Movement Information',
+                    tittle: 'Steps Information',
                     description:
                         'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
                     height: 260),
@@ -381,7 +381,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                   ),
                 ),
                 InfoScreen(
-                    tittle: 'Movement Information',
+                    tittle: 'Exercise Information',
                     description:
                         'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
                     height: 260),

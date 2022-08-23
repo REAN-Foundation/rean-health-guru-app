@@ -259,7 +259,6 @@ class _EditProfileState extends State<EditProfile> {
                             button: true,
                             child: InkWell(
                               onTap: () {
-                                deleteAccount();
                                 Navigator.pop(context);
                               },
                               child: Container(
@@ -274,12 +273,12 @@ class _EditProfileState extends State<EditProfile> {
                                 ),
                                 child: Center(
                             child: Text(
-                              'Yes',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: primaryColor,
-                                  fontSize: 14),
-                            ),
+                              'No',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: primaryColor,
+                                        fontSize: 14),
+                                  ),
                           ),
                         ),
                       ),
@@ -295,7 +294,8 @@ class _EditProfileState extends State<EditProfile> {
                       child: InkWell(
                         onTap: () {
                           Navigator.pop(context);
-                        },
+                                deleteAccount();
+                              },
                         child: Container(
                           height: 48,
                           padding: EdgeInsets.symmetric(
@@ -307,12 +307,12 @@ class _EditProfileState extends State<EditProfile> {
                               color: primaryColor),
                           child: Center(
                             child: Text(
-                              'No',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                  fontSize: 14),
-                            ),
+                              'Yes',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                        fontSize: 14),
+                                  ),
                           ),
                         ),
                       ),
@@ -503,11 +503,11 @@ class _EditProfileState extends State<EditProfile> {
             if (isEditable) {
               final result = await _onBackPressed();
               return result;
-                } else {
-                  Navigator.of(context).pop();
-                  return true;
-                }
-              },
+            } else {
+              Navigator.of(context).pop();
+              return true;
+            }
+          },
               child: Scaffold(
                 backgroundColor: Colors.white,
                 appBar: AppBar(
@@ -622,7 +622,7 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future<bool> _onBackPressed() {
-    return showDialog(
+    /*return showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Semantics(
@@ -651,7 +651,146 @@ class _EditProfileState extends State<EditProfile> {
           ),
         ],
       ),
-    ).then((value) => value as bool);
+    ).then((value) => value as bool);*/
+
+    return showMaterialModalBottomSheet(
+        isDismissible: true,
+        backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+        ),
+        context: context,
+        builder: (context) => Container(
+              height: 180,
+              color: Colors.transparent,
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(24.0),
+                      topRight: Radius.circular(24.0)),
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Alert!',
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Montserrat",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 18.0),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: 'Are you sure you want to discard the changes?',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                            color: textGrey,
+                          ),
+                          children: <TextSpan>[],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Semantics(
+                              button: true,
+                              label: 'No',
+                              child: ExcludeSemantics(
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).pop(false);
+                                  },
+                                  child: Container(
+                                    height: 48,
+                                    width:
+                                        MediaQuery.of(context).size.width - 32,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 16.0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(6.0),
+                                        border: Border.all(
+                                            color: primaryColor, width: 1),
+                                        color: Colors.white),
+                                    child: Center(
+                                      child: Text(
+                                        'No',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            color: primaryColor,
+                                            fontSize: 14),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Semantics(
+                              button: true,
+                              label: 'Yes',
+                              child: ExcludeSemantics(
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).pop(true);
+                                  },
+                                  child: Container(
+                                    height: 48,
+                                    width:
+                                        MediaQuery.of(context).size.width - 32,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 16.0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(6.0),
+                                        border: Border.all(
+                                            color: primaryColor, width: 1),
+                                        color: primaryColor),
+                                    child: Center(
+                                      child: Text(
+                                        'Yes',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white,
+                                            fontSize: 14),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            )).then((value) => value as bool);
   }
 
   Future getFile() async {

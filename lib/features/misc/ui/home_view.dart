@@ -318,15 +318,15 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyMyTasks,
         (targets.length + 1).toString(),
-        'Daily Tasks',
+        'My Tasks',
         'Keep a watch on your daily tasks.',
         CoachMarkContentPosition.top,
         ShapeLightFocus.Circle));
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyUploadReports,
         (targets.length + 1).toString(),
-        'Upload Reports',
-        'Upload all your reports here.',
+        'Upload Medical Records',
+        'Upload all your medical records here.',
         CoachMarkContentPosition.top,
         ShapeLightFocus.Circle));
     //targets.add(GetTargetFocus.getTargetFocus(_keyViewAppointments, (targets.length + 1).toString(), 'Appointments List', 'View all your Appointments here.', CoachMarkContentPosition.top));

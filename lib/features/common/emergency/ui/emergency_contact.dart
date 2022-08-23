@@ -17,6 +17,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -1486,7 +1487,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   _removeConfirmation(Items contact) {
-    showDialog(
+    /*showDialog(
       context: context,
       builder: (context) => AlertDialog(
         content: ListTile(
@@ -1522,7 +1523,19 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
           ),
         ],
       ),
-    );
+    );*/
+    ConfirmationBottomSheet(
+        context: context,
+        height: 180,
+        onPositiveButtonClickListner: () {
+          //debugPrint('Positive Button Click');
+          removeTeamMembers(contact.id!);
+        },
+        onNegativeButtonClickListner: () {
+          //debugPrint('Negative Button Click');
+        },
+        question: 'Are you sure you want to remove this contact?',
+        tittle: 'Alert!');
   }
 
   removeTeamMembers(String emergencyContactId) async {

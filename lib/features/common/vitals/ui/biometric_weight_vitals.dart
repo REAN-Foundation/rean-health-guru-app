@@ -15,6 +15,7 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -665,8 +666,10 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                 label: 'Weight ',
                 readOnly: true,
                 child: Text(
-                  (double.parse(record.bodyWeight.toString()) * 2.20462)
-                      .toStringAsFixed(1),
+                  unit == 'lbs'
+                      ? (double.parse(record.bodyWeight.toString()) * 2.20462)
+                          .toStringAsFixed(1)
+                      : record.bodyWeight.toString(),
                   style: TextStyle(
                       color: primaryColor,
                       fontSize: 14,
@@ -681,12 +684,24 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                 padding: EdgeInsets.zero,
                 constraints: BoxConstraints(),
                 onPressed: () {
-                  deleteVitals(record.id.toString());
+                  ConfirmationBottomSheet(
+                      context: context,
+                      height: 180,
+                      onPositiveButtonClickListner: () {
+                        //debugPrint('Positive Button Click');
+                        deleteVitals(record.id.toString());
+                      },
+                      onNegativeButtonClickListner: () {
+                        //debugPrint('Negative Button Click');
+                      },
+                      question: 'Are you sure you want to delete this record?',
+                      tittle: 'Alert!');
                 },
                 icon: Icon(
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
+                  semanticLabel: 'Weight Delete',
                 ))
           ],
         ),
@@ -1064,6 +1079,9 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
         if (records.isNotEmpty) {
           weight = double.parse(records.elementAt(0).bodyWeight.toString());
+          _sharedPrefUtils.saveDouble('weight', weight);
+        } else {
+          weight = 0.0;
           _sharedPrefUtils.saveDouble('weight', weight);
         }
         if (height != 0) {

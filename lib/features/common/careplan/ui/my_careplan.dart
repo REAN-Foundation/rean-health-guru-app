@@ -42,7 +42,7 @@ class _MyCarePlanViewState extends State<MyCarePlanView> {
             backgroundColor: primaryColor,
             brightness: Brightness.dark,
             title: Text(
-              'My Care Plan',
+              'Health Journey',
               style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.white,

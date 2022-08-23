@@ -11,6 +11,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -158,7 +159,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                 width: 8,
               ),
               InfoScreen(
-                  tittle: 'Pulse Information',
+                  tittle: 'Pulse Rate Information',
                   description:
                       'Your heart rate, or pulse, is the number of times your heart beats per minute. Normal heart rate varies from person to person. For most of us (adults), between 60 and 100 beats per minute (bpm) is normal.',
                   height: 240),
@@ -414,12 +415,24 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                 padding: EdgeInsets.zero,
                 constraints: BoxConstraints(),
                 onPressed: () {
-                  deleteVitals(record.id.toString());
+                  ConfirmationBottomSheet(
+                      context: context,
+                      height: 180,
+                      onPositiveButtonClickListner: () {
+                        //debugPrint('Positive Button Click');
+                        deleteVitals(record.id.toString());
+                      },
+                      onNegativeButtonClickListner: () {
+                        //debugPrint('Negative Button Click');
+                      },
+                      question: 'Are you sure you want to delete this record?',
+                      tittle: 'Alert!');
                 },
                 icon: Icon(
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
+                  semanticLabel: 'Pulse Rate Delete',
                 ))
           ],
         ),

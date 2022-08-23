@@ -1372,7 +1372,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       map['Frequency'] = frequency;
       map['FrequencyUnit'] = _frequencyUnit;
       map['Route'] = ' ';
-      map['Duration'] = int.parse(_durationController.text);
+      if (_durationController.text.isNotEmpty) {
+        map['Duration'] = int.parse(_durationController.text);
+      }
       map['DurationUnit'] = durationUnitValue;
       //map['StartDate'] = startOn;
       map['RefillNeeded'] = false;

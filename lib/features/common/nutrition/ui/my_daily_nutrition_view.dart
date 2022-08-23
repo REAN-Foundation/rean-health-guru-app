@@ -1016,7 +1016,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                     color: Colors.black),
                               ),
                               InfoScreen(
-                                  tittle: 'Nutrition Information',
+                                  tittle: 'Alcohol Intake Information',
                                   description:
                                       'One drink is 12 ounces of beer, 4 ounces of wine, 1.5 ounces of 80-proof spirits or 1 ounce of 100-proof spirit.',
                                   height: 200),

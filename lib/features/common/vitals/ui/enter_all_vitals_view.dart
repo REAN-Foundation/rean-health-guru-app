@@ -640,7 +640,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   width: 8,
                 ),
                 InfoScreen(
-                    tittle: 'Blood GlucoeInformation',
+                    tittle: 'Blood Glucoe Information',
                     description:
                         'The American Diabetes Association recommends testing for prediabetes and risk for future diabetes for all people beginning at age 45 years. If tests are normal, it is reasonable to repeat testing at a minimum of 3-year intervals.',
                     height: 240),
@@ -830,7 +830,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   width: 8,
                 ),
                 InfoScreen(
-                    tittle: 'Pulse Information',
+                    tittle: 'Pulse Rate Information',
                     description:
                         'Your heart rate, or pulse, is the number of times your heart beats per minute. Normal heart rate varies from person to person. For most of us (adults), between 60 and 100 beats per minute (bpm) is normal.',
                     height: 240),

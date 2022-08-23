@@ -10,6 +10,7 @@ import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -292,7 +293,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       width: 40,
                     ),
                     Text(
-                      'Care Plan',
+                      'Health Journey',
                       style: TextStyle(
                           color: primaryColor, fontWeight: FontWeight.w600),
                     ),
@@ -489,7 +490,7 @@ class _AppDrawerState extends State<AppDrawer> {
   }
 
   _logoutConfirmation() {
-    showDialog(
+    /*showDialog(
       context: context,
       builder: (context) => AlertDialog(
         content: ListTile(
@@ -532,7 +533,28 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
         ],
       ),
-    );
+    );*/
+    //Navigator.pop(context);
+    ConfirmationBottomSheet(
+        context: context,
+        height: 180,
+        onPositiveButtonClickListner: () {
+          debugPrint('Positive Button Click');
+          carePlanEnrollmentForPatientGlobe = null;
+          _sharedPrefUtils.save('CarePlan', null);
+          _sharedPrefUtils.saveBoolean('login', null);
+          _sharedPrefUtils.clearAll();
+          chatList.clear();
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) {
+            return LoginWithOTPView();
+          }), (Route<dynamic> route) => false);
+        },
+        onNegativeButtonClickListner: () {
+          //debugPrint('Negative Button Click');
+        },
+        question: 'Are you sure you want to logout?',
+        tittle: 'Alert!');
   }
 
   Widget _createHeader() {

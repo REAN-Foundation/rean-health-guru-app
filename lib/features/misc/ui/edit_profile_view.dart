@@ -98,7 +98,7 @@ class _EditProfileState extends State<EditProfile> {
   final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
   String _maritalStatusValue = '';
   String _countryValue = '';
-  List<String> _countryList = [];
+  List<String> countryList = [];
 
   @override
   void initState() {
@@ -214,9 +214,9 @@ class _EditProfileState extends State<EditProfile> {
 
   loadCountries() {
     for (int i = 0; i < countries.length; i++) {
-      _countryList.add(countries.elementAt(i)['name']);
+      countryList.add(countries.elementAt(i)['name']);
     }
-    debugPrint('Country Count ==> ${_countryList.length}');
+    debugPrint('Country Count ==> ${countryList.length}');
   }
 
   void overFlowHandleClick(String value) {
@@ -750,7 +750,7 @@ class _EditProfileState extends State<EditProfile> {
                           child: DropdownButton<String>(
                             isExpanded: true,
                             value: _countryValue == '' ? null : _countryValue,
-                            items: _countryList.map((String value) {
+                            items: countryList.map((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(value),
@@ -1373,7 +1373,7 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  Widget _entryCountryField(String title, {bool isPassword = false}) {
+  /*Widget _entryCountryField(String title, {bool isPassword = false}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 4),
       child: Column(
@@ -1425,8 +1425,7 @@ class _EditProfileState extends State<EditProfile> {
         ],
       ),
     );
-  }
-
+  }*/
 
   Widget _entryPostalField(String title, {bool isPassword = false}) {
     return Container(

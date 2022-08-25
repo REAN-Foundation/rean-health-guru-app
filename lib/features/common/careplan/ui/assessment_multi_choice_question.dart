@@ -152,24 +152,28 @@ class _AssessmentMultiChoiceQuestionViewState
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: ListView.builder(
-                  itemCount: widget.assesment!.options!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CheckboxListTile(
-                        value: widget.assesment!.options!
-                            .elementAt(index)
-                            .isChecked,
-                        title: Text(widget.assesment!.options!
-                            .elementAt(index)
-                            .text
-                            .toString()),
-                        controlAffinity: ListTileControlAffinity.leading,
-                        onChanged: (bool? val) {
-                          widget.assesment!.options!.elementAt(index).isCheck =
-                              val;
-                          setState(() {});
-                        });
-                  }),
+              child: Scrollbar(
+                isAlwaysShown: true,
+                child: ListView.builder(
+                    itemCount: widget.assesment!.options!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CheckboxListTile(
+                          value: widget.assesment!.options!
+                              .elementAt(index)
+                              .isChecked,
+                          title: Text(widget.assesment!.options!
+                              .elementAt(index)
+                              .text
+                              .toString()),
+                          controlAffinity: ListTileControlAffinity.leading,
+                          onChanged: (bool? val) {
+                            widget.assesment!.options!
+                                .elementAt(index)
+                                .isCheck = val;
+                            setState(() {});
+                          });
+                    }),
+              ),
             ),
           ),
           SizedBox(

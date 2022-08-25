@@ -581,11 +581,12 @@ class _ViewMyAllDailyActivityTrendsState
   Widget stepCounter() {
     int stepsToDisplay = 0;
     if (Platform.isIOS) {
-      if (steps > stepsMovements) {
+      /*if (steps > stepsMovements) {
         stepsToDisplay = steps;
       } else {
         stepsToDisplay = stepsMovements;
-      }
+      }*/
+      stepsToDisplay = steps + stepsMovements;
     } else {
       stepsToDisplay = stepsMovements;
     }
@@ -765,11 +766,13 @@ class _ViewMyAllDailyActivityTrendsState
     if (Platform.isIOS) {
       debugPrint(
           "Inside Exercise Time ==> ${data!.getExerciseTimeInMin().abs()}");
-      if (data!.getExerciseTimeInMin() > exerciseMovements) {
+      /*if (data!.getExerciseTimeInMin() > exerciseMovements) {
         exerciseToDisplay = data!.getExerciseTimeInMin().abs();
       } else {
         exerciseToDisplay = exerciseMovements;
-      }
+      }*/
+      exerciseToDisplay =
+          data!.getExerciseTimeInMin().abs() + exerciseMovements;
     } else {
       exerciseToDisplay = exerciseMovements;
     }

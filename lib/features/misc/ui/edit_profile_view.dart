@@ -123,13 +123,15 @@ class _EditProfileState extends State<EditProfile> {
           patient.user!.person!.maritalStatus.toString() == 'null'
               ? ''
               : patient.user!.person!.maritalStatus.toString();
-      _countryValue = patient.user!.person!.addresses!
-                  .elementAt(0)
-                  .country
-                  .toString() ==
-              'null'
-          ? ''
-          : patient.user!.person!.addresses!.elementAt(0).country.toString();
+      if (_countryValue.isNotEmpty) {
+        _countryValue = patient.user!.person!.addresses!
+                    .elementAt(0)
+                    .country
+                    .toString() ==
+                'null'
+            ? ''
+            : patient.user!.person!.addresses!.elementAt(0).country.toString();
+      }
       //debugPrint('Marital Status ==> ${patient.user!.person!.maritalStatus.toString()}');
       userId = user.data!.user!.id.toString();
       auth = user.data!.accessToken;

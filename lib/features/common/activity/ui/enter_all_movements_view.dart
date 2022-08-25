@@ -33,12 +33,84 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
   final ScrollController _scrollController = ScrollController();
   DateTime? startDate;
   var dateFormat = DateFormat('yyyy-MM-dd');
+  MovementsTracking? _standMovemntsTracking;
+  int standMovements = 0;
+  MovementsTracking? _stepsMovemntsTracking;
+  int stepsMovements = 0;
+  MovementsTracking? _exerciseMovemntsTracking;
+  int exerciseMovements = 0;
+  DateTime? todaysDate;
 
   @override
   void initState() {
     startDate = DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
+    todaysDate = DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
+    loadStandMovement();
+    loadStepsMovement();
+    loadExerciseMovement();
     super.initState();
+  }
+
+  loadStandMovement() async {
+    try {
+      final movements = await _sharedPrefUtils.read('standTime');
+
+      if (movements != null) {
+        _standMovemntsTracking = MovementsTracking.fromJson(movements);
+      }
+
+      if (_standMovemntsTracking != null) {
+        if (todaysDate == _standMovemntsTracking!.date) {
+          debugPrint('Stand ==> ${_standMovemntsTracking!.value!}');
+          standMovements = _standMovemntsTracking!.value!;
+        }
+      }
+      setState(() {});
+    } catch (e) {
+      debugPrint('error caught: $e');
+    }
+  }
+
+  loadStepsMovement() async {
+    try {
+      final movements = await _sharedPrefUtils.read('stepCount');
+
+      if (movements != null) {
+        _stepsMovemntsTracking = MovementsTracking.fromJson(movements);
+      }
+
+      if (_stepsMovemntsTracking != null) {
+        if (todaysDate == _stepsMovemntsTracking!.date) {
+          debugPrint('Steps ==> ${_stepsMovemntsTracking!.value!}');
+          stepsMovements = _stepsMovemntsTracking!.value!;
+        }
+      }
+      setState(() {});
+    } catch (e) {
+      debugPrint('error caught: $e');
+    }
+  }
+
+  loadExerciseMovement() async {
+    try {
+      final movements = await _sharedPrefUtils.read('exerciseTime');
+
+      if (movements != null) {
+        _exerciseMovemntsTracking = MovementsTracking.fromJson(movements);
+      }
+
+      if (_exerciseMovemntsTracking != null) {
+        if (todaysDate == _exerciseMovemntsTracking!.date) {
+          debugPrint('Exercise ==> ${_exerciseMovemntsTracking!.value!}');
+          exerciseMovements = _exerciseMovemntsTracking!.value!;
+        }
+      }
+      setState(() {});
+    } catch (e) {
+      debugPrint('error caught: $e');
+    }
   }
 
   @override
@@ -442,8 +514,13 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
 
   recordMyStandTimeInMinutes(int time) async {
     try {
-      _sharedPrefUtils.save(
-          'standTime', MovementsTracking(startDate, time, '').toJson());
+      if (_standMovemntsTracking == null) {
+        _sharedPrefUtils.save(
+            'standTime', MovementsTracking(startDate, time, '').toJson());
+      } else {
+        _standMovemntsTracking!.value = _standMovemntsTracking!.value! + time;
+        _sharedPrefUtils.save('standTime', _standMovemntsTracking!.toJson());
+      }
       _standController.text = '';
       _standController.selection = TextSelection.fromPosition(
         TextPosition(offset: _standController.text.length),
@@ -468,8 +545,13 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
 
   recordMyStepCount(int count) async {
     try {
-      _sharedPrefUtils.save(
-          'stepCount', MovementsTracking(startDate, count, '').toJson());
+      if (_stepsMovemntsTracking == null) {
+        _sharedPrefUtils.save(
+            'stepCount', MovementsTracking(startDate, count, '').toJson());
+      } else {
+        _stepsMovemntsTracking!.value = _stepsMovemntsTracking!.value! + count;
+        _sharedPrefUtils.save('stepCount', _stepsMovemntsTracking!.toJson());
+      }
       _stepscontroller.text = '';
       _stepscontroller.selection = TextSelection.fromPosition(
         TextPosition(offset: _stepscontroller.text.length),
@@ -495,8 +577,15 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
 
   recordMyExcerciseTimeInMinutes(int time) async {
     try {
-      _sharedPrefUtils.save(
-          'exerciseTime', MovementsTracking(startDate, time, '').toJson());
+      if (_exerciseMovemntsTracking == null) {
+        _sharedPrefUtils.save(
+            'exerciseTime', MovementsTracking(startDate, time, '').toJson());
+      } else {
+        _exerciseMovemntsTracking!.value =
+            _exerciseMovemntsTracking!.value! + time;
+        _sharedPrefUtils.save(
+            'exerciseTime', _exerciseMovemntsTracking!.toJson());
+      }
       _exerciseController.text = '';
       _exerciseController.selection = TextSelection.fromPosition(
         TextPosition(offset: _exerciseController.text.length),

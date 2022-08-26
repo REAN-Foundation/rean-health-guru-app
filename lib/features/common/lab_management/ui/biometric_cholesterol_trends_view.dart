@@ -88,7 +88,7 @@ class _BiometricCholesterolTrendsViewState
           Expanded(
             flex: 1,
             child: Semantics(
-              label: 'Record Cholesterol 1 of 2',
+              label: 'Record Lab Values 1 of 2',
               selected: true,
               child: InkWell(
                 onTap: () {
@@ -110,7 +110,7 @@ class _BiometricCholesterolTrendsViewState
                         height: 4,
                       ),
                       Text(
-                        'Record Cholesterol',
+                        'Record Lab Values',
                         style: TextStyle(
                             color:
                                 _currentIndex == 0 ? Colors.white : Colors.grey,

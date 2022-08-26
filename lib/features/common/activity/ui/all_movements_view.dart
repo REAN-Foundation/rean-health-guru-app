@@ -44,7 +44,7 @@ class _AllMovementsViewState extends State<AllMovementsView> {
             backgroundColor: Colors.white,
             brightness: Brightness.light,
             title: Text(
-              'Physical Health',
+              'Physical Activity',
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,

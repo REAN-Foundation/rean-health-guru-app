@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
     this.isLogin = isLogin;
     setSessionFlag(isLogin);
     setBaseUrl(_baseUrl);
+    setAppName('REAN HealthGuru');
     setAppFlavour('RHG-Dev');
     GetIt.instance.registerSingleton<ApiProvider>(ApiProvider(_baseUrl));
     GetIt.instance

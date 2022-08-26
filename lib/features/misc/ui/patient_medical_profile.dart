@@ -371,23 +371,20 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                           SizedBox(
                             height: 8,
                           ),
-                          Row(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               SizedBox(
-                                width: 150,
-                                child: Text('Tobacco Intake',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: textBlack)),
+                                height: 8,
                               ),
-                              Text(':',
+                              Text(
+                                  'Have you used tobacco products (such as cigarettes, electronic cigarettes, cigars, smokeless tobacco, or hookah) over the past year?',
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
-                                width: 8,
+                                height: 8,
                               ),
                               Text('' + yesOrNo(healthProfile!.isSmoker!),
                                   style: TextStyle(

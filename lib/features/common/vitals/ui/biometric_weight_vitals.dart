@@ -1200,7 +1200,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           var localHeight =
               double.parse(picker.getSelectedValues().elementAt(0).toString());
           _sharedPrefUtils.saveDouble('height', localHeight);
-          height = int.parse(localHeight.toString());
+          height = localHeight.toInt();
           conversion();
           calculetBMI();
           debugPrint('Selected Height ==> $localHeight');

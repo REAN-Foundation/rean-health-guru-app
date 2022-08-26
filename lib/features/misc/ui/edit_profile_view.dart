@@ -123,7 +123,7 @@ class _EditProfileState extends State<EditProfile> {
           patient.user!.person!.maritalStatus.toString() == 'null'
               ? ''
               : patient.user!.person!.maritalStatus.toString();
-      if (_countryValue.isNotEmpty) {
+      if (patient.user!.person!.addresses!.isNotEmpty) {
         _countryValue = patient.user!.person!.addresses!
                     .elementAt(0)
                     .country
@@ -2386,14 +2386,38 @@ class _EditProfileState extends State<EditProfile> {
           ],
         ),
         _genderWidget(),
+        SizedBox(
+          height: 8,
+        ),
         _dateOfBirthField('Date Of Birth'),
+        SizedBox(
+          height: 8,
+        ),
         _entryMobileNoField('Mobile Number'),
+        SizedBox(
+          height: 8,
+        ),
         _maritalStatus(),
+        SizedBox(
+          height: 8,
+        ),
         _entryEmailField('Email'),
+        SizedBox(
+          height: 8,
+        ),
         //_entryBloodGroupField("Blood Group"),
         //_entryEmergencyMobileNoField('Emergency Contact Number'),
+        SizedBox(
+          height: 8,
+        ),
         _entryAddressField('Address'),
+        SizedBox(
+          height: 8,
+        ),
         _entryLocalityField('City'),
+        SizedBox(
+          height: 8,
+        ),
         _country(),
         /* Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -2412,6 +2436,9 @@ class _EditProfileState extends State<EditProfile> {
             ),
           ],
         ),*/
+        SizedBox(
+          height: 8,
+        ),
         _entryPostalField('Postal Code'),
       ],
     );

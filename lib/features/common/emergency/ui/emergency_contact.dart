@@ -378,7 +378,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   color: Colors.black),
               decoration: InputDecoration(
                   labelStyle: TextStyle(fontSize: 16),
-                  labelText: 'Enter emergency details',
+                  labelText: 'Enter your hospitalization details',
                   hintText: ''),
             ),
           ),
@@ -1573,7 +1573,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
             'emergency',
             DashboardTile(DateTime.now(), 'emergency', emergencyBreif)
                 .toJson());
-        showToast('Emergency details saved successfully!', context);
+        showToast('Hospitalization details saved successfully!', context);
         loadSharedPrefs();
         setState(() {});
       } else {

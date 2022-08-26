@@ -120,7 +120,7 @@ class _SymptomsViewState extends State<SymptomsView> {
             backgroundColor: Colors.white,
             brightness: Brightness.light,
             title: Text(
-              'Symptom',
+              'Symptoms',
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,

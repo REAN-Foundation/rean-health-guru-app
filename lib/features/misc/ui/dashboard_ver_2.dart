@@ -86,7 +86,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     model.setBusy(true);
     Future.delayed(
       Duration(seconds: 4),
-          () {
+      () {
         getTodaysKnowledgeTopic();
         //getTaskPlanSummary();
         getMyMedications();

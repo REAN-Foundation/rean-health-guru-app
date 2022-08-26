@@ -26,7 +26,6 @@ class _NutritionQuestionnaireViewState
   var model = PatientHealthMarkerViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var dateFormat = DateFormat('yyyy-MM-dd');
-
   //final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   Color buttonColor = primaryLightColor;
   int vegetableServing = 0;

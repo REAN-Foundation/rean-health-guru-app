@@ -392,33 +392,37 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     }
   }
 
-  /*showSuccessDialog() {
+  showSuccessDialog() {
     Dialog sucsessDialog = Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
       //this right here
       child: Card(
         elevation: 0.0,
+        margin: EdgeInsets.zero,
         semanticContainer: false,
         child: Container(
-          height: 340.0,
-          width: 400.0,
+          height: 324.0,
+          width: MediaQuery.of(context).size.width - 64,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 200,
-                color: getAppType() == 'AHA' ? redLightAha : primaryLightColor,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(4),
+                      topLeft: Radius.circular(4)),
+                  color: /*getAppType() == 'AHA' ?*/ redLightAha /*: primaryLightColor*/,
+                ),
                 child: Center(
                   child: Container(
-                    height: 100,
-                    width: 100,
+                    height: 160,
                     child: Semantics(
                       label: 'Success image',
                       image: true,
                       child: Image.asset(
                         'res/images/ic_health_journey.png',
-                        width: 100,
                       ),
                     ),
                   ),
@@ -435,84 +439,87 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                     fontSize: 18.0),
               ),
               Padding(padding: EdgeInsets.only(top: 20.0)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Semantics(
-                      button: true,
-                      label: 'Cancel',
-                      child: ExcludeSemantics(
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            height: 48,
-                            width: MediaQuery.of(context).size.width - 32,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.0,
-                            ),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6.0),
-                                border:
-                                Border.all(color: primaryColor, width: 1),
-                                color: Colors.white),
-                            child: Center(
-                              child: Text(
-                                'Cancel',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: primaryColor,
-                                    fontSize: 14),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Semantics(
+                        button: true,
+                        label: 'Cancel',
+                        child: ExcludeSemantics(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 48,
+                              width: MediaQuery.of(context).size.width - 32,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border:
+                                      Border.all(color: primaryColor, width: 1),
+                                  color: Colors.white),
+                              child: Center(
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: primaryColor,
+                                      fontSize: 14),
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Semantics(
-                      button: true,
-                      label: 'Get Started',
-                      child: ExcludeSemantics(
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            height: 48,
-                            width: MediaQuery.of(context).size.width - 32,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.0,
-                            ),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6.0),
-                                border:
-                                Border.all(color: primaryColor, width: 1),
-                                color: primaryColor),
-                            child: Center(
-                              child: Text(
-                                'Get Started',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
-                                    fontSize: 14),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Semantics(
+                        button: true,
+                        label: 'Get Started',
+                        child: ExcludeSemantics(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 48,
+                              width: MediaQuery.of(context).size.width - 32,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border:
+                                      Border.all(color: primaryColor, width: 1),
+                                  color: primaryColor),
+                              child: Center(
+                                child: Text(
+                                  'Get Started',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                      fontSize: 14),
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Container(
                 height: 20,
@@ -526,7 +533,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) => sucsessDialog);
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {

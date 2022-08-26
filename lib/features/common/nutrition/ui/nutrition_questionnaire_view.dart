@@ -175,7 +175,48 @@ class _NutritionQuestionnaireViewState
             width: MediaQuery.of(context).size.width,
             height: 48,
             child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  bool isValueEnteredOrSelected = false;
+
+                  if (vegetableServing > 0) {
+                    isValueEnteredOrSelected = true;
+                    recordMyCaloriesConsumed(
+                        false, 'Vegetables', vegetableServing);
+                  }
+                  if (fruitServing > 0) {
+                    isValueEnteredOrSelected = true;
+                    recordMyCaloriesConsumed(false, 'Fruit', fruitServing);
+                  }
+                  if (grainServing > 0) {
+                    isValueEnteredOrSelected = true;
+                    recordMyCaloriesConsumed(false, 'Grains', grainServing);
+                  }
+                  if (meatServing > 0) {
+                    isValueEnteredOrSelected = true;
+                    recordMyCaloriesConsumed(false, 'Sea food', meatServing);
+                  }
+                  if (sugaryDrinkServing > 0) {
+                    isValueEnteredOrSelected = true;
+                    recordMyCaloriesConsumed(
+                        false, 'Sugary drinks', sugaryDrinkServing);
+                  }
+
+                  if (protienValueClicked.isNotEmpty) {
+                    isValueEnteredOrSelected = true;
+                    recordMyCaloriesConsumed(protienValue, 'Protein', 0);
+                  }
+
+                  if (salthValueClicked.isNotEmpty) {
+                    isValueEnteredOrSelected = true;
+                    recordMyCaloriesConsumed(saltValue, 'Salt', 0);
+                  }
+
+                  if (isValueEnteredOrSelected) {
+                    clearText();
+                  } else {
+                    showToast('Please select serving values', context);
+                  }
+                },
                 child: Text(
                   'Save',
                   style: TextStyle(
@@ -1350,22 +1391,21 @@ class _NutritionQuestionnaireViewState
     );
   }
 
-  recordMyCaloriesConsumed(String nutritionName, String nutritionType,
-      double caloriesConsumed) async {
+  recordMyCaloriesConsumed(
+      bool ateHealthyFood, String nutritionType, int servings) async {
     try {
+      var list = [nutritionType];
+
       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['ConsumedAs'] =
-          nutritionType[0].toUpperCase() + nutritionType.substring(1);
-      map['Food'] = nutritionName;
-      map['Calories'] = caloriesConsumed.toString();
-      map['StartTime'] = dateFormat.format(DateTime.now());
-      map['EndTime'] = dateFormat.format(DateTime.now());
+      map['FoodTypes'] = list;
+      map['UserResponse'] = ateHealthyFood;
+      map['Servings'] = servings;
 
       final BaseResponse baseResponse =
           await model.recordMyCaloriesConsumed(map);
       if (baseResponse.status == 'success') {
-        showToast(baseResponse.message!, context);
+        //showToast(baseResponse.message!, context);
       } else {}
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -1377,5 +1417,19 @@ class _NutritionQuestionnaireViewState
       showToast(CustomException.toString(), context);
       debugPrint('Error ==> ' + CustomException.toString());
     }*/
+  }
+
+  void clearText() {
+    showToast('Food consumption record created successfully!', context);
+    vegetableServing = 0;
+    fruitServing = 0;
+    grainServing = 0;
+    meatServing = 0;
+    sugaryDrinkServing = 0;
+    protienValue = false;
+    protienValueClicked = '';
+    saltValue = false;
+    salthValueClicked = '';
+    setState(() {});
   }
 }

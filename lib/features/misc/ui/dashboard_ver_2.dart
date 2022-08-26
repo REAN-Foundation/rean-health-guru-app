@@ -1060,7 +1060,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             label: 'Yes I had healthy food today',
                             button: true,
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                recordMyCaloriesConsumed(true);
+                              },
                               child: ExcludeSemantics(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -1090,8 +1092,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             button: true,
                             child: InkWell(
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, RoutePaths.My_Medications);
+                                recordMyCaloriesConsumed(false);
                               },
                               child: ExcludeSemantics(
                                 child: Column(
@@ -3073,6 +3074,32 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
     }
+  }
+
+  recordMyCaloriesConsumed(bool ateHealthyFood) async {
+    try {
+      var list = ['GenericNutrition'];
+
+      final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['FoodTypes'] = list;
+      map['UserResponse'] = ateHealthyFood;
+
+      final BaseResponse baseResponse =
+          await model.recordMyCaloriesConsumed(map);
+      if (baseResponse.status == 'success') {
+        showToast(baseResponse.message!, context);
+      } else {}
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+    /*catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ==> ' + CustomException.toString());
+    }*/
   }
 
   recordHowAreYouFeeling(int feeling) async {

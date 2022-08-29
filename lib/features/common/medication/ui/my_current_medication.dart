@@ -11,6 +11,7 @@ import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -59,6 +60,8 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       if (medicationList.elementAt(i).endDate!.isAfter(DateTime.now())) {
         currentMedicationList.add(medicationList.elementAt(i));
         debugPrint('End Data ==> ${medicationList.elementAt(i).endDate}');
+      }else if(medicationList.elementAt(i).frequencyUnit == 'Other' ){
+        currentMedicationList.add(medicationList.elementAt(i));
       }
     }
     setState(() {});
@@ -155,83 +158,113 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
             color: Colors.white,
             border: Border.all(color: primaryColor, width: 0.8),
             borderRadius: BorderRadius.all(Radius.circular(8.0))),
-        child: Row(
+        child: Stack(
           children: [
-            Expanded(
-              flex: 9,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Semantics(
-                    child: Text(medication.drugName!,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: primaryColor)),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text(
-                      medication.dose.toString() + ' ' + medication.dosageUnit!,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.grey)),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                      medication.frequencyUnit.toString() +
-                          ' - ' +
-                          medication.timeSchedules!.join(', '),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.grey)),
-                  Text(
-                      'Started on ' +
-                          dateFormatStandard
-                              .format(medication.startDate!.toLocal()),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.grey)),
-                  Text(
-                      medication.instructions ?? ' ',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.grey)),
-                  //const SizedBox(height: 16,),
-                ],
-              ),
-            ),
-            if (medication.imageResourceId != null)
-              Expanded(
-                flex: 1,
-                child: Semantics(
-                  label: 'Medication ',
-                  child: CachedNetworkImage(
-                    imageUrl: apiProvider!.getBaseUrl()! +
-                        '/file-resources/' +
-                        medication.imageResourceId! +
-                        '/download-by-version-name/1',
+            Row(
+              children: [
+                Expanded(
+                  flex: 9,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Semantics(
+                        child: Text(medication.drugName!,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: primaryColor)),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                          medication.dose.toString() + ' ' + medication.dosageUnit!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.grey)),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                          medication.frequencyUnit.toString() +
+                              ' - ' +
+                              medication.timeSchedules!.join(', '),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.grey)),
+                      Text(
+                          'Started on ' +
+                              dateFormatStandard
+                                  .format(medication.startDate!.toLocal()),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.grey)),
+                      Text(
+                          medication.instructions ?? ' ',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.grey)),
+                      //const SizedBox(height: 16,),
+                    ],
                   ),
                 ),
-              )
-            else
-              Container(),
+                if (medication.imageResourceId != null)
+                  Expanded(
+                    flex: 1,
+                    child: Semantics(
+                      label: 'Medication ',
+                      child: CachedNetworkImage(
+                        imageUrl: apiProvider!.getBaseUrl()! +
+                            '/file-resources/' +
+                            medication.imageResourceId! +
+                            '/download-by-version-name/1',
+                      ),
+                    ),
+                  )
+                else
+                  Container(),
+              ],
+            ),
+            Positioned(
+                top: 0,
+                right: 0,
+                child: IconButton(
+                    padding: EdgeInsets.zero,
+                    constraints: BoxConstraints(),
+                    onPressed: () {
+                      ConfirmationBottomSheet(
+                          context: context,
+                          height: 180,
+                          onPositiveButtonClickListner: () {
+                            //debugPrint('Positive Button Click');
+                            deleteMedication(medication.id.toString());
+                          },
+                          onNegativeButtonClickListner: () {
+                            //debugPrint('Negative Button Click');
+                          },
+                          question: 'Are you sure you want to delete this record?',
+                          tittle: 'Alert!');
+                    },
+                    icon: Icon(
+                      Icons.delete_rounded,
+                      color: primaryColor,
+                      size: 24,
+                      semanticLabel: 'Weight Delete',
+                    )))
           ],
         ),
       ),
@@ -453,6 +486,33 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  deleteMedication(String recordId) async {
+    try {
+      progressDialog.show(max: 100, msg: 'Loading...');
+
+      final BaseResponse baseResponse =
+      await model.deleteMedication(recordId);
+
+      if (baseResponse.status == 'success') {
+        if (progressDialog.isOpen()) {
+          progressDialog.close();
+        }
+        showToast(baseResponse.message!, context);
+        //Navigator.pop(context);
+        getMyMedications();
+        model.setBusy(true);
+      } else {
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      progressDialog.close();
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 }

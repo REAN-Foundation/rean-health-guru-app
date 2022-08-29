@@ -6,6 +6,7 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -345,43 +346,47 @@ class _EnterAllCholesterolValuesViewState
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                ImageIcon(
-                  AssetImage('res/images/ic_total_cholesterol.png'),
-                  size: 24,
-                  color: primaryColor,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  'Enter your total cholesterol',
-                  style: TextStyle(
-                      color: textBlack,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14),
-                  textAlign: TextAlign.center,
-                ),
-                RichText(
-                  text: TextSpan(
-                    text: ' (mg/dl)',
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w600,
-                        color: textBlack,
-                        fontSize: 12),
+            SingleChildScrollView(
+              child: Row(
+                children: [
+                  ImageIcon(
+                    AssetImage('res/images/ic_total_cholesterol.png'),
+                    size: 24,
+                    color: primaryColor,
                   ),
-                ),
-                SizedBox(
-                  width: 0,
-                ),
-                InfoScreen(
-                    tittle: 'Total Cholesterol Information',
-                    description:
-                        'You might have a fasting lipoprotein profile taken every four to six years, starting at age 20. This is a blood test that measures total cholesterol, LDL (bad) cholesterol and HDL (good) cholesterol. You may need to be tested more frequently if your doctor determines that you’re at an increased risk for heart disease or stroke. After age 40, your doctor will also want to use an equation to calculate your 10-year risk of experiencing cardiovascular disease or stroke.',
-                    height: 320),
-              ],
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    'Enter your total cholesterol',
+                    style: TextStyle(
+                        color: textBlack,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: ' (mg/dl)',
+                      style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          color: textBlack,
+                          fontSize: 12),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 0,
+                  ),
+                  Expanded(
+                    child: InfoScreen(
+                        tittle: 'Total Cholesterol Information',
+                        description:
+                            'You might have a fasting lipoprotein profile taken every four to six years, starting at age 20. This is a blood test that measures total cholesterol, LDL (bad) cholesterol and HDL (good) cholesterol. You may need to be tested more frequently if your doctor determines that you’re at an increased risk for heart disease or stroke. After age 40, your doctor will also want to use an equation to calculate your 10-year risk of experiencing cardiovascular disease or stroke.',
+                        height: 320),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
               height: 8,
@@ -636,7 +641,7 @@ class _EnterAllCholesterolValuesViewState
                   color: primaryColor,
                 ),
                 SizedBox(
-                  width: 10,
+                  width: 8,
                 ),
                 Text(
                   'Enter your ratio',
@@ -712,26 +717,32 @@ class _EnterAllCholesterolValuesViewState
 
     if (_ldlController.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      addvitals('LDL', _ldlController.text.toString(), 'mg/dl');
     }
     if (_hdlcontroller.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      addvitals('HDL', _hdlcontroller.text.toString(), 'mg/dl');
     }
     if (_totalCholesterolController.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      addvitals('Total Cholesterol', _totalCholesterolController.text.toString(), 'mg/dl');
     }
     if (_triglyceridesController.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      addvitals('Triglyceride Level', _ldlController.text.toString(), 'mg/dl');
     }
     if (_ratioController.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      addvitals('Cholesterol Ratio', _ldlController.text.toString(), '%');
     }
 
     if (_a1cLevelController.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      addvitals('A1C Level', _ldlController.text.toString(), 'mg/dl');
     }
 
     if (ifRecordsEnterted) {
-      addvitals();
+      clearAllFeilds();
     }
   }
 
@@ -741,7 +752,36 @@ class _EnterAllCholesterolValuesViewState
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  addvitals() async {
+  addvitals(String displayName, String value, String unit) async {
+    try {
+      //progressDialog!.show(max: 100, msg: 'Loading...');
+      final map = <String, dynamic>{};
+      map['TypeName'] = 'Cholesterol';
+      map['DisplayName'] = displayName;
+      map['PrimaryValue'] = value;
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = unit;
+      //map['RecordedByUserId'] = null;
+
+      final BaseResponse baseResponse = await model.addlipidProfile(map);
+
+      if (baseResponse.status == 'success') {
+        //progressDialog!.close();
+        //showToast(baseResponse.message!, context);
+        model.setBusy(true);
+      } else {
+        //progressDialog!.close();
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      //progressDialog!.close();
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  /*addvitals() async {
     try {
       progressDialog!.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
@@ -778,17 +818,17 @@ class _EnterAllCholesterolValuesViewState
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
-  }
+  }*/
 
   bool toastDisplay = true;
 
   clearAllFeilds() {
-    //if (toastDisplay) {
+    if (toastDisplay) {
     _scrollController.animateTo(0.0,
-        duration: Duration(seconds: 2), curve: Curves.ease);
-    /*   showToast('Record Updated Successfully!', context);
+        duration: Duration(seconds: 4), curve: Curves.ease);
+       showToast('Record Created Successfully!', context);
       toastDisplay = false;
-    }*/
+    }
 
     _ldlController.text = '';
     _ldlController.selection = TextSelection.fromPosition(

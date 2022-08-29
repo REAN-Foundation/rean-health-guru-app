@@ -1,39 +1,42 @@
 /// Status : "success"
-/// Message : "Total 3 blood cholesterol records retrieved successfully!"
+/// Message : "Total 1 lab records retrieved successfully!"
 /// HttpCode : 200
-/// Data : {"BloodCholesterolRecords":{"TotalCount":3,"RetrievedCount":3,"PageIndex":0,"ItemsPerPage":25,"Order":"descending","OrderedBy":"CreatedAt","Items":[{"id":"7b913d29-c822-4052-81f8-53bb13ae9dbb","EhrId":null,"PatientUserId":"5f9ece85-5322-495d-ae31-30c4402aae34","TotalCholesterol":120,"HDL":150,"LDL":170,"TriglycerideLevel":7,"Ratio":2,"Unit":"mg/dl","RecordDate":"2022-07-14T07:42:27.000Z","RecordedByUserId":"5f9ece85-5322-495d-ae31-30c4402aae34"},{"id":"ec6f904e-7a4d-4b8c-83e1-f16d3db43673","EhrId":null,"PatientUserId":"9f9ac031-64a7-44c2-90c1-4cbfea35d7fd","TotalCholesterol":120,"HDL":150,"LDL":170,"TriglycerideLevel":7,"Ratio":2,"Unit":"mg/dl","RecordDate":"2022-07-14T07:04:44.000Z","RecordedByUserId":"9f9ac031-64a7-44c2-90c1-4cbfea35d7fd"},{"id":"3ff4b6af-e502-457b-a527-83114f93ad9c","EhrId":null,"PatientUserId":"5f9ece85-5322-495d-ae31-30c4402aae34","TotalCholesterol":120,"HDL":150,"LDL":170,"TriglycerideLevel":7,"Ratio":2,"Unit":"mg/dl","RecordDate":"2022-07-14T07:02:54.000Z","RecordedByUserId":"5f9ece85-5322-495d-ae31-30c4402aae34"}]}}
+/// Data : {"LabRecordRecords":{"TotalCount":1,"RetrievedCount":1,"PageIndex":0,"ItemsPerPage":25,"Order":"descending","OrderedBy":"CreatedAt","Items":[{"id":"3fd930b7-188e-4611-a77b-5ddd919d596d","EhrId":null,"PatientUserId":"d4f6a394-5f68-409f-9246-7a6e9a15e21e","TypeId":"e7fb3a01-cae5-4101-8249-2e3fcc2621a4","TypeName":"Cholesterol","DisplayName":"Total Cholesterol","PrimaryValue":223,"SecondaryValue":null,"Unit":"mg/dl","ReportId":null,"OrderId":null,"RecordedAt":"2022-08-29T09:40:47.000Z"}]}}
 
-class LipidProfileHistoryResponse {
-  LipidProfileHistoryResponse({
-    String? status,
-    String? message,
-    int? httpCode,
-    Data? data,
-  }) {
+class Test {
+  Test({
+      String? status, 
+      String? message, 
+      num? httpCode, 
+      Data? data,}){
     _status = status;
     _message = message;
     _httpCode = httpCode;
     _data = data;
-  }
+}
 
-  LipidProfileHistoryResponse.fromJson(dynamic json) {
+  Test.fromJson(dynamic json) {
     _status = json['Status'];
     _message = json['Message'];
     _httpCode = json['HttpCode'];
     _data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
-
   String? _status;
   String? _message;
-  int? _httpCode;
+  num? _httpCode;
   Data? _data;
-
+Test copyWith({  String? status,
+  String? message,
+  num? httpCode,
+  Data? data,
+}) => Test(  status: status ?? _status,
+  message: message ?? _message,
+  httpCode: httpCode ?? _httpCode,
+  data: data ?? _data,
+);
   String? get status => _status;
-
   String? get message => _message;
-
-  int? get httpCode => _httpCode;
-
+  num? get httpCode => _httpCode;
   Data? get data => _data;
 
   Map<String, dynamic> toJson() {
@@ -46,23 +49,24 @@ class LipidProfileHistoryResponse {
     }
     return map;
   }
+
 }
 
 /// LabRecordRecords : {"TotalCount":1,"RetrievedCount":1,"PageIndex":0,"ItemsPerPage":25,"Order":"descending","OrderedBy":"CreatedAt","Items":[{"id":"3fd930b7-188e-4611-a77b-5ddd919d596d","EhrId":null,"PatientUserId":"d4f6a394-5f68-409f-9246-7a6e9a15e21e","TypeId":"e7fb3a01-cae5-4101-8249-2e3fcc2621a4","TypeName":"Cholesterol","DisplayName":"Total Cholesterol","PrimaryValue":223,"SecondaryValue":null,"Unit":"mg/dl","ReportId":null,"OrderId":null,"RecordedAt":"2022-08-29T09:40:47.000Z"}]}
 
 class Data {
   Data({
-    LabRecordRecords? labRecordRecords,}){
+      LabRecordRecords? labRecordRecords,}){
     _labRecordRecords = labRecordRecords;
-  }
+}
 
   Data.fromJson(dynamic json) {
     _labRecordRecords = json['LabRecordRecords'] != null ? LabRecordRecords.fromJson(json['LabRecordRecords']) : null;
   }
   LabRecordRecords? _labRecordRecords;
-  Data copyWith({  LabRecordRecords? labRecordRecords,
-  }) => Data(  labRecordRecords: labRecordRecords ?? _labRecordRecords,
-  );
+Data copyWith({  LabRecordRecords? labRecordRecords,
+}) => Data(  labRecordRecords: labRecordRecords ?? _labRecordRecords,
+);
   LabRecordRecords? get labRecordRecords => _labRecordRecords;
 
   Map<String, dynamic> toJson() {
@@ -85,13 +89,13 @@ class Data {
 
 class LabRecordRecords {
   LabRecordRecords({
-    num? totalCount,
-    num? retrievedCount,
-    num? pageIndex,
-    num? itemsPerPage,
-    String? order,
-    String? orderedBy,
-    List<Items>? items,}){
+      num? totalCount, 
+      num? retrievedCount, 
+      num? pageIndex, 
+      num? itemsPerPage, 
+      String? order, 
+      String? orderedBy, 
+      List<Items>? items,}){
     _totalCount = totalCount;
     _retrievedCount = retrievedCount;
     _pageIndex = pageIndex;
@@ -99,7 +103,7 @@ class LabRecordRecords {
     _order = order;
     _orderedBy = orderedBy;
     _items = items;
-  }
+}
 
   LabRecordRecords.fromJson(dynamic json) {
     _totalCount = json['TotalCount'];
@@ -122,21 +126,21 @@ class LabRecordRecords {
   String? _order;
   String? _orderedBy;
   List<Items>? _items;
-  LabRecordRecords copyWith({  num? totalCount,
-    num? retrievedCount,
-    num? pageIndex,
-    num? itemsPerPage,
-    String? order,
-    String? orderedBy,
-    List<Items>? items,
-  }) => LabRecordRecords(  totalCount: totalCount ?? _totalCount,
-    retrievedCount: retrievedCount ?? _retrievedCount,
-    pageIndex: pageIndex ?? _pageIndex,
-    itemsPerPage: itemsPerPage ?? _itemsPerPage,
-    order: order ?? _order,
-    orderedBy: orderedBy ?? _orderedBy,
-    items: items ?? _items,
-  );
+LabRecordRecords copyWith({  num? totalCount,
+  num? retrievedCount,
+  num? pageIndex,
+  num? itemsPerPage,
+  String? order,
+  String? orderedBy,
+  List<Items>? items,
+}) => LabRecordRecords(  totalCount: totalCount ?? _totalCount,
+  retrievedCount: retrievedCount ?? _retrievedCount,
+  pageIndex: pageIndex ?? _pageIndex,
+  itemsPerPage: itemsPerPage ?? _itemsPerPage,
+  order: order ?? _order,
+  orderedBy: orderedBy ?? _orderedBy,
+  items: items ?? _items,
+);
   num? get totalCount => _totalCount;
   num? get retrievedCount => _retrievedCount;
   num? get pageIndex => _pageIndex;
@@ -176,18 +180,18 @@ class LabRecordRecords {
 
 class Items {
   Items({
-    String? id,
-    dynamic ehrId,
-    String? patientUserId,
-    String? typeId,
-    String? typeName,
-    String? displayName,
-    num? primaryValue,
-    dynamic secondaryValue,
-    String? unit,
-    dynamic reportId,
-    dynamic orderId,
-    String? recordedAt,}){
+      String? id, 
+      dynamic ehrId, 
+      String? patientUserId, 
+      String? typeId, 
+      String? typeName, 
+      String? displayName, 
+      num? primaryValue, 
+      dynamic secondaryValue, 
+      String? unit, 
+      dynamic reportId, 
+      dynamic orderId, 
+      String? recordedAt,}){
     _id = id;
     _ehrId = ehrId;
     _patientUserId = patientUserId;
@@ -200,7 +204,7 @@ class Items {
     _reportId = reportId;
     _orderId = orderId;
     _recordedAt = recordedAt;
-  }
+}
 
   Items.fromJson(dynamic json) {
     _id = json['id'];
@@ -228,31 +232,31 @@ class Items {
   dynamic _reportId;
   dynamic _orderId;
   String? _recordedAt;
-  Items copyWith({  String? id,
-    dynamic ehrId,
-    String? patientUserId,
-    String? typeId,
-    String? typeName,
-    String? displayName,
-    num? primaryValue,
-    dynamic secondaryValue,
-    String? unit,
-    dynamic reportId,
-    dynamic orderId,
-    String? recordedAt,
-  }) => Items(  id: id ?? _id,
-    ehrId: ehrId ?? _ehrId,
-    patientUserId: patientUserId ?? _patientUserId,
-    typeId: typeId ?? _typeId,
-    typeName: typeName ?? _typeName,
-    displayName: displayName ?? _displayName,
-    primaryValue: primaryValue ?? _primaryValue,
-    secondaryValue: secondaryValue ?? _secondaryValue,
-    unit: unit ?? _unit,
-    reportId: reportId ?? _reportId,
-    orderId: orderId ?? _orderId,
-    recordedAt: recordedAt ?? _recordedAt,
-  );
+Items copyWith({  String? id,
+  dynamic ehrId,
+  String? patientUserId,
+  String? typeId,
+  String? typeName,
+  String? displayName,
+  num? primaryValue,
+  dynamic secondaryValue,
+  String? unit,
+  dynamic reportId,
+  dynamic orderId,
+  String? recordedAt,
+}) => Items(  id: id ?? _id,
+  ehrId: ehrId ?? _ehrId,
+  patientUserId: patientUserId ?? _patientUserId,
+  typeId: typeId ?? _typeId,
+  typeName: typeName ?? _typeName,
+  displayName: displayName ?? _displayName,
+  primaryValue: primaryValue ?? _primaryValue,
+  secondaryValue: secondaryValue ?? _secondaryValue,
+  unit: unit ?? _unit,
+  reportId: reportId ?? _reportId,
+  orderId: orderId ?? _orderId,
+  recordedAt: recordedAt ?? _recordedAt,
+);
   String? get id => _id;
   dynamic get ehrId => _ehrId;
   String? get patientUserId => _patientUserId;

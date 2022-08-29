@@ -295,9 +295,9 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 child: Text(
                                     height == 0
                                         ? ''
-                                        : heightInFeet
+                                        : getCurrentLocale() == "US" ?  heightInFeet
                                                 .toString()
-                                                .replaceAll('.', "'") +
+                                                .replaceAll('.', "'") : height.toString()+
                                             '"',
                                     semanticsLabel: heightInFeet
                                             .toString()

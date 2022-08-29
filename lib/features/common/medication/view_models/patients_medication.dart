@@ -73,6 +73,26 @@ class PatientMedicationViewModel extends BaseModel {
     return BaseResponse.fromJson(response);
   }
 
+  Future<BaseResponse> deleteMedication(String medicationId) async {
+    // Get user profile for id
+    //setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final body = <String, String>{};
+
+    final response = await apiProvider!.put(
+        '/clinical/medications/' + medicationId,
+        header: map,
+        body: body);
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
+
   Future<BaseResponse> markMedicationsAsMissed(String consumptionId) async {
     // Get user profile for id
     //setBusy(true);

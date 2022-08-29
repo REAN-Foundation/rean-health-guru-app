@@ -958,7 +958,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     bottom: 0,
                     right: 0,
                     child: InfoOutlinedScreen(
-                      tittle: 'Medication Information',
+                      tittle: 'Medications Information',
                       description:
                           'Medicines can help control things like high blood pressure (hypertension) or high cholesterol.',
                       height: 200,
@@ -1802,7 +1802,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       bottom: 0,
                       right: 0,
                       child: InfoOutlinedScreen(
-                        tittle: 'Vital Information',
+                        tittle: 'Vitals Information',
                         description:
                             'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
                         height: 260,
@@ -2635,7 +2635,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       bottom: 0,
                       right: 0,
                       child: InfoOutlinedScreen(
-                        tittle: 'Physical Health Information',
+                        tittle: 'Physical Activity Information',
                         description:
                             'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
                         height: 260,

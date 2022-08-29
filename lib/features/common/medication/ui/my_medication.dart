@@ -52,7 +52,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
             backgroundColor: Colors.white,
             brightness: Brightness.light,
             title: Text(
-              'Medication',
+              'Medications',
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
@@ -102,7 +102,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
             Expanded(
               flex: 1,
               child: Semantics(
-                label: 'Medication Reminder 1 of 3',
+                label: 'Medications Reminder 1 of 3',
                 child: InkWell(
                   onTap: () {
                     setState(() {
@@ -141,7 +141,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
             Expanded(
               flex: 1,
               child: Semantics(
-                label: 'Medication list 2 of 3',
+                label: 'Medications list 2 of 3',
                 child: InkWell(
                   onTap: () {
                     setState(() {
@@ -163,7 +163,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                           height: 4,
                         ),
                         Text(
-                          'Medication list',
+                          'Medications list',
                           style: TextStyle(
                               color: _currentIndex == 1
                                   ? Colors.white
@@ -179,7 +179,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
             Expanded(
               flex: 1,
               child: Semantics(
-                label: 'Medication History 3 of 3',
+                label: 'Medications History 3 of 3',
                 child: InkWell(
                   onTap: () {
                     setState(() {

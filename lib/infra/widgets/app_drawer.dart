@@ -273,7 +273,7 @@ class _AppDrawerState extends State<AppDrawer> {
           Visibility(
             visible: getBaseUrl()!.contains('aha-api-uat') ||
                 getBaseUrl()!.contains('reancare-api-dev') ||
-                getAppName() == 'Lipid Helper',
+                getAppName() == 'Heart & Stroke Helper™ ',
             //visible: true,
             child: InkWell(
               onTap: () {
@@ -379,7 +379,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
           Visibility(
-            visible: getAppName() != 'Lipid Helper',
+            visible: getAppName() != 'Heart & Stroke Helper™ ',
             child: InkWell(
               onTap: () {
                 Navigator.popAndPushNamed(context, RoutePaths.ABOUT_REAN_CARE);

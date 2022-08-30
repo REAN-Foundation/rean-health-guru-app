@@ -75,13 +75,13 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       debugPrint(
           'Plan Code ==> ${list.elementAt(i).code == 'CholesterolMini'}');
 
-      if (getAppFlavour() == 'Lipid Helper' &&
+      if (getAppFlavour() == 'Heart & Stroke Helper™ ' &&
           list.elementAt(i).code == 'Cholesterol') {
         items.add(DropdownMenuItem(
           child: Text(list.elementAt(i).displayName!),
           value: list.elementAt(i).displayName,
         ));
-      } else if (getAppFlavour() == 'Lipid Helper' &&
+      } else if (getAppFlavour() == 'Heart & Stroke Helper™ ' &&
           list.elementAt(i).code == 'Stroke') {
         items.add(DropdownMenuItem(
           child: Text(list.elementAt(i).displayName!),
@@ -197,35 +197,38 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Semantics(
-                                          label: 'Health Journey image',
-                                          image: true,
-                                          child: Image.asset(
-                                            'res/images/ic_hf_care_plan.png',
-                                            color: primaryColor,
-                                            width: 120,
-                                            height: 120,
+                                  child: Scrollbar(
+                                    isAlwaysShown: true,
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Semantics(
+                                            label: 'Health Journey image',
+                                            image: true,
+                                            child: Image.asset(
+                                              'res/images/ic_hf_care_plan.png',
+                                              color: primaryColor,
+                                              width: 120,
+                                              height: 120,
+                                            ),
                                           ),
-                                        ),
-                                        selectCarePlanDropDown(),
-                                        startCarePlanDate(),
-                                        //checkElegibility(),
-                                        /* if (selectedCarePlan == '')
-                                          Container()
-                                        else*/
-                                        decription != ''
-                                            ? descriptionOfCarePlan()
-                                            : Container(),
-                                        //eligibilityOfCarePlan(),
-                                        //recomandationForCarePlan(),
-                                      ],
+                                          selectCarePlanDropDown(),
+                                          startCarePlanDate(),
+                                          //checkElegibility(),
+                                          /* if (selectedCarePlan == '')
+                                            Container()
+                                          else*/
+                                          decription != ''
+                                              ? descriptionOfCarePlan()
+                                              : Container(),
+                                          //eligibilityOfCarePlan(),
+                                          //recomandationForCarePlan(),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

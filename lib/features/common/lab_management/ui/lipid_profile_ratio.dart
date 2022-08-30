@@ -396,7 +396,7 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
-                  semanticLabel: 'Weight Delete',
+                  semanticLabel: 'Cholesterol Ratio Delete',
                 ))
           ],
         ),

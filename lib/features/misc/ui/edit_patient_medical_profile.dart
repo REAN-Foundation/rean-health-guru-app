@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -912,10 +911,11 @@ class _EditPatientMedicalProfileViewState
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
+        //Navigator.popUntil(context, ModalRoute.withName(RoutePaths.My_Medical_Profile));
         Navigator.pop(context, true);
-        if (Platform.isAndroid) {
+        //if (Platform.isAndroid) {
           Navigator.pop(context);
-        }
+        //}
         showToast('Medical Profile updated successfully!', context);
       } else {
         showToast(baseResponse.message!, context);

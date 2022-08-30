@@ -14,6 +14,7 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/upload_image_response.dart';
 import 'package:patient/features/misc/models/user_data.dart';
+import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/features/misc/ui/welcome.dart';
 import 'package:patient/features/misc/view_models/login_view_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
@@ -517,14 +518,17 @@ class _CreateProfileState extends State<CreateProfile> {
         await _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
         _sharedPrefUtils.saveBoolean('login1.8.81', true);
-        /*Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) {
-          return HomeView(0);
-        }), (Route<dynamic> route) => false);*/
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) {
-          return Welcome();
-        }), (Route<dynamic> route) => false);
+        if(getAppName() == 'Heart & Stroke Helper™ ') {
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) {
+                return Welcome();
+              }), (Route<dynamic> route) => false);
+        }else{
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) {
+                return HomeView(0);
+              }), (Route<dynamic> route) => false);
+        }
         model.setBusy(false);
       } else {
         showToast(doctorListApiResponse.message!, context);

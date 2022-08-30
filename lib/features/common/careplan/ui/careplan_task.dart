@@ -82,7 +82,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     try {
       var dateTill;
       /*if (getBaseUrl()!.contains('aha-api-uat.services') ||
-          getAppName() == 'Lipid Helper') {
+          getAppName() == 'Heart & Stroke Helper™ ') {
         dateTill = DateTime.now();
       } else {*/
       dateTill = DateTime.now().add(Duration(days: 91));
@@ -129,7 +129,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   getUserTask() async {
     /*if (getBaseUrl()!.contains('aha-api-uat.services') ||
-        getAppName() == 'Lipid Helper') {
+        getAppName() == 'Heart & Stroke Helper™ ') {
       getEducationUserTask();
     } else {*/
     getAllUserTask();

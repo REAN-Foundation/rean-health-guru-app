@@ -83,10 +83,9 @@ class PatientMedicationViewModel extends BaseModel {
 
     final body = <String, String>{};
 
-    final response = await apiProvider!.put(
+    final response = await apiProvider!.delete(
         '/clinical/medications/' + medicationId,
-        header: map,
-        body: body);
+        header: map);
 
     setBusy(false);
     // Convert and return

@@ -256,14 +256,14 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                           onNegativeButtonClickListner: () {
                             //debugPrint('Negative Button Click');
                           },
-                          question: 'Are you sure you want to delete this record?',
+                          question: 'Are you sure you want to delete this medication?',
                           tittle: 'Alert!');
                     },
                     icon: Icon(
                       Icons.delete_rounded,
                       color: primaryColor,
                       size: 24,
-                      semanticLabel: 'Weight Delete',
+                      semanticLabel: medication.drugName!+' Delete',
                     )))
           ],
         ),

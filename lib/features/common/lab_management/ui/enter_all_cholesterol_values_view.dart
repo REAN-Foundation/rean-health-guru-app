@@ -729,16 +729,16 @@ class _EnterAllCholesterolValuesViewState
     }
     if (_triglyceridesController.text.isNotEmpty) {
       ifRecordsEnterted = true;
-      addvitals('Triglyceride Level', _ldlController.text.toString(), 'mg/dl');
+      addvitals('Triglyceride Level', _triglyceridesController.text.toString(), 'mg/dl');
     }
     if (_ratioController.text.isNotEmpty) {
       ifRecordsEnterted = true;
-      addvitals('Cholesterol Ratio', _ldlController.text.toString(), '%');
+      addvitals('Cholesterol Ratio', _ratioController.text.toString(), '%');
     }
 
     if (_a1cLevelController.text.isNotEmpty) {
       ifRecordsEnterted = true;
-      addvitals('A1C Level', _ldlController.text.toString(), 'mg/dl');
+      addvitals('A1C Level', _a1cLevelController.text.toString(), 'mg/dl');
     }
 
     if (ifRecordsEnterted) {
@@ -768,7 +768,7 @@ class _EnterAllCholesterolValuesViewState
       if (baseResponse.status == 'success') {
         //progressDialog!.close();
         //showToast(baseResponse.message!, context);
-        model.setBusy(true);
+        model.setBusy(false);
       } else {
         //progressDialog!.close();
         showToast(baseResponse.message!, context);

@@ -407,8 +407,8 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                 InfoScreen(
                     tittle: 'Sleep Information',
                     description:
-                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                    height: 260),
+                        'Sleep is essential to recovery and well-being. Lower your risk for serious health problems, like diabetes and heart disease.',
+                    height: 200),
               ],
             ),
             SizedBox(
@@ -524,8 +524,8 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                 InfoScreen(
                     tittle: 'Mindfulness Information',
                     description:
-                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                    height: 260),
+                        'Practicing meditation or mindfulness may help you manage stress and high blood pressure.',
+                    height: 188),
               ],
             ),
             SizedBox(

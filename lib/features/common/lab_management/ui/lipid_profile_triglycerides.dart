@@ -295,7 +295,7 @@ class _LipidProfileTriglyceridesViewState
                 Expanded(
                   flex: 2,
                   child: Text(
-                    'Ratio\n%',
+                    'Triglyceride\nmg/dl',
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,

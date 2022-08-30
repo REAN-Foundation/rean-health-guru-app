@@ -277,7 +277,7 @@ class _LipidProfileA1CLevelViewState extends State<LipidProfileA1CLevelView> {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    'A1C Level\nmg/dl',
+                    'A1C Level\n%',
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,

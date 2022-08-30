@@ -263,8 +263,8 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                 InfoScreen(
                     tittle: 'Stand Information',
                     description:
-                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                    height: 260),
+                        'Standing is better for the back than sitting. It strengthens leg muscles and improves balance. It burns more calories than sitting.',
+                    height: 208),
               ],
             ),
             const SizedBox(
@@ -360,8 +360,8 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                 InfoScreen(
                     tittle: 'Steps Information',
                     description:
-                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                    height: 260),
+                        'Steps will increase cardiovascular and pulmonary (heart and lung) fitness. reduced risk of heart disease and stroke. improved management of conditions such as hypertension (high blood pressure), high cholesterol, joint, and muscular pain or stiffness, and diabetes. stronger bones and improved balance.',
+                    height: 288),
               ],
             ),
             const SizedBox(
@@ -455,8 +455,8 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                 InfoScreen(
                     tittle: 'Exercise Information',
                     description:
-                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                    height: 260),
+                        'Regular physical activity can improve your muscle strength and boost your endurance. Exercise delivers oxygen and nutrients to your tissues and helps your cardiovascular system work more efficiently. And when your heart and lung health improve, you have more energy to tackle daily chores.',
+                    height: 268),
               ],
             ),
             const SizedBox(

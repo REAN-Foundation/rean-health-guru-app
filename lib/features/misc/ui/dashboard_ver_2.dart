@@ -295,7 +295,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Semantics(
                         label: 'Symptom is Better',
@@ -401,8 +401,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     child: InfoOutlinedScreen(
                       tittle: 'Symptoms Information',
                       description:
-                          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                      height: 260,
+                          'Symptom management may help a person feel more comfortable and help relieve the symptoms of a disease, such as cancer, and the side effects caused by treatment of the disease.',
+                      height: 220,
                       infoIconcolor: Colors.grey,
                     ),
                   )
@@ -1057,7 +1057,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Semantics(
-                            label: 'Yes I had healthy food today',
+                            label: 'Yes, most of my food choices were healthy today.',
                             button: true,
                             child: InkWell(
                               onTap: () {
@@ -1088,7 +1088,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             ),
                           ),
                           Semantics(
-                            label: 'No I havn`t ate healthy food today',
+                            label: 'No, most of my food choices were not healthy today.',
                             button: true,
                             child: InkWell(
                               onTap: () {
@@ -1804,8 +1804,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       child: InfoOutlinedScreen(
                         tittle: 'Vitals Information',
                         description:
-                            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                        height: 260,
+                            'Vital signs are useful in detecting or monitoring medical problems. Vital signs can be measured in a medical setting, at home.',
+                        height: 208,
                         infoIconcolor: Colors.grey,
                       ),
                     )
@@ -2637,8 +2637,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       child: InfoOutlinedScreen(
                         tittle: 'Physical Activity Information',
                         description:
-                            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                        height: 260,
+                            'Regular physical activity is proven to help prevent and manage noncommunicable diseases such as heart disease, stroke, diabetes and several cancers. It also helps prevent hypertension, maintain healthy body weight and can improve mental health, quality of life and well-being.',
+                        height: 268,
                         infoIconcolor: Colors.grey,
                       ),
                     )
@@ -2893,8 +2893,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       child: InfoOutlinedScreen(
                         tittle: 'Mental Well-Being Information',
                         description:
-                            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                        height: 260,
+                            'Meditation helps lower the heart rate by igniting the parasympathetic nervous system and encouraging slower breathing.',
+                        height: 200,
                         infoIconcolor: Colors.grey,
                       ),
                     )
@@ -3088,7 +3088,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
       final BaseResponse baseResponse =
           await model.recordMyCaloriesConsumed(map);
       if (baseResponse.status == 'success') {
-        showToast(baseResponse.message!, context);
+        if(ateHealthyFood) {
+          showToast('Yes, most of my food choices were healthy today.', context);
+        }else{
+          showToast('No, most of my food choices were not healthy today.', context);
+        }
       } else {}
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');

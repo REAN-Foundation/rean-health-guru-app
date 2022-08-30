@@ -738,7 +738,7 @@ class _EnterAllCholesterolValuesViewState
 
     if (_a1cLevelController.text.isNotEmpty) {
       ifRecordsEnterted = true;
-      addvitals('A1C Level', _a1cLevelController.text.toString(), 'mg/dl');
+      addvitals('A1C Level', _a1cLevelController.text.toString(), '%');
     }
 
     if (ifRecordsEnterted) {
@@ -823,12 +823,12 @@ class _EnterAllCholesterolValuesViewState
   bool toastDisplay = true;
 
   clearAllFeilds() {
-    if (toastDisplay) {
+    //if (toastDisplay) {
     _scrollController.animateTo(0.0,
-        duration: Duration(seconds: 4), curve: Curves.ease);
+        duration: Duration(seconds: 2), curve: Curves.ease);
        showToast('Record Created Successfully!', context);
-      toastDisplay = false;
-    }
+      //toastDisplay = false;
+    //}
 
     _ldlController.text = '';
     _ldlController.selection = TextSelection.fromPosition(

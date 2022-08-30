@@ -80,9 +80,7 @@ class PatientMedicationViewModel extends BaseModel {
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
-
-    final body = <String, String>{};
-
+    
     final response = await apiProvider!.delete(
         '/clinical/medications/' + medicationId,
         header: map);

@@ -48,53 +48,50 @@ class LipidProfileHistoryResponse {
   }
 }
 
-/// BloodCholesterolRecords : {"TotalCount":3,"RetrievedCount":3,"PageIndex":0,"ItemsPerPage":25,"Order":"descending","OrderedBy":"CreatedAt","Items":[{"id":"7b913d29-c822-4052-81f8-53bb13ae9dbb","EhrId":null,"PatientUserId":"5f9ece85-5322-495d-ae31-30c4402aae34","TotalCholesterol":120,"HDL":150,"LDL":170,"TriglycerideLevel":7,"Ratio":2,"Unit":"mg/dl","RecordDate":"2022-07-14T07:42:27.000Z","RecordedByUserId":"5f9ece85-5322-495d-ae31-30c4402aae34"},{"id":"ec6f904e-7a4d-4b8c-83e1-f16d3db43673","EhrId":null,"PatientUserId":"9f9ac031-64a7-44c2-90c1-4cbfea35d7fd","TotalCholesterol":120,"HDL":150,"LDL":170,"TriglycerideLevel":7,"Ratio":2,"Unit":"mg/dl","RecordDate":"2022-07-14T07:04:44.000Z","RecordedByUserId":"9f9ac031-64a7-44c2-90c1-4cbfea35d7fd"},{"id":"3ff4b6af-e502-457b-a527-83114f93ad9c","EhrId":null,"PatientUserId":"5f9ece85-5322-495d-ae31-30c4402aae34","TotalCholesterol":120,"HDL":150,"LDL":170,"TriglycerideLevel":7,"Ratio":2,"Unit":"mg/dl","RecordDate":"2022-07-14T07:02:54.000Z","RecordedByUserId":"5f9ece85-5322-495d-ae31-30c4402aae34"}]}
+/// LabRecordRecords : {"TotalCount":1,"RetrievedCount":1,"PageIndex":0,"ItemsPerPage":25,"Order":"descending","OrderedBy":"CreatedAt","Items":[{"id":"3fd930b7-188e-4611-a77b-5ddd919d596d","EhrId":null,"PatientUserId":"d4f6a394-5f68-409f-9246-7a6e9a15e21e","TypeId":"e7fb3a01-cae5-4101-8249-2e3fcc2621a4","TypeName":"Cholesterol","DisplayName":"Total Cholesterol","PrimaryValue":223,"SecondaryValue":null,"Unit":"mg/dl","ReportId":null,"OrderId":null,"RecordedAt":"2022-08-29T09:40:47.000Z"}]}
 
 class Data {
   Data({
-    BloodCholesterolRecords? bloodCholesterolRecords,
-  }) {
-    _bloodCholesterolRecords = bloodCholesterolRecords;
+    LabRecordRecords? labRecordRecords,}){
+    _labRecordRecords = labRecordRecords;
   }
 
   Data.fromJson(dynamic json) {
-    _bloodCholesterolRecords = json['BloodCholesterolRecords'] != null
-        ? BloodCholesterolRecords.fromJson(json['BloodCholesterolRecords'])
-        : null;
+    _labRecordRecords = json['LabRecordRecords'] != null ? LabRecordRecords.fromJson(json['LabRecordRecords']) : null;
   }
-
-  BloodCholesterolRecords? _bloodCholesterolRecords;
-
-  BloodCholesterolRecords? get bloodCholesterolRecords =>
-      _bloodCholesterolRecords;
+  LabRecordRecords? _labRecordRecords;
+  Data copyWith({  LabRecordRecords? labRecordRecords,
+  }) => Data(  labRecordRecords: labRecordRecords ?? _labRecordRecords,
+  );
+  LabRecordRecords? get labRecordRecords => _labRecordRecords;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (_bloodCholesterolRecords != null) {
-      map['BloodCholesterolRecords'] = _bloodCholesterolRecords?.toJson();
+    if (_labRecordRecords != null) {
+      map['LabRecordRecords'] = _labRecordRecords?.toJson();
     }
     return map;
   }
+
 }
 
-/// TotalCount : 3
-/// RetrievedCount : 3
+/// TotalCount : 1
+/// RetrievedCount : 1
 /// PageIndex : 0
 /// ItemsPerPage : 25
 /// Order : "descending"
 /// OrderedBy : "CreatedAt"
-/// Items : [{"id":"7b913d29-c822-4052-81f8-53bb13ae9dbb","EhrId":null,"PatientUserId":"5f9ece85-5322-495d-ae31-30c4402aae34","TotalCholesterol":120,"HDL":150,"LDL":170,"TriglycerideLevel":7,"Ratio":2,"Unit":"mg/dl","RecordDate":"2022-07-14T07:42:27.000Z","RecordedByUserId":"5f9ece85-5322-495d-ae31-30c4402aae34"},{"id":"ec6f904e-7a4d-4b8c-83e1-f16d3db43673","EhrId":null,"PatientUserId":"9f9ac031-64a7-44c2-90c1-4cbfea35d7fd","TotalCholesterol":120,"HDL":150,"LDL":170,"TriglycerideLevel":7,"Ratio":2,"Unit":"mg/dl","RecordDate":"2022-07-14T07:04:44.000Z","RecordedByUserId":"9f9ac031-64a7-44c2-90c1-4cbfea35d7fd"},{"id":"3ff4b6af-e502-457b-a527-83114f93ad9c","EhrId":null,"PatientUserId":"5f9ece85-5322-495d-ae31-30c4402aae34","TotalCholesterol":120,"HDL":150,"LDL":170,"TriglycerideLevel":7,"Ratio":2,"Unit":"mg/dl","RecordDate":"2022-07-14T07:02:54.000Z","RecordedByUserId":"5f9ece85-5322-495d-ae31-30c4402aae34"}]
+/// Items : [{"id":"3fd930b7-188e-4611-a77b-5ddd919d596d","EhrId":null,"PatientUserId":"d4f6a394-5f68-409f-9246-7a6e9a15e21e","TypeId":"e7fb3a01-cae5-4101-8249-2e3fcc2621a4","TypeName":"Cholesterol","DisplayName":"Total Cholesterol","PrimaryValue":223,"SecondaryValue":null,"Unit":"mg/dl","ReportId":null,"OrderId":null,"RecordedAt":"2022-08-29T09:40:47.000Z"}]
 
-class BloodCholesterolRecords {
-  BloodCholesterolRecords({
-    int? totalCount,
-    int? retrievedCount,
-    int? pageIndex,
-    int? itemsPerPage,
+class LabRecordRecords {
+  LabRecordRecords({
+    num? totalCount,
+    num? retrievedCount,
+    num? pageIndex,
+    num? itemsPerPage,
     String? order,
     String? orderedBy,
-    List<Items>? items,
-  }) {
+    List<Items>? items,}){
     _totalCount = totalCount;
     _retrievedCount = retrievedCount;
     _pageIndex = pageIndex;
@@ -104,7 +101,7 @@ class BloodCholesterolRecords {
     _items = items;
   }
 
-  BloodCholesterolRecords.fromJson(dynamic json) {
+  LabRecordRecords.fromJson(dynamic json) {
     _totalCount = json['TotalCount'];
     _retrievedCount = json['RetrievedCount'];
     _pageIndex = json['PageIndex'];
@@ -118,27 +115,34 @@ class BloodCholesterolRecords {
       });
     }
   }
-
-  int? _totalCount;
-  int? _retrievedCount;
-  int? _pageIndex;
-  int? _itemsPerPage;
+  num? _totalCount;
+  num? _retrievedCount;
+  num? _pageIndex;
+  num? _itemsPerPage;
   String? _order;
   String? _orderedBy;
   List<Items>? _items;
-
-  int? get totalCount => _totalCount;
-
-  int? get retrievedCount => _retrievedCount;
-
-  int? get pageIndex => _pageIndex;
-
-  int? get itemsPerPage => _itemsPerPage;
-
+  LabRecordRecords copyWith({  num? totalCount,
+    num? retrievedCount,
+    num? pageIndex,
+    num? itemsPerPage,
+    String? order,
+    String? orderedBy,
+    List<Items>? items,
+  }) => LabRecordRecords(  totalCount: totalCount ?? _totalCount,
+    retrievedCount: retrievedCount ?? _retrievedCount,
+    pageIndex: pageIndex ?? _pageIndex,
+    itemsPerPage: itemsPerPage ?? _itemsPerPage,
+    order: order ?? _order,
+    orderedBy: orderedBy ?? _orderedBy,
+    items: items ?? _items,
+  );
+  num? get totalCount => _totalCount;
+  num? get retrievedCount => _retrievedCount;
+  num? get pageIndex => _pageIndex;
+  num? get itemsPerPage => _itemsPerPage;
   String? get order => _order;
-
   String? get orderedBy => _orderedBy;
-
   List<Items>? get items => _items;
 
   Map<String, dynamic> toJson() {
@@ -154,115 +158,129 @@ class BloodCholesterolRecords {
     }
     return map;
   }
+
 }
 
-/// id : "7b913d29-c822-4052-81f8-53bb13ae9dbb"
+/// id : "3fd930b7-188e-4611-a77b-5ddd919d596d"
 /// EhrId : null
-/// PatientUserId : "5f9ece85-5322-495d-ae31-30c4402aae34"
-/// TotalCholesterol : 120
-/// HDL : 150
-/// LDL : 170
-/// TriglycerideLevel : 7
-/// Ratio : 2
+/// PatientUserId : "d4f6a394-5f68-409f-9246-7a6e9a15e21e"
+/// TypeId : "e7fb3a01-cae5-4101-8249-2e3fcc2621a4"
+/// TypeName : "Cholesterol"
+/// DisplayName : "Total Cholesterol"
+/// PrimaryValue : 223
+/// SecondaryValue : null
 /// Unit : "mg/dl"
-/// RecordDate : "2022-07-14T07:42:27.000Z"
-/// RecordedByUserId : "5f9ece85-5322-495d-ae31-30c4402aae34"
+/// ReportId : null
+/// OrderId : null
+/// RecordedAt : "2022-08-29T09:40:47.000Z"
 
 class Items {
   Items({
     String? id,
     dynamic ehrId,
     String? patientUserId,
-    dynamic totalCholesterol,
-    dynamic hdl,
-    dynamic ldl,
-    dynamic triglycerideLevel,
-    dynamic ratio,
-    dynamic a1cLevel,
+    String? typeId,
+    String? typeName,
+    String? displayName,
+    num? primaryValue,
+    dynamic secondaryValue,
     String? unit,
-    String? recordDate,
-    String? recordedByUserId,
-  }) {
+    dynamic reportId,
+    dynamic orderId,
+    String? recordedAt,}){
     _id = id;
     _ehrId = ehrId;
     _patientUserId = patientUserId;
-    _totalCholesterol = totalCholesterol;
-    _hdl = hdl;
-    _ldl = ldl;
-    _triglycerideLevel = triglycerideLevel;
-    _ratio = ratio;
-    _a1cLevel = a1cLevel;
+    _typeId = typeId;
+    _typeName = typeName;
+    _displayName = displayName;
+    _primaryValue = primaryValue;
+    _secondaryValue = secondaryValue;
     _unit = unit;
-    _recordDate = recordDate;
-    _recordedByUserId = recordedByUserId;
+    _reportId = reportId;
+    _orderId = orderId;
+    _recordedAt = recordedAt;
   }
 
   Items.fromJson(dynamic json) {
     _id = json['id'];
     _ehrId = json['EhrId'];
     _patientUserId = json['PatientUserId'];
-    _totalCholesterol = json['TotalCholesterol'];
-    _hdl = json['HDL'];
-    _ldl = json['LDL'];
-    _triglycerideLevel = json['TriglycerideLevel'];
-    _ratio = json['Ratio'];
-    _a1cLevel = json['A1CLevel'];
+    _typeId = json['TypeId'];
+    _typeName = json['TypeName'];
+    _displayName = json['DisplayName'];
+    _primaryValue = json['PrimaryValue'];
+    _secondaryValue = json['SecondaryValue'];
     _unit = json['Unit'];
-    _recordDate = json['RecordDate'];
-    _recordedByUserId = json['RecordedByUserId'];
+    _reportId = json['ReportId'];
+    _orderId = json['OrderId'];
+    _recordedAt = json['RecordedAt'];
   }
-
   String? _id;
   dynamic _ehrId;
   String? _patientUserId;
-  dynamic _totalCholesterol;
-  dynamic _hdl;
-  dynamic _ldl;
-  dynamic _triglycerideLevel;
-  dynamic _ratio;
-  dynamic _a1cLevel;
+  String? _typeId;
+  String? _typeName;
+  String? _displayName;
+  num? _primaryValue;
+  dynamic _secondaryValue;
   String? _unit;
-  String? _recordDate;
-  String? _recordedByUserId;
-
+  dynamic _reportId;
+  dynamic _orderId;
+  String? _recordedAt;
+  Items copyWith({  String? id,
+    dynamic ehrId,
+    String? patientUserId,
+    String? typeId,
+    String? typeName,
+    String? displayName,
+    num? primaryValue,
+    dynamic secondaryValue,
+    String? unit,
+    dynamic reportId,
+    dynamic orderId,
+    String? recordedAt,
+  }) => Items(  id: id ?? _id,
+    ehrId: ehrId ?? _ehrId,
+    patientUserId: patientUserId ?? _patientUserId,
+    typeId: typeId ?? _typeId,
+    typeName: typeName ?? _typeName,
+    displayName: displayName ?? _displayName,
+    primaryValue: primaryValue ?? _primaryValue,
+    secondaryValue: secondaryValue ?? _secondaryValue,
+    unit: unit ?? _unit,
+    reportId: reportId ?? _reportId,
+    orderId: orderId ?? _orderId,
+    recordedAt: recordedAt ?? _recordedAt,
+  );
   String? get id => _id;
-
   dynamic get ehrId => _ehrId;
-
   String? get patientUserId => _patientUserId;
-
-  dynamic get totalCholesterol => _totalCholesterol;
-
-  dynamic get hdl => _hdl;
-
-  dynamic get ldl => _ldl;
-
-  dynamic get triglycerideLevel => _triglycerideLevel;
-
-  dynamic get ratio => _ratio;
-
-  dynamic get a1cLevel => _a1cLevel;
-
+  String? get typeId => _typeId;
+  String? get typeName => _typeName;
+  String? get displayName => _displayName;
+  num? get primaryValue => _primaryValue;
+  dynamic get secondaryValue => _secondaryValue;
   String? get unit => _unit;
-
-  String? get recordDate => _recordDate;
-
-  String? get recordedByUserId => _recordedByUserId;
+  dynamic get reportId => _reportId;
+  dynamic get orderId => _orderId;
+  String? get recordedAt => _recordedAt;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['EhrId'] = _ehrId;
     map['PatientUserId'] = _patientUserId;
-    map['TotalCholesterol'] = _totalCholesterol;
-    map['HDL'] = _hdl;
-    map['LDL'] = _ldl;
-    map['TriglycerideLevel'] = _triglycerideLevel;
-    map['Ratio'] = _ratio;
-    map['A1CLevel'] = _a1cLevel;
+    map['TypeId'] = _typeId;
+    map['TypeName'] = _typeName;
+    map['DisplayName'] = _displayName;
+    map['PrimaryValue'] = _primaryValue;
+    map['SecondaryValue'] = _secondaryValue;
     map['Unit'] = _unit;
-    map['RecordDate'] = _recordDate;
-    map['RecordedByUserId'] = _recordedByUserId;
+    map['ReportId'] = _reportId;
+    map['OrderId'] = _orderId;
+    map['RecordedAt'] = _recordedAt;
     return map;
   }
+
 }

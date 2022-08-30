@@ -13,6 +13,7 @@ import 'package:patient/features/misc/models/user_data.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/ui/create_profile_view.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
+import 'package:patient/features/misc/ui/welcome.dart';
 import 'package:patient/features/misc/view_models/login_view_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
@@ -42,6 +43,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
   String? _fcmToken = '';
   bool loginOTP = false;
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+  OtpFieldController otpController = OtpFieldController();
 
   @override
   void initState() {
@@ -228,6 +230,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             height: 8,
           ),
           OTPTextField(
+            controller: otpController,
+            contentPadding: const EdgeInsets.symmetric(vertical: 16.0),
             length: 6,
             width: MediaQuery.of(context).size.width,
             fieldWidth: 40,
@@ -372,6 +376,9 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         showToast(
             'One-time PIN has been successfully sent on your mobile number',
             context);
+        otpController.clear();
+        otpController.setFocus(0);
+        setState(() {});
         //model.setBusy(false);
       } else {
         //model.setBusy(false);
@@ -503,10 +510,17 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
         _sharedPrefUtils.saveBoolean('login1.8.81', true);
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) {
-          return HomeView(0);
-        }), (Route<dynamic> route) => false);
+        if(getAppName() == 'Heart & Stroke Helper™ ') {
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) {
+                return Welcome();
+              }), (Route<dynamic> route) => false);
+        }else{
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) {
+                return HomeView(0);
+              }), (Route<dynamic> route) => false);
+        }
         model.setBusy(false);
       } else {
         model.setBusy(false);

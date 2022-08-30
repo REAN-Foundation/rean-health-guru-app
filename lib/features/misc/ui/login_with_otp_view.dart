@@ -327,15 +327,18 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Checkbox(
-                value: isPrivacyPolicyChecked,
-                onChanged: (value) {
-                  isPrivacyPolicyChecked = value;
-                  if (value!) {
-                    privacyPolicyErrorVisibility = false;
-                  }
-                  setState(() {});
-                }),
+            Semantics(
+              label: 'privacy policy',
+              child: Checkbox(
+                  value: isPrivacyPolicyChecked,
+                  onChanged: (value) {
+                    isPrivacyPolicyChecked = value;
+                    if (value!) {
+                      privacyPolicyErrorVisibility = false;
+                    }
+                    setState(() {});
+                  }),
+            ),
             Expanded(
               child: Text.rich(
                 TextSpan(

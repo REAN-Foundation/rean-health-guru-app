@@ -208,4 +208,20 @@ class DashboardSummaryModel extends BaseModel {
     // Convert and return
     return BaseResponse.fromJson(response);
   }
+
+  Future<BaseResponse> recordMyCaloriesConsumed(Map body) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!
+        .post('/wellness/nutrition/food-consumptions', header: map, body: body);
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
 }

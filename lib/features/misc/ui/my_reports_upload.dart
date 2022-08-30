@@ -24,6 +24,7 @@ import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:share/share.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -716,7 +717,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   _removeConfirmation(Items document) {
-    showDialog(
+    /* showDialog(
       context: context,
       builder: (context) => AlertDialog(
         content: ListTile(
@@ -752,7 +753,19 @@ class _MyReportsViewState extends State<MyReportsView> {
           ),
         ],
       ),
-    );
+    );*/
+    ConfirmationBottomSheet(
+        context: context,
+        height: 180,
+        onPositiveButtonClickListner: () {
+          //debugPrint('Positive Button Click');
+          deleteDocument(document.id!);
+        },
+        onNegativeButtonClickListner: () {
+          //debugPrint('Negative Button Click');
+        },
+        question: 'Are you sure you want to delete this record?',
+        tittle: 'Alert!');
   }
 
   _renameDialog(Items document) async {

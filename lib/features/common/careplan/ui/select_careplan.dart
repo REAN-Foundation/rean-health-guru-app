@@ -53,7 +53,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       _ahaCarePlansResponse = await model.getAHACarePlans();
 
       if (_ahaCarePlansResponse.status == 'success') {
-        debugPrint('AHA Care Plan ==> ${_ahaCarePlansResponse.toJson()}');
+        debugPrint('AHA Health Journey ==> ${_ahaCarePlansResponse.toJson()}');
 
         _carePlanMenuItems = buildDropDownMenuItemsForCarePlan(
             _ahaCarePlansResponse.data!.availablePlans!);
@@ -75,13 +75,13 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       debugPrint(
           'Plan Code ==> ${list.elementAt(i).code == 'CholesterolMini'}');
 
-      if (getAppFlavour() == 'Lipid Helper' &&
+      if (getAppFlavour() == 'Heart & Stroke Helper™ ' &&
           list.elementAt(i).code == 'Cholesterol') {
         items.add(DropdownMenuItem(
           child: Text(list.elementAt(i).displayName!),
           value: list.elementAt(i).displayName,
         ));
-      } else if (getAppFlavour() == 'Lipid Helper' &&
+      } else if (getAppFlavour() == 'Heart & Stroke Helper™ ' &&
           list.elementAt(i).code == 'Stroke') {
         items.add(DropdownMenuItem(
           child: Text(list.elementAt(i).displayName!),
@@ -140,7 +140,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             backgroundColor: primaryColor,
             brightness: Brightness.dark,
             title: Text(
-              'Select Care Plan',
+              'Select Health Journey',
               style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.white,
@@ -197,35 +197,38 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Semantics(
-                                          label: 'Care Plan image',
-                                          image: true,
-                                          child: Image.asset(
-                                            'res/images/ic_hf_care_plan.png',
-                                            color: primaryColor,
-                                            width: 120,
-                                            height: 120,
+                                  child: Scrollbar(
+                                    isAlwaysShown: true,
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Semantics(
+                                            label: 'Health Journey image',
+                                            image: true,
+                                            child: Image.asset(
+                                              'res/images/ic_hf_care_plan.png',
+                                              color: primaryColor,
+                                              width: 120,
+                                              height: 120,
+                                            ),
                                           ),
-                                        ),
-                                        selectCarePlanDropDown(),
-                                        startCarePlanDate(),
-                                        //checkElegibility(),
-                                        /* if (selectedCarePlan == '')
-                                          Container()
-                                        else*/
-                                        decription != ''
-                                            ? descriptionOfCarePlan()
-                                            : Container(),
-                                        //eligibilityOfCarePlan(),
-                                        //recomandationForCarePlan(),
-                                      ],
+                                          selectCarePlanDropDown(),
+                                          startCarePlanDate(),
+                                          //checkElegibility(),
+                                          /* if (selectedCarePlan == '')
+                                            Container()
+                                          else*/
+                                          decription != ''
+                                              ? descriptionOfCarePlan()
+                                              : Container(),
+                                          //eligibilityOfCarePlan(),
+                                          //recomandationForCarePlan(),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -252,7 +255,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       ),
       child: Center(
         child: Text(
-          'You do not have any registered care plan.',
+          'You do not have any registered Health Journey.',
           style: TextStyle(color: textBlack, fontWeight: FontWeight.w600),
         ),
       ),
@@ -268,7 +271,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Select Care Plan',
+            'Select Health Journey',
             style: TextStyle(
                 color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
           ),
@@ -286,7 +289,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             child: DropdownButton<String>(
               isExpanded: true,
               hint: Text(
-                'Select Care Plan',
+                'Select Health Journey',
                 style: TextStyle(
                     color: textBlack,
                     fontSize: 14,
@@ -755,7 +758,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 child: InkWell(
                   onTap: () {
                     if (selectedCarePlan == '') {
-                      showToast('Please select care plan', context);
+                      showToast('Please select Health Journey', context);
                     } else if (startDate == '') {
                       showToast('Please select start date', context);
                     } else if (carePlanEligibility!) {
@@ -800,7 +803,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       map['StartDate'] = startDate;
 
       final EnrollCarePlanResponse response = await model.startCarePlan(map);
-      debugPrint('Registered Care Plan ==> ${response.toJson()}');
+      debugPrint('Registered Health Journey ==> ${response.toJson()}');
       if (response.status == 'success') {
         showSuccessDialog();
         //showToast(response.message!, context);
@@ -818,7 +821,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     try {
       final CheckCareplanEligibility response =
           await model.checkCarePlanEligibility(code);
-      debugPrint('Eligibility of Care Plan ==> ${response.toJson()}');
+      debugPrint('Eligibility of Health Journey ==> ${response.toJson()}');
       if (response.status == 'success') {
         carePlanEligibility = response.data!.eligibility!.eligible;
         if (response.data!.eligibility!.reason != null) {
@@ -851,7 +854,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Semantics(
-                label: 'Care Plan image',
+                label: 'Health Journey image',
                 image: true,
                 child: Image.asset(
                   'res/images/ic_careplan_success_tick.png',

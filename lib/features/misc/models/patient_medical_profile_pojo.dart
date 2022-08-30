@@ -83,6 +83,7 @@ class HealthProfile {
   bool? hasHeartAilment;
   String? maritalStatus;
   String? ethnicity;
+  String? race;
   String? nationality;
   String? occupation;
   bool? sedentaryLifestyle;
@@ -107,17 +108,18 @@ class HealthProfile {
       this.hasHeartAilment,
       this.maritalStatus,
       this.ethnicity,
-        this.nationality,
-        this.occupation,
-        this.sedentaryLifestyle,
-        this.isSmoker,
-        this.smokingSeverity,
-        this.smokingSince,
-        this.isDrinker,
-        this.drinkingSeverity,
-        this.drinkingSince,
-        this.substanceAbuse,
-        this.procedureHistory,
+      this.race,
+      this.nationality,
+      this.occupation,
+      this.sedentaryLifestyle,
+      this.isSmoker,
+      this.smokingSeverity,
+      this.smokingSince,
+      this.isDrinker,
+      this.drinkingSeverity,
+      this.drinkingSince,
+      this.substanceAbuse,
+      this.procedureHistory,
         this.obstetricHistory,
         this.otherInformation});
 
@@ -131,6 +133,7 @@ class HealthProfile {
     hasHeartAilment = json['HasHeartAilment'];
     maritalStatus = json['MaritalStatus'];
     ethnicity = json['Ethnicity'];
+    race = json['Race'];
     nationality = json['Nationality'];
     occupation = json['Occupation'];
     sedentaryLifestyle = json['SedentaryLifestyle'];
@@ -157,6 +160,7 @@ class HealthProfile {
     data['HasHeartAilment'] = hasHeartAilment;
     data['MaritalStatus'] = maritalStatus;
     data['Ethnicity'] = ethnicity;
+    data['Race'] = race;
     data['Nationality'] = nationality;
     data['Occupation'] = occupation;
     data['SedentaryLifestyle'] = sedentaryLifestyle;

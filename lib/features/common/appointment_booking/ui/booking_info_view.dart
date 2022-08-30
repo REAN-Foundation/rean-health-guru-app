@@ -16,8 +16,8 @@ import 'package:patient/features/common/appointment_booking/ui/doctor_tile_widge
 import 'package:patient/features/common/appointment_booking/ui/lab_tile_widget.dart';
 import 'package:patient/features/common/appointment_booking/view_models/book_appointment_view_model.dart';
 import 'package:patient/features/misc/models/doctor_booking_appointment_pojo.dart';
-import 'package:patient/features/misc/models/upload_image_response.dart';
 import 'package:patient/features/misc/models/time_slot.dart';
+import 'package:patient/features/misc/models/upload_image_response.dart';
 import 'package:patient/features/misc/models/user_data.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -337,7 +337,7 @@ class _BookingInfoViewState extends State<BookingInfoView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Gender',
+            'Sex',
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(

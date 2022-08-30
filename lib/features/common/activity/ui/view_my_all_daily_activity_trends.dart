@@ -18,6 +18,7 @@ import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/get_sleep_data.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 //ignore: must_be_immutable
@@ -497,14 +498,25 @@ class _ViewMyAllDailyActivityTrendsState
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Stand',
-                  semanticsLabel: 'Stand',
-                  style: TextStyle(
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.0,
-                      color: textBlack),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Stand',
+                      semanticsLabel: 'Stand',
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.0,
+                          color: textBlack),
+                    ),
+                    InfoScreen(
+                        tittle: 'Stand Information',
+                        description:
+                            'Standing is better for the back than sitting. It strengthens leg muscles and improves balance. It burns more calories than sitting.',
+                        height: 208),
+                  ],
                 ),
                 SizedBox(
                   height: 16,
@@ -569,11 +581,12 @@ class _ViewMyAllDailyActivityTrendsState
   Widget stepCounter() {
     int stepsToDisplay = 0;
     if (Platform.isIOS) {
-      if (steps > stepsMovements) {
+      /*if (steps > stepsMovements) {
         stepsToDisplay = steps;
       } else {
         stepsToDisplay = stepsMovements;
-      }
+      }*/
+      stepsToDisplay = steps + stepsMovements;
     } else {
       stepsToDisplay = stepsMovements;
     }
@@ -591,14 +604,25 @@ class _ViewMyAllDailyActivityTrendsState
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Steps',
-                  semanticsLabel: 'Steps',
-                  style: TextStyle(
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.0,
-                      color: textBlack),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Steps',
+                      semanticsLabel: 'Steps',
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.0,
+                          color: textBlack),
+                    ),
+                    InfoScreen(
+                        tittle: 'Steps Information',
+                        description:
+                            'Steps will increase cardiovascular and pulmonary (heart and lung) fitness. reduced risk of heart disease and stroke. improved management of conditions such as hypertension (high blood pressure), high cholesterol, joint, and muscular pain or stiffness, and diabetes. stronger bones and improved balance.',
+                        height: 288),
+                  ],
                 ),
                 SizedBox(
                   height: 16,
@@ -742,11 +766,13 @@ class _ViewMyAllDailyActivityTrendsState
     if (Platform.isIOS) {
       debugPrint(
           "Inside Exercise Time ==> ${data!.getExerciseTimeInMin().abs()}");
-      if (data!.getExerciseTimeInMin() > exerciseMovements) {
+      /*if (data!.getExerciseTimeInMin() > exerciseMovements) {
         exerciseToDisplay = data!.getExerciseTimeInMin().abs();
       } else {
         exerciseToDisplay = exerciseMovements;
-      }
+      }*/
+      exerciseToDisplay =
+          data!.getExerciseTimeInMin().abs() + exerciseMovements;
     } else {
       exerciseToDisplay = exerciseMovements;
     }
@@ -761,14 +787,25 @@ class _ViewMyAllDailyActivityTrendsState
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Exercise',
-              semanticsLabel: 'Exercise',
-              style: TextStyle(
-                  fontFamily: "Montserrat",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.0,
-                  color: textBlack),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Exercise',
+                  semanticsLabel: 'Exercise',
+                  style: TextStyle(
+                      fontFamily: "Montserrat",
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18.0,
+                      color: textBlack),
+                ),
+                InfoScreen(
+                    tittle: 'Exercise Information',
+                    description:
+                    'Regular physical activity can improve your muscle strength and boost your endurance. Exercise delivers oxygen and nutrients to your tissues and helps your cardiovascular system work more efficiently. And when your heart and lung health improve, you have more energy to tackle daily chores.',
+                    height: 268),
+              ],
             ),
             SizedBox(
               height: 16,

@@ -6,9 +6,7 @@ import 'package:patient/features/common/nutrition/models/glass_of_water_consumpt
 import 'package:patient/features/common/nutrition/models/nutrition_response_store.dart';
 import 'package:patient/features/common/nutrition/models/sodium_intake_consumption.dart';
 import 'package:patient/features/common/nutrition/models/tobacco_consumption.dart';
-import 'package:patient/features/common/nutrition/ui/add_alcohol_consumption_view.dart';
 import 'package:patient/features/common/nutrition/ui/add_sodium_intake_view.dart';
-import 'package:patient/features/common/nutrition/ui/add_tobacco_consumption_view.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -18,6 +16,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+
 import 'add_daily_nutrition_view.dart';
 
 //ignore: must_be_immutable
@@ -207,7 +206,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
               backgroundColor: primaryColor,
               brightness: Brightness.dark,
               title: Text(
-                'Nutrition Management',
+                'Nutrition',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,
@@ -1001,118 +1000,8 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                           SizedBox(
                             height: 16,
                           ),
-                          Text(
-                            'Alcohol Intake',
-                            semanticsLabel: 'Alcohol Intake',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16.0,
-                                color: Colors.black),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Container(
-                            height: 56,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(12))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Semantics(
-                                    label: alcoholIntakeInMililitre!
-                                        .toStringAsFixed(0) +
-                                        (alcoholIntakeInMililitre! > 1
-                                            ? 'ml'
-                                            : 'ml'),
-                                    child: ExcludeSemantics(
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 4,
-                                          ),
-                                          Text(
-                                            alcoholIntakeInMililitre.toString(),
-                                            semanticsLabel: '',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 16.0,
-                                                color: textGrey),
-                                          ),
-                                          SizedBox(
-                                            width: 8,
-                                          ),
-                                          Text(
-                                            alcoholIntakeInMililitre! > 1
-                                                ? 'ml'
-                                                : 'ml',
-                                            semanticsLabel:
-                                            alcoholIntakeInMililitre! > 1
-                                                ? 'ml'
-                                                : 'ml',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 16.0,
-                                                color: textGrey),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 48,
-                                    width: 48,
-                                    decoration: BoxDecoration(
-                                        color: buttonColor,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(12))),
-                                    child: Center(
-                                      child: IconButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            CupertinoPageRoute(
-                                              fullscreenDialog: true,
-                                              builder: (context) =>
-                                                  AddAlcoholConsumptionView(
-                                                    submitButtonListner:
-                                                        (alcoholConsumed) {
-                                                      debugPrint(alcoholConsumed);
-                                                      recordMyAlcoholConsumption(
-                                                          int.parse(
-                                                              alcoholConsumed));
-                                                      Navigator.of(context,
-                                                          rootNavigator: true)
-                                                          .pop();
-                                                    },
-                                                  ),
-                                            ),
-                                          );
-                                        },
-                                        icon: Icon(
-                                          Icons.add,
-                                          color: primaryColor,
-                                          semanticLabel: 'Add alcohol intake',
-                                          size: 32,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          Text(
+
+                          /*Text(
                             'Tobacco Intake',
                             semanticsLabel: 'Tobacco Intake',
                             style: TextStyle(
@@ -1219,7 +1108,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                 ],
                               ),
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                     ),

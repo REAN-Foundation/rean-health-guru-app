@@ -7,10 +7,14 @@ import 'package:patient/features/common/lab_management/models/lipid_profile_hist
 import 'package:patient/features/common/lab_management/view_models/patients_lipid_profile.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
+import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
@@ -132,11 +136,27 @@ class _LipidProfileTotalCholesterolViewState
           const SizedBox(
             height: 16,
           ),
-          Text(
-            'Enter your total cholesterol:',
-            style: TextStyle(
-                color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
-            textAlign: TextAlign.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Enter your total cholesterol:',
+                style: TextStyle(
+                    color: textBlack,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              InfoScreen(
+                  tittle: 'Total Cholesterol Information',
+                  description:
+                      'You might have a fasting lipoprotein profile taken every four to six years, starting at age 20. This is a blood test that measures total cholesterol, LDL (bad) cholesterol and HDL (good) cholesterol. You may need to be tested more frequently if your doctor determines that you’re at an increased risk for heart disease or stroke. After age 40, your doctor will also want to use an equation to calculate your 10-year risk of experiencing cardiovascular disease or stroke.',
+                  height: 320),
+            ],
           ),
           const SizedBox(
             height: 16,
@@ -244,7 +264,7 @@ class _LipidProfileTotalCholesterolViewState
     return Container(
       color: colorF6F6FF,
       constraints: BoxConstraints(
-          minHeight: 100, minWidth: double.infinity, maxHeight: 160),
+          minHeight: 160, minWidth: double.infinity, maxHeight: 200),
       padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16, bottom: 16),
       //height: 160,
       child: model.busy
@@ -261,24 +281,40 @@ class _LipidProfileTotalCholesterolViewState
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            'Date',
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Date',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                          Text(
-                            'Total Cholesterol',
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              'Total Cholesterol\nmg/dl',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
+                          Expanded(
+                            flex: 1,
+                            child: ExcludeSemantics(
+                              child: SizedBox(
+                                height: 32,
+                                width: 32,
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -297,7 +333,7 @@ class _LipidProfileTotalCholesterolViewState
                               separatorBuilder:
                                   (BuildContext context, int index) {
                                 return SizedBox(
-                                  height: 8,
+                                  height: 0,
                                 );
                               },
                               itemCount: records.length,
@@ -333,19 +369,10 @@ class _LipidProfileTotalCholesterolViewState
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              dateFormatStandard.format(DateTime.parse(record.recordDate!)),
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            Semantics(
-              label: 'Total Cholesterol ',
+            Expanded(
+              flex: 3,
               child: Text(
-                record.totalCholesterol.toString() + ' mg/dl',
+                dateFormatStandard.format(DateTime.parse(record.recordedAt!)),
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -354,6 +381,44 @@ class _LipidProfileTotalCholesterolViewState
                 overflow: TextOverflow.ellipsis,
               ),
             ),
+            Expanded(
+              flex: 2,
+              child: Semantics(
+                label: 'Total Cholesterol ',
+                child: Text(
+                  record.primaryValue.toString(),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            IconButton(
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(),
+                onPressed: () {
+                  ConfirmationBottomSheet(
+                      context: context,
+                      height: 180,
+                      onPositiveButtonClickListner: () {
+                        //debugPrint('Positive Button Click');
+                        deleteVitals(record.id.toString());
+                      },
+                      onNegativeButtonClickListner: () {
+                        //debugPrint('Negative Button Click');
+                      },
+                      question: 'Are you sure you want to delete this record?',
+                      tittle: 'Alert!');
+                },
+                icon: Icon(
+                  Icons.delete_rounded,
+                  color: primaryColor,
+                  size: 24,
+                  semanticLabel: 'Total Cholesterol Delete',
+                ))
           ],
         ),
       ),
@@ -412,8 +477,8 @@ class _LipidProfileTotalCholesterolViewState
 
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate!).toLocal(),
-          double.parse(records.elementAt(i).totalCholesterol.toString())));
+          DateTime.parse(records.elementAt(i).recordedAt!).toLocal(),
+          double.parse(records.elementAt(i).primaryValue.toString())));
     }
 
     return [
@@ -578,12 +643,14 @@ class _LipidProfileTotalCholesterolViewState
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
-      map['TotalCholesterol'] = _controller.text.toString();
-      map['PatientUserId'] = "";
+      map['TypeName'] = 'Cholesterol';
+      map['DisplayName'] = 'Total Cholesterol';
+      map['PrimaryValue'] = _controller.text.toString();
+      map['PatientUserId'] = patientUserId;
       map['Unit'] = "mg/dl";
       //map['RecordedByUserId'] = null;
 
-      final BaseResponse baseResponse = await model.addMylipidProfile(map);
+      final BaseResponse baseResponse = await model.addlipidProfile(map);
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
@@ -607,27 +674,47 @@ class _LipidProfileTotalCholesterolViewState
   getVitalsHistory() async {
     try {
       final LipidProfileHistoryResponse lipidProfileHistoryResponse =
-          await model.getMyVitalsHistory();
+          await model.getLabRecordHistory('Total Cholesterol');
       if (lipidProfileHistoryResponse.status == 'success') {
+        debugPrint("Tushar 1 ==> ${lipidProfileHistoryResponse.data!.labRecordRecords!.items!.length}");
         records.clear();
-        for (int i = 0;
-            i <
-                lipidProfileHistoryResponse
-                    .data!.bloodCholesterolRecords!.items!.length;
-            i++) {
-          if (lipidProfileHistoryResponse.data!.bloodCholesterolRecords!.items!
-                  .elementAt(i)
-                  .totalCholesterol !=
-              null) {
-            records.add(lipidProfileHistoryResponse
-                .data!.bloodCholesterolRecords!.items!
-                .elementAt(i));
-          }
-        }
+        records.addAll(lipidProfileHistoryResponse.data!.labRecordRecords!.items!.toList());
       } else {
+        debugPrint("Tushar 1");
         showToast(lipidProfileHistoryResponse.message!, context);
       }
+    }on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    } /*catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }*/
+  }
+
+  deleteVitals(String recordId) async {
+    try {
+      progressDialog.show(max: 100, msg: 'Loading...');
+
+      final BaseResponse baseResponse =
+      await model.deleteLabRecord(recordId);
+
+      if (baseResponse.status == 'success') {
+        if (progressDialog.isOpen()) {
+          progressDialog.close();
+        }
+        showToast(baseResponse.message!, context);
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
+      } else {
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
+      }
     } catch (e) {
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());

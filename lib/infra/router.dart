@@ -64,7 +64,7 @@ import 'package:patient/features/common/lab_management/ui/lipid_profile_total_ch
 import 'package:patient/features/common/lab_management/ui/lipid_profile_triglycerides.dart';
 import 'package:patient/features/common/medication/ui/add_my_medication.dart';
 import 'package:patient/features/common/medication/ui/my_medication.dart';
-import 'package:patient/features/common/nutrition/ui/my_daily_nutrition_view.dart';
+import 'package:patient/features/common/nutrition/ui/nutrition_questionnaire_view.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_glucose_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_oxygen_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_pressure_vitals.dart';
@@ -182,7 +182,7 @@ class Routers {
       case RoutePaths.My_Nutrition:
         return MaterialPageRoute(
             builder: (_) =>
-                MyDailyNutritionView(settings.arguments as String?));
+                NutritionQuestionnaireView(settings.arguments as String?));
       case RoutePaths.Meditation:
         return MaterialPageRoute(builder: (_) => MeditationTimmerView());
       /*case RoutePaths.My_Vitals_By_Device_Framework:

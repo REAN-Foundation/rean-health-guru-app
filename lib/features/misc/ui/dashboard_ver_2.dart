@@ -1092,7 +1092,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             button: true,
                             child: InkWell(
                               onTap: () {
-                                recordMyCaloriesConsumed(false);
+                                Navigator.pushNamed(context, RoutePaths.My_Nutrition,
+                                    arguments: '');
+                                //recordMyCaloriesConsumed(false);
                               },
                               child: ExcludeSemantics(
                                 child: Column(

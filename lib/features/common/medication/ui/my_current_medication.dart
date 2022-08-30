@@ -113,25 +113,24 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
 
   Widget noMedicationFound() {
     return Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text('No medication added',
-              style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                  fontFamily: 'Montserrat',
-                  color: primaryColor)),
-          Container(
-            height: 32,
-            width: 32,
-            child: InfoScreen(
+      child: Container(
+        height: 40,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('No medication added',
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    fontFamily: 'Montserrat',
+                    color: primaryColor)),
+            InfoScreen(
                 tittle: 'Medication Information',
                 description: 'Add your medications by pressing the + sign.',
-                height: 180),
+                height: 180)
+            ],
           ),
-        ],
       ),
     );
   }

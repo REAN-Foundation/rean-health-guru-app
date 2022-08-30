@@ -239,13 +239,13 @@ class _MyDialogState extends State<AddNurseDialog> {
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Semantics(
-        label: 'Gender of nurse',
+        label: 'Sex of nurse',
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             ExcludeSemantics(
               child: Text(
-                'Gender*',
+                'Sex*',
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
               ),
             ),

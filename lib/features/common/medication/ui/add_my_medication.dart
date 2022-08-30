@@ -1,10 +1,15 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:http/http.dart' as http;
 import 'package:patient/features/common/medication/models/drugs_library_pojo.dart';
 import 'package:patient/features/common/medication/models/get_medication_stock_images.dart';
+import 'package:patient/features/common/medication/models/nih_medication_search_response.dart';
 import 'package:patient/features/common/medication/view_models/patients_medication.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/medication_dosage_units_pojo.dart';
@@ -53,7 +58,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   bool? nightCheck = false;
 
   List<MedicationStockImages> medicationStockImagesList =
-      <MedicationStockImages>[];
+  <MedicationStockImages>[];
 
   String? medcationResourceId = '';
 
@@ -70,8 +75,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   loadSharedPrefs() async {
     try {
       final MedicationDosageUnitsPojo dosageUnitsPojo =
-          MedicationDosageUnitsPojo.fromJson(
-              await _sharedPrefUtils.read('MedicationDosageUnits'));
+      MedicationDosageUnitsPojo.fromJson(
+          await _sharedPrefUtils.read('MedicationDosageUnits'));
       debugPrint(
           'Dosage = ${dosageUnitsPojo.data!.medicationDosageUnits!.length.toString()}');
       final MedicationDurationUnitsPojo durationUnitsPojo =
@@ -84,6 +89,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               await _sharedPrefUtils.read('MedicationFrequencies'));
       debugPrint(
           'Frequency = ${frequenciesPojo.data!.medicationFrequencyUnits!.length.toString()}');
+
+      if (!frequenciesPojo.data!.medicationFrequencyUnits!.contains('Other')) {
+        frequenciesPojo.data!.medicationFrequencyUnits!.add('Other');
+      }
 
       setState(() {
         _frequencyUnitMenuItems = buildDropDownMenuItemsForFrequency(
@@ -100,8 +109,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     }*/
   }
 
-  List<DropdownMenuItem<String>> buildDropDownMenuItemsForDosageUnit(
-      List<String> allergenCategories) {
+  List<DropdownMenuItem<String>> buildDropDownMenuItemsForDosageUnit(List<String> allergenCategories) {
     final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < allergenCategories.length; i++) {
       items.add(DropdownMenuItem(
@@ -112,8 +120,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     return items;
   }
 
-  List<DropdownMenuItem<String>> buildDropDownMenuItemsForDurationUnit(
-      List<String> allergenCategories) {
+  List<DropdownMenuItem<String>> buildDropDownMenuItemsForDurationUnit(List<String> allergenCategories) {
     final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < allergenCategories.length; i++) {
       items.add(DropdownMenuItem(
@@ -124,8 +131,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     return items;
   }
 
-  List<DropdownMenuItem<String>> buildDropDownMenuItemsForFrequency(
-      List<String> allergenCategories) {
+  List<DropdownMenuItem<String>> buildDropDownMenuItemsForFrequency(List<String> allergenCategories) {
     final List<DropdownMenuItem<String>> items = [];
     for (int i = 0; i < allergenCategories.length; i++) {
       items.add(DropdownMenuItem(
@@ -141,19 +147,19 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     return BaseWidget<PatientMedicationViewModel?>(
         model: model,
         builder: (context, model, child) => Container(
-                /* shape: RoundedRectangleBorder(
+          /* shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
               elevation: 0.0,
               backgroundColor: colorF6F6FF,*/
-                child: Scaffold(
+            child: Scaffold(
               key: _scaffoldKey,
               backgroundColor: Colors.white,
               appBar: AppBar(
                 backgroundColor: Colors.white,
                 brightness: Brightness.light,
                 title: Text(
-                  'Medication',
+                  'Medications',
                   style: TextStyle(
                       fontSize: 16.0,
                       color: primaryColor,
@@ -203,18 +209,32 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   _frequencyUnit == 'Daily'
                       ? _drugTimeScheduledCheck()
                       : Container(),
-                _drugDuration(),
-                const SizedBox(
-                  height: 16,
-                ),
+                if (_frequencyUnit == 'Other') ...[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: Text(
+                        'Note: You will not get reminder for this option.',
+                        style: TextStyle(
+                            fontSize: 14.0,
+                            color: textGrey,
+                            fontWeight: FontWeight.w500,
+                            fontStyle: FontStyle.italic)),
+                  ),
+                ],
+                if (_frequencyUnit != 'Other') ...[
+                  _drugDuration(),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                ],
                 _drugUnit(),
                 const SizedBox(
                   height: 16,
                 ),
-                _startDate(),
+                /*_startDate(),
                 const SizedBox(
                   height: 16,
-                ),
+                ),*/
                 _entryInstructionField(),
                 const SizedBox(
                   height: 16,
@@ -278,7 +298,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     suggestionsCallback: (pattern) {
                       return Future.delayed(
                         Duration(seconds: 4),
-                        () => getDrugsSuggestions(pattern),
+                            () => getDrugsSuggestions(pattern),
                       );
                     },
                     itemBuilder: (context, dynamic suggestion) {
@@ -324,15 +344,15 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       child: searchForDrug
                           ? CircularProgressIndicator()
                           : Icon(
-                              Icons.search,
-                              color: primaryColor,
-                              size: 32.0,
-                            ),
+                        Icons.search,
+                        color: primaryColor,
+                        size: 32.0,
+                      ),
                     ),
                   ),
                 ),
               ),
-              Container(
+              /*Container(
                 padding: const EdgeInsets.all(0.0),
                 height: 40.0,
                 width: 40.0,
@@ -355,7 +375,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     ),
                   ),
                 ),
-              ),
+              ),*/
             ],
           ),
         )
@@ -520,12 +540,12 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   text: ' ' + _frequencyUnit! == ''
                       ? ''
                       : _frequencyUnit == 'Weekly'
-                          ? ' (number of weeks)'
-                          : _frequencyUnit == 'Monthly'
-                              ? ' (number of months)'
-                              : _frequencyUnit == 'Daily'
-                                  ? ' (number of days)'
-                                  : '',
+                      ? ' (number of weeks)'
+                      : _frequencyUnit == 'Monthly'
+                      ? ' (number of months)'
+                      : _frequencyUnit == 'Daily'
+                      ? ' (number of days)'
+                      : '',
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w300,
@@ -637,17 +657,17 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
           child: medicationStockImagesList.isEmpty
               ? Container()
               : GridView.builder(
-                  itemCount: medicationStockImagesList.length,
-                  controller: ScrollController(keepScrollOffset: false),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 6,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
-                      childAspectRatio: 16 / 16),
-                  itemBuilder: (BuildContext context, int index) =>
-                      _makeImageSlot(context, index)),
+              itemCount: medicationStockImagesList.length,
+              controller: ScrollController(keepScrollOffset: false),
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 6,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  childAspectRatio: 16 / 16),
+              itemBuilder: (BuildContext context, int index) =>
+                  _makeImageSlot(context, index)),
         ),
       ],
     );
@@ -655,7 +675,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   _makeImageSlot(BuildContext context, int index) {
     final MedicationStockImages images =
-        medicationStockImagesList.elementAt(index);
+    medicationStockImagesList.elementAt(index);
 
     Color selcetedColor = Colors.white;
     //debugPrint("isAvailable ${slot.isAvailable} isSelected ${slot.isSelected}, Time Slot ${slot.slotStart.substring(0,5)+" - "+slot.slotEnd.substring(0,5)}");
@@ -690,14 +710,16 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               Semantics(
                 label: medicationName,
                 image: true,
-                child: Center(
-                    child: SizedBox(
-                  width: 32,
-                  height: 32,
-                  child: CachedNetworkImage(
-                    imageUrl: images.publicUrl!,
-                  ),
-                )),
+                child: ExcludeSemantics(
+                  child: Center(
+                      child: SizedBox(
+                        width: 32,
+                        height: 32,
+                        child: CachedNetworkImage(
+                          imageUrl: images.publicUrl!,
+                        ),
+                      )),
+                ),
               ),
               if (images.isSelected)
                 ExcludeSemantics(
@@ -713,7 +735,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                           width: 1.0,
                         ),
                         borderRadius:
-                            BorderRadius.only(topRight: Radius.circular(6)),
+                        BorderRadius.only(topRight: Radius.circular(6)),
                       ),
                       child: Icon(
                         Icons.check,
@@ -749,7 +771,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     setState(() {});
   }
 
-  Widget _startDate() {
+/*  Widget _startDate() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -824,7 +846,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         )
       ],
     );
-  }
+  }*/
 
   Widget _submitButton(BuildContext context) {
     return Row(
@@ -836,7 +858,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
           child: Semantics(
             label: 'Save',
             child:
-                /*RaisedButton(
+            /*RaisedButton(
               onPressed: () {
                 if (_typeAheadController.text == '') {
                   showToast('Please select drug', context);
@@ -874,44 +896,45 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               textColor: Colors.white,
               color: primaryColor,
             )*/
-                ElevatedButton(
-                    child: Text("Save",
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w600)),
-                    style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(primaryLightColor),
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(primaryColor),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(24),
-                                    side: BorderSide(color: primaryColor)))),
-                    onPressed: () {
-                      int frequency = 0;
+            ElevatedButton(
+                child: Text("Save",
+                    style: TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w600)),
+                style: ButtonStyle(
+                    foregroundColor:
+                    MaterialStateProperty.all<Color>(primaryLightColor),
+                    backgroundColor:
+                    MaterialStateProperty.all<Color>(primaryColor),
+                    shape:
+                    MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                            side: BorderSide(color: primaryColor)))),
+                onPressed: () {
+                  int frequency = 0;
 
-                      if (_frequencyUnit == 'Daily') {
-                        if (morningCheck!) {
-                          frequency = frequency + 1;
-                        }
-                        if (afternoonCheck!) {
-                          frequency = frequency + 1;
-                        }
-                        if (eveningCheck!) {
-                          frequency = frequency + 1;
-                        }
-                        if (nightCheck!) {
-                          frequency = frequency + 1;
-                        }
-                      }
-                      if (_typeAheadController.text == '') {
-                        showToast('Please select drug', context);
-                      } else if (_frequencyUnit == '') {
-                        showToast('Please select frequency', context);
-                      } else if (_frequencyUnit == 'Daily' && frequency == 0) {
+                  if (_frequencyUnit == 'Daily') {
+                    if (morningCheck!) {
+                      frequency = frequency + 1;
+                    }
+                    if (afternoonCheck!) {
+                      frequency = frequency + 1;
+                    }
+                    if (eveningCheck!) {
+                      frequency = frequency + 1;
+                    }
+                    if (nightCheck!) {
+                      frequency = frequency + 1;
+                    }
+                  }
+                  if (_typeAheadController.text == '') {
+                    showToast('Please select drug', context);
+                  } else if (_frequencyUnit == '') {
+                    showToast('Please select frequency', context);
+                  } else if (_frequencyUnit == 'Daily' && frequency == 0) {
                         showToast('Please select daily time schedule', context);
-                      } else if (_durationController.text.trim() == '') {
+                      } else if (_durationController.text.trim() == '' &&
+                          _frequencyUnit != 'Other') {
                         showToast('Please enter duration', context);
                       } else if (validationForDuration()) {
                         if (_frequencyUnit == 'Daily') {
@@ -923,20 +946,22 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                               'You can add medication for the next 26 weeks',
                               context);
                         } else if (_frequencyUnit == 'Monthly') {
-                          showToast(
-                              'You can add medication for the next 6 months',
-                              context);
-                        }
-                        /*showToast(
+                      showToast(
+                          'You can add medication for the next 6 months',
+                          context);
+                    }
+                    /*showToast(
                             'Please enter valid duration 6 months / 26 weeks / 180 days',
                             context);*/
-                      } else if (_unitController.text.trim() == '') {
-                        showToast('Please enter unit quantity', context);
-                      } else if (_dosageUnit == '') {
+                  } else if (_unitController.text.trim() == '') {
+                    showToast('Please enter unit quantity', context);
+                  } else if (_dosageUnit == '') {
                         showToast('Please Select dosage unit', context);
-                      } else if (startOn == '') {
+                      }
+                      /*else if (startOn == '') {
                         showToast('Please select start date', context);
-                      } else {
+                      }*/
+                      else {
                         _addPatientMedication(context);
                       }
                     }),
@@ -1190,7 +1215,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     );
   }
 
-  List<String?> getDrugsSuggestions(String query) {
+/*  List<String?> getDrugsSuggestions(String query) {
     final List<String?> matches = [];
     matches.addAll(drugsList);
     matches.retainWhere((s) => s!.toLowerCase().contains(query.toLowerCase()));
@@ -1233,6 +1258,80 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     for (int i = 0; i < drugs.length; i++) {
       drugsList.add(drugs.elementAt(i).drugName);
     }
+  }*/
+
+  List<String?> getDrugsSuggestions(String query) {
+    final List<String?> matches = [];
+    matches.addAll(drugsList);
+    matches.retainWhere((s) => s!.toLowerCase().contains(query.toLowerCase()));
+    return matches;
+  }
+
+  _getDrugsByName() async {
+    setState(() {
+      searchForDrug = true;
+    });
+    Map<String, String>? headers = <String, String>{};
+    var responseJson;
+    try {
+      final response = await http
+          .get(
+              Uri.parse(
+                  'https://nctr-crs.fda.gov/fdalabel/services/product/names-containing/' +
+                      _typeAheadController.text +
+                      '?l=10&t=TRADE'),
+              headers: headers)
+          .timeout(const Duration(seconds: 40));
+      responseJson = json.decode('{ "data" :' + response.body.toString() + '}');
+
+      debugPrint(
+          'Nih Medication Response ==> ${'{ "data" :' + response.body.toString() + '}'}');
+
+      NihMedicationSearchResponse searchResponse =
+          NihMedicationSearchResponse.fromJson(responseJson);
+
+      debugPrint(
+          'Nih Medication List Lenght ==> ${searchResponse.nihMedicationList!.length.toString()}');
+
+      setState(() {
+        searchForDrug = false;
+      });
+
+      _sortDrugs(searchResponse);
+      /*if (baseResponse.status == 'success') {
+        setState(() {
+          searchForDrug = false;
+        });
+        drugs.clear();
+        setState(() {
+          drugs.addAll(baseResponse.data!.drugs!.items!);
+        });
+        _sortDrugs();
+      } else {
+        setState(() {
+          searchForDrug = false;
+        });
+        showToast('Please try again', context);
+      }*/
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    } on TimeoutException catch (_) {
+      // A timeout occurred.
+      throw FetchDataException('No Internet connection');
+    } catch (CustomException) {
+      setState(() {
+        searchForDrug = false;
+      });
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  _sortDrugs(NihMedicationSearchResponse searchResponse) {
+    drugsList.clear();
+    for (int i = 0; i < searchResponse.nihMedicationList!.length; i++) {
+      drugsList.add(searchResponse.nihMedicationList!.elementAt(i).name);
+    }
+    setState(() {});
   }
 
   _addPatientMedication(BuildContext context) async {
@@ -1285,9 +1384,11 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       map['Frequency'] = frequency;
       map['FrequencyUnit'] = _frequencyUnit;
       map['Route'] = ' ';
-      map['Duration'] = int.parse(_durationController.text);
+      if (_durationController.text.isNotEmpty) {
+        map['Duration'] = int.parse(_durationController.text);
+      }
       map['DurationUnit'] = durationUnitValue;
-      map['StartDate'] = startOn;
+      //map['StartDate'] = startOn;
       map['RefillNeeded'] = false;
       map['Instructions'] = _instructionController.text;
       map['ImageResourceId'] = medcationResourceId;
@@ -1300,8 +1401,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         //Navigator.of(context).pop();
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
-          return HomeView(0);
-        }), (Route<dynamic> route) => false);
+              return HomeView(0);
+            }), (Route<dynamic> route) => false);
         //_getPatientAllergies("4c47a191-9cb6-4377-b828-83eb9ab48d0a");
       } else {
         showToast('Please try again', context);
@@ -1314,7 +1415,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     }
   }
 
-  Future _addDrugConfirmDialog(BuildContext context) async {
+/*  Future _addDrugConfirmDialog(BuildContext context) async {
     return showDialog(
       context: context,
       barrierDismissible: false, // user must tap button for close dialog!
@@ -1342,9 +1443,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
         );
       },
     );
-  }
+  }*/
 
-  _addDrugTolibrary() async {
+  /*_addDrugTolibrary() async {
     try {
       FocusScope.of(context).unfocus();
       final map = <String, String>{};
@@ -1361,12 +1462,12 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     } catch (CustomException) {
       debugPrint('Error ' + CustomException.toString());
     }
-  }
+  }*/
 
   _getMedicaionStockImages() async {
     try {
       final GetMedicationStockImages getMedicationStockImages =
-          await model.getMedicationStockImages();
+      await model.getMedicationStockImages();
       if (getMedicationStockImages.status == 'success') {
         medicationStockImagesList.clear();
         medicationStockImagesList

@@ -312,21 +312,21 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         _keyNavigation_drawer,
         (targets.length + 1).toString(),
         'Navigation Menu',
-        'Update your profile, add vitals and medical information.',
+        'Update your profile and medical information.',
         CoachMarkContentPosition.bottom,
         ShapeLightFocus.Circle));
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyMyTasks,
         (targets.length + 1).toString(),
-        'Daily Tasks',
+        'My Tasks',
         'Keep a watch on your daily tasks.',
         CoachMarkContentPosition.top,
         ShapeLightFocus.Circle));
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyUploadReports,
         (targets.length + 1).toString(),
-        'Upload Reports',
-        'Upload all your reports here.',
+        'Upload Medical Records',
+        'Upload all your medical records here.',
         CoachMarkContentPosition.top,
         ShapeLightFocus.Circle));
     //targets.add(GetTargetFocus.getTargetFocus(_keyViewAppointments, (targets.length + 1).toString(), 'Appointments List', 'View all your Appointments here.', CoachMarkContentPosition.top));
@@ -390,6 +390,149 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           context: context,
           builder: (context) => HowAreYouFeelingToday());
     }
+  }
+
+  showSuccessDialog() {
+    Dialog sucsessDialog = Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      //this right here
+      child: Card(
+        elevation: 0.0,
+        margin: EdgeInsets.zero,
+        semanticContainer: false,
+        child: Container(
+          height: 324.0,
+          width: MediaQuery.of(context).size.width - 64,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(4),
+                      topLeft: Radius.circular(4)),
+                  color: /*getAppType() == 'AHA' ?*/ redLightAha /*: primaryLightColor*/,
+                ),
+                child: Center(
+                  child: Container(
+                    height: 160,
+                    child: Semantics(
+                      label: 'Success image',
+                      image: true,
+                      child: Image.asset(
+                        'res/images/ic_health_journey.png',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 8,),
+              Text(
+                'Start your health journey here',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 18.0),
+              ),
+              Padding(padding: EdgeInsets.only(top: 20.0)),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Semantics(
+                        button: true,
+                        label: 'Cancel',
+                        child: ExcludeSemantics(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 48,
+                              width: MediaQuery.of(context).size.width - 32,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border:
+                                      Border.all(color: primaryColor, width: 1),
+                                  color: Colors.white),
+                              child: Center(
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: primaryColor,
+                                      fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Semantics(
+                        button: true,
+                        label: 'Get Started',
+                        child: ExcludeSemantics(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 48,
+                              width: MediaQuery.of(context).size.width - 32,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border:
+                                      Border.all(color: primaryColor, width: 1),
+                                  color: primaryColor),
+                              child: Center(
+                                child: Text(
+                                  'Get Started',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                      fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) => sucsessDialog);
   }
 
   @override
@@ -501,7 +644,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
               ),
               actions: <Widget>[
                 /*Badge(
-                  position: BadgePosition.topRight(top: 4, right: 4),
+                  position: BadgePosition.topEnd(top: 4, end: 4),
                   animationType: BadgeAnimationType.scale,
                   badgeColor: primaryColor,
                   badgeContent: Text(
@@ -512,6 +655,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                     icon: new Image.asset("res/images/ic_notification.png"),
                     onPressed: () {
                       debugPrint("Clicked on notification icon");
+                      showSuccessDialog();
                     },
                   ),
                 ),*/

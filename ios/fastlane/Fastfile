@@ -2,7 +2,7 @@ default_platform :ios
 
 platform :ios do
   before_all do
-    xcversion(version: "13.1")
+    xcversion(version: "~> 13.1")
     setup_ci
   end
 
@@ -185,9 +185,9 @@ platform :ios do
 
   lane :upload_build_to_testflight_aha_chol do |options|
     if options[:flavor]["_"]
-      upload_build_to_testflight(flavorId: options[:flavor].partition('_').last , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog: "Lipid Helper Test Build", description: "Lipid Helper")
+      upload_build_to_testflight(flavorId: options[:flavor].partition('_').last , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog: "Heart & Stroke Helper™  Test Build", description: "Heart & Stroke Helper™ ")
     else
-      upload_build_to_testflight(flavorId: options[:flavor] , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog: "Lipid Helper Build", description: "Lipid Helper")
+      upload_build_to_testflight(flavorId: options[:flavor] , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog: "Heart & Stroke Helper™  Build", description: "Heart & Stroke Helper™ ")
     end
   end
 

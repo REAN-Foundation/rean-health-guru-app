@@ -37,8 +37,14 @@ class GetAllConfigrations {
     map['authorization'] = 'Bearer ' + auth!;
     final response = await apiProvider!
         .get('/clinical/medications/frequency-units', header: map);
+    //if(response.toString().contains('Other')) {
     debugPrint('Medication Frequencies ==> $response');
     _sharedPrefUtils.save('MedicationFrequencies', response);
+    /*}else{
+      var modifiedResponse = response.toString().replaceAll('Monthly', 'Monthly, Other');
+      debugPrint('Medication Frequencies ==> $modifiedResponse');
+      _sharedPrefUtils.save('MedicationFrequencies', modifiedResponse);
+    }*/
     // Convert and return
   }
 

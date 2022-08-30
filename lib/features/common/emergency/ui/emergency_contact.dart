@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/features/common/appointment_booking/models/doctor_list_api_response.dart';
 import 'package:patient/features/common/emergency/models/emergency_contact_response.dart';
 import 'package:patient/features/common/emergency/ui/add_doctor_details_dialog.dart';
@@ -18,6 +17,8 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EmergencyContactView extends StatefulWidget {
@@ -242,7 +243,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   SizedBox(
                     width: 12,
                   ),
-                  Text('Did you have an emergency?',
+                  Text('Have you been hospitalized?',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
@@ -367,7 +368,6 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         content: Container(
           width: MediaQuery.of(context).size.width,
           child: Semantics(
-            label: 'updateEmergencyText',
             child: TextField(
               controller: emergencyDetailsTextControler,
               autofocus: true,
@@ -378,7 +378,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   color: Colors.black),
               decoration: InputDecoration(
                   labelStyle: TextStyle(fontSize: 16),
-                  labelText: 'Enter emergency details',
+                  labelText: 'Enter your hospitalization details',
                   hintText: ''),
             ),
           ),
@@ -439,35 +439,11 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       if (tittle == 'Doctors')
-                        Semantics(
-                          label: 'information',
-                          button: true,
-                          child: InkWell(
-                            onTap: () {
-                              showMaterialModalBottomSheet(
-                                  isDismissible: true,
-                                  backgroundColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(25.0)),
-                                  ),
-                                  context: context,
-                                  builder: (context) => _showInfo());
-                            },
-                            child: Container(
-                              key: Key(tittle),
-                              alignment: Alignment.centerRight,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  Icons.info,
-                                  color: primaryColor,
-                                  size: 24,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        InfoScreen(
+                            tittle: 'Information',
+                            description:
+                                'To share your health information with your doctor, you must include their email address in the doctor profile.',
+                            height: 208),
                       Semantics(
                         label: 'Add ' + tittle + ' details',
                         button: true,
@@ -1511,7 +1487,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   _removeConfirmation(Items contact) {
-    showDialog(
+    /*showDialog(
       context: context,
       builder: (context) => AlertDialog(
         content: ListTile(
@@ -1547,7 +1523,19 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
           ),
         ],
       ),
-    );
+    );*/
+    ConfirmationBottomSheet(
+        context: context,
+        height: 180,
+        onPositiveButtonClickListner: () {
+          //debugPrint('Positive Button Click');
+          removeTeamMembers(contact.id!);
+        },
+        onNegativeButtonClickListner: () {
+          //debugPrint('Negative Button Click');
+        },
+        question: 'Are you sure you want to remove this contact?',
+        tittle: 'Alert!');
   }
 
   removeTeamMembers(String emergencyContactId) async {
@@ -1585,7 +1573,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
             'emergency',
             DashboardTile(DateTime.now(), 'emergency', emergencyBreif)
                 .toJson());
-        showToast('Emergency details saved successfully!', context);
+        showToast('Hospitalization details saved successfully!', context);
         loadSharedPrefs();
         setState(() {});
       } else {
@@ -1598,88 +1586,4 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     }
   }
 
-  Widget _showInfo() {
-    return Container(
-      height: 208,
-      color: Colors.transparent,
-      child: Container(
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0)),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Info',
-              style: TextStyle(
-                  color: primaryColor,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Montserrat",
-                  fontStyle: FontStyle.normal,
-                  fontSize: 18.0),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            RichText(
-              text: TextSpan(
-                text:
-                    'To share your health information with your doctor, you must include their email address in the doctor profile. ',
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: textGrey,
-                ),
-                children: <TextSpan>[],
-              ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Semantics(
-                  button: true,
-                  label: 'Alright',
-                  child: ExcludeSemantics(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        height: 48,
-                        width: MediaQuery.of(context).size.width - 32,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                        ),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6.0),
-                            border: Border.all(color: primaryColor, width: 1),
-                            color: primaryColor),
-                        child: Center(
-                          child: Text(
-                            'Alright',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                                fontSize: 14),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
 }

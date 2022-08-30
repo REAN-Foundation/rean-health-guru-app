@@ -10,6 +10,7 @@ import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -76,33 +77,42 @@ class _AppDrawerState extends State<AppDrawer> {
   Widget build(BuildContext context) {
     loadSharedPrefs();
     return Drawer(
-      child: Container(
-        color: colorF6F6FF,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _createHeader(),
-            _menuItems(),
-            _footer(),
+      child: Card(
+        margin: EdgeInsets.zero,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        semanticContainer: false,
+        elevation: 0,
+        child: Container(
+          color: colorF6F6FF,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              _createHeader(),
+              _menuItems(),
+              _footer(),
 
-            /* _createDrawerItem(
-                icon: Icons.note,
-                text: 'Notes',
-                onTap: () =>
-                    Navigator.pushReplacementNamed(context, RoutePaths.notes)),
-            Divider(),
-            _createDrawerItem(icon: Icons.collections_bookmark, text: 'Steps'),
-            _createDrawerItem(icon: Icons.face, text: 'Authors'),
-            _createDrawerItem(
-                icon: Icons.account_box, text: 'Flutter Documentation'),
-            _createDrawerItem(icon: Icons.stars, text: 'Useful Links'),
-            Divider(),
-            _createDrawerItem(icon: Icons.bug_report, text: 'Report an issue'),*/
-            /* ListTile(
-              title: Text('0.0.1'),
-              onTap: () {},
-            ),*/
-          ],
+              /* _createDrawerItem(
+                  icon: Icons.note,
+                  text: 'Notes',
+                  onTap: () =>
+                      Navigator.pushReplacementNamed(context, RoutePaths.notes)),
+              Divider(),
+              _createDrawerItem(icon: Icons.collections_bookmark, text: 'Steps'),
+              _createDrawerItem(icon: Icons.face, text: 'Authors'),
+              _createDrawerItem(
+                  icon: Icons.account_box, text: 'Flutter Documentation'),
+              _createDrawerItem(icon: Icons.stars, text: 'Useful Links'),
+              Divider(),
+              _createDrawerItem(icon: Icons.bug_report, text: 'Report an issue'),*/
+              /* ListTile(
+                title: Text('0.0.1'),
+                onTap: () {},
+              ),*/
+            ],
+          ),
         ),
       ),
     );
@@ -168,7 +178,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'Vital Management',
+                        'Vital',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),
@@ -204,7 +214,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     width: 40,
                   ),
                   Text(
-                    'Medication Management',
+                    'Medication',
                     style: TextStyle(
                         color: primaryColor, fontWeight: FontWeight.w600),
                   ),
@@ -252,7 +262,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         width: 40,
                       ),
                       Text(
-                        'Nutrition Management',
+                        'Nutrition',
                         style: TextStyle(
                             color: primaryColor, fontWeight: FontWeight.w600),
                       ),
@@ -263,7 +273,7 @@ class _AppDrawerState extends State<AppDrawer> {
           Visibility(
             visible: getBaseUrl()!.contains('aha-api-uat') ||
                 getBaseUrl()!.contains('reancare-api-dev') ||
-                getAppName() == 'Lipid Helper',
+                getAppName() == 'Heart & Stroke Helper™ ',
             //visible: true,
             child: InkWell(
               onTap: () {
@@ -283,7 +293,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       width: 40,
                     ),
                     Text(
-                      'Care Plan',
+                      'Health Journey',
                       style: TextStyle(
                           color: primaryColor, fontWeight: FontWeight.w600),
                     ),
@@ -369,7 +379,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
           Visibility(
-            visible: getAppName() != 'Lipid Helper',
+            visible: getAppName() != 'Heart & Stroke Helper™ ',
             child: InkWell(
               onTap: () {
                 Navigator.popAndPushNamed(context, RoutePaths.ABOUT_REAN_CARE);
@@ -480,7 +490,7 @@ class _AppDrawerState extends State<AppDrawer> {
   }
 
   _logoutConfirmation() {
-    showDialog(
+    /*showDialog(
       context: context,
       builder: (context) => AlertDialog(
         content: ListTile(
@@ -523,7 +533,28 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
         ],
       ),
-    );
+    );*/
+    //Navigator.pop(context);
+    ConfirmationBottomSheet(
+        context: context,
+        height: 180,
+        onPositiveButtonClickListner: () {
+          debugPrint('Positive Button Click');
+          carePlanEnrollmentForPatientGlobe = null;
+          _sharedPrefUtils.save('CarePlan', null);
+          _sharedPrefUtils.saveBoolean('login', null);
+          _sharedPrefUtils.clearAll();
+          chatList.clear();
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) {
+            return LoginWithOTPView();
+          }), (Route<dynamic> route) => false);
+        },
+        onNegativeButtonClickListner: () {
+          //debugPrint('Negative Button Click');
+        },
+        question: 'Are you sure you want to logout?',
+        tittle: 'Alert!');
   }
 
   Widget _createHeader() {

@@ -34,6 +34,29 @@ class PatientLipidProfileViewModel extends BaseModel {
     return BaseResponse.fromJson(response);
   }
 
+  Future<BaseResponse> addlipidProfile(Map body) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    body['PatientUserId'] = patientUserId;
+    //body['RecordedByUserId'] = recordedByUserId;
+
+    print('body:');
+
+    final response = await apiProvider!.post(
+        '/clinical/lab-records',
+        header: map,
+        body: body);
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
+
   Future<LipidProfileHistoryResponse> getMyVitalsHistory() async {
     // Get user profile for id
     setBusy(true);
@@ -50,5 +73,40 @@ class PatientLipidProfileViewModel extends BaseModel {
     setBusy(false);
     // Convert and return
     return LipidProfileHistoryResponse.fromJson(response);
+  }
+
+  Future<LipidProfileHistoryResponse> getLabRecordHistory(String displayName) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/clinical/lab-records/search?displayName='+displayName+'&patientUserId=' +
+            patientUserId!,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return LipidProfileHistoryResponse.fromJson(response);
+  }
+
+  Future<BaseResponse> deleteLabRecord(String id) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.delete(
+        '/clinical/lab-records/'+id,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
   }
 }

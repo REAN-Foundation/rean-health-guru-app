@@ -11,6 +11,8 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
@@ -100,11 +102,11 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                         const SizedBox(
                           height: 16,
                         ),
-                        weightHistoryListFeilds(),
+                        if (records.isEmpty) Container() else graph(),
                         const SizedBox(
                           height: 16,
                         ),
-                        if (records.isEmpty) Container() else graph(),
+                        weightHistoryListFeilds(),
                         //allGoal(),
                         const SizedBox(
                           height: 16,
@@ -119,11 +121,11 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    weightHistoryListFeilds(),
+                    if (records.isEmpty) Container() else graph(),
                     const SizedBox(
                       height: 16,
                     ),
-                    if (records.isEmpty) Container() else graph(),
+                    weightHistoryListFeilds(),
                   ],
                 ),
               ),
@@ -141,11 +143,27 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
           const SizedBox(
             height: 16,
           ),
-          Text(
-            'Enter your pulse rate:',
-            style: TextStyle(
-                color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
-            textAlign: TextAlign.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Enter your pulse rate:',
+                style: TextStyle(
+                    color: textBlack,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              InfoScreen(
+                  tittle: 'Pulse Rate Information',
+                  description:
+                      'Your heart rate, or pulse, is the number of times your heart beats per minute. Normal heart rate varies from person to person. For most of us (adults), between 60 and 100 beats per minute (bpm) is normal.',
+                  height: 240),
+            ],
           ),
           const SizedBox(
             height: 16,
@@ -253,7 +271,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
     return Container(
       color: colorF6F6FF,
       constraints: BoxConstraints(
-          minHeight: 100, minWidth: double.infinity, maxHeight: 160),
+          minHeight: 160, minWidth: double.infinity, maxHeight: 200),
       padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16, bottom: 16),
       //height: 160,
       child: model.busy
@@ -270,29 +288,45 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            'Date',
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Date',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                          Text(
-                            'Pulse Rate',
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Pulse Rate\n(bpm)',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
+                          Expanded(
+                            flex: 1,
+                            child: ExcludeSemantics(
+                              child: SizedBox(
+                                height: 32,
+                                width: 32,
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
                     const SizedBox(
-                      height: 16,
+                      height: 8,
                     ),
                     Expanded(
                       child: Scrollbar(
@@ -306,7 +340,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                               separatorBuilder:
                                   (BuildContext context, int index) {
                                 return SizedBox(
-                                  height: 8,
+                                  height: 0,
                                 );
                               },
                               itemCount: records.length,
@@ -342,27 +376,64 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              dateFormatStandard.format(DateTime.parse(record.recordDate!)),
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            Semantics(
-              label: 'Pulse Rate ',
-              child: Text(
-                record.pulse.toString() + ' bpm',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+            Expanded(
+              flex: 3,
+              child: Semantics(
+                child: Text(
+                  dateFormatStandard.format(records
+                              .elementAt(index)
+                              .recordDate ==
+                          null
+                      ? DateTime.now()
+                      : DateTime.parse(records.elementAt(index).recordDate!)),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
+            Expanded(
+              flex: 2,
+              child: Semantics(
+                label: 'Pulse Rate ',
+                child: Text(
+                  record.pulse.toString(),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300),
+                  maxLines: 1,
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            IconButton(
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(),
+                onPressed: () {
+                  ConfirmationBottomSheet(
+                      context: context,
+                      height: 180,
+                      onPositiveButtonClickListner: () {
+                        //debugPrint('Positive Button Click');
+                        deleteVitals(record.id.toString());
+                      },
+                      onNegativeButtonClickListner: () {
+                        //debugPrint('Negative Button Click');
+                      },
+                      question: 'Are you sure you want to delete this record?',
+                      tittle: 'Alert!');
+                },
+                icon: Icon(
+                  Icons.delete_rounded,
+                  color: primaryColor,
+                  size: 24,
+                  semanticLabel: 'Pulse Rate Delete',
+                ))
           ],
         ),
       ),
@@ -598,6 +669,33 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
         progressDialog.close();
         showToast(baseResponse.message!, context);
         _controller.clear();
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
+      } else {
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      progressDialog.close();
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  deleteVitals(String recordId) async {
+    try {
+      progressDialog.show(max: 100, msg: 'Loading...');
+
+      final BaseResponse baseResponse =
+          await model.deleteVitalsRecord('pulse', recordId);
+
+      if (baseResponse.status == 'success') {
+        if (progressDialog.isOpen()) {
+          progressDialog.close();
+        }
+        showToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);

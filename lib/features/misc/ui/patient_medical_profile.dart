@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/nutrition/models/alcohol_consumption.dart';
+import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_medical_profile_pojo.dart';
 import 'package:patient/features/misc/view_models/patients_observation.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/conversion.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
@@ -30,16 +34,19 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
   TextEditingController();*/
 
   String mobileNumber = '';
-
+  Color buttonColor = primaryLightColor;
   final _majorAilmentFocus = FocusNode();
   final _ocupationFocus = FocusNode();
   final _nationalityFocus = FocusNode();
   final _procedureHistoryFocus = FocusNode();
-
+  DateTime? startDate;
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   double weight = 0;
   double height = 0;
-  double heightInFeet = 0;
+  String heightInFeet = '0';
+
+  int alcoholIntakeInMililitre = 0;
+  AlcoholConsumption? _alcoholConsumption;
 
   /* final _ethnicityFocus = FocusNode();*/
 
@@ -47,16 +54,36 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
     height = await _sharedPrefUtils.readDouble('height');
 
     if (height != 0.0) {
-      heightInFeet = Conversion.cmToFeet(height);
+      heightInFeet = Conversion.cmToFeet(height.toInt());
     }
     setState(() {});
   }
 
   @override
   void initState() {
+    startDate = DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
+    if (getAppType() == 'AHA') {
+      buttonColor = redLightAha;
+    }
     _getPatientMedicalProfile();
     loadSharedPref();
+    loadAlcohol();
     super.initState();
+  }
+
+  loadAlcohol() async {
+    final alcoholIntake = await _sharedPrefUtils.read('alcoholIntake');
+
+    if (alcoholIntake != null) {
+      _alcoholConsumption = AlcoholConsumption.fromJson(alcoholIntake);
+    }
+
+    if (_alcoholConsumption != null) {
+      if (startDate == _alcoholConsumption!.date) {
+        alcoholIntakeInMililitre = _alcoholConsumption!.count ?? 0;
+      }
+    }
   }
 
   @override
@@ -93,7 +120,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             children: <Widget>[
                               SizedBox(
                                 width: 150,
-                                child: Text('Major Ailment',
+                                child: Text('Main Condition',
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w600,
@@ -112,40 +139,6 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                     '' +
                                         replaceNull(
                                             healthProfile!.majorAilment),
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: textBlack)),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              SizedBox(
-                                width: 150,
-                                child: Text('Other Conditions',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: textBlack)),
-                              ),
-                              Text(': ',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: textBlack)),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Expanded(
-                                child: Text(
-                                    '' +
-                                        replaceNull(
-                                            healthProfile!.otherConditions),
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
@@ -189,6 +182,38 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             height: 8,
                           ),
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Race',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: textBlack)),
+                              ),
+                              Text(': ',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Expanded(
+                                child: Text(
+                                    '' + replaceNull(healthProfile!.race),
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
                             children: <Widget>[
                               SizedBox(
                                 width: 150,
@@ -211,6 +236,78 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w500,
                                       color: textBlack)),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Occupation',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: textBlack)),
+                              ),
+                              Text(':',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Expanded(
+                                child: Text(
+                                    '' + replaceNull(healthProfile!.occupation),
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 150,
+                                child: Text('Height',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: textBlack)),
+                              ),
+                              Text(': ',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: textBlack)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Expanded(
+                                child: Text(
+                                    height == 0
+                                        ? ''
+                                        : getCurrentLocale() == "US" ?  heightInFeet
+                                                .toString()
+                                                .replaceAll('.', "'") +
+                                            '"': height.toStringAsFixed(0)+' Cm',
+                                    semanticsLabel: getCurrentLocale() == "US" ?  heightInFeet
+                                            .toString()
+                                            .replaceAll('.', 'Feet ') +
+                                        ' inches': height.toStringAsFixed(0)+' centimeter',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
                             ],
                           ),
                           SizedBox(
@@ -272,151 +369,22 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             ],
                           ),
                           SizedBox(
-                            height: 24,
-                          ),
-                          SizedBox(
                             height: 8,
                           ),
-                          Row(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               SizedBox(
-                                width: 150,
-                                child: Text('Marital Status',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: textBlack)),
+                                height: 8,
                               ),
-                              Text(':',
+                              Text(
+                                  'Have you used tobacco products (such as cigarettes, electronic cigarettes, cigars, smokeless tobacco, or hookah) over the past year?',
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
-                                width: 8,
-                              ),
-                              Expanded(
-                                child: Text(
-                                    '' +
-                                        replaceNull(healthProfile!
-                                            .maritalStatus!
-                                            .replaceAll('Unknown', 'Single')),
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: textBlack)),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: 150,
-                                child: Text('Occupation',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: textBlack)),
-                              ),
-                              Text(':',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: textBlack)),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Expanded(
-                                child: Text(
-                                    '' + replaceNull(healthProfile!.occupation),
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: textBlack)),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          /*Row(
-                children: <Widget>[
-                  SizedBox(width: 150,
-                    child: Text('Sedentary Occupation',
-                        style: TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w600,
-                            color: textBlack)),
-                  ),
-                  Text(':',
-                      style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w600,
-                          color: textBlack)),
-                  SizedBox(width: 8,),
-                  Text('No',
-                      style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w600,
-                          color: textBlack)),
-                ],
-              ),
-              SizedBox(height: 8,),*/
-                          Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: 150,
-                                child: Text('Nationality',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: textBlack)),
-                              ),
-                              Text(':',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: textBlack)),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Expanded(
-                                child: Text(
-                                    '' +
-                                        replaceNull(healthProfile!.nationality),
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: textBlack)),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 32,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: 150,
-                                child: Text('Is Smoker?',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: textBlack)),
-                              ),
-                              Text(':',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: textBlack)),
-                              SizedBox(
-                                width: 8,
+                                height: 8,
                               ),
                               Text('' + yesOrNo(healthProfile!.isSmoker!),
                                   style: TextStyle(
@@ -428,107 +396,159 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                           SizedBox(
                             height: 8,
                           ),
-                          Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: 150,
-                                child: Text('Is Drinker?',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: textBlack)),
+                          /*Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Alcohol Intake',
+                                semanticsLabel: 'Alcohol Intake',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16.0,
+                                    color: textBlack),
                               ),
-                              Text(':',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: textBlack)),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text('' + yesOrNo(healthProfile!.isDrinker!),
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: textBlack)),
+                              InfoScreen(
+                                  tittle: 'Alcohol Intake Information',
+                                  description:
+                                  'One drink is 12 ounces of beer, 4 ounces of wine, 1.5 ounces of 80-proof spirits or 1 ounce of 100-proof spirit.',
+                                  height: 200),
                             ],
                           ),
                           SizedBox(
-                            height: 8,
+                            height: 0,
                           ),
-                          Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: 150,
-                                child: Text('Procedure History',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: textBlack)),
+                          Container(
+                            height: 56,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(12)),
+                              border: Border.all(color: primaryColor, width: 0.80),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    height: 48,
+                                    width: 48,
+                                    decoration: BoxDecoration(
+                                        color: buttonColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12))),
+                                    child: Center(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          if(alcoholIntakeInMililitre > 0) {
+                                            alcoholIntakeInMililitre =
+                                                alcoholIntakeInMililitre - 1;
+                                            recordMyAlcoholConsumption(
+                                                alcoholIntakeInMililitre);
+                                          }
+                                        },
+                                        icon: Icon(
+                                          Icons.remove,
+                                          color: primaryColor,
+                                          semanticLabel: 'Add alcohol intake',
+                                          size: 32,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Semantics(
+                                    label: alcoholIntakeInMililitre
+                                        .toStringAsFixed(0) +
+                                        (alcoholIntakeInMililitre > 1
+                                            ? 'glasses'
+                                            : 'glass'),
+                                    child: ExcludeSemantics(
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(
+                                            alcoholIntakeInMililitre.toString(),
+                                            semanticsLabel: '',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            alcoholIntakeInMililitre > 1
+                                                ? 'glasses'
+                                                : 'glass',
+                                            semanticsLabel:
+                                            alcoholIntakeInMililitre > 1
+                                                ? 'glasses'
+                                                : 'glass',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16.0,
+                                                color: textGrey),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 48,
+                                    width: 48,
+                                    decoration: BoxDecoration(
+                                        color: buttonColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12))),
+                                    child: Center(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          */ /*Navigator.push(
+                                            context,
+                                            CupertinoPageRoute(
+                                              fullscreenDialog: true,
+                                              builder: (context) =>
+                                                  AddAlcoholConsumptionView(
+                                                    submitButtonListner:
+                                                        (alcoholConsumed) {
+                                                      debugPrint(alcoholConsumed);
+                                                      recordMyAlcoholConsumption(
+                                                          int.parse(
+                                                              alcoholConsumed));
+                                                      Navigator.of(context,
+                                                          rootNavigator: true)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                            ),
+                                          );*/ /*
+
+                                          alcoholIntakeInMililitre = alcoholIntakeInMililitre + 1;
+                                          recordMyAlcoholConsumption(alcoholIntakeInMililitre);
+
+                                        },
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: primaryColor,
+                                          semanticLabel: 'Add alcohol intake',
+                                          size: 32,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
-                              Text(':',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: textBlack)),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Expanded(
-                                child: Text(
-                                    '' +
-                                        replaceNull(
-                                            healthProfile!.procedureHistory),
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: textBlack)),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ),*/
                           SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              SizedBox(
-                                width: 150,
-                                child: Text('Height',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: textBlack)),
-                              ),
-                              Text(': ',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: textBlack)),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Expanded(
-                                child: Text(
-                                    height == 0
-                                        ? ''
-                                        : heightInFeet
-                                                .toString()
-                                                .replaceAll('.', "'") +
-                                            '"',
-                                    semanticsLabel: heightInFeet
-                                            .toString()
-                                            .replaceAll('.', 'Feet ') +
-                                        ' inches',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500,
-                                        color: textBlack)),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 8,
+                            height: 16,
                           ),
                         ],
                       ),
@@ -579,6 +599,55 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
     } catch (CustomException) {
       debugPrint('Error ' + CustomException.toString());
     }
+  }
+
+  recordMyAlcoholConsumption(int alcoholInMililitre) async {
+    try {
+      recordMyMonitoringFoodConsumtion(
+          'Alcohol', 'ml', alcoholInMililitre.toDouble());
+      _sharedPrefUtils.save('alcoholIntake',
+          AlcoholConsumption(startDate, alcoholIntakeInMililitre, '').toJson());
+      showToast("Alcohol intake updated successfully", context);
+      setState(() {});
+      /* final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['Volume'] = waterGlass;
+      map['Time'] = dateFormat.format(DateTime.now());
+
+      final BaseResponse baseResponse = await model.recordMyWaterCount(map);
+      if (baseResponse.status == 'success') {
+      } else {}*/
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  recordMyMonitoringFoodConsumtion(
+      String foodName, String unit, double amount) async {
+    try {
+      final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['MonitoredFoodComponent'] = foodName;
+      map['Unit'] = unit;
+      map['Amount'] = amount;
+
+      final BaseResponse baseResponse =
+          await model.recordMyMonitoringFoodConsumtion(map);
+      if (baseResponse.status == 'success') {
+        //showToast(baseResponse.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      //model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+    /*catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ==> ' + CustomException.toString());
+    }*/
   }
 
   medicalProfileDialog(BuildContext context) {

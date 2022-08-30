@@ -11,6 +11,8 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
+import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
@@ -247,65 +249,80 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
       //height: 160,
       child: model.busy
           ? Center(
-              child: CircularProgressIndicator(),
-            )
+        child: CircularProgressIndicator(),
+      )
           : (records.isEmpty
-              ? noHistoryFound()
-              : Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Date',
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            'Ratio',
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
+          ? noHistoryFound()
+          : Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Date',
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    'Ratio\n%',
+                    style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: ExcludeSemantics(
+                    child: SizedBox(
+                      height: 32,
+                      width: 32,
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Expanded(
-                      child: Scrollbar(
-                        isAlwaysShown: true,
-                        controller: _scrollController,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: ListView.separated(
-                              itemBuilder: (context, index) =>
-                                  _makeList(context, index),
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return SizedBox(
-                                  height: 8,
-                                );
-                              },
-                              itemCount: records.length,
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true),
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Expanded(
+            child: Scrollbar(
+              isAlwaysShown: true,
+              controller: _scrollController,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ListView.separated(
+                    itemBuilder: (context, index) =>
+                        _makeList(context, index),
+                    separatorBuilder:
+                        (BuildContext context, int index) {
+                      return SizedBox(
+                        height: 8,
+                      );
+                    },
+                    itemCount: records.length,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true),
+              ),
+            ),
+          ),
+        ],
+      )),
     );
   }
 
@@ -331,19 +348,10 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              dateFormatStandard.format(DateTime.parse(record.recordDate!)),
-              style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            Semantics(
-              label: 'Ratio ',
+            Expanded(
+              flex: 3,
               child: Text(
-                record.ratio.toString() + ' %',
+                dateFormatStandard.format(DateTime.parse(record.recordedAt!)),
                 style: TextStyle(
                     color: primaryColor,
                     fontSize: 14,
@@ -352,6 +360,44 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
+            Expanded(
+              flex: 2,
+              child: Semantics(
+                label: 'Ratio',
+                child: Text(
+                  record.primaryValue.toString(),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            IconButton(
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(),
+                onPressed: () {
+                  ConfirmationBottomSheet(
+                      context: context,
+                      height: 180,
+                      onPositiveButtonClickListner: () {
+                        //debugPrint('Positive Button Click');
+                        deleteVitals(record.id.toString());
+                      },
+                      onNegativeButtonClickListner: () {
+                        //debugPrint('Negative Button Click');
+                      },
+                      question: 'Are you sure you want to delete this record?',
+                      tittle: 'Alert!');
+                },
+                icon: Icon(
+                  Icons.delete_rounded,
+                  color: primaryColor,
+                  size: 24,
+                  semanticLabel: 'Cholesterol Ratio Delete',
+                ))
           ],
         ),
       ),
@@ -410,13 +456,13 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
 
     for (int i = 0; i < records.length; i++) {
       data.add(TimeSeriesSales(
-          DateTime.parse(records.elementAt(i).recordDate!).toLocal(),
-          double.parse(records.elementAt(i).ratio.toString())));
+          DateTime.parse(records.elementAt(i).recordedAt!).toLocal(),
+          double.parse(records.elementAt(i).primaryValue.toString())));
     }
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
-        id: 'Ratio',
+        id: 'HDL',
         colorFn: (_, __) => charts.MaterialPalette.indigo.shadeDefault,
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
@@ -576,12 +622,14 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
-      map['Ratio'] = _controller.text.toString();
-      map['PatientUserId'] = "";
+      map['TypeName'] = 'Cholesterol';
+      map['DisplayName'] = 'Cholesterol Ratio';
+      map['PrimaryValue'] = _controller.text.toString();
+      map['PatientUserId'] = patientUserId;
       map['Unit'] = "%";
       //map['RecordedByUserId'] = null;
 
-      final BaseResponse baseResponse = await model.addMylipidProfile(map);
+      final BaseResponse baseResponse = await model.addlipidProfile(map);
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
@@ -605,27 +653,41 @@ class _LipidProfileRatioViewState extends State<LipidProfileRatioView> {
   getVitalsHistory() async {
     try {
       final LipidProfileHistoryResponse lipidProfileHistoryResponse =
-          await model.getMyVitalsHistory();
+      await model.getLabRecordHistory('Cholesterol Ratio');
       if (lipidProfileHistoryResponse.status == 'success') {
         records.clear();
-        for (int i = 0;
-            i <
-                lipidProfileHistoryResponse
-                    .data!.bloodCholesterolRecords!.items!.length;
-            i++) {
-          if (lipidProfileHistoryResponse.data!.bloodCholesterolRecords!.items!
-                  .elementAt(i)
-                  .ratio !=
-              null) {
-            records.add(lipidProfileHistoryResponse
-                .data!.bloodCholesterolRecords!.items!
-                .elementAt(i));
-          }
-        }
+        records.addAll(lipidProfileHistoryResponse.data!.labRecordRecords!.items!.toList());
       } else {
         showToast(lipidProfileHistoryResponse.message!, context);
       }
     } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  deleteVitals(String recordId) async {
+    try {
+      progressDialog.show(max: 100, msg: 'Loading...');
+
+      final BaseResponse baseResponse =
+      await model.deleteLabRecord(recordId);
+
+      if (baseResponse.status == 'success') {
+        if (progressDialog.isOpen()) {
+          progressDialog.close();
+        }
+        showToast(baseResponse.message!, context);
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
+      } else {
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      progressDialog.close();
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());

@@ -58,8 +58,8 @@ class MyApp extends StatelessWidget {
     this.isLogin = isLogin;
     setSessionFlag(isLogin);
     setAppType('AHA');
-    setAppName('Lipid Helper');
-    setAppFlavour('Lipid Helper');
+    setAppName('Heart & Stroke Helper™ ');
+    setAppFlavour('Heart & Stroke Helper™ ');
     setBaseUrl(_baseUrl);
     GetIt.instance.registerSingleton<ApiProvider>(ApiProvider(_baseUrl));
     GetIt.instance
@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: providers,
       child: MaterialApp(
-        title: 'Lipid Helper',
+        title: 'Heart & Stroke Helper™ ',
         showSemanticsDebugger: false,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(primarySwatch: colorCustom, fontFamily: 'Montserrat'),

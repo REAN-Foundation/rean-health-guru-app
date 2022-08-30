@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:patient/features/common/nutrition/models/alcohol_consumption.dart';
+import 'package:patient/features/common/nutrition/models/glass_of_water_consumption.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/custom_tooltip.dart';
 
@@ -37,13 +40,55 @@ class _NutritionQuestionnaireViewState
   String protienValueClicked = '';
   bool saltValue = false;
   String salthValueClicked = '';
+  int waterGlass = 0;
+  GlassOfWaterConsumption? glassOfWaterConsumption;
+  int alcoholIntakeInMililitre = 0;
+  AlcoholConsumption? _alcoholConsumption;
+  DateTime? startDate;
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
 
   @override
   void initState() {
+    startDate = DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
+    loadWaterConsuption();
+    loadAlcohol();
     if (getAppType() == 'AHA') {
       buttonColor = redLightAha;
     }
     super.initState();
+  }
+
+  loadWaterConsuption() async {
+    final waterConsuption = await _sharedPrefUtils.read('waterConsumption');
+
+    if (waterConsuption != null) {
+      glassOfWaterConsumption =
+          GlassOfWaterConsumption.fromJson(waterConsuption);
+    }
+
+    if (glassOfWaterConsumption != null) {
+      if (startDate == glassOfWaterConsumption!.date) {
+        waterGlass = glassOfWaterConsumption!.count ?? 0;
+      }
+    }
+    setState(() {});
+  }
+
+  loadAlcohol() async {
+    final alcoholIntake = await _sharedPrefUtils.read('alcoholIntake');
+
+    if (alcoholIntake != null) {
+      _alcoholConsumption = AlcoholConsumption.fromJson(alcoholIntake);
+    }
+
+    if (_alcoholConsumption != null) {
+      if (startDate == _alcoholConsumption!.date) {
+        alcoholIntakeInMililitre = _alcoholConsumption!.count ?? 0;
+
+      }
+    }
+    setState(() {});
   }
 
   @override
@@ -157,11 +202,22 @@ class _NutritionQuestionnaireViewState
                     SizedBox(
                       height: 8,
                     ),
+                    water(),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    alcohol(),
+                    SizedBox(
+                      height: 8,
+                    ),
                     protein(),
                     SizedBox(
                       height: 8,
                     ),
                     salt(),
+                    SizedBox(
+                      height: 8,
+                    ),
                   ],
                 ),
               ),
@@ -307,7 +363,7 @@ class _NutritionQuestionnaireViewState
                                 Icons.remove,
                                 color: primaryColor,
                                 semanticLabel:
-                                    'decrease fruit serving quantity',
+                                    'decrease vegetables serving quantity',
                                 size: 24,
                               ),
                             ),
@@ -377,7 +433,7 @@ class _NutritionQuestionnaireViewState
                                 Icons.add,
                                 color: primaryColor,
                                 semanticLabel:
-                                    'increase fruit serving quantity',
+                                    'increase vegetables serving quantity',
                                 size: 24,
                               ),
                             ),
@@ -1407,6 +1463,430 @@ class _NutritionQuestionnaireViewState
       if (baseResponse.status == 'success') {
         //showToast(baseResponse.message!, context);
       } else {}
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+    /*catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ==> ' + CustomException.toString());
+    }*/
+  }
+
+  Widget water() {
+    return Card(
+      semanticContainer: false,
+      elevation: 0,
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 8,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ImageIcon(
+                    AssetImage('res/images/ic_glass_of_water.png'),
+                    size: 24,
+                    color: primaryColor,
+                  ),
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: Text(
+                      'Water',
+                      style: TextStyle(
+                          color: textBlack,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Montserrat')),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  height: 56,
+                  width: 280,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                              color: buttonColor,
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(4))),
+                          child: Center(
+                            child: IconButton(
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onPressed: () {
+                                if (waterGlass != 0) {
+                                  waterGlass = waterGlass - 1;
+                                  setState(() {});
+                                  recordMyWaterConsumptions();
+                                }
+                              },
+                              icon: Icon(
+                                Icons.remove,
+                                color: primaryColor,
+                                semanticLabel:
+                                'decrease water Glass quantity',
+                                size: 24,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Semantics(
+                          label: '',
+                          child: ExcludeSemantics(
+                            child: Container(
+                              width: 180,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(4)),
+                                border:
+                                Border.all(color: colorD6D6D6, width: 0.80),
+                              ),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 16,
+                                  ),
+                                  Text(
+                                    waterGlass == 0
+                                        ? ''
+                                        : waterGlass.toString(),
+                                    semanticsLabel: '',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.0,
+                                        color: textGrey),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    waterGlass > 1 ? 'glasses' : 'glass',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.0,
+                                        color: textGrey),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                              color: buttonColor,
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(4))),
+                          child: Center(
+                            child: IconButton(
+                              onPressed: () {
+                                waterGlass = waterGlass + 1;
+                                setState(() {});
+                                debugPrint(
+                                    "waterGlass ==> $waterGlass");
+                                recordMyWaterConsumptions();
+                              },
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              icon: Icon(
+                                Icons.add,
+                                color: primaryColor,
+                                semanticLabel:
+                                'increase water Glass quantity',
+                                size: 24,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                CustomTooltip(
+                  message: '1 glass = 8 ounces of water',
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                    color: Colors.grey.withOpacity(0.6),
+                    semanticLabel: 'info',
+                    size: 32,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget alcohol() {
+    return Card(
+      semanticContainer: false,
+      elevation: 0,
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 8,
+                ),
+                   ImageIcon(
+                    AssetImage('res/images/ic_drink.png'),
+                    size: 32,
+                    color: primaryColor,
+                  ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: Text(
+                      'Alcohol',
+                      style: TextStyle(
+                          color: textBlack,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Montserrat')),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  height: 56,
+                  width: 280,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                              color: buttonColor,
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(4))),
+                          child: Center(
+                            child: IconButton(
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onPressed: () {
+                                if (alcoholIntakeInMililitre != 0) {
+                                  alcoholIntakeInMililitre = alcoholIntakeInMililitre - 1;
+                                  setState(() {});
+                                  recordMyAlcoholConsumption();
+                                }
+                              },
+                              icon: Icon(
+                                Icons.remove,
+                                color: primaryColor,
+                                semanticLabel:
+                                'decrease alcohol drink quantity',
+                                size: 24,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Semantics(
+                          label: '',
+                          child: ExcludeSemantics(
+                            child: Container(
+                              width: 180,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(4)),
+                                border:
+                                Border.all(color: colorD6D6D6, width: 0.80),
+                              ),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 16,
+                                  ),
+                                  Text(
+                                    alcoholIntakeInMililitre == 0
+                                        ? ''
+                                        : alcoholIntakeInMililitre.toString(),
+                                    semanticsLabel: '',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.0,
+                                        color: textGrey),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    alcoholIntakeInMililitre > 1 ? 'drinks' : 'drink',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.0,
+                                        color: textGrey),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                              color: buttonColor,
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(4))),
+                          child: Center(
+                            child: IconButton(
+                              onPressed: () {
+                                alcoholIntakeInMililitre = alcoholIntakeInMililitre + 1;
+                                setState(() {});
+                                debugPrint(
+                                    "alcoholIntakeInMililitre ==> $alcoholIntakeInMililitre");
+                                recordMyAlcoholConsumption();
+                              },
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              icon: Icon(
+                                Icons.add,
+                                color: primaryColor,
+                                semanticLabel:
+                                'increase alcohol drink quantity',
+                                size: 24,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                CustomTooltip(
+                  message: 'One drink is 12 ounces of beer, 4 ounces of wine, 1.5 ounces of 80-proof spirits or 1 ounce of 100-proof spirit.',
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                    color: Colors.grey.withOpacity(0.6),
+                    semanticLabel: 'info',
+                    size: 32,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  recordMyWaterConsumptions() async {
+    try {
+      _sharedPrefUtils.save('waterConsumption',
+          GlassOfWaterConsumption(startDate, waterGlass, '').toJson());
+
+      final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['Volume'] = waterGlass;
+      map['Time'] = dateFormat.format(DateTime.now());
+
+      final BaseResponse baseResponse = await model.recordMyWaterCount(map);
+      if (baseResponse.status == 'success') {
+      } else {}
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  recordMyAlcoholConsumption() async {
+    try {
+      recordMyMonitoringFoodConsumtion(
+          'Alcohol', 'ml', alcoholIntakeInMililitre.toDouble());
+      _sharedPrefUtils.save('alcoholIntake',
+          AlcoholConsumption(startDate, alcoholIntakeInMililitre, '').toJson());
+      //showToast("Alcohol intake added successfully", context);
+      setState(() {});
+      /* final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['Volume'] = waterGlass;
+      map['Time'] = dateFormat.format(DateTime.now());
+
+      final BaseResponse baseResponse = await model.recordMyWaterCount(map);
+      if (baseResponse.status == 'success') {
+      } else {}*/
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  recordMyMonitoringFoodConsumtion(
+      String foodName, String unit, double amount) async {
+    try {
+      final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['MonitoredFoodComponent'] = foodName;
+      map['Unit'] = unit;
+      map['Amount'] = amount;
+
+      final BaseResponse baseResponse =
+      await model.recordMyMonitoringFoodConsumtion(map);
+      if (baseResponse.status == 'success') {
+        //showToast(baseResponse.message!, context);
+      }
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
       model.setBusy(false);

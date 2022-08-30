@@ -73,7 +73,7 @@ class _WelcomeState extends State<Welcome> {
                     height: 16,
                   ),
                   Text(
-                      "LH supports individuals to better manage \nyour health by providing education, healthy \nhabits, tracking your symptoms and \nmedications, and sharing health \ninformation with your doctor - \nall in one place.",
+                      getAppName()+" supports individuals to better manage \nyour health by providing education, healthy \nhabits, tracking your symptoms and \nmedications, and sharing health \ninformation with your doctor - \nall in one place.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Montserrat',

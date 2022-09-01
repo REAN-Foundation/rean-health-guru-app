@@ -803,7 +803,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "Heart & Stroke Helper™ ";
+				APP_DISPLAY_NAME = "Lipid Helper ";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-aha";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/RunnerDebug-aha_sac.entitlements";
@@ -828,7 +828,7 @@
 					"$(PROJECT_DIR)/Flutter",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.heart.lipidhelper;
-				PRODUCT_NAME = "Heart & Stroke Helper™ ";
+				PRODUCT_NAME = "Heart & Stroke Helper™";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -898,7 +898,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
-				APP_DISPLAY_NAME = "Heart & Stroke Helper™ ";
+				APP_DISPLAY_NAME = "Lipid Helper ";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-aha";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Runner/RunnerRelease-aha_sac.entitlements";
@@ -922,7 +922,7 @@
 					"$(PROJECT_DIR)/Flutter",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.heart.lipidhelper;
-				PRODUCT_NAME = "Heart & Stroke Helper™ ";
+				PRODUCT_NAME = "Lipid Helper ";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.heart.lipidhelper";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

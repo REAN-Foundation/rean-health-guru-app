@@ -15,7 +15,7 @@ on:
 
 jobs:
   Android-App-Release-Prod:
-    environment: aha-chol-prod1
+    environment: aha-chol-prod
     runs-on: ubuntu-latest
     defaults:
       run:

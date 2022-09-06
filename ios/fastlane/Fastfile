@@ -231,7 +231,7 @@ platform :ios do
   end
   
   lane :submit_beta_to_app_store_aha_chol do |options|
-    submit_beta_to_app_store(app_identifier: "org.heart.lipidprofile", metadata_path: "./fastlane/metadata/aha_prod_chol")
+    submit_beta_to_app_store(app_identifier: "org.heart.lipidhelper", metadata_path: "./fastlane/metadata/aha_prod_chol")
   end
 
   lane :submit_beta_to_app_store_rf do |options|

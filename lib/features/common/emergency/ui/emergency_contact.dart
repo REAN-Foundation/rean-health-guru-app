@@ -138,8 +138,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       ),
                       InfoScreen(
                           tittle: 'Emergency Contact Information',
-                          description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                          height: 240),
+                          description: "Add details of the person whom you want to contact in case of emergency. So your caretaker can call them.",
+                          height: 200),
                     ],
                   ),
                   sectionHeader('Doctors'),

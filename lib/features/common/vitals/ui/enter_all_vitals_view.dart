@@ -748,7 +748,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                     SizedBox(width: 16,),
                     InfoScreen(
                         tittle: 'Blood Oxygen Sturation Information',
-                        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                        description: "Oxygen saturation is an essential element in the management and understanding of patient care. A healthy blood oxygen level varies between 75 and 100 millimeters of mercury (mm Hg).",
                         height: 240),
                   ],
                 ),
@@ -942,8 +942,8 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 SizedBox(width: 4,),
                 InfoScreen(
                     tittle: 'Body Temperature Information',
-                    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                    height: 240),
+                    description: "In particular, enzymes in a body's cells must have the correct temperature to be able to catalyse chemical reactions. The optimal temperature of the human body is 37 °C (98.6 °F), but various factors can affect this value, including exposure to the elements in the environment.",
+                    height: 280),
               ],
             ),
             const SizedBox(

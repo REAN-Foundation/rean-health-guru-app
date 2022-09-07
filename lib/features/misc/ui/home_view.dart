@@ -294,8 +294,15 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
           if (carePlanEnrollmentForPatientGlobe == null) {
-            Future.delayed(
-                const Duration(seconds: 2), () => showHealthJourneyDialog());
+            if(getBaseUrl()!.contains('aha-api-uat') ||
+                getBaseUrl()!.contains('reancare-api-dev') ||
+                getAppName() == 'Heart & Stroke Helper™ ') {
+              Future.delayed(
+                  const Duration(seconds: 2), () => showHealthJourneyDialog());
+            }else{
+              Future.delayed(
+                  const Duration(seconds: 2), () => showDailyCheckIn());
+            }
           }else{
             Future.delayed(
                 const Duration(seconds: 2), () => showDailyCheckIn());

@@ -444,7 +444,7 @@ class _NutritionQuestionnaireViewState
                   ),
                 ),
                 CustomTooltip(
-                  message: '1 serving = 1/2 cup',
+                  message: '1 serving = 1/2 cup.',
                   child: Icon(
                     Icons.info_outline_rounded,
                     color: primaryColor,//Colors.grey.withOpacity(0.6),
@@ -616,7 +616,7 @@ class _NutritionQuestionnaireViewState
                   ),
                 ),
                 CustomTooltip(
-                  message: '1 serving = 1/2 cup',
+                  message: '1 serving = 1/2 cup.',
                   child: Icon(
                     Icons.info_outline_rounded,
                     color: primaryColor,//Colors.grey.withOpacity(0.6),
@@ -790,7 +790,7 @@ class _NutritionQuestionnaireViewState
                 ),
                 CustomTooltip(
                   message:
-                      '1 serving = 1 slice whole-grain bread or 3/4 cup whole-grain pasta or cereal',
+                      '1 serving = 1 slice whole-grain bread or 3/4 cup whole-grain pasta or cereal.',
                   child: Icon(
                     Icons.info_outline_rounded,
                     color: primaryColor,//Colors.grey.withOpacity(0.6),
@@ -963,7 +963,7 @@ class _NutritionQuestionnaireViewState
                   ),
                 ),
                 CustomTooltip(
-                  message: '1 serving = 3 oz cooked, not fried',
+                  message: '1 serving = 3 oz cooked, not fried.',
                   child: Icon(
                     Icons.info_outline_rounded,
                     color: primaryColor,//Colors.grey.withOpacity(0.6),
@@ -1056,7 +1056,7 @@ class _NutritionQuestionnaireViewState
                                 Icons.remove,
                                 color: primaryColor,
                                 semanticLabel:
-                                    'decrease sugary drink serving  quantity',
+                                    'decrease sugary drink serving quantity',
                                 size: 24,
                               ),
                             ),
@@ -1126,7 +1126,7 @@ class _NutritionQuestionnaireViewState
                                 Icons.add,
                                 color: primaryColor,
                                 semanticLabel:
-                                    'increase sea food serving quantity',
+                                    'increase sugary drink serving quantity',
                                 size: 24,
                               ),
                             ),
@@ -1138,7 +1138,7 @@ class _NutritionQuestionnaireViewState
                 ),
                 CustomTooltip(
                   message:
-                      '1 serving = 12 oz; includes sports drinks, lemonade, fruit drinks with added sugar, energy drinks and soda, drinks with added sugar',
+                      '1 serving = 12 oz; includes sports drinks, lemonade, fruit drinks with added sugar, energy drinks and soda, drinks with added sugar.',
                   child: Icon(
                     Icons.info_outline_rounded,
                     color: primaryColor,//Colors.grey.withOpacity(0.6),
@@ -1280,7 +1280,7 @@ class _NutritionQuestionnaireViewState
                   right: 0,
                   child: CustomTooltip(
                     message:
-                        'Legumes and nuts; fish and seafood; low-fat or nonfat dairy; unprocessed and lean poultry or meat',
+                        'Legumes and nuts; fish and seafood; low-fat or nonfat dairy; unprocessed and lean poultry or meat.',
                     child: Icon(
                       Icons.info_outline_rounded,
                       color: primaryColor,//Colors.grey.withOpacity(0.6),
@@ -1384,7 +1384,7 @@ class _NutritionQuestionnaireViewState
                       ),
                     ),
                     Semantics(
-                      label: 'No I havn`t salty food today',
+                      label: 'No I havn`t ate salty food today',
                       button: true,
                       child: InkWell(
                         onTap: () {

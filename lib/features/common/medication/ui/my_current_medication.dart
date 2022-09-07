@@ -119,7 +119,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('No medication added',
+            Text('No medications added',
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 14,
@@ -139,7 +139,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Row(
+       /* Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             InfoScreen(
@@ -148,7 +148,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
                 height: 240),
           ],
-        ),
+        ),*/
         ListView.separated(
             itemBuilder: (context, index) => _makeMedicineCard(context, index),
             separatorBuilder: (BuildContext context, int index) {

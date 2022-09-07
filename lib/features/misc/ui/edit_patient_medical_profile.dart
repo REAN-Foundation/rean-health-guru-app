@@ -895,6 +895,8 @@ class _EditPatientMedicalProfileViewState
 
   _updatePatientMedicalProfile() async {
     try {
+      _majorAilmentFocus.unfocus();
+      _ocupationFocus.unfocus();
       progressDialog.show(max: 100, msg: 'Loading...');
       final Map<String, dynamic> data = <String, dynamic>{};
       data['BloodGroup'] = _bloodgroupValue;
@@ -914,7 +916,7 @@ class _EditPatientMedicalProfileViewState
         //Navigator.popUntil(context, ModalRoute.withName(RoutePaths.My_Medical_Profile));
         Navigator.pop(context, true);
         //if (Platform.isAndroid) {
-          Navigator.pop(context);
+          //Navigator.pop(context);
         //}
         showToast('Medical Profile updated successfully!', context);
       } else {

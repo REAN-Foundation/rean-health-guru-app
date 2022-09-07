@@ -5,7 +5,6 @@ import 'package:patient/features/common/medication/view_models/patients_medicati
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
-import 'package:patient/infra/widgets/info_screen.dart';
 
 class MyMedicationHistoryView extends StatefulWidget {
   @override
@@ -74,7 +73,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
 
   Widget noMedicationFound() {
     return Center(
-      child: Text('No medication history',
+      child: Text('No medications history',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -87,7 +86,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Row(
+       /* Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             InfoScreen(
@@ -95,7 +94,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                 description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
                 height: 240),
           ],
-        ),
+        ),*/
         ListView.separated(
             itemBuilder: (context, index) =>
                 _makeMedicinePrescriptionCard(context, index),

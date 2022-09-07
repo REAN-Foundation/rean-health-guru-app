@@ -126,7 +126,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                     fontFamily: 'Montserrat',
                     color: primaryColor)),
             InfoScreen(
-                tittle: 'Medication Information',
+                tittle: 'Medications Information',
                 description: 'Add your medications by pressing the + sign.',
                 height: 180)
           ],

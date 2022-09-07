@@ -738,7 +738,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         children: <TextSpan>[
                            TextSpan(
                               text: ' (%) ',
-                              style: new TextStyle(fontFamily: 'Montserrat',
+                              style: TextStyle(fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w600,
                                   color: textBlack,
                                   fontSize: 12)),

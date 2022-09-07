@@ -288,36 +288,36 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     )..show();
   }*/
 
+  healthJourneyCheck(){
+    if (carePlanEnrollmentForPatientGlobe == null) {
+      if(getBaseUrl()!.contains('aha-api-uat') ||
+          getBaseUrl()!.contains('reancare-api-dev') ||
+          getAppName() == 'Heart & Stroke Helper™ ') {
+        Future.delayed(
+            const Duration(seconds: 2), () => showHealthJourneyDialog());
+      }else{
+        Future.delayed(
+            const Duration(seconds: 2), () => showDailyCheckIn());
+      }
+    }else{
+      Future.delayed(
+          const Duration(seconds: 2), () => showDailyCheckIn());
+    }
+  }
+
   void showTutorial() {
     coackMarkUtilites.displayCoachMark(context, targets,
         onCoachMartkFinish: () {
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
-          if (carePlanEnrollmentForPatientGlobe == null) {
-            if(getBaseUrl()!.contains('aha-api-uat') ||
-                getBaseUrl()!.contains('reancare-api-dev') ||
-                getAppName() == 'Heart & Stroke Helper™ ') {
-              Future.delayed(
-                  const Duration(seconds: 2), () => showHealthJourneyDialog());
-            }else{
-              Future.delayed(
-                  const Duration(seconds: 2), () => showDailyCheckIn());
-            }
-          }else{
-            Future.delayed(
-                const Duration(seconds: 2), () => showDailyCheckIn());
-          }
+          Future.delayed(
+              const Duration(seconds: 6), () => healthJourneyCheck());
       debugPrint('Coach Mark Finish');
     }, onCoachMartkSkip: () {
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
-          if (carePlanEnrollmentForPatientGlobe == null) {
-            Future.delayed(
-                const Duration(seconds: 2), () => showHealthJourneyDialog());
-          }else{
-            Future.delayed(
-                const Duration(seconds: 2), () => showDailyCheckIn());
-          }
+          Future.delayed(
+              const Duration(seconds: 6), () => healthJourneyCheck());
       debugPrint('Coach Mark Skip');
     }, onCoachMartkClickTarget: (target) {
       debugPrint('Coach Mark target click');

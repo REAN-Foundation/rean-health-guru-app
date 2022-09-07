@@ -1638,7 +1638,7 @@ class _NutritionQuestionnaireViewState
                   ),
                 ),
                 CustomTooltip(
-                  message: '1 glass = 8 ounces of water',
+                  message: '1 glass = 8 ounces of water.',
                   child: Icon(
                     Icons.info_outline_rounded,
                     color: primaryColor,//Colors.grey.withOpacity(0.6),

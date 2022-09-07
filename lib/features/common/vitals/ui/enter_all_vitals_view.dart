@@ -706,53 +706,49 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SingleChildScrollView(
-              child: Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    ImageIcon(
-                      AssetImage('res/images/ic_oximeter.png'),
-                      size: 24,
-                      color: primaryColor,
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    /*Text(
-                      'Enter your blood oxygen\nsaturation',
-                      style: TextStyle(
-                          color: textBlack,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14),
-                      textAlign: TextAlign.left,
-                    ),*/
-                    RichText(
-                      text: TextSpan(
-                        text: 'Enter your blood oxygen\nsaturation',
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w600,
-                            color: textBlack,
-                            fontSize: 14),
-                        children: <TextSpan>[
-                           TextSpan(
-                              text: ' (%) ',
-                              style: TextStyle(fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w600,
-                                  color: textBlack,
-                                  fontSize: 12)),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 16,),
-                    InfoScreen(
-                        tittle: 'Blood Oxygen Sturation Information',
-                        description: "Oxygen saturation is an essential element in the management and understanding of patient care. A healthy blood oxygen level varies between 75 and 100 millimeters of mercury (mm Hg).",
-                        height: 240),
-                  ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ImageIcon(
+                  AssetImage('res/images/ic_oximeter.png'),
+                  size: 24,
+                  color: primaryColor,
                 ),
-              ),
+                SizedBox(
+                  width: 8,
+                ),
+                /*Text(
+                  'Enter your blood oxygen\nsaturation',
+                  style: TextStyle(
+                      color: textBlack,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14),
+                  textAlign: TextAlign.left,
+                ),*/
+                RichText(
+                  text: TextSpan(
+                    text: 'Enter your blood oxygen\nsaturation',
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w600,
+                        color: textBlack,
+                        fontSize: 14),
+                    children: <TextSpan>[
+                       TextSpan(
+                          text: ' (%) ',
+                          style: TextStyle(fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              color: textBlack,
+                              fontSize: 12)),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 16,),
+                InfoScreen(
+                    tittle: 'Blood Oxygen Saturation Information',
+                    description: "Oxygen saturation is an essential element in the management and understanding of patient care. A healthy blood oxygen level varies between 75 and 100 millimeters of mercury (mm Hg).",
+                    height: 240),
+              ],
             ),
             const SizedBox(
               height: 8,

@@ -248,7 +248,7 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                 ),
                 SizedBox(width: 8,),
                 InfoScreen(
-                    tittle: 'Blood Oxygen Sturation Information',
+                    tittle: 'Blood Oxygen Saturation Information',
                     description: "Oxygen saturation is an essential element in the management and understanding of patient care. A healthy blood oxygen level varies between 75 and 100 millimeters of mercury (mm Hg).",
                     height: 240),
               ],

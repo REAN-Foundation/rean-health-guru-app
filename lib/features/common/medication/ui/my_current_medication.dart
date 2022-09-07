@@ -136,31 +136,16 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   }
 
   Widget listWidget() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-       /* Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            InfoScreen(
-                tittle: 'Medications List Information',
-                description:
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                height: 240),
-          ],
-        ),*/
-        ListView.separated(
-            itemBuilder: (context, index) => _makeMedicineCard(context, index),
-            separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(
-                height: 8,
-              );
-            },
-            itemCount: currentMedicationList.length,
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true),
-      ],
-    );
+    return ListView.separated(
+        itemBuilder: (context, index) => _makeMedicineCard(context, index),
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            height: 8,
+          );
+        },
+        itemCount: currentMedicationList.length,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true);
   }
 
   Widget _makeMedicineCard(BuildContext context, int index) {

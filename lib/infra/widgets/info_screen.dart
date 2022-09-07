@@ -75,6 +75,8 @@ class _InfoScreenState extends State<InfoScreen> {
             children: [
               Text(
                 widget.tittle ?? 'Info',
+                textAlign: TextAlign.center,
+                maxLines: 1,
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w700,

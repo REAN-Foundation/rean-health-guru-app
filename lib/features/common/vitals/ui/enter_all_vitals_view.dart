@@ -706,35 +706,53 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                ImageIcon(
-                  AssetImage('res/images/ic_oximeter.png'),
-                  size: 24,
-                  color: primaryColor,
+            SingleChildScrollView(
+              child: Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ImageIcon(
+                      AssetImage('res/images/ic_oximeter.png'),
+                      size: 24,
+                      color: primaryColor,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    /*Text(
+                      'Enter your blood oxygen\nsaturation',
+                      style: TextStyle(
+                          color: textBlack,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14),
+                      textAlign: TextAlign.left,
+                    ),*/
+                    RichText(
+                      text: TextSpan(
+                        text: 'Enter your blood oxygen\nsaturation',
+                        style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w600,
+                            color: textBlack,
+                            fontSize: 14),
+                        children: <TextSpan>[
+                           TextSpan(
+                              text: ' (%) ',
+                              style: new TextStyle(fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600,
+                                  color: textBlack,
+                                  fontSize: 12)),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 16,),
+                    InfoScreen(
+                        tittle: 'Blood Oxygen Sturation Information',
+                        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                        height: 240),
+                  ],
                 ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  'Enter your blood oxygen saturation',
-                  style: TextStyle(
-                      color: textBlack,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14),
-                  textAlign: TextAlign.center,
-                ),
-                RichText(
-                  text: TextSpan(
-                    text: ' (%) ',
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w600,
-                        color: textBlack,
-                        fontSize: 12),
-                  ),
-                ),
-              ],
+              ),
             ),
             const SizedBox(
               height: 8,
@@ -921,6 +939,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         fontSize: 12),
                   ),
                 ),
+                SizedBox(width: 4,),
+                InfoScreen(
+                    tittle: 'Body Temperature Information',
+                    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                    height: 240),
               ],
             ),
             const SizedBox(

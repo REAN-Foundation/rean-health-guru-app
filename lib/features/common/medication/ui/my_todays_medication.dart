@@ -12,6 +12,7 @@ import 'package:patient/infra/utils/coach_mark_utilities.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_constant.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
@@ -189,6 +190,15 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              InfoScreen(
+                                    tittle: 'Medications Remainder Information',
+                                    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                                    height: 240),
+                            ],
+                          ),
                           if (morningMedicationList.isNotEmpty)
                             medicationTimeWiseSection(
                                 'Morning',

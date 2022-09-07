@@ -47,7 +47,7 @@ class _InfoScreenState extends State<InfoScreen> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(
-              Icons.info,
+              Icons.info_outline,
               color: widget.infoIconcolor ?? primaryColor,
               size: 24,
             ),

@@ -124,15 +124,23 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   emergency(),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      'Emergency Contact ',
-                      style: TextStyle(
-                          color: primaryColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16),
-                    ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, top: 16, bottom: 16),
+                        child: Text(
+                          'Emergency Contact ',
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16),
+                        ),
+                      ),
+                      InfoScreen(
+                          tittle: 'Emergency Contact Information',
+                          description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                          height: 240),
+                    ],
                   ),
                   sectionHeader('Doctors'),
                   if (model!.busy)
@@ -394,7 +402,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
               child: const Text('Submit'),
               onPressed: () {
                 if (emergencyDetailsTextControler.text.trim().isEmpty) {
-                  showToastMsg('Please enter emergency details', context);
+                  showToastMsg('Please enter hospitalization details', context);
                 } else {
                   addMedicalEmergencyEvent(
                       emergencyDetailsTextControler.text.trim());

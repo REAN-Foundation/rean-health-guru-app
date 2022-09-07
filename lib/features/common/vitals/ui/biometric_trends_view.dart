@@ -246,6 +246,11 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
+                SizedBox(width: 8,),
+                InfoScreen(
+                    tittle: 'Blood Oxygen Sturation Information',
+                    description: "Oxygen saturation is an essential element in the management and understanding of patient care. A healthy blood oxygen level varies between 75 and 100 millimeters of mercury (mm Hg).",
+                    height: 240),
               ],
             ),
             const SizedBox(
@@ -334,6 +339,11 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
+                SizedBox(width: 8,),
+                InfoScreen(
+                    tittle: 'Body Temperature Information',
+                    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                    height: 240),
               ],
             ),
             const SizedBox(

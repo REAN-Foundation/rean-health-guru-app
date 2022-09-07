@@ -294,6 +294,10 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
+                InfoScreen(
+                    tittle: 'A1C Level Information',
+                    description: "It's one of the commonly used tests to diagnose prediabetes and diabetes, and is also the main test to help you and your health care team manage your diabetes.",
+                    height: 220),
               ],
             ),
             const SizedBox(

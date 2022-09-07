@@ -5,6 +5,7 @@ import 'package:patient/features/common/careplan/view_models/patients_careplan.d
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 
 class SummaryOfMyCarePlanView extends StatefulWidget {
   @override
@@ -68,17 +69,10 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                         SizedBox(
                           width: 8,
                         ),
-                        Text(
-                          carePlanEnrollmentForPatientGlobe!
-                              .data!.patientEnrollments!
-                              .elementAt(0)
-                              .enrollmentId
-                              .toString(),
-                          style: TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.w200),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        InfoScreen(
+                            tittle: 'Health Journey Information',
+                            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                            height: 240),
                         const SizedBox(
                           width: 8,
                         )

@@ -214,7 +214,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     width: 40,
                   ),
                   Text(
-                    'Medication',
+                    'Medications',
                     style: TextStyle(
                         color: primaryColor, fontWeight: FontWeight.w600),
                   ),

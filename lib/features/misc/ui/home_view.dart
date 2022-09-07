@@ -293,12 +293,24 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         onCoachMartkFinish: () {
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
-      Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
+          if (carePlanEnrollmentForPatientGlobe == null) {
+            Future.delayed(
+                const Duration(seconds: 2), () => showHealthJourneyDialog());
+          }else{
+            Future.delayed(
+                const Duration(seconds: 2), () => showDailyCheckIn());
+          }
       debugPrint('Coach Mark Finish');
     }, onCoachMartkSkip: () {
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
-      Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
+          if (carePlanEnrollmentForPatientGlobe == null) {
+            Future.delayed(
+                const Duration(seconds: 2), () => showHealthJourneyDialog());
+          }else{
+            Future.delayed(
+                const Duration(seconds: 2), () => showDailyCheckIn());
+          }
       debugPrint('Coach Mark Skip');
     }, onCoachMartkClickTarget: (target) {
       debugPrint('Coach Mark target click');
@@ -351,11 +363,11 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    getCarePlanSubscribe();
     _initPackageInfo();
     getDailyCheckInDate();
     loadSharedPrefs();
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
-    getCarePlanSubscribe();
     initTargets();
     WidgetsBinding.instance!.addPostFrameCallback(_layout);
     super.initState();
@@ -392,17 +404,19 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     }
   }
 
-  showSuccessDialog() {
+  showHealthJourneyDialog() {
     Dialog sucsessDialog = Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      backgroundColor: Colors.transparent,
+      insetPadding: EdgeInsets.all(24),
       //this right here
       child: Card(
         elevation: 0.0,
         margin: EdgeInsets.zero,
         semanticContainer: false,
         child: Container(
-          height: 324.0,
-          width: MediaQuery.of(context).size.width - 64,
+          height: 340.0,
+          width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -419,7 +433,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                   child: Container(
                     height: 160,
                     child: Semantics(
-                      label: 'Success image',
+                      label: 'Health Journey image',
                       image: true,
                       child: Image.asset(
                         'res/images/ic_health_journey.png',
@@ -428,7 +442,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                   ),
                 ),
               ),
-              SizedBox(height: 8,),
+              SizedBox(height: 24,),
               Text(
                 'Start your health journey here',
                 style: TextStyle(
@@ -454,6 +468,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                           child: InkWell(
                             onTap: () {
                               Navigator.pop(context);
+                              Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
                             },
                             child: Container(
                               height: 48,
@@ -491,7 +506,12 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                         child: ExcludeSemantics(
                           child: InkWell(
                             onTap: () {
-                              Navigator.pop(context);
+                              if (carePlanEnrollmentForPatientGlobe == null) {
+                                Navigator.popAndPushNamed(
+                                    context, RoutePaths.Select_Care_Plan);
+                              } else {
+                                Navigator.popAndPushNamed(context, RoutePaths.My_Care_Plan);
+                              }
                             },
                             child: Container(
                               height: 48,

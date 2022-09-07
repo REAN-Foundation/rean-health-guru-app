@@ -30,7 +30,7 @@ class _NutritionQuestionnaireViewState
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var dateFormat = DateFormat('yyyy-MM-dd');
   //final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  Color buttonColor = primaryLightColor;
+  Color buttonColor = Color(0XFFCFB4FF);
   int vegetableServing = 0;
   int fruitServing = 0;
   int grainServing = 0;
@@ -447,9 +447,9 @@ class _NutritionQuestionnaireViewState
                   message: '1 serving = 1/2 cup',
                   child: Icon(
                     Icons.info_outline_rounded,
-                    color: Colors.grey.withOpacity(0.6),
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
                     semanticLabel: 'info',
-                    size: 32,
+                    size: 24,
                   ),
                 ),
               ],
@@ -619,9 +619,9 @@ class _NutritionQuestionnaireViewState
                   message: '1 serving = 1/2 cup',
                   child: Icon(
                     Icons.info_outline_rounded,
-                    color: Colors.grey.withOpacity(0.6),
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
                     semanticLabel: 'info',
-                    size: 32,
+                    size: 24,
                   ),
                 ),
               ],
@@ -793,9 +793,9 @@ class _NutritionQuestionnaireViewState
                       '1 serving = 1 slice whole-grain bread or 3/4 cup whole-grain pasta or cereal',
                   child: Icon(
                     Icons.info_outline_rounded,
-                    color: Colors.grey.withOpacity(0.6),
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
                     semanticLabel: 'info',
-                    size: 32,
+                    size: 24,
                   ),
                 ),
               ],
@@ -966,9 +966,9 @@ class _NutritionQuestionnaireViewState
                   message: '1 serving = 3 oz cooked, not fried',
                   child: Icon(
                     Icons.info_outline_rounded,
-                    color: Colors.grey.withOpacity(0.6),
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
                     semanticLabel: 'info',
-                    size: 32,
+                    size: 24,
                   ),
                 ),
               ],
@@ -1141,9 +1141,9 @@ class _NutritionQuestionnaireViewState
                       '1 serving = 12 oz; includes sports drinks, lemonade, fruit drinks with added sugar, energy drinks and soda, drinks with added sugar',
                   child: Icon(
                     Icons.info_outline_rounded,
-                    color: Colors.grey.withOpacity(0.6),
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
                     semanticLabel: 'info',
-                    size: 32,
+                    size: 24,
                   ),
                 ),
               ],
@@ -1217,7 +1217,7 @@ class _NutritionQuestionnaireViewState
                                 Icons.thumb_up,
                                 color: protienValueClicked == 'Yes'
                                     ? Color(0XFF007E1A)
-                                    : Color(0XFFCFB4FF),
+                                    : buttonColor,
                                 size: 36,
                               ),
                               SizedBox(
@@ -1227,7 +1227,7 @@ class _NutritionQuestionnaireViewState
                                   style: TextStyle(
                                       color: protienValueClicked == 'Yes'
                                           ? Color(0XFF007E1A)
-                                          : Color(0XFFCFB4FF),
+                                          : buttonColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
@@ -1254,7 +1254,7 @@ class _NutritionQuestionnaireViewState
                                 Icons.thumb_down,
                                 color: protienValueClicked == 'No'
                                     ? primaryColor
-                                    : Color(0XFFCFB4FF),
+                                    : buttonColor,
                                 size: 36,
                               ),
                               SizedBox(
@@ -1264,7 +1264,7 @@ class _NutritionQuestionnaireViewState
                                   style: TextStyle(
                                       color: protienValueClicked == 'No'
                                           ? primaryColor
-                                          : Color(0XFFCFB4FF),
+                                          : buttonColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
@@ -1283,9 +1283,9 @@ class _NutritionQuestionnaireViewState
                         'Legumes and nuts; fish and seafood; low-fat or nonfat dairy; unprocessed and lean poultry or meat',
                     child: Icon(
                       Icons.info_outline_rounded,
-                      color: Colors.grey.withOpacity(0.6),
+                      color: primaryColor,//Colors.grey.withOpacity(0.6),
                       semanticLabel: 'info',
-                      size: 32,
+                      size: 24,
                     ),
                   ),
                 )
@@ -1364,7 +1364,7 @@ class _NutritionQuestionnaireViewState
                                 Icons.thumb_up,
                                 color: salthValueClicked == 'Yes'
                                     ? Color(0XFF007E1A)
-                                    : Color(0XFFCFB4FF),
+                                    : buttonColor,
                                 size: 36,
                               ),
                               SizedBox(
@@ -1374,7 +1374,7 @@ class _NutritionQuestionnaireViewState
                                   style: TextStyle(
                                       color: salthValueClicked == 'Yes'
                                           ? Color(0XFF007E1A)
-                                          : Color(0XFFCFB4FF),
+                                          : buttonColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
@@ -1402,7 +1402,7 @@ class _NutritionQuestionnaireViewState
                                 Icons.thumb_down,
                                 color: salthValueClicked == 'No'
                                     ? primaryColor
-                                    : Color(0XFFCFB4FF),
+                                    : buttonColor,
                                 size: 36,
                               ),
                               SizedBox(
@@ -1412,7 +1412,7 @@ class _NutritionQuestionnaireViewState
                                   style: TextStyle(
                                       color: salthValueClicked == 'No'
                                           ? primaryColor
-                                          : Color(0XFFCFB4FF),
+                                          : buttonColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       fontFamily: 'Montserrat')),
@@ -1641,9 +1641,9 @@ class _NutritionQuestionnaireViewState
                   message: '1 glass = 8 ounces of water',
                   child: Icon(
                     Icons.info_outline_rounded,
-                    color: Colors.grey.withOpacity(0.6),
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
                     semanticLabel: 'info',
-                    size: 32,
+                    size: 24,
                   ),
                 ),
               ],
@@ -1817,9 +1817,9 @@ class _NutritionQuestionnaireViewState
                   message: 'One drink is 12 ounces of beer, 4 ounces of wine, 1.5 ounces of 80-proof spirits or 1 ounce of 100-proof spirit.',
                   child: Icon(
                     Icons.info_outline_rounded,
-                    color: Colors.grey.withOpacity(0.6),
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
                     semanticLabel: 'info',
-                    size: 32,
+                    size: 24,
                   ),
                 ),
               ],

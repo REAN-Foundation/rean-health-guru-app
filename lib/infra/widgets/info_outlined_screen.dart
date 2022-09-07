@@ -48,7 +48,7 @@ class _InfoScreenState extends State<InfoOutlinedScreen> {
             padding: const EdgeInsets.all(0.0),
             child: Icon(
               Icons.info_outline_rounded,
-              color: widget.infoIconcolor ?? primaryColor,
+              color: primaryColor,
               size: 24,
             ),
           ),

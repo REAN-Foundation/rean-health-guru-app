@@ -346,7 +346,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
 
   Widget noHistoryFound() {
     return Center(
-      child: Text('No vital history found',
+      child: Text('No lab value found',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,

@@ -1806,7 +1806,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       child: InfoOutlinedScreen(
                         tittle: 'Vitals Information',
                         description:
-                            'Vital signs are useful in detecting or monitoring medical problems. Vital signs can be measured in a medical setting, at home.',
+                            'Vital signs are useful in detecting or monitoring medical problems. Vital signs can be measured in a medical setting or at home.',
                         height: 208,
                         infoIconcolor: Colors.grey,
                       ),

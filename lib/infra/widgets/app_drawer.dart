@@ -539,6 +539,7 @@ class _AppDrawerState extends State<AppDrawer> {
         context: context,
         height: 180,
         onPositiveButtonClickListner: () {
+          dailyCheckInDate = '';
           debugPrint('Positive Button Click');
           carePlanEnrollmentForPatientGlobe = null;
           _sharedPrefUtils.save('CarePlan', null);

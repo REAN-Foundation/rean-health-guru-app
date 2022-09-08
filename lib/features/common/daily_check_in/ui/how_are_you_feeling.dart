@@ -176,7 +176,8 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                                     height: 80,
                                     width: 80,
                                     child: Image.asset(
-                                      'res/images/dailyCheckIn/ic_same.png',
+                                      'res/images/dailyCheckIn/ic_netural.png',
+
                                       height: 80,
                                       width: 80,
                                     ),

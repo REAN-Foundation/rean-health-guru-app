@@ -318,7 +318,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             children: <Widget>[
                               SizedBox(
                                 width: 150,
-                                child: Text('Diabetic',
+                                child: Text('Diabetes',
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w600,
@@ -342,17 +342,11 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                           SizedBox(
                             height: 8,
                           ),
-                          Row(
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              SizedBox(
-                                width: 150,
-                                child: Text('Heart Patient',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: textBlack)),
-                              ),
-                              Text(':',
+                              Text('Do you have heart disease, have you had a previous heart attack, stroke or other cardiovascular event?',
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w600,

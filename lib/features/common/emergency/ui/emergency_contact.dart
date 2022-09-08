@@ -374,21 +374,34 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       builder: (context) => AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),
         content: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Semantics(
-            child: TextField(
-              controller: emergencyDetailsTextControler,
-              autofocus: true,
-              style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 16.0,
-                  color: Colors.black),
-              decoration: InputDecoration(
-                  labelStyle: TextStyle(fontSize: 16),
-                  labelText: 'Enter your hospitalization details',
-                  hintText: ''),
-            ),
+          height: 90,
+          child: Column(
+            children: [
+              Text('Enter your hospitalization details\n(Date & Reason)',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Montserrat')),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Semantics(
+                  child: TextField(
+                    controller: emergencyDetailsTextControler,
+                    autofocus: true,
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16.0,
+                        color: Colors.black),
+                    decoration: InputDecoration(
+                        labelStyle: TextStyle(fontSize: 16),
+                        //labelText: 'Enter your hospitalization details (Date & Reason)',
+                        hintText: ''),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         actions: <Widget>[

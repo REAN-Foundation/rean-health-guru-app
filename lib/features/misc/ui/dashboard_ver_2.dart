@@ -958,7 +958,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     bottom: 0,
                     right: 0,
                     child: InfoOutlinedScreen(
-                      tittle: 'Medications Information',
+                      tittle: 'Medication Information',
                       description:
                           'Medicines can help control things like high blood pressure (hypertension) or high cholesterol.',
                       height: 200,

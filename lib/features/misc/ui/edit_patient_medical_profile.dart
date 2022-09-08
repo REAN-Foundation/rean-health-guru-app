@@ -287,30 +287,7 @@ class _EditPatientMedicalProfileViewState
                       SizedBox(
                         height: 8,
                       ),
-                      Text('Diabetic',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
-                              color: textBlack)),
-                      RadioGroup<String>.builder(
-                        items: radioItems,
-                        groupValue: isDiabetic,
-                        direction: Axis.horizontal,
-                        horizontalAlignment: MainAxisAlignment.start,
-                        onChanged: (item) {
-                          debugPrint(item);
-                          isDiabetic = item;
-                          setState(() {});
-                        },
-                        itemBuilder: (item) => RadioButtonBuilder(
-                          item,
-                          textPosition: RadioButtonTextPosition.right,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text('Heart Patient',
+                      Text('Do you have heart disease, have you had a previous heart attack, stroke or other cardiovascular event?',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
@@ -340,7 +317,29 @@ class _EditPatientMedicalProfileViewState
                   onSelected: (item) {
                     debugPrint(item.title);
                   },
-                ),*/
+                ),*/SizedBox(
+                        height: 8,
+                      ),
+                      Text('Diabetes',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                              color: textBlack)),
+                      RadioGroup<String>.builder(
+                        items: radioItems,
+                        groupValue: isDiabetic,
+                        direction: Axis.horizontal,
+                        horizontalAlignment: MainAxisAlignment.start,
+                        onChanged: (item) {
+                          debugPrint(item);
+                          isDiabetic = item;
+                          setState(() {});
+                        },
+                        itemBuilder: (item) => RadioButtonBuilder(
+                          item,
+                          textPosition: RadioButtonTextPosition.right,
+                        ),
+                      ),
 
                       SizedBox(
                         width: 24,

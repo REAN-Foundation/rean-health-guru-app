@@ -293,13 +293,16 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       if(getBaseUrl()!.contains('aha-api-uat') ||
           getBaseUrl()!.contains('reancare-api-dev') ||
           getAppName() == 'Heart & Stroke Helper™ ') {
+        debugPrint('Health Journey');
         Future.delayed(
             const Duration(seconds: 2), () => showHealthJourneyDialog());
       }else{
+        debugPrint('Daily Check-In');
         Future.delayed(
             const Duration(seconds: 2), () => showDailyCheckIn());
       }
     }else{
+      debugPrint('Daily Check-In');
       Future.delayed(
           const Duration(seconds: 2), () => showDailyCheckIn());
     }
@@ -311,13 +314,13 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
           Future.delayed(
-              const Duration(seconds: 6), () => healthJourneyCheck());
+              const Duration(seconds: 2), () => healthJourneyCheck());
       debugPrint('Coach Mark Finish');
     }, onCoachMartkSkip: () {
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
           Future.delayed(
-              const Duration(seconds: 6), () => healthJourneyCheck());
+              const Duration(seconds: 1), () => healthJourneyCheck());
       debugPrint('Coach Mark Skip');
     }, onCoachMartkClickTarget: (target) {
       debugPrint('Coach Mark target click');
@@ -399,7 +402,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   showDailyCheckIn() {
     debugPrint('Inside Daily Check In');
     healthData = GetIt.instance<GetHealthData>();
-    if (dailyCheckInDate != dateFormat.format(DateTime.now())) {
+    if (dailyCheckInDate != dateFormat.format(DateTime.now()) || dailyCheckInDate == '') {
+      debugPrint('Inside Daily Check Inside Date');
       showMaterialModalBottomSheet(
           isDismissible: true,
           backgroundColor: Colors.transparent,

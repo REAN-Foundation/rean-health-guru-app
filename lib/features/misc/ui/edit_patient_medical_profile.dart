@@ -913,8 +913,10 @@ class _EditPatientMedicalProfileViewState
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
+        FocusScope.of(context).unfocus();
         //Navigator.popUntil(context, ModalRoute.withName(RoutePaths.My_Medical_Profile));
-        Navigator.pop(context, true);
+        //Navigator.pop(context, true);
+        Navigator.of(context).pop(true);
         //if (Platform.isAndroid) {
           //Navigator.pop(context);
         //}

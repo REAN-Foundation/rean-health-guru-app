@@ -2179,7 +2179,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Info',
+                  'Survey Information',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w700,

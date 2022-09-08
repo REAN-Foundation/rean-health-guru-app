@@ -501,7 +501,9 @@ class _OTPScreenViewState extends State<OTPScreenView> {
     GetCarePlanEnrollmentForPatient carePlanEnrollmentForPatient =  GetCarePlanEnrollmentForPatient.fromJson(response);
 
     if (carePlanEnrollmentForPatient.status == 'success') {
-      carePlanEnrollmentForPatientGlobe = carePlanEnrollmentForPatient;
+      if (carePlanEnrollmentForPatient.data!.patientEnrollments!.isNotEmpty) {
+        carePlanEnrollmentForPatientGlobe = carePlanEnrollmentForPatient;
+      }
       /*_sharedPrefUtils.save(
           'CarePlan', carePlanEnrollmentForPatient.toJson());*/
     }

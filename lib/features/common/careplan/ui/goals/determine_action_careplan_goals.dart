@@ -379,7 +379,7 @@ class _DeterminActionPlansForCarePlanViewState
                     color: primaryColor),
                 child: Center(
                   child: Text(
-                    'Go to my task',
+                    'Go to my tasks',
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: Colors.white,

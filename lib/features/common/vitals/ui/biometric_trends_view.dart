@@ -246,6 +246,11 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
+                SizedBox(width: 8,),
+                InfoScreen(
+                    tittle: 'Blood Oxygen Saturation Information',
+                    description: "Oxygen saturation is an essential element in the management and understanding of patient care. A healthy blood oxygen level varies between 75 and 100 millimeters of mercury (mm Hg).",
+                    height: 240),
               ],
             ),
             const SizedBox(
@@ -334,6 +339,11 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
+                SizedBox(width: 8,),
+                InfoScreen(
+                    tittle: 'Body Temperature Information',
+                    description: "In particular, enzymes in a body's cells must have the correct temperature to be able to catalyse chemical reactions. The optimal temperature of the human body is 37 °C (98.6 °F), but various factors can affect this value, including exposure to the elements in the environment.",
+                    height: 280),
               ],
             ),
             const SizedBox(

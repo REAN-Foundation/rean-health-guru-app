@@ -600,7 +600,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                   children: [
                     Semantics(
                       button: true,
-                      label: 'Alright',
+                      label: 'Okay',
                       child: ExcludeSemantics(
                         child: InkWell(
                           onTap: () {
@@ -619,7 +619,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                                 color: primaryColor),
                             child: Center(
                               child: Text(
-                                'Alright',
+                                'Okay',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: Colors.white,

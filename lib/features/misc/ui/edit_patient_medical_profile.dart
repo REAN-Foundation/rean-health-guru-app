@@ -287,30 +287,7 @@ class _EditPatientMedicalProfileViewState
                       SizedBox(
                         height: 8,
                       ),
-                      Text('Diabetic',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
-                              color: textBlack)),
-                      RadioGroup<String>.builder(
-                        items: radioItems,
-                        groupValue: isDiabetic,
-                        direction: Axis.horizontal,
-                        horizontalAlignment: MainAxisAlignment.start,
-                        onChanged: (item) {
-                          debugPrint(item);
-                          isDiabetic = item;
-                          setState(() {});
-                        },
-                        itemBuilder: (item) => RadioButtonBuilder(
-                          item,
-                          textPosition: RadioButtonTextPosition.right,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text('Heart Patient',
+                      Text('Do you have heart disease, have you had a previous heart attack, stroke or other cardiovascular event?',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
@@ -340,7 +317,29 @@ class _EditPatientMedicalProfileViewState
                   onSelected: (item) {
                     debugPrint(item.title);
                   },
-                ),*/
+                ),*/SizedBox(
+                        height: 8,
+                      ),
+                      Text('Diabetes',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w600,
+                              color: textBlack)),
+                      RadioGroup<String>.builder(
+                        items: radioItems,
+                        groupValue: isDiabetic,
+                        direction: Axis.horizontal,
+                        horizontalAlignment: MainAxisAlignment.start,
+                        onChanged: (item) {
+                          debugPrint(item);
+                          isDiabetic = item;
+                          setState(() {});
+                        },
+                        itemBuilder: (item) => RadioButtonBuilder(
+                          item,
+                          textPosition: RadioButtonTextPosition.right,
+                        ),
+                      ),
 
                       SizedBox(
                         width: 24,
@@ -540,7 +539,7 @@ class _EditPatientMedicalProfileViewState
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Blood Group',
+        Text('Blood Type',
             style: TextStyle(
                 fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
         SizedBox(
@@ -895,6 +894,8 @@ class _EditPatientMedicalProfileViewState
 
   _updatePatientMedicalProfile() async {
     try {
+      _majorAilmentFocus.unfocus();
+      _ocupationFocus.unfocus();
       progressDialog.show(max: 100, msg: 'Loading...');
       final Map<String, dynamic> data = <String, dynamic>{};
       data['BloodGroup'] = _bloodgroupValue;
@@ -911,10 +912,12 @@ class _EditPatientMedicalProfileViewState
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
+        FocusScope.of(context).unfocus();
         //Navigator.popUntil(context, ModalRoute.withName(RoutePaths.My_Medical_Profile));
-        Navigator.pop(context, true);
+        //Navigator.pop(context, true);
+        Navigator.of(context).pop(true);
         //if (Platform.isAndroid) {
-          Navigator.pop(context);
+          //Navigator.pop(context);
         //}
         showToast('Medical Profile updated successfully!', context);
       } else {

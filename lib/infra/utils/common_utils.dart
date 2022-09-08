@@ -290,6 +290,7 @@ getDailyCheckInDate() async {
     debugPrint('dailyCheckInDate ==> $dailyCheckInDate ');
   } catch (Excepetion) {
     // do something
+
   }
   //return knowledgeLinkDisplayedDate ?? '';
 }

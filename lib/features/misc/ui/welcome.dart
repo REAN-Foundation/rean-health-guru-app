@@ -46,7 +46,7 @@ class _WelcomeState extends State<Welcome> {
                           height: 160,
                         ),
                   SizedBox(
-                    height: 32,
+                    height: 24,
                   ),
                   Text(
                     "Welcome to",
@@ -65,23 +65,26 @@ class _WelcomeState extends State<Welcome> {
                       style: TextStyle(
                         fontFamily: 'Montserrat',
                         color: Color(0xff000000),
-                        fontSize: 30,
+                        fontSize: 24,
                         fontWeight: FontWeight.w700,
                         fontStyle: FontStyle.normal,
                       )),
-                  SizedBox(
+                  /*SizedBox(
                     height: 16,
+                  ),*/
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16),
+                    child: Text(
+                        getAppName()+" supports individuals to better manage your health by providing education, healthy habits, tracking your symptoms and medications, and sharing health information with your doctor - all in one place.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color: Color(0xff636466),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          fontStyle: FontStyle.normal,
+                        )),
                   ),
-                  Text(
-                      getAppName()+" supports individuals to better manage \nyour health by providing education, healthy \nhabits, tracking your symptoms and \nmedications, and sharing health \ninformation with your doctor - \nall in one place.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        color: Color(0xff636466),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        fontStyle: FontStyle.normal,
-                      )),
                   SizedBox(
                     height: 32,
                   ),
@@ -96,7 +99,7 @@ class _WelcomeState extends State<Welcome> {
                           }), (Route<dynamic> route) => false);
                         },
                         child: Text(
-                          "I’m’ in",
+                          "I’m in",
                           style: TextStyle(
                               fontSize: 16.0,
                               color: Colors.white,

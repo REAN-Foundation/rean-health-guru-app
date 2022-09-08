@@ -48,7 +48,7 @@ class _InfoScreenState extends State<InfoOutlinedScreen> {
             padding: const EdgeInsets.all(0.0),
             child: Icon(
               Icons.info_outline_rounded,
-              color: widget.infoIconcolor ?? primaryColor,
+              color: primaryColor,
               size: 24,
             ),
           ),
@@ -105,7 +105,7 @@ class _InfoScreenState extends State<InfoOutlinedScreen> {
                 children: [
                   Semantics(
                     button: true,
-                    label: 'Alright',
+                    label: 'Okay',
                     child: ExcludeSemantics(
                       child: InkWell(
                         onTap: () {
@@ -123,7 +123,7 @@ class _InfoScreenState extends State<InfoOutlinedScreen> {
                               color: primaryColor),
                           child: Center(
                             child: Text(
-                              'Alright',
+                              'Okay',
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.white,

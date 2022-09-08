@@ -214,7 +214,7 @@ class _AppDrawerState extends State<AppDrawer> {
                     width: 40,
                   ),
                   Text(
-                    'Medication',
+                    'Medications',
                     style: TextStyle(
                         color: primaryColor, fontWeight: FontWeight.w600),
                   ),
@@ -539,6 +539,7 @@ class _AppDrawerState extends State<AppDrawer> {
         context: context,
         height: 180,
         onPositiveButtonClickListner: () {
+          dailyCheckInDate = '';
           debugPrint('Positive Button Click');
           carePlanEnrollmentForPatientGlobe = null;
           _sharedPrefUtils.save('CarePlan', null);

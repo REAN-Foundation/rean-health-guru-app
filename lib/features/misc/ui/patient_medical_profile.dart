@@ -217,7 +217,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             children: <Widget>[
                               SizedBox(
                                 width: 150,
-                                child: Text('Blood Group',
+                                child: Text('Blood Type',
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w600,

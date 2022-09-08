@@ -707,6 +707,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 ImageIcon(
                   AssetImage('res/images/ic_oximeter.png'),
@@ -716,24 +717,37 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 SizedBox(
                   width: 8,
                 ),
-                Text(
-                  'Enter your blood oxygen saturation',
+                /*Text(
+                  'Enter your blood oxygen\nsaturation',
                   style: TextStyle(
                       color: textBlack,
                       fontWeight: FontWeight.w600,
                       fontSize: 14),
-                  textAlign: TextAlign.center,
-                ),
+                  textAlign: TextAlign.left,
+                ),*/
                 RichText(
                   text: TextSpan(
-                    text: ' (%) ',
+                    text: 'Enter your blood oxygen\nsaturation',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
                         color: textBlack,
-                        fontSize: 12),
+                        fontSize: 14),
+                    children: <TextSpan>[
+                       TextSpan(
+                          text: ' (%) ',
+                          style: TextStyle(fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              color: textBlack,
+                              fontSize: 12)),
+                    ],
                   ),
                 ),
+                SizedBox(width: 16,),
+                InfoScreen(
+                    tittle: 'Blood Oxygen Saturation Information',
+                    description: "Oxygen saturation is an essential element in the management and understanding of patient care. A healthy blood oxygen level varies between 75 and 100 millimeters of mercury (mm Hg).",
+                    height: 240),
               ],
             ),
             const SizedBox(
@@ -921,6 +935,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         fontSize: 12),
                   ),
                 ),
+                SizedBox(width: 4,),
+                InfoScreen(
+                    tittle: 'Body Temperature Information',
+                    description: "In particular, enzymes in a body's cells must have the correct temperature to be able to catalyse chemical reactions. The optimal temperature of the human body is 37 °C (98.6 °F), but various factors can affect this value, including exposure to the elements in the environment.",
+                    height: 280),
               ],
             ),
             const SizedBox(

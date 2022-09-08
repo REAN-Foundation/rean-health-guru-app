@@ -349,7 +349,7 @@ class _LipidProfileTotalCholesterolViewState
 
   Widget noHistoryFound() {
     return Center(
-      child: Text('No vital history found',
+      child: Text('No lab value found',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,

@@ -47,7 +47,7 @@ class _InfoScreenState extends State<InfoScreen> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(
-              Icons.info,
+              Icons.info_outline,
               color: widget.infoIconcolor ?? primaryColor,
               size: 24,
             ),
@@ -75,6 +75,8 @@ class _InfoScreenState extends State<InfoScreen> {
             children: [
               Text(
                 widget.tittle ?? 'Info',
+                textAlign: TextAlign.center,
+                maxLines: 1,
                 style: TextStyle(
                     color: primaryColor,
                     fontWeight: FontWeight.w700,
@@ -105,7 +107,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 children: [
                   Semantics(
                     button: true,
-                    label: 'Alright',
+                    label: 'Okay',
                     child: ExcludeSemantics(
                       child: InkWell(
                         onTap: () {
@@ -123,7 +125,7 @@ class _InfoScreenState extends State<InfoScreen> {
                               color: primaryColor),
                           child: Center(
                             child: Text(
-                              'Alright',
+                              'Okay',
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.white,

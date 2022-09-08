@@ -25,6 +25,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:share/share.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -202,14 +203,22 @@ class _MyReportsViewState extends State<MyReportsView> {
                     height: 16,
                   ),
                   uploadWidget(),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text('Medical Records',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: textBlack,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'Montserrat')),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, top: 16, bottom: 16),
+                        child: Text('Medical Records',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: textBlack,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Montserrat')),
+                      ),
+                      InfoScreen(
+                          tittle: 'Medical Records Information',
+                          description: "Save all your health reports in one place by uploading them here and sharing them easily with your healthcare team.",
+                          height: 200),
+                    ],
                   ),
                   SizedBox(
                     height: 0,

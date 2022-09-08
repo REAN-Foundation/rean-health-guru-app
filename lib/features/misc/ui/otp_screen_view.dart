@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:package_info/package_info.dart';
+import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/user_data.dart';
@@ -462,7 +463,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
               MaterialPageRoute(builder: (context) {
                 return HomeView(0);
               }), (Route<dynamic> route) => false);*/
-
+          getCarePlan(
+              model, userData.data!.accessToken!, userData.data!.user!.id!);
           getPatientDetails(
               model, userData.data!.accessToken!, userData.data!.user!.id!);
           userDiviceData(
@@ -484,6 +486,26 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       debugPrint('error caught: $e');
       model.setBusy(false);
       setState(() {});
+    }
+  }
+
+ getCarePlan(LoginViewModel model, String auth, String userId) async {
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
+
+    final response = await apiProvider!.get(
+        '/care-plans/patients/' + userId + '/enrollments',
+        header: map);
+    // Convert and return
+    GetCarePlanEnrollmentForPatient carePlanEnrollmentForPatient =  GetCarePlanEnrollmentForPatient.fromJson(response);
+
+    if (carePlanEnrollmentForPatient.status == 'success') {
+      if (carePlanEnrollmentForPatient.data!.patientEnrollments!.isNotEmpty) {
+        carePlanEnrollmentForPatientGlobe = carePlanEnrollmentForPatient;
+      }
+      /*_sharedPrefUtils.save(
+          'CarePlan', carePlanEnrollmentForPatient.toJson());*/
     }
   }
 

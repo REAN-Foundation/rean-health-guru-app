@@ -153,7 +153,7 @@ class _LipidProfileTriglyceridesViewState
               InfoScreen(
                   tittle: 'Triglycerides Information',
                   description:
-                      'Triglycerides are the most common type of fat in your body. They come from food, and your body also makes them.\n\nNormal triglyceride levels vary by age and sex.',
+                      'Triglycerides are the most common type of fat in your body. They come from food, and your body also makes them.\n\nNormal triglycerides levels vary by age and sex.',
                   height: 240),
             ],
           ),
@@ -223,7 +223,7 @@ class _LipidProfileTriglyceridesViewState
               child: InkWell(
                 onTap: () {
                   if (_controller.text.toString().isEmpty) {
-                    showToast('Please enter your total triglycerides', context);
+                    showToast('Please enter your triglycerides', context);
                   } else {
                     addvitals();
                   }
@@ -295,7 +295,7 @@ class _LipidProfileTriglyceridesViewState
                 Expanded(
                   flex: 2,
                   child: Text(
-                    'Triglyceride\nmg/dl',
+                    'Triglycerides\nmg/dl',
                     style: TextStyle(
                         color: primaryColor,
                         fontSize: 14,
@@ -348,7 +348,7 @@ class _LipidProfileTriglyceridesViewState
 
   Widget noHistoryFound() {
     return Center(
-      child: Text('No vital history found',
+      child: Text('No lab value found',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -383,7 +383,7 @@ class _LipidProfileTriglyceridesViewState
             Expanded(
               flex: 2,
               child: Semantics(
-                label: 'Triglyceride ',
+                label: 'Triglycerides ',
                 child: Text(
                   record.primaryValue.toString(),
                   style: TextStyle(
@@ -416,7 +416,7 @@ class _LipidProfileTriglyceridesViewState
                   Icons.delete_rounded,
                   color: primaryColor,
                   size: 24,
-                  semanticLabel: 'Triglyceride Delete',
+                  semanticLabel: 'Triglycerides Delete',
                 ))
           ],
         ),

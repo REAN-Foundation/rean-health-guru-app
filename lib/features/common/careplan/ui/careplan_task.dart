@@ -2179,7 +2179,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Info',
+                  'Survey Information',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w700,
@@ -2211,7 +2211,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                   children: [
                     Semantics(
                       button: true,
-                      label: 'Alright',
+                      label: 'Okay',
                       child: ExcludeSemantics(
                         child: InkWell(
                           onTap: () {
@@ -2230,7 +2230,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 color: primaryColor),
                             child: Center(
                               child: Text(
-                                'Alright',
+                                'Okay',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: Colors.white,

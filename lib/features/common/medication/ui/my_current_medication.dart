@@ -60,7 +60,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       if (medicationList.elementAt(i).endDate!.isAfter(DateTime.now())) {
         currentMedicationList.add(medicationList.elementAt(i));
         debugPrint('End Data ==> ${medicationList.elementAt(i).endDate}');
-      }else if(medicationList.elementAt(i).frequencyUnit == 'Other' ){
+      } else if (medicationList.elementAt(i).frequencyUnit == 'Other') {
         currentMedicationList.add(medicationList.elementAt(i));
       }
     }
@@ -77,7 +77,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
             key: _scaffoldKey,
             backgroundColor: Colors.white,
             body: Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(8.0),
               child: model!.busy
                   ? Center(
                       child: SizedBox(
@@ -119,18 +119,18 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('No medication added',
+            Text('No medications added',
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 14,
                     fontFamily: 'Montserrat',
                     color: primaryColor)),
             InfoScreen(
-                tittle: 'Medication Information',
+                tittle: 'Medications Information',
                 description: 'Add your medications by pressing the + sign.',
                 height: 180)
-            ],
-          ),
+          ],
+        ),
       ),
     );
   }
@@ -161,16 +161,34 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
             color: Colors.white,
             border: Border.all(color: primaryColor, width: 0.8),
             borderRadius: BorderRadius.all(Radius.circular(8.0))),
-        child: Stack(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  flex: 9,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            Expanded(
+              flex: 9,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
+                      medication.imageResourceId != null
+                          ? Container(
+                        height: 24,
+                        width: 24,
+                        child: Semantics(
+                          label: 'Medication ',
+                          child: CachedNetworkImage(
+                            imageUrl: apiProvider!.getBaseUrl()! +
+                                '/file-resources/' +
+                                medication.imageResourceId! +
+                                '/download-by-version-name/1',
+                          ),
+                        ),
+                      )
+                          : Container(),
+                      SizedBox(width: 8,),
                       Semantics(
                         child: Text(medication.drugName!,
                             overflow: TextOverflow.ellipsis,
@@ -179,95 +197,89 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                                 fontWeight: FontWeight.w600,
                                 color: primaryColor)),
                       ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Text(
-                          medication.dose.toString() + ' ' + medication.dosageUnit!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300,
-                              color: Colors.grey)),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                          medication.frequencyUnit.toString() +
-                              ' - ' +
-                              medication.timeSchedules!.join(', '),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300,
-                              color: Colors.grey)),
-                      Text(
-                          'Started on ' +
-                              dateFormatStandard
-                                  .format(medication.startDate!.toLocal()),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300,
-                              color: Colors.grey)),
-                      Text(
-                          medication.instructions ?? ' ',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300,
-                              color: Colors.grey)),
-                      //const SizedBox(height: 16,),
                     ],
                   ),
-                ),
-                if (medication.imageResourceId != null)
-                  Expanded(
-                    flex: 1,
-                    child: Semantics(
-                      label: 'Medication ',
-                      child: CachedNetworkImage(
-                        imageUrl: apiProvider!.getBaseUrl()! +
-                            '/file-resources/' +
-                            medication.imageResourceId! +
-                            '/download-by-version-name/1',
-                      ),
-                    ),
-                  )
-                else
-                  Container(),
-              ],
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                      medication.dose.toString() +
+                          ' ' +
+                          medication.dosageUnit!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.grey)),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                      medication.frequencyUnit.toString() +
+                          ' - ' +
+                          medication.timeSchedules!.join(', '),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.grey)),
+                  Text(
+                      'Started on ' +
+                          dateFormatStandard
+                              .format(medication.startDate!.toLocal()),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.grey)),
+                  Text(medication.instructions ?? ' ',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.grey)),
+                  //const SizedBox(height: 16,),
+                ],
+              ),
             ),
-            Positioned(
-                top: 0,
-                right: 0,
-                child: IconButton(
-                    padding: EdgeInsets.zero,
-                    constraints: BoxConstraints(),
-                    onPressed: () {
-                      ConfirmationBottomSheet(
-                          context: context,
-                          height: 180,
-                          onPositiveButtonClickListner: () {
-                            //debugPrint('Positive Button Click');
-                            deleteMedication(medication.id.toString());
-                          },
-                          onNegativeButtonClickListner: () {
-                            //debugPrint('Negative Button Click');
-                          },
-                          question: 'Are you sure you want to delete this medication?',
-                          tittle: 'Alert!');
-                    },
-                    icon: Icon(
-                      Icons.delete_rounded,
-                      color: primaryColor,
-                      size: 24,
-                      semanticLabel: medication.drugName!+' Delete',
-                    )))
+            Expanded(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  IconButton(
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(),
+                      onPressed: () {
+                        ConfirmationBottomSheet(
+                            context: context,
+                            height: 180,
+                            onPositiveButtonClickListner: () {
+                              //debugPrint('Positive Button Click');
+                              deleteMedication(medication.id.toString());
+                            },
+                            onNegativeButtonClickListner: () {
+                              //debugPrint('Negative Button Click');
+                            },
+                            question:
+                            'Are you sure you want to delete this medication?',
+                            tittle: 'Alert!');
+                      },
+                      icon: Icon(
+                        Icons.delete_rounded,
+                        color: primaryColor,
+                        size: 24,
+                        semanticLabel: medication.drugName! + ' Delete',
+                      )),
+
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -496,8 +508,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
 
-      final BaseResponse baseResponse =
-      await model.deleteMedication(recordId);
+      final BaseResponse baseResponse = await model.deleteMedication(recordId);
 
       if (baseResponse.status == 'success') {
         if (progressDialog.isOpen()) {

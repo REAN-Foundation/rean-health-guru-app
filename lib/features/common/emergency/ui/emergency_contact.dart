@@ -124,15 +124,23 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   emergency(),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      'Emergency Contact ',
-                      style: TextStyle(
-                          color: primaryColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16),
-                    ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, top: 16, bottom: 16),
+                        child: Text(
+                          'Emergency Contact ',
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16),
+                        ),
+                      ),
+                      InfoScreen(
+                          tittle: 'Emergency Contact Information',
+                          description: "Add details of the person whom you want to contact in case of emergency. So your caretaker can call them.",
+                          height: 200),
+                    ],
                   ),
                   sectionHeader('Doctors'),
                   if (model!.busy)
@@ -366,21 +374,34 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       builder: (context) => AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),
         content: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Semantics(
-            child: TextField(
-              controller: emergencyDetailsTextControler,
-              autofocus: true,
-              style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 16.0,
-                  color: Colors.black),
-              decoration: InputDecoration(
-                  labelStyle: TextStyle(fontSize: 16),
-                  labelText: 'Enter your hospitalization details',
-                  hintText: ''),
-            ),
+          height: 90,
+          child: Column(
+            children: [
+              Text('Enter your hospitalization details\n(Date & Reason)',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Montserrat')),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Semantics(
+                  child: TextField(
+                    controller: emergencyDetailsTextControler,
+                    autofocus: true,
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16.0,
+                        color: Colors.black),
+                    decoration: InputDecoration(
+                        labelStyle: TextStyle(fontSize: 16),
+                        //labelText: 'Enter your hospitalization details (Date & Reason)',
+                        hintText: ''),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         actions: <Widget>[
@@ -394,7 +415,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
               child: const Text('Submit'),
               onPressed: () {
                 if (emergencyDetailsTextControler.text.trim().isEmpty) {
-                  showToastMsg('Please enter emergency details', context);
+                  showToastMsg('Please enter hospitalization details', context);
                 } else {
                   addMedicalEmergencyEvent(
                       emergencyDetailsTextControler.text.trim());

@@ -958,7 +958,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     bottom: 0,
                     right: 0,
                     child: InfoOutlinedScreen(
-                      tittle: 'Medications Information',
+                      tittle: 'Medication Information',
                       description:
                           'Medicines can help control things like high blood pressure (hypertension) or high cholesterol.',
                       height: 200,
@@ -1806,7 +1806,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       child: InfoOutlinedScreen(
                         tittle: 'Vitals Information',
                         description:
-                            'Vital signs are useful in detecting or monitoring medical problems. Vital signs can be measured in a medical setting, at home.',
+                            'Vital signs are useful in detecting or monitoring medical problems. Vital signs can be measured in a medical setting or at home.',
                         height: 208,
                         infoIconcolor: Colors.grey,
                       ),

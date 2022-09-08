@@ -73,7 +73,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
 
   Widget noMedicationFound() {
     return Center(
-      child: Text('No medication history',
+      child: Text('No medications history',
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14,
@@ -83,17 +83,31 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
   }
 
   Widget listWidget() {
-    return ListView.separated(
-        itemBuilder: (context, index) =>
-            _makeMedicinePrescriptionCard(context, index),
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            height: 8,
-          );
-        },
-        itemCount: summarys.length,
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+       /* Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            InfoScreen(
+                tittle: 'Medications History Information',
+                description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                height: 240),
+          ],
+        ),*/
+        ListView.separated(
+            itemBuilder: (context, index) =>
+                _makeMedicinePrescriptionCard(context, index),
+            separatorBuilder: (BuildContext context, int index) {
+              return SizedBox(
+                height: 8,
+              );
+            },
+            itemCount: summarys.length,
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true),
+      ],
+    );
   }
 
   Widget _makeMedicinePrescriptionCard(BuildContext context, int index) {

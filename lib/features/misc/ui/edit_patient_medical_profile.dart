@@ -577,7 +577,7 @@ class _EditPatientMedicalProfileViewState
                         child: Text(value),
                       );
                     }).toList(),
-                    hint: Text('Select Blood Group'),
+                    hint: Text('Select Blood Type'),
                     onChanged: (data) {
                       debugPrint(data);
                       setState(() {

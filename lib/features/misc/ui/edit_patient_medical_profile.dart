@@ -539,7 +539,7 @@ class _EditPatientMedicalProfileViewState
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Blood Group',
+        Text('Blood Type',
             style: TextStyle(
                 fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
         SizedBox(
@@ -558,7 +558,7 @@ class _EditPatientMedicalProfileViewState
                     border: Border.all(color: primaryColor, width: 0.80),
                     color: Colors.white),
                 child: Semantics(
-                  label: 'Blood Group',
+                  label: 'Blood Type',
                   child: DropdownButton<String>(
                     isExpanded: true,
                     value: _bloodgroupValue == '' ? null : _bloodgroupValue,

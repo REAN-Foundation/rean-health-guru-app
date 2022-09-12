@@ -85,7 +85,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           getAppName() == 'Heart & Stroke Helper™ ') {
         dateTill = DateTime.now();
       } else {*/
-      dateTill = DateTime.now().add(Duration(days: 91));
+      if(getBaseUrl()!.contains('reancare-api-dev')){
+        dateTill = DateTime.now().add(Duration(days: 91));
+      }else{
+        dateTill = DateTime.now().add(Duration(days: 0));
+      }
+
       //}
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
       userTaskResponse = await model.getUserTasks(

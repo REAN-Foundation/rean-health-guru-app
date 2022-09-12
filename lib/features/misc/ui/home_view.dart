@@ -290,17 +290,17 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   healthJourneyCheck(){
     if (carePlanEnrollmentForPatientGlobe == null) {
-      if(getBaseUrl()!.contains('aha-api-uat') ||
+      /*if(getBaseUrl()!.contains('aha-api-uat') ||
           getBaseUrl()!.contains('reancare-api-dev') ||
-          getAppName() == 'Heart & Stroke Helper™ ') {
+          getAppName() == 'Heart & Stroke Helper™ ') {*/
         debugPrint('Health Journey');
         Future.delayed(
             const Duration(seconds: 2), () => showHealthJourneyDialog());
-      }else{
+     /* }else{
         debugPrint('Daily Check-In');
         Future.delayed(
             const Duration(seconds: 2), () => showDailyCheckIn());
-      }
+      }*/
     }else{
       debugPrint('Daily Check-In');
       Future.delayed(
@@ -438,7 +438,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(4),
                       topLeft: Radius.circular(4)),
-                  color: /*getAppType() == 'AHA' ?*/ redLightAha /*: primaryLightColor*/,
+                  color: getAppType() == 'AHA' ? redLightAha : primaryLightColor,
                 ),
                 child: Center(
                   child: Container(
@@ -447,7 +447,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                       label: 'Health Journey image',
                       image: true,
                       child: Image.asset(
-                        'res/images/ic_health_journey.png',
+                        getAppType() == 'AHA' ? 'res/images/ic_health_journey.png' : 'res/images/ic_health_journey_blue.png',
                       ),
                     ),
                   ),

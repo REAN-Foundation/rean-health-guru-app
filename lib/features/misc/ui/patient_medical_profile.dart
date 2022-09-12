@@ -217,7 +217,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             children: <Widget>[
                               SizedBox(
                                 width: 150,
-                                child: Text('Blood Group',
+                                child: Text('Blood Type',
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w600,
@@ -313,26 +313,22 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                           SizedBox(
                             height: 8,
                           ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               SizedBox(
-                                width: 150,
-                                child: Text('Diabetes',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: textBlack)),
+                                height: 8,
                               ),
-                              Text(':',
+                              Text(
+                                  'Have you used tobacco products (such as cigarettes, electronic cigarettes, cigars, smokeless tobacco, or hookah) over the past year?',
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
-                                width: 8,
+                                height: 8,
                               ),
-                              Text('' + yesOrNo(healthProfile!.isDiabetic!),
+                              Text('' + yesOrNo(healthProfile!.isSmoker!),
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w500,
@@ -365,22 +361,26 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                           SizedBox(
                             height: 8,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               SizedBox(
-                                height: 8,
+                                width: 150,
+                                child: Text('Diabetes',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: textBlack)),
                               ),
-                              Text(
-                                  'Have you used tobacco products (such as cigarettes, electronic cigarettes, cigars, smokeless tobacco, or hookah) over the past year?',
+                              Text(':',
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w600,
                                       color: textBlack)),
                               SizedBox(
-                                height: 8,
+                                width: 8,
                               ),
-                              Text('' + yesOrNo(healthProfile!.isSmoker!),
+                              Text('' + yesOrNo(healthProfile!.isDiabetic!),
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w500,

@@ -618,24 +618,44 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 SizedBox(
                   width: 8,
                 ),
-                Text(
-                  'Enter your blood glucose',
-                  style: TextStyle(
-                      color: textBlack,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14),
-                  textAlign: TextAlign.center,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Enter your blood glucose',
+                          style: TextStyle(
+                              color: textBlack,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14),
+                          textAlign: TextAlign.center,
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            text: ' (mg/dL) ',
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                color: textBlack,
+                                fontSize: 12),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 4,),
+                    Text(
+                      '(Also known as blood sugar)',
+                      style: TextStyle(
+                          color: textBlack,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
-                RichText(
-                  text: TextSpan(
-                    text: ' (mg/dL) ',
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w600,
-                        color: textBlack,
-                        fontSize: 12),
-                  ),
-                ),
+
                 SizedBox(
                   width: 8,
                 ),

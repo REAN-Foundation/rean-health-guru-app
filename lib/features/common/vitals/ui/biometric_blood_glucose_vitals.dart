@@ -148,13 +148,28 @@ class _BiometricBloodSugarVitalsViewState
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                'Enter your blood glucose:',
-                style: TextStyle(
-                    color: textBlack,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16),
-                textAlign: TextAlign.center,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Enter your blood glucose:',
+                    style: TextStyle(
+                        color: textBlack,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 4,),
+                  Text(
+                    '(Also known as blood sugar)',
+                    style: TextStyle(
+                        color: textBlack,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
               SizedBox(
                 width: 8,

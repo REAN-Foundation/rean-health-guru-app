@@ -408,6 +408,7 @@ class _EditProfileState extends State<EditProfile> {
       if (deleteMyAccount.status == 'success') {
         progressDialog.close();
         showDeleteDialog();
+        carePlanEnrollmentForPatientGlobe = null;
         _sharedPrefUtils.save('CarePlan', null);
         _sharedPrefUtils.saveBoolean('login', null);
         _sharedPrefUtils.clearAll();

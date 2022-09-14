@@ -2698,16 +2698,16 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  /*IconButton(
+                  IconButton(
                       icon: Icon(
                         Icons.add_circle,
                         size: 32,
                         color: iconColor,
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, RoutePaths.My_Activity,
-                            arguments: '');
-                      })*/
+                        Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
+                            arguments: 0);
+                      })
                 ],
               ),
             ),

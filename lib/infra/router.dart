@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/activity/ui/all_mental_well_being_view.dart';
 import 'package:patient/features/common/activity/ui/all_movements_view.dart';
 import 'package:patient/features/common/activity/ui/meditation_timmer_view.dart';
 import 'package:patient/features/common/activity/ui/view_my_all_daily_activity.dart';
@@ -169,7 +170,7 @@ class Routers {
         //return MaterialPageRoute(builder: (_) => BiometricVitalsView());
         return MaterialPageRoute(builder: (_) => BiometricVitalsTrendsView());
       case RoutePaths.MY_STRESS:
-        return MaterialPageRoute(builder: (_) => ViewMyAllDailyStress());
+        return MaterialPageRoute(builder: (_) => ViewMyAllDailyStress(true));
       case RoutePaths.My_Activity:
         return MaterialPageRoute(
             builder: (_) => //ViewMyDailyActivity());
@@ -177,6 +178,9 @@ class Routers {
       case RoutePaths.My_Activity_Trends:
         return MaterialPageRoute(
             builder: (_) => AllMovementsView(settings.arguments as int));
+      case RoutePaths.My_Activity_Mindfullness:
+        return MaterialPageRoute(
+            builder: (_) => AllMentalWellBeingView(settings.arguments as int));
       case RoutePaths.MySleepData:
         return MaterialPageRoute(builder: (_) => ViewMyDailySleep());
       case RoutePaths.My_Nutrition:

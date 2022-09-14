@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/activity/models/movements_tracking.dart';
 import 'package:patient/features/common/nutrition/models/glass_of_water_consumption.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -24,6 +25,13 @@ import 'package:patient/infra/widgets/info_screen.dart';
 
 //ignore: must_be_immutable
 class ViewMyAllDailyStress extends StatefulWidget {
+
+  bool _appBarView = true;
+
+  ViewMyAllDailyStress(bool appBarView) {
+    _appBarView = appBarView;
+  }
+
   @override
   _ViewMyAllDailyStressState createState() => _ViewMyAllDailyStressState();
 }
@@ -56,6 +64,9 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
   DashboardTile? mindfulnessTimeDashboardTile;
   int oldStoreSec = 0;
   late Timer _timerRefrehs;
+  MovementsTracking? _sleepTracking;
+  int _sleepHrs = 0;
+  DateTime? todaysDate;
 
   loadSharedPrefs() async {
     try {
@@ -83,7 +94,10 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     endDate = DateTime(DateTime.now().year, DateTime.now().month,
         DateTime.now().day, 23, 59, 59);
+    todaysDate = DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     loadSharedPrefs();
+    loadSleepMovement();
     //loadWaterConsuption();
     if (Platform.isIOS) {
       fetchData();
@@ -101,6 +115,26 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
   void dispose() {
     _timerRefrehs.cancel();
     super.dispose();
+  }
+
+  loadSleepMovement() async {
+    try {
+      final movements = await _sharedPrefUtils.read('sleepTime');
+
+      if (movements != null) {
+        _sleepTracking = MovementsTracking.fromJson(movements);
+      }
+
+      if (_sleepTracking != null) {
+        if (todaysDate == _sleepTracking!.date) {
+          debugPrint('Sleep ==> ${_sleepTracking!.value!} Hrs');
+          _sleepHrs = _sleepTracking!.value!;
+        }
+      }
+      setState(() {});
+    } catch (e) {
+      debugPrint('error caught: $e');
+    }
   }
 
   Future<void> fetchData() async {
@@ -281,7 +315,8 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
         child: Scaffold(
             key: _scaffoldKey,
             backgroundColor: Colors.white,
-            appBar: AppBar(
+
+            appBar: widget._appBarView ? AppBar(
               elevation: 0,
               backgroundColor: primaryColor,
               brightness: Brightness.dark,
@@ -305,8 +340,13 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                 },
               )*/
               ],
+            ) : PreferredSize(
+                preferredSize: Size.fromHeight(0.0), // here the desired height
+                child: AppBar(
+
+                )
             ),
-            body: Stack(
+            body: widget._appBarView ? Stack(
               children: [
                 Positioned(
                     top: 0,
@@ -355,14 +395,32 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                   children: [
                 ),*/
               ],
-            )),
+            ):
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              color: Color(0XFFf7f5f5),
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (Platform.isIOS) _content(),
+                    if (Platform.isAndroid) _contentDataReady(),
+                  ],
+                ),
+              ),
+            ),
+        ),
       ),
     );
   }
 
   Widget sleepTime() {
     var sleepToDisplay = 0;
-    if (Platform.isIOS) {
+    if(_sleepHrs != 0){
+      sleepToDisplay = _sleepHrs * 60;
+    }else if (Platform.isIOS) {
       debugPrint(
           'Sleep in Bed ==>${sleepDataInBed!.getSleepDurationInBed().abs()} ');
       debugPrint(

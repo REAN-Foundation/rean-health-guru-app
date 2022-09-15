@@ -214,10 +214,12 @@ class _MyReportsViewState extends State<MyReportsView> {
                                 fontWeight: FontWeight.w600,
                                 fontFamily: 'Montserrat')),
                       ),
-                      InfoScreen(
-                          tittle: 'Medical Records Information',
-                          description: "Save all your health reports in one place by uploading them here and sharing them easily with your healthcare team.",
-                          height: 200),
+                      Expanded(
+                        child: InfoScreen(
+                            tittle: 'Medical Records Information',
+                            description: "Save all your health reports in one place by uploading them here and sharing them easily with your healthcare team.",
+                            height: 200),
+                      ),
                     ],
                   ),
                   SizedBox(

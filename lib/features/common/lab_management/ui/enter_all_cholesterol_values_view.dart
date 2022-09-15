@@ -180,11 +180,13 @@ class _EnterAllCholesterolValuesViewState
                 SizedBox(
                   width: 0,
                 ),
-                InfoScreen(
-                    tittle: 'LDL Information',
-                    description:
-                        'Since LDL is the bad kind of cholesterol, a low LDL level is considered good for your heart health.',
-                    height: 200),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'LDL Information',
+                      description:
+                          'Since LDL is the bad kind of cholesterol, a low LDL level is considered good for your heart health.',
+                      height: 200),
+                ),
               ],
             ),
             const SizedBox(
@@ -279,11 +281,13 @@ class _EnterAllCholesterolValuesViewState
                 SizedBox(
                   width: 0,
                 ),
-                InfoScreen(
-                    tittle: 'HDL Information',
-                    description:
-                        'HDL cholesterol is called “good” cholesterol. A healthy HDL-cholesterol level may protect against heart attack and stroke.',
-                    height: 208),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'HDL Information',
+                      description:
+                          'HDL cholesterol is called “good” cholesterol. A healthy HDL-cholesterol level may protect against heart attack and stroke.',
+                      height: 208),
+                ),
               ],
             ),
             const SizedBox(
@@ -479,11 +483,13 @@ class _EnterAllCholesterolValuesViewState
                 SizedBox(
                   width: 0,
                 ),
-                InfoScreen(
-                    tittle: 'Triglycerides Information',
-                    description:
-                        'Triglycerides are the most common type of fat in your body. They come from food, and your body also makes them.\n\nNormal triglyceride levels vary by age and sex.',
-                    height: 240),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Triglycerides Information',
+                      description:
+                          'Triglycerides are the most common type of fat in your body. They come from food, and your body also makes them.\n\nNormal triglyceride levels vary by age and sex.',
+                      height: 240),
+                ),
               ],
             ),
             const SizedBox(
@@ -572,10 +578,12 @@ class _EnterAllCholesterolValuesViewState
                         fontSize: 12),
                   ),
                 ),
-                InfoScreen(
-                    tittle: 'A1C Level Information',
-                    description: "It's one of the commonly used tests to diagnose prediabetes and diabetes, and is also the main test to help you and your health care team manage your diabetes.",
-                    height: 220),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'A1C Level Information',
+                      description: "It's one of the commonly used tests to diagnose prediabetes and diabetes, and is also the main test to help you and your health care team manage your diabetes.",
+                      height: 220),
+                ),
               ],
             ),
             const SizedBox(

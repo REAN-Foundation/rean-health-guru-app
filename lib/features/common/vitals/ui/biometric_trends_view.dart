@@ -106,11 +106,13 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                 const SizedBox(
                   width: 8,
                 ),
-                InfoScreen(
-                    tittle: 'Weight Information',
-                    description:
-                        'Your doctor typically will record your weight during your regular health care visits. Please refer to your doctor\'s recommended frequency of measuring your weight at home.',
-                    height: 220),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Weight Information',
+                      description:
+                          'Your doctor typically will record your weight during your regular health care visits. Please refer to your doctor\'s recommended frequency of measuring your weight at home.',
+                      height: 220),
+                ),
               ],
             ),
             SizedBox(
@@ -154,11 +156,13 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   const SizedBox(
                     width: 8,
                   ),
-                  InfoScreen(
-                      tittle: 'Blood Pressure Information',
-                      description:
-                          'Your blood pressure will be measured at your regular health care visits or at least once per year if blood pressure is less than 120/80 mm Hg.  Your doctor might recommend you monitor your blood pressure at home. Your blood pressure readings can be categorized as (in mm Hg): *Normal: Less than 120/80; Elevated: Systolic 120-129 AND Diastolic less than 80; *High Blood Pressure Stage 1: Systolic 130-139 OR Diastolic 80-89; *High Blood Pressure Stage 2: Sytsolic 140+ OR Diasotlic 90+; Hypertensive Crisis (Consult your doctor immediately): Systolic 180+ and/or Diastolic 180+.',
-                      height: 380),
+                  Expanded(
+                    child: InfoScreen(
+                        tittle: 'Blood Pressure Information',
+                        description:
+                            'Your blood pressure will be measured at your regular health care visits or at least once per year if blood pressure is less than 120/80 mm Hg.  Your doctor might recommend you monitor your blood pressure at home. Your blood pressure readings can be categorized as (in mm Hg): *Normal: Less than 120/80; Elevated: Systolic 120-129 AND Diastolic less than 80; *High Blood Pressure Stage 1: Systolic 130-139 OR Diastolic 80-89; *High Blood Pressure Stage 2: Sytsolic 140+ OR Diasotlic 90+; Hypertensive Crisis (Consult your doctor immediately): Systolic 180+ and/or Diastolic 180+.',
+                        height: 380),
+                  ),
                 ],
               ),
               const SizedBox(
@@ -216,11 +220,13 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                 SizedBox(
                   width: 8,
                 ),
-                InfoScreen(
-                    tittle: 'Blood Glucose Information',
-                    description:
-                        'The American Diabetes Association recommends testing for prediabetes and risk for future diabetes for all people beginning at age 45 years. If tests are normal, it is reasonable to repeat testing at a minimum of 3-year intervals.',
-                    height: 240),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Blood Glucose Information',
+                      description:
+                          'The American Diabetes Association recommends testing for prediabetes and risk for future diabetes for all people beginning at age 45 years. If tests are normal, it is reasonable to repeat testing at a minimum of 3-year intervals.',
+                      height: 240),
+                ),
               ],
             ),
             const SizedBox(
@@ -262,10 +268,12 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(width: 8,),
-                InfoScreen(
-                    tittle: 'Blood Oxygen Saturation Information',
-                    description: "Oxygen saturation is an essential element in the management and understanding of patient care. A healthy blood oxygen level varies between 75 and 100 millimeters of mercury (mm Hg).",
-                    height: 240),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Blood Oxygen Saturation Information',
+                      description: "Oxygen saturation is an essential element in the management and understanding of patient care. A healthy blood oxygen level varies between 75 and 100 millimeters of mercury (mm Hg).",
+                      height: 240),
+                ),
               ],
             ),
             const SizedBox(
@@ -309,11 +317,13 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                 SizedBox(
                   width: 8,
                 ),
-                InfoScreen(
-                    tittle: 'Pulse Rate Information',
-                    description:
-                        'Your heart rate, or pulse, is the number of times your heart beats per minute. Normal heart rate varies from person to person. For most of us (adults), between 60 and 100 beats per minute (bpm) is normal.',
-                    height: 240),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Pulse Rate Information',
+                      description:
+                          'Your heart rate, or pulse, is the number of times your heart beats per minute. Normal heart rate varies from person to person. For most of us (adults), between 60 and 100 beats per minute (bpm) is normal.',
+                      height: 240),
+                ),
               ],
             ),
             const SizedBox(
@@ -355,10 +365,12 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(width: 8,),
-                InfoScreen(
-                    tittle: 'Body Temperature Information',
-                    description: "In particular, enzymes in a body's cells must have the correct temperature to be able to catalyse chemical reactions. The optimal temperature of the human body is 37 °C (98.6 °F), but various factors can affect this value, including exposure to the elements in the environment.",
-                    height: 280),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Body Temperature Information',
+                      description: "In particular, enzymes in a body's cells must have the correct temperature to be able to catalyse chemical reactions. The optimal temperature of the human body is 37 °C (98.6 °F), but various factors can affect this value, including exposure to the elements in the environment.",
+                      height: 280),
+                ),
               ],
             ),
             const SizedBox(

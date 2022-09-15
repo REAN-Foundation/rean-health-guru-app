@@ -44,7 +44,7 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
             backgroundColor: Colors.white,
             brightness: Brightness.light,
             title: Text(
-              'Physical Activity',
+              'Mental Well-Being',
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
@@ -92,7 +92,7 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
           Expanded(
             flex: 1,
             child: Semantics(
-              label: 'Record Movements 1 of 2',
+              label: 'Record Mental Well-Being 1 of 2',
               selected: true,
               child: InkWell(
                 onTap: () {
@@ -116,7 +116,9 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
                         height: 4,
                       ),
                       Text(
-                        'Record Sleep',
+                        'Record Mental Well-Being',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             color: widget._currentIndex == 0
                                 ? Colors.white
@@ -132,7 +134,7 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
           Expanded(
             flex: 1,
             child: Semantics(
-              label: 'View Moments 2 of 2',
+              label: 'View Mental Well-Being 2 of 2',
               selected: true,
               child: InkWell(
                 onTap: () {
@@ -157,6 +159,8 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
                       ),
                       Text(
                         'View Mental Well-Being',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             color: widget._currentIndex == 1
                                 ? Colors.white

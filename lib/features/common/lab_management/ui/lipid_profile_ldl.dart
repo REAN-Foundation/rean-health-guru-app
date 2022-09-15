@@ -148,11 +148,13 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
               SizedBox(
                 width: 8,
               ),
-              InfoScreen(
-                  tittle: 'LDL Information',
-                  description:
-                      'Since LDL is the bad kind of cholesterol, a low LDL level is considered good for your heart health.',
-                  height: 200),
+              Expanded(
+                child: InfoScreen(
+                    tittle: 'LDL Information',
+                    description:
+                        'Since LDL is the bad kind of cholesterol, a low LDL level is considered good for your heart health.',
+                    height: 200),
+              ),
             ],
           ),
           const SizedBox(

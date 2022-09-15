@@ -105,11 +105,13 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                 SizedBox(
                   width: 8,
                 ),
-                InfoScreen(
-                    tittle: 'LDL Information',
-                    description:
-                        'Since LDL is the bad kind of cholesterol, a low LDL level is considered good for your heart health.',
-                    height: 200),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'LDL Information',
+                      description:
+                          'Since LDL is the bad kind of cholesterol, a low LDL level is considered good for your heart health.',
+                      height: 200),
+                ),
               ],
             ),
             SizedBox(
@@ -153,11 +155,13 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                 SizedBox(
                   width: 8,
                 ),
-                InfoScreen(
-                    tittle: 'HDL Information',
-                    description:
-                        'HDL cholesterol is called “good” cholesterol. A healthy HDL-cholesterol level may protect against heart attack and stroke.',
-                    height: 208),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'HDL Information',
+                      description:
+                          'HDL cholesterol is called “good” cholesterol. A healthy HDL-cholesterol level may protect against heart attack and stroke.',
+                      height: 208),
+                ),
               ],
             ),
             const SizedBox(
@@ -201,11 +205,13 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                 SizedBox(
                   width: 8,
                 ),
-                InfoScreen(
-                    tittle: 'Total Cholesterol Information',
-                    description:
-                        'You might have a fasting lipoprotein profile taken every four to six years, starting at age 20. This is a blood test that measures total cholesterol, LDL (bad) cholesterol and HDL (good) cholesterol. You may need to be tested more frequently if your doctor determines that you’re at an increased risk for heart disease or stroke. After age 40, your doctor will also want to use an equation to calculate your 10-year risk of experiencing cardiovascular disease or stroke.',
-                    height: 320),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Total Cholesterol Information',
+                      description:
+                          'You might have a fasting lipoprotein profile taken every four to six years, starting at age 20. This is a blood test that measures total cholesterol, LDL (bad) cholesterol and HDL (good) cholesterol. You may need to be tested more frequently if your doctor determines that you’re at an increased risk for heart disease or stroke. After age 40, your doctor will also want to use an equation to calculate your 10-year risk of experiencing cardiovascular disease or stroke.',
+                      height: 320),
+                ),
               ],
             ),
             const SizedBox(
@@ -249,11 +255,13 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                 SizedBox(
                   width: 8,
                 ),
-                InfoScreen(
-                    tittle: 'Triglycerides Information',
-                    description:
-                        'Triglycerides are the most common type of fat in your body. They come from food, and your body also makes them.\n\nNormal triglyceride levels vary by age and sex.',
-                    height: 240),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Triglycerides Information',
+                      description:
+                          'Triglycerides are the most common type of fat in your body. They come from food, and your body also makes them.\n\nNormal triglyceride levels vary by age and sex.',
+                      height: 240),
+                ),
               ],
             ),
             const SizedBox(
@@ -294,10 +302,12 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
-                InfoScreen(
-                    tittle: 'A1C Level Information',
-                    description: "It's one of the commonly used tests to diagnose prediabetes and diabetes, and is also the main test to help you and your health care team manage your diabetes.",
-                    height: 220),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'A1C Level Information',
+                      description: "It's one of the commonly used tests to diagnose prediabetes and diabetes, and is also the main test to help you and your health care team manage your diabetes.",
+                      height: 220),
+                ),
               ],
             ),
             const SizedBox(

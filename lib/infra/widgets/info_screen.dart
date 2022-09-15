@@ -32,6 +32,9 @@ class _InfoScreenState extends State<InfoScreen> {
       label: widget.tittle ?? 'information',
       button: true,
       child: InkWell(
+        highlightColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        splashColor: Colors.transparent,
         onTap: () {
           showMaterialModalBottomSheet(
               isDismissible: true,

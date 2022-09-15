@@ -446,11 +446,13 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
               const SizedBox(
                 width: 8,
               ),
-              InfoScreen(
-                  tittle: 'Weight Information',
-                  description:
-                      'Your doctor typically will record your weight during your regular health care visits. Please refer to your doctor\'s recommended frequency of measuring your weight at home.',
-                  height: 220),
+              Expanded(
+                child: InfoScreen(
+                    tittle: 'Weight Information',
+                    description:
+                        'Your doctor typically will record your weight during your regular health care visits. Please refer to your doctor\'s recommended frequency of measuring your weight at home.',
+                    height: 220),
+              ),
             ],
           ),
           const SizedBox(

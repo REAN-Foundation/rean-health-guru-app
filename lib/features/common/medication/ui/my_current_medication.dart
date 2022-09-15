@@ -189,13 +189,16 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                       )
                           : Container(),
                       SizedBox(width: 8,),
-                      Semantics(
-                        child: Text(medication.drugName!,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: primaryColor)),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 124,
+                        child: Semantics(
+                            child: Text(medication.drugName!,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: primaryColor)),
+                        ),
                       ),
                     ],
                   ),

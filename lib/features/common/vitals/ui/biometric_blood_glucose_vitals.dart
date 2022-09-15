@@ -174,11 +174,13 @@ class _BiometricBloodSugarVitalsViewState
               SizedBox(
                 width: 8,
               ),
-              InfoScreen(
-                  tittle: 'Blood Glucose Information',
-                  description:
-                      'The American Diabetes Association recommends testing for prediabetes and risk for future diabetes for all people beginning at age 45 years. If tests are normal, it is reasonable to repeat testing at a minimum of 3-year intervals.',
-                  height: 240),
+              Expanded(
+                child: InfoScreen(
+                    tittle: 'Blood Glucose Information',
+                    description:
+                        'The American Diabetes Association recommends testing for prediabetes and risk for future diabetes for all people beginning at age 45 years. If tests are normal, it is reasonable to repeat testing at a minimum of 3-year intervals.',
+                    height: 240),
+              ),
             ],
           ),
           const SizedBox(

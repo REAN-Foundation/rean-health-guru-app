@@ -136,10 +136,13 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                               fontSize: 16),
                         ),
                       ),
-                      InfoScreen(
-                          tittle: 'Emergency Contact Information',
-                          description: "Add details of the person whom you want to contact in case of emergency. So your caretaker can call them.",
-                          height: 200),
+                      Expanded(
+                        child: InfoScreen(
+                            tittle: 'Emergency Contact Information',
+                            description: "Add details of the person whom you want to contact in case of emergency. So your caretaker can call them.",
+                            height: 200),
+                      ),
+                      SizedBox(width: 8,),
                     ],
                   ),
                   sectionHeader('Doctors'),

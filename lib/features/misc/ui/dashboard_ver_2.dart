@@ -2725,8 +2725,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                           button: true,
                           child: InkWell(
                             onTap: () {
-                              Navigator.pushNamed(
-                                  context, RoutePaths.MY_STRESS);
+                              /*Navigator.pushNamed(
+                                  context, RoutePaths.MY_STRESS);*/
+                              Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
+                                  arguments: 1);
                             },
                             child: Container(
                               height: 96,
@@ -2769,8 +2771,10 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                           button: true,
                           child: InkWell(
                             onTap: () {
-                              Navigator.pushNamed(
-                                  context, RoutePaths.MY_STRESS);
+                             /* Navigator.pushNamed(
+                                  context, RoutePaths.MY_STRESS);*/
+                              Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
+                                  arguments: 1);
                             },
                             child: Container(
                               height: 96,

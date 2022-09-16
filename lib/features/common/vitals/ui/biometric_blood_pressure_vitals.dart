@@ -375,7 +375,7 @@ class _BiometricBloodPresureVitalsViewState
       bmiRightSideValue = (60 - int.parse(bmiValue.toStringAsFixed(0))) - 1;
     }*/
 
-    if(sytolicBloodPressure <= 120 && diastolicBloodPressure <= 80){
+    if(sytolicBloodPressure <= 119 && diastolicBloodPressure <= 79){
       bmiLeftSideValue = 2;
       bmiRightSideValue = 28;
       debugPrint('Normal BP');
@@ -384,22 +384,22 @@ class _BiometricBloodPresureVitalsViewState
     }else if((sytolicBloodPressure >= 120 && sytolicBloodPressure <= 129) && diastolicBloodPressure <= 80){
       bmiLeftSideValue = 9;
       bmiRightSideValue = 23;
-      debugPrint('Elevate BP');
-      value = 'Elevate';
-      valeTextColor = Color(0XFFFBEC02);
-    }else if((sytolicBloodPressure >= 130 && sytolicBloodPressure <= 139) || (diastolicBloodPressure >= 81 && diastolicBloodPressure <= 89)){
+      debugPrint('Elevated BP');
+      value = 'Elevated';
+      valeTextColor = Color(0XFFFBED4F);
+    }else if((sytolicBloodPressure >= 130 && sytolicBloodPressure <= 139) /*|| (diastolicBloodPressure >= 81 && diastolicBloodPressure <= 89)*/){
       bmiLeftSideValue = 17;
       bmiRightSideValue = 17;
       debugPrint('Stage 1 BP');
       value = 'Stage 1';
       valeTextColor = Color(0XFFFBB601);
-    }else if((sytolicBloodPressure >= 140 && sytolicBloodPressure <= 180) || (diastolicBloodPressure >= 90 && diastolicBloodPressure <= 120)){
+    }else if((sytolicBloodPressure >= 140 && sytolicBloodPressure <= 180) /*|| (diastolicBloodPressure >= 90 && diastolicBloodPressure <= 120)*/){
       bmiLeftSideValue = 23;
       bmiRightSideValue = 9;
       debugPrint('Stage 2 BP');
       value = 'Stage 2';
       valeTextColor = Color(0XFFBA3903);
-    }else if(sytolicBloodPressure > 180 && diastolicBloodPressure > 120){
+    }else if(sytolicBloodPressure > 180 /*&& diastolicBloodPressure > 120*/){
       bmiLeftSideValue = 28;
       bmiRightSideValue = 2;
       debugPrint('Crisis BP');
@@ -469,7 +469,7 @@ class _BiometricBloodPresureVitalsViewState
             SizedBox(
               height: 8,
             ),
-                  Padding(
+            value != '' ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -484,7 +484,7 @@ class _BiometricBloodPresureVitalsViewState
                         Expanded(flex: bmiRightSideValue, child: Container())
                       ],
                     ),
-                  ),
+                  ) : Container(),
                   Container(
                       width: MediaQuery.of(context).size.width,
                       child: Image.asset(

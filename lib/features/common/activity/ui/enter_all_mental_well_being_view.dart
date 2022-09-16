@@ -429,6 +429,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
 
   recordMySleepTimeInHrs() async {
     try {
+      if(_sleepHrs != 0 ) {
       if (_sleepTracking == null) {
         _sharedPrefUtils.save(
             'sleepTime', MovementsTracking(startDate, _sleepHrs, '').toJson());
@@ -436,7 +437,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
         _sleepTracking!.value = _sleepHrs;
         _sharedPrefUtils.save('sleepTime', _sleepTracking!.toJson());
       }
-      if(_sleepHrs != 0 ) {
+
         showToast("Sleep time recorded successfully", context);
       }
       setState(() {});

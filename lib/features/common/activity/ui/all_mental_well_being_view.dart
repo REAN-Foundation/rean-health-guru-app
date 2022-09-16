@@ -106,8 +106,8 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ImageIcon(
-                        AssetImage('res/images/ic_sleep.png'),
-                        size: 28,
+                        AssetImage('res/images/ic_record_mental_well_being.png'),
+                        size: 24,
                         color: widget._currentIndex == 0
                             ? Colors.white
                             : Colors.grey,

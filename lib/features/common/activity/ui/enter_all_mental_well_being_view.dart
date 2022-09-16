@@ -431,13 +431,14 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
     try {
       if (_sleepTracking == null) {
         _sharedPrefUtils.save(
-            'sleepTime', MovementsTracking(startDate, -_sleepHrs, '').toJson());
+            'sleepTime', MovementsTracking(startDate, _sleepHrs, '').toJson());
       } else {
         _sleepTracking!.value = _sleepHrs;
         _sharedPrefUtils.save('sleepTime', _sleepTracking!.toJson());
       }
-
-      showToast("Sleep time recorded successfully", context);
+      if(_sleepHrs != 0 ) {
+        showToast("Sleep time recorded successfully", context);
+      }
       setState(() {});
       /* final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;

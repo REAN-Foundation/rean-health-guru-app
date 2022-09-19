@@ -320,6 +320,16 @@ class _NutritionQuestionnaireViewState
                           fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ),
+                SizedBox(width: 4,),
+                CustomTooltip(
+                  message: '1 serving = 1/2 cup.',
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
+                    semanticLabel: 'info',
+                    size: 24,
+                  ),
+                ),
               ],
             ),
             SizedBox(
@@ -443,15 +453,6 @@ class _NutritionQuestionnaireViewState
                     ),
                   ),
                 ),
-                CustomTooltip(
-                  message: '1 serving = 1/2 cup.',
-                  child: Icon(
-                    Icons.info_outline_rounded,
-                    color: primaryColor,//Colors.grey.withOpacity(0.6),
-                    semanticLabel: 'info',
-                    size: 24,
-                  ),
-                ),
               ],
             ),
           ],
@@ -492,6 +493,16 @@ class _NutritionQuestionnaireViewState
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
+                ),
+                SizedBox(width: 4,),
+                CustomTooltip(
+                  message: '1 serving = 1/2 cup.',
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
+                    semanticLabel: 'info',
+                    size: 24,
+                  ),
                 ),
               ],
             ),
@@ -615,15 +626,6 @@ class _NutritionQuestionnaireViewState
                     ),
                   ),
                 ),
-                CustomTooltip(
-                  message: '1 serving = 1/2 cup.',
-                  child: Icon(
-                    Icons.info_outline_rounded,
-                    color: primaryColor,//Colors.grey.withOpacity(0.6),
-                    semanticLabel: 'info',
-                    size: 24,
-                  ),
-                ),
               ],
             ),
           ],
@@ -665,6 +667,17 @@ class _NutritionQuestionnaireViewState
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
+                ),
+                SizedBox(width: 4,),
+                CustomTooltip(
+                  message:
+                  '1 serving = 1 slice whole-grain bread or 3/4 cup whole-grain pasta or cereal.',
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
+                    semanticLabel: 'info',
+                    size: 24,
+                  ),
                 ),
               ],
             ),
@@ -788,16 +801,6 @@ class _NutritionQuestionnaireViewState
                     ),
                   ),
                 ),
-                CustomTooltip(
-                  message:
-                      '1 serving = 1 slice whole-grain bread or 3/4 cup whole-grain pasta or cereal.',
-                  child: Icon(
-                    Icons.info_outline_rounded,
-                    color: primaryColor,//Colors.grey.withOpacity(0.6),
-                    semanticLabel: 'info',
-                    size: 24,
-                  ),
-                ),
               ],
             ),
           ],
@@ -839,6 +842,16 @@ class _NutritionQuestionnaireViewState
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
+                ),
+                SizedBox(width: 4,),
+                CustomTooltip(
+                  message: '1 serving = 3 oz cooked, not fried.',
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
+                    semanticLabel: 'info',
+                    size: 24,
+                  ),
                 ),
               ],
             ),
@@ -962,15 +975,6 @@ class _NutritionQuestionnaireViewState
                     ),
                   ),
                 ),
-                CustomTooltip(
-                  message: '1 serving = 3 oz cooked, not fried.',
-                  child: Icon(
-                    Icons.info_outline_rounded,
-                    color: primaryColor,//Colors.grey.withOpacity(0.6),
-                    semanticLabel: 'info',
-                    size: 24,
-                  ),
-                ),
               ],
             ),
           ],
@@ -1012,6 +1016,17 @@ class _NutritionQuestionnaireViewState
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
+                ),
+                SizedBox(width: 4,),
+                CustomTooltip(
+                  message:
+                  '1 serving = 12 oz; includes sports drinks, lemonade, fruit drinks with added sugar, energy drinks and soda, drinks with added sugar.',
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
+                    semanticLabel: 'info',
+                    size: 24,
+                  ),
                 ),
               ],
             ),
@@ -1136,16 +1151,6 @@ class _NutritionQuestionnaireViewState
                     ),
                   ),
                 ),
-                CustomTooltip(
-                  message:
-                      '1 serving = 12 oz; includes sports drinks, lemonade, fruit drinks with added sugar, energy drinks and soda, drinks with added sugar.',
-                  child: Icon(
-                    Icons.info_outline_rounded,
-                    color: primaryColor,//Colors.grey.withOpacity(0.6),
-                    semanticLabel: 'info',
-                    size: 24,
-                  ),
-                ),
               ],
             ),
           ],
@@ -1187,6 +1192,17 @@ class _NutritionQuestionnaireViewState
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
+                ),
+                SizedBox(width: 4,),
+                CustomTooltip(
+                  message:
+                  'Legumes and nuts; fish and seafood; low-fat or nonfat dairy; unprocessed and lean poultry or meat.',
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
+                    semanticLabel: 'info',
+                    size: 24,
+                  ),
                 ),
               ],
             ),
@@ -1275,20 +1291,6 @@ class _NutritionQuestionnaireViewState
                     )
                   ],
                 ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: CustomTooltip(
-                    message:
-                        'Legumes and nuts; fish and seafood; low-fat or nonfat dairy; unprocessed and lean poultry or meat.',
-                    child: Icon(
-                      Icons.info_outline_rounded,
-                      color: primaryColor,//Colors.grey.withOpacity(0.6),
-                      semanticLabel: 'info',
-                      size: 24,
-                    ),
-                  ),
-                )
               ],
             ),
             SizedBox(
@@ -1512,6 +1514,15 @@ class _NutritionQuestionnaireViewState
                           fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ),
+                CustomTooltip(
+                  message: '1 glass = 8 ounces of water.',
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
+                    semanticLabel: 'info',
+                    size: 24,
+                  ),
+                ),
               ],
             ),
             SizedBox(
@@ -1637,15 +1648,6 @@ class _NutritionQuestionnaireViewState
                     ),
                   ),
                 ),
-                CustomTooltip(
-                  message: '1 glass = 8 ounces of water.',
-                  child: Icon(
-                    Icons.info_outline_rounded,
-                    color: primaryColor,//Colors.grey.withOpacity(0.6),
-                    semanticLabel: 'info',
-                    size: 24,
-                  ),
-                ),
               ],
             ),
           ],
@@ -1687,6 +1689,15 @@ class _NutritionQuestionnaireViewState
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
+                ),
+                CustomTooltip(
+                  message: 'One drink is 12 ounces of beer, 4 ounces of wine, 1.5 ounces of 80-proof spirits or 1 ounce of 100-proof spirit.',
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
+                    semanticLabel: 'info',
+                    size: 24,
+                  ),
                 ),
               ],
             ),
@@ -1811,15 +1822,6 @@ class _NutritionQuestionnaireViewState
                         )
                       ],
                     ),
-                  ),
-                ),
-                CustomTooltip(
-                  message: 'One drink is 12 ounces of beer, 4 ounces of wine, 1.5 ounces of 80-proof spirits or 1 ounce of 100-proof spirit.',
-                  child: Icon(
-                    Icons.info_outline_rounded,
-                    color: primaryColor,//Colors.grey.withOpacity(0.6),
-                    semanticLabel: 'info',
-                    size: 24,
                   ),
                 ),
               ],

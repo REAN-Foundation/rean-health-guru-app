@@ -178,8 +178,8 @@ class _BiometricBloodSugarVitalsViewState
                 child: InfoScreen(
                     tittle: 'Blood Glucose Information',
                     description:
-                        'The American Diabetes Association recommends testing for prediabetes and risk for future diabetes for all people beginning at age 45 years. If tests are normal, it is reasonable to repeat testing at a minimum of 3-year intervals.',
-                    height: 240),
+                        'High blood glucose or "blood sugar" levels put you at greater risk of developing insulin resistance, prediabetes and type 2 diabetes. Prediabetes and Type 2 diabetes increases risk of heart disease and stroke. Blood glucose is measured through a blood test.\n\nPrediabetes: Fasting blood glucose range is 100 to 125 mg/dL\nDiabetes mellitus (Type 2 diabetes): 126 mg/dL',
+                    height: 320),
               ),
             ],
           ),

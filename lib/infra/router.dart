@@ -87,6 +87,7 @@ import 'package:patient/features/misc/ui/on_boarding_page.dart';
 import 'package:patient/features/misc/ui/otp_screen_view.dart';
 import 'package:patient/features/misc/ui/patient_medical_profile.dart';
 import 'package:patient/features/misc/ui/splash_screen.dart';
+import 'package:patient/features/misc/ui/support_network_view.dart';
 import 'package:patient/features/misc/ui/support_view.dart';
 import 'package:patient/features/misc/ui/symptoms_view.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -126,6 +127,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => AboutREANCareView());
       case RoutePaths.CONTACT_US:
         return MaterialPageRoute(builder: (_) => SupportView());
+      case RoutePaths.SUPPORT_NETWORK:
+        return MaterialPageRoute(builder: (_) => SupportNetworkView());
       case RoutePaths.Payment_Confirmation_View:
         return MaterialPageRoute(builder: (_) => PaymentConfirmationView());
       case RoutePaths.Booking_Appoinment_Confirmation_View:

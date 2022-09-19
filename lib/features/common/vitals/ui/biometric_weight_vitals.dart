@@ -293,8 +293,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                     InfoScreen(
                         tittle: 'BMI Information',
                         description:
-                            'BMI stands for Body Mass Index\nThis is a numerical value of your weight in relation to your height. A BMI between 18.5 and 25 kg/m² indicates a normal weight. A BMI of less than 18.5 kg/m² is considered underweight. A BMI between 25 kg/m² and 29.9 kg/m² is considered overweight. A BMI of 30 kg/m² or higher is considered obese. ',
-                        height: 300),
+                            'BMI stands for Body Mass Index.\nBMI is an indicator of the amount of body fat for most people. It is used as a screening tool to identify whether an adult is at a healthy weight. This is a numerical value of your weight in relation to your height. A BMI between 18.5 and 25 kg/m² indicates a normal weight. A BMI of less than 18.5 kg/m² is considered underweight. A BMI between 25 kg/m² and 29.9 kg/m² is considered overweight. A BMI of 30 kg/m² or higher is considered obese.',
+                        height: 340),
                   ],
                 ),
               ],
@@ -450,7 +450,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                 child: InfoScreen(
                     tittle: 'Weight Information',
                     description:
-                        'Your doctor typically will record your weight during your regular health care visits. Please refer to your doctor\'s recommended frequency of measuring your weight at home.',
+                        ' Achieving and maintaining a healthy weight in beneficial in loweing your risk for heart disease and stroke. Please refer to your doctor\'s recommended healthy weight range and frequency of measuring your weight at home.',
                     height: 220),
               ),
             ],
@@ -595,7 +595,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                           Expanded(
                             flex: 2,
                             child: Text(
-                              unit == 'lbs' ? 'Weight\n(lbs)' : 'Weight\n(Kgs)',
+                              unit == 'lbs' ? 'Weight\n(lbs)' : 'Weight\n(Kg)',
                               style: TextStyle(
                                   color: primaryColor,
                                   fontSize: 14,

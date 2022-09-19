@@ -218,7 +218,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   const SizedBox(
                     height: 8,
                   ),
-                  Text(
+                  Text(medication.frequencyUnit.toString() == "Other" ? medication.frequencyUnit.toString() :
                       medication.frequencyUnit.toString() +
                           ' - ' +
                           medication.timeSchedules!.join(', '),

@@ -109,7 +109,7 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                   child: InfoScreen(
                       tittle: 'LDL Information',
                       description:
-                          'Since LDL is the bad kind of cholesterol, a low LDL level is considered good for your heart health.',
+                          'LDL = BAD: Low-density lipoprotein is known as “bad” cholesterol.',
                       height: 200),
                 ),
               ],
@@ -159,7 +159,7 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                   child: InfoScreen(
                       tittle: 'HDL Information',
                       description:
-                          'HDL cholesterol is called “good” cholesterol. A healthy HDL-cholesterol level may protect against heart attack and stroke.',
+                          'HDL = GOOD: High-density lipoprotein is known as “good” cholesterol.',
                       height: 208),
                 ),
               ],
@@ -209,8 +209,8 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                   child: InfoScreen(
                       tittle: 'Total Cholesterol Information',
                       description:
-                          'You might have a fasting lipoprotein profile taken every four to six years, starting at age 20. This is a blood test that measures total cholesterol, LDL (bad) cholesterol and HDL (good) cholesterol. You may need to be tested more frequently if your doctor determines that you’re at an increased risk for heart disease or stroke. After age 40, your doctor will also want to use an equation to calculate your 10-year risk of experiencing cardiovascular disease or stroke.',
-                      height: 320),
+                          'Your total blood cholesterol is calculated by adding your HDL and LDL cholesterol levels, plus 20% of your triglyceride level. “Normal ranges” are less important than your overall cardiovascular risk. Like HDL and LDL cholesterol levels, your total blood cholesterol level should be considered in context with your other known risk factors. All adults age 20 or older should have their cholesterol (and other traditional risk factors) checked every four to six years. If certain factors put you at high risk, or if you already have heart disease, your doctor may ask you to check it more often. Work with your doctor to determine your risk for cardiovascular disease and stroke and create a plan to reduce your risk.',
+                      height: 420),
                 ),
               ],
             ),
@@ -259,7 +259,7 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                   child: InfoScreen(
                       tittle: 'Triglycerides Information',
                       description:
-                          'Triglycerides are the most common type of fat in your body. They come from food, and your body also makes them.\n\nNormal triglyceride levels vary by age and sex.',
+                          'Triglycerides are the most common type of fat in your body. They come from food, and your body also makes them. \n\nNormal triglyceride levels vary by age and sex. ',
                       height: 240),
                 ),
               ],
@@ -305,8 +305,8 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                 Expanded(
                   child: InfoScreen(
                       tittle: 'A1C Level Information',
-                      description: "It's one of the commonly used tests to diagnose prediabetes and diabetes, and is also the main test to help you and your health care team manage your diabetes.",
-                      height: 220),
+                      description: "HbA1C (A1C or glycosylated hemoglobin test). The A1C test can diagnose prediabetes and diabetes. It measures your average blood glucose control for the past two to three months. Blood sugar is measured by the amount of glycosylated hemoglobin (A1C) in your blood. An A1C of 5.7% to 6.4% means that you have prediabetes, and you're at high risk for developing diabetes. Diabetes is diagnosed when the A1C is 6.5% or higher",
+                      height: 320)
                 ),
               ],
             ),

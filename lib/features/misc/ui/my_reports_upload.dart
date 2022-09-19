@@ -217,7 +217,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                       Expanded(
                         child: InfoScreen(
                             tittle: 'Medical Records Information',
-                            description: "Save all your health reports in one place by uploading them here and sharing them easily with your healthcare team.",
+                            description: "Save your medical records here for easy access.",
                             height: 200),
                       ),
                     ],

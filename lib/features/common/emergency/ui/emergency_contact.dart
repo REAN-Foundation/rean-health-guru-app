@@ -139,8 +139,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       Expanded(
                         child: InfoScreen(
                             tittle: 'Emergency Contact Information',
-                            description: "Add details of the person whom you want to contact in case of emergency. So your caretaker can call them.",
-                            height: 200),
+                            description: "Add details of your emergency contact here.",
+                            height: 180),
                       ),
                       SizedBox(width: 8,),
                     ],

@@ -152,7 +152,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
                 child: InfoScreen(
                     tittle: 'HDL Information',
                     description:
-                        'HDL cholesterol is called “good” cholesterol. A healthy HDL-cholesterol level may protect against heart attack and stroke.',
+                        'HDL = GOOD: High-density lipoprotein is known as “good” cholesterol.',
                     height: 208),
               ),
             ],

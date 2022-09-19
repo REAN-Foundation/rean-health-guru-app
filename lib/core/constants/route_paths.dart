@@ -13,6 +13,7 @@ class RoutePaths {
   static const String Post = 'post';
   static const String ABOUT_REAN_CARE = 'aboutReanCare';
   static const String CONTACT_US = 'contactUs';
+  static const String SUPPORT_NETWORK = 'supportNetwork';
   static const String Edit_Profile = 'editProfile';
   static const String Select_Date_And_Time_Book_Appoinment =
       'selectDateAndTimeForBookAppoinment';

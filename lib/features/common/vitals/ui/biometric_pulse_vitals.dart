@@ -162,7 +162,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                 child: InfoScreen(
                     tittle: 'Pulse Rate Information',
                     description:
-                        'Your heart rate, or pulse, is the number of times your heart beats per minute. Normal heart rate varies from person to person. For most of us (adults), between 60 and 100 beats per minute (bpm) is normal.',
+                        'Your heart rate, or pulse, is the number of times your heart beats per minute. Normal heart rate varies from person to person. For most of us (adults), between 60 and 100 beats per minute (bpm) is normal. ',
                     height: 240),
               ),
             ],

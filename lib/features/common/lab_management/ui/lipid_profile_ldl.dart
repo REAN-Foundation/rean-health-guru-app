@@ -152,7 +152,7 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
                 child: InfoScreen(
                     tittle: 'LDL Information',
                     description:
-                        'Since LDL is the bad kind of cholesterol, a low LDL level is considered good for your heart health.',
+                        'LDL = BAD: Low-density lipoprotein is known as “bad” cholesterol.',
                     height: 200),
               ),
             ],

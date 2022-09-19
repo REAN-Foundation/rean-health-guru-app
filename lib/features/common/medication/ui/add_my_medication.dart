@@ -1380,7 +1380,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       map['DrugName'] = _typeAheadController.text;
       map['Dose'] = int.parse(_unitController.text);
       map['DosageUnit'] = _dosageUnit;
-      map['TimeSchedules'] = timeShedule;
+      if(_frequencyUnit != "Other"){
+        map['TimeSchedules'] = timeShedule;
+      }
       map['Frequency'] = frequency;
       map['FrequencyUnit'] = _frequencyUnit;
       map['Route'] = ' ';

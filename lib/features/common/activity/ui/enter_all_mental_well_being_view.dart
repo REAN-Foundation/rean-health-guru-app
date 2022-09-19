@@ -204,8 +204,8 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                 InfoScreen(
                     tittle: 'Sleep Information',
                     description:
-                    'Sleep is essential to recovery and well-being. Lower your risk for serious health problems, like diabetes and heart disease.',
-                    height: 200),
+                    'Getting a good night’s sleep every night is vital to cardiovascular health. Adults should aim for an average of 7-9 hours. Too little or too much sleep is associated with heart disease.',
+                    height: 224),
               ],
             ),
             SizedBox(
@@ -376,8 +376,8 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                 InfoScreen(
                     tittle: 'Mindfulness Information',
                     description:
-                    'Practicing meditation or mindfulness may help you manage stress and high blood pressure.',
-                    height: 188),
+                    'Practicing mindfulness and meditation may help you manage stress and high blood pressure, sleep better, feel more balanced and connected, and even lower your risk of heart disease.',
+                    height: 240),
               ],
             ),
 

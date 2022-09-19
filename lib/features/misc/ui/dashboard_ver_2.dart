@@ -401,8 +401,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     child: InfoOutlinedScreen(
                       tittle: 'Symptoms Information',
                       description:
-                          'Symptom management may help a person feel more comfortable and help relieve the symptoms of a disease, such as cancer, and the side effects caused by treatment of the disease.',
-                      height: 220,
+                          'Symptom management can help a person track how they are feeling day-to-day to notice changes over time. ',
+                      height: 200,
                       infoIconcolor: Colors.grey,
                     ),
                   )
@@ -960,8 +960,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     child: InfoOutlinedScreen(
                       tittle: 'Medication Information',
                       description:
-                          'Medicines can help control things like high blood pressure (hypertension) or high cholesterol.',
-                      height: 200,
+                          'Taking medications as directed by your health care professional gives you the best opportunity to manage your chronic condition and maintain the best possible health for yourself.',
+                      height: 220,
                       infoIconcolor: Colors.grey,
                     ),
                   )
@@ -1130,8 +1130,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     child: InfoOutlinedScreen(
                       tittle: 'Nutrition Information',
                       description:
-                          'Aim for an overall healthy eating pattern to keep your heart healthy such as eating whole foods, lots of fruits and vegetables, lean protein, nuts, seeds, and cooking in non-tropical oils.',
-                      height: 220,
+                          'A healthy diet and lifestyle are the keys to preventing and managing heart disease. Track your overall healthy eating pattern to keep your heart healthy such as eating whole foods, lots of fruits and vegetables, lean protein, nuts, seeds, and cooking in non-tropical oils.',
+                      height: 260,
                       infoIconcolor: Colors.grey,
                     ),
                   )
@@ -1806,8 +1806,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       child: InfoOutlinedScreen(
                         tittle: 'Vitals Information',
                         description:
-                            'Vital signs are useful in detecting or monitoring medical problems. Vital signs can be measured in a medical setting or at home.',
-                        height: 208,
+                            'An important aspect of lowering risk of cardiovascular disease, also called coronary artery disease (CAD), is managing health behaviors and risk factors, such as nutrition, physical activity, tobacco product usage, body mass index (BMI), weight, blood pressure, total cholesterol or blood glucose (blood sugar.)',
+                        height: 272,
                         infoIconcolor: Colors.grey,
                       ),
                     )
@@ -2116,8 +2116,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       child: InfoOutlinedScreen(
                         tittle: 'Lab Values Information',
                         description:
-                            'Maintaining healthy cholesterol levels is a great way to keep your heart healthy. It can lower your chances of getting heart disease or having a stroke.',
-                        height: 220,
+                            'Cholesterol circulates in the blood. As the amount of cholesterol in your blood increases, so does the risk to your health. High cholesterol contributes to a higher risk of cardiovascular diseases, such as heart disease and stroke. That’s why it’s important to have your cholesterol tested, so you can know your levels and track them here. ',
+                        height: 288,
                         infoIconcolor: Colors.grey,
                       ),
                     )
@@ -2639,8 +2639,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       child: InfoOutlinedScreen(
                         tittle: 'Physical Activity Information',
                         description:
-                            'Regular physical activity is proven to help prevent and manage noncommunicable diseases such as heart disease, stroke, diabetes and several cancers. It also helps prevent hypertension, maintain healthy body weight and can improve mental health, quality of life and well-being.',
-                        height: 268,
+                            'Get at least 150 minutes per week of moderate-intensity aerobic activity or 75 minutes per week of vigorous aerobic activity (or a combination of both), preferably spread throughout the week. Physical activity relieves stress, improves mood, gives you energy, helps with sleep and can lower your risk of chronic disease, including dementia and depression',
+                        height: 288,
                         infoIconcolor: Colors.grey,
                       ),
                     )
@@ -2899,8 +2899,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       child: InfoOutlinedScreen(
                         tittle: 'Mental Well-Being Information',
                         description:
-                            'Meditation helps lower the heart rate by igniting the parasympathetic nervous system and encouraging slower breathing.',
-                        height: 200,
+                            'Practicing meditation or mindfulness may help you manage stress and high blood pressure. It also may help you sleep better, feel more balanced and connected and possibly lower your risk of heart disease.',
+                        height: 240,
                         infoIconcolor: Colors.grey,
                       ),
                     )

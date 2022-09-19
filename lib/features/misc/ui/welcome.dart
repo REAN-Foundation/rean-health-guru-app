@@ -75,7 +75,7 @@ class _WelcomeState extends State<Welcome> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16),
                     child: Text(
-                        getAppName()+" supports individuals to better manage your health by providing education, healthy habits, tracking your symptoms and medications, and sharing health information with your doctor - all in one place.",
+                        getAppName()+" supports individuals to better manage their health condition by providing education from a trusted source and keeping track of healthy habits, health numbers, symptoms, and medications - all in one place.upo",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: 'Montserrat',

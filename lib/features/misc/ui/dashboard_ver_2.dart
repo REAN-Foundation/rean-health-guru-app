@@ -284,11 +284,21 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Montserrat')),
+                  Expanded(
+                    child: InfoOutlinedScreen(
+                      tittle: 'Symptoms Information',
+                      description:
+                      'Symptom management can help a person track how they are feeling day-to-day to notice changes over time. ',
+                      height: 200,
+                      infoIconcolor: Colors.grey,
+                    ),
+                  ),
+                  SizedBox(width: 16,)
                 ],
               ),
             ),
             Container(
-              height: 140,
+              height: 108,
               color: primaryLightColor,
               padding: const EdgeInsets.all(16),
               child: Stack(
@@ -395,7 +405,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       )
                     ],
                   ),
-                  Positioned(
+                  /*Positioned(
                     bottom: 0,
                     right: 0,
                     child: InfoOutlinedScreen(
@@ -405,7 +415,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       height: 200,
                       infoIconcolor: Colors.grey,
                     ),
-                  )
+                  )*/
                 ],
               ),
             ),
@@ -837,19 +847,33 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  Semantics(
-                    label: 'Add medication',
-                    child: IconButton(
-                        icon: Icon(
-                          Icons.add_circle,
-                          size: 32,
-                          color: iconColor,
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(
-                              context, RoutePaths.ADD_MY_MEDICATION);
-                        }),
-                  )
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InfoOutlinedScreen(
+                        tittle: 'Medication Information',
+                        description:
+                        'Taking medications as directed by your health care professional gives you the best opportunity to manage your chronic condition and maintain the best possible health for yourself.',
+                        height: 220,
+                        infoIconcolor: Colors.grey,
+                      ),
+                      SizedBox(width: 4,),
+                      Semantics(
+                        label: 'Add medication',
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.add_circle,
+                              size: 32,
+                              color: iconColor,
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, RoutePaths.ADD_MY_MEDICATION);
+                            }),
+                      )
+                    ],
+                  ),
+
                 ],
               ),
             ),
@@ -954,17 +978,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       ),
                     ],
                   ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: InfoOutlinedScreen(
-                      tittle: 'Medication Information',
-                      description:
-                          'Taking medications as directed by your health care professional gives you the best opportunity to manage your chronic condition and maintain the best possible health for yourself.',
-                      height: 220,
-                      infoIconcolor: Colors.grey,
-                    ),
-                  )
                 ],
               ),
             ),
@@ -1020,17 +1033,30 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  IconButton(
-                      icon: Icon(
-                        Icons.add_circle,
-                        size: 32,
-                        color: iconColor,
-                        semanticLabel: 'Add Nutrition',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InfoOutlinedScreen(
+                        tittle: 'Nutrition Information',
+                        description:
+                        'A healthy diet and lifestyle are the keys to preventing and managing heart disease. Track your overall healthy eating pattern to keep your heart healthy such as eating whole foods, lots of fruits and vegetables, lean protein, nuts, seeds, and cooking in non-tropical oils.',
+                        height: 260,
+                        infoIconcolor: Colors.grey,
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, RoutePaths.My_Nutrition,
-                            arguments: '');
-                      })
+                      SizedBox(width: 4,),
+                      IconButton(
+                          icon: Icon(
+                            Icons.add_circle,
+                            size: 32,
+                            color: iconColor,
+                            semanticLabel: 'Add Nutrition',
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, RoutePaths.My_Nutrition,
+                                arguments: '');
+                          }),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -1124,17 +1150,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       ),
                     ],
                   ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: InfoOutlinedScreen(
-                      tittle: 'Nutrition Information',
-                      description:
-                          'A healthy diet and lifestyle are the keys to preventing and managing heart disease. Track your overall healthy eating pattern to keep your heart healthy such as eating whole foods, lots of fruits and vegetables, lean protein, nuts, seeds, and cooking in non-tropical oils.',
-                      height: 260,
-                      infoIconcolor: Colors.grey,
-                    ),
-                  )
                 ],
               ),
             ),
@@ -1589,16 +1604,29 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  IconButton(
-                      icon: Icon(
-                        Icons.add_circle,
-                        size: 32,
-                        color: iconColor,
-                        semanticLabel: 'Add Vitals',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InfoOutlinedScreen(
+                        tittle: 'Vitals Information',
+                        description:
+                        'An important aspect of lowering risk of cardiovascular disease, also called coronary artery disease (CAD), is managing health behaviors and risk factors, such as nutrition, physical activity, tobacco product usage, body mass index (BMI), weight, blood pressure, total cholesterol or blood glucose (blood sugar.)',
+                        height: 272,
+                        infoIconcolor: Colors.grey,
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, RoutePaths.My_Vitals);
-                      })
+                      SizedBox(width: 4,),
+                      IconButton(
+                          icon: Icon(
+                            Icons.add_circle,
+                            size: 32,
+                            color: iconColor,
+                            semanticLabel: 'Add Vitals',
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, RoutePaths.My_Vitals);
+                          }),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -1800,17 +1828,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         ),
                       ],
                     ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: InfoOutlinedScreen(
-                        tittle: 'Vitals Information',
-                        description:
-                            'An important aspect of lowering risk of cardiovascular disease, also called coronary artery disease (CAD), is managing health behaviors and risk factors, such as nutrition, physical activity, tobacco product usage, body mass index (BMI), weight, blood pressure, total cholesterol or blood glucose (blood sugar.)',
-                        height: 272,
-                        infoIconcolor: Colors.grey,
-                      ),
-                    )
                   ],
                 )),
           ],
@@ -1865,16 +1882,29 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  IconButton(
-                      icon: Icon(
-                        Icons.add_circle,
-                        size: 32,
-                        color: iconColor,
-                        semanticLabel: 'Add Lab records',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InfoOutlinedScreen(
+                        tittle: 'Lab Values Information',
+                        description:
+                        'Cholesterol circulates in the blood. As the amount of cholesterol in your blood increases, so does the risk to your health. High cholesterol contributes to a higher risk of cardiovascular diseases, such as heart disease and stroke. That’s why it’s important to have your cholesterol tested, so you can know your levels and track them here. ',
+                        height: 288,
+                        infoIconcolor: Colors.grey,
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, RoutePaths.Lipid_Profile);
-                      })
+                      SizedBox(width: 4,),
+                      IconButton(
+                          icon: Icon(
+                            Icons.add_circle,
+                            size: 32,
+                            color: iconColor,
+                            semanticLabel: 'Add Lab records',
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, RoutePaths.Lipid_Profile);
+                          }),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -2110,17 +2140,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         ),*/
                       ],
                     ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: InfoOutlinedScreen(
-                        tittle: 'Lab Values Information',
-                        description:
-                            'Cholesterol circulates in the blood. As the amount of cholesterol in your blood increases, so does the risk to your health. High cholesterol contributes to a higher risk of cardiovascular diseases, such as heart disease and stroke. That’s why it’s important to have your cholesterol tested, so you can know your levels and track them here. ',
-                        height: 288,
-                        infoIconcolor: Colors.grey,
-                      ),
-                    )
                   ],
                 )),
           ],
@@ -2428,20 +2447,33 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  IconButton(
-                      padding: EdgeInsets.only(left: 6, bottom: 8, right: 16),
-                      constraints: BoxConstraints(),
-                      icon: Icon(
-                        Icons.add_circle,
-                        size: 32,
-                        color: iconColor,
-                        semanticLabel: 'Add physical health record',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InfoOutlinedScreen(
+                        tittle: 'Physical Activity Information',
+                        description:
+                        'Get at least 150 minutes per week of moderate-intensity aerobic activity or 75 minutes per week of vigorous aerobic activity (or a combination of both), preferably spread throughout the week. Physical activity relieves stress, improves mood, gives you energy, helps with sleep and can lower your risk of chronic disease, including dementia and depression',
+                        height: 288,
+                        infoIconcolor: Colors.grey,
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(
-                            context, RoutePaths.My_Activity_Trends,
-                            arguments: 0);
-                      })
+                      SizedBox(width: 4,),
+                      IconButton(
+                          padding: EdgeInsets.only(left: 6, bottom: 8, right: 16),
+                          constraints: BoxConstraints(),
+                          icon: Icon(
+                            Icons.add_circle,
+                            size: 32,
+                            color: iconColor,
+                            semanticLabel: 'Add physical health record',
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, RoutePaths.My_Activity_Trends,
+                                arguments: 0);
+                          }),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -2633,17 +2665,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         ),*/
                       ],
                     ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: InfoOutlinedScreen(
-                        tittle: 'Physical Activity Information',
-                        description:
-                            'Get at least 150 minutes per week of moderate-intensity aerobic activity or 75 minutes per week of vigorous aerobic activity (or a combination of both), preferably spread throughout the week. Physical activity relieves stress, improves mood, gives you energy, helps with sleep and can lower your risk of chronic disease, including dementia and depression',
-                        height: 288,
-                        infoIconcolor: Colors.grey,
-                      ),
-                    )
                   ],
                 )),
           ],
@@ -2698,16 +2719,29 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  IconButton(
-                      icon: Icon(
-                        Icons.add_circle,
-                        size: 32,
-                        color: iconColor,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InfoOutlinedScreen(
+                        tittle: 'Mental Well-Being Information',
+                        description:
+                        'Practicing meditation or mindfulness may help you manage stress and high blood pressure. It also may help you sleep better, feel more balanced and connected and possibly lower your risk of heart disease.',
+                        height: 240,
+                        infoIconcolor: Colors.grey,
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
-                            arguments: 0);
-                      })
+                      SizedBox(width: 4,),
+                      IconButton(
+                          icon: Icon(
+                            Icons.add_circle,
+                            size: 32,
+                            color: iconColor,
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
+                                arguments: 0);
+                          }),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -2893,17 +2927,6 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         ),*/
                       ],
                     ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: InfoOutlinedScreen(
-                        tittle: 'Mental Well-Being Information',
-                        description:
-                            'Practicing meditation or mindfulness may help you manage stress and high blood pressure. It also may help you sleep better, feel more balanced and connected and possibly lower your risk of heart disease.',
-                        height: 240,
-                        infoIconcolor: Colors.grey,
-                      ),
-                    )
                   ],
                 )),
           ],

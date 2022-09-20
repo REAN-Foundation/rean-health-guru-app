@@ -154,8 +154,8 @@ class _LipidProfileTriglyceridesViewState
                 child: InfoScreen(
                     tittle: 'Triglycerides Information',
                     description:
-                        'Triglycerides are the most common type of fat in your body. They come from food, and your body also makes them.\n\nNormal triglycerides levels vary by age and sex.',
-                    height: 240),
+                        'Triglycerides: The most common type of fat in the body.',
+                    height: 200),
               ),
             ],
           ),

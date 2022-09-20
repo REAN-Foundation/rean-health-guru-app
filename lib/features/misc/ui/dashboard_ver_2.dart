@@ -857,7 +857,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         height: 220,
                         infoIconcolor: Colors.grey,
                       ),
-                      SizedBox(width: 4,),
+                      SizedBox(width: 8,),
                       Semantics(
                         label: 'Add medication',
                         child: IconButton(
@@ -1043,7 +1043,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         height: 260,
                         infoIconcolor: Colors.grey,
                       ),
-                      SizedBox(width: 4,),
+                      SizedBox(width: 8,),
                       IconButton(
                           icon: Icon(
                             Icons.add_circle,
@@ -1610,11 +1610,11 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       InfoOutlinedScreen(
                         tittle: 'Vitals Information',
                         description:
-                        'An important aspect of lowering risk of cardiovascular disease, also called coronary artery disease (CAD), is managing health behaviors and risk factors, such as nutrition, physical activity, tobacco product usage, body mass index (BMI), weight, blood pressure, total cholesterol or blood glucose (blood sugar.)',
+                        'An important aspect of lowering risk of cardiovascular disease, also called coronary artery disease (CAD), is managing health behaviors and risk factors, such as nutrition, physical activity, tobacco product usage, body mass index (BMI), weight, blood pressure, total cholesterol or blood glucose (blood sugar).',
                         height: 272,
                         infoIconcolor: Colors.grey,
                       ),
-                      SizedBox(width: 4,),
+                      SizedBox(width: 8,),
                       IconButton(
                           icon: Icon(
                             Icons.add_circle,
@@ -1892,7 +1892,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         height: 288,
                         infoIconcolor: Colors.grey,
                       ),
-                      SizedBox(width: 4,),
+                      SizedBox(width: 8,),
                       IconButton(
                           icon: Icon(
                             Icons.add_circle,
@@ -2457,7 +2457,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         height: 288,
                         infoIconcolor: Colors.grey,
                       ),
-                      SizedBox(width: 4,),
+                      SizedBox(width: 8,),
                       IconButton(
                           padding: EdgeInsets.only(left: 6, bottom: 8, right: 16),
                           constraints: BoxConstraints(),
@@ -2729,7 +2729,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         height: 240,
                         infoIconcolor: Colors.grey,
                       ),
-                      SizedBox(width: 4,),
+                      SizedBox(width: 8,),
                       IconButton(
                           icon: Icon(
                             Icons.add_circle,

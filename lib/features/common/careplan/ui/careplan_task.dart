@@ -1151,8 +1151,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
-                                      color: DateTime.now().isAfter(DateTime.parse(
-                                          task.scheduledStartTime!)) ? textBlack : primaryColor,)),
+                                      color: primaryColor,)),
                               SizedBox(
                                 width: 8,
                               ),

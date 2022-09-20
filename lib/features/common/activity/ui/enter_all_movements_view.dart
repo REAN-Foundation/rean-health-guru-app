@@ -460,8 +460,8 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                   child: InfoScreen(
                       tittle: 'Exercise Information',
                       description:
-                          'Fit in 150+\n\nGet at least 150 minutes per week of moderate-intensity aerobic activity or 75 minutes per week of vigorous aerobic activity (or a combination of both), preferably spread throughout the week.',
-                      height: 268),
+                          'Fit in 150+\nGet at least 150 minutes per week of moderate-intensity aerobic activity or 75 minutes per week of vigorous aerobic activity (or a combination of both), preferably spread throughout the week.',
+                      height: 248),
                 ),
               ],
             ),

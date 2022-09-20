@@ -259,8 +259,8 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                   child: InfoScreen(
                       tittle: 'Triglycerides Information',
                       description:
-                          'Triglycerides are the most common type of fat in your body. They come from food, and your body also makes them. \n\nNormal triglyceride levels vary by age and sex. ',
-                      height: 240),
+                          'Triglycerides: The most common type of fat in the body.',
+                      height: 200),
                 ),
               ],
             ),
@@ -305,7 +305,7 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                 Expanded(
                   child: InfoScreen(
                       tittle: 'A1C Level Information',
-                      description: "HbA1C (A1C or glycosylated hemoglobin test). The A1C test can diagnose prediabetes and diabetes. It measures your average blood glucose control for the past two to three months. Blood sugar is measured by the amount of glycosylated hemoglobin (A1C) in your blood. An A1C of 5.7% to 6.4% means that you have prediabetes, and you're at high risk for developing diabetes. Diabetes is diagnosed when the A1C is 6.5% or higher",
+                      description: "HbA1C (A1C or glycosylated hemoglobin test). The A1C test can diagnose prediabetes and diabetes. It measures your average blood glucose control for the past two to three months. Blood sugar is measured by the amount of glycosylated hemoglobin (A1C) in your blood. An A1C of 5.7% to 6.4% means that you have prediabetes, and you're at high risk for developing diabetes. Diabetes is diagnosed when the A1C is 6.5% or higher.",
                       height: 320)
                 ),
               ],

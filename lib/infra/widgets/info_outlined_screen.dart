@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/infra/themes/app_colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable
 class InfoOutlinedScreen extends StatefulWidget {
@@ -85,17 +87,33 @@ class _InfoScreenState extends State<InfoOutlinedScreen> {
               const SizedBox(
                 height: 24,
               ),
-              RichText(
-                text: TextSpan(
-                  text: widget.description,
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: textGrey,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Linkify(
+                      onOpen: (link) async {
+                        if (await canLaunch(link.url)) {
+                          await launch(link.url);
+                        } else {
+                          throw 'Could not launch $link';
+                        }
+                      },
+                      options: LinkifyOptions(
+                        humanize: false,looseUrl: true, removeWww: true,
+                      ),
+                      text:widget.description!,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: textGrey,
+                      ),
+                      linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                    ),
                   ),
-                  children: <TextSpan>[],
-                ),
+                ],
               ),
               const SizedBox(
                 height: 24,

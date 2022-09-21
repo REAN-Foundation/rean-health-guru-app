@@ -375,7 +375,7 @@ class _BiometricBloodPresureVitalsViewState
       bmiRightSideValue = (60 - int.parse(bmiValue.toStringAsFixed(0))) - 1;
     }*/
 
-    if(sytolicBloodPressure <= 119 && diastolicBloodPressure <= 79){
+    if(sytolicBloodPressure <= 119 && diastolicBloodPressure <= 80){
       bmiLeftSideValue = 2;
       bmiRightSideValue = 28;
       debugPrint('Normal BP');

@@ -110,8 +110,8 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                   child: InfoScreen(
                       tittle: 'Weight Information',
                       description:
-                          ' Achieving and maintaining a healthy weight in beneficial in loweing your risk for heart disease and stroke. Please refer to your doctor\'s recommended healthy weight range and frequency of measuring your weight at home.',
-                      height: 220),
+                      'Achieving and maintaining a healthy weight is beneficial in loweing your risk for heart disease and stroke. Please refer to your doctor\'s recommended healthy weight range and frequency of measuring your weight at home.',
+                      height: 240),
                 ),
               ],
             ),

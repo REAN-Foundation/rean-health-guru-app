@@ -73,6 +73,7 @@ class _EditPatientMedicalProfileViewState
   String _ethnicityValue = '';
   String _raceValue = '';
   String _bloodgroupValue = '';
+  String selectedUnit = '';
 
   @override
   void initState() {
@@ -104,12 +105,12 @@ class _EditPatientMedicalProfileViewState
 
       if (getCurrentLocale() == 'US') {
         _heightInFeetController.text =
-            heightInDouble.toString().replaceAll('.', "'");
+            heightInDouble.toString().replaceAll('.', "'")+'"';
         _heightInFeetController.selection = TextSelection.fromPosition(
           TextPosition(offset: _heightInFeetController.text.length),
         );
       } else {
-        _heightInFeetController.text = height.toString();
+        _heightInFeetController.text = height.toString() + ' cm';
         _heightInFeetController.selection = TextSelection.fromPosition(
           TextPosition(offset: _heightInFeetController.text.length),
         );

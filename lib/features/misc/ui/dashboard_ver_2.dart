@@ -868,7 +868,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             ),
                             onPressed: () {
                               Navigator.pushNamed(
-                                  context, RoutePaths.ADD_MY_MEDICATION);
+                                  context, RoutePaths.ADD_MY_MEDICATION, arguments: 'Dashboard');
                             }),
                       )
                     ],
@@ -948,7 +948,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             child: InkWell(
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, RoutePaths.My_Medications);
+                                    context, RoutePaths.My_Medications, arguments: 0);
                               },
                               child: ExcludeSemantics(
                                 child: Column(
@@ -1610,8 +1610,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       InfoOutlinedScreen(
                         tittle: 'Vitals Information',
                         description:
-                        'An important aspect of lowering risk of cardiovascular disease, also called coronary artery disease (CAD), is managing health behaviors and risk factors, such as nutrition, physical activity, tobacco product usage, body mass index (BMI), weight, blood pressure, total cholesterol or blood glucose (blood sugar).',
-                        height: 272,
+                        'An important aspect of lowering risk of cardiovascular disease, also called coronary artery disease (CAD) also known as https://www.heart.org/en/health-topics/consumer-healthcare/what-is-cardiovascular-disease/coronary-artery-disease, is managing health behaviors and risk factors, such as nutrition, physical activity, tobacco product usage, body mass index (BMI), weight, blood pressure, total cholesterol or blood glucose (blood sugar).',
+                        height: 340,
                         infoIconcolor: Colors.grey,
                       ),
                       SizedBox(width: 8,),
@@ -2453,7 +2453,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       InfoOutlinedScreen(
                         tittle: 'Physical Activity Information',
                         description:
-                        'Get at least 150 minutes per week of moderate-intensity aerobic activity or 75 minutes per week of vigorous aerobic activity (or a combination of both), preferably spread throughout the week. Physical activity relieves stress, improves mood, gives you energy, helps with sleep and can lower your risk of chronic disease, including dementia and depression',
+                        'Get at least 150 minutes per week of moderate-intensity aerobic activity or 75 minutes per week of vigorous aerobic activity (or a combination of both), preferably spread throughout the week. Physical activity relieves stress, improves mood, gives you energy, helps with sleep and can lower your risk of chronic disease, including dementia and depression.',
                         height: 288,
                         infoIconcolor: Colors.grey,
                       ),
@@ -2482,7 +2482,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                 padding: const EdgeInsets.all(16),
                 child: Stack(
                   children: [
-                    Row(
+                    /*Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -2624,45 +2624,91 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             ),
                           ),
                         ),
-                        /*Semantics(
-                          label: 'Snacks',
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(context, RoutePaths.My_Nutrition,
-                                  arguments: 'snacks');
-                            },
-                            child: Container(
-                              height: 96,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height: 56,
-                                    width: 56,
-                                    decoration: BoxDecoration(
-                                        color: primaryColor,
-                                        border: Border.all(color: primaryColor),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(12.0))),
-                                    child: ImageIcon(
-                                      AssetImage('res/images/ic_snacks.png'),
-                                      size: 32,
-                                      color: iconColor,
-                                    ),
+                        */
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Did you add movement to your day today?',
+                            style: TextStyle(
+                                color: textBlack,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Montserrat')),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Semantics(
+                              label: 'Yes, I had movement today.',
+                              button: true,
+                              child: InkWell(
+                                onTap: () {
+                                  recordMyPhysicalActivity(true);
+                                  Navigator.pushNamed(
+                                      context, RoutePaths.My_Activity_Trends,
+                                      arguments: 0);
+                                },
+                                child: ExcludeSemantics(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.thumb_up,
+                                        color: Color(0XFF007E1A),
+                                        size: 36,
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('Yes',
+                                          style: TextStyle(
+                                              color: Color(0XFF007E1A),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text('Snack',
-                                      style: TextStyle(
-                                          color: primaryColor,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'Montserrat')),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),*/
+                            Semantics(
+                              label: 'No, I don\'t had any movement today.',
+                              button: true,
+                              child: InkWell(
+                                onTap: () {
+                                  recordMyPhysicalActivity(false);
+                                },
+                                child: ExcludeSemantics(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.thumb_down,
+                                        color: primaryColor,
+                                        size: 36,
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('No',
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ],
                     ),
                   ],
@@ -3121,6 +3167,33 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
           showToast('Yes, most of my food choices were healthy today.', context);
         }else{
           showToast('No, most of my food choices were not healthy today.', context);
+        }
+      } else {}
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+    /*catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ==> ' + CustomException.toString());
+    }*/
+  }
+
+  recordMyPhysicalActivity(bool haveYouDoneWithPhysicalActivity) async {
+    try {
+      final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['PhysicalActivityQuestionAns'] = haveYouDoneWithPhysicalActivity;
+
+      final BaseResponse baseResponse =
+      await model.recordMyPhysicalHealth(map);
+      if (baseResponse.status == 'success') {
+        if(haveYouDoneWithPhysicalActivity) {
+          //showToast('Yes, I had movement today.', context);
+        }else{
+          showToast('No, I don\'t had any movement today.', context);
         }
       } else {}
     } on FetchDataException catch (e) {

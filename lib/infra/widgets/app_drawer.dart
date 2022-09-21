@@ -203,7 +203,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ),*/
           InkWell(
             onTap: () {
-              Navigator.popAndPushNamed(context, RoutePaths.My_Medications);
+              Navigator.popAndPushNamed(context, RoutePaths.My_Medications, arguments: 0);
             },
             child: Container(
               height: 48,

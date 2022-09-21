@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/activity/models/movements_tracking.dart';
+import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -40,6 +41,10 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
   MovementsTracking? _exerciseMovemntsTracking;
   int exerciseMovements = 0;
   DateTime? todaysDate;
+  var exersizeType = <Answer>[];
+  String radioItem = '';
+  // Group Value for Radio Button.
+  int id = 0;
 
   @override
   void initState() {
@@ -50,7 +55,23 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
     loadStandMovement();
     loadStepsMovement();
     loadExerciseMovement();
+    processAnswer();
     super.initState();
+  }
+
+  processAnswer() {
+
+    exersizeType.add(Answer(
+          1,
+          'Cardio'));
+    exersizeType.add(Answer(
+        2,
+        'Strength'));
+    exersizeType.add(Answer(
+        3,
+        'Mix'));
+
+    setState(() {});
   }
 
   loadStandMovement() async {
@@ -506,6 +527,21 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                 ),
               ],
             ),
+            Column(
+              children: exersizeType
+                  .map((data) => RadioListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(data.text),
+                groupValue: id,
+                value: data.index,
+                onChanged: (dynamic val) {
+                  setState(() {
+                    radioItem = data.text;
+                    id = data.index;
+                  });
+                },
+              )).toList(),
+            ),
           ],
         ),
       ),
@@ -618,11 +654,16 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
 
   clearAllFeilds() {
     if (toastDisplay) {
+      id = 0;
+      radioItem = '';
       _scrollController.animateTo(0.0,
           duration: Duration(seconds: 2), curve: Curves.ease);
       showToast('Record Updated Successfully!', context);
       toastDisplay = false;
     }
+    setState(() {
+
+    });
   }
 
   recordMySteps() async {

@@ -292,36 +292,170 @@ class _NutritionQuestionnaireViewState
       elevation: 0,
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height:8,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 8,
+                    ),
+                    ImageIcon(
+                      AssetImage('res/images/ic_vegetable.png'),
+                      size: 32,
+                      color: primaryColor,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Text(
+                          'How many servings of vegetables did you eat today?',
+                          style: TextStyle(
+                              color: textBlack,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat')),
+                    ),
+                    SizedBox(width: 32,),
+
+                  ],
+                ),
                 SizedBox(
-                  width: 8,
+                  height: 16,
                 ),
-                ImageIcon(
-                  AssetImage('res/images/ic_vegetable.png'),
-                  size: 32,
-                  color: primaryColor,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 56,
+                      width: 280,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4))),
+                              child: Center(
+                                child: IconButton(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onPressed: () {
+                                    if (vegetableServing != 0) {
+                                      vegetableServing = vegetableServing - 1;
+                                      setState(() {});
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.remove,
+                                    color: primaryColor,
+                                    semanticLabel:
+                                        'decrease vegetables serving quantity',
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Semantics(
+                              label: '',
+                              child: ExcludeSemantics(
+                                child: Container(
+                                  width: 180,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                    border:
+                                        Border.all(color: colorD6D6D6, width: 0.80),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 16,
+                                      ),
+                                      Text(
+                                        vegetableServing == 0
+                                            ? ''
+                                            : vegetableServing.toString(),
+                                        semanticsLabel: '',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14.0,
+                                            color: textGrey),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        'Servings',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14.0,
+                                            color: textGrey),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4))),
+                              child: Center(
+                                child: IconButton(
+                                  onPressed: () {
+                                    vegetableServing = vegetableServing + 1;
+                                    setState(() {});
+                                    debugPrint(
+                                        "Vegetable Serving ==> $vegetableServing");
+                                  },
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  icon: Icon(
+                                    Icons.add,
+                                    color: primaryColor,
+                                    semanticLabel:
+                                        'increase vegetables serving quantity',
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: Text(
-                      'How many servings of vegetables did you eat today?',
-                      style: TextStyle(
-                          color: textBlack,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Montserrat')),
-                ),
-                SizedBox(width: 4,),
-                CustomTooltip(
+              ],
+            ),
+            Positioned(
+                top: 0,
+                right: 0,
+                child: CustomTooltip(
                   message: '1 serving = 1/2 cup.',
                   child: Icon(
                     Icons.info_outline_rounded,
@@ -329,132 +463,7 @@ class _NutritionQuestionnaireViewState
                     semanticLabel: 'info',
                     size: 24,
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 56,
-                  width: 280,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: Center(
-                            child: IconButton(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onPressed: () {
-                                if (vegetableServing != 0) {
-                                  vegetableServing = vegetableServing - 1;
-                                  setState(() {});
-                                }
-                              },
-                              icon: Icon(
-                                Icons.remove,
-                                color: primaryColor,
-                                semanticLabel:
-                                    'decrease vegetables serving quantity',
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Semantics(
-                          label: '',
-                          child: ExcludeSemantics(
-                            child: Container(
-                              width: 180,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(4)),
-                                border:
-                                    Border.all(color: colorD6D6D6, width: 0.80),
-                              ),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 16,
-                                  ),
-                                  Text(
-                                    vegetableServing == 0
-                                        ? ''
-                                        : vegetableServing.toString(),
-                                    semanticsLabel: '',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: textGrey),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    'Servings',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: textGrey),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: Center(
-                            child: IconButton(
-                              onPressed: () {
-                                vegetableServing = vegetableServing + 1;
-                                setState(() {});
-                                debugPrint(
-                                    "Vegetable Serving ==> $vegetableServing");
-                              },
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              icon: Icon(
-                                Icons.add,
-                                color: primaryColor,
-                                semanticLabel:
-                                    'increase vegetables serving quantity',
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+                ),)
           ],
         ),
       ),

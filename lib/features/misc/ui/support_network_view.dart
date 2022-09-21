@@ -6,7 +6,6 @@ import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/user_data.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
-import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -64,107 +63,185 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
       model: model,
       builder: (context, model, child) => Container(
           child: Scaffold(
-              backgroundColor: colorF6F6FF,
-              body: Container(
-                height: height,
-                child: Stack(
-                  children: <Widget>[
-                    Positioned(
-                      child: Container(
-                        height: 400,
-                        color: primaryColor,
-                      ),
-                    ),
-                    /*Positioned(
-                      top: 100,
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          height: 120,
-                          width: 120,
-                          decoration: BoxDecoration(
-                          color: Colors.orange,
-                          shape: BoxShape.circle
-                          ),
-                        ),
-                      ),
-                    ),*/
-                    _content(),
-                    Positioned(top: 40, left: 0, child: _backButton()),
-                  ],
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: primaryColor,
+          brightness: Brightness.dark,
+          title: Text(
+            '',
+            style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.white,
+                fontWeight: FontWeight.w600),
+          ),
+          iconTheme: IconThemeData(color: Colors.white),
+          actions: <Widget>[
+            /*IconButton(
+                icon: Icon(
+                  Icons.person_pin,
+                  color: Colors.black,
+                  size: 32.0,
                 ),
-              ))),
+                onPressed: () {
+                  debugPrint("Clicked on profile icon");
+                },
+              )*/
+          ],
+        ),
+        body: Stack(
+          children: [
+            Positioned(
+                top: 0,
+                right: 0,
+                child: Container(
+                  color: primaryColor,
+                  height: 100,
+                  width: MediaQuery.of(context).size.width,
+                )),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  color: primaryColor,
+                  height: 0,
+                  width: MediaQuery.of(context).size.width,
+                ),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(0.0),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(12),
+                            topLeft: Radius.circular(12))),
+                    child: body(),
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
+      )),
     );
   }
 
-  Widget _backButton() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Semantics(
-          label: 'Back',
-          button: true,
-          child: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-              height: 48,
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(16),
-                    bottomRight: Radius.circular(16)),
-                /* boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      color: Colors.grey.shade200,
-                      offset: Offset(2, 4),
-                      blurRadius: 5,
-                      spreadRadius: 2)
-                ],*/
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    //padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-                    child: Icon(
-                      Icons.keyboard_arrow_left,
-                      color: Colors.white,
-                      size: 40,
-                    ),
+  Widget body() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Scrollbar(
+              isAlwaysShown: true,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 32,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ImageIcon(
+                            AssetImage('res/images/ic_support_network.png'),
+                            size: 80,
+                            color: primaryColor,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 32,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Support Network",
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: textBlack,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.normal,
+                              )
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                  Text("The American Heart Association’s Support Network exist so real people can share their real stories and make a real difference in people’s lives.",
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: textBlack,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FontStyle.normal,
+                        )
+                      ),
+                      SizedBox(
+                        height: 32,
+                      ),
+                      Text("Signing up at",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Color(0xff000000),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.normal,
+
+
+                          )
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Linkify(
+                        onOpen: (link) async {
+                          if (await canLaunch(link.url)) {
+                            await launch(link.url);
+                          } else {
+                            throw 'Could not launch $link';
+                          }
+                        },
+                        options: LinkifyOptions(
+                          humanize: true,
+                        ),
+                        text:
+                        'www.heart.org/SupportNetwork\nis easy, and membership is free — putting advice, encouragement and reliable, helpful information at your fingertips whenever you need it.',
+                        style: TextStyle(
+                            color: textBlack,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600),
+                        linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                      ),
+                    ],
                   ),
-                  /*Text('Back',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600))*/
-                ],
+                ),
               ),
             ),
           ),
-        ),
-        Semantics(
-          header: true,
-          child: Text(
-            'Support Network',
-            style: TextStyle(
-                fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600),
-          ),
-        )
-      ],
+        ],
+      ),
     );
   }
 
-  Widget _content() {
+
+ /* Widget body() {
     return Stack(
       children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 150,
-            ),
             Container(
               height: MediaQuery.of(context).size.height - 150,
               decoration: BoxDecoration(
@@ -177,55 +254,9 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
             ),
           ],
         ),
-        Positioned(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 100,
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(60.0),
-                  ),
-                  elevation: 8,
-                  child: Container(
-                    height: 100,
-                    width: 100,
-                    padding: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: getAppType() == 'AHA'
-                          ? primaryLightColor
-                          : Colors.white,
-                      shape: BoxShape.circle,
-                      /*boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: Colors.grey.shade300,
-                            offset: Offset(2, 4),
-                            blurRadius: 3,
-                            spreadRadius: 2)
-                      ],*/
-                    ),
-                    child: getAppType() == 'AHA'
-                        ? Image.asset(
-                      'res/images/aha_logo.png',
-                      semanticLabel: 'American Heart Association Logo',
-                    )
-                        : Image.asset(
-                      'res/images/app_logo_transparent.png',
-                      semanticLabel: 'REAN HealthGuru',
-                      color: primaryColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
       ],
     );
-  }
+  }*/
 
   Widget _aboutUsContent() {
     return Column(
@@ -247,20 +278,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Linkify(
-                          onOpen: (link) async {
-                            if (await canLaunch(link.url)) {
-                              await launch(link.url);
-                            } else {
-                              throw 'Could not launch $link';
-                            }
-                          },
-                          options: LinkifyOptions(humanize: true, ),
 
-                          text: 'The American Heart Association’s Support Network exists so real people can share their real stories and make a real difference in people’s lives.\nSigning up at www.heart.org/SupportNetwork is easy, and membership is free — putting advice, encouragement and reliable, helpful information at your fingertips whenever you need it.',
-                          style: TextStyle(color: textBlack, fontSize: 16, fontWeight: FontWeight.w600),
-                          linkStyle: TextStyle(color: Colors.lightBlueAccent),
-                        ),
                         const SizedBox(
                           height: 16,
                         ),
@@ -273,5 +291,4 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
       ],
     );
   }
-
 }

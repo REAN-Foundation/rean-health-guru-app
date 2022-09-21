@@ -101,7 +101,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   ),
                   backgroundColor: primaryColor,
                   onPressed: () {
-                    Navigator.pushNamed(context, RoutePaths.ADD_MY_MEDICATION)
+                    Navigator.pushNamed(context, RoutePaths.ADD_MY_MEDICATION, arguments: 'Medication')
                         .then((value) {
                       getMyMedications();
                     });

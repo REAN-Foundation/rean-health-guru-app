@@ -11,6 +11,13 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'my_todays_medication.dart';
 
 class MyMedicationView extends StatefulWidget {
+
+  var _currentIndex = 0;
+
+  MyMedicationView(int index) {
+    _currentIndex = index;
+  }
+
   @override
   _MyMedicationViewState createState() => _MyMedicationViewState();
 }
@@ -19,12 +26,12 @@ class _MyMedicationViewState extends State<MyMedicationView> {
   var model = PatientMedicationViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var _currentIndex = 0;
+  //var _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     late Widget screen;
-    switch (_currentIndex) {
+    switch (widget._currentIndex) {
       case 0:
         screen = MyTodaysMedicationView();
         break;
@@ -106,7 +113,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                 child: InkWell(
                   onTap: () {
                     setState(() {
-                      _currentIndex = 0;
+                      widget._currentIndex = 0;
                     });
                   },
                   child: ExcludeSemantics(
@@ -119,7 +126,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                               'res/images/ic_medication_remainder_selected.png'),
                           size: 24,
                           color:
-                              _currentIndex == 0 ? Colors.white : Colors.grey,
+                          widget._currentIndex == 0 ? Colors.white : Colors.grey,
                         ),
                         SizedBox(
                           height: 4,
@@ -127,7 +134,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                         Text(
                           'Reminders',
                           style: TextStyle(
-                              color: _currentIndex == 0
+                              color:  widget._currentIndex == 0
                                   ? Colors.white
                                   : Colors.grey,
                               fontSize: 10),
@@ -145,7 +152,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                 child: InkWell(
                   onTap: () {
                     setState(() {
-                      _currentIndex = 1;
+                      widget._currentIndex = 1;
                     });
                   },
                   child: ExcludeSemantics(
@@ -157,7 +164,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                           AssetImage('res/images/ic_pharmacy_colored.png'),
                           size: 24,
                           color:
-                              _currentIndex == 1 ? Colors.white : Colors.grey,
+                          widget._currentIndex == 1 ? Colors.white : Colors.grey,
                         ),
                         SizedBox(
                           height: 4,
@@ -165,7 +172,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                         Text(
                           'Medications list',
                           style: TextStyle(
-                              color: _currentIndex == 1
+                              color:  widget._currentIndex == 1
                                   ? Colors.white
                                   : Colors.grey,
                               fontSize: 10),
@@ -183,7 +190,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                 child: InkWell(
                   onTap: () {
                     setState(() {
-                      _currentIndex = 2;
+                      widget._currentIndex = 2;
                     });
                   },
                   child: ExcludeSemantics(
@@ -196,7 +203,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                               'res/images/ic_medication_history_selected.png'),
                           size: 24,
                           color:
-                              _currentIndex == 2 ? Colors.white : Colors.grey,
+                          widget._currentIndex == 2 ? Colors.white : Colors.grey,
                         ),
                         SizedBox(
                           height: 4,
@@ -204,7 +211,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                         Text(
                           'History',
                           style: TextStyle(
-                              color: _currentIndex == 2
+                              color:  widget._currentIndex == 2
                                   ? Colors.white
                                   : Colors.grey,
                               fontSize: 10),

@@ -235,9 +235,9 @@ class Routers {
             builder: (_) => EditPatientMedicalProfileView(
                 settings.arguments as HealthProfile));
       case RoutePaths.My_Medications:
-        return MaterialPageRoute(builder: (_) => MyMedicationView());
+        return MaterialPageRoute(builder: (_) => MyMedicationView(settings.arguments as int));
       case RoutePaths.ADD_MY_MEDICATION:
-        return MaterialPageRoute(builder: (_) => AddMyMedicationView());
+        return MaterialPageRoute(builder: (_) => AddMyMedicationView(settings.arguments as String?));
       case RoutePaths.My_Care_Plan:
         return MaterialPageRoute(builder: (_) => MyCarePlanView());
       case RoutePaths.Select_Care_Plan:

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get_it/get_it.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:http/http.dart' as http;
@@ -721,6 +722,13 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
+  List<String?> getSuggestions(String query) {
+    final List<String?> matches = [];
+    matches.addAll(countryList);
+    matches.retainWhere((s) => s!.toLowerCase().contains(query.toLowerCase()));
+    return matches;
+  }
+
   Widget _country() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -742,6 +750,7 @@ class _EditProfileState extends State<EditProfile> {
                   Expanded(
                     child: Container(
                         width: MediaQuery.of(context).size.width,
+                        height: 48,
                         padding: EdgeInsets.symmetric(horizontal: 10.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4.0),
@@ -750,7 +759,53 @@ class _EditProfileState extends State<EditProfile> {
                             color: Colors.white),
                         child: Semantics(
                           label: 'Country',
-                          child: DropdownButton<String>(
+                          child: TypeAheadFormField(
+                            textFieldConfiguration: TextFieldConfiguration(
+                              controller: _countryController,
+                              onChanged: (text) {
+                                debugPrint(text);
+                                //_getDrugsByName();
+                              },
+                              /*decoration: InputDecoration(
+                                                labelText: 'City'
+                                            )*/
+                            ),
+                            suggestionsCallback: (pattern) {
+                              return getSuggestions(pattern);
+                            },
+                            itemBuilder: (context, dynamic suggestion) {
+                              return Card(
+                                margin: EdgeInsets.zero,
+                                semanticContainer: false,
+                                elevation: 0.0,
+                                child: ListTile(
+                                  visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+                                  title: Text(
+                                    suggestion,
+                                    semanticsLabel: suggestion,
+                                  ),
+                                ),
+                              );
+                            },
+                            transitionBuilder: (context, suggestionsBox, controller) {
+                              return suggestionsBox;
+                            },
+                            onSuggestionSelected: (dynamic suggestion) {
+                              debugPrint(suggestion);
+                              _countryController.text = suggestion;
+                            },
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please select a country';
+                              } else {
+                                return '';
+                              }
+                            },
+                            onSaved: (value) {
+                              debugPrint(value);
+                            },
+                          ),
+                          /*DropdownButton<String>(
                             isExpanded: true,
                             value: _countryValue == '' ? null : _countryValue,
                             items: countryList.map((String value) {
@@ -767,7 +822,7 @@ class _EditProfileState extends State<EditProfile> {
                               });
                               setState(() {});
                             },
-                          ),
+                          ),*/
                         )),
                   ),
                 ],
@@ -1096,7 +1151,7 @@ class _EditProfileState extends State<EditProfile> {
             imageResourceId =
                 uploadResponse.data!.fileResources!.elementAt(0).id;
             //profileImage = uploadResponse.data.details.elementAt(0).url;
-            showToast(uploadResponse.message!, context);
+            showToast('Profile picture uploaded successfully!', context);
             setState(() {
               debugPrint(
                   'File Public URL ==> ${uploadResponse.data!.fileResources!.elementAt(0).url}');
@@ -2065,7 +2120,7 @@ class _EditProfileState extends State<EditProfile> {
                     final address = <String, String?>{};
                     address['AddressLine'] = _addressController.text.trim();
                     address['City'] = _cityController.text.trim();
-                    address['Country'] = _countryValue.trim();
+                    address['Country'] = _countryController.text.trim();
                     address['PostalCode'] = _postalCodeController.text.isEmpty
                         ? null
                         : _postalCodeController.text.trim();

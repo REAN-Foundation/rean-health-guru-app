@@ -9,7 +9,7 @@ import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 
 import 'my_todays_medication.dart';
-
+//ignore: must_be_immutable
 class MyMedicationView extends StatefulWidget {
 
   var _currentIndex = 0;

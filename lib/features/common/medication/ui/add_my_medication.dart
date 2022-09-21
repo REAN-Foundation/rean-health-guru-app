@@ -23,6 +23,7 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 
+//ignore: must_be_immutable
 class AddMyMedicationView extends StatefulWidget {
 
   String _path = '';

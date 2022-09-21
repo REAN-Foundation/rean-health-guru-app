@@ -58,7 +58,6 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
     return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
@@ -258,37 +257,4 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
     );
   }*/
 
-  Widget _aboutUsContent() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(
-          height: 60,
-        ),
-        Expanded(
-            flex: 5,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                        const SizedBox(
-                          height: 16,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )),
-      ],
-    );
-  }
 }

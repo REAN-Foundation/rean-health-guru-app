@@ -93,7 +93,7 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
             flex: 1,
             child: Semantics(
               label: 'Record Mental Well-Being 1 of 2',
-              selected: true,
+              focusable: true,
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -135,7 +135,6 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
             flex: 1,
             child: Semantics(
               label: 'View Mental Well-Being 2 of 2',
-              selected: true,
               child: InkWell(
                 onTap: () {
                   setState(() {

@@ -2531,6 +2531,7 @@ class _EditProfileState extends State<EditProfile> {
           children: [
             Semantics(
               label: 'Camera',
+              button: true,
               child: InkWell(
                 onTap: () {
                   Navigator.pop(context);
@@ -2577,6 +2578,7 @@ class _EditProfileState extends State<EditProfile> {
             ),
             Semantics(
               label: 'Gallery',
+              button: true,
               child: InkWell(
                 onTap: () {
                   Navigator.pop(context);

@@ -361,6 +361,7 @@ class _NutritionQuestionnaireViewState
                                   onPressed: () {
                                     if (vegetableServing != 0) {
                                       vegetableServing = vegetableServing - 1;
+                                      announceText('$vegetableServing Serving of vegetable');
                                       setState(() {});
                                     }
                                   },
@@ -375,7 +376,7 @@ class _NutritionQuestionnaireViewState
                               ),
                             ),
                             Semantics(
-                              label: '',
+                              label: '$vegetableServing Servings of vegetable',
                               child: ExcludeSemantics(
                                 child: Container(
                                   width: 180,
@@ -429,6 +430,7 @@ class _NutritionQuestionnaireViewState
                                   onPressed: () {
                                     vegetableServing = vegetableServing + 1;
                                     setState(() {});
+                                    announceText('$vegetableServing Servings of vegetable');
                                     debugPrint(
                                         "Vegetable Serving ==> $vegetableServing");
                                   },
@@ -543,6 +545,7 @@ class _NutritionQuestionnaireViewState
                                   onPressed: () {
                                     if (fruitServing != 0) {
                                       fruitServing = fruitServing - 1;
+                                      announceText('$fruitServing Serving of fruits');
                                       setState(() {});
                                     }
                                   },
@@ -557,7 +560,7 @@ class _NutritionQuestionnaireViewState
                               ),
                             ),
                             Semantics(
-                              label: '',
+                              label: '$fruitServing Serving of fruits',
                               child: ExcludeSemantics(
                                 child: Container(
                                   width: 180,
@@ -610,6 +613,7 @@ class _NutritionQuestionnaireViewState
                                 child: IconButton(
                                   onPressed: () {
                                     fruitServing = fruitServing + 1;
+                                    announceText('$fruitServing Serving of fruits');
                                     setState(() {});
                                     debugPrint("Fruit Serving ==> $fruitServing");
                                   },
@@ -725,6 +729,7 @@ class _NutritionQuestionnaireViewState
                                   onPressed: () {
                                     if (grainServing != 0) {
                                       grainServing = grainServing - 1;
+                                      announceText('$grainServing Serving of grains');
                                       setState(() {});
                                     }
                                   },
@@ -739,7 +744,7 @@ class _NutritionQuestionnaireViewState
                               ),
                             ),
                             Semantics(
-                              label: '',
+                              label: '$grainServing Serving of grains',
                               child: ExcludeSemantics(
                                 child: Container(
                                   width: 180,
@@ -792,6 +797,7 @@ class _NutritionQuestionnaireViewState
                                 child: IconButton(
                                   onPressed: () {
                                     grainServing = grainServing + 1;
+                                    announceText('$grainServing Serving of grains');
                                     setState(() {});
                                     debugPrint("Grain Serving ==> $grainServing");
                                   },
@@ -908,6 +914,7 @@ class _NutritionQuestionnaireViewState
                                   onPressed: () {
                                     if (meatServing != 0) {
                                       meatServing = meatServing - 1;
+                                      announceText('$meatServing Serving of meat');
                                       setState(() {});
                                     }
                                   },
@@ -922,7 +929,7 @@ class _NutritionQuestionnaireViewState
                               ),
                             ),
                             Semantics(
-                              label: '',
+                              label: '$meatServing Serving of meat',
                               child: ExcludeSemantics(
                                 child: Container(
                                   width: 180,
@@ -975,6 +982,7 @@ class _NutritionQuestionnaireViewState
                                 child: IconButton(
                                   onPressed: () {
                                     meatServing = meatServing + 1;
+                                    announceText('$meatServing Serving of meat');
                                     setState(() {});
                                     debugPrint("Meat Serving ==> $meatServing");
                                   },
@@ -1090,6 +1098,7 @@ class _NutritionQuestionnaireViewState
                                   onPressed: () {
                                     if (sugaryDrinkServing != 0) {
                                       sugaryDrinkServing = sugaryDrinkServing - 1;
+                                      announceText('$sugaryDrinkServing Serving of Sugary drinks');
                                       setState(() {});
                                     }
                                   },
@@ -1104,7 +1113,7 @@ class _NutritionQuestionnaireViewState
                               ),
                             ),
                             Semantics(
-                              label: '',
+                              label: '$sugaryDrinkServing Serving of Sugary drinks',
                               child: ExcludeSemantics(
                                 child: Container(
                                   width: 180,
@@ -1157,6 +1166,7 @@ class _NutritionQuestionnaireViewState
                                 child: IconButton(
                                   onPressed: () {
                                     sugaryDrinkServing = sugaryDrinkServing + 1;
+                                    announceText('$sugaryDrinkServing Serving of Sugary drinks');
                                     setState(() {});
                                     debugPrint(
                                         "Sugary Drink Serving Serving ==> $sugaryDrinkServing");
@@ -1617,6 +1627,7 @@ class _NutritionQuestionnaireViewState
                               onPressed: () {
                                 if (waterGlass != 0) {
                                   waterGlass = waterGlass - 1;
+                                  announceText('$waterGlass glass of water');
                                   setState(() {});
                                   recordMyWaterConsumptions();
                                 }
@@ -1632,7 +1643,7 @@ class _NutritionQuestionnaireViewState
                           ),
                         ),
                         Semantics(
-                          label: '',
+                          label: '$waterGlass glass of water',
                           child: ExcludeSemantics(
                             child: Container(
                               width: 180,
@@ -1685,6 +1696,7 @@ class _NutritionQuestionnaireViewState
                             child: IconButton(
                               onPressed: () {
                                 waterGlass = waterGlass + 1;
+                                announceText('$waterGlass glass of water');
                                 setState(() {});
                                 debugPrint(
                                     "waterGlass ==> $waterGlass");
@@ -1793,6 +1805,7 @@ class _NutritionQuestionnaireViewState
                               onPressed: () {
                                 if (alcoholIntakeInMililitre != 0) {
                                   alcoholIntakeInMililitre = alcoholIntakeInMililitre - 1;
+                                  announceText('$alcoholIntakeInMililitre driks of alcohol');
                                   setState(() {});
                                   recordMyAlcoholConsumption();
                                 }
@@ -1808,7 +1821,7 @@ class _NutritionQuestionnaireViewState
                           ),
                         ),
                         Semantics(
-                          label: '',
+                          label: '$alcoholIntakeInMililitre driks of alcohol',
                           child: ExcludeSemantics(
                             child: Container(
                               width: 180,
@@ -1861,6 +1874,7 @@ class _NutritionQuestionnaireViewState
                             child: IconButton(
                               onPressed: () {
                                 alcoholIntakeInMililitre = alcoholIntakeInMililitre + 1;
+                                announceText('$alcoholIntakeInMililitre driks of alcohol');
                                 setState(() {});
                                 debugPrint(
                                     "alcoholIntakeInMililitre ==> $alcoholIntakeInMililitre");

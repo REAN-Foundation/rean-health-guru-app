@@ -56,6 +56,11 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
     if (height != 0.0) {
       heightInFeet = Conversion.cmToFeet(height.toInt());
     }
+
+    if(heightInFeet == '0.12'){
+      heightInFeet = '1.0';
+    }
+
     setState(() {});
   }
 
@@ -298,7 +303,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                         : getCurrentLocale() == "US" ?  heightInFeet
                                                 .toString()
                                                 .replaceAll('.', "'") +
-                                            '"': height.toStringAsFixed(0)+' Cm',
+                                            '"': height.toStringAsFixed(0)+' cm',
                                     semanticsLabel: getCurrentLocale() == "US" ?  heightInFeet
                                             .toString()
                                             .replaceAll('.', 'Feet ') +

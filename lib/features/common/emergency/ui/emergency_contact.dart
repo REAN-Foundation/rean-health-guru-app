@@ -323,7 +323,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   Icons.edit,
                                   size: 24,
                                   color: primaryColor,
-                                  semanticLabel: 'edit emergency text',
+                                  semanticLabel: 'edit hospitalization details',
                                 ),
                                 onPressed: () {
                                   _emergencyDetailDialog(true);
@@ -337,7 +337,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   Icons.delete,
                                   size: 24,
                                   color: primaryColor,
-                                  semanticLabel: 'edit emergency text',
+                                  semanticLabel: 'delete hospitalization details',
                                 ),
                                 onPressed: () {
                                   ConfirmationBottomSheet(
@@ -361,7 +361,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     )
                   else
                     Semantics(
-                      label: 'Yes, I had an emergency',
+                      label: 'Yes, I have been hospitalized',
                       button: true,
                       child: ExcludeSemantics(
                         child: InkWell(

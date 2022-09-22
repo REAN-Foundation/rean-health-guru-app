@@ -98,9 +98,13 @@ class _EditPatientMedicalProfileViewState
       debugPrint('Conversion Height in cms => $height');
       heightInDouble = Conversion.cmToFeet(height.toInt());
       debugPrint('Conversion Height in ft & inch => $heightInDouble');
+      if(heightInDouble == '0.12'){
+        heightInDouble = '1.0';
+      }
       heightArry = heightInDouble.toString().split('.');
       heightInFt = int.parse(heightArry[0]);
       heightInInch = int.parse(heightArry[1]);
+
       debugPrint('Conversion Height => $heightInFt ft $heightInInch inch');
 
       if (getCurrentLocale() == 'US') {

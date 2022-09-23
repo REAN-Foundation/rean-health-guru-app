@@ -101,7 +101,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   ),
                   backgroundColor: primaryColor,
                   onPressed: () {
-                    Navigator.pushNamed(context, RoutePaths.ADD_MY_MEDICATION)
+                    Navigator.pushNamed(context, RoutePaths.ADD_MY_MEDICATION, arguments: 'Medication')
                         .then((value) {
                       getMyMedications();
                     });
@@ -189,13 +189,16 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                       )
                           : Container(),
                       SizedBox(width: 8,),
-                      Semantics(
-                        child: Text(medication.drugName!,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: primaryColor)),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 124,
+                        child: Semantics(
+                            child: Text(medication.drugName!,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: primaryColor)),
+                        ),
                       ),
                     ],
                   ),
@@ -215,7 +218,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   const SizedBox(
                     height: 8,
                   ),
-                  Text(
+                  Text(medication.frequencyUnit.toString() == "Other" ? medication.frequencyUnit.toString() :
                       medication.frequencyUnit.toString() +
                           ' - ' +
                           medication.timeSchedules!.join(', '),

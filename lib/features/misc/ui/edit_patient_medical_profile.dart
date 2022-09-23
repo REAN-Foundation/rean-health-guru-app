@@ -73,6 +73,7 @@ class _EditPatientMedicalProfileViewState
   String _ethnicityValue = '';
   String _raceValue = '';
   String _bloodgroupValue = '';
+  String selectedUnit = '';
 
   @override
   void initState() {
@@ -97,19 +98,23 @@ class _EditPatientMedicalProfileViewState
       debugPrint('Conversion Height in cms => $height');
       heightInDouble = Conversion.cmToFeet(height.toInt());
       debugPrint('Conversion Height in ft & inch => $heightInDouble');
+      if(heightInDouble == '0.12'){
+        heightInDouble = '1.0';
+      }
       heightArry = heightInDouble.toString().split('.');
       heightInFt = int.parse(heightArry[0]);
       heightInInch = int.parse(heightArry[1]);
+
       debugPrint('Conversion Height => $heightInFt ft $heightInInch inch');
 
       if (getCurrentLocale() == 'US') {
         _heightInFeetController.text =
-            heightInDouble.toString().replaceAll('.', "'");
+            heightInDouble.toString().replaceAll('.', " ft ")+' inch';
         _heightInFeetController.selection = TextSelection.fromPosition(
           TextPosition(offset: _heightInFeetController.text.length),
         );
       } else {
-        _heightInFeetController.text = height.toString();
+        _heightInFeetController.text = height.toString() + ' cm';
         _heightInFeetController.selection = TextSelection.fromPosition(
           TextPosition(offset: _heightInFeetController.text.length),
         );
@@ -577,7 +582,7 @@ class _EditPatientMedicalProfileViewState
                         child: Text(value),
                       );
                     }).toList(),
-                    hint: Text('Select Blood Group'),
+                    hint: Text('Select Blood Type'),
                     onChanged: (data) {
                       debugPrint(data);
                       setState(() {

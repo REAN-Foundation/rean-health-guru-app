@@ -292,158 +292,172 @@ class _NutritionQuestionnaireViewState
       elevation: 0,
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 2,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 8,
+                    ),
+                    ImageIcon(
+                      AssetImage('res/images/ic_vegetable.png'),
+                      size: 32,
+                      color: primaryColor,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Text(
+                          'How many servings of vegetables did you eat today?',
+                          style: TextStyle(
+                              color: textBlack,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat')),
+                    ),
+                    SizedBox(width: 32,),
+
+                  ],
+                ),
                 SizedBox(
-                  width: 8,
+                  height: 16,
                 ),
-                ImageIcon(
-                  AssetImage('res/images/ic_vegetable.png'),
-                  size: 32,
-                  color: primaryColor,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: Text(
-                      'How many servings of vegetables did you eat today?',
-                      style: TextStyle(
-                          color: textBlack,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Montserrat')),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 56,
+                      width: 280,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4))),
+                              child: Center(
+                                child: IconButton(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onPressed: () {
+                                    if (vegetableServing != 0) {
+                                      vegetableServing = vegetableServing - 1;
+                                      announceText('$vegetableServing Serving of vegetable');
+                                      setState(() {});
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.remove,
+                                    color: primaryColor,
+                                    semanticLabel:
+                                        'decrease vegetables serving quantity',
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Semantics(
+                              label: '$vegetableServing Servings of vegetable',
+                              child: ExcludeSemantics(
+                                child: Container(
+                                  width: 180,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                    border:
+                                        Border.all(color: colorD6D6D6, width: 0.80),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 16,
+                                      ),
+                                      Text(
+                                        vegetableServing == 0
+                                            ? ''
+                                            : vegetableServing.toString(),
+                                        semanticsLabel: '',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14.0,
+                                            color: textGrey),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        'Servings',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14.0,
+                                            color: textGrey),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4))),
+                              child: Center(
+                                child: IconButton(
+                                  onPressed: () {
+                                    vegetableServing = vegetableServing + 1;
+                                    setState(() {});
+                                    announceText('$vegetableServing Servings of vegetable');
+                                    debugPrint(
+                                        "Vegetable Serving ==> $vegetableServing");
+                                  },
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  icon: Icon(
+                                    Icons.add,
+                                    color: primaryColor,
+                                    semanticLabel:
+                                        'increase vegetables serving quantity',
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            SizedBox(
-              height: 16,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 56,
-                  width: 280,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: Center(
-                            child: IconButton(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onPressed: () {
-                                if (vegetableServing != 0) {
-                                  vegetableServing = vegetableServing - 1;
-                                  setState(() {});
-                                }
-                              },
-                              icon: Icon(
-                                Icons.remove,
-                                color: primaryColor,
-                                semanticLabel:
-                                    'decrease vegetables serving quantity',
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Semantics(
-                          label: '',
-                          child: ExcludeSemantics(
-                            child: Container(
-                              width: 180,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(4)),
-                                border:
-                                    Border.all(color: colorD6D6D6, width: 0.80),
-                              ),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 16,
-                                  ),
-                                  Text(
-                                    vegetableServing == 0
-                                        ? ''
-                                        : vegetableServing.toString(),
-                                    semanticsLabel: '',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: textGrey),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    'Servings',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: textGrey),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: Center(
-                            child: IconButton(
-                              onPressed: () {
-                                vegetableServing = vegetableServing + 1;
-                                setState(() {});
-                                debugPrint(
-                                    "Vegetable Serving ==> $vegetableServing");
-                              },
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              icon: Icon(
-                                Icons.add,
-                                color: primaryColor,
-                                semanticLabel:
-                                    'increase vegetables serving quantity',
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                CustomTooltip(
+            Positioned(
+                top: 0,
+                right: 0,
+                child: CustomTooltip(
                   message: '1 serving = 1/2 cup.',
                   child: Icon(
                     Icons.info_outline_rounded,
@@ -451,9 +465,7 @@ class _NutritionQuestionnaireViewState
                     semanticLabel: 'info',
                     size: 24,
                   ),
-                ),
-              ],
-            ),
+                ),)
           ],
         ),
       ),
@@ -466,156 +478,169 @@ class _NutritionQuestionnaireViewState
       elevation: 0,
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 2,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 8,
+                    ),
+                    ImageIcon(
+                      AssetImage('res/images/ic_fruit.png'),
+                      size: 32,
+                      color: primaryColor,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Text('How many servings of fruit did you eat today?',
+                          style: TextStyle(
+                              color: textBlack,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat')),
+                    ),
+                    SizedBox(width: 24,),
+                  ],
+                ),
                 SizedBox(
-                  width: 8,
+                  height: 16,
                 ),
-                ImageIcon(
-                  AssetImage('res/images/ic_fruit.png'),
-                  size: 32,
-                  color: primaryColor,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: Text('How many servings of fruit did you eat today?',
-                      style: TextStyle(
-                          color: textBlack,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Montserrat')),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 56,
+                      width: 280,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4))),
+                              child: Center(
+                                child: IconButton(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onPressed: () {
+                                    if (fruitServing != 0) {
+                                      fruitServing = fruitServing - 1;
+                                      announceText('$fruitServing Serving of fruits');
+                                      setState(() {});
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.remove,
+                                    color: primaryColor,
+                                    semanticLabel:
+                                        'decrease fruit serving quantity',
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Semantics(
+                              label: '$fruitServing Serving of fruits',
+                              child: ExcludeSemantics(
+                                child: Container(
+                                  width: 180,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                    border:
+                                        Border.all(color: colorD6D6D6, width: 0.80),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 16,
+                                      ),
+                                      Text(
+                                        fruitServing == 0
+                                            ? ''
+                                            : fruitServing.toString(),
+                                        semanticsLabel: '',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14.0,
+                                            color: textGrey),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        'Servings',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14.0,
+                                            color: textGrey),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4))),
+                              child: Center(
+                                child: IconButton(
+                                  onPressed: () {
+                                    fruitServing = fruitServing + 1;
+                                    announceText('$fruitServing Serving of fruits');
+                                    setState(() {});
+                                    debugPrint("Fruit Serving ==> $fruitServing");
+                                  },
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  icon: Icon(
+                                    Icons.add,
+                                    color: primaryColor,
+                                    semanticLabel:
+                                        'increase fruit serving quantity',
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            SizedBox(
-              height: 16,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 56,
-                  width: 280,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: Center(
-                            child: IconButton(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onPressed: () {
-                                if (fruitServing != 0) {
-                                  fruitServing = fruitServing - 1;
-                                  setState(() {});
-                                }
-                              },
-                              icon: Icon(
-                                Icons.remove,
-                                color: primaryColor,
-                                semanticLabel:
-                                    'decrease fruit serving quantity',
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Semantics(
-                          label: '',
-                          child: ExcludeSemantics(
-                            child: Container(
-                              width: 180,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(4)),
-                                border:
-                                    Border.all(color: colorD6D6D6, width: 0.80),
-                              ),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 16,
-                                  ),
-                                  Text(
-                                    fruitServing == 0
-                                        ? ''
-                                        : fruitServing.toString(),
-                                    semanticsLabel: '',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: textGrey),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    'Servings',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: textGrey),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: Center(
-                            child: IconButton(
-                              onPressed: () {
-                                fruitServing = fruitServing + 1;
-                                setState(() {});
-                                debugPrint("Fruit Serving ==> $fruitServing");
-                              },
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              icon: Icon(
-                                Icons.add,
-                                color: primaryColor,
-                                semanticLabel:
-                                    'increase fruit serving quantity',
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                CustomTooltip(
+            Positioned(
+                top: 0,
+                right: 0,
+                child: CustomTooltip(
                   message: '1 serving = 1/2 cup.',
                   child: Icon(
                     Icons.info_outline_rounded,
@@ -623,9 +648,7 @@ class _NutritionQuestionnaireViewState
                     semanticLabel: 'info',
                     size: 24,
                   ),
-                ),
-              ],
-            ),
+                ),)
           ],
         ),
       ),
@@ -638,168 +661,179 @@ class _NutritionQuestionnaireViewState
       elevation: 0,
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 2,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 8,
+                    ),
+                    ImageIcon(
+                      AssetImage('res/images/ic_grain.png'),
+                      size: 32,
+                      color: primaryColor,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Text(
+                          'How many servings of whole grains did you eat today?',
+                          style: TextStyle(
+                              color: textBlack,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat')),
+                    ),
+                    SizedBox(width: 24,),
+                  ],
+                ),
                 SizedBox(
-                  width: 8,
+                  height: 16,
                 ),
-                ImageIcon(
-                  AssetImage('res/images/ic_grain.png'),
-                  size: 32,
-                  color: primaryColor,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: Text(
-                      'How many servings of whole grains did you eat today?',
-                      style: TextStyle(
-                          color: textBlack,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Montserrat')),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 56,
+                      width: 280,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4))),
+                              child: Center(
+                                child: IconButton(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onPressed: () {
+                                    if (grainServing != 0) {
+                                      grainServing = grainServing - 1;
+                                      announceText('$grainServing Serving of grains');
+                                      setState(() {});
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.remove,
+                                    color: primaryColor,
+                                    semanticLabel:
+                                        'decrease grain serving quantity',
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Semantics(
+                              label: '$grainServing Serving of grains',
+                              child: ExcludeSemantics(
+                                child: Container(
+                                  width: 180,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                    border:
+                                        Border.all(color: colorD6D6D6, width: 0.80),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 16,
+                                      ),
+                                      Text(
+                                        grainServing == 0
+                                            ? ''
+                                            : grainServing.toString(),
+                                        semanticsLabel: '',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14.0,
+                                            color: textGrey),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        'Servings',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14.0,
+                                            color: textGrey),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4))),
+                              child: Center(
+                                child: IconButton(
+                                  onPressed: () {
+                                    grainServing = grainServing + 1;
+                                    announceText('$grainServing Serving of grains');
+                                    setState(() {});
+                                    debugPrint("Grain Serving ==> $grainServing");
+                                  },
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  icon: Icon(
+                                    Icons.add,
+                                    color: primaryColor,
+                                    semanticLabel:
+                                        'increase grain serving quantity',
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            SizedBox(
-              height: 16,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 56,
-                  width: 280,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: Center(
-                            child: IconButton(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onPressed: () {
-                                if (grainServing != 0) {
-                                  grainServing = grainServing - 1;
-                                  setState(() {});
-                                }
-                              },
-                              icon: Icon(
-                                Icons.remove,
-                                color: primaryColor,
-                                semanticLabel:
-                                    'decrease grain serving quantity',
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Semantics(
-                          label: '',
-                          child: ExcludeSemantics(
-                            child: Container(
-                              width: 180,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(4)),
-                                border:
-                                    Border.all(color: colorD6D6D6, width: 0.80),
-                              ),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 16,
-                                  ),
-                                  Text(
-                                    grainServing == 0
-                                        ? ''
-                                        : grainServing.toString(),
-                                    semanticsLabel: '',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: textGrey),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    'Servings',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: textGrey),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: Center(
-                            child: IconButton(
-                              onPressed: () {
-                                grainServing = grainServing + 1;
-                                setState(() {});
-                                debugPrint("Grain Serving ==> $grainServing");
-                              },
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              icon: Icon(
-                                Icons.add,
-                                color: primaryColor,
-                                semanticLabel:
-                                    'increase grain serving quantity',
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                CustomTooltip(
+            Positioned(
+                right: 0,
+                top: 0,
+                child: CustomTooltip(
                   message:
-                      '1 serving = 1 slice whole-grain bread or 3/4 cup whole-grain pasta or cereal.',
+                  '1 serving = 1 slice whole-grain bread or 3/4 cup whole-grain pasta or cereal.',
                   child: Icon(
                     Icons.info_outline_rounded,
                     color: primaryColor,//Colors.grey.withOpacity(0.6),
                     semanticLabel: 'info',
                     size: 24,
                   ),
-                ),
-              ],
-            ),
+                ),)
           ],
         ),
       ),
@@ -812,157 +846,170 @@ class _NutritionQuestionnaireViewState
       elevation: 0,
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 2,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 8,
+                    ),
+                    ImageIcon(
+                      AssetImage('res/images/ic_meat.png'),
+                      size: 32,
+                      color: primaryColor,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Text(
+                          'How many servings of fish or shellfish / seafood did you eat today?',
+                          style: TextStyle(
+                              color: textBlack,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat')),
+                    ),
+                    SizedBox(width: 24,),
+                  ],
+                ),
                 SizedBox(
-                  width: 8,
+                  height: 16,
                 ),
-                ImageIcon(
-                  AssetImage('res/images/ic_meat.png'),
-                  size: 32,
-                  color: primaryColor,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: Text(
-                      'How many servings of fish or shellfish / seafood did you eat today?',
-                      style: TextStyle(
-                          color: textBlack,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Montserrat')),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 56,
+                      width: 280,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4))),
+                              child: Center(
+                                child: IconButton(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onPressed: () {
+                                    if (meatServing != 0) {
+                                      meatServing = meatServing - 1;
+                                      announceText('$meatServing Serving of Seafood');
+                                      setState(() {});
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.remove,
+                                    color: primaryColor,
+                                    semanticLabel:
+                                        'decrease sea food serving quantity',
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Semantics(
+                              label: '$meatServing Serving of Seafood',
+                              child: ExcludeSemantics(
+                                child: Container(
+                                  width: 180,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                    border:
+                                        Border.all(color: colorD6D6D6, width: 0.80),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 16,
+                                      ),
+                                      Text(
+                                        meatServing == 0
+                                            ? ''
+                                            : meatServing.toString(),
+                                        semanticsLabel: '',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14.0,
+                                            color: textGrey),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        'Servings',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14.0,
+                                            color: textGrey),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4))),
+                              child: Center(
+                                child: IconButton(
+                                  onPressed: () {
+                                    meatServing = meatServing + 1;
+                                    announceText('$meatServing Serving of Seafood');
+                                    setState(() {});
+                                    debugPrint("Meat Serving ==> $meatServing");
+                                  },
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  icon: Icon(
+                                    Icons.add,
+                                    color: primaryColor,
+                                    semanticLabel:
+                                        'increase sea food serving quantity',
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            SizedBox(
-              height: 16,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 56,
-                  width: 280,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: Center(
-                            child: IconButton(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onPressed: () {
-                                if (meatServing != 0) {
-                                  meatServing = meatServing - 1;
-                                  setState(() {});
-                                }
-                              },
-                              icon: Icon(
-                                Icons.remove,
-                                color: primaryColor,
-                                semanticLabel:
-                                    'decrease sea food serving quantity',
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Semantics(
-                          label: '',
-                          child: ExcludeSemantics(
-                            child: Container(
-                              width: 180,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(4)),
-                                border:
-                                    Border.all(color: colorD6D6D6, width: 0.80),
-                              ),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 16,
-                                  ),
-                                  Text(
-                                    meatServing == 0
-                                        ? ''
-                                        : meatServing.toString(),
-                                    semanticsLabel: '',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: textGrey),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    'Servings',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: textGrey),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: Center(
-                            child: IconButton(
-                              onPressed: () {
-                                meatServing = meatServing + 1;
-                                setState(() {});
-                                debugPrint("Meat Serving ==> $meatServing");
-                              },
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              icon: Icon(
-                                Icons.add,
-                                color: primaryColor,
-                                semanticLabel:
-                                    'increase sea food serving quantity',
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                CustomTooltip(
+            Positioned(
+                top: 0,
+                right: 0,
+                child: CustomTooltip(
                   message: '1 serving = 3 oz cooked, not fried.',
                   child: Icon(
                     Icons.info_outline_rounded,
@@ -970,9 +1017,7 @@ class _NutritionQuestionnaireViewState
                     semanticLabel: 'info',
                     size: 24,
                   ),
-                ),
-              ],
-            ),
+                ),)
           ],
         ),
       ),
@@ -985,169 +1030,180 @@ class _NutritionQuestionnaireViewState
       elevation: 0,
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 2,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 8,
+                    ),
+                    ImageIcon(
+                      AssetImage('res/images/ic_sugary_drink.png'),
+                      size: 32,
+                      color: primaryColor,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Text(
+                          'How many servings of sugary drinks did you drink today?',
+                          style: TextStyle(
+                              color: textBlack,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat')),
+                    ),
+                    SizedBox(width: 28,),
+                  ],
+                ),
                 SizedBox(
-                  width: 8,
+                  height: 16,
                 ),
-                ImageIcon(
-                  AssetImage('res/images/ic_sugary_drink.png'),
-                  size: 32,
-                  color: primaryColor,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: Text(
-                      'How many servings of sugary drinks did you drink today?',
-                      style: TextStyle(
-                          color: textBlack,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Montserrat')),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 56,
+                      width: 280,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4))),
+                              child: Center(
+                                child: IconButton(
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onPressed: () {
+                                    if (sugaryDrinkServing != 0) {
+                                      sugaryDrinkServing = sugaryDrinkServing - 1;
+                                      announceText('$sugaryDrinkServing Serving of Sugary drinks');
+                                      setState(() {});
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.remove,
+                                    color: primaryColor,
+                                    semanticLabel:
+                                        'decrease sugary drink serving quantity',
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Semantics(
+                              label: '$sugaryDrinkServing Serving of Sugary drinks',
+                              child: ExcludeSemantics(
+                                child: Container(
+                                  width: 180,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                    border:
+                                        Border.all(color: colorD6D6D6, width: 0.80),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 16,
+                                      ),
+                                      Text(
+                                        sugaryDrinkServing == 0
+                                            ? ''
+                                            : sugaryDrinkServing.toString(),
+                                        semanticsLabel: '',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14.0,
+                                            color: textGrey),
+                                      ),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        'Servings',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14.0,
+                                            color: textGrey),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  color: buttonColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4))),
+                              child: Center(
+                                child: IconButton(
+                                  onPressed: () {
+                                    sugaryDrinkServing = sugaryDrinkServing + 1;
+                                    announceText('$sugaryDrinkServing Serving of Sugary drinks');
+                                    setState(() {});
+                                    debugPrint(
+                                        "Sugary Drink Serving Serving ==> $sugaryDrinkServing");
+                                  },
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  icon: Icon(
+                                    Icons.add,
+                                    color: primaryColor,
+                                    semanticLabel:
+                                        'increase sugary drink serving quantity',
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            SizedBox(
-              height: 16,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 56,
-                  width: 280,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: Center(
-                            child: IconButton(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onPressed: () {
-                                if (sugaryDrinkServing != 0) {
-                                  sugaryDrinkServing = sugaryDrinkServing - 1;
-                                  setState(() {});
-                                }
-                              },
-                              icon: Icon(
-                                Icons.remove,
-                                color: primaryColor,
-                                semanticLabel:
-                                    'decrease sugary drink serving quantity',
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Semantics(
-                          label: '',
-                          child: ExcludeSemantics(
-                            child: Container(
-                              width: 180,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(4)),
-                                border:
-                                    Border.all(color: colorD6D6D6, width: 0.80),
-                              ),
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 16,
-                                  ),
-                                  Text(
-                                    sugaryDrinkServing == 0
-                                        ? ''
-                                        : sugaryDrinkServing.toString(),
-                                    semanticsLabel: '',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: textGrey),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    'Servings',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: textGrey),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: buttonColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: Center(
-                            child: IconButton(
-                              onPressed: () {
-                                sugaryDrinkServing = sugaryDrinkServing + 1;
-                                setState(() {});
-                                debugPrint(
-                                    "Sugary Drink Serving Serving ==> $sugaryDrinkServing");
-                              },
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              icon: Icon(
-                                Icons.add,
-                                color: primaryColor,
-                                semanticLabel:
-                                    'increase sugary drink serving quantity',
-                                size: 24,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                CustomTooltip(
+            Positioned(
+                top: 0,
+                right: 0,
+                child: CustomTooltip(
                   message:
-                      '1 serving = 12 oz; includes sports drinks, lemonade, fruit drinks with added sugar, energy drinks and soda, drinks with added sugar.',
+                  '1 serving = 12 oz; includes sports drinks, lemonade, fruit drinks with added sugar, energy drinks and soda, drinks with added sugar.',
                   child: Icon(
                     Icons.info_outline_rounded,
                     color: primaryColor,//Colors.grey.withOpacity(0.6),
                     semanticLabel: 'info',
                     size: 24,
                   ),
-                ),
-              ],
-            ),
+                ),)
           ],
         ),
       ),
@@ -1160,140 +1216,145 @@ class _NutritionQuestionnaireViewState
       elevation: 0,
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: 8,
-                ),
-                ImageIcon(
-                  AssetImage('res/images/ic_protein.png'),
-                  size: 32,
-                  color: primaryColor,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: Text(
-                      'Did you select healthy sources of protein today?',
-                      style: TextStyle(
-                          color: textBlack,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Montserrat')),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Stack(
-              children: [
+                SizedBox(height: 2,),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Semantics(
-                      label: 'Yes I had source of protein today',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          protienValue = true;
-                          protienValueClicked = 'Yes';
-                          setState(() {});
-                        },
-                        child: ExcludeSemantics(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.thumb_up,
-                                color: protienValueClicked == 'Yes'
-                                    ? Color(0XFF007E1A)
-                                    : buttonColor,
-                                size: 36,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Yes',
-                                  style: TextStyle(
-                                      color: protienValueClicked == 'Yes'
-                                          ? Color(0XFF007E1A)
-                                          : buttonColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat')),
-                            ],
-                          ),
-                        ),
-                      ),
+                    SizedBox(
+                      width: 8,
                     ),
-                    Semantics(
-                      label: 'No I havn`t source of protein today',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          protienValue = false;
-                          protienValueClicked = 'No';
-                          setState(() {});
-                        },
-                        child: ExcludeSemantics(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.thumb_down,
-                                color: protienValueClicked == 'No'
-                                    ? primaryColor
-                                    : buttonColor,
-                                size: 36,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('No',
-                                  style: TextStyle(
-                                      color: protienValueClicked == 'No'
-                                          ? primaryColor
-                                          : buttonColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat')),
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
+                    ImageIcon(
+                      AssetImage('res/images/ic_protein.png'),
+                      size: 32,
+                      color: primaryColor,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Text(
+                          'Did you select healthy sources of protein today?',
+                          style: TextStyle(
+                              color: textBlack,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat')),
+                    ),
+                    SizedBox(width: 24,),
                   ],
                 ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: CustomTooltip(
-                    message:
-                        'Legumes and nuts; fish and seafood; low-fat or nonfat dairy; unprocessed and lean poultry or meat.',
-                    child: Icon(
-                      Icons.info_outline_rounded,
-                      color: primaryColor,//Colors.grey.withOpacity(0.6),
-                      semanticLabel: 'info',
-                      size: 24,
+                SizedBox(
+                  height: 16,
+                ),
+                Stack(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Semantics(
+                          label: 'Yes I had source of protein today',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              protienValue = true;
+                              protienValueClicked = 'Yes';
+                              setState(() {});
+                            },
+                            child: ExcludeSemantics(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.thumb_up,
+                                    color: protienValueClicked == 'Yes'
+                                        ? Color(0XFF007E1A)
+                                        : buttonColor,
+                                    size: 36,
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text('Yes',
+                                      style: TextStyle(
+                                          color: protienValueClicked == 'Yes'
+                                              ? Color(0XFF007E1A)
+                                              : buttonColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'Montserrat')),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Semantics(
+                          label: 'No I havn`t source of protein today',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              protienValue = false;
+                              protienValueClicked = 'No';
+                              setState(() {});
+                            },
+                            child: ExcludeSemantics(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.thumb_down,
+                                    color: protienValueClicked == 'No'
+                                        ? primaryColor
+                                        : buttonColor,
+                                    size: 36,
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text('No',
+                                      style: TextStyle(
+                                          color: protienValueClicked == 'No'
+                                              ? primaryColor
+                                              : buttonColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'Montserrat')),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  ),
-                )
+                  ],
+                ),
+                SizedBox(
+                  height: 8,
+                ),
               ],
             ),
-            SizedBox(
-              height: 8,
-            ),
+            Positioned(
+                top: 0,
+                right: 0,
+                child: CustomTooltip(
+                  message:
+                  'Legumes and nuts; fish and seafood; low-fat or nonfat dairy; unprocessed and lean poultry or meat.',
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
+                    semanticLabel: 'info',
+                    size: 24,
+                  ),
+                ),)
           ],
         ),
       ),
@@ -1306,141 +1367,150 @@ class _NutritionQuestionnaireViewState
       elevation: 0,
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  width: 8,
-                ),
-                ImageIcon(
-                  AssetImage('res/images/ic_salt.png'),
-                  size: 32,
-                  color: primaryColor,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: Text(
-                      'Did you choose or prepare foods with little or no salt today?',
-                      style: TextStyle(
-                          color: textBlack,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Montserrat')),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Stack(
-              children: [
+                SizedBox(height: 2,),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Semantics(
-                      label: 'Yes I had salt in my food today',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          saltValue = true;
-                          salthValueClicked = 'Yes';
-
-                          setState(() {});
-                        },
-                        child: ExcludeSemantics(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.thumb_up,
-                                color: salthValueClicked == 'Yes'
-                                    ? Color(0XFF007E1A)
-                                    : buttonColor,
-                                size: 36,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Yes',
-                                  style: TextStyle(
-                                      color: salthValueClicked == 'Yes'
-                                          ? Color(0XFF007E1A)
-                                          : buttonColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat')),
-                            ],
-                          ),
-                        ),
-                      ),
+                    SizedBox(
+                      width: 8,
                     ),
-                    Semantics(
-                      label: 'No I havn`t ate salty food today',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          saltValue = false;
-                          salthValueClicked = 'No';
-
-                          setState(() {});
-                        },
-                        child: ExcludeSemantics(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.thumb_down,
-                                color: salthValueClicked == 'No'
-                                    ? primaryColor
-                                    : buttonColor,
-                                size: 36,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('No',
-                                  style: TextStyle(
-                                      color: salthValueClicked == 'No'
-                                          ? primaryColor
-                                          : buttonColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat')),
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
+                    ImageIcon(
+                      AssetImage('res/images/ic_salt.png'),
+                      size: 32,
+                      color: primaryColor,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      child: Text(
+                          'Did you choose or prepare foods with little or no salt today?',
+                          style: TextStyle(
+                              color: textBlack,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat')),
+                    ),
                   ],
                 ),
-                /*Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: CustomTooltip(
-                    message: 'Legumes and nuts; fish and seafood; low-fat or nonfat dairy; unprocessed and lean poultry or meat',
-                    child: Icon(
-                      Icons.info_outline_rounded,
-                    color: Colors.grey.withOpacity(0.6),,
-                      semanticLabel: 'info',
-                      size: 32,
+                SizedBox(
+                  height: 16,
+                ),
+                Stack(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Semantics(
+                          label: 'Yes I had salt in my food today',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              saltValue = true;
+                              salthValueClicked = 'Yes';
+
+                              setState(() {});
+                            },
+                            child: ExcludeSemantics(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.thumb_up,
+                                    color: salthValueClicked == 'Yes'
+                                        ? Color(0XFF007E1A)
+                                        : buttonColor,
+                                    size: 36,
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text('Yes',
+                                      style: TextStyle(
+                                          color: salthValueClicked == 'Yes'
+                                              ? Color(0XFF007E1A)
+                                              : buttonColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'Montserrat')),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Semantics(
+                          label: 'No I havn`t ate salty food today',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              saltValue = false;
+                              salthValueClicked = 'No';
+
+                              setState(() {});
+                            },
+                            child: ExcludeSemantics(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.thumb_down,
+                                    color: salthValueClicked == 'No'
+                                        ? primaryColor
+                                        : buttonColor,
+                                    size: 36,
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text('No',
+                                      style: TextStyle(
+                                          color: salthValueClicked == 'No'
+                                              ? primaryColor
+                                              : buttonColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'Montserrat')),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  ),
-                )*/
+                    /*Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: CustomTooltip(
+                        message: 'Legumes and nuts; fish and seafood; low-fat or nonfat dairy; unprocessed and lean poultry or meat',
+                        child: Icon(
+                          Icons.info_outline_rounded,
+                        color: Colors.grey.withOpacity(0.6),,
+                          semanticLabel: 'info',
+                          size: 32,
+                        ),
+                      ),
+                    )*/
+                  ],
+                ),
+                SizedBox(
+                  height: 8,
+                ),
               ],
             ),
-            SizedBox(
-              height: 8,
-            ),
+            /*Positioned(
+                top: 0,
+                right: 0,
+                child: )*/
           ],
         ),
       ),
@@ -1512,6 +1582,15 @@ class _NutritionQuestionnaireViewState
                           fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ),
+                CustomTooltip(
+                  message: '1 glass = 8 ounces of water.',
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
+                    semanticLabel: 'info',
+                    size: 24,
+                  ),
+                ),
               ],
             ),
             SizedBox(
@@ -1548,6 +1627,7 @@ class _NutritionQuestionnaireViewState
                               onPressed: () {
                                 if (waterGlass != 0) {
                                   waterGlass = waterGlass - 1;
+                                  announceText('$waterGlass glass of water');
                                   setState(() {});
                                   recordMyWaterConsumptions();
                                 }
@@ -1563,7 +1643,7 @@ class _NutritionQuestionnaireViewState
                           ),
                         ),
                         Semantics(
-                          label: '',
+                          label: '$waterGlass glass of water',
                           child: ExcludeSemantics(
                             child: Container(
                               width: 180,
@@ -1616,6 +1696,7 @@ class _NutritionQuestionnaireViewState
                             child: IconButton(
                               onPressed: () {
                                 waterGlass = waterGlass + 1;
+                                announceText('$waterGlass glass of water');
                                 setState(() {});
                                 debugPrint(
                                     "waterGlass ==> $waterGlass");
@@ -1635,15 +1716,6 @@ class _NutritionQuestionnaireViewState
                         )
                       ],
                     ),
-                  ),
-                ),
-                CustomTooltip(
-                  message: '1 glass = 8 ounces of water.',
-                  child: Icon(
-                    Icons.info_outline_rounded,
-                    color: primaryColor,//Colors.grey.withOpacity(0.6),
-                    semanticLabel: 'info',
-                    size: 24,
                   ),
                 ),
               ],
@@ -1688,6 +1760,15 @@ class _NutritionQuestionnaireViewState
                           fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat')),
                 ),
+                CustomTooltip(
+                  message: 'One drink is 12 ounces of beer, 4 ounces of wine, 1.5 ounces of 80-proof spirits or 1 ounce of 100-proof spirit.',
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                    color: primaryColor,//Colors.grey.withOpacity(0.6),
+                    semanticLabel: 'info',
+                    size: 24,
+                  ),
+                ),
               ],
             ),
             SizedBox(
@@ -1724,6 +1805,7 @@ class _NutritionQuestionnaireViewState
                               onPressed: () {
                                 if (alcoholIntakeInMililitre != 0) {
                                   alcoholIntakeInMililitre = alcoholIntakeInMililitre - 1;
+                                  announceText('$alcoholIntakeInMililitre driks of alcohol');
                                   setState(() {});
                                   recordMyAlcoholConsumption();
                                 }
@@ -1739,7 +1821,7 @@ class _NutritionQuestionnaireViewState
                           ),
                         ),
                         Semantics(
-                          label: '',
+                          label: '$alcoholIntakeInMililitre driks of alcohol',
                           child: ExcludeSemantics(
                             child: Container(
                               width: 180,
@@ -1792,6 +1874,7 @@ class _NutritionQuestionnaireViewState
                             child: IconButton(
                               onPressed: () {
                                 alcoholIntakeInMililitre = alcoholIntakeInMililitre + 1;
+                                announceText('$alcoholIntakeInMililitre driks of alcohol');
                                 setState(() {});
                                 debugPrint(
                                     "alcoholIntakeInMililitre ==> $alcoholIntakeInMililitre");
@@ -1811,15 +1894,6 @@ class _NutritionQuestionnaireViewState
                         )
                       ],
                     ),
-                  ),
-                ),
-                CustomTooltip(
-                  message: 'One drink is 12 ounces of beer, 4 ounces of wine, 1.5 ounces of 80-proof spirits or 1 ounce of 100-proof spirit.',
-                  child: Icon(
-                    Icons.info_outline_rounded,
-                    color: primaryColor,//Colors.grey.withOpacity(0.6),
-                    semanticLabel: 'info',
-                    size: 24,
                   ),
                 ),
               ],

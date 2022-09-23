@@ -1151,7 +1151,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
-                                      color: primaryColor)),
+                                      color: primaryColor,)),
                               SizedBox(
                                 width: 8,
                               ),

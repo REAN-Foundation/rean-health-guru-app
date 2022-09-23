@@ -109,7 +109,7 @@ class _EditPatientMedicalProfileViewState
 
       if (getCurrentLocale() == 'US') {
         _heightInFeetController.text =
-            heightInDouble.toString().replaceAll('.', "'")+'"';
+            heightInDouble.toString().replaceAll('.', " ft ")+' inch';
         _heightInFeetController.selection = TextSelection.fromPosition(
           TextPosition(offset: _heightInFeetController.text.length),
         );

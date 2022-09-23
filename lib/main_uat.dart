@@ -21,7 +21,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool? login = prefs.getBool('login1.8.140');
+  bool? login = prefs.getBool('login1.8.141');
   login ??= false;
   runApp(MyApp(login));
 }

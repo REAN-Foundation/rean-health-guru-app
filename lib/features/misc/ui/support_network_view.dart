@@ -145,7 +145,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 32,
+                        height: 16,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -158,7 +158,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                         ],
                       ),
                       SizedBox(
-                        height: 32,
+                        height: 16,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -168,21 +168,22 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                                 fontFamily: 'Montserrat',
                                 color: textBlack,
                                 fontSize: 18,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 fontStyle: FontStyle.normal,
                               )
                           ),
                         ],
                       ),
                       SizedBox(
-                        height: 16,
+                        height: 8,
                       ),
                   Text("The American Heart Association’s Support Network exist so real people can share their real stories and make a real difference in people’s lives.",
                       style: TextStyle(
+                        height: 1.5,
                         fontFamily: 'Montserrat',
-                        color: textBlack,
+                        color: Colors.black,
                         fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                         fontStyle: FontStyle.normal,
                         )
                       ),
@@ -194,7 +195,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                             fontFamily: 'Montserrat',
                             color: Color(0xff000000),
                             fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             fontStyle: FontStyle.normal,
 
 
@@ -217,9 +218,10 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                         text:
                         'www.heart.org/SupportNetwork\nis easy, and membership is free — putting advice, encouragement and reliable, helpful information at your fingertips whenever you need it.',
                         style: TextStyle(
-                            color: textBlack,
+                            height: 1.5,
+                            color: Colors.black,
                             fontSize: 14,
-                            fontWeight: FontWeight.w600),
+                            fontWeight: FontWeight.w500),
                         linkStyle: TextStyle(color: Colors.lightBlueAccent),
                       ),
                     ],

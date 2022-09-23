@@ -42,6 +42,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     todaysDate = DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
+    debugPrint('Start Date $startDate');
     if (getAppType() == 'AHA') {
       buttonColor = redLightAha;
     }
@@ -431,10 +432,14 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
     try {
       if(_sleepHrs != 0 ) {
       if (_sleepTracking == null) {
+        debugPrint("123 ");
         _sharedPrefUtils.save(
             'sleepTime', MovementsTracking(startDate, _sleepHrs, '').toJson());
+        loadSleepMovement();
       } else {
+        debugPrint("456 ");
         _sleepTracking!.value = _sleepHrs;
+        _sleepTracking!.date = startDate;
         _sharedPrefUtils.save('sleepTime', _sleepTracking!.toJson());
       }
 

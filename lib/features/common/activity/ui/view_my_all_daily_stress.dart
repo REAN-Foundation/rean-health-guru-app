@@ -121,7 +121,9 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       final movements = await _sharedPrefUtils.read('sleepTime');
 
       if (movements != null) {
+        debugPrint('Sleep Inside');
         _sleepTracking = MovementsTracking.fromJson(movements);
+        debugPrint('Sleep ${_sleepTracking!.date}');
       }
 
       if (_sleepTracking != null) {

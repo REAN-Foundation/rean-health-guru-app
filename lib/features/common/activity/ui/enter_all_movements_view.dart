@@ -625,6 +625,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
       } else {
         _exerciseMovemntsTracking!.value =
             _exerciseMovemntsTracking!.value! + time;
+        _exerciseMovemntsTracking!.date = startDate;
         _sharedPrefUtils.save(
             'exerciseTime', _exerciseMovemntsTracking!.toJson());
       }

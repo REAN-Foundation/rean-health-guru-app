@@ -914,7 +914,7 @@ class _NutritionQuestionnaireViewState
                                   onPressed: () {
                                     if (meatServing != 0) {
                                       meatServing = meatServing - 1;
-                                      announceText('$meatServing Serving of meat');
+                                      announceText('$meatServing Serving of Seafood');
                                       setState(() {});
                                     }
                                   },
@@ -929,7 +929,7 @@ class _NutritionQuestionnaireViewState
                               ),
                             ),
                             Semantics(
-                              label: '$meatServing Serving of meat',
+                              label: '$meatServing Serving of Seafood',
                               child: ExcludeSemantics(
                                 child: Container(
                                   width: 180,
@@ -982,7 +982,7 @@ class _NutritionQuestionnaireViewState
                                 child: IconButton(
                                   onPressed: () {
                                     meatServing = meatServing + 1;
-                                    announceText('$meatServing Serving of meat');
+                                    announceText('$meatServing Serving of Seafood');
                                     setState(() {});
                                     debugPrint("Meat Serving ==> $meatServing");
                                   },

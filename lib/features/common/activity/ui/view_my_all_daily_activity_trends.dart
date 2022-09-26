@@ -511,11 +511,6 @@ class _ViewMyAllDailyActivityTrendsState
                           fontSize: 18.0,
                           color: textBlack),
                     ),
-                    InfoScreen(
-                        tittle: 'Stand Information',
-                        description:
-                            'Standing is better for the back than sitting. It strengthens leg muscles and improves balance. It burns more calories than sitting.',
-                        height: 208),
                   ],
                 ),
                 SizedBox(
@@ -551,6 +546,14 @@ class _ViewMyAllDailyActivityTrendsState
               ],
             ),
           ),
+          /*Positioned(
+            top: 4,
+            right: 4,
+            child: InfoScreen(
+              tittle: 'Stand Information',
+              description:
+              'Standing is better for the back than sitting. It strengthens leg muscles and improves balance. It burns more calories than sitting.',
+              height: 208),)*/
           /*Align(
             alignment: Alignment.topRight,
             child: Container(
@@ -617,11 +620,6 @@ class _ViewMyAllDailyActivityTrendsState
                           fontSize: 18.0,
                           color: textBlack),
                     ),
-                    InfoScreen(
-                        tittle: 'Steps Information',
-                        description:
-                            'Steps will increase cardiovascular and pulmonary (heart and lung) fitness. reduced risk of heart disease and stroke. improved management of conditions such as hypertension (high blood pressure), high cholesterol, joint, and muscular pain or stiffness, and diabetes. stronger bones and improved balance.',
-                        height: 288),
                   ],
                 ),
                 SizedBox(
@@ -656,6 +654,14 @@ class _ViewMyAllDailyActivityTrendsState
               ],
             ),
           ),
+          /*Positioned(
+            top: 4,
+            right: 4,
+            child: InfoScreen(
+              tittle: 'Steps Information',
+              description:
+              'Steps will increase cardiovascular and pulmonary (heart and lung) fitness. reduced risk of heart disease and stroke. improved management of conditions such as hypertension (high blood pressure), high cholesterol, joint, and muscular pain or stiffness, and diabetes. stronger bones and improved balance.',
+              height: 288),)*/
           /*Align(
             alignment: Alignment.topRight,
             child: Container(
@@ -781,64 +787,71 @@ class _ViewMyAllDailyActivityTrendsState
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(12))),
-      child: Align(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Exercise',
-                  semanticsLabel: 'Exercise',
-                  style: TextStyle(
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.0,
-                      color: textBlack),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Exercise',
+                      semanticsLabel: 'Exercise',
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.0,
+                          color: textBlack),
+                    ),
+                  ],
                 ),
-                InfoScreen(
-                    tittle: 'Exercise Information',
-                    description:
-                    'Regular physical activity can improve your muscle strength and boost your endurance. Exercise delivers oxygen and nutrients to your tissues and helps your cardiovascular system work more efficiently. And when your heart and lung health improve, you have more energy to tackle daily chores.',
-                    height: 268),
+                SizedBox(
+                  height: 16,
+                ),
+                ImageIcon(
+                  AssetImage('res/images/ic_exercise_person.png'),
+                  size: 48,
+                  color: primaryColor,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(Conversion.durationFromMinToHrsToString(exerciseToDisplay),
+                    semanticsLabel:
+                        Conversion.durationFromMinToHrsToString(exerciseToDisplay),
+                    style: const TextStyle(
+                        color: textBlack,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: "Montserrat",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 22.0),
+                    textAlign: TextAlign.center),
+                Text("Duration",
+                    semanticsLabel: 'Duration',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Color(0xffa8a8a8),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      fontStyle: FontStyle.normal,
+                    )),
               ],
             ),
-            SizedBox(
-              height: 16,
-            ),
-            ImageIcon(
-              AssetImage('res/images/ic_exercise_person.png'),
-              size: 48,
-              color: primaryColor,
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Text(Conversion.durationFromMinToHrsToString(exerciseToDisplay),
-                semanticsLabel:
-                    Conversion.durationFromMinToHrsToString(exerciseToDisplay),
-                style: const TextStyle(
-                    color: textBlack,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "Montserrat",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 22.0),
-                textAlign: TextAlign.center),
-            Text("Duration",
-                semanticsLabel: 'Duration',
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  color: Color(0xffa8a8a8),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  fontStyle: FontStyle.normal,
-                )),
-          ],
-        ),
+          ),
+          Positioned(
+            top: 4,
+            right: 4,
+            child: InfoScreen(
+              tittle: 'Exercise Information',
+              description:
+              'Fit in 150+\nGet at least 150 minutes per week of moderate-intensity aerobic activity or 75 minutes per week of vigorous aerobic activity (or a combination of both), preferably spread throughout the week.',
+              height: 248),)
+        ],
       ),
     );
   }

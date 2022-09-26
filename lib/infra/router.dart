@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/activity/ui/all_mental_well_being_view.dart';
 import 'package:patient/features/common/activity/ui/all_movements_view.dart';
 import 'package:patient/features/common/activity/ui/meditation_timmer_view.dart';
 import 'package:patient/features/common/activity/ui/view_my_all_daily_activity.dart';
@@ -86,6 +87,7 @@ import 'package:patient/features/misc/ui/on_boarding_page.dart';
 import 'package:patient/features/misc/ui/otp_screen_view.dart';
 import 'package:patient/features/misc/ui/patient_medical_profile.dart';
 import 'package:patient/features/misc/ui/splash_screen.dart';
+import 'package:patient/features/misc/ui/support_network_view.dart';
 import 'package:patient/features/misc/ui/support_view.dart';
 import 'package:patient/features/misc/ui/symptoms_view.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -125,6 +127,8 @@ class Routers {
         return MaterialPageRoute(builder: (_) => AboutREANCareView());
       case RoutePaths.CONTACT_US:
         return MaterialPageRoute(builder: (_) => SupportView());
+      case RoutePaths.SUPPORT_NETWORK:
+        return MaterialPageRoute(builder: (_) => SupportNetworkView());
       case RoutePaths.Payment_Confirmation_View:
         return MaterialPageRoute(builder: (_) => PaymentConfirmationView());
       case RoutePaths.Booking_Appoinment_Confirmation_View:
@@ -169,7 +173,7 @@ class Routers {
         //return MaterialPageRoute(builder: (_) => BiometricVitalsView());
         return MaterialPageRoute(builder: (_) => BiometricVitalsTrendsView());
       case RoutePaths.MY_STRESS:
-        return MaterialPageRoute(builder: (_) => ViewMyAllDailyStress());
+        return MaterialPageRoute(builder: (_) => ViewMyAllDailyStress(true));
       case RoutePaths.My_Activity:
         return MaterialPageRoute(
             builder: (_) => //ViewMyDailyActivity());
@@ -177,6 +181,9 @@ class Routers {
       case RoutePaths.My_Activity_Trends:
         return MaterialPageRoute(
             builder: (_) => AllMovementsView(settings.arguments as int));
+      case RoutePaths.My_Activity_Mindfullness:
+        return MaterialPageRoute(
+            builder: (_) => AllMentalWellBeingView(settings.arguments as int));
       case RoutePaths.MySleepData:
         return MaterialPageRoute(builder: (_) => ViewMyDailySleep());
       case RoutePaths.My_Nutrition:
@@ -228,9 +235,9 @@ class Routers {
             builder: (_) => EditPatientMedicalProfileView(
                 settings.arguments as HealthProfile));
       case RoutePaths.My_Medications:
-        return MaterialPageRoute(builder: (_) => MyMedicationView());
+        return MaterialPageRoute(builder: (_) => MyMedicationView(settings.arguments as int));
       case RoutePaths.ADD_MY_MEDICATION:
-        return MaterialPageRoute(builder: (_) => AddMyMedicationView());
+        return MaterialPageRoute(builder: (_) => AddMyMedicationView(settings.arguments as String?));
       case RoutePaths.My_Care_Plan:
         return MaterialPageRoute(builder: (_) => MyCarePlanView());
       case RoutePaths.Select_Care_Plan:

@@ -443,9 +443,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                 child: Center(
                   child: Container(
                     height: 160,
-                    child: Semantics(
-                      label: 'Health Journey image',
-                      image: true,
+                    child: ExcludeSemantics(
                       child: Image.asset(
                         getAppType() == 'AHA' ? 'res/images/ic_health_journey.png' : 'res/images/ic_health_journey_blue.png',
                       ),
@@ -474,7 +472,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                       flex: 1,
                       child: Semantics(
                         button: true,
-                        label: 'Cancel',
+                        label: 'Cancel health journey',
                         child: ExcludeSemantics(
                           child: InkWell(
                             onTap: () {
@@ -513,7 +511,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                       flex: 1,
                       child: Semantics(
                         button: true,
-                        label: 'Get Started',
+                        label: 'Get Started health journey',
                         child: ExcludeSemantics(
                           child: InkWell(
                             onTap: () {

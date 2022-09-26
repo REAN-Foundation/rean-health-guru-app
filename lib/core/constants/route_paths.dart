@@ -13,6 +13,7 @@ class RoutePaths {
   static const String Post = 'post';
   static const String ABOUT_REAN_CARE = 'aboutReanCare';
   static const String CONTACT_US = 'contactUs';
+  static const String SUPPORT_NETWORK = 'supportNetwork';
   static const String Edit_Profile = 'editProfile';
   static const String Select_Date_And_Time_Book_Appoinment =
       'selectDateAndTimeForBookAppoinment';
@@ -36,6 +37,7 @@ class RoutePaths {
   static const String My_Medications = 'MyMedications';
   static const String My_Activity = 'MyActivity';
   static const String My_Activity_Trends = 'MyActivityTrends';
+  static const String My_Activity_Mindfullness = 'MyActivityMindfullness';
   static const String MY_STRESS = 'MyStress';
   static const String MyExcersiceData = 'MyExcersiceData';
   static const String MySleepData = 'MySleepData';

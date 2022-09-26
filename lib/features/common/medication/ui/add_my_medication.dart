@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:http/http.dart' as http;
+import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/medication/models/drugs_library_pojo.dart';
 import 'package:patient/features/common/medication/models/get_medication_stock_images.dart';
 import 'package:patient/features/common/medication/models/nih_medication_search_response.dart';
@@ -16,14 +17,21 @@ import 'package:patient/features/misc/models/medication_dosage_units_pojo.dart';
 import 'package:patient/features/misc/models/medication_duration_units_pojo.dart';
 import 'package:patient/features/misc/models/medication_frequencies_pojo.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
-import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 
+//ignore: must_be_immutable
 class AddMyMedicationView extends StatefulWidget {
+
+  String _path = '';
+
+  AddMyMedicationView(String? path) {
+    _path = path.toString();
+  }
+
   @override
   _AddMyMedicationViewState createState() => _AddMyMedicationViewState();
 }
@@ -1380,7 +1388,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       map['DrugName'] = _typeAheadController.text;
       map['Dose'] = int.parse(_unitController.text);
       map['DosageUnit'] = _dosageUnit;
-      map['TimeSchedules'] = timeShedule;
+      if(_frequencyUnit != "Other"){
+        map['TimeSchedules'] = timeShedule;
+      }
       map['Frequency'] = frequency;
       map['FrequencyUnit'] = _frequencyUnit;
       map['Route'] = ' ';
@@ -1398,11 +1408,15 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       if (baseResponse.status == 'success') {
         showToast('Medication was added successfully.', context);
         //widget._submitButtonListner();
-        //Navigator.of(context).pop();
-        Navigator.pushAndRemoveUntil(context,
+        if(widget._path == 'Dashboard'){
+          Navigator.popAndPushNamed(context, RoutePaths.My_Medications, arguments: 1);
+        }else{
+          Navigator.of(context).pop();
+        }
+        /*Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
               return HomeView(0);
-            }), (Route<dynamic> route) => false);
+            }), (Route<dynamic> route) => false);*/
         //_getPatientAllergies("4c47a191-9cb6-4377-b828-83eb9ab48d0a");
       } else {
         showToast('Please try again', context);

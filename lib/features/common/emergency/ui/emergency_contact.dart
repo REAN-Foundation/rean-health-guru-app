@@ -94,10 +94,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
     }
-    /*catch (Excepetion) {
+    catch (Excepetion) {
       // do something
-      debugPrint(Excepetion.toString());
-    }*/
+      emergencyDashboardTile = null;
+      debugPrint('error caught : ${Excepetion.toString()}');
+      setState(() {
+
+      });
+    }
   }
 
   @override
@@ -136,10 +140,13 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                               fontSize: 16),
                         ),
                       ),
-                      InfoScreen(
-                          tittle: 'Emergency Contact Information',
-                          description: "Add details of the person whom you want to contact in case of emergency. So your caretaker can call them.",
-                          height: 200),
+                      Expanded(
+                        child: InfoScreen(
+                            tittle: 'Emergency Contact Information',
+                            description: "Add details of your emergency contact here.",
+                            height: 180),
+                      ),
+                      SizedBox(width: 8,),
                     ],
                   ),
                   sectionHeader('Doctors'),
@@ -305,23 +312,56 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                     fontWeight: FontWeight.w500,
                                     fontFamily: 'Montserrat')),
                           ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.edit,
-                              size: 24,
-                              color: primaryColor,
-                              semanticLabel: 'edit emergency text',
-                            ),
-                            onPressed: () {
-                              _emergencyDetailDialog(true);
-                            },
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                constraints: BoxConstraints(),
+                                icon: Icon(
+                                  Icons.edit,
+                                  size: 24,
+                                  color: primaryColor,
+                                  semanticLabel: 'edit hospitalization details',
+                                ),
+                                onPressed: () {
+                                  _emergencyDetailDialog(true);
+                                },
+                              ),
+                              SizedBox(height: 16,),
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                constraints: BoxConstraints(),
+                                icon: Icon(
+                                  Icons.delete,
+                                  size: 24,
+                                  color: primaryColor,
+                                  semanticLabel: 'delete hospitalization details',
+                                ),
+                                onPressed: () {
+                                  ConfirmationBottomSheet(
+                                      context: context,
+                                      height: 180,
+                                      onPositiveButtonClickListner: () {
+                                        deleteMedicalEmergencyEvent();
+                                        //debugPrint('Positive Button Click');
+                                      },
+                                      onNegativeButtonClickListner: () {
+                                        //debugPrint('Negative Button Click');
+                                      },
+                                      question: 'Are you sure you want to delete this record?',
+                                      tittle: 'Alert!');
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     )
                   else
                     Semantics(
-                      label: 'Yes, I had an emergency',
+                      label: 'Yes, I have been hospitalized',
                       button: true,
                       child: ExcludeSemantics(
                         child: InkWell(
@@ -1574,6 +1614,17 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     } catch (CustomException) {
       model.setBusy(false);
       //progressDialog.close();
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  deleteMedicalEmergencyEvent() async {
+    try {
+        _sharedPrefUtils.remove('emergency');
+        showToast('Hospitalization details record deleted successfully!', context);
+        loadSharedPrefs();
+    } catch (CustomException) {
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
     }

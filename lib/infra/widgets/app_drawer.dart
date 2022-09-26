@@ -203,7 +203,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ),*/
           InkWell(
             onTap: () {
-              Navigator.popAndPushNamed(context, RoutePaths.My_Medications);
+              Navigator.popAndPushNamed(context, RoutePaths.My_Medications, arguments: 0);
             },
             child: Container(
               height: 48,
@@ -420,6 +420,30 @@ class _AppDrawerState extends State<AppDrawer> {
                         color: primaryColor, fontWeight: FontWeight.w600),
                   ),
                 ],
+              ),
+            ),
+          ),
+          Visibility(
+            visible: getAppName() == 'AHA',
+            child: InkWell(
+              onTap: () {
+                Navigator.popAndPushNamed(context, RoutePaths.SUPPORT_NETWORK);
+              },
+              child: Container(
+                height: 48,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 40,
+                    ),
+                    Text(
+                      'Support Network',
+                      style: TextStyle(
+                          color: primaryColor, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

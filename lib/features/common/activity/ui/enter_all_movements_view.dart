@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/activity/models/movements_tracking.dart';
+import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -40,6 +41,10 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
   MovementsTracking? _exerciseMovemntsTracking;
   int exerciseMovements = 0;
   DateTime? todaysDate;
+  var exersizeType = <Answer>[];
+  String radioItem = '';
+  // Group Value for Radio Button.
+  int id = 0;
 
   @override
   void initState() {
@@ -50,7 +55,23 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
     loadStandMovement();
     loadStepsMovement();
     loadExerciseMovement();
+    processAnswer();
     super.initState();
+  }
+
+  processAnswer() {
+
+    exersizeType.add(Answer(
+          1,
+          'Cardio'));
+    exersizeType.add(Answer(
+        2,
+        'Strength'));
+    exersizeType.add(Answer(
+        3,
+        'Mix'));
+
+    setState(() {});
   }
 
   loadStandMovement() async {
@@ -260,11 +281,13 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                         fontSize: 12),
                   ),
                 ),
-                InfoScreen(
-                    tittle: 'Stand Information',
-                    description:
-                        'Standing is better for the back than sitting. It strengthens leg muscles and improves balance. It burns more calories than sitting.',
-                    height: 208),
+                /*Expanded(
+                  child: InfoScreen(
+                      tittle: 'Stand Information',
+                      description:
+                          'Standing is better for the back than sitting. It strengthens leg muscles and improves balance. It burns more calories than sitting.',
+                      height: 208),
+                ),*/
               ],
             ),
             const SizedBox(
@@ -357,11 +380,13 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                         fontSize: 12),
                   ),
                 ),
-                InfoScreen(
-                    tittle: 'Steps Information',
-                    description:
-                        'Steps will increase cardiovascular and pulmonary (heart and lung) fitness. reduced risk of heart disease and stroke. improved management of conditions such as hypertension (high blood pressure), high cholesterol, joint, and muscular pain or stiffness, and diabetes. stronger bones and improved balance.',
-                    height: 288),
+                /*Expanded(
+                  child: InfoScreen(
+                      tittle: 'Steps Information',
+                      description:
+                          'Steps will increase cardiovascular and pulmonary (heart and lung) fitness. reduced risk of heart disease and stroke. improved management of conditions such as hypertension (high blood pressure), high cholesterol, joint, and muscular pain or stiffness, and diabetes. stronger bones and improved balance.',
+                      height: 288),
+                ),*/
               ],
             ),
             const SizedBox(
@@ -452,11 +477,13 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                         fontSize: 12),
                   ),
                 ),
-                InfoScreen(
-                    tittle: 'Exercise Information',
-                    description:
-                        'Regular physical activity can improve your muscle strength and boost your endurance. Exercise delivers oxygen and nutrients to your tissues and helps your cardiovascular system work more efficiently. And when your heart and lung health improve, you have more energy to tackle daily chores.',
-                    height: 268),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Exercise Information',
+                      description:
+                          'Fit in 150+\nGet at least 150 minutes per week of moderate-intensity aerobic activity or 75 minutes per week of vigorous aerobic activity (or a combination of both), preferably spread throughout the week.',
+                      height: 248),
+                ),
               ],
             ),
             const SizedBox(
@@ -499,6 +526,21 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                   ),
                 ),
               ],
+            ),
+            Column(
+              children: exersizeType
+                  .map((data) => RadioListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(data.text),
+                groupValue: id,
+                value: data.index,
+                onChanged: (dynamic val) {
+                  setState(() {
+                    radioItem = data.text;
+                    id = data.index;
+                  });
+                },
+              )).toList(),
             ),
           ],
         ),
@@ -583,6 +625,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
       } else {
         _exerciseMovemntsTracking!.value =
             _exerciseMovemntsTracking!.value! + time;
+        _exerciseMovemntsTracking!.date = startDate;
         _sharedPrefUtils.save(
             'exerciseTime', _exerciseMovemntsTracking!.toJson());
       }
@@ -612,11 +655,16 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
 
   clearAllFeilds() {
     if (toastDisplay) {
+      id = 0;
+      radioItem = '';
       _scrollController.animateTo(0.0,
           duration: Duration(seconds: 2), curve: Curves.ease);
       showToast('Record Updated Successfully!', context);
       toastDisplay = false;
     }
+    setState(() {
+
+    });
   }
 
   recordMySteps() async {

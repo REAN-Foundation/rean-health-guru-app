@@ -277,11 +277,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 const SizedBox(
                   width: 8,
                 ),
-                InfoScreen(
-                    tittle: 'Weight Information',
-                    description:
-                        'Your doctor typically will record your weight during your regular health care visits. Please refer to your doctor\'s recommended frequency of measuring your weight at home.',
-                    height: 220),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Weight Information',
+                      description:
+                      'Achieving and maintaining a healthy weight is beneficial in loweing your risk for heart disease and stroke. Please refer to your doctor\'s recommended healthy weight range and frequency of measuring your weight at home.',
+                      height: 240),
+                ),
               ],
             ),
             const SizedBox(
@@ -369,11 +371,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   const SizedBox(
                     width: 8,
                   ),
-                  InfoScreen(
-                      tittle: 'Blood Pressure Information',
-                      description:
-                          'Your blood pressure will be measured at your regular health care visits or at least once per year if blood pressure is less than 120/80 mm Hg.  Your doctor might recommend you monitor your blood pressure at home. Your blood pressure readings can be categorized as (in mm Hg): *Normal: Less than 120/80; Elevated: Systolic 120-129 AND Diastolic less than 80; *High Blood Pressure Stage 1: Systolic 130-139 OR Diastolic 80-89; *High Blood Pressure Stage 2: Sytsolic 140+ OR Diasotlic 90+; Hypertensive Crisis (Consult your doctor immediately): Systolic 180+ and/or Diastolic 180+.',
-                      height: 380),
+                  Expanded(
+                    child: InfoScreen(
+                        tittle: 'Blood Pressure Information',
+                        description:
+                        'If your blood pressure is below 120/80 mm Hg, be sure to get it checked at least once every two years, starting at age 20. If your blood pressure is higher, your doctor may want to check it more often. High blood pressure can be controlled through lifestyle changes and/or medication. \n*Normal: Less than 120/80 \n*Elevated: Systolic 120-129 AND Diastolic less than 80 \n*High Blood Pressure Stage 1: Systolic 130-139 OR Diastolic 80-89 \n*High Blood Pressure Stage 2: Systolic 140+ OR Diastolic 90+ \n*Hypertensive Crisis (Consult your doctor immediately): Systolic 180+ and/or Diastolic 120+',
+                        height: 408),
+                  ),
                 ],
               ),
               const SizedBox(
@@ -659,11 +663,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 SizedBox(
                   width: 8,
                 ),
-                InfoScreen(
-                    tittle: 'Blood Glucose Information',
-                    description:
-                        'The American Diabetes Association recommends testing for prediabetes and risk for future diabetes for all people beginning at age 45 years. If tests are normal, it is reasonable to repeat testing at a minimum of 3-year intervals.',
-                    height: 240),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Blood Glucose Information',
+                      description:
+                      'High blood glucose or "blood sugar" levels put you at greater risk of developing insulin resistance, prediabetes and type 2 diabetes. Prediabetes and Type 2 diabetes increases risk of heart disease and stroke. Blood glucose is measured through a blood test.\n\nPrediabetes: Fasting blood glucose range is 100 to 125 mg/dL\nDiabetes mellitus (Type 2 diabetes): 126 mg/dL',
+                      height: 320),
+                ),
               ],
             ),
             const SizedBox(
@@ -764,10 +770,12 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   ),
                 ),
                 SizedBox(width: 16,),
-                InfoScreen(
-                    tittle: 'Blood Oxygen Saturation Information',
-                    description: "Oxygen saturation is an essential element in the management and understanding of patient care. A healthy blood oxygen level varies between 75 and 100 millimeters of mercury (mm Hg).",
-                    height: 240),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Blood Oxygen Saturation Information',
+                      description: "Pulse oximetry testing is conducted to estimate the percentage of hemoglobin in the blood that is saturated with oxygen.",
+                      height: 220),
+                ),
               ],
             ),
             const SizedBox(
@@ -863,11 +871,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 SizedBox(
                   width: 8,
                 ),
-                InfoScreen(
-                    tittle: 'Pulse Rate Information',
-                    description:
-                        'Your heart rate, or pulse, is the number of times your heart beats per minute. Normal heart rate varies from person to person. For most of us (adults), between 60 and 100 beats per minute (bpm) is normal.',
-                    height: 240),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Pulse Rate Information',
+                      description:
+                          'Your heart rate, or pulse, is the number of times your heart beats per minute. Normal heart rate varies from person to person. For most of us (adults), between 60 and 100 beats per minute (bpm) is normal. ',
+                      height: 240),
+                ),
               ],
             ),
             const SizedBox(
@@ -956,10 +966,12 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                   ),
                 ),
                 SizedBox(width: 4,),
-                InfoScreen(
-                    tittle: 'Body Temperature Information',
-                    description: "In particular, enzymes in a body's cells must have the correct temperature to be able to catalyse chemical reactions. The optimal temperature of the human body is 37 °C (98.6 °F), but various factors can affect this value, including exposure to the elements in the environment.",
-                    height: 280),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Body Temperature Information',
+                      description: "The optimal temperature of the human body is 37 °C (98.6 °F), but various factors can affect this value, including exposure to the elements in the environment.",
+                      height: 220),
+                ),
               ],
             ),
             const SizedBox(

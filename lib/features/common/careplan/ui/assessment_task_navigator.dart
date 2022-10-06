@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/answer_assessment_response.dart';
 import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
@@ -48,6 +49,7 @@ class _AssesmentTaskNavigatorViewState
   @override
   void initState() {
     debugPrint("Assessment ==> 2");
+    debugPrint('Assessment Name ==> ${widget.task!.action!.assessment!.title}');
     //progressDialog = ProgressDialog(context: context);
     startAssesmentResponse();
     super.initState();
@@ -458,7 +460,13 @@ class _AssesmentTaskNavigatorViewState
         if (_answerAssesmentResponse.message ==
             'Assessment has completed successfully!') {
           //showToast(_answerAssesmentResponse.message.toString(), context);
-          showSuccessDialog();
+          if(widget.task!.action!.assessment!.title == 'Quality of Life Questionnaire'){
+            Navigator.popAndPushNamed(context, RoutePaths.Assessment_Score_Navigator,
+                arguments: widget.task!.action!.assessment!.id);
+          }else {
+            showSuccessDialog();
+          }
+
         } else {
           getNextQuestionAssesmentResponse();
           debugPrint(
@@ -499,7 +507,12 @@ class _AssesmentTaskNavigatorViewState
         if (_answerAssesmentResponse.message ==
             'Assessment has completed successfully!') {
           //showToast(_answerAssesmentResponse.message.toString(), context);
-          showSuccessDialog();
+          if(widget.task!.action!.assessment!.title == 'Quality of Life Questionnaire'){
+            Navigator.popAndPushNamed(context, RoutePaths.Assessment_Score_Navigator,
+                arguments: widget.task!.action!.assessment!.id);
+          }else {
+            showSuccessDialog();
+          }
         } else {
           getNextQuestionAssesmentResponse();
           debugPrint(

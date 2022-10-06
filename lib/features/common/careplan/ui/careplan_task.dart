@@ -1918,6 +1918,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               //showToast('Task completed successfully', context);
             });
           } else {
+            /*Navigator.pushNamed(context, RoutePaths.Assessment_Score_Navigator,
+                arguments: task.action!.assessment!.id)
+                .then((value) {
+              getUserTask();
+              //showToast('Task completed successfully', context);
+            });*/
             showToast('Task is already completed', context);
           }
           //Navigator.pushNamed(context, RoutePaths.Assessment_Start_Care_Plan);

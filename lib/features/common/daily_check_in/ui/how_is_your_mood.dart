@@ -35,7 +35,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 500,
+        height: 620,
         color: Colors.transparent,
         child: Container(
           decoration: BoxDecoration(
@@ -634,6 +634,155 @@ class _HowIsYourMood extends State<HowIsYourMood>
                                 height: 8,
                               ),
                               Text('Hopeful',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                        delay: delayedAmount + 3000,
+                      ),
+                    ),
+                  ),
+                  Semantics(
+                    label: 'Calm',
+                    child: InkWell(
+                      onTap: () {
+                        selectedFeelings = 9;
+                        dailyMood = 'Calm';
+                        setState(() {});
+                        Future.delayed(const Duration(milliseconds: 300),
+                                () => showDailyCheckIn());
+                      },
+                      child: DelayedAnimation(
+                        child: ExcludeSemantics(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Stack(
+                                alignment: Alignment.topRight,
+                                children: [
+                                  Container(
+                                    height: 80,
+                                    width: 80,
+                                    child: Image.asset(
+                                      'res/images/dailyCheckIn/ic_calm.png',
+                                      height: 80,
+                                      width: 80,
+                                    ),
+                                  ),
+                                  if (selectedFeelings == 9)
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          border: Border.all(
+                                            color: Colors.green,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(24)),
+                                        ),
+                                        child: Icon(
+                                          Icons.check,
+                                          size: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    Container(),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Calm',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
+                        delay: delayedAmount + 3000,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Semantics(
+                    label: 'Status Quo',
+                    child: InkWell(
+                      onTap: () {
+                        selectedFeelings = 10;
+                        dailyMood = 'Status Quo';
+                        setState(() {});
+                        Future.delayed(const Duration(milliseconds: 300),
+                                () => showDailyCheckIn());
+                      },
+                      child: DelayedAnimation(
+                        child: ExcludeSemantics(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Stack(
+                                alignment: Alignment.topRight,
+                                children: [
+                                  Container(
+                                    height: 80,
+                                    width: 80,
+                                    child: Image.asset(
+                                      'res/images/dailyCheckIn/ic_stats_quo.png',
+                                      height: 80,
+                                      width: 80,
+                                    ),
+                                  ),
+                                  if (selectedFeelings == 10)
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          border: Border.all(
+                                            color: Colors.green,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(24)),
+                                        ),
+                                        child: Icon(
+                                          Icons.check,
+                                          size: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    Container(),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text('Status Quo',
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,

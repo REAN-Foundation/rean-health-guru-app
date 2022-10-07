@@ -460,12 +460,12 @@ class _AssesmentTaskNavigatorViewState
         if (_answerAssesmentResponse.message ==
             'Assessment has completed successfully!') {
           //showToast(_answerAssesmentResponse.message.toString(), context);
-          if(widget.task!.action!.assessment!.title == 'Quality of Life Questionnaire'){
+          /*if(widget.task!.action!.assessment!.title == 'Quality of Life Questionnaire'){
             Navigator.popAndPushNamed(context, RoutePaths.Assessment_Score_Navigator,
                 arguments: widget.task!.action!.assessment!.id);
-          }else {
+          }else {*/
             showSuccessDialog();
-          }
+          //}
 
         } else {
           getNextQuestionAssesmentResponse();
@@ -507,12 +507,7 @@ class _AssesmentTaskNavigatorViewState
         if (_answerAssesmentResponse.message ==
             'Assessment has completed successfully!') {
           //showToast(_answerAssesmentResponse.message.toString(), context);
-          if(widget.task!.action!.assessment!.title == 'Quality of Life Questionnaire'){
-            Navigator.popAndPushNamed(context, RoutePaths.Assessment_Score_Navigator,
-                arguments: widget.task!.action!.assessment!.id);
-          }else {
             showSuccessDialog();
-          }
         } else {
           getNextQuestionAssesmentResponse();
           debugPrint(
@@ -720,10 +715,15 @@ class _AssesmentTaskNavigatorViewState
               Padding(padding: EdgeInsets.only(top: 20.0)),
               InkWell(
                 onTap: () {
-                  Navigator.pushAndRemoveUntil(context,
-                      MaterialPageRoute(builder: (context) {
-                    return HomeView(1);
-                  }), (Route<dynamic> route) => false);
+                  if(widget.task!.action!.assessment!.title == 'Quality of Life Questionnaire'){
+                      Navigator.popAndPushNamed(context, RoutePaths.Assessment_Score_Navigator,
+                      arguments: widget.task!.action!.assessment!.id);
+                  }else {
+                    Navigator.pushAndRemoveUntil(context,
+                        MaterialPageRoute(builder: (context) {
+                          return HomeView(1);
+                        }), (Route<dynamic> route) => false);
+                  }
                 },
                 child: Container(
                   height: 48,
@@ -737,7 +737,7 @@ class _AssesmentTaskNavigatorViewState
                       color: primaryColor),
                   child: Center(
                     child: Text(
-                      'Go to my tasks',
+                      widget.task!.action!.assessment!.title == 'Quality of Life Questionnaire' ? 'Show my score' :'Go to my tasks',
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           color: Colors.white,

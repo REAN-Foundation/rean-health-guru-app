@@ -387,7 +387,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   Widget _createToDos(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
-
+    debugPrint('Type ==> ${task.actionType}');
     return /*task.task == 'News feed'
         ? Container()
         : */
@@ -749,6 +749,25 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
                                       color: Color(0XFF909CAC))),
+                              task.task == 'Quality of Life Questionnaire' && task.finished ?
+                              Text('Show my score',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      shadows: [
+                                        Shadow(
+                                            color: Colors.lightBlueAccent,
+                                            offset: Offset(0, -5))
+                                      ],
+                                      fontSize: 12.0,
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.transparent,
+                                      decoration:
+                                      TextDecoration.underline,
+                                      decorationColor: Colors.lightBlueAccent,
+                                      decorationThickness: 1,))
+                                  : Container()
                             ],
                           ),
                         ),
@@ -1210,6 +1229,15 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                       : Container(),
                                 ],
                               ),
+                              task.task == 'Quality of Life Questionnaire' && task.finished ?
+                              Text('Show my score',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.w300,
+                                      color: textBlack))
+                                  : Container()
                               /*SizedBox(
                                 height: 4,
                               ),

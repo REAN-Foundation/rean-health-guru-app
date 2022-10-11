@@ -364,7 +364,7 @@ class _BiometricBloodPresureVitalsViewState
         ));
   }
 
-  oldLogic(){
+  /*oldLogic(){
     int bmiLeftSideValue = 0;
     int bmiRightSideValue = 0;
     String value = '';
@@ -382,26 +382,26 @@ class _BiometricBloodPresureVitalsViewState
       debugPrint('Elevated BP');
       value = 'Elevated';
       valeTextColor = Color(0XFFFBED4F);
-    }else if(sytolicBloodPressure >= 130 && sytolicBloodPressure <= 139 /*|| (diastolicBloodPressure >= 81 && diastolicBloodPressure <= 89)*/){
+    }else if(sytolicBloodPressure >= 130 && sytolicBloodPressure <= 139 *//*|| (diastolicBloodPressure >= 81 && diastolicBloodPressure <= 89)*//*){
       bmiLeftSideValue = 17;
       bmiRightSideValue = 17;
       debugPrint('Stage 1 BP');
       value = 'Stage 1';
       valeTextColor = Color(0XFFFBB601);
-    }else if(sytolicBloodPressure >= 140 && sytolicBloodPressure <= 180 /*|| (diastolicBloodPressure >= 90 && diastolicBloodPressure <= 120)*/){
+    }else if(sytolicBloodPressure >= 140 && sytolicBloodPressure <= 180 *//*|| (diastolicBloodPressure >= 90 && diastolicBloodPressure <= 120)*//*){
       bmiLeftSideValue = 23;
       bmiRightSideValue = 9;
       debugPrint('Stage 2 BP');
       value = 'Stage 2';
       valeTextColor = Color(0XFFBA3903);
-    }else if(sytolicBloodPressure > 180 /*&& diastolicBloodPressure > 120*/){
+    }else if(sytolicBloodPressure > 180 *//*&& diastolicBloodPressure > 120*//*){
       bmiLeftSideValue = 28;
       bmiRightSideValue = 2;
       debugPrint('Crisis BP');
       value = 'Crisis';
       valeTextColor = Color(0XFF991112);
     }
-  }
+  }*/
 
 
   Widget bpScale(){
@@ -446,7 +446,7 @@ class _BiometricBloodPresureVitalsViewState
         debugPrint('Diastolic Stage 2 BP');
         value = 'Stage 2';
         valeTextColor = Color(0XFFBA3903);
-      }else{
+      }else if(diastolicBloodPressure > 120){
         bmiLeftSideValue = 28;
         bmiRightSideValue = 2;
         debugPrint('Diastolic Crisis BP');
@@ -454,7 +454,7 @@ class _BiometricBloodPresureVitalsViewState
         valeTextColor = Color(0XFF991112);
       }
 
-    }else if((sytolicBloodPressure >= 120 && sytolicBloodPressure <= 129) /*&& diastolicBloodPressure <= 80*/){
+    }else if(sytolicBloodPressure >= 120 && sytolicBloodPressure <= 129 /*&& diastolicBloodPressure <= 80*/){
       bmiLeftSideValue = 9;
       bmiRightSideValue = 23;
       debugPrint('Elevated BP');
@@ -478,7 +478,7 @@ class _BiometricBloodPresureVitalsViewState
         debugPrint('Diastolic Stage 2 BP');
         value = 'Stage 2';
         valeTextColor = Color(0XFFBA3903);
-      }else{
+      }else if(diastolicBloodPressure > 120){
         bmiLeftSideValue = 28;
         bmiRightSideValue = 2;
         debugPrint('Diastolic Crisis BP');
@@ -503,7 +503,7 @@ class _BiometricBloodPresureVitalsViewState
         debugPrint('Diastolic Stage 2 BP');
         value = 'Stage 2';
         valeTextColor = Color(0XFFBA3903);
-      }else{
+      }else if(diastolicBloodPressure > 120){
         bmiLeftSideValue = 28;
         bmiRightSideValue = 2;
         debugPrint('Diastolic Crisis BP');
@@ -522,7 +522,7 @@ class _BiometricBloodPresureVitalsViewState
         debugPrint('Diastolic Stage 2 BP');
         value = 'Stage 2';
         valeTextColor = Color(0XFFBA3903);
-      }else{
+      }else if(diastolicBloodPressure > 120){
         bmiLeftSideValue = 28;
         bmiRightSideValue = 2;
         debugPrint('Diastolic Crisis BP');

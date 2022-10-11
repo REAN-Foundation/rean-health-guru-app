@@ -7,6 +7,7 @@ import 'package:patient/features/misc/ui/home_view.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 
+//ignore: must_be_immutable
 class AssessmentScorePlanView extends StatefulWidget {
   String? taskId;
 
@@ -21,17 +22,17 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  AssessmentScore? _assessmentScore;
+  AssessmentScore? assessmentScore;
   String score = '';
 
   getAssessmentScore() async {
     try {
-      _assessmentScore =
+      assessmentScore =
           await model.getAssessmentScore(widget.taskId.toString());
 
-      if (_assessmentScore!.status == 'success') {
-        debugPrint('Assessment Score ==> ${_assessmentScore!.toJson()}');
-        score = _assessmentScore!.data!.score!.overallSummaryScore!.toStringAsFixed(2);
+      if (assessmentScore!.status == 'success') {
+        debugPrint('Assessment Score ==> ${assessmentScore!.toJson()}');
+        score = assessmentScore!.data!.score!.overallSummaryScore!.toStringAsFixed(2);
         setState(() {
         });
       } else {}

@@ -71,12 +71,12 @@ class Data {
 
 class Score {
   Score({
-      dynamic? physicalLimitationKCCQPLScore, 
-      dynamic? symptomFrequencyKCCQSFScore, 
-      dynamic? qualityOfLifeKCCQQLScore, 
-      dynamic? socialLimitationKCCQSLScore, 
-      dynamic? clinicalSummaryScore, 
-      dynamic? overallSummaryScore,}){
+      dynamic physicalLimitationKCCQPLScore,
+      dynamic symptomFrequencyKCCQSFScore,
+      dynamic qualityOfLifeKCCQQLScore,
+      dynamic socialLimitationKCCQSLScore,
+      dynamic clinicalSummaryScore,
+      dynamic overallSummaryScore,}){
     _physicalLimitationKCCQPLScore = physicalLimitationKCCQPLScore;
     _symptomFrequencyKCCQSFScore = symptomFrequencyKCCQSFScore;
     _qualityOfLifeKCCQQLScore = qualityOfLifeKCCQQLScore;
@@ -93,19 +93,19 @@ class Score {
     _clinicalSummaryScore = json['ClinicalSummaryScore'];
     _overallSummaryScore = json['OverallSummaryScore'];
   }
-  dynamic? _physicalLimitationKCCQPLScore;
-  dynamic? _symptomFrequencyKCCQSFScore;
-  dynamic? _qualityOfLifeKCCQQLScore;
-  dynamic? _socialLimitationKCCQSLScore;
-  dynamic? _clinicalSummaryScore;
-  dynamic? _overallSummaryScore;
+  dynamic _physicalLimitationKCCQPLScore;
+  dynamic _symptomFrequencyKCCQSFScore;
+  dynamic _qualityOfLifeKCCQQLScore;
+  dynamic _socialLimitationKCCQSLScore;
+  dynamic _clinicalSummaryScore;
+  dynamic _overallSummaryScore;
 
-  dynamic? get physicalLimitationKCCQPLScore => _physicalLimitationKCCQPLScore;
-  dynamic? get symptomFrequencyKCCQSFScore => _symptomFrequencyKCCQSFScore;
-  dynamic? get qualityOfLifeKCCQQLScore => _qualityOfLifeKCCQQLScore;
-  dynamic? get socialLimitationKCCQSLScore => _socialLimitationKCCQSLScore;
-  dynamic? get clinicalSummaryScore => _clinicalSummaryScore;
-  dynamic? get overallSummaryScore => _overallSummaryScore;
+  dynamic get physicalLimitationKCCQPLScore => _physicalLimitationKCCQPLScore;
+  dynamic get symptomFrequencyKCCQSFScore => _symptomFrequencyKCCQSFScore;
+  dynamic get qualityOfLifeKCCQQLScore => _qualityOfLifeKCCQQLScore;
+  dynamic get socialLimitationKCCQSLScore => _socialLimitationKCCQSLScore;
+  dynamic get clinicalSummaryScore => _clinicalSummaryScore;
+  dynamic get overallSummaryScore => _overallSummaryScore;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

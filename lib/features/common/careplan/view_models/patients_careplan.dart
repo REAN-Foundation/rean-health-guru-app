@@ -235,7 +235,7 @@ class PatientCarePlanViewModel extends BaseModel {
             dateFrom +
             '&scheduledTo=' +
             dateTo +
-            '&itemsPerPage=200',
+            '&itemsPerPage=400',
         header: map);
 
     setBusy(false);

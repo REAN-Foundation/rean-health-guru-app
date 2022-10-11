@@ -2,8 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_picker/flutter_picker.dart';
 import 'package:group_radio_button/group_radio_button.dart';
+import 'package:patient/features/common/activity/ui/add_height_cm_dialog.dart';
+import 'package:patient/features/common/activity/ui/add_height_ft_n_Inch_dialog.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_medical_profile_pojo.dart';
 import 'package:patient/features/misc/view_models/patients_observation.dart';
@@ -66,7 +67,7 @@ class _EditPatientMedicalProfileViewState
   int height = 0;
   late var heightArray;
 
-  int heightInFt = 1;
+  int heightInFt = 0;
   int heightInInch = 0;
   String heightInDouble = '0.0';
   late var heightArry;
@@ -104,6 +105,12 @@ class _EditPatientMedicalProfileViewState
       heightArry = heightInDouble.toString().split('.');
       heightInFt = int.parse(heightArry[0]);
       heightInInch = int.parse(heightArry[1]);
+
+      if(heightInInch == 12){
+        heightInFt = heightInFt + 1;
+        heightInInch = 0;
+        heightInDouble = heightInFt.toString()+'.0';
+      }
 
       debugPrint('Conversion Height => $heightInFt ft $heightInInch inch');
 
@@ -753,9 +760,17 @@ class _EditPatientMedicalProfileViewState
                               TextButton(
                                   onPressed: () {
                                     if (getCurrentLocale() == 'US') {
-                                      showHeightPickerInFoot(context);
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) {
+                                            return _addHeightInFtnInchDialog(context);
+                                          });
                                     } else {
-                                      showHeightPickerCms(context);
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) {
+                                            return _addHeightInCmDialog(context);
+                                          });
                                     }
                                   },
                                   child: Text(
@@ -812,8 +827,79 @@ class _EditPatientMedicalProfileViewState
     );
   }*/
 
-  showHeightPickerInFoot(BuildContext context) {
-    Picker(
+  /*showHeightPickerInFoot(BuildContext context) {
+    debugPrint("Inside US Height 123");
+    Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        //child: addOrEditAllergiesDialog(context),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 340,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Biometrics',
+                        semanticsLabel: 'Biometrics',
+                        style: TextStyle(
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                            fontSize: 18.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    alignment: Alignment.topRight,
+                    icon: Icon(
+                      Icons.close,
+                      color: primaryColor,
+                      semanticLabel: 'Close',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: AddBMIDetailDialog(
+                  submitButtonListner: (double weight, double height) {
+
+
+                    debugPrint(
+                        'Height : $height  Weight: ${weight.roundToDouble()}');
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  height: height,
+                  weight: 225,
+                ),
+              )
+            ],
+          ),
+        ));
+
+    *//*Picker(
         adapter: NumberPickerAdapter(data: [
           NumberPickerColumn(
             begin: 1,
@@ -859,10 +945,164 @@ class _EditPatientMedicalProfileViewState
           setState(() {
             showToast('Height record created successfully!', context);
           });
-        }).showDialog(context);
+        }).showDialog(context);*//*
+  }*/
+
+  Widget _addHeightInFtnInchDialog(BuildContext context) {
+    return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        //child: addOrEditAllergiesDialog(context),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 240,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Height',
+                        semanticsLabel: 'Height',
+                        style: TextStyle(
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                            fontSize: 18.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    alignment: Alignment.topRight,
+                    icon: Icon(
+                      Icons.close,
+                      color: primaryColor,
+                      semanticLabel: 'Close',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: AddHeightInFtNInchDialog(
+                  submitButtonListner: (int heightInFeet, int heightInInches) {
+                    var localHeight = Conversion.FeetAndInchToCm(
+                        heightInFeet,
+                        heightInInches);
+                    _sharedPrefUtils.saveDouble('height', double.parse(localHeight));
+                    height = int.parse(localHeight);
+                    conversion();
+                    debugPrint('Selected Height ==> $localHeight');
+                    setState(() {
+                      showToast('Height record created successfully!', context);
+                    });
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  heightInFeet: heightInFt,
+                  heightInInches: heightInInch,
+                ),
+              )
+            ],
+          ),
+        ));
   }
 
-  showHeightPickerCms(BuildContext context) {
+  Widget _addHeightInCmDialog(BuildContext context) {
+    return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        //child: addOrEditAllergiesDialog(context),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 240,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Height',
+                        semanticsLabel: 'Height',
+                        style: TextStyle(
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                            fontSize: 18.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    alignment: Alignment.topRight,
+                    icon: Icon(
+                      Icons.close,
+                      color: primaryColor,
+                      semanticLabel: 'Close',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: AddHeightInCmDialog(
+                  submitButtonListner: (int heightInCm) {
+                    var localHeight =
+                    double.parse(heightInCm.toString());
+                    _sharedPrefUtils.saveDouble('height', localHeight);
+                    height = localHeight.toInt();
+                    conversion();
+                    debugPrint('Selected Height ==> $localHeight');
+                    setState(() {
+                      showToast('Height record created successfully!', context);
+                    });
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  heightInCm: height.toInt(),
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+
+  /*showHeightPickerCms(BuildContext context) {
     Picker(
         adapter: NumberPickerAdapter(data: [
           NumberPickerColumn(
@@ -895,7 +1135,7 @@ class _EditPatientMedicalProfileViewState
             showToast('Height record created successfully!', context);
           });
         }).showDialog(context);
-  }
+  }*/
 
   _updatePatientMedicalProfile() async {
     try {

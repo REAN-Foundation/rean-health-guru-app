@@ -750,23 +750,26 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                       fontWeight: FontWeight.w300,
                                       color: Color(0XFF909CAC))),
                               task.task == 'Quality of Life Questionnaire' && task.finished ?
-                              Text('Show my score',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      shadows: [
-                                        Shadow(
-                                            color: Colors.lightBlueAccent,
-                                            offset: Offset(0, -5))
-                                      ],
-                                      fontSize: 12.0,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.transparent,
-                                      decoration:
-                                      TextDecoration.underline,
-                                      decorationColor: Colors.lightBlueAccent,
-                                      decorationThickness: 1,))
+                              Semantics(
+                                button: true,
+                                child: Text('Show my score',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        shadows: [
+                                          Shadow(
+                                              color: Colors.blue,
+                                              offset: Offset(0, -5))
+                                        ],
+                                        fontSize: 12.0,
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w300,
+                                        color: Colors.transparent,
+                                        decoration:
+                                        TextDecoration.underline,
+                                        decorationColor: Colors.blue,
+                                        decorationThickness: 1,)),
+                              )
                                   : Container()
                             ],
                           ),
@@ -1230,13 +1233,16 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 ],
                               ),
                               task.task == 'Quality of Life Questionnaire' && task.finished ?
-                              Text('Show my score',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w300,
-                                      color: textBlack))
+                              Semantics(
+                                button: true,
+                                child: Text('Show my score',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w300,
+                                        color: textBlack)),
+                              )
                                   : Container()
                               /*SizedBox(
                                 height: 4,

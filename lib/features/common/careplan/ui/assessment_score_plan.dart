@@ -53,7 +53,7 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
   Widget _getRadialGauge() {
     return Semantics(
         label: 'Assessment Score ',
-        value: score,
+        //value: score,
       child: SfRadialGauge(
           enableLoadingAnimation: true,
           animationDuration: 4500,
@@ -181,85 +181,92 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
                           ? Center(
                               child: CircularProgressIndicator(),
                             )
-                          : SingleChildScrollView(
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                                    child: _getGauge(),
-                                  ),
-                                  /*Semantics(
-                                    label: 'Success image',
-                                    image: true,
-                                    child: Image.asset(
-                                      'res/images/ic_careplan_success_tumbs_up.png',
-                                      width: 200,
-                                      height: 200,
+                          : Scrollbar(
+                            isAlwaysShown: true,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(height: 30,),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                      child: _getGauge(),
                                     ),
-                                  ),*/
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                                    child: Text(
-                                      'Scores are scaled 0-100, where 0 denotes the lowest reportable health status and 100 the highest.',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: "Montserrat",
-                                          fontStyle: FontStyle.normal,
-                                          fontSize: 14.0),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(15.0),
-                                    child: Text(
-                                      'Your sense of well-being and satisfaction with medical care. Higher score means better quality of life.',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: "Montserrat",
-                                          fontStyle: FontStyle.normal,
-                                          fontSize: 14.0),
-                                    ),
-                                  ),
-                                  Padding(padding: EdgeInsets.only(top: 10.0)),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.pushAndRemoveUntil(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return HomeView(1);
-                                      }), (Route<dynamic> route) => false);
-                                    },
-                                    child: Container(
-                                      height: 48,
-                                      width: 260,
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 16.0,
+                                    /*Semantics(
+                                      label: 'Success image',
+                                      image: true,
+                                      child: Image.asset(
+                                        'res/images/ic_careplan_success_tumbs_up.png',
+                                        width: 200,
+                                        height: 200,
                                       ),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(6.0),
-                                          border: Border.all(
-                                              color: primaryColor, width: 1),
-                                          color: primaryColor),
-                                      child: Center(
-                                        child: Text(
-                                          'Go to my tasks',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white,
-                                              fontSize: 14),
+                                    ),*/
+                                    SizedBox(height: 20,),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                      child: Text(
+                                        'Scores are scaled 0-100, where 0 denotes the lowest reportable health status and 100 the highest.',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: "Montserrat",
+                                            fontStyle: FontStyle.normal,
+                                            fontSize: 12.0),
+                                      ),
+                                    ),
+                                    SizedBox(height: 20,),
+                                    Padding(
+                                      padding: EdgeInsets.all(15.0),
+                                      child: Text(
+                                        'Your sense of well-being and satisfaction with medical care. Higher score means better quality of life.',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: "Montserrat",
+                                            fontStyle: FontStyle.normal,
+                                            fontSize: 14.0),
+                                      ),
+                                    ),
+                                    Padding(padding: EdgeInsets.only(top: 10.0)),
+                                    SizedBox(height: 30,),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushAndRemoveUntil(context,
+                                            MaterialPageRoute(builder: (context) {
+                                          return HomeView(1);
+                                        }), (Route<dynamic> route) => false);
+                                      },
+                                      child: Container(
+                                        height: 48,
+                                        width: 260,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 16.0,
+                                        ),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(6.0),
+                                            border: Border.all(
+                                                color: primaryColor, width: 1),
+                                            color: primaryColor),
+                                        child: Center(
+                                          child: Text(
+                                            'Go to my tasks',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white,
+                                                fontSize: 14),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    height: 20,
-                                  ),
-                                ],
-                              ),
+                                    Container(
+                                      height: 20,
+                                    ),
+                                  ],
+                                ),
+                            ),
                           ),
                     ),
                   )

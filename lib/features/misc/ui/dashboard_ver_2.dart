@@ -3193,7 +3193,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
         if(haveYouDoneWithPhysicalActivity) {
           //showToast('Yes, I had movement today.', context);
         }else{
-          showToast('No, I don\'t had any movement today.', context);
+          showToast('Okay, try to add movement to your day it will help you to stay healthy.', context);
         }
       } else {}
     } on FetchDataException catch (e) {

@@ -424,7 +424,7 @@ class _AppDrawerState extends State<AppDrawer> {
             ),
           ),
           Visibility(
-            visible: getAppName() == 'AHA',
+            visible: getAppType() == 'AHA',
             child: InkWell(
               onTap: () {
                 Navigator.popAndPushNamed(context, RoutePaths.SUPPORT_NETWORK);

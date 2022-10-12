@@ -387,7 +387,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   Widget _createToDos(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
-
+    debugPrint('Type ==> ${task.actionType}');
     return /*task.task == 'News feed'
         ? Container()
         : */
@@ -749,6 +749,28 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
                                       color: Color(0XFF909CAC))),
+                              task.task == 'Quality of Life Questionnaire' && task.finished ?
+                              Semantics(
+                                button: true,
+                                child: Text('Show my score',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        shadows: [
+                                          Shadow(
+                                              color: Colors.blue,
+                                              offset: Offset(0, -5))
+                                        ],
+                                        fontSize: 12.0,
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w300,
+                                        color: Colors.transparent,
+                                        decoration:
+                                        TextDecoration.underline,
+                                        decorationColor: Colors.blue,
+                                        decorationThickness: 1,)),
+                              )
+                                  : Container()
                             ],
                           ),
                         ),
@@ -1210,6 +1232,18 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                       : Container(),
                                 ],
                               ),
+                              task.task == 'Quality of Life Questionnaire' && task.finished ?
+                              Semantics(
+                                button: true,
+                                child: Text('Show my score',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w300,
+                                        color: textBlack)),
+                              )
+                                  : Container()
                               /*SizedBox(
                                 height: 4,
                               ),
@@ -1918,6 +1952,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               //showToast('Task completed successfully', context);
             });
           } else {
+            Navigator.pushNamed(context, RoutePaths.Assessment_Score_Navigator,
+                arguments: task.action!.assessment!.id)
+                .then((value) {
+              getUserTask();
+              //showToast('Task completed successfully', context);
+            });
             showToast('Task is already completed', context);
           }
           //Navigator.pushNamed(context, RoutePaths.Assessment_Start_Care_Plan);

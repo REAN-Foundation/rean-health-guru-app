@@ -2081,7 +2081,8 @@ class _EditProfileState extends State<EditProfile> {
           clipBehavior: Clip.antiAlias,
           // Add This
           child: Semantics(
-            label: 'saveProfile',
+            label: 'Save Profile',
+            button: true,
             child: MaterialButton(
                 minWidth: 200,
                 child: Text('Save',

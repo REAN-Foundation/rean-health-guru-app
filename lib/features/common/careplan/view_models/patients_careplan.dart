@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:patient/features/common/appointment_booking/models/doctor_list_api_response.dart';
 import 'package:patient/features/common/appointment_booking/models/pharmacy_list_api_response.dart';
+import 'package:patient/features/common/careplan/models/AssessmentScore.dart';
 import 'package:patient/features/common/careplan/models/add_team_member_response.dart';
 import 'package:patient/features/common/careplan/models/answer_assessment_response.dart';
 import 'package:patient/features/common/careplan/models/assesment_response.dart';
@@ -234,7 +235,7 @@ class PatientCarePlanViewModel extends BaseModel {
             dateFrom +
             '&scheduledTo=' +
             dateTo +
-            '&itemsPerPage=200',
+            '&itemsPerPage=400',
         header: map);
 
     setBusy(false);
@@ -430,6 +431,25 @@ class PatientCarePlanViewModel extends BaseModel {
     setBusy(false);
     // Convert and return
     return AssesmentResponse.fromJson(response);
+  }
+
+  Future<AssessmentScore> getAssessmentScore(
+      String assesmentId) async {
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/clinical/assessments/' +
+            assesmentId +
+            '/score',
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return AssessmentScore.fromJson(response);
   }
 
   Future<BaseResponse> addBiometricTask(

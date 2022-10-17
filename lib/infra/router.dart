@@ -25,6 +25,7 @@ import 'package:patient/features/common/careplan/ui/approve_doctor_for_goal_care
 import 'package:patient/features/common/careplan/ui/assessment_final_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/assessment_question_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/assessment_question_two_for_careplan.dart';
+import 'package:patient/features/common/careplan/ui/assessment_score_plan.dart';
 import 'package:patient/features/common/careplan/ui/assessment_start_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/assessment_task_navigator.dart';
 import 'package:patient/features/common/careplan/ui/biometric_task.dart';
@@ -286,6 +287,10 @@ class Routers {
         return MaterialPageRoute(
             builder: (_) =>
                 AssesmentTaskNavigatorView(settings.arguments as UserTask));
+      case RoutePaths.Assessment_Score_Navigator:
+        return MaterialPageRoute(
+            builder: (_) =>
+                AssessmentScorePlanView(settings.arguments as String));
       case RoutePaths.Biometric_Care_Plan_Line:
         return MaterialPageRoute(
             builder: (_) => BiomatricTask(settings.arguments));

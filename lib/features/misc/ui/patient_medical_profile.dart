@@ -45,6 +45,10 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
   double height = 0;
   String heightInFeet = '0';
 
+  int heightInFt = 0;
+  int heightInInch = 0;
+  late var heightArry;
+
   int alcoholIntakeInMililitre = 0;
   AlcoholConsumption? _alcoholConsumption;
 
@@ -59,6 +63,16 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
 
     if(heightInFeet == '0.12'){
       heightInFeet = '1.0';
+    }
+
+    heightArry = heightInFeet.toString().split('.');
+    heightInFt = int.parse(heightArry[0]);
+    heightInInch = int.parse(heightArry[1]);
+
+    if(heightInInch == 12){
+      heightInFt = heightInFt + 1;
+      heightInInch = 0;
+      heightInFeet = heightInFt.toString()+'.0';
     }
 
     setState(() {});

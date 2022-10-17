@@ -5,37 +5,31 @@ import 'package:patient/features/common/careplan/view_models/patients_careplan.d
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
-import 'package:patient/infra/utils/conversion.dart';
 
 // ignore: must_be_immutable
-class AddHeightDialog extends StatefulWidget {
+class AddHeightInCmDialog extends StatefulWidget {
   late Function _submitButtonListner;
-  int? _height;
+  int? _heightInCm;
 
-  // ignore
-  //AllergiesDialog(@required this._allergiesCategoryMenuItems,@required this._allergiesSeveretyMenuItems, @required Function this.submitButtonListner, this.patientId);
-
-  AddHeightDialog(
-      {Key? key, required Function submitButtonListner, int? height})
+  AddHeightInCmDialog(
+      {Key? key, required Function submitButtonListner, int? heightInCm})
       : super(key: key) {
     _submitButtonListner = submitButtonListner;
-    _height = height;
+    _heightInCm = heightInCm;
   }
 
   @override
   _MyDialogState createState() => _MyDialogState();
 }
 
-class _MyDialogState extends State<AddHeightDialog> {
+class _MyDialogState extends State<AddHeightInCmDialog> {
   var model = PatientCarePlanViewModel();
   var doctorSearchList = <Doctors>[];
 
   String unit = 'Kg';
   late var height;
-  final _heightInFeetController = TextEditingController();
-  final _heightInInchesController = TextEditingController();
-  final _heightInFeetFocus = FocusNode();
-  final _heightInInchesFocus = FocusNode();
+  final _heightController = TextEditingController();
+  final _heightFocus = FocusNode();
 
   @override
   void initState() {
@@ -43,18 +37,10 @@ class _MyDialogState extends State<AddHeightDialog> {
       unit = 'lbs';
     }
 
-    if (widget._height != 0.0) {
-      widget._height = int.parse(Conversion.cmToFeet(widget._height!));
-
-      height = widget._height.toString().split('.');
-
-      _heightInFeetController.text = height[0].toString();
-      _heightInFeetController.selection = TextSelection.fromPosition(
-        TextPosition(offset: _heightInFeetController.text.length),
-      );
-      _heightInInchesController.text = height[1].toString();
-      _heightInInchesController.selection = TextSelection.fromPosition(
-        TextPosition(offset: _heightInInchesController.text.length),
+    if (widget._heightInCm != 0.0) {
+      _heightController.text = widget._heightInCm.toString();
+      _heightController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _heightController.text.length),
       );
     }
 
@@ -117,60 +103,18 @@ class _MyDialogState extends State<AddHeightDialog> {
                   child: Semantics(
                     label: 'Height measures in ',
                     child: TextFormField(
-                        controller: _heightInFeetController,
-                        focusNode: _heightInFeetFocus,
+                        controller: _heightController,
+                        focusNode: _heightFocus,
                         maxLines: 1,
-                        maxLength: 2,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.number,
-                        onFieldSubmitted: (term) {
-                          _fieldFocusChange(context, _heightInFeetFocus,
-                              _heightInInchesFocus);
-                        },
-                        inputFormatters: [
-                          FilteringTextInputFormatter.deny(
-                              RegExp('[\\,|\\.|\\+|\\-|\\ ]')),
-                        ],
-                        decoration: InputDecoration(
-                            hintText: 'Feet',
-                            counterText: "",
-                            hintStyle: TextStyle(
-                              fontSize: 14,
-                            ),
-                            contentPadding: EdgeInsets.all(0),
-                            border: InputBorder.none,
-                            fillColor: Colors.white,
-                            filled: true)),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 4,
-              ),
-              Expanded(
-                flex: 8,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: textGrey, width: 1),
-                      color: Colors.white),
-                  child: Semantics(
-                    label: 'Height measures in ',
-                    child: TextFormField(
-                        controller: _heightInInchesController,
-                        focusNode: _heightInInchesFocus,
-                        maxLines: 1,
-                        maxLength: 2,
+                        maxLength: 3,
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.number,
-                        onFieldSubmitted: (term) {},
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(
                               RegExp('[\\,|\\.|\\+|\\-|\\ ]')),
                         ],
                         decoration: InputDecoration(
-                            hintText: 'Inches',
+                            hintText: 'Cm',
                             counterText: "",
                             hintStyle: TextStyle(
                               fontSize: 14,
@@ -193,30 +137,25 @@ class _MyDialogState extends State<AddHeightDialog> {
     );
   }
 
-  _fieldFocusChange(
+/*  _fieldFocusChange(
       BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
-  }
+  }*/
 
   Widget _submitButton() {
     return Align(
       alignment: Alignment.center,
       child: ElevatedButton(
         onPressed: () {
-          if (_heightInFeetController.text.trim().isEmpty) {
-            showToastMsg("Please enter your height in feet", context);
-          } else if (double.parse(_heightInFeetController.text) > 15) {
-            showToastMsg("Please enter valid height in feet", context);
-          } else if (_heightInInchesController.text.trim().isEmpty) {
-            showToastMsg("Please enter your height in inches", context);
-          } else if (double.parse(_heightInInchesController.text) > 12) {
-            showToastMsg("Please enter valid height in inches", context);
+          if (_heightController.text.trim().isEmpty) {
+            showToastMsg("Please enter your height in cm", context);
+          } else if (double.parse(_heightController.text) == 0) {
+            showToastMsg("Please enter valid height in cm", context);
+          } else if (double.parse(_heightController.text) > 500) {
+            showToastMsg("Please enter valid height in cm", context);
           } else {
-            widget._submitButtonListner(Conversion.FeetToCm(double.parse(
-                _heightInFeetController.text +
-                    '.' +
-                    _heightInInchesController.text)));
+            widget._submitButtonListner(int.parse(_heightController.text));
           }
         },
         style: ButtonStyle(

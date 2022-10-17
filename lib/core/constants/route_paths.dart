@@ -64,6 +64,7 @@ class RoutePaths {
   static const String Quiz_Care_Plan = 'quizCarePlan';
   static const String Biometric_Care_Plan_Line = 'biometricCarePlanLine';
   static const String Assessment_Navigator = 'assessmentNavigator';
+  static const String Assessment_Score_Navigator = 'assessmentScoreNavigator';
   static const String Assessment_Start_Care_Plan = 'assessmentStartCarePlan';
   static const String Assessment_Question_Care_Plan =
       'assessmentQuestionCarePlan';

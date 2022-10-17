@@ -53,6 +53,60 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           dateQueryFormat.format(dateTill.subtract(Duration(days: 1))) +
               '&category=Educational');
 
+
+      if (userTaskResponse.status == 'success') {
+        tasksList.clear();
+        //tasksList.addAll(userTaskResponse.data.userTasks.items);
+        if (userTaskResponse.data!.userTasks!.items!.isEmpty) {
+          getAllUserTask();
+        } else {
+          _sortUserTask(
+              userTaskResponse.data!.userTasks!.items!, 'Educational');
+        }
+
+       /* debugPrint('User Educational Tasks ==> ${userTaskResponse.toJson()}');
+        debugPrint(
+            'User Tasks Educational Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');*/
+      } else {
+        tasksList.clear();
+        showToast(userTaskResponse.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      tasksList.clear();
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+  }
+
+  getAllUserTask() async {
+    try {
+      var dateTill;
+      /*if (getBaseUrl()!.contains('aha-api-uat.services') ||
+          getAppName() == 'Heart & Stroke Helper™ ') {
+        dateTill = DateTime.now();
+      } else {*/
+      if(getBaseUrl()!.contains('reancare-api-dev')){
+        dateTill = DateTime.now().add(Duration(days: 91));
+      }else{
+        dateTill = DateTime.now().add(Duration(days: 0));
+      }
+
+      //}
+      //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
+      userTaskResponse = await model.getUserTasks(
+          query,
+          carePlanEnrollmentForPatientGlobe != null
+              ? dateQueryFormat.format(DateTime.parse(
+                  carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+                      .elementAt(0)
+                      .startAt
+                      .toString()))
+              : dateQueryFormat.format(DateTime.now()),
+          carePlanEnrollmentForPatientGlobe != null
+              ? dateQueryFormat.format(dateTill)
+              : dateQueryFormat.format(DateTime.now()));
+
       if (userTaskResponse.status == 'success') {
         tasksList.clear();
         //tasksList.addAll(userTaskResponse.data.userTasks.items);

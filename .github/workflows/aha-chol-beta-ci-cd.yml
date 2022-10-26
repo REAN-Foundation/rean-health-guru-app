@@ -153,7 +153,7 @@ jobs:
 
   iOS-BuildApp:
     environment: aha-chol-prod
-    runs-on: macos-latest
+    runs-on: macOS-12
     steps:
       # Checkout Code
       - name: Checkout Code
@@ -216,7 +216,7 @@ jobs:
   iOS-Release-Alpha:
     environment: aha-chol-prod
     needs: iOS-BuildApp
-    runs-on: macos-latest
+    runs-on: macOS-12
     defaults:
       run:
         shell: bash

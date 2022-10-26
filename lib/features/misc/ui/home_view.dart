@@ -289,19 +289,25 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   }*/
 
   healthJourneyCheck(){
-    if (carePlanEnrollmentForPatientGlobe == null) {
-      /*if(getBaseUrl()!.contains('aha-api-uat') ||
+    if(getAppName() != 'HF Helper') {
+      if (carePlanEnrollmentForPatientGlobe == null) {
+        /*if(getBaseUrl()!.contains('aha-api-uat') ||
           getBaseUrl()!.contains('reancare-api-dev') ||
           getAppName() == 'Heart & Stroke Helper™ ') {*/
         debugPrint('Health Journey');
         Future.delayed(
             const Duration(seconds: 2), () => showHealthJourneyDialog());
-     /* }else{
+        /* }else{
         debugPrint('Daily Check-In');
         Future.delayed(
             const Duration(seconds: 2), () => showDailyCheckIn());
       }*/
-    }else{
+      } else {
+        debugPrint('Daily Check-In');
+        Future.delayed(
+            const Duration(seconds: 2), () => showDailyCheckIn());
+      }
+    }else {
       debugPrint('Daily Check-In');
       Future.delayed(
           const Duration(seconds: 2), () => showDailyCheckIn());

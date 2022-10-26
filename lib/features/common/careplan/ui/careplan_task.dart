@@ -87,6 +87,9 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       } else {*/
       if(getBaseUrl()!.contains('reancare-api-dev')){
         dateTill = DateTime.now().add(Duration(days: 91));
+      }else if(carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+          .elementAt(0).planCode == 'Stroke'){
+        dateTill = DateTime.now().add(Duration(days: 91));
       }else{
         dateTill = DateTime.now().add(Duration(days: 0));
       }

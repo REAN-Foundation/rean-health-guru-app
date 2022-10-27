@@ -86,15 +86,15 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                   SizedBox(
                     height: 8,
                   ),
-                  Container(
+                  /*Container(
                     height: 1,
                     width: MediaQuery.of(context).size.width - 16,
                     color: Colors.grey,
-                  ),
+                  ),*/
                   SizedBox(
                     height: 16,
                   ),
-                  RichText(
+                  /*RichText(
                     text: TextSpan(
                       text:
                           'To share your health information with your doctor, you must include their email address in the doctor profile. ',
@@ -110,7 +110,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                   SizedBox(
                     height: 8,
                   ),
-                  _entryEmailField('Email'),
+                  _entryEmailField('Email'),*/
                   //_genderWidget(),
                   const SizedBox(
                     height: 24,
@@ -141,9 +141,9 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
           showToastMsg('Enter first name', context);
         } else if (_lastNameController.text.trim() == '') {
           showToastMsg('Enter last name', context);
-        } else if (emailValidation()) {
+        } /*else if (emailValidation()) {
           showToastMsg('Enter valid email', context);
-        } else if (mobileNumber!.isEmpty) {
+        } */else if (mobileNumber!.isEmpty) {
           showToastMsg('Enter mobile number', context);
         } else if (mobileNumber!.length != maxLengthOfPhone) {
           showToastMsg('Enter valid mobile number', context);

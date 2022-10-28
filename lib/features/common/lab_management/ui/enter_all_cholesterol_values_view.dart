@@ -748,9 +748,11 @@ class _EnterAllCholesterolValuesViewState
       addvitals('Cholesterol Ratio', _ratioController.text.toString(), '%');
     }
 
-    if (_a1cLevelController.text.isNotEmpty) {
-      ifRecordsEnterted = true;
-      addvitals('A1C Level', _a1cLevelController.text.toString(), '%');
+    if (_a1cLevelController.text.isNotEmpty && isNumeric(_a1cLevelController.text)) {
+        ifRecordsEnterted = true;
+        addvitals('A1C Level', _a1cLevelController.text.toString(), '%');
+    }else{
+      showToast('Please enter valid input', context);
     }
 
     if (ifRecordsEnterted) {

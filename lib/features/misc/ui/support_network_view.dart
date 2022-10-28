@@ -216,7 +216,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                           humanize: true,
                         ),
                         text:
-                        'www.heart.org/SupportNetwork\nis easy, and membership is free — putting advice, encouragement and reliable, helpful information at your fingertips whenever you need it.',
+                        'www.heart.org/HFsupport\nis easy, and membership is free — putting advice, encouragement and reliable, helpful information at your fingertips whenever you need it.',
                         style: TextStyle(
                             height: 1.5,
                             color: Colors.black,

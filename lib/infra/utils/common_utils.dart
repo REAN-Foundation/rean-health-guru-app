@@ -249,6 +249,13 @@ setImage(String url) {
   );
 }
 
+bool isNumeric(String s) {
+  if (s == null) {
+    return false;
+  }
+  return double.tryParse(s) != null;
+}
+
 circularImage() {
   CircleAvatar(
     radius: 48,

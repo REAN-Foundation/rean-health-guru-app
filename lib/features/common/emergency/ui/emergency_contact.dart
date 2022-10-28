@@ -499,12 +499,12 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      if (tittle == 'Doctors')
+                      /*if (tittle == 'Doctors')
                         InfoScreen(
                             tittle: 'Information',
                             description:
                                 'To share your health information with your doctor, you must include their email address in the doctor profile.',
-                            height: 208),
+                            height: 208),*/
                       Semantics(
                         label: 'Add ' + tittle + ' details',
                         button: true,
@@ -709,7 +709,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                             SizedBox(
                               height: 4,
                             ),
-                            if (details.contactPerson!.email != null)
+                            /*if (details.contactPerson!.email != null)
                               Semantics(
                                 label:
                                     "Email: " + details.contactPerson!.email!,
@@ -722,12 +722,12 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            /*Text(
+                                            *//*Text(
                                                 'Email:  ',
                                                 style: TextStyle(
                                                     fontSize: 12.0,
                                                     fontWeight: FontWeight.w300,
-                                                    color: primaryColor)),*/
+                                                    color: primaryColor)),*//*
                                             Expanded(
                                               child: Text(
                                                   details.contactPerson!.email!,
@@ -746,7 +746,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                     ],
                                   ),
                                 ),
-                              ),
+                              ),*/
                             Text("Doctor",
                                 style: TextStyle(
                                     fontSize: 12.0,

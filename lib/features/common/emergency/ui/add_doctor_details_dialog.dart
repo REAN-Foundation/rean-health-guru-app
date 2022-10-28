@@ -265,7 +265,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
     );
   }
 
-  Widget _entryEmailField(String title) {
+  /*Widget _entryEmailField(String title) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -312,7 +312,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
         ],
       ),
     );
-  }
+  }*/
 
   /*Widget _genderWidget() {
     return Container(

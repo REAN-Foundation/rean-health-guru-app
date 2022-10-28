@@ -224,6 +224,44 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                             fontWeight: FontWeight.w500),
                         linkStyle: TextStyle(color: Colors.lightBlueAccent),
                       ),
+
+                      SizedBox(
+                        height: 32,
+                      ),
+                      Text("Helpful Links",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Color(0xff000000),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal,
+
+
+                          )
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Linkify(
+                        onOpen: (link) async {
+                          if (await canLaunch(link.url)) {
+                            await launch(link.url);
+                          } else {
+                            throw 'Could not launch $link';
+                          }
+                        },
+                        options: LinkifyOptions(
+                          humanize: true,
+                        ),
+                        text:
+                        'Need help finding a community resource? Start here https://heart.org/findhelp\n\nJoin an exclusive peer support group for heart failure patients like you https://heart.org/HFsupport',
+                        style: TextStyle(
+                            height: 1.5,
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500),
+                        linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                      ),
                     ],
                   ),
                 ),

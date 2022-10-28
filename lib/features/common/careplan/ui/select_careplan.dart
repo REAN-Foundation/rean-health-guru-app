@@ -442,6 +442,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   }
 
   Widget descriptionOfCarePlan() {
+    debugPrint('Discription ${decription.toString()}');
     return Column(
       children: [
         SizedBox(

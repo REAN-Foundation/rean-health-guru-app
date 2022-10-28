@@ -26,6 +26,8 @@ Future<void> main() async {
   login ??= false;
   primaryColor = Color(0XFFc10e21);
   primaryLightColor = Color(0XFFFFFFFF);
+  String? sponsor = prefs.getString('Sponsor');
+  setSponsor(sponsor??'');
   runApp(MyApp(login));
 }
 

@@ -196,6 +196,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     flex: 1,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color?>(
@@ -223,6 +224,27 @@ class _SplashScreenState extends State<SplashScreen> {
                                       ? primaryColor
                                       : Colors.white)),
                         ),
+                        if(getSponsor().isNotEmpty)...[
+                          Semantics(
+                            readOnly: true,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Expanded(
+                                child: Center(
+                                  child: Text(
+                                      getSponsor(),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w300,
+                                          color: getAppType() == 'AHA'
+                                              ? primaryColor
+                                              : Colors.white)),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),

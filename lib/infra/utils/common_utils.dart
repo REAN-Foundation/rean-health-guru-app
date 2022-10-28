@@ -37,6 +37,7 @@ String? _currentLocale = '';
 String _appName = '';
 String _appType = '';
 String _appFlavour = '';
+String _sponsor = '';
 dynamic _roleId = '';
 final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
 String knowledgeLinkDisplayedDate = '';
@@ -141,6 +142,14 @@ void setRoleId(dynamic roleId) {
 
 dynamic getRoleId() {
   return _roleId;
+}
+
+void setSponsor(String name) {
+  _sponsor = name;
+}
+
+String getSponsor() {
+  return _sponsor;
 }
 
 void setAppType(String name) {

@@ -208,8 +208,6 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
     bmiValue = weight.roundToDouble() / heightInMetersSquare;
 
-    announceText('Your recent BMI is $bmiValue');
-
     if (bmiValue == 0.0) {
       bmiResult = '';
     } else if (bmiValue < 18.5) {
@@ -228,6 +226,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
       bmiResult = 'Severely Obese';
       bmiResultColor = Colors.red;
     }
+
+    announceText('Your recent BMI is ${bmiValue.toStringAsFixed(2)} and your recent BMI status is $bmiResult');
 
     if (Platform.isAndroid) {
       setState(() {});

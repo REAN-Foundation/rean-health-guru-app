@@ -513,6 +513,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.0"
+  flutter_web_browser:
+    dependency: "direct main"
+    description:
+      name: flutter_web_browser
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.14.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -1116,6 +1123,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  terra_flutter:
+    dependency: "direct main"
+    description:
+      name: terra_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1-alpha.1"
   test_api:
     dependency: transitive
     description:

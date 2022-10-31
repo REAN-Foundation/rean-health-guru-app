@@ -96,6 +96,8 @@ dependencies:
   flutter_svg: ^0.22.0
   flutter_picker: 2.0.5
   syncfusion_flutter_gauges: 19.1.65
+  flutter_web_browser: ^0.14.0
+  terra_flutter: ^0.0.1-alpha.1
 
 dev_dependencies:
   #test: any

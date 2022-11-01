@@ -215,8 +215,8 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                         options: LinkifyOptions(
                           humanize: true,
                         ),
-                        text:
-                        'www.heart.org/HFsupport\nis easy, and membership is free — putting advice, encouragement and reliable, helpful information at your fingertips whenever you need it.',
+                        text:'www.heart.org/SupportNetwork\nis easy, and membership is free — putting advice, encouragement and reliable, helpful information at your fingertips whenever you need it.',
+                        //'www.heart.org/HFsupport\nis easy, and membership is free — putting advice, encouragement and reliable, helpful information at your fingertips whenever you need it.',
                         style: TextStyle(
                             height: 1.5,
                             color: Colors.black,
@@ -228,7 +228,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                       SizedBox(
                         height: 32,
                       ),
-                      Text("Helpful Links",
+                      /*Text("Helpful Links",
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             color: Color(0xff000000),
@@ -261,7 +261,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                             fontSize: 14,
                             fontWeight: FontWeight.w500),
                         linkStyle: TextStyle(color: Colors.lightBlueAccent),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),

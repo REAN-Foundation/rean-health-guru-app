@@ -99,6 +99,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         heightInInch = 0;
         heightInDouble = heightInFt.toString()+'.0';
       }
+      calculetBMI();
       debugPrint('Conversion Height => $heightInFt ft $heightInInch inch');
     }
   }
@@ -229,6 +230,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     if (Platform.isAndroid) {
       setState(() {});
     }
+
+    announceText('Your recent BMI is ${bmiValue.toStringAsFixed(2)} and your recent BMI status is $bmiResult');
 
     /*new Timer(const Duration(milliseconds: 3000), () {
       setState(() {
@@ -545,8 +548,10 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                 onTap: () {
                   if (_weightController.text.toString().isEmpty) {
                     showToast('Please enter your weight', context);
-                  } else {
+                  } else if(isNumeric(_weightController.text)) {
                     addvitals();
+                  } else{
+                    showToast('Please enter valid input', context);
                   }
                 },
                 child: ExcludeSemantics(

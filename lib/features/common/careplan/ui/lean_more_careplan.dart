@@ -412,7 +412,7 @@ class _LearnMoreCarePlanViewState extends State<LearnMoreCarePlanView> {
             Container(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                widget.assortedViewConfigs!.task!.action!.description!,
+                widget.assortedViewConfigs!.task!.action!.transcription!,
                 style: TextStyle(fontWeight: FontWeight.w300, fontSize: 16),
               ),
             ),

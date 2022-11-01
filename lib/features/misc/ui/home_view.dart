@@ -131,7 +131,6 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       url: "https://widget.tryterra.co/session/7e2bcbf0-b00c-47e0-b5a1-5c2e7e5961c4",
       customTabsOptions: const CustomTabsOptions(
         colorScheme: CustomTabsColorScheme.dark,
-        shareState: CustomTabsShareState.on,
         instantAppsEnabled: true,
         showTitle: true,
         urlBarHidingEnabled: true,

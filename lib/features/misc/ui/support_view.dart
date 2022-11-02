@@ -147,7 +147,7 @@ class _SupportViewState extends State<SupportView> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    if(getAppName() != 'AHA')...[
+                                    if(getAppType() != 'AHA')...[
                                       Semantics(
                                         label: 'Call Us',
                                         button: true,

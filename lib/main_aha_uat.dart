@@ -24,6 +24,8 @@ Future<void> main() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   bool? login = prefs.getBool('login1.8.141');
   login ??= false;
+  String? sponsor = prefs.getString('Sponsor');
+  setSponsor(sponsor??'');
   primaryColor = Color(0XFFc10e21);
   primaryLightColor = Color(0XFFFFFFFF);
   runApp(MyApp(login));

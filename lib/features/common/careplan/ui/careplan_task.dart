@@ -1228,6 +1228,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                             Icons.info_outline_rounded,
                                             color: primaryColor,
                                             size: 24,
+                                            semanticLabel: 'Survey information',
                                           ))
                                       : Container(),
                                 ],

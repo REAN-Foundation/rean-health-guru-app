@@ -175,11 +175,26 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
               .elementAt(0)
               .id
               .toString());
+
+          if(carePlanEnrollmentForPatient
+              .data!.patientEnrollments!
+              .elementAt(0).planCode == 'Stroke'){
+            debugPrint('CarePlan ==> Stroke');
+            _sharedPrefUtils.save('Sponsor', 'The HCA Healthcare Foundation is proud to be a national supporter of the American Stroke Association’s Together to End Stroke™');
+          }else if(carePlanEnrollmentForPatient
+              .data!.patientEnrollments!
+              .elementAt(0).planCode == 'Cholesterol'){
+            debugPrint('CarePlan ==> Cholesterol');
+            _sharedPrefUtils.save('Sponsor', 'Novartis is a proud supporter of the American Heart Association’s');
+          }
+
         }
         //showToast(startCarePlanResponse.message);
       } else {
         //showToast(startCarePlanResponse.message);
       }
+
+
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);

@@ -347,6 +347,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           ),
           Semantics(
             label: 'Select start date ' + dob,
+            button: true,
             child: GestureDetector(
               child: ExcludeSemantics(
                 child: Container(
@@ -442,6 +443,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   }
 
   Widget descriptionOfCarePlan() {
+    debugPrint('Discription ${decription.toString()}');
     return Column(
       children: [
         SizedBox(

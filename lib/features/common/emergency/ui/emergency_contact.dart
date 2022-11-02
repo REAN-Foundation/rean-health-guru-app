@@ -43,6 +43,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   Color iconColor = Colors.white;
   Color textColor = Colors.white;
   var emergencyDetailsTextControler = TextEditingController();
+  var _healthSystem = '';
+  var _healthSystemHospital = '';
 
   getEmergencyTeam() async {
     try {
@@ -128,6 +130,29 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   emergency(),
+
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, top: 16, bottom: 16),
+                        child: Text(
+                          'Health System ',
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16),
+                        ),
+                      ),
+                      Expanded(
+                        child: InfoScreen(
+                            tittle: 'Health System Information',
+                            description: "Select your health system details here.",
+                            height: 180),
+                      ),
+                      SizedBox(width: 8,),
+                    ],
+                  ),
+                  healthSystem(),
                   Row(
                     children: [
                       Padding(
@@ -208,6 +233,103 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       ),
     );
   }
+
+  Widget healthSystem(){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                      border: Border.all(color: primaryColor, width: 0.80),
+                      color: Colors.white),
+                  child: Semantics(
+                    label: 'Race',
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      value: _healthSystem == '' ? null : _healthSystem,
+                      items: <String>[
+                        'Well star health system',
+                        'Well star health system',
+                        'Well star health system',
+                        'Well star health system',
+                        'Well star health system'
+                      ].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      hint: Text('Select your health system'),
+                      onChanged: (data) {
+                        debugPrint(data);
+                        setState(() {
+                          _healthSystem = data.toString();
+                        });
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                      border: Border.all(color: primaryColor, width: 0.80),
+                      color: Colors.white),
+                  child: Semantics(
+                    label: 'Race',
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      value: _healthSystemHospital == '' ? null : _healthSystemHospital,
+                      items: <String>[
+                        'Well star Kennestone - Stroke CAD',
+                        'Well star Kennestone - Stroke CAD'
+                      ].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      hint: Text('Select the hospital'),
+                      onChanged: (data) {
+                        debugPrint(data);
+                        setState(() {
+                          _healthSystemHospital = data.toString();
+                        });
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
 
   Widget emergency() {
     String? discription = '';

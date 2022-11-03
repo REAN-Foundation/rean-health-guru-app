@@ -20,7 +20,7 @@ class SupportView extends StatefulWidget {
 class _SupportViewState extends State<SupportView> {
   //var model = PatientCarePlanViewModel();
   String msg = 'We are here to help you so please get in touch.';
-  String msgAHA = 'Please call us or email us for technical help.';
+  String msgAHA = 'Please email us for technical help.';
   String subtitle =
       'For medical help, please contact your health care professional.';
   String phone = '+12025397323';
@@ -88,6 +88,8 @@ class _SupportViewState extends State<SupportView> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+                                  if(getAppType() == 'AHA')
+                                    SizedBox(height: 80,),
                                   Semantics(
                                     label: 'Support',
                                     image: true,
@@ -224,7 +226,7 @@ class _SupportViewState extends State<SupportView> {
                                           String appName =
                                               'REAN%20HealthGuru';
                                           if (getAppType() == 'AHA') {
-                                            appName = Uri.parse(getAppName()).toString().replaceAll('™ ', '');
+                                            appName = Uri.parse(getAppName().replaceAll('™ ', '')).toString();
                                           }
 
                                           final link = 'mailto:' +

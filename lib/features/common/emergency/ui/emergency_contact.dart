@@ -78,6 +78,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   getHealthSystem() async {
     try {
+      healthSystemList.clear();
       final HealthSystemPojo healthSystemPojo =
       await model.getHealthSystem();
 
@@ -99,6 +100,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   getHealthSystemHospital(String healthSystemId) async {
     try {
+      healthSystemHospitalList.clear();
       final HealthSyetemHospitalPojo systemHospitals =
       await model.getHealthSystemHospital(healthSystemId);
 
@@ -316,11 +318,12 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                           child: Text(value),
                         );
                       }).toList(),
-                      hint: Text(healthSystemGlobe == null ? 'Select your health system' : healthSystemGlobe),
+                      hint: Text(healthSystemGlobe ?? 'Select your health system'),
                       onChanged: (data) {
                         debugPrint(data);
                         setState(() {
                           healthSystemGlobe = data.toString();
+                          healthSystemHospitalGlobe = null;
                         });
                         for(int i = 0 ; i < _healthSystems!.length ; i++ ){
                           if(_healthSystems![i].name.toString() == data){
@@ -360,7 +363,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                           child: Text(value),
                         );
                       }).toList(),
-                      hint: Text(healthSystemHospitalGlobe == null ? 'Select the hospital' : healthSystemHospitalGlobe),
+                      hint: Text(healthSystemHospitalGlobe ?? 'Select the hospital'),
                       onChanged: (data) {
                         debugPrint(data);
                         setState(() {

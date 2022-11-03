@@ -49,8 +49,8 @@ String dailyMood = '';
 String dailyFeeling = '';
 List<String> dailyEnergyLevels = [];
 List<String> createdGoalsIds = [];
-var healthSystemGlobe = null;
-var healthSystemHospitalGlobe = null;
+var healthSystemGlobe;
+var healthSystemHospitalGlobe;
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');

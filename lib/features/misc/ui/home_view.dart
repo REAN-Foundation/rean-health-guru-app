@@ -105,8 +105,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             : '';
       });
 
-      healthSystemGlobe = patient.healthSystem == null ? null : patient.healthSystem.toString();
-      healthSystemHospitalGlobe = patient.associatedHospital == null ? null : patient.associatedHospital.toString();
+      healthSystemGlobe =  patient.healthSystem?.toString();
+      healthSystemHospitalGlobe = patient.associatedHospital?.toString();
 
       debugPrint('Health System Globe ==> ${patient.healthSystem.toString()}');
       debugPrint('Health System Hospital Globe ==> ${patient.associatedHospital.toString()}');

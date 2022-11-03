@@ -51,6 +51,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   getHealthSystem() async {
     try {
+      healthSystemList.clear();
       final HealthSystemPojo healthSystemPojo = await model.getHealthSystem();
 
       if (healthSystemPojo.status == 'success') {
@@ -72,6 +73,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   getHealthSystemHospital(String healthSystemId) async {
     try {
+      healthSystemHospitalList.clear();
       final HealthSyetemHospitalPojo systemHospitals =
           await model.getHealthSystemHospital(healthSystemId);
 
@@ -185,128 +187,139 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     _checkCareplanEligibility(carePlanTypes!.code.toString());
   }
 
+  Future<bool> _onWillPop() async {
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) {
+          return HomeView(0);
+        }), (Route<dynamic> route) => false);
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseWidget<PatientCarePlanViewModel?>(
       model: model,
       builder: (context, model, child) => Container(
-        child: Scaffold(
-          key: _scaffoldKey,
-          backgroundColor: primaryColor,
-          appBar: AppBar(
-            elevation: 0,
+        child: WillPopScope(
+          onWillPop: _onWillPop,
+          child: Scaffold(
+            key: _scaffoldKey,
             backgroundColor: primaryColor,
-            brightness: Brightness.dark,
-            title: Text(
-              '',//'Select Health Journey',
-              style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600),
-            ),
-            iconTheme: IconThemeData(color: Colors.white),
-            actions: <Widget>[
-              /*IconButton(
-                icon: Icon(
-                  Icons.person_pin,
-                  color: Colors.black,
-                  size: 32.0,
-                ),
-                onPressed: () {
-                  debugPrint("Clicked on profile icon");
-                },
-              )*/
-            ],
-          ),
-          body: Stack(
-            children: [
-              Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Container(
-                    color: primaryColor,
-                    height: 100,
-                    width: MediaQuery.of(context).size.width,
-                  )),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    color: primaryColor,
-                    height: 0,
-                    width: MediaQuery.of(context).size.width,
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: primaryColor,
+              brightness: Brightness.dark,
+              title: Text(
+                '',//'Select Health Journey',
+                style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600),
+              ),
+              iconTheme: IconThemeData(color: Colors.white),
+              actions: <Widget>[
+                /*IconButton(
+                  icon: Icon(
+                    Icons.person_pin,
+                    color: Colors.black,
+                    size: 32.0,
                   ),
-                  Expanded(
+                  onPressed: () {
+                    debugPrint("Clicked on profile icon");
+                  },
+                )*/
+              ],
+            ),
+            body: Stack(
+              children: [
+                Positioned(
+                    top: 0,
+                    right: 0,
                     child: Container(
-                      padding: const EdgeInsets.all(8.0),
+                      color: primaryColor,
+                      height: 100,
                       width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(12),
-                              topLeft: Radius.circular(12))),
-                      child: model!.busy
-                          ? Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Scrollbar(
-                                    isAlwaysShown: true,
-                                    child: SingleChildScrollView(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          SizedBox(height: 16,),
-                                          Semantics(
-                                            label: 'Health Journey image',
-                                            image: true,
-                                            child: Image.asset(
-                                              'res/images/ic_hf_care_plan.png',
-                                              color: primaryColor,
-                                              width: 120,
-                                              height: 120,
+                    )),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      color: primaryColor,
+                      height: 0,
+                      width: MediaQuery.of(context).size.width,
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(8.0),
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(12),
+                                topLeft: Radius.circular(12))),
+                        child: model!.busy
+                            ? Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Scrollbar(
+                                      isAlwaysShown: true,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            SizedBox(height: 16,),
+                                            Semantics(
+                                              label: 'Health Journey image',
+                                              image: true,
+                                              child: Image.asset(
+                                                'res/images/ic_hf_care_plan.png',
+                                                color: primaryColor,
+                                                width: 120,
+                                                height: 120,
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(height: 8,),
-                                          Text(
-                                            'Health Journey',
-                                            style: TextStyle(color: textBlack, fontWeight: FontWeight.w700, fontSize: 22),
-                                          ),
-                                          SizedBox(height: 16,),
-                                          selectCarePlanDropDown(),
-                                          startCarePlanDate(),
-                                          SizedBox(height: 8,),
-                                          healthSystem(),
-                                          //checkElegibility(),
-                                          /* if (selectedCarePlan == '')
-                                            Container()
-                                          else*/
-                                          decription != ''
-                                              ? descriptionOfCarePlan()
-                                              : Container(),
-                                          //eligibilityOfCarePlan(),
-                                          //recomandationForCarePlan(),
-                                        ],
+                                            SizedBox(height: 8,),
+                                            Text(
+                                              'Health Journey',
+                                              style: TextStyle(color: textBlack, fontWeight: FontWeight.w700, fontSize: 22),
+                                            ),
+                                            SizedBox(height: 16,),
+                                            selectCarePlanDropDown(),
+                                            startCarePlanDate(),
+                                            SizedBox(height: 8,),
+                                            healthSystem(),
+                                            //checkElegibility(),
+                                            /* if (selectedCarePlan == '')
+                                              Container()
+                                            else*/
+                                            decription != ''
+                                                ? descriptionOfCarePlan()
+                                                : Container(),
+                                            //eligibilityOfCarePlan(),
+                                            //recomandationForCarePlan(),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                registerFooter(),
-                              ],
-                            ),
-                    ),
-                  )
-                ],
-              ),
-            ],
+                                  registerFooter(),
+                                ],
+                              ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -541,44 +554,24 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 ),
                 /* Text("dfbbd", style: TextStyle(
                     color: textBlack, fontSize: 16, fontFamily: 'Montserrat', fontWeight: FontWeight.w200,),),*/
-                RichText(
-                  text: TextSpan(
-                    text: decription.toString(),
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      color: textGrey,
-                    ),
-                    /*children: <TextSpan>[
-                      TextSpan(
-                        text: '(https://www.heart.org)',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: primaryColor,
-                          fontFamily: 'Montserrat',
-                          fontSize: 14,
-                          decoration: TextDecoration.underline,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => _launchURL('https://www.heart.org'),
-                      ),
-                      TextSpan(
-                          text:
-                              ' to improve your cardiovascular health if you have experienced heart attack, heart failure, angioplasty or heart surgery.',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: textGrey,
-                              fontSize: 14,
-                              fontFamily: 'Montserrat')),
-                    ],*/
+              Linkify(
+                onOpen: (link) async {
+                  if (await canLaunch(link.url)) {
+                    await launch(link.url);
+                  } else {
+                    throw 'Could not launch $link';
+                  }
+                },
+                options: LinkifyOptions(humanize: false),
+                text: decription.toString(),
+                style: TextStyle(color: textGrey, fontSize: 14),
+                linkStyle: TextStyle(color: Colors.lightBlueAccent),
+              ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      ],
+    ),
+    ],
     );
   }
 
@@ -1044,14 +1037,14 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           child: Text(value),
                         );
                       }).toList(),
-                      hint: Text(healthSystemGlobe == null
-                          ? 'Select your health system'
-                          : healthSystemGlobe),
+                      hint: Text(healthSystemGlobe ?? 'Select your health system'),
                       onChanged: (data) {
                         debugPrint(data);
                         setState(() {
                           healthSystemGlobe = data.toString();
+                          healthSystemHospitalGlobe = null;
                         });
+
                         for (int i = 0; i < _healthSystems!.length; i++) {
                           if (_healthSystems![i].name.toString() == data) {
                             getHealthSystemHospital(
@@ -1102,9 +1095,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           child: Text(value),
                         );
                       }).toList(),
-                      hint: Text(healthSystemHospitalGlobe == null
-                          ? 'Select the hospital'
-                          : healthSystemHospitalGlobe),
+                      hint: Text(healthSystemHospitalGlobe ?? 'Select the hospital'),
                       onChanged: (data) {
                         debugPrint(data);
                         setState(() {

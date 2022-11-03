@@ -147,7 +147,7 @@ class _SupportViewState extends State<SupportView> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    if(getAppName() != 'AHA')...[
+                                    if(getAppType() != 'AHA')...[
                                       Semantics(
                                         label: 'Call Us',
                                         button: true,
@@ -224,7 +224,7 @@ class _SupportViewState extends State<SupportView> {
                                           String appName =
                                               'REAN%20HealthGuru';
                                           if (getAppType() == 'AHA') {
-                                            appName = Uri.parse(getAppName()).toString();
+                                            appName = Uri.parse(getAppName()).toString().replaceAll('™ ', '');
                                           }
 
                                           final link = 'mailto:' +

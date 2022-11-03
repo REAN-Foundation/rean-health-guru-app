@@ -50,6 +50,8 @@ class Patient {
   User? user;
   String? displayId;
   String? ehrId;
+  String? healthSystem;
+  String? associatedHospital;
 
   Patient({
     this.id,
@@ -57,6 +59,8 @@ class Patient {
     this.user,
     this.displayId,
     this.ehrId,
+    this.healthSystem,
+    this.associatedHospital
   });
 
   Patient.fromJson(Map<String, dynamic> json) {
@@ -65,6 +69,8 @@ class Patient {
     user = json['User'] != null ? User.fromJson(json['User']) : null;
     displayId = json['DisplayId'];
     ehrId = json['EhrId'];
+    healthSystem = json['HealthSystem'];
+    associatedHospital = json['AssociatedHospital'];
   }
 
   Map<String, dynamic> toJson() {
@@ -76,6 +82,8 @@ class Patient {
     }
     data['DisplayId'] = displayId;
     data['EhrId'] = ehrId;
+    data['HealthSystem'] = healthSystem;
+    data['AssociatedHospital'] = associatedHospital;
 
     return data;
   }

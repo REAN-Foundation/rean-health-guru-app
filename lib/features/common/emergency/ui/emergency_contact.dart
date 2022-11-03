@@ -1,17 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:patient/features/common/appointment_booking/models/doctor_list_api_response.dart';
 import 'package:patient/features/common/emergency/models/emergency_contact_response.dart';
+import 'package:patient/features/common/emergency/models/health_syetem_hospital_pojo.dart';
+import 'package:patient/features/common/emergency/models/health_system_pojo.dart';
 import 'package:patient/features/common/emergency/ui/add_doctor_details_dialog.dart';
 import 'package:patient/features/common/emergency/ui/add_family_member_dialog.dart';
 import 'package:patient/features/common/emergency/ui/add_nurse_dialog.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/dashboard_tile.dart';
+import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/view_models/common_config_model.dart';
+import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -43,8 +48,10 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   Color iconColor = Colors.white;
   Color textColor = Colors.white;
   var emergencyDetailsTextControler = TextEditingController();
-  var _healthSystem = '';
-  var _healthSystemHospital = '';
+  var healthSystemList = <String>[];
+  var healthSystemHospitalList = <String>[];
+  List<HealthSystems>? _healthSystems;
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   getEmergencyTeam() async {
     try {
@@ -61,6 +68,48 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         _sortTeamMembers(emergencyContactResponse);
       } else {
         showToast(emergencyContactResponse.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+  }
+
+  getHealthSystem() async {
+    try {
+      final HealthSystemPojo healthSystemPojo =
+      await model.getHealthSystem();
+
+      if (healthSystemPojo.status == 'success') {
+        _healthSystems = healthSystemPojo.data!.healthSystems;
+        for(int i = 0 ; i < healthSystemPojo.data!.healthSystems!.length ; i++ ){
+          healthSystemList.add(healthSystemPojo.data!.healthSystems![i].name.toString());
+        }
+        setState(() {});
+      } else {
+        showToast(healthSystemPojo.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+  }
+
+  getHealthSystemHospital(String healthSystemId) async {
+    try {
+      final HealthSyetemHospitalPojo systemHospitals =
+      await model.getHealthSystemHospital(healthSystemId);
+
+      if (systemHospitals.status == 'success') {
+
+        for(int i = 0 ; i < systemHospitals.data!.healthSystemHospitals!.length ; i++ ){
+          healthSystemHospitalList.add(systemHospitals.data!.healthSystemHospitals![i].name.toString());
+        }
+        setState(() {});
+      } else {
+        showToast(systemHospitals.message!, context);
       }
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -108,6 +157,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   @override
   void initState() {
+    getHealthSystem();
     loadSharedPrefs();
     getEmergencyTeam();
     super.initState();
@@ -235,6 +285,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   Widget healthSystem(){
+    debugPrint('Health System Globe ==> $healthSystemGlobe');
+    debugPrint('Health System Hospital Globe ==> $healthSystemHospitalGlobe');
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
@@ -254,28 +306,28 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       border: Border.all(color: primaryColor, width: 0.80),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Race',
+                    label: 'Select your health system',
                     child: DropdownButton<String>(
                       isExpanded: true,
-                      value: _healthSystem == '' ? null : _healthSystem,
-                      items: <String>[
-                        'Well star health system',
-                        'Well star health system',
-                        'Well star health system',
-                        'Well star health system',
-                        'Well star health system'
-                      ].map((String value) {
+                      value: healthSystemGlobe,
+                      items: healthSystemList.map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
                         );
                       }).toList(),
-                      hint: Text('Select your health system'),
+                      hint: Text(healthSystemGlobe == null ? 'Select your health system' : healthSystemGlobe),
                       onChanged: (data) {
                         debugPrint(data);
                         setState(() {
-                          _healthSystem = data.toString();
+                          healthSystemGlobe = data.toString();
                         });
+                        for(int i = 0 ; i < _healthSystems!.length ; i++ ){
+                          if(_healthSystems![i].name.toString() == data){
+                           getHealthSystemHospital(_healthSystems![i].id.toString());
+                          }
+                        }
+
                         setState(() {});
                       },
                     ),
@@ -298,26 +350,24 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       border: Border.all(color: primaryColor, width: 0.80),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Race',
+                    label: 'Select the hospital',
                     child: DropdownButton<String>(
                       isExpanded: true,
-                      value: _healthSystemHospital == '' ? null : _healthSystemHospital,
-                      items: <String>[
-                        'Well star Kennestone - Stroke CAD',
-                        'Well star Kennestone - Stroke CAD'
-                      ].map((String value) {
+                      value: healthSystemHospitalGlobe,
+                      items: healthSystemHospitalList.map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
                         );
                       }).toList(),
-                      hint: Text('Select the hospital'),
+                      hint: Text(healthSystemHospitalGlobe == null ? 'Select the hospital' : healthSystemHospitalGlobe),
                       onChanged: (data) {
                         debugPrint(data);
                         setState(() {
-                          _healthSystemHospital = data.toString();
+                          healthSystemHospitalGlobe = data.toString();
                         });
                         setState(() {});
+                        updateHospitalSystem();
                       },
                     ),
                   ),
@@ -1777,6 +1827,66 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  updateHospitalSystem() async {
+
+    final map = <String, dynamic>{};
+    map['HealthSystem'] = healthSystemGlobe;
+    map['AssociatedHospital'] = healthSystemHospitalGlobe;
+
+    try {
+      final BaseResponse updateProfileSuccess = await model
+          .updateProfilePatient(map);
+
+      if (updateProfileSuccess.status == 'success') {
+        showToast('Patient Health System details updated successfully!', context);
+
+
+        getPatientDetails();
+        //Navigator.pushNamed(context, RoutePaths.Home);
+      } else {
+        showToast(updateProfileSuccess.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      debugPrint("3");
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+  }
+
+  getPatientDetails() async {
+    try {
+      /*//ApiProvider apiProvider = new ApiProvider();
+
+      ApiProvider apiProvider = GetIt.instance<ApiProvider>();*/
+
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth!;
+
+      final response =
+      await apiProvider!.get('/patients/' + patientUserId!, header: map);
+
+      final PatientApiDetails doctorListApiResponse =
+      PatientApiDetails.fromJson(response);
+
+      if (doctorListApiResponse.status == 'success') {
+        debugPrint(doctorListApiResponse.data!.patient!.user!.person!
+            .toJson()
+            .toString());
+        await _sharedPrefUtils.save(
+            'patientDetails', doctorListApiResponse.data!.patient!.toJson());
+      } else {
+        showToast(doctorListApiResponse.message!, context);
+        model.setBusy(false);
+      }
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint(CustomException.toString());
     }
   }
 

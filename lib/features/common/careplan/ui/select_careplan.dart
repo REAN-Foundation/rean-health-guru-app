@@ -2,16 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:patient/features/common/careplan/models/check_careplan_eligibility.dart';
 import 'package:patient/features/common/careplan/models/enroll_care_clan_response.dart';
 import 'package:patient/features/common/careplan/models/get_aha_careplans_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
+import 'package:patient/features/common/emergency/models/health_syetem_hospital_pojo.dart';
+import 'package:patient/features/common/emergency/models/health_system_pojo.dart';
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
+import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -35,10 +43,60 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   bool? carePlanEligibility = false;
   String? carePlanEligibilityMsg = '';
   String? decription = '';
+  var healthSystemList = <String>[];
+  var healthSystemHospitalList = <String>[];
+  List<HealthSystems>? _healthSystems;
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+  final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+
+  getHealthSystem() async {
+    try {
+      final HealthSystemPojo healthSystemPojo = await model.getHealthSystem();
+
+      if (healthSystemPojo.status == 'success') {
+        _healthSystems = healthSystemPojo.data!.healthSystems;
+        for (int i = 0; i < healthSystemPojo.data!.healthSystems!.length; i++) {
+          healthSystemList
+              .add(healthSystemPojo.data!.healthSystems![i].name.toString());
+        }
+        setState(() {});
+      } else {
+        showToast(healthSystemPojo.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+  }
+
+  getHealthSystemHospital(String healthSystemId) async {
+    try {
+      final HealthSyetemHospitalPojo systemHospitals =
+          await model.getHealthSystemHospital(healthSystemId);
+
+      if (systemHospitals.status == 'success') {
+        for (int i = 0;
+            i < systemHospitals.data!.healthSystemHospitals!.length;
+            i++) {
+          healthSystemHospitalList.add(
+              systemHospitals.data!.healthSystemHospitals![i].name.toString());
+        }
+        setState(() {});
+      } else {
+        showToast(systemHospitals.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+  }
 
   @override
   void initState() {
     model.setBusy(true);
+    getHealthSystem();
     getAHACarePlans();
     doctorSearchListGlobe.clear();
     parmacySearchListGlobe.clear();
@@ -140,7 +198,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             backgroundColor: primaryColor,
             brightness: Brightness.dark,
             title: Text(
-              'Select Health Journey',
+              '',//'Select Health Journey',
               style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.white,
@@ -206,6 +264,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: <Widget>[
+                                          SizedBox(height: 16,),
                                           Semantics(
                                             label: 'Health Journey image',
                                             image: true,
@@ -216,8 +275,16 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                                               height: 120,
                                             ),
                                           ),
+                                          SizedBox(height: 8,),
+                                          Text(
+                                            'Health Journey',
+                                            style: TextStyle(color: textBlack, fontWeight: FontWeight.w700, fontSize: 22),
+                                          ),
+                                          SizedBox(height: 16,),
                                           selectCarePlanDropDown(),
                                           startCarePlanDate(),
+                                          SizedBox(height: 8,),
+                                          healthSystem(),
                                           //checkElegibility(),
                                           /* if (selectedCarePlan == '')
                                             Container()
@@ -271,7 +338,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Select Health Journey',
+            'Select Health Journey*',
             style: TextStyle(
                 color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
           ),
@@ -338,7 +405,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Select Start Date:',
+            'Select Start Date*',
             style: TextStyle(
                 color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
           ),
@@ -934,5 +1001,185 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => sucsessDialog);
+  }
+
+  Widget healthSystem() {
+    debugPrint('Health System Globe ==> $healthSystemGlobe');
+    debugPrint('Health System Hospital Globe ==> $healthSystemHospitalGlobe');
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Select your health system',
+            style: TextStyle(
+                color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  height: 48,
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(color: Colors.grey, width: 1),
+                  ),
+                  child: Semantics(
+                    label: 'Select your health system',
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      value: healthSystemGlobe,
+                      items: healthSystemList.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      hint: Text(healthSystemGlobe == null
+                          ? 'Select your health system'
+                          : healthSystemGlobe),
+                      onChanged: (data) {
+                        debugPrint(data);
+                        setState(() {
+                          healthSystemGlobe = data.toString();
+                        });
+                        for (int i = 0; i < _healthSystems!.length; i++) {
+                          if (_healthSystems![i].name.toString() == data) {
+                            getHealthSystemHospital(
+                                _healthSystems![i].id.toString());
+                          }
+                        }
+
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          Text(
+            'Select the hospital',
+            style: TextStyle(
+                color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  height: 48,
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(color: Colors.grey, width: 1),
+                  ),
+                  child: Semantics(
+                    label: 'Select the hospital',
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      value: healthSystemHospitalGlobe,
+                      items: healthSystemHospitalList.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      hint: Text(healthSystemHospitalGlobe == null
+                          ? 'Select the hospital'
+                          : healthSystemHospitalGlobe),
+                      onChanged: (data) {
+                        debugPrint(data);
+                        setState(() {
+                          healthSystemHospitalGlobe = data.toString();
+                        });
+                        setState(() {});
+                        updateHospitalSystem();
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  updateHospitalSystem() async {
+    final map = <String, dynamic>{};
+    map['HealthSystem'] = healthSystemGlobe;
+    map['AssociatedHospital'] = healthSystemHospitalGlobe;
+
+    try {
+      final BaseResponse updateProfileSuccess =
+          await model.updateProfilePatient(map);
+
+      if (updateProfileSuccess.status == 'success') {
+        showToast(
+            'Patient Health System details updated successfully!', context);
+
+        getPatientDetails();
+        //Navigator.pushNamed(context, RoutePaths.Home);
+      } else {
+        showToast(updateProfileSuccess.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      debugPrint("3");
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+  }
+
+  getPatientDetails() async {
+    try {
+      /*//ApiProvider apiProvider = new ApiProvider();
+
+      ApiProvider apiProvider = GetIt.instance<ApiProvider>();*/
+
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth!;
+
+      final response =
+          await apiProvider!.get('/patients/' + patientUserId!, header: map);
+
+      final PatientApiDetails doctorListApiResponse =
+          PatientApiDetails.fromJson(response);
+
+      if (doctorListApiResponse.status == 'success') {
+        debugPrint(doctorListApiResponse.data!.patient!.user!.person!
+            .toJson()
+            .toString());
+        await _sharedPrefUtils.save(
+            'patientDetails', doctorListApiResponse.data!.patient!.toJson());
+      } else {
+        showToast(doctorListApiResponse.message!, context);
+        model.setBusy(false);
+      }
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint(CustomException.toString());
+    }
   }
 }

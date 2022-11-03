@@ -53,7 +53,7 @@ class _HowIsYourMood extends State<HowIsYourMood>
               ),
               DelayedAnimation(
                 child: Text(
-                  "How is your mood?",
+                  "How is your mood today?",
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 18.0,

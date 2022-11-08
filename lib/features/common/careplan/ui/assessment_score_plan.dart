@@ -10,6 +10,7 @@ import 'package:patient/features/common/careplan/models/AssessmentScore.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
+import 'package:patient/features/misc/ui/pdf_viewer.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -36,6 +37,7 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
   AssessmentScore? assessmentScore;
   String score = '';
   String? _api_key = '';
+  String reportUrl = '';
 
   getAssessmentScore() async {
     try {
@@ -45,6 +47,8 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
       if (assessmentScore!.status == 'success') {
         debugPrint('Assessment Score ==> ${assessmentScore!.toJson()}');
         score = assessmentScore!.data!.score!.overallSummaryScore!.toStringAsFixed(2);
+        debugPrint('Assessment ReportURL ==> ${assessmentScore!.data!.reportURL}');
+        reportUrl = assessmentScore!.data!.reportURL.toString();
         setState(() {
         });
       } else {}
@@ -289,14 +293,16 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
                                             flex: 1,
                                             child: InkWell(
                                               onTap: () {
-                                                /* createFileOfPdfUrl(document.authenticatedUrl!, document.fileName)
+                                                progressDialog.show(
+                                                    max: 100, msg: 'Loading...', barrierDismissible: false);
+                                                 createFileOfPdfUrl(reportUrl, 'assessment_score.pdf')
                                                   .then((f) {
                                                 progressDialog.close();
                                                 Navigator.push(context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
                                                             PDFScreen(f.path)));
-                                              });*/
+                                              });
                                               },
                                               child: Container(
                                                 height: 48,
@@ -346,6 +352,7 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
   }
 
     Future<File> createFileOfPdfUrl(String url, String? fileName) async {
+
     //debugPrint('Base Url ==> ${url}');
     //final url = "http://africau.edu/images/default/sample.pdf";
     //final url = "https://www.lalpathlabs.com/SampleReports/Z614.pdf";

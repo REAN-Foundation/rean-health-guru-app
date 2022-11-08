@@ -633,6 +633,7 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   Future<String?> _askForDocsType() async {
     return showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -785,6 +786,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       TextPosition(offset: renameControler.text.length - 4),
     );
     showDialog(
+        barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),

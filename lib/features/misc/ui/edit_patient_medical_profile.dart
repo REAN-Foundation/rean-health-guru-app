@@ -761,12 +761,14 @@ class _EditPatientMedicalProfileViewState
                                   onPressed: () {
                                     if (getCurrentLocale() == 'US') {
                                       showDialog(
+        barrierDismissible: false,
                                           context: context,
                                           builder: (_) {
                                             return _addHeightInFtnInchDialog(context);
                                           });
                                     } else {
                                       showDialog(
+        barrierDismissible: false,
                                           context: context,
                                           builder: (_) {
                                             return _addHeightInCmDialog(context);

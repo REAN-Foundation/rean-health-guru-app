@@ -1431,6 +1431,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
 /*  Future _addDrugConfirmDialog(BuildContext context) async {
     return showDialog(
+        barrierDismissible: false,
       context: context,
       barrierDismissible: false, // user must tap button for close dialog!
       builder: (BuildContext context) {

@@ -580,8 +580,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       ),
     );
     showDialog(
+        barrierDismissible: false,
         context: context,
-        barrierDismissible: true,
         builder: (BuildContext context) => sucsessDialog);
   }
 

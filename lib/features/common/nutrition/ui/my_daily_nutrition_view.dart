@@ -375,6 +375,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                       child: IconButton(
                                         onPressed: () async {
                                           /*showDialog(
+        barrierDismissible: false,
                                               context: context,
                                               builder: (_) {
                                                 return _addCaloriesConsumedDialog(
@@ -493,6 +494,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                       child: IconButton(
                                         onPressed: () {
                                           /*showDialog(
+        barrierDismissible: false,
                                               context: context,
                                               builder: (_) {
                                                 return _addCaloriesConsumedDialog(
@@ -611,6 +613,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                       child: IconButton(
                                         onPressed: () {
                                           /*showDialog(
+        barrierDismissible: false,
                                               context: context,
                                               builder: (_) {
                                                 return _addCaloriesConsumedDialog(
@@ -731,6 +734,7 @@ class _MyDailyNutritionViewState extends State<MyDailyNutritionView> {
                                       child: IconButton(
                                         onPressed: () {
                                           /*showDialog(
+        barrierDismissible: false,
                                               context: context,
                                               builder: (_) {
                                                 return _addCaloriesConsumedDialog(

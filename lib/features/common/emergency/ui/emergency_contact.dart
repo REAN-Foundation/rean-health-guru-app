@@ -585,6 +585,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       );
     }
     showDialog(
+        barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),
@@ -688,6 +689,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                             //showToast(tittle);
                             if (tittle == 'Doctors') {
                               showDialog(
+        barrierDismissible: false,
                                   context: context,
                                   builder: (_) {
                                     return _addEmergencyDoctorDialog(context);
@@ -696,12 +698,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                             } else if (tittle ==
                                 'Nurses / Social Health Workers') {
                               showDialog(
+        barrierDismissible: false,
                                   context: context,
                                   builder: (_) {
                                     return _addNurseDialog(context);
                                   });
                             } else if (tittle == 'Family Members / Friends') {
                               showDialog(
+        barrierDismissible: false,
                                   context: context,
                                   builder: (_) {
                                     return _addFamilyMemberDialog(context);
@@ -1724,6 +1728,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   _removeConfirmation(Items contact) {
     /*showDialog(
+        barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         content: ListTile(

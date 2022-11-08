@@ -356,6 +356,7 @@ class _EditProfileState extends State<EditProfile> {
 
   _accountDeleteConfirmation() {
     showDialog(
+        barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         content: ListTile(

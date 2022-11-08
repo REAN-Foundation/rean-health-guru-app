@@ -54,6 +54,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
 
     /*if (height == 0.0 || weight == 0.0) {
       showDialog(
+        barrierDismissible: false,
           context: context,
           builder: (_) {
             return _addBMIDetailsDialog(context);
@@ -622,6 +623,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                 InkWell(
                     onTap: () {
                       showDialog(
+        barrierDismissible: false,
                           context: context,
                           builder: (_) {
                             return _addBMIDetailsDialog(context);

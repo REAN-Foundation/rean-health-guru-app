@@ -25,6 +25,8 @@ Future<void> main() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   bool? login = prefs.getBool('login1.8.141');
   login ??= false;
+  String? sponsor = prefs.getString('Sponsor');
+  setSponsor(sponsor??'');
   runApp(MyApp(login));
 }
 //ignore: must_be_immutable

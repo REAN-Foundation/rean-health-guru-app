@@ -166,7 +166,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 if (_weightController.text
                                     .toString()
                                     .isNotEmpty) {
-                                  addWeightVitals();
+                                  if(isNumeric(_weightController.text)) {
+                                    addWeightVitals();
+                                  }else{
+                                    showToast('Please enter valid input', context);
+                                  }
                                 }
                                 if (_systolicController.text
                                         .toString()
@@ -194,7 +198,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 if (_bodyTempratureController.text
                                     .toString()
                                     .isNotEmpty) {
-                                  addTemperatureVitals();
+                                  if(isNumeric(_bodyTempratureController.text)) {
+                                    addTemperatureVitals();
+                                  }else{
+                                    showToast('Please enter valid input', context);
+                                  }
                                 }
                               },
                               child: ExcludeSemantics(

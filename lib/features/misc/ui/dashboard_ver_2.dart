@@ -2781,6 +2781,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             Icons.add_circle,
                             size: 32,
                             color: iconColor,
+                            semanticLabel: 'Add mental well-being record'
                           ),
                           onPressed: () {
                             Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,

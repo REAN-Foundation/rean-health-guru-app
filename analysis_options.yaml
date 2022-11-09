@@ -63,7 +63,7 @@ linter:
     # always_use_package_imports # we do this commonly : true
     annotate_overrides: true
     # avoid_annotating_with_dynamic # conflicts with always_specify_types : true
-    avoid_bool_literals_in_conditional_expressions: true
+    avoid_bool_literals_in_conditional_expressions: false
     # avoid_catches_without_on_clauses # we do this commonly : true
     # avoid_catching_errors # we do this commonly : true
     avoid_classes_with_only_static_members: true

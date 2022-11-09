@@ -567,7 +567,7 @@ class _BiometricBloodPresureVitalsViewState
         valeTextColor = Color(0XFF991112);
       }*/
     }
-
+    announceText('Your recent Blood Pressure is $value');
 
       return Card(
       semanticContainer: false,

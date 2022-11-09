@@ -1228,6 +1228,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                             Icons.info_outline_rounded,
                                             color: primaryColor,
                                             size: 24,
+                                            semanticLabel: 'Survey information',
                                           ))
                                       : Container(),
                                 ],
@@ -1952,13 +1953,17 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               //showToast('Task completed successfully', context);
             });
           } else {
-            Navigator.pushNamed(context, RoutePaths.Assessment_Score_Navigator,
-                arguments: task.action!.assessment!.id)
-                .then((value) {
-              getUserTask();
-              //showToast('Task completed successfully', context);
-            });
-            showToast('Task is already completed', context);
+            if(task.action!.assessment!.title == 'Quality of Life Questionnaire') {
+              Navigator.pushNamed(
+                  context, RoutePaths.Assessment_Score_Navigator,
+                  arguments: task.action!.assessment!.id)
+                  .then((value) {
+                getUserTask();
+                //showToast('Task completed successfully', context);
+              });
+            }else {
+              showToast('Task is already completed', context);
+            }
           }
           //Navigator.pushNamed(context, RoutePaths.Assessment_Start_Care_Plan);
           break;

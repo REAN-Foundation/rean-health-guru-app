@@ -350,10 +350,19 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Select Health Journey*',
-            style: TextStyle(
-                color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+          Row(
+            children: [
+              Text(
+                'Select Health Journey',
+                style: TextStyle(
+                    color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           const SizedBox(
             height: 4,
@@ -416,10 +425,19 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Select Start Date*',
-            style: TextStyle(
-                color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+          Row(
+            children: [
+              Text(
+                'Select Start Date',
+                style: TextStyle(
+                    color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           const SizedBox(
             height: 4,

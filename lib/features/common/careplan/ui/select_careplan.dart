@@ -368,8 +368,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             ),
             child: DropdownButton<String>(
               isExpanded: true,
-              hint: Text(
-                'Select Health Journey',
+              hint: Text('Choose an option',
                 style: TextStyle(
                     color: textBlack,
                     fontSize: 14,
@@ -825,6 +824,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                       showToast('Please select start date', context);
                     } else if (carePlanEligibility!) {
                       startCarePlan();
+                      _updatePatientMedicalProfile(carePlanTypes!.name.toString());
                     } else {
                       //showToast(carePlanEligibilityMsg.toString(), context);
                     }
@@ -1006,7 +1006,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Select your health system',
+            'Select Health System',
             style: TextStyle(
                 color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
           ),
@@ -1037,7 +1037,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           child: Text(value),
                         );
                       }).toList(),
-                      hint: Text(healthSystemGlobe ?? 'Select your health system'),
+                      hint: Text(healthSystemGlobe ?? 'Choose an option'),
                       onChanged: (data) {
                         debugPrint(data);
                         setState(() {
@@ -1064,7 +1064,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             height: 16,
           ),
           Text(
-            'Select the hospital',
+            'Select Hospital',
             style: TextStyle(
                 color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
           ),
@@ -1085,7 +1085,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     border: Border.all(color: Colors.grey, width: 1),
                   ),
                   child: Semantics(
-                    label: 'Select the hospital',
+                    label: 'Select Hospital',
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: healthSystemHospitalGlobe,
@@ -1095,7 +1095,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           child: Text(value),
                         );
                       }).toList(),
-                      hint: Text(healthSystemHospitalGlobe ?? 'Select the hospital'),
+                      hint: Text(healthSystemHospitalGlobe ?? 'Choose an option'),
                       onChanged: (data) {
                         debugPrint(data);
                         setState(() {
@@ -1138,6 +1138,23 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       debugPrint('error caught: $e');
       model.setBusy(false);
       showToast(e.toString(), context);
+    }
+  }
+
+  _updatePatientMedicalProfile(String mainCondition) async {
+    try {
+      final Map<String, dynamic> data = <String, dynamic>{};
+      data['MajorAilment'] = mainCondition;
+
+
+      final BaseResponse baseResponse = await model.updatePatientMedicalProfile(data);
+
+      if (baseResponse.status == 'success') {
+      } else {
+        showToast(baseResponse.message!, context);
+      }
+    } catch (CustomException) {
+      debugPrint('Error ' + CustomException.toString());
     }
   }
 

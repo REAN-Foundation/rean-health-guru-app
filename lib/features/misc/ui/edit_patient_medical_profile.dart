@@ -2,7 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:group_radio_button/group_radio_button.dart';
 import 'package:patient/features/common/activity/ui/add_height_cm_dialog.dart';
 import 'package:patient/features/common/activity/ui/add_height_ft_n_Inch_dialog.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -62,19 +61,29 @@ class _EditPatientMedicalProfileViewState
   var sedentaryLifestyle;
   var isSmoker;
   var isDrinker;
+  var isBloodPressure;
+  var isHighCholesterol;
+  var isAtrialfibrillation;
+  /*  String _ethnicityValue = '';
+  String _raceValue = '';*/
+
   String maritalStatus = '';
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   int height = 0;
-  late var heightArray;
 
+  late var heightArray;
   int heightInFt = 0;
   int heightInInch = 0;
   String heightInDouble = '0.0';
   late var heightArry;
-  String _ethnicityValue = '';
-  String _raceValue = '';
   String _bloodgroupValue = '';
   String selectedUnit = '';
+
+  String _typeOfStrokeValue = '';
+
+
+
+
 
   @override
   void initState() {
@@ -151,17 +160,35 @@ class _EditPatientMedicalProfileViewState
       TextPosition(offset: _procedureHistoryController.text.length),
     );
 
-    _ethnicityValue = widget.healthProfile!.ethnicity ?? '';
-    _raceValue = widget.healthProfile!.race ?? '';
+/*    _ethnicityValue = widget.healthProfile!.ethnicity ?? '';
+    _raceValue = widget.healthProfile!.race ?? '';*/
     _bloodgroupValue = widget.healthProfile!.bloodGroup ?? '';
 
-    isDiabetic = yesOrNo(widget.healthProfile!.isDiabetic!);
-    hasHeartAilment = yesOrNo(widget.healthProfile!.hasHeartAilment!);
-    sedentaryLifestyle = yesOrNo(widget.healthProfile!.sedentaryLifestyle!);
+    _typeOfStrokeValue = widget.healthProfile!.typeOfStroke ?? '';
+
+    isDiabetic = widget.healthProfile!.isDiabetic! == null ? '' : yesOrNo(widget.healthProfile!.isDiabetic!);
+    if(widget.healthProfile!.hasHighBloodPressure != null) {
+      isBloodPressure = yesOrNo(widget.healthProfile!.hasHighBloodPressure!);
+    }
+    if(widget.healthProfile!.hasHighCholesterol != null) {
+      isHighCholesterol = yesOrNo(widget.healthProfile!.hasHighCholesterol!);
+    }
+
+    if(widget.healthProfile!.hasAtrialFibrillation != null) {
+      isAtrialfibrillation = yesOrNo(widget.healthProfile!.hasAtrialFibrillation!);
+    }
+
+    if(widget.healthProfile!.hasHeartAilment != null) {
+      hasHeartAilment = yesOrNo(widget.healthProfile!.hasHeartAilment!);
+    }
+    //debugPrint('Has Heart Ailment ${hasHeartAilment}');
+    if(widget.healthProfile!.sedentaryLifestyle != null) {
+      sedentaryLifestyle =  yesOrNo(widget.healthProfile!.sedentaryLifestyle!);
+    }
   }
 
   String yesOrNo(bool flag) {
-    return flag ? 'Yes' : 'No';
+    return flag == null ? '' : flag ? 'Yes' : 'No';
   }
 
 
@@ -201,10 +228,10 @@ class _EditPatientMedicalProfileViewState
                           _otherConditionsFocus,
                           _ethnicityFocus),
                       _sizedBoxHeight(),*/
-                      _ethnicity(),
+                      /*_ethnicity(),
                       _sizedBoxHeight(),
                       _race(),
-                      _sizedBoxHeight(),
+                      _sizedBoxHeight(),*/
                       _bloodGroup(),
                       _sizedBoxHeight(),
                       _textFeilds('Occupation', _ocupationController,
@@ -272,16 +299,44 @@ class _EditPatientMedicalProfileViewState
                               ))
                         ],
                       ),*/
-                      SizedBox(
-                        height: 8,
-                      ),
+                      _sizedBoxHeight(),
                       Text(
                           'Have you used tobacco products (such as cigarettes, electronic cigarettes, cigars, smokeless tobacco, or hookah) over the past year?',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
                               color: textBlack)),
-                      RadioGroup<String>.builder(
+                      SizedBox(height: 8,),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.0),
+                            border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                            color: Colors.white),
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          value: isSmoker == '' ? null : isSmoker,
+                          items: <String>[
+                            'Yes',
+                            'No'
+                          ].map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          hint: Text('Choose an option'),
+                          onChanged: (data) {
+                            debugPrint(data);
+                            setState(() {
+                              isSmoker = data.toString();
+                            });
+                            setState(() {});
+                          },
+                        ),
+                      ),
+                      /*RadioGroup<String>.builder(
                         items: radioItems,
                         groupValue: isSmoker,
                         direction: Axis.horizontal,
@@ -295,16 +350,45 @@ class _EditPatientMedicalProfileViewState
                           item,
                           textPosition: RadioButtonTextPosition.right,
                         ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
+                      ),*/
+                      _sizedBoxHeight(),
                       Text('Do you have heart disease, have you had a previous heart attack, stroke or other cardiovascular event?',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.w600,
                               color: textBlack)),
-                      RadioGroup<String>.builder(
+                      SizedBox(height: 8,),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.0),
+                            border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                            color: Colors.white),
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          value: hasHeartAilment == '' ? null : hasHeartAilment,
+                          items: <String>[
+                            'Yes',
+                            'No'
+                          ].map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          hint: Text('Choose an option'),
+                          onChanged: (data) {
+                            debugPrint(data);
+                            setState(() {
+                              hasHeartAilment = data.toString();
+                            });
+                            setState(() {});
+                          },
+                        ),
+                      ),
+
+                      /*RadioGroup<String>.builder(
                         items: radioItems,
                         groupValue: hasHeartAilment,
                         direction: Axis.horizontal,
@@ -318,7 +402,7 @@ class _EditPatientMedicalProfileViewState
                           item,
                           textPosition: RadioButtonTextPosition.right,
                         ),
-                      ),
+                      ),*/
                       /*Text('Sedentary Occupation',
                     style: TextStyle(
                         fontSize: 16.0,
@@ -329,29 +413,12 @@ class _EditPatientMedicalProfileViewState
                   onSelected: (item) {
                     debugPrint(item.title);
                   },
-                ),*/SizedBox(
-                        height: 8,
-                      ),
-                      Text('Diabetes',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
-                              color: textBlack)),
-                      RadioGroup<String>.builder(
-                        items: radioItems,
-                        groupValue: isDiabetic,
-                        direction: Axis.horizontal,
-                        horizontalAlignment: MainAxisAlignment.start,
-                        onChanged: (item) {
-                          debugPrint(item);
-                          isDiabetic = item;
-                          setState(() {});
-                        },
-                        itemBuilder: (item) => RadioButtonBuilder(
-                          item,
-                          textPosition: RadioButtonTextPosition.right,
-                        ),
-                      ),
+                ),*/
+                      _sizedBoxHeight(),
+                      _typeOfStroke(),
+                      _sizedBoxHeight(),
+                      _toldByYourHealthcareProfessional(),
+
 
                       SizedBox(
                         width: 24,
@@ -433,7 +500,7 @@ class _EditPatientMedicalProfileViewState
             ));
   }
 
-  Widget _ethnicity() {
+/*  Widget _ethnicity() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -545,6 +612,306 @@ class _EditPatientMedicalProfileViewState
         )
       ],
     );
+  }*/
+
+  Widget _typeOfStroke() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Type of Stroke',
+            style: TextStyle(
+                fontSize: 15,
+                color: Colors.black87,
+                fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 8,
+        ),
+         Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                    color: Colors.white),
+                child: Semantics(
+                  label: 'Type of Stroke',
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: _typeOfStrokeValue == '' ? null : _typeOfStrokeValue,
+                    items: <String>[
+                      'Ischemic',
+                      'Hemorrhagic',
+                      'Transient Ischemic Attack (TIA)',
+                      'Unknown'
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: Text('Choose an option'),
+                    onChanged: (data) {
+                      debugPrint(data);
+                      setState(() {
+                        _typeOfStrokeValue = data.toString();
+                      });
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _toldByYourHealthcareProfessional() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Have you ever been told by your healthcare professional that you have any of the following',
+            style: TextStyle(
+                fontSize: 15,
+                color: Colors.black87,
+                fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 8,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              highBloodPressure(),
+              SizedBox(height: 8,),
+              highCholesterol(),
+              SizedBox(height: 8,),
+              diabetics(),
+              SizedBox(height: 8,),
+              atrialFibrillation(),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget highBloodPressure(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: 168,
+          child: Text('High blood pressure',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w600,
+                  color: textBlack)),
+        ),
+        SizedBox(width: 8,),
+        Expanded(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4.0),
+                border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                color: Colors.white),
+            child: Semantics(
+              label: 'High blood pressure ',
+              child: DropdownButton<String>(
+                isExpanded: true,
+                value: isBloodPressure == '' ? null : isBloodPressure,
+                items: <String>[
+                  'Yes',
+                  'No'
+                ].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                hint: Text('Choose an option'),
+                onChanged: (data) {
+                  debugPrint(data);
+                  setState(() {
+                    isBloodPressure = data.toString();
+                  });
+                  setState(() {});
+                },
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget highCholesterol(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: 168,
+          child: Text('High cholesterol',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w600,
+                  color: textBlack)),
+        ),
+        SizedBox(width: 8,),
+        Expanded(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4.0),
+                border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                color: Colors.white),
+            child: Semantics(
+              label: 'High cholesterol',
+              child: DropdownButton<String>(
+                isExpanded: true,
+                value: isHighCholesterol == '' ? null : isHighCholesterol,
+                items: <String>[
+                  'Yes',
+                  'No'
+                ].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                hint: Text('Choose an option'),
+                onChanged: (data) {
+                  debugPrint(data);
+                  setState(() {
+                    isHighCholesterol = data.toString();
+                  });
+                  setState(() {});
+                },
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget diabetics(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: 168,
+          child: Text('Diabetes',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w600,
+                  color: textBlack)),
+        ),
+        SizedBox(width: 8,),
+        Expanded(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4.0),
+                border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                color: Colors.white),
+            child: Semantics(
+              label: 'Diabetes',
+              child: DropdownButton<String>(
+                isExpanded: true,
+                value: isDiabetic == '' ? null : isDiabetic,
+                items: <String>[
+                  'Yes',
+                  'No'
+                ].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                hint: Text('Choose an option'),
+                onChanged: (data) {
+                  debugPrint(data);
+                  setState(() {
+                    isDiabetic = data.toString();
+                  });
+                  setState(() {});
+                },
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget atrialFibrillation(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: 168,
+          child: Text('Atrial fibrillation',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w600,
+                  color: textBlack)),
+        ),
+        SizedBox(width: 8,),
+        Expanded(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4.0),
+                border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                color: Colors.white),
+            child: Semantics(
+              label: 'Atrial fibrillation',
+              child: DropdownButton<String>(
+                isExpanded: true,
+                value: isAtrialfibrillation == '' ? null : isAtrialfibrillation,
+                items: <String>[
+                  'Yes',
+                  'No'
+                ].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                hint: Text('Choose an option'),
+                onChanged: (data) {
+                  debugPrint(data);
+                  setState(() {
+                    isAtrialfibrillation = data.toString();
+                  });
+                  setState(() {});
+                },
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _bloodGroup() {
@@ -592,7 +959,7 @@ class _EditPatientMedicalProfileViewState
                         ),
                       );
                     }).toList(),
-                    hint: Text('Select Blood Type'),
+                    hint: Text('Choose an option'),
                     onChanged: (data) {
                       debugPrint(data);
                       setState(() {
@@ -1153,8 +1520,12 @@ class _EditPatientMedicalProfileViewState
       data['IsDiabetic'] = isDiabetic == 'Yes';
       data['IsSmoker'] = isSmoker == 'Yes';
       data['HasHeartAilment'] = hasHeartAilment == 'Yes';
-      data['Ethnicity'] = _ethnicityValue;
-      data['Race'] = _raceValue;
+      /*data['Ethnicity'] = _ethnicityValue;
+      data['Race'] = _raceValue;*/
+      data['TypeOfStroke'] = _typeOfStrokeValue == '' ? null : _typeOfStrokeValue;
+      data['HasHighBloodPressure'] =  isBloodPressure == '' ? null : isBloodPressure == 'Yes' ? true : false;;
+      data['HasHighCholesterol'] =  isHighCholesterol == '' ? null : isHighCholesterol == 'Yes' ? true : false;;
+      data['HasAtrialFibrillation'] =  isAtrialfibrillation == '' ? null : isAtrialfibrillation == 'Yes' ? true : false;;
       data['Occupation'] = _ocupationController.text;
 
       final BaseResponse baseResponse = await model.updatePatientMedicalProfile(

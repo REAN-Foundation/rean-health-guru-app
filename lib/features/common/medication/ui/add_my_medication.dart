@@ -425,8 +425,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     enableInteractiveSelection: false,
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontSize: 14,
-                        color: primaryColor),
+                        fontSize: 14),
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
@@ -465,7 +464,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     isExpanded: true,
                     value: _dosageUnit == '' ? null : _dosageUnit,
                     items: _dosageUnitMenuItems,
-                    hint: Text('Select Unit'),
+                    hint: Text('Choose an option'),
                     onChanged: (data) {
                       _unitFocus.unfocus();
                       FocusScope.of(context).requestFocus(FocusNode());
@@ -513,7 +512,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     isExpanded: true,
                     value: _frequencyUnit == '' ? null : _frequencyUnit,
                     items: _frequencyUnitMenuItems,
-                    hint: Text('Select Frequency'),
+                    hint: Text('Choose an option'),
                     onChanged: (data) {
                       debugPrint(data);
                       setState(() {
@@ -590,8 +589,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       enabled: true,
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 14,
-                          color: primaryColor),
+                          fontSize: 14),
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
@@ -1053,8 +1051,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       enabled: true,
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 14,
-                          color: primaryColor),
+                          fontSize: 14),
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
                         hintStyle: TextStyle(

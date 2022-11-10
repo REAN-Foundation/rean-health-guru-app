@@ -295,6 +295,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            'Select Health System',
+            style: TextStyle(
+                color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -308,7 +316,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       border: Border.all(color: primaryColor, width: 0.80),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Select your health system',
+                    label: 'Select Health System',
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: healthSystemGlobe,
@@ -318,7 +326,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                           child: Text(value),
                         );
                       }).toList(),
-                      hint: Text(healthSystemGlobe ?? 'Select your health system'),
+                      hint: Text(healthSystemGlobe ?? 'Choose an option'),
                       onChanged: (data) {
                         debugPrint(data);
                         setState(() {
@@ -340,6 +348,14 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
             ],
           ),
           SizedBox(height: 16,),
+          Text(
+            'Select Hospital',
+            style: TextStyle(
+                color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -353,7 +369,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       border: Border.all(color: primaryColor, width: 0.80),
                       color: Colors.white),
                   child: Semantics(
-                    label: 'Select the hospital',
+                    label: 'Select Hospital',
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: healthSystemHospitalGlobe,
@@ -363,7 +379,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                           child: Text(value),
                         );
                       }).toList(),
-                      hint: Text(healthSystemHospitalGlobe ?? 'Select the hospital'),
+                      hint: Text(healthSystemHospitalGlobe ?? 'Choose an option'),
                       onChanged: (data) {
                         debugPrint(data);
                         setState(() {

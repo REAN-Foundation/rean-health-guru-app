@@ -97,6 +97,10 @@ class HealthProfile {
   String? procedureHistory;
   String? obstetricHistory;
   String? otherInformation;
+  String? typeOfStroke;
+  bool? hasHighBloodPressure;
+  bool? hasHighCholesterol;
+  bool? hasAtrialFibrillation;
 
   HealthProfile(
       {this.id,
@@ -120,8 +124,12 @@ class HealthProfile {
       this.drinkingSince,
       this.substanceAbuse,
       this.procedureHistory,
-        this.obstetricHistory,
-        this.otherInformation});
+      this.obstetricHistory,
+      this.otherInformation,
+      this.typeOfStroke,
+      this.hasHighBloodPressure,
+      this.hasHighCholesterol,
+      this.hasAtrialFibrillation});
 
   HealthProfile.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -147,6 +155,10 @@ class HealthProfile {
     procedureHistory = json['ProcedureHistory'];
     obstetricHistory = json['ObstetricHistory'];
     otherInformation = json['OtherInformation'];
+    typeOfStroke = json['TypeOfStroke'];
+    hasHighBloodPressure = json['HasHighBloodPressure'];
+    hasHighCholesterol = json['HasHighCholesterol'];
+    hasAtrialFibrillation = json['HasAtrialFibrillation'];
   }
 
   Map<String, dynamic> toJson() {
@@ -174,6 +186,10 @@ class HealthProfile {
     data['ProcedureHistory'] = procedureHistory;
     data['ObstetricHistory'] = obstetricHistory;
     data['OtherInformation'] = otherInformation;
+    data['TypeOfStroke'] = typeOfStroke;
+    data['HasHighBloodPressure'] = hasHighBloodPressure;
+    data['HasHighCholesterol'] = hasHighCholesterol;
+    data['HasAtrialFibrillation'] = hasAtrialFibrillation;
     return data;
   }
 }

@@ -150,6 +150,11 @@ class Person {
   String? displayName;
   String? gender;
   String? maritalStatus;
+  String? race;
+  String? ethnicity;
+  String? strokeSurvivorOrCaregiver;
+  bool? livingAlone;
+  bool? workedPriorToStroke;
   DateTime? birthDate;
   String? age;
   String? phone;
@@ -167,6 +172,11 @@ class Person {
       this.displayName,
       this.gender,
       this.maritalStatus,
+      this.race,
+      this.ethnicity,
+      this.strokeSurvivorOrCaregiver,
+      this.livingAlone,
+      this.workedPriorToStroke,
       this.birthDate,
       this.age,
       this.phone,
@@ -184,6 +194,11 @@ class Person {
     displayName = json['DisplayName'];
     gender = json['Gender'];
     maritalStatus = json['MaritalStatus'];
+    race = json['Race'];
+    ethnicity = json['Ethnicity'];
+    strokeSurvivorOrCaregiver = json['StrokeSurvivorOrCaregiver'];
+    livingAlone = json['LivingAlone'];
+    workedPriorToStroke = json['WorkedPriorToStroke'];
     if (json['BirthDate'] != null) {
       birthDate = DateTime.parse(json['BirthDate']);
     } else {
@@ -212,6 +227,11 @@ class Person {
     data['DisplayName'] = displayName;
     data['Gender'] = gender;
     data['MaritalStatus'] = maritalStatus;
+    data['Ethnicity'] = ethnicity;
+    data['Race'] = race;
+    data['StrokeSurvivorOrCaregiver'] = strokeSurvivorOrCaregiver;
+    data['LivingAlone'] = livingAlone;
+    data['WorkedPriorToStroke'] = workedPriorToStroke;
     if (birthDate == null) {
       data['BirthDate'] = birthDate;
     } else {

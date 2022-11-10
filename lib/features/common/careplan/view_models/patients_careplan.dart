@@ -116,6 +116,23 @@ class PatientCarePlanViewModel extends BaseModel {
     return BaseResponse.fromJson(response);
   }
 
+  Future<BaseResponse> updatePatientMedicalProfile(Map body) async {
+    setBusy(true);
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.put(
+        '/patient-health-profiles/' + patientUserId!,
+        header: map,
+        body: body); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
+
+    debugPrint(response.toString());
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
+
   Future<EnrollCarePlanResponse> startCarePlan(Map body) async {
     // Get user profile for id
 

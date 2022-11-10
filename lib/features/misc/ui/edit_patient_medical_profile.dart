@@ -1523,9 +1523,9 @@ class _EditPatientMedicalProfileViewState
       /*data['Ethnicity'] = _ethnicityValue;
       data['Race'] = _raceValue;*/
       data['TypeOfStroke'] = _typeOfStrokeValue == '' ? null : _typeOfStrokeValue;
-      data['HasHighBloodPressure'] =  isBloodPressure == '' ? null : isBloodPressure == 'Yes' ? true : false;;
-      data['HasHighCholesterol'] =  isHighCholesterol == '' ? null : isHighCholesterol == 'Yes' ? true : false;;
-      data['HasAtrialFibrillation'] =  isAtrialfibrillation == '' ? null : isAtrialfibrillation == 'Yes' ? true : false;;
+      data['HasHighBloodPressure'] =  isBloodPressure == '' ? null : isBloodPressure == 'Yes' ? true : false;
+      data['HasHighCholesterol'] =  isHighCholesterol == '' ? null : isHighCholesterol == 'Yes' ? true : false;
+      data['HasAtrialFibrillation'] =  isAtrialfibrillation == '' ? null : isAtrialfibrillation == 'Yes' ? true : false;
       data['Occupation'] = _ocupationController.text;
 
       final BaseResponse baseResponse = await model.updatePatientMedicalProfile(

@@ -416,6 +416,7 @@ class _EditPatientMedicalProfileViewState
                                               color: primaryColor)))),
                               child: Text(
                                 'Save',
+                                semanticsLabel: 'Save Medical Profile',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
@@ -586,7 +587,9 @@ class _EditPatientMedicalProfileViewState
                     ].map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(value,
+                          semanticsLabel: value.contains('+') ? value.replaceAll('+', ' Positive') : value.replaceAll('-', ' Negative') ,
+                        ),
                       );
                     }).toList(),
                     hint: Text('Select Blood Type'),

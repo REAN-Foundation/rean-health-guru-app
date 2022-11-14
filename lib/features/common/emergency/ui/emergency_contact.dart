@@ -608,6 +608,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         content: Container(
           height: 90,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Enter your hospitalization details\n(Date & Reason)',
                   style: TextStyle(
@@ -617,6 +619,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       fontFamily: 'Montserrat')),
               Container(
                 width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 2),
                 child: Semantics(
                   child: TextField(
                     controller: emergencyDetailsTextControler,
@@ -930,7 +933,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                                       fontSize: 12.0,
                                                       fontWeight:
                                                           FontWeight.w300,
-                                                      color: textGrey)),
+                                                      color: textBlack)),
                                             ),
                                           ],
                                         ),
@@ -946,7 +949,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w300,
-                                    color: textGrey)),
+                                    color: textBlack)),
                           ],
                         ),
                       ),
@@ -1079,7 +1082,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                               style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w300,
-                                  color: textGrey)),
+                                  color: textBlack)),
                         ],
                       ),
                     ),
@@ -1251,7 +1254,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w200,
-                                      color: textGrey),
+                                      color: textBlack),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -1430,7 +1433,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w200,
-                                      color: textGrey),
+                                      color: textBlack),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),

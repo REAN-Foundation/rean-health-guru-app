@@ -123,13 +123,15 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
-                                      height: 200,
-                                      child: getAppType() == 'AHA'
-                                          ? Image.asset(
-                                              'res/images/medication_aha_bg.png')
-                                          : Image.asset(
-                                              'res/images/medication_rean_bg.png')),
+                                  ExcludeSemantics(
+                                    child: Container(
+                                        height: 200,
+                                        child: getAppType() == 'AHA'
+                                            ? Image.asset(
+                                                'res/images/medication_aha_bg.png')
+                                            : Image.asset(
+                                                'res/images/medication_rean_bg.png')),
+                                  ),
                                   SizedBox(
                                     height: 8,
                                   ),
@@ -147,14 +149,18 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                   Stack(
                                     children: [
                                       getAppType() == 'AHA'
-                                          ? Image.asset(
-                                              'res/images/medication_aha_bottom_bg.png')
-                                          : Image.asset(
-                                              'res/images/medication_rean_bottom_bg.png',
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                            ),
+                                          ? ExcludeSemantics(
+                                            child: Image.asset(
+                                                'res/images/medication_aha_bottom_bg.png'),
+                                          )
+                                          : ExcludeSemantics(
+                                            child: Image.asset(
+                                                'res/images/medication_rean_bottom_bg.png',
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                              ),
+                                          ),
                                       Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -207,6 +213,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                       if (_timer != null) ...[
                                                         _timer!.isActive
                                                             ? Semantics(
+                                                                label: 'Play',
                                                                 button: true,
                                                                 child:
                                                                     ExcludeSemantics(
@@ -271,6 +278,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                             Radius.circular(
                                                                 70.0))),
                                                 child: Semantics(
+                                                  label: 'Pause',
                                                   button: true,
                                                   child: ExcludeSemantics(
                                                     child: Container(

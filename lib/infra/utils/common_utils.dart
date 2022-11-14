@@ -242,6 +242,10 @@ void announceText(String text) {
   SemanticsService.announce(text, TextDirection.ltr);
 }
 
+hideKeyboard(){
+  FocusManager.instance.primaryFocus!.unfocus();
+}
+
 setImage(String url) {
   CachedNetworkImage(
     imageUrl:

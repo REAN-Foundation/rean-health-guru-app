@@ -26,6 +26,7 @@ Future<void> main() async {
   login ??= false;
   primaryColor = Color(0XFFc10e21);
   primaryLightColor = Color(0XFFFFFFFF);
+  primaryExtraLightColor =  Color(0XFFFF8B90);
   runApp(MyApp(login));
 }
 

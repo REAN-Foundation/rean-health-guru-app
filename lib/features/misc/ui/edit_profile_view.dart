@@ -8,7 +8,6 @@ import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get_it/get_it.dart';
-import 'package:group_radio_button/group_radio_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -96,7 +95,7 @@ class _EditProfileState extends State<EditProfile> {
   String? imageResourceId = '';
   var _api_key;
 
-  final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
+  final List<String> radioItemsForGender = ['Female', 'Male', 'Non-binary', 'Prefer to self-describe', 'Prefer not to answer'];
   String _maritalStatusValue = '';
   String _countryValue = '';
   List<String> countryList = [];
@@ -812,6 +811,8 @@ class _EditProfileState extends State<EditProfile> {
                     Expanded(
                       child: Text(
                         _raceValue.toString(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontWeight: FontWeight.normal,
                             fontSize: 16,
@@ -950,7 +951,7 @@ class _EditProfileState extends State<EditProfile> {
                     border: Border.all(color: Color(0XFF909CAC), width: 0.80),
                     color: Colors.white),
                 child: Semantics(
-                  label: 'Stroke Survivor or Caregiver',
+                  label: 'Are you a stroke survivor or caregiver?',
                   child: DropdownButton<String>(
                     isExpanded: true,
                     value: _surviourOrCaregiverValue == '' ? null : _surviourOrCaregiverValue,
@@ -978,7 +979,7 @@ class _EditProfileState extends State<EditProfile> {
           ],
         )
             : Semantics(
-          label: 'Stroke ' + _surviourOrCaregiverValue.toString(),
+          label: 'Are you a stroke survivor or caregiver?' + _surviourOrCaregiverValue.toString(),
           readOnly: true,
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -1072,7 +1073,7 @@ class _EditProfileState extends State<EditProfile> {
           ],
         )
             : Semantics(
-          label: _liveAloneValue.toString(),
+          label: 'Do you live alone?' + _liveAloneValue.toString(),
           readOnly: true,
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -1166,7 +1167,7 @@ class _EditProfileState extends State<EditProfile> {
           ],
         )
             : Semantics(
-          label: workPriorToStrokeValue.toString(),
+          label: 'Did you work prior to your stroke?' + workPriorToStrokeValue.toString(),
           readOnly: true,
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -2778,6 +2779,21 @@ class _EditProfileState extends State<EditProfile> {
         });
   }*/
 
+  /*RadioGroup<String>.builder(
+                      items: radioItemsForGender,
+                      groupValue: selectedGender.toString(),
+                      horizontalAlignment: MainAxisAlignment.start,
+                      onChanged: (item) {
+                        debugPrint(item);
+                        selectedGender = item;
+                        setState(() {});
+                      },
+                      itemBuilder: (item) => RadioButtonBuilder(
+                        item,
+                        textPosition: RadioButtonTextPosition.right,
+                      ),
+                    ),*/
+
   Widget _genderWidget() {
     debugPrint('Gender: $selectedGender');
     return Container(
@@ -2798,21 +2814,34 @@ class _EditProfileState extends State<EditProfile> {
             label: selectedGender,
                   child: AbsorbPointer(
                     absorbing: !isEditable,
-                    child: RadioGroup<String>.builder(
-                      items: radioItemsForGender,
-                      groupValue: selectedGender.toString(),
-                      direction: Axis.horizontal,
-                      horizontalAlignment: MainAxisAlignment.start,
-                      onChanged: (item) {
-                        debugPrint(item);
-                        selectedGender = item;
-                        setState(() {});
-                      },
-                      itemBuilder: (item) => RadioButtonBuilder(
-                        item,
-                        textPosition: RadioButtonTextPosition.right,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0),
+                          border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                          color: Colors.white),
+                      child: DropdownButton<String>(
+                        isExpanded: true,
+                        value: selectedGender == ''
+                            ? null
+                            : selectedGender,
+                        items: radioItemsForGender.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        hint: Text('Choose an option'),
+                        onChanged: (data) {
+                          debugPrint(data);
+                          setState(() {
+                            selectedGender = data.toString();
+                          });
+                          setState(() {});
+                        },
                       ),
-                    ),
+                    )
                   ),
                 )
               : Semantics(

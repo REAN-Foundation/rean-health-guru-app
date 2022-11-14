@@ -251,7 +251,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     ),
                     Expanded(
                       child: Container(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(0.0),
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                             color: Colors.white,

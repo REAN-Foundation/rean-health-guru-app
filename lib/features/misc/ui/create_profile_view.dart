@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:get_it/get_it.dart';
-import 'package:group_radio_button/group_radio_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -56,7 +55,7 @@ class _CreateProfileState extends State<CreateProfile> {
   String fullName = '';
   var dateFormat = DateFormat('MMM dd, yyyy');
 
-  final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
+  final List<String> radioItemsForGender = ['Female', 'Male', 'Non-binary', 'Prefer to self-describe', 'Prefer not to answer'];
 
   //Patient patient;
   //String profileImage = "";
@@ -282,9 +281,18 @@ class _CreateProfileState extends State<CreateProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -329,9 +337,18 @@ class _CreateProfileState extends State<CreateProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -633,9 +650,18 @@ class _CreateProfileState extends State<CreateProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            'Sex',
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+          Row(
+            children: [
+              Text(
+                'Sex',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -662,7 +688,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   selectedGender = 'Intersex';
                 }
               })*/
-          RadioGroup<String>.builder(
+          /*RadioGroup<String>.builder(
             items: radioItemsForGender,
             groupValue: selectedGender.toString(),
             direction: Axis.horizontal,
@@ -676,7 +702,35 @@ class _CreateProfileState extends State<CreateProfile> {
               item,
               textPosition: RadioButtonTextPosition.right,
             ),
-          ),
+          ),*/
+           Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                    color: Colors.white),
+                child: DropdownButton<String>(
+                  isExpanded: true,
+                  value: selectedGender == ''
+                      ? null
+                      : selectedGender,
+                  items: radioItemsForGender.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  hint: Text('Choose an option'),
+                  onChanged: (data) {
+                    debugPrint(data);
+                    setState(() {
+                      selectedGender = data.toString();
+                    });
+                    setState(() {});
+                  },
+                ),
+              )
         ],
       ),
     );
@@ -688,9 +742,18 @@ class _CreateProfileState extends State<CreateProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,

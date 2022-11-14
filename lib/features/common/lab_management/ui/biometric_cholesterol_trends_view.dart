@@ -104,7 +104,7 @@ class _BiometricCholesterolTrendsViewState
                       ImageIcon(
                         AssetImage('res/images/ic_total_cholesterol.png'),
                         size: 32,
-                        color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                        color: _currentIndex == 0 ? Colors.white : primaryExtraLightColor,
                       ),
                       SizedBox(
                         height: 4,
@@ -113,7 +113,7 @@ class _BiometricCholesterolTrendsViewState
                         'Record Lab Values',
                         style: TextStyle(
                             color:
-                                _currentIndex == 0 ? Colors.white : Colors.grey,
+                                _currentIndex == 0 ? Colors.white : primaryExtraLightColor,
                             fontSize: 10),
                       ),
                     ],
@@ -141,7 +141,7 @@ class _BiometricCholesterolTrendsViewState
                       ImageIcon(
                         AssetImage('res/images/ic_trends.png'),
                         size: 28,
-                        color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                        color: _currentIndex == 1 ? Colors.white : primaryExtraLightColor,
                       ),
                       SizedBox(
                         height: 4,
@@ -150,7 +150,7 @@ class _BiometricCholesterolTrendsViewState
                         'View Trends',
                         style: TextStyle(
                             color:
-                                _currentIndex == 1 ? Colors.white : Colors.grey,
+                                _currentIndex == 1 ? Colors.white : primaryExtraLightColor,
                             fontSize: 10),
                       ),
                     ],

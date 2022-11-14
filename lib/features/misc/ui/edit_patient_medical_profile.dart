@@ -211,289 +211,296 @@ class _EditPatientMedicalProfileViewState
                 ),
                 iconTheme: IconThemeData(color: Colors.black),
               ),
-              body: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _sizedBoxHeight(),
-                      _textFeilds('Main Condition', _majorAilmentController,
-                          _majorAilmentFocus, _obstetricHistoryFocus),
-                      _sizedBoxHeight(),
-                      /*_textFeilds(
-                          'Other Conditions',
-                          _otherConditionsController,
-                          _otherConditionsFocus,
-                          _ethnicityFocus),
-                      _sizedBoxHeight(),*/
-                      /*_ethnicity(),
-                      _sizedBoxHeight(),
-                      _race(),
-                      _sizedBoxHeight(),*/
-                      _bloodGroup(),
-                      _sizedBoxHeight(),
-                      _textFeilds('Occupation', _ocupationController,
-                          _ocupationFocus, _obstetricHistoryFocus),
-                      _sizedBoxHeight(),
-                      /*Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 150,
-                            child: Text('Height*',
-                                style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w600,
-                                    color: textBlack)),
-                          ),
+              body: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  // call this method here to hide soft keyboard
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _sizedBoxHeight(),
+                        _textFeilds('Main Condition', _majorAilmentController,
+                            _majorAilmentFocus, _obstetricHistoryFocus),
+                        _sizedBoxHeight(),
+                        /*_textFeilds(
+                            'Other Conditions',
+                            _otherConditionsController,
+                            _otherConditionsFocus,
+                            _ethnicityFocus),
+                        _sizedBoxHeight(),*/
+                        /*_ethnicity(),
+                        _sizedBoxHeight(),
+                        _race(),
+                        _sizedBoxHeight(),*/
+                        _bloodGroup(),
+                        _sizedBoxHeight(),
+                        _textFeilds('Occupation', _ocupationController,
+                            _ocupationFocus, _obstetricHistoryFocus),
+                        _sizedBoxHeight(),
+                        /*Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 150,
+                              child: Text('Height*',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: textBlack)),
+                            ),
 
-                        ],
-                      ),*/
-                      _heightFeilds(),
-                      /*Stack(
-                        children: [
-                          TextFormField(
-                            controller: _heightInFeetController,
-                            textAlign: TextAlign.left,
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              labelText: 'Height',
-                              labelStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor),
+                          ],
+                        ),*/
+                        _heightFeilds(),
+                        /*Stack(
+                          children: [
+                            TextFormField(
+                              controller: _heightInFeetController,
+                              textAlign: TextAlign.left,
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                labelText: 'Height',
+                                labelStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: primaryColor),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: primaryColor),
+                                ),
                               ),
                             ),
+                            Align(
+                                alignment: Alignment.bottomRight,
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    TextButton(
+                                        onPressed: () {
+                                          if (getCurrentLocale() == 'US') {
+                                            showHeightPickerInFoot(context);
+                                          } else {
+                                            showHeightPickerCms(context);
+                                          }
+                                        },
+                                        child: Text(
+                                          height == 0 ? 'Select' : 'Change',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              color: primaryColor),
+                                        )),
+                                  ],
+                                ))
+                          ],
+                        ),*/
+                        _sizedBoxHeight(),
+                        Text(
+                            'Have you used tobacco products (such as cigarettes, electronic cigarettes, cigars, smokeless tobacco, or hookah) over the past year?',
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w600,
+                                color: textBlack)),
+                        SizedBox(height: 8,),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4.0),
+                              border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                              color: Colors.white),
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            value: isSmoker == '' ? null : isSmoker,
+                            items: <String>[
+                              'Yes',
+                              'No'
+                            ].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            hint: Text('Choose an option'),
+                            onChanged: (data) {
+                              debugPrint(data);
+                              setState(() {
+                                isSmoker = data.toString();
+                              });
+                              setState(() {});
+                            },
                           ),
-                          Align(
-                              alignment: Alignment.bottomRight,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 4,
-                                  ),
-                                  TextButton(
-                                      onPressed: () {
-                                        if (getCurrentLocale() == 'US') {
-                                          showHeightPickerInFoot(context);
-                                        } else {
-                                          showHeightPickerCms(context);
-                                        }
-                                      },
-                                      child: Text(
-                                        height == 0 ? 'Select' : 'Change',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            color: primaryColor),
-                                      )),
-                                ],
-                              ))
-                        ],
-                      ),*/
-                      _sizedBoxHeight(),
-                      Text(
-                          'Have you used tobacco products (such as cigarettes, electronic cigarettes, cigars, smokeless tobacco, or hookah) over the past year?',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
-                              color: textBlack)),
-                      SizedBox(height: 8,),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4.0),
-                            border: Border.all(color: Color(0XFF909CAC), width: 0.80),
-                            color: Colors.white),
-                        child: DropdownButton<String>(
-                          isExpanded: true,
-                          value: isSmoker == '' ? null : isSmoker,
-                          items: <String>[
-                            'Yes',
-                            'No'
-                          ].map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          hint: Text('Choose an option'),
-                          onChanged: (data) {
-                            debugPrint(data);
-                            setState(() {
-                              isSmoker = data.toString();
-                            });
+                        ),
+                        /*RadioGroup<String>.builder(
+                          items: radioItems,
+                          groupValue: isSmoker,
+                          direction: Axis.horizontal,
+                          horizontalAlignment: MainAxisAlignment.start,
+                          onChanged: (item) {
+                            debugPrint(item);
+                            isSmoker = item;
                             setState(() {});
                           },
+                          itemBuilder: (item) => RadioButtonBuilder(
+                            item,
+                            textPosition: RadioButtonTextPosition.right,
+                          ),
+                        ),*/
+                        _sizedBoxHeight(),
+                        Text('Do you have heart disease, have you had a previous heart attack, stroke or other cardiovascular event?',
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w600,
+                                color: textBlack)),
+                        SizedBox(height: 8,),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4.0),
+                              border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                              color: Colors.white),
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            value: hasHeartAilment == '' ? null : hasHeartAilment,
+                            items: <String>[
+                              'Yes',
+                              'No'
+                            ].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            hint: Text('Choose an option'),
+                            onChanged: (data) {
+                              debugPrint(data);
+                              setState(() {
+                                hasHeartAilment = data.toString();
+                              });
+                              setState(() {});
+                            },
+                          ),
                         ),
-                      ),
-                      /*RadioGroup<String>.builder(
-                        items: radioItems,
-                        groupValue: isSmoker,
-                        direction: Axis.horizontal,
-                        horizontalAlignment: MainAxisAlignment.start,
-                        onChanged: (item) {
-                          debugPrint(item);
-                          isSmoker = item;
-                          setState(() {});
-                        },
-                        itemBuilder: (item) => RadioButtonBuilder(
-                          item,
-                          textPosition: RadioButtonTextPosition.right,
-                        ),
-                      ),*/
-                      _sizedBoxHeight(),
-                      Text('Do you have heart disease, have you had a previous heart attack, stroke or other cardiovascular event?',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
-                              color: textBlack)),
-                      SizedBox(height: 8,),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4.0),
-                            border: Border.all(color: Color(0XFF909CAC), width: 0.80),
-                            color: Colors.white),
-                        child: DropdownButton<String>(
-                          isExpanded: true,
-                          value: hasHeartAilment == '' ? null : hasHeartAilment,
-                          items: <String>[
-                            'Yes',
-                            'No'
-                          ].map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          hint: Text('Choose an option'),
-                          onChanged: (data) {
-                            debugPrint(data);
-                            setState(() {
-                              hasHeartAilment = data.toString();
-                            });
+
+                        /*RadioGroup<String>.builder(
+                          items: radioItems,
+                          groupValue: hasHeartAilment,
+                          direction: Axis.horizontal,
+                          horizontalAlignment: MainAxisAlignment.start,
+                          onChanged: (item) {
+                            debugPrint(item);
+                            hasHeartAilment = item;
                             setState(() {});
                           },
+                          itemBuilder: (item) => RadioButtonBuilder(
+                            item,
+                            textPosition: RadioButtonTextPosition.right,
+                          ),
+                        ),*/
+                        /*Text('Sedentary Occupation',
+                      style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w600,
+                          color: textBlack)),
+                  RadioGroup<String>.builder(
+                    items: radioItems,
+                    onSelected: (item) {
+                      debugPrint(item.title);
+                    },
+                  ),*/
+                        _sizedBoxHeight(),
+                        _typeOfStroke(),
+                        _sizedBoxHeight(),
+                        _toldByYourHealthcareProfessional(),
+
+
+                        SizedBox(
+                          width: 24,
                         ),
-                      ),
-
-                      /*RadioGroup<String>.builder(
-                        items: radioItems,
-                        groupValue: hasHeartAilment,
-                        direction: Axis.horizontal,
-                        horizontalAlignment: MainAxisAlignment.start,
-                        onChanged: (item) {
-                          debugPrint(item);
-                          hasHeartAilment = item;
-                          setState(() {});
-                        },
-                        itemBuilder: (item) => RadioButtonBuilder(
-                          item,
-                          textPosition: RadioButtonTextPosition.right,
-                        ),
-                      ),*/
-                      /*Text('Sedentary Occupation',
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w600,
-                        color: textBlack)),
-                RadioGroup<String>.builder(
-                  items: radioItems,
-                  onSelected: (item) {
-                    debugPrint(item.title);
-                  },
-                ),*/
-                      _sizedBoxHeight(),
-                      _typeOfStroke(),
-                      _sizedBoxHeight(),
-                      _toldByYourHealthcareProfessional(),
-
-
-                      SizedBox(
-                        width: 24,
-                      ),
-                      _sizedBoxHeight(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 150,
-                            height: 40,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                /*if (_heightInFeetController.text
-                                    .trim()
-                                    .isEmpty) {
-                                  showToast("Please enter your height in feet",
-                                      context);
-                                } else if (double.parse(
-                                        _heightInFeetController.text) >
-                                    15) {
-                                  showToast("Please enter valid height in feet",
-                                      context);
-                                } else if (_heightInInchesController.text
-                                    .trim()
-                                    .isEmpty) {
-                                  showToast(
-                                      "Please enter your height in inches",
-                                      context);
-                                } else if (double.parse(
-                                        _heightInInchesController.text) >
-                                    12) {
-                                  showToast(
-                                      "Please enter valid height in inches",
-                                      context);
-                                } else {
-                                  _sharedPrefUtils.saveDouble(
-                                      'height',
-                                      double.parse(Conversion.FeetToCm(
-                                              double.parse(
-                                                  _heightInFeetController.text +
-                                                      '.' +
-                                                      _heightInInchesController
-                                                          .text))
-                                          .toString()));
-                                }*/
-                                _updatePatientMedicalProfile();
-                              },
-                              style: ButtonStyle(
-                                  foregroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          primaryLightColor),
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          primaryColor),
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(24),
-                                          side: BorderSide(
-                                              color: primaryColor)))),
-                              child: Text(
-                                'Save',
-                                semanticsLabel: 'Save Medical Profile',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600),
+                        _sizedBoxHeight(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 150,
+                              height: 40,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  /*if (_heightInFeetController.text
+                                      .trim()
+                                      .isEmpty) {
+                                    showToast("Please enter your height in feet",
+                                        context);
+                                  } else if (double.parse(
+                                          _heightInFeetController.text) >
+                                      15) {
+                                    showToast("Please enter valid height in feet",
+                                        context);
+                                  } else if (_heightInInchesController.text
+                                      .trim()
+                                      .isEmpty) {
+                                    showToast(
+                                        "Please enter your height in inches",
+                                        context);
+                                  } else if (double.parse(
+                                          _heightInInchesController.text) >
+                                      12) {
+                                    showToast(
+                                        "Please enter valid height in inches",
+                                        context);
+                                  } else {
+                                    _sharedPrefUtils.saveDouble(
+                                        'height',
+                                        double.parse(Conversion.FeetToCm(
+                                                double.parse(
+                                                    _heightInFeetController.text +
+                                                        '.' +
+                                                        _heightInInchesController
+                                                            .text))
+                                            .toString()));
+                                  }*/
+                                  _updatePatientMedicalProfile();
+                                },
+                                style: ButtonStyle(
+                                    foregroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            primaryLightColor),
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            primaryColor),
+                                    shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(24),
+                                            side: BorderSide(
+                                                color: primaryColor)))),
+                                child: Text(
+                                  'Save',
+                                  semanticsLabel: 'Save Medical Profile',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      )
-                    ],
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -678,7 +685,7 @@ class _EditPatientMedicalProfileViewState
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Have you ever been told by your healthcare professional that you have any of the following',
+        Text('Have you ever been told by your healthcare professional that you have any of the following?',
             style: TextStyle(
                 fontSize: 15,
                 color: Colors.black87,
@@ -707,50 +714,45 @@ class _EditPatientMedicalProfileViewState
   }
 
   Widget highBloodPressure(){
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text('High Blood Pressure',
+            style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w600,
+                color: textBlack)),
+        SizedBox(height: 8,),
         Container(
-          width: 168,
-          child: Text('High blood pressure',
-              style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w600,
-                  color: textBlack)),
-        ),
-        SizedBox(width: 8,),
-        Expanded(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4.0),
-                border: Border.all(color: Color(0XFF909CAC), width: 0.80),
-                color: Colors.white),
-            child: Semantics(
-              label: 'High blood pressure ',
-              child: DropdownButton<String>(
-                isExpanded: true,
-                value: isBloodPressure == '' ? null : isBloodPressure,
-                items: <String>[
-                  'Yes',
-                  'No'
-                ].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                hint: Text('Choose an option'),
-                onChanged: (data) {
-                  debugPrint(data);
-                  setState(() {
-                    isBloodPressure = data.toString();
-                  });
-                  setState(() {});
-                },
-              ),
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.0),
+              border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+              color: Colors.white),
+          child: Semantics(
+            label: 'High blood pressure ',
+            child: DropdownButton<String>(
+              isExpanded: true,
+              value: isBloodPressure == '' ? null : isBloodPressure,
+              items: <String>[
+                'Yes',
+                'No'
+              ].map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              hint: Text('Choose an option'),
+              onChanged: (data) {
+                debugPrint(data);
+                setState(() {
+                  isBloodPressure = data.toString();
+                });
+                setState(() {});
+              },
             ),
           ),
         ),
@@ -759,50 +761,48 @@ class _EditPatientMedicalProfileViewState
   }
 
   Widget highCholesterol(){
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           width: 168,
-          child: Text('High cholesterol',
+          child: Text('High Cholesterol',
               style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w600,
                   color: textBlack)),
         ),
-        SizedBox(width: 8,),
-        Expanded(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4.0),
-                border: Border.all(color: Color(0XFF909CAC), width: 0.80),
-                color: Colors.white),
-            child: Semantics(
-              label: 'High cholesterol',
-              child: DropdownButton<String>(
-                isExpanded: true,
-                value: isHighCholesterol == '' ? null : isHighCholesterol,
-                items: <String>[
-                  'Yes',
-                  'No'
-                ].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                hint: Text('Choose an option'),
-                onChanged: (data) {
-                  debugPrint(data);
-                  setState(() {
-                    isHighCholesterol = data.toString();
-                  });
-                  setState(() {});
-                },
-              ),
+        SizedBox(height: 8,),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.0),
+              border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+              color: Colors.white),
+          child: Semantics(
+            label: 'High cholesterol',
+            child: DropdownButton<String>(
+              isExpanded: true,
+              value: isHighCholesterol == '' ? null : isHighCholesterol,
+              items: <String>[
+                'Yes',
+                'No'
+              ].map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              hint: Text('Choose an option'),
+              onChanged: (data) {
+                debugPrint(data);
+                setState(() {
+                  isHighCholesterol = data.toString();
+                });
+                setState(() {});
+              },
             ),
           ),
         ),
@@ -811,9 +811,9 @@ class _EditPatientMedicalProfileViewState
   }
 
   Widget diabetics(){
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           width: 168,
@@ -823,38 +823,36 @@ class _EditPatientMedicalProfileViewState
                   fontWeight: FontWeight.w600,
                   color: textBlack)),
         ),
-        SizedBox(width: 8,),
-        Expanded(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4.0),
-                border: Border.all(color: Color(0XFF909CAC), width: 0.80),
-                color: Colors.white),
-            child: Semantics(
-              label: 'Diabetes',
-              child: DropdownButton<String>(
-                isExpanded: true,
-                value: isDiabetic == '' ? null : isDiabetic,
-                items: <String>[
-                  'Yes',
-                  'No'
-                ].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                hint: Text('Choose an option'),
-                onChanged: (data) {
-                  debugPrint(data);
-                  setState(() {
-                    isDiabetic = data.toString();
-                  });
-                  setState(() {});
-                },
-              ),
+        SizedBox(height: 8,),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.0),
+              border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+              color: Colors.white),
+          child: Semantics(
+            label: 'Diabetes',
+            child: DropdownButton<String>(
+              isExpanded: true,
+              value: isDiabetic == '' ? null : isDiabetic,
+              items: <String>[
+                'Yes',
+                'No'
+              ].map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              hint: Text('Choose an option'),
+              onChanged: (data) {
+                debugPrint(data);
+                setState(() {
+                  isDiabetic = data.toString();
+                });
+                setState(() {});
+              },
             ),
           ),
         ),
@@ -863,50 +861,48 @@ class _EditPatientMedicalProfileViewState
   }
 
   Widget atrialFibrillation(){
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           width: 168,
-          child: Text('Atrial fibrillation',
+          child: Text('Atrial Fibrillation',
               style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w600,
                   color: textBlack)),
         ),
-        SizedBox(width: 8,),
-        Expanded(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4.0),
-                border: Border.all(color: Color(0XFF909CAC), width: 0.80),
-                color: Colors.white),
-            child: Semantics(
-              label: 'Atrial fibrillation',
-              child: DropdownButton<String>(
-                isExpanded: true,
-                value: isAtrialfibrillation == '' ? null : isAtrialfibrillation,
-                items: <String>[
-                  'Yes',
-                  'No'
-                ].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                hint: Text('Choose an option'),
-                onChanged: (data) {
-                  debugPrint(data);
-                  setState(() {
-                    isAtrialfibrillation = data.toString();
-                  });
-                  setState(() {});
-                },
-              ),
+        SizedBox(height: 8,),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.0),
+              border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+              color: Colors.white),
+          child: Semantics(
+            label: 'Atrial fibrillation',
+            child: DropdownButton<String>(
+              isExpanded: true,
+              value: isAtrialfibrillation == '' ? null : isAtrialfibrillation,
+              items: <String>[
+                'Yes',
+                'No'
+              ].map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              hint: Text('Choose an option'),
+              onChanged: (data) {
+                debugPrint(data);
+                setState(() {
+                  isAtrialfibrillation = data.toString();
+                });
+                setState(() {});
+              },
             ),
           ),
         ),
@@ -1044,14 +1040,12 @@ class _EditPatientMedicalProfileViewState
                       maxLines: null,
                       enabled: true,
                       style: TextStyle(fontFamily: 'Montserrat', fontSize: 14),
-                      textInputAction: focusNode == _obstetricHistoryFocus
-                          ? TextInputAction.done
-                          : TextInputAction.next,
+                      textInputAction: TextInputAction.done,
                       onFieldSubmitted: (term) {
-                        focusNode != _obstetricHistoryFocus
+                       /* focusNode != _obstetricHistoryFocus
                             ? _fieldFocusChange(
                                 context, focusNode, nextFocusNode)
-                            : '  ';
+                            : '  ';*/
                       },
                       decoration: InputDecoration(
                         hintStyle:
@@ -1131,14 +1125,14 @@ class _EditPatientMedicalProfileViewState
                                   onPressed: () {
                                     if (getCurrentLocale() == 'US') {
                                       showDialog(
-        barrierDismissible: false,
+                                          barrierDismissible: false,
                                           context: context,
                                           builder: (_) {
                                             return _addHeightInFtnInchDialog(context);
                                           });
                                     } else {
                                       showDialog(
-        barrierDismissible: false,
+                                          barrierDismissible: false,
                                           context: context,
                                           builder: (_) {
                                             return _addHeightInCmDialog(context);
@@ -1511,6 +1505,8 @@ class _EditPatientMedicalProfileViewState
 
   _updatePatientMedicalProfile() async {
     try {
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+      FocusManager.instance.primaryFocus?.unfocus();
       _majorAilmentFocus.unfocus();
       _ocupationFocus.unfocus();
       progressDialog.show(max: 100, msg: 'Loading...');
@@ -1532,15 +1528,23 @@ class _EditPatientMedicalProfileViewState
           widget.healthProfile!.id, data);
 
       if (baseResponse.status == 'success') {
-        progressDialog.close();
-        FocusScope.of(context).unfocus();
+        showToast('Medical Profile updated successfully!', context);
+        //progressDialog.close();
+        //FocusScope.of(context).unfocus();
         //Navigator.popUntil(context, ModalRoute.withName(RoutePaths.My_Medical_Profile));
-        //Navigator.pop(context, true);
-        Navigator.of(context).pop(true);
+        if(Navigator.canPop(context)) {
+          Navigator.pop(context, true);
+        }
+        if(Navigator.canPop(context)) {
+          Navigator.of(context).pop(true);
+        }
+        //Navigator.of(context).pop(true);
+       /* Navigator.of(context)
+            .popUntil(ModalRoute.withName("mProfile"));*/
         //if (Platform.isAndroid) {
           //Navigator.pop(context);
         //}
-        showToast('Medical Profile updated successfully!', context);
+
       } else {
         showToast(baseResponse.message!, context);
         progressDialog.close();

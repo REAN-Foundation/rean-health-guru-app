@@ -430,7 +430,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                       children: <Widget>[
                                         SizedBox(
                                           width: 180,
-                                          child: Text('High blood pressure',
+                                          child: Text('High Blood Pressure',
                                               style: TextStyle(
                                                   fontSize: 16.0,
                                                   fontWeight: FontWeight.w600,
@@ -457,7 +457,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                       children: <Widget>[
                                         SizedBox(
                                           width: 180,
-                                          child: Text('High cholesterol',
+                                          child: Text('High Cholesterol',
                                               style: TextStyle(
                                                   fontSize: 16.0,
                                                   fontWeight: FontWeight.w600,
@@ -511,7 +511,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                       children: <Widget>[
                                         SizedBox(
                                           width: 180,
-                                          child: Text('Atrial fibrillation',
+                                          child: Text('Atrial Fibrillation',
                                               style: TextStyle(
                                                   fontSize: 16.0,
                                                   fontWeight: FontWeight.w600,

@@ -141,7 +141,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
                       ImageIcon(
                         AssetImage('res/images/ic_trends.png'),
                         size: 28,
-                        color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                        color: _currentIndex == 1 ? Colors.white : primaryExtraLightColor,
                       ),
                       SizedBox(
                         height: 4,
@@ -150,7 +150,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
                         'View Trends',
                         style: TextStyle(
                             color:
-                                _currentIndex == 1 ? Colors.white : Colors.grey,
+                                _currentIndex == 1 ? Colors.white : primaryExtraLightColor,
                             fontSize: 10),
                       ),
                     ],

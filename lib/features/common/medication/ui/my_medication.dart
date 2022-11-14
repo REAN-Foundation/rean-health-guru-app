@@ -126,7 +126,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                               'res/images/ic_medication_remainder_selected.png'),
                           size: 24,
                           color:
-                          widget._currentIndex == 0 ? Colors.white : Colors.grey,
+                          widget._currentIndex == 0 ? Colors.white : primaryExtraLightColor,
                         ),
                         SizedBox(
                           height: 4,
@@ -136,7 +136,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                           style: TextStyle(
                               color:  widget._currentIndex == 0
                                   ? Colors.white
-                                  : Colors.grey,
+                                  : primaryExtraLightColor,
                               fontSize: 10),
                         ),
                       ],
@@ -164,7 +164,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                           AssetImage('res/images/ic_pharmacy_colored.png'),
                           size: 24,
                           color:
-                          widget._currentIndex == 1 ? Colors.white : Colors.grey,
+                          widget._currentIndex == 1 ? Colors.white : primaryExtraLightColor,
                         ),
                         SizedBox(
                           height: 4,
@@ -174,7 +174,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                           style: TextStyle(
                               color:  widget._currentIndex == 1
                                   ? Colors.white
-                                  : Colors.grey,
+                                  : primaryExtraLightColor,
                               fontSize: 10),
                         ),
                       ],
@@ -203,7 +203,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                               'res/images/ic_medication_history_selected.png'),
                           size: 24,
                           color:
-                          widget._currentIndex == 2 ? Colors.white : Colors.grey,
+                          widget._currentIndex == 2 ? Colors.white : primaryExtraLightColor,
                         ),
                         SizedBox(
                           height: 4,
@@ -213,7 +213,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                           style: TextStyle(
                               color:  widget._currentIndex == 2
                                   ? Colors.white
-                                  : Colors.grey,
+                                  : primaryExtraLightColor,
                               fontSize: 10),
                         ),
                       ],
@@ -236,13 +236,13 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                     AssetImage(
                         'res/images/ic_medication_prescription_selected.png'),
                     size: 24,
-                    color: _currentIndex == 2 ? Colors.white : Colors.grey,
+                    color: _currentIndex == 2 ? Colors.white : primaryExtraLightColor,
                   ),
                   SizedBox(height: 4,),
                   Text(
                     'Prescriptions',
                     style: TextStyle(
-                        color: _currentIndex == 2 ? Colors.white : Colors.grey,
+                        color: _currentIndex == 2 ? Colors.white : primaryExtraLightColor,
                         fontSize: 10),
                   ),
                 ],
@@ -261,13 +261,13 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                   ImageIcon(
                     AssetImage('res/images/ic_medication_refill_selected.png'),
                     size: 24,
-                    color: _currentIndex == 3 ? Colors.white : Colors.grey,
+                    color: _currentIndex == 3 ? Colors.white : primaryExtraLightColor,
                   ),
                   SizedBox(height: 4,),
                   Text(
                     'Refills',
                     style: TextStyle(
-                        color: _currentIndex == 3 ? Colors.white : Colors.grey,
+                        color: _currentIndex == 3 ? Colors.white : primaryExtraLightColor,
                         fontSize: 10),
                   ),
                 ],

@@ -8,7 +8,6 @@ import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get_it/get_it.dart';
-import 'package:group_radio_button/group_radio_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -96,10 +95,15 @@ class _EditProfileState extends State<EditProfile> {
   String? imageResourceId = '';
   var _api_key;
 
-  final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
+  final List<String> radioItemsForGender = ['Female', 'Male', 'Non-binary', 'Prefer to self-describe', 'Prefer not to answer'];
   String _maritalStatusValue = '';
   String _countryValue = '';
   List<String> countryList = [];
+  String _raceValue = '';
+  String _ethnicityValue = '';
+  String _surviourOrCaregiverValue = '';
+  String _liveAloneValue = '';
+  String workPriorToStrokeValue = '';
 
   @override
   void initState() {
@@ -189,6 +193,12 @@ class _EditProfileState extends State<EditProfile> {
               '/download'
           : '';
 
+      _ethnicityValue = patient.user!.person!.ethnicity ?? '';
+      _raceValue = patient.user!.person!.race ?? '';
+      _surviourOrCaregiverValue = patient.user!.person!.strokeSurvivorOrCaregiver ?? '';
+      _liveAloneValue = patient.user!.person!.livingAlone == null ? '' : patient.user!.person!.livingAlone!  ? 'Yes' : 'No';
+      workPriorToStrokeValue = patient.user!.person!.workedPriorToStroke == null ? '' : patient.user!.person!.workedPriorToStroke!  ? 'Yes' : 'No';
+      debugPrint('Race = $_raceValue \nEthinicity = $_ethnicityValue \nStroke Survivor Or Caregiver = $_surviourOrCaregiverValue \nLive Alone Value = $_liveAloneValue \nWork Prior To Stroke Value = $workPriorToStrokeValue');
       setState(() {
         debugPrint(patientGender);
         selectedGender = patientGender;
@@ -356,6 +366,7 @@ class _EditProfileState extends State<EditProfile> {
 
   _accountDeleteConfirmation() {
     showDialog(
+        barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         content: ListTile(
@@ -646,7 +657,7 @@ class _EditProfileState extends State<EditProfile> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4.0),
                             border:
-                                Border.all(color: primaryColor, width: 0.80),
+                                Border.all(color: Color(0XFF909CAC), width: 0.80),
                             color: Colors.white),
                         child: Semantics(
                           label: 'Marital Status',
@@ -658,18 +669,15 @@ class _EditProfileState extends State<EditProfile> {
                             items: <String>[
                               'Single',
                               'Married',
-                              'Unmarried',
-                              'Widowed',
-                              'Divorcee',
-                              'Live-in',
-                              'Unknown'
+                              'Divorced',
+                              'Widowed'
                             ].map((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(value),
                               );
                             }).toList(),
-                            hint: Text('Select Marital Status'),
+                            hint: Text('Choose an option'),
                             onChanged: (data) {
                               debugPrint(data);
                               setState(() {
@@ -722,6 +730,482 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
+  Widget _race() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Race',
+            style: TextStyle(
+                fontSize: 15,
+                color: Colors.black87,
+                fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 8,
+        ),
+        isEditable
+            ? Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                    color: Colors.white),
+                child: Semantics(
+                  label: 'Race',
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: _raceValue == '' ? null : _raceValue,
+                    items: <String>[
+                      'American Indian/Alaskan Native',
+                      'Asian',
+                      'Black/African American',
+                      'Native Hawaiian or Other Pacific Islander',
+                      'White'
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: Text('Choose an option'),
+                    onChanged: (data) {
+                      debugPrint(data);
+                      setState(() {
+                        _raceValue = data.toString();
+                      });
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+            : Semantics(
+          label: 'Race ' + _raceValue.toString(),
+          readOnly: true,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 48.0,
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              border: Border.all(
+                color: Color(0XFF909CAC),
+                width: 1.0,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+              child: ExcludeSemantics(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        _raceValue.toString(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16,
+                            color: textGrey),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _ehinicity() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Ethnicity',
+            style: TextStyle(
+                fontSize: 15,
+                color: Colors.black87,
+                fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 8,
+        ),
+        isEditable
+            ? Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                    color: Colors.white),
+                child: Semantics(
+                  label: 'Ethnicity',
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: _ethnicityValue == '' ? null : _ethnicityValue,
+                    items: <String>[
+                      'Hispanic/Latino',
+                      'Not Hispanic/Latino',
+                      'Prefer not to say'
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: Text('Choose an option'),
+                    onChanged: (data) {
+                      debugPrint(data);
+                      setState(() {
+                        _ethnicityValue = data.toString();
+                      });
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+            : Semantics(
+          label: 'Ethnicity ' + _ethnicityValue.toString(),
+          readOnly: true,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 48.0,
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              border: Border.all(
+                color: Color(0XFF909CAC),
+                width: 1.0,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+              child: ExcludeSemantics(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        _ethnicityValue.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16,
+                            color: textGrey),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _strokeSurviourOrCaregiver() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Are you a stroke survivor or caregiver?',
+            style: TextStyle(
+                fontSize: 15,
+                color: Colors.black87,
+                fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 8,
+        ),
+        isEditable
+            ? Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                    color: Colors.white),
+                child: Semantics(
+                  label: 'Are you a stroke survivor or caregiver?',
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: _surviourOrCaregiverValue == '' ? null : _surviourOrCaregiverValue,
+                    items: <String>[
+                      'Survivor',
+                      'Caregiver'
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: Text('Choose an option'),
+                    onChanged: (data) {
+                      debugPrint(data);
+                      setState(() {
+                        _surviourOrCaregiverValue = data.toString();
+                      });
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+            : Semantics(
+          label: 'Are you a stroke survivor or caregiver?' + _surviourOrCaregiverValue.toString(),
+          readOnly: true,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 48.0,
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              border: Border.all(
+                color: Color(0XFF909CAC),
+                width: 1.0,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+              child: ExcludeSemantics(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        _surviourOrCaregiverValue.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16,
+                            color: textGrey),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _liveAlone() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Do you live alone?',
+            style: TextStyle(
+                fontSize: 15,
+                color: Colors.black87,
+                fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 8,
+        ),
+        isEditable
+            ? Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                    color: Colors.white),
+                child: Semantics(
+                  label: 'Do you live alone?',
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: _liveAloneValue == '' ? null : _liveAloneValue,
+                    items: <String>[
+                      'Yes',
+                      'No'
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: Text('Choose an option'),
+                    onChanged: (data) {
+                      debugPrint(data);
+                      setState(() {
+                        _liveAloneValue = data.toString();
+                      });
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+            : Semantics(
+          label: 'Do you live alone?' + _liveAloneValue.toString(),
+          readOnly: true,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 48.0,
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              border: Border.all(
+                color: Color(0XFF909CAC),
+                width: 1.0,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+              child: ExcludeSemantics(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        _liveAloneValue.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16,
+                            color: textGrey),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _workPriorToStroke() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Did you work prior to your stroke?',
+            style: TextStyle(
+                fontSize: 15,
+                color: Colors.black87,
+                fontWeight: FontWeight.w600)),
+        SizedBox(
+          height: 8,
+        ),
+        isEditable
+            ? Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                    color: Colors.white),
+                child: Semantics(
+                  label: 'Did you work prior to your stroke?',
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: workPriorToStrokeValue == '' ? null : workPriorToStrokeValue,
+                    items: <String>[
+                      'Yes',
+                      'No'
+                    ].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: Text('Choose an option'),
+                    onChanged: (data) {
+                      debugPrint(data);
+                      setState(() {
+                        workPriorToStrokeValue = data.toString();
+                      });
+                      setState(() {});
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )
+            : Semantics(
+          label: 'Did you work prior to your stroke?' + workPriorToStrokeValue.toString(),
+          readOnly: true,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 48.0,
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              border: Border.all(
+                color: Color(0XFF909CAC),
+                width: 1.0,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 8, 0, 8),
+              child: ExcludeSemantics(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        workPriorToStrokeValue.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16,
+                            color: textGrey),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   List<String?> getSuggestions(String query) {
     final List<String?> matches = [];
     matches.addAll(countryList);
@@ -755,7 +1239,7 @@ class _EditProfileState extends State<EditProfile> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4.0),
                             border:
-                                Border.all(color: primaryColor, width: 0.80),
+                                Border.all(color: Color(0XFF909CAC), width: 0.80),
                             color: Colors.white),
                         child: Semantics(
                           label: 'Country',
@@ -814,7 +1298,7 @@ class _EditProfileState extends State<EditProfile> {
                                 child: Text(value),
                               );
                             }).toList(),
-                            hint: Text('Select Country'),
+                            hint: Text('Choose an option'),
                             onChanged: (data) {
                               debugPrint(data);
                               setState(() {
@@ -1668,7 +2152,7 @@ class _EditProfileState extends State<EditProfile> {
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(8)),
               border: Border.all(
-                color: textGrey,
+                color: Color(0XFF909CAC),
                 width: 1.0,
               ),
             ),
@@ -2118,6 +2602,11 @@ class _EditProfileState extends State<EditProfile> {
                     map['MiddleName'] = _middleNameController.text;
                     map['LastName'] = _lastNameController.text;
                     map['MaritalStatus'] = _maritalStatusValue;
+                    map['Ethnicity'] = _ethnicityValue;
+                    map['StrokeSurvivorOrCaregiver'] = _surviourOrCaregiverValue == '' ? null : _surviourOrCaregiverValue;
+                    map['LivingAlone'] = _liveAloneValue == '' ? null : _liveAloneValue == 'Yes' ? true : false;
+                    map['WorkedPriorToStroke'] = workPriorToStrokeValue == '' ? null : workPriorToStrokeValue == 'Yes' ? true : false;
+                    map['Race'] = _raceValue;
                     final address = <String, String?>{};
                     address['AddressLine'] = _addressController.text.trim();
                     address['City'] = _cityController.text.trim();
@@ -2290,6 +2779,21 @@ class _EditProfileState extends State<EditProfile> {
         });
   }*/
 
+  /*RadioGroup<String>.builder(
+                      items: radioItemsForGender,
+                      groupValue: selectedGender.toString(),
+                      horizontalAlignment: MainAxisAlignment.start,
+                      onChanged: (item) {
+                        debugPrint(item);
+                        selectedGender = item;
+                        setState(() {});
+                      },
+                      itemBuilder: (item) => RadioButtonBuilder(
+                        item,
+                        textPosition: RadioButtonTextPosition.right,
+                      ),
+                    ),*/
+
   Widget _genderWidget() {
     debugPrint('Gender: $selectedGender');
     return Container(
@@ -2310,21 +2814,34 @@ class _EditProfileState extends State<EditProfile> {
             label: selectedGender,
                   child: AbsorbPointer(
                     absorbing: !isEditable,
-                    child: RadioGroup<String>.builder(
-                      items: radioItemsForGender,
-                      groupValue: selectedGender.toString(),
-                      direction: Axis.horizontal,
-                      horizontalAlignment: MainAxisAlignment.start,
-                      onChanged: (item) {
-                        debugPrint(item);
-                        selectedGender = item;
-                        setState(() {});
-                      },
-                      itemBuilder: (item) => RadioButtonBuilder(
-                        item,
-                        textPosition: RadioButtonTextPosition.right,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0),
+                          border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                          color: Colors.white),
+                      child: DropdownButton<String>(
+                        isExpanded: true,
+                        value: selectedGender == ''
+                            ? null
+                            : selectedGender,
+                        items: radioItemsForGender.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        hint: Text('Choose an option'),
+                        onChanged: (data) {
+                          debugPrint(data);
+                          setState(() {
+                            selectedGender = data.toString();
+                          });
+                          setState(() {});
+                        },
                       ),
-                    ),
+                    )
                   ),
                 )
               : Semantics(
@@ -2459,6 +2976,26 @@ class _EditProfileState extends State<EditProfile> {
           height: 8,
         ),
         _entryEmailField('Email'),
+        SizedBox(
+          height: 8,
+        ),
+        _race(),
+        SizedBox(
+          height: 16,
+        ),
+        _ehinicity(),
+        SizedBox(
+          height: 16,
+        ),
+        _strokeSurviourOrCaregiver(),
+        SizedBox(
+          height: 16,
+        ),
+        _liveAlone(),
+        SizedBox(
+          height: 16,
+        ),
+        _workPriorToStroke(),
         SizedBox(
           height: 8,
         ),

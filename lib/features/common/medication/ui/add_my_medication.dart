@@ -271,9 +271,18 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Drug Name',
-            style: TextStyle(
-                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
+        Row(
+          children: [
+            Text('Drug Name',
+                style: TextStyle(
+                    fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
+            Text(
+              '*',
+              style: TextStyle(
+                  color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
         SizedBox(
           height: 8,
         ),
@@ -396,9 +405,18 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Unit',
-            style: TextStyle(
-                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
+        Row(
+          children: [
+            Text('Unit',
+                style: TextStyle(
+                    fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
+            Text(
+              '*',
+              style: TextStyle(
+                  color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
         SizedBox(
           height: 8,
         ),
@@ -425,8 +443,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     enableInteractiveSelection: false,
                     style: TextStyle(
                         fontFamily: 'Montserrat',
-                        fontSize: 14,
-                        color: primaryColor),
+                        fontSize: 14),
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
@@ -465,7 +482,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     isExpanded: true,
                     value: _dosageUnit == '' ? null : _dosageUnit,
                     items: _dosageUnitMenuItems,
-                    hint: Text('Select Unit'),
+                    hint: Text('Choose an option'),
                     onChanged: (data) {
                       _unitFocus.unfocus();
                       FocusScope.of(context).requestFocus(FocusNode());
@@ -489,9 +506,18 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Frequency',
-            style: TextStyle(
-                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
+        Row(
+          children: [
+            Text('Frequency',
+                style: TextStyle(
+                    fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
+            Text(
+              '*',
+              style: TextStyle(
+                  color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
         SizedBox(
           height: 8,
         ),
@@ -513,7 +539,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     isExpanded: true,
                     value: _frequencyUnit == '' ? null : _frequencyUnit,
                     items: _frequencyUnitMenuItems,
-                    hint: Text('Select Frequency'),
+                    hint: Text('Choose an option'),
                     onChanged: (data) {
                       debugPrint(data);
                       setState(() {
@@ -538,28 +564,37 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RichText(
-          text: TextSpan(
-            text: 'Duration',
-            style: TextStyle(
-                fontSize: 18.0, color: textBlack, fontWeight: FontWeight.w600),
-            children: <TextSpan>[
-              TextSpan(
-                  text: ' ' + _frequencyUnit! == ''
-                      ? ''
-                      : _frequencyUnit == 'Weekly'
-                      ? ' (number of weeks)'
-                      : _frequencyUnit == 'Monthly'
-                      ? ' (number of months)'
-                      : _frequencyUnit == 'Daily'
-                      ? ' (number of days)'
-                      : '',
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w300,
-                      fontStyle: FontStyle.italic)),
-            ],
-          ),
+        Row(
+          children: [
+            RichText(
+              text: TextSpan(
+                text: 'Duration',
+                style: TextStyle(
+                    fontSize: 18.0, color: textBlack, fontWeight: FontWeight.w600),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: ' ' + _frequencyUnit! == ''
+                          ? ''
+                          : _frequencyUnit == 'Weekly'
+                          ? ' (number of weeks)'
+                          : _frequencyUnit == 'Monthly'
+                          ? ' (number of months)'
+                          : _frequencyUnit == 'Daily'
+                          ? ' (number of days)'
+                          : '',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300,
+                          fontStyle: FontStyle.italic)),
+                ],
+              ),
+            ),
+            Text(
+              '*',
+              style: TextStyle(
+                  color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+            ),
+          ],
         ),
         /*Text('Duration'+_frequencyUnit == 'Daily' ? ' (in days)',
             style: TextStyle(
@@ -590,8 +625,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       enabled: true,
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 14,
-                          color: primaryColor),
+                          fontSize: 14),
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
@@ -1053,8 +1087,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       enabled: true,
                       style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontSize: 14,
-                          color: primaryColor),
+                          fontSize: 14),
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
                         hintStyle: TextStyle(
@@ -1083,9 +1116,18 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Time Scheduled',
-            style: TextStyle(
-                fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
+        Row(
+          children: [
+            Text('Time Scheduled',
+                style: TextStyle(
+                    fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
+            Text(
+              '*',
+              style: TextStyle(
+                  color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
         SizedBox(
           height: 8,
         ),
@@ -1431,6 +1473,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
 /*  Future _addDrugConfirmDialog(BuildContext context) async {
     return showDialog(
+        barrierDismissible: false,
       context: context,
       barrierDismissible: false, // user must tap button for close dialog!
       builder: (BuildContext context) {

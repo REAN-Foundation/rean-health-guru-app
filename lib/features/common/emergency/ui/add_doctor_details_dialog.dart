@@ -80,9 +80,9 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   //_profileIcon(),
-                  _entryFirstNameField('First Name*'),
-                  _entryLastNameField('Last Name*'),
-                  _entryMobileNoField('Phone*'),
+                  _entryFirstNameField('First Name'),
+                  _entryLastNameField('Last Name'),
+                  _entryMobileNoField('Phone'),
                   SizedBox(
                     height: 8,
                   ),
@@ -181,9 +181,18 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -226,9 +235,18 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -360,9 +378,18 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,

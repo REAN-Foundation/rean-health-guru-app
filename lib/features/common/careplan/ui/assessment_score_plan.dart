@@ -35,7 +35,8 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   late ProgressDialog progressDialog;
   AssessmentScore? assessmentScore;
-  String score = '';
+  String score = '0';
+  String displayScore = '0';
   String? _api_key = '';
   String reportUrl = '';
 
@@ -45,13 +46,21 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
           await model.getAssessmentScore(widget.taskId.toString());
 
       if (assessmentScore!.status == 'success') {
-        debugPrint('Assessment Score ==> ${assessmentScore!.toJson()}');
+        displayScore = double.parse(assessmentScore!.data!.score!.overallSummaryScore!.toStringAsFixed(2)).roundToDouble().toString();
         score = assessmentScore!.data!.score!.overallSummaryScore!.toStringAsFixed(2);
+        debugPrint('Assessment Score ==> $score');
+        debugPrint('Assessment Display Score ==> $displayScore');
         debugPrint('Assessment ReportURL ==> ${assessmentScore!.data!.reportURL}');
         reportUrl = assessmentScore!.data!.reportURL.toString();
-        setState(() {
-        });
-      } else {}
+
+      } else {
+        if(Navigator.canPop(context)){
+          showToast(assessmentScore!.message.toString(),context);
+          Navigator.pop(context);
+        }
+      }
+      setState(() {
+      });
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
@@ -117,7 +126,7 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
             ], annotations: <GaugeAnnotation>[
               GaugeAnnotation(
                   widget: Container(
-                      child: Text(score,
+                      child: Text(double.parse(displayScore).toStringAsFixed(0),
                           style: TextStyle(
                               fontSize: 25, fontWeight: FontWeight.bold))),
                   angle: 90,
@@ -296,13 +305,13 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
                                                 progressDialog.show(
                                                     max: 100, msg: 'Loading...', barrierDismissible: false);
                                                  createFileOfPdfUrl(reportUrl, 'assessment_score.pdf')
-                                                  .then((f) {
+                                                  /*.then((f) {
                                                 progressDialog.close();
                                                 Navigator.push(context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
                                                             PDFScreen(f.path)));
-                                              });
+                                              })*/;
                                               },
                                               child: Container(
                                                 height: 48,
@@ -317,7 +326,7 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
                                                     color: Colors.white),
                                                 child: Center(
                                                   child: Text(
-                                                    'Download report',
+                                                    'View report',
                                                     maxLines: 1,
                                                     overflow: TextOverflow.ellipsis,
                                                     style: TextStyle(
@@ -351,7 +360,7 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
     );
   }
 
-    Future<File> createFileOfPdfUrl(String url, String? fileName) async {
+    Future<void> createFileOfPdfUrl(String url, String? fileName) async {
 
     //debugPrint('Base Url ==> ${url}');
     //final url = "http://africau.edu/images/default/sample.pdf";
@@ -368,13 +377,23 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
 
     debugPrint('Base Url ==> ${request.uri}');
     debugPrint('Headers ==> ${request.headers.toString()}');
-
-    final bytes = await consolidateHttpClientResponseBytes(response);
-    final String dir = (await getApplicationDocumentsDirectory()).path;
-    final File file = File('$dir/$fileName');
-    await file.writeAsBytes(bytes);
-    return file;
+    debugPrint('Response Status ==> ${response.statusCode}');
+    File file;
+    if(response.statusCode == 200) {
+      final bytes = await consolidateHttpClientResponseBytes(response);
+      final String dir = (await getApplicationDocumentsDirectory()).path;
+      file = File('$dir/$fileName');
+      await file.writeAsBytes(bytes);
+      progressDialog.close();
+      Navigator.push(context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  PDFScreen(file.path)));
+    }else{
+      progressDialog.close();
+      showToast('Unable to view report, Please try again later.', context);
     }
+  }
 
   Future<bool> _onWillPop() async {
      Navigator.pushAndRemoveUntil(context,

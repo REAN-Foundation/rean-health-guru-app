@@ -165,7 +165,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          /*SizedBox(
                             height: 8,
                           ),
                           Row(
@@ -228,9 +228,9 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                         color: textBlack)),
                               ),
                             ],
-                          ),
+                          ),*/
                           SizedBox(
-                            height: 8,
+                            height: 16,
                           ),
                           Row(
                             children: <Widget>[
@@ -258,7 +258,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             ],
                           ),
                           SizedBox(
-                            height: 8,
+                            height: 16,
                           ),
                           Row(
                             children: <Widget>[
@@ -289,7 +289,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             ],
                           ),
                           SizedBox(
-                            height: 8,
+                            height: 16,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -330,7 +330,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             ],
                           ),
                           SizedBox(
-                            height: 8,
+                            height: 16,
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -355,7 +355,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             ],
                           ),
                           SizedBox(
-                            height: 8,
+                            height: 16,
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -378,14 +378,13 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                             ],
                           ),
                           SizedBox(
-                            height: 8,
+                            height: 16,
                           ),
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               SizedBox(
                                 width: 150,
-                                child: Text('Diabetes',
+                                child: Text('Type of Stroke',
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w600,
@@ -399,16 +398,149 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               SizedBox(
                                 width: 8,
                               ),
-                              Text('' + yesOrNo(healthProfile!.isDiabetic!),
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: textBlack)),
+                              Expanded(
+                                child: Text(
+                                    '' + replaceNull(healthProfile!.typeOfStroke),
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                        color: textBlack)),
+                              ),
                             ],
                           ),
                           SizedBox(
-                            height: 8,
+                            height: 16,
                           ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text('Have you ever been told by your healthcare professional that you have any of the following?',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: textBlack)),
+                              SizedBox(height: 8,),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        SizedBox(
+                                          width: 180,
+                                          child: Text('High Blood Pressure',
+                                              style: TextStyle(
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: textBlack)),
+                                        ),
+                                        Text(':',
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w600,
+                                                color: textBlack)),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(healthProfile!.hasHighBloodPressure == null ? '' : yesOrNo(healthProfile!.hasHighBloodPressure!),
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w500,
+                                                color: textBlack)),
+                                      ],
+                                    ),
+                                    SizedBox(height: 8,),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        SizedBox(
+                                          width: 180,
+                                          child: Text('High Cholesterol',
+                                              style: TextStyle(
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: textBlack)),
+                                        ),
+                                        Text(':',
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w600,
+                                                color: textBlack)),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(healthProfile!.hasHighCholesterol == null ? '' : yesOrNo(healthProfile!.hasHighCholesterol!),
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w500,
+                                                color: textBlack)),
+                                      ],
+                                    ),
+                                    SizedBox(height: 8,),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        SizedBox(
+                                          width: 180,
+                                          child: Text('Diabetes',
+                                              style: TextStyle(
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: textBlack)),
+                                        ),
+                                        Text(':',
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w600,
+                                                color: textBlack)),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(healthProfile!.isDiabetic == null ? '' : yesOrNo(healthProfile!.isDiabetic!),
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w500,
+                                                color: textBlack)),
+                                      ],
+                                    ),
+                                    SizedBox(height: 8,),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        SizedBox(
+                                          width: 180,
+                                          child: Text('Atrial Fibrillation',
+                                              style: TextStyle(
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: textBlack)),
+                                        ),
+                                        Text(':',
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w600,
+                                                color: textBlack)),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(healthProfile!.hasAtrialFibrillation == null ? '' : yesOrNo(healthProfile!.hasAtrialFibrillation!),
+                                            style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w500,
+                                                color: textBlack)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                            ],
+                          ),
+
+
+
                           /*Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,

@@ -30,7 +30,7 @@ class _NutritionQuestionnaireViewState
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var dateFormat = DateFormat('yyyy-MM-dd');
   //final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  Color buttonColor = Color(0XFFCFB4FF);
+  Color buttonColor = primaryLightColor;
   int vegetableServing = 0;
   int fruitServing = 0;
   int grainServing = 0;

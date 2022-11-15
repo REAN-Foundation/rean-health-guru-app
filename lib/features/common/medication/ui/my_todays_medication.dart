@@ -381,6 +381,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
             }
           });
           /*final bool res = await showDialog(
+        barrierDismissible: false,
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(

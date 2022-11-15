@@ -538,7 +538,7 @@ class _ViewMyAllDailyActivityTrendsState
                     semanticsLabel: 'Duration',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
-                      color: Color(0xffa8a8a8),
+                      color: textBlack,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       fontStyle: FontStyle.normal,
@@ -646,7 +646,7 @@ class _ViewMyAllDailyActivityTrendsState
                     semanticsLabel: 'Steps',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
-                      color: Color(0xffa8a8a8),
+                      color: secondaryTextBlack,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       fontStyle: FontStyle.normal,
@@ -756,7 +756,7 @@ class _ViewMyAllDailyActivityTrendsState
                     fontFamily: "Montserrat",
                     fontWeight: FontWeight.w600,
                     fontSize: 12.0,
-                    color: textGrey),
+                    color: secondaryTextBlack),
               ),
             ],
           ),
@@ -835,7 +835,7 @@ class _ViewMyAllDailyActivityTrendsState
                     semanticsLabel: 'Duration',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
-                      color: Color(0xffa8a8a8),
+                      color: secondaryTextBlack,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       fontStyle: FontStyle.normal,
@@ -900,7 +900,7 @@ class _ViewMyAllDailyActivityTrendsState
                     semanticsLabel: 'Duration',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
-                      color: Color(0xffa8a8a8),
+                      color: secondaryTextBlack,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       fontStyle: FontStyle.normal,
@@ -982,7 +982,7 @@ class _ViewMyAllDailyActivityTrendsState
                 semanticsLabel: 'Duration',
                 style: TextStyle(
                   fontFamily: 'Montserrat',
-                  color: Color(0xffa8a8a8),
+                  color: secondaryTextBlack,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   fontStyle: FontStyle.normal,
@@ -1078,7 +1078,7 @@ class _ViewMyAllDailyActivityTrendsState
                 semanticsLabel: 'Cal',
                 style: TextStyle(
                   fontFamily: 'Montserrat',
-                  color: Color(0xffa8a8a8),
+                  color: secondaryTextBlack,
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   fontStyle: FontStyle.normal,
@@ -1129,7 +1129,7 @@ class _ViewMyAllDailyActivityTrendsState
                     semanticsLabel: 'Cal',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
-                      color: Color(0xffa8a8a8),
+                      color: secondaryTextBlack,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       fontStyle: FontStyle.normal,

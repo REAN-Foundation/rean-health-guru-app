@@ -105,6 +105,12 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             : '';
       });
 
+      healthSystemGlobe =  patient.healthSystem?.toString();
+      healthSystemHospitalGlobe = patient.associatedHospital?.toString();
+
+      debugPrint('Health System Globe ==> ${patient.healthSystem.toString()}');
+      debugPrint('Health System Hospital Globe ==> ${patient.associatedHospital.toString()}');
+
       /*if (!user.data.isProfileComplete ||
           user.data.isProfileComplete == null) {
         startCarePlanResponseGlob = null;
@@ -304,20 +310,25 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   }*/
 
   healthJourneyCheck(){
-    if (carePlanEnrollmentForPatientGlobe == null) {
-      /*if(getBaseUrl()!.contains('aha-api-uat') ||
+    if(getAppFlavour() != 'HF Helper') {
+      if (carePlanEnrollmentForPatientGlobe == null) {
+        /*if(getBaseUrl()!.contains('aha-api-uat') ||
           getBaseUrl()!.contains('reancare-api-dev') ||
           getAppName() == 'Heart & Stroke Helper™ ') {*/
         debugPrint('Health Journey');
         Future.delayed(
             const Duration(seconds: 2), () => showHealthJourneyDialog());
-     /* }else{
+        /* }else{
         debugPrint('Daily Check-In');
         Future.delayed(
             const Duration(seconds: 2), () => showDailyCheckIn());
       }*/
+      } else {
+        debugPrint('Daily Check-In');
+        Future.delayed(
+            const Duration(seconds: 2), () => showDailyCheckIn());
+      }
     }else{
-      debugPrint('Daily Check-In');
       Future.delayed(
           const Duration(seconds: 2), () => showDailyCheckIn());
     }
@@ -574,8 +585,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       ),
     );
     showDialog(
+        barrierDismissible: false,
         context: context,
-        barrierDismissible: true,
         builder: (BuildContext context) => sucsessDialog);
   }
 

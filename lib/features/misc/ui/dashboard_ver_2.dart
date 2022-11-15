@@ -2990,6 +2990,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
       );
     }
     showDialog(
+        barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),

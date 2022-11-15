@@ -331,18 +331,21 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
                             if (getCurrentLocale() == 'US') {
                               showDialog(
+        barrierDismissible: false,
                                   context: context,
                                   builder: (_) {
                                     return _addHeightInFtnInchDialog(context);
                                   });
                             } else {
                               showDialog(
+        barrierDismissible: false,
                                   context: context,
                                   builder: (_) {
                                     return _addHeightInCmDialog(context);
                                   });
                             }
                             /*showDialog(
+        barrierDismissible: false,
                                 context: context,
                                 builder: (_) {
                                   return _addBMIDetailsDialog(context);
@@ -1199,7 +1202,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           setState(() {
             showToast('Height record created successfully!', context);
           });
-        }).showDialog(context);
+        }).showDialog(
+        barrierDismissible: false,context);
   }
 
   showHeightPickerCms(BuildContext context) {

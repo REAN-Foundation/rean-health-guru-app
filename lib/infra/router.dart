@@ -233,6 +233,7 @@ class Routers {
         return MaterialPageRoute(builder: (_) => PatientMedicalProfileView());
       case RoutePaths.Patient_EDIT_MEDIACL_PROFILE:
         return MaterialPageRoute(
+            settings: RouteSettings(name: "mProfile"),
             builder: (_) => EditPatientMedicalProfileView(
                 settings.arguments as HealthProfile));
       case RoutePaths.My_Medications:

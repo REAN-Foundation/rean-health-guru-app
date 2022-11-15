@@ -468,7 +468,7 @@ class _CreateProfileState extends State<CreateProfile> {
                 } else if (unformatedDOB == '') {
                   showToast('Please select your date of birth', context);
                 } else if (selectedGender == '') {
-                  showToast('Please select your gender', context);
+                  showToast('Please select your sex', context);
                 } else {
                   progressDialog.show(max: 100, msg: 'Loading...');
                   progressDialog.show(max: 100, msg: 'Loading...');

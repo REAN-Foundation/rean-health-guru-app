@@ -41,9 +41,11 @@ class PDFScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: SfPdfViewer.file(
-          file,
-          key: _pdfViewerKey,
+        body: ExcludeSemantics(
+          child: SfPdfViewer.file(
+            file,
+            key: _pdfViewerKey,
+          ),
         ));
   }
 

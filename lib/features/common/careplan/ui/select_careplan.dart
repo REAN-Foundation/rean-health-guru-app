@@ -1113,7 +1113,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           child: Text(value),
                         );
                       }).toList(),
-                      hint: Text(healthSystemHospitalGlobe ?? 'Choose an option'),
+                      hint: Text(healthSystemHospitalGlobe ?? 'Choose an option', maxLines: 2, overflow: TextOverflow.ellipsis,),
                       onChanged: (data) {
                         debugPrint(data);
                         setState(() {

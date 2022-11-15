@@ -379,7 +379,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                           child: Text(value),
                         );
                       }).toList(),
-                      hint: Text(healthSystemHospitalGlobe ?? 'Choose an option'),
+                      hint: Text(healthSystemHospitalGlobe ?? 'Choose an option', maxLines: 2, overflow: TextOverflow.ellipsis,),
                       onChanged: (data) {
                         debugPrint(data);
                         setState(() {

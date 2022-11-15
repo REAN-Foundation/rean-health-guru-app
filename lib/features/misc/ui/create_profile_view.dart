@@ -800,7 +800,7 @@ class _CreateProfileState extends State<CreateProfile> {
                 FocusScope.of(context).unfocus();
                 DatePicker.showDatePicker(context,
                     showTitleActions: true,
-                    minTime: DateTime(1940, 1, 1),
+                    minTime: DateTime(1900, 1, 1),
                     maxTime: DateTime.now().subtract(Duration(days: 1)),
                     onChanged: (date) {
                       debugPrint('change $date');

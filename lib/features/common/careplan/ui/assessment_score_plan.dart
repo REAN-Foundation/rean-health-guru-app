@@ -35,8 +35,8 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   late ProgressDialog progressDialog;
   AssessmentScore? assessmentScore;
-  String score = '';
-  String displayScore = '';
+  String score = '0';
+  String displayScore = '0';
   String? _api_key = '';
   String reportUrl = '';
 
@@ -52,9 +52,15 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
         debugPrint('Assessment Display Score ==> $displayScore');
         debugPrint('Assessment ReportURL ==> ${assessmentScore!.data!.reportURL}');
         reportUrl = assessmentScore!.data!.reportURL.toString();
-        setState(() {
-        });
-      } else {}
+
+      } else {
+        if(Navigator.canPop(context)){
+          showToast(assessmentScore!.message.toString(),context);
+          Navigator.pop(context);
+        }
+      }
+      setState(() {
+      });
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);

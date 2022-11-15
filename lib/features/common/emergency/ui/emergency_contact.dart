@@ -376,7 +376,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       items: healthSystemHospitalList.map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value),
+                          child: Text(value, maxLines: 2, overflow: TextOverflow.ellipsis,),
                         );
                       }).toList(),
                       hint: Text(healthSystemHospitalGlobe ?? 'Choose an option', maxLines: 2, overflow: TextOverflow.ellipsis,),

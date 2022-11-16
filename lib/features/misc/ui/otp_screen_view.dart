@@ -457,7 +457,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       if (userData.status == 'success') {
         _sharedPrefUtils.save('user', userData.toJson());
         if (userData.data!.isProfileComplete!) {
-          /* _sharedPrefUtils.saveBoolean("login1.8.141", true);
+          /* _sharedPrefUtils.saveBoolean("login1.8.167", true);
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
                 return HomeView(0);
@@ -534,7 +534,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         }
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
-        _sharedPrefUtils.saveBoolean('login1.8.141', true);
+        _sharedPrefUtils.saveBoolean('login1.8.167', true);
         if(getAppName() == 'Heart & Stroke Helper™ ') {
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {

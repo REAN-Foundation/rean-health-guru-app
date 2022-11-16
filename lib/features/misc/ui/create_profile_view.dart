@@ -533,10 +533,10 @@ class _CreateProfileState extends State<CreateProfile> {
           PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        _sharedPrefUtils.saveBoolean('login1.8.141', true);
+        _sharedPrefUtils.saveBoolean('login1.8.167', true);
         await _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
-        _sharedPrefUtils.saveBoolean('login1.8.141', true);
+        _sharedPrefUtils.saveBoolean('login1.8.167', true);
         if(getAppName() == 'Heart & Stroke Helper™ ') {
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {

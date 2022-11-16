@@ -117,81 +117,79 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
   }
 
   textMessage(){
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          getAppType() == 'AHA' ?
-              ExcludeSemantics(
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  child: Lottie.asset(
-                    'res/lottiefiles/aha_health_journey_loader.json',
-                  ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        getAppType() == 'AHA' ?
+            ExcludeSemantics(
+              child: Container(
+                width: 100,
+                height: 100,
+                child: Lottie.asset(
+                  'res/lottiefiles/aha_health_journey_loader.json',
                 ),
-              )
-              :
-          ExcludeSemantics(
-            child: Container(
-              width: 100,
-              height: 100,
-              child: Lottie.asset(
-                'res/lottiefiles/health_journey_loader.json',
               ),
+            )
+            :
+        ExcludeSemantics(
+          child: Container(
+            width: 100,
+            height: 100,
+            child: Lottie.asset(
+              'res/lottiefiles/health_journey_loader.json',
             ),
           ),
-          SizedBox(height: 16,),
-          Text('Your ${carePlanEnrollmentForPatientGlobe!
-              .data!.patientEnrollments!
-              .elementAt(0)
-              .planName
-              .toString()} Health Journey will begin from '+dateFormat.format(weeklyCarePlanStatusGlobe!
-              .data!.careplanStatus!.startDate!
-              .toLocal()),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: secondaryTextBlack,
-                fontWeight: FontWeight.w600,
-                fontFamily: "Montserrat",
-                fontStyle: FontStyle.normal,
-                fontSize: 16.0),
-          ),
-          SizedBox(height: 16,),
-          Semantics(
-            label: 'Okay',
-            button: true,
-            child: ExcludeSemantics(
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  height: 48,
-                  width: MediaQuery.of(context).size.width - 256,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                  ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0),
-                      border: Border.all(color: primaryColor, width: 1),
-                      color: primaryColor),
-                  child: Center(
-                    child: Text(
-                      'Okay',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                          fontSize: 14),
-                    ),
+        ),
+        SizedBox(height: 16,),
+        Text('Your ${carePlanEnrollmentForPatientGlobe!
+            .data!.patientEnrollments!
+            .elementAt(0)
+            .planName
+            .toString()} Health Journey will begin from '+dateFormat.format(weeklyCarePlanStatusGlobe!
+            .data!.careplanStatus!.startDate!
+            .toLocal()),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: secondaryTextBlack,
+              fontWeight: FontWeight.w600,
+              fontFamily: "Montserrat",
+              fontStyle: FontStyle.normal,
+              fontSize: 16.0),
+        ),
+        SizedBox(height: 16,),
+        Semantics(
+          label: 'Okay',
+          button: true,
+          child: ExcludeSemantics(
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 48,
+                width: MediaQuery.of(context).size.width - 256,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    border: Border.all(color: primaryColor, width: 1),
+                    color: primaryColor),
+                child: Center(
+                  child: Text(
+                    'Okay',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 14),
                   ),
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

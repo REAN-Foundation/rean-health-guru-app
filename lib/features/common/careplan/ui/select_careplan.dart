@@ -21,6 +21,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SelectCarePlanView extends StatefulWidget {
@@ -48,6 +49,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   List<HealthSystems>? _healthSystems;
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  late ProgressDialog progressDialog;
 
   getHealthSystem() async {
     try {
@@ -97,6 +99,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   @override
   void initState() {
+    progressDialog = ProgressDialog(context: context);
     model.setBusy(true);
     getHealthSystem();
     getAHACarePlans();
@@ -882,6 +885,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   startCarePlan() async {
     try {
+      progressDialog.show(max: 100, msg: 'Loading...');
       model.setBusy(true);
       final map = <String, String?>{};
       map['Provider'] = carePlanTypes!.provider;
@@ -891,12 +895,23 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       final EnrollCarePlanResponse response = await model.startCarePlan(map);
       debugPrint('Registered Health Journey ==> ${response.toJson()}');
       if (response.status == 'success') {
+        progressDialog.close();
+        if(progressDialog.isOpen()){
+          progressDialog.close();
+        }
         showSuccessDialog();
         //showToast(response.message!, context);
       } else {
         showToast(response.message!, context);
       }
+      if(progressDialog.isOpen()){
+        progressDialog.close();
+      }
     } catch (CustomException) {
+      progressDialog.close();
+      if(progressDialog.isOpen()){
+        progressDialog.close();
+      }
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());

@@ -81,6 +81,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   getAllUserTask() async {
     try {
       var dateTill;
+      var dateFrom;
       /*if (getBaseUrl()!.contains('aha-api-uat.services') ||
           getAppName() == 'Heart & Stroke Helper™ ') {
         dateTill = DateTime.now();
@@ -91,17 +92,25 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         dateTill = DateTime.now().add(Duration(days: 0));
       }
 
+      if(carePlanEnrollmentForPatientGlobe != null){
+        DateTime startDate = DateTime.parse(
+            carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+                .elementAt(0)
+                .startAt
+                .toString());
+        if(startDate.isAfter(DateTime.now())){
+          dateFrom = dateQueryFormat.format(DateTime.now());
+        }else {
+          dateFrom = dateQueryFormat.format(startDate);
+        }
+      }else{
+        dateFrom = dateQueryFormat.format(DateTime.now());
+      }
+
       //}
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
       userTaskResponse = await model.getUserTasks(
-          query,
-          carePlanEnrollmentForPatientGlobe != null
-              ? dateQueryFormat.format(DateTime.parse(
-                  carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
-                      .elementAt(0)
-                      .startAt
-                      .toString()))
-              : dateQueryFormat.format(DateTime.now()),
+          query, dateFrom,
           carePlanEnrollmentForPatientGlobe != null
               ? dateQueryFormat.format(dateTill)
               : dateQueryFormat.format(DateTime.now()));

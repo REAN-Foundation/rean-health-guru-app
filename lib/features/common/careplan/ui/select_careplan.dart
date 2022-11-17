@@ -811,6 +811,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             carePlanEligibilityMsg != '' || carePlanEligibilityMsg != null
                 ? Linkify(
@@ -830,45 +831,50 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 : SizedBox(
                     height: 0,
                   ),
-            Semantics(
-              label: 'Register',
-              button: true,
-              child: ExcludeSemantics(
-                child: InkWell(
-                  onTap: () {
-                    if (selectedCarePlan == '') {
-                      showToast('Please select Health Journey', context);
-                    } else if (startDate == '') {
-                      showToast('Please select start date', context);
-                    } else if (carePlanEligibility!) {
-                      startCarePlan();
-                      _updatePatientMedicalProfile(carePlanTypes!.name.toString());
-                    } else {
-                      //showToast(carePlanEligibilityMsg.toString(), context);
-                    }
-                  },
-                  child: Container(
-                    height: 48,
-                    width: MediaQuery.of(context).size.width - 32,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                    ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0),
-                        border: Border.all(color: primaryColor, width: 1),
-                        color: primaryColor),
-                    child: Center(
-                      child: Text(
-                        'Register',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                            fontSize: 14),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Semantics(
+                  label: 'Register',
+                  button: true,
+                  child: ExcludeSemantics(
+                    child: InkWell(
+                      onTap: () {
+                        if (selectedCarePlan == '') {
+                          showToast('Please select Health Journey', context);
+                        } else if (startDate == '') {
+                          showToast('Please select start date', context);
+                        } else if (carePlanEligibility!) {
+                          startCarePlan();
+                          _updatePatientMedicalProfile(carePlanTypes!.name.toString());
+                        } else {
+                          //showToast(carePlanEligibilityMsg.toString(), context);
+                        }
+                      },
+                      child: Container(
+                        height: 48,
+                        width: MediaQuery.of(context).size.width - 32,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                        ),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6.0),
+                            border: Border.all(color: primaryColor, width: 1),
+                            color: primaryColor),
+                        child: Center(
+                          child: Text(
+                            'Register',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                                fontSize: 14),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           ],
         ));
@@ -1110,7 +1116,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                       items: healthSystemHospitalList.map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value),
+                          child: Text(value, maxLines: 2, overflow: TextOverflow.ellipsis,),
                         );
                       }).toList(),
                       hint: Text(healthSystemHospitalGlobe ?? 'Choose an option', maxLines: 2, overflow: TextOverflow.ellipsis,),

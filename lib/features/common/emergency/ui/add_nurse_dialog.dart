@@ -115,7 +115,7 @@ class _MyDialogState extends State<AddNurseDialog> {
           } else if (mobileNumber!.length != maxLengthOfPhone) {
             showToastMsg('Enter valid mobile number', context);
           } else if (selectedGender == '') {
-            showToastMsg('Select gender', context);
+            showToastMsg('Select sex', context);
           } else {
             widget._submitButtonListner(
                 _firstNameController.text.trim(),
@@ -298,7 +298,7 @@ class _MyDialogState extends State<AddNurseDialog> {
               padding: EdgeInsets.symmetric(horizontal: 10.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4.0),
-                  border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                  border: Border.all(color: primaryColor, width: 0.80),
                   color: Colors.white),
               child: DropdownButton<String>(
                 isExpanded: true,

@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
   bool? isLogin;
   String? _baseUrl;
   String? _botBaseUrl;
-  FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer =
+  FirebaseAnalyticsObserver(analytics: analytics);
   Map<int, Color> color = {
     50: Color(0xFFFFEBEE),
     100: Color(0xFFFFCDD2),

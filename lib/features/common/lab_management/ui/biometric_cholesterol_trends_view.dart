@@ -41,7 +41,7 @@ class _BiometricCholesterolTrendsViewState
             backgroundColor: Colors.white,
             systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
-              'Lab Management',
+              'Lab Values',
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
@@ -89,8 +89,8 @@ class _BiometricCholesterolTrendsViewState
           Expanded(
             flex: 1,
             child: Semantics(
-              label: 'Record Cholesterol 1 of 2',
-              selected: true,
+              label: 'Record Lab Values 1 of 2',
+              selected: _currentIndex == 0 ? true : false,
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -105,16 +105,16 @@ class _BiometricCholesterolTrendsViewState
                       ImageIcon(
                         AssetImage('res/images/ic_total_cholesterol.png'),
                         size: 32,
-                        color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                        color: _currentIndex == 0 ? Colors.white : primaryExtraLightColor,
                       ),
                       SizedBox(
                         height: 4,
                       ),
                       Text(
-                        'Record Cholesterol',
+                        'Record Lab Values',
                         style: TextStyle(
                             color:
-                                _currentIndex == 0 ? Colors.white : Colors.grey,
+                                _currentIndex == 0 ? Colors.white : primaryExtraLightColor,
                             fontSize: 10),
                       ),
                     ],
@@ -127,7 +127,7 @@ class _BiometricCholesterolTrendsViewState
             flex: 1,
             child: Semantics(
               label: 'View Trends 2 of 2',
-              selected: true,
+              selected: _currentIndex == 1 ? true : false,
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -142,7 +142,7 @@ class _BiometricCholesterolTrendsViewState
                       ImageIcon(
                         AssetImage('res/images/ic_trends.png'),
                         size: 28,
-                        color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                        color: _currentIndex == 1 ? Colors.white : primaryExtraLightColor,
                       ),
                       SizedBox(
                         height: 4,
@@ -151,7 +151,7 @@ class _BiometricCholesterolTrendsViewState
                         'View Trends',
                         style: TextStyle(
                             color:
-                                _currentIndex == 1 ? Colors.white : Colors.grey,
+                                _currentIndex == 1 ? Colors.white : primaryExtraLightColor,
                             fontSize: 10),
                       ),
                     ],

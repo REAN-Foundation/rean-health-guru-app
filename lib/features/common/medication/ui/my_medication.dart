@@ -10,8 +10,15 @@ import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 
 import 'my_todays_medication.dart';
-
+//ignore: must_be_immutable
 class MyMedicationView extends StatefulWidget {
+
+  var _currentIndex = 0;
+
+  MyMedicationView(int index) {
+    _currentIndex = index;
+  }
+
   @override
   _MyMedicationViewState createState() => _MyMedicationViewState();
 }
@@ -20,12 +27,12 @@ class _MyMedicationViewState extends State<MyMedicationView> {
   var model = PatientMedicationViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var _currentIndex = 0;
+  //var _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     late Widget screen;
-    switch (_currentIndex) {
+    switch (widget._currentIndex) {
       case 0:
         screen = MyTodaysMedicationView();
         break;
@@ -53,7 +60,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
             backgroundColor: Colors.white,
             systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
-              'Medication Management',
+              'Medications',
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
@@ -103,11 +110,11 @@ class _MyMedicationViewState extends State<MyMedicationView> {
             Expanded(
               flex: 1,
               child: Semantics(
-                label: 'Medication Reminder 1 of 3',
+                label: 'Medications Reminder 1 of 3',
                 child: InkWell(
                   onTap: () {
                     setState(() {
-                      _currentIndex = 0;
+                      widget._currentIndex = 0;
                     });
                   },
                   child: ExcludeSemantics(
@@ -120,7 +127,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                               'res/images/ic_medication_remainder_selected.png'),
                           size: 24,
                           color:
-                              _currentIndex == 0 ? Colors.white : Colors.grey,
+                          widget._currentIndex == 0 ? Colors.white : primaryExtraLightColor,
                         ),
                         SizedBox(
                           height: 4,
@@ -128,9 +135,9 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                         Text(
                           'Reminders',
                           style: TextStyle(
-                              color: _currentIndex == 0
+                              color:  widget._currentIndex == 0
                                   ? Colors.white
-                                  : Colors.grey,
+                                  : primaryExtraLightColor,
                               fontSize: 10),
                         ),
                       ],
@@ -142,11 +149,11 @@ class _MyMedicationViewState extends State<MyMedicationView> {
             Expanded(
               flex: 1,
               child: Semantics(
-                label: 'Add Medication 2 of 3',
+                label: 'Medications list 2 of 3',
                 child: InkWell(
                   onTap: () {
                     setState(() {
-                      _currentIndex = 1;
+                      widget._currentIndex = 1;
                     });
                   },
                   child: ExcludeSemantics(
@@ -158,17 +165,17 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                           AssetImage('res/images/ic_pharmacy_colored.png'),
                           size: 24,
                           color:
-                              _currentIndex == 1 ? Colors.white : Colors.grey,
+                          widget._currentIndex == 1 ? Colors.white : primaryExtraLightColor,
                         ),
                         SizedBox(
                           height: 4,
                         ),
                         Text(
-                          'Add Medication',
+                          'Medications list',
                           style: TextStyle(
-                              color: _currentIndex == 1
+                              color:  widget._currentIndex == 1
                                   ? Colors.white
-                                  : Colors.grey,
+                                  : primaryExtraLightColor,
                               fontSize: 10),
                         ),
                       ],
@@ -180,11 +187,11 @@ class _MyMedicationViewState extends State<MyMedicationView> {
             Expanded(
               flex: 1,
               child: Semantics(
-                label: 'Medication History 3 of 3',
+                label: 'Medications History 3 of 3',
                 child: InkWell(
                   onTap: () {
                     setState(() {
-                      _currentIndex = 2;
+                      widget._currentIndex = 2;
                     });
                   },
                   child: ExcludeSemantics(
@@ -197,7 +204,7 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                               'res/images/ic_medication_history_selected.png'),
                           size: 24,
                           color:
-                              _currentIndex == 2 ? Colors.white : Colors.grey,
+                          widget._currentIndex == 2 ? Colors.white : primaryExtraLightColor,
                         ),
                         SizedBox(
                           height: 4,
@@ -205,9 +212,9 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                         Text(
                           'History',
                           style: TextStyle(
-                              color: _currentIndex == 2
+                              color:  widget._currentIndex == 2
                                   ? Colors.white
-                                  : Colors.grey,
+                                  : primaryExtraLightColor,
                               fontSize: 10),
                         ),
                       ],
@@ -230,13 +237,13 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                     AssetImage(
                         'res/images/ic_medication_prescription_selected.png'),
                     size: 24,
-                    color: _currentIndex == 2 ? Colors.white : Colors.grey,
+                    color: _currentIndex == 2 ? Colors.white : primaryExtraLightColor,
                   ),
                   SizedBox(height: 4,),
                   Text(
                     'Prescriptions',
                     style: TextStyle(
-                        color: _currentIndex == 2 ? Colors.white : Colors.grey,
+                        color: _currentIndex == 2 ? Colors.white : primaryExtraLightColor,
                         fontSize: 10),
                   ),
                 ],
@@ -255,13 +262,13 @@ class _MyMedicationViewState extends State<MyMedicationView> {
                   ImageIcon(
                     AssetImage('res/images/ic_medication_refill_selected.png'),
                     size: 24,
-                    color: _currentIndex == 3 ? Colors.white : Colors.grey,
+                    color: _currentIndex == 3 ? Colors.white : primaryExtraLightColor,
                   ),
                   SizedBox(height: 4,),
                   Text(
                     'Refills',
                     style: TextStyle(
-                        color: _currentIndex == 3 ? Colors.white : Colors.grey,
+                        color: _currentIndex == 3 ? Colors.white : primaryExtraLightColor,
                         fontSize: 10),
                   ),
                 ],

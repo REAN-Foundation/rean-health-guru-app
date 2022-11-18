@@ -50,6 +50,8 @@ class Patient {
   User? user;
   String? displayId;
   String? ehrId;
+  String? healthSystem;
+  String? associatedHospital;
 
   Patient({
     this.id,
@@ -57,6 +59,8 @@ class Patient {
     this.user,
     this.displayId,
     this.ehrId,
+    this.healthSystem,
+    this.associatedHospital
   });
 
   Patient.fromJson(Map<String, dynamic> json) {
@@ -65,6 +69,8 @@ class Patient {
     user = json['User'] != null ? User.fromJson(json['User']) : null;
     displayId = json['DisplayId'];
     ehrId = json['EhrId'];
+    healthSystem = json['HealthSystem'];
+    associatedHospital = json['AssociatedHospital'];
   }
 
   Map<String, dynamic> toJson() {
@@ -76,6 +82,8 @@ class Patient {
     }
     data['DisplayId'] = displayId;
     data['EhrId'] = ehrId;
+    data['HealthSystem'] = healthSystem;
+    data['AssociatedHospital'] = associatedHospital;
 
     return data;
   }
@@ -141,6 +149,12 @@ class Person {
   String? lastName;
   String? displayName;
   String? gender;
+  String? maritalStatus;
+  String? race;
+  String? ethnicity;
+  String? strokeSurvivorOrCaregiver;
+  bool? livingAlone;
+  bool? workedPriorToStroke;
   DateTime? birthDate;
   String? age;
   String? phone;
@@ -157,13 +171,19 @@ class Person {
       this.lastName,
       this.displayName,
       this.gender,
+      this.maritalStatus,
+      this.race,
+      this.ethnicity,
+      this.strokeSurvivorOrCaregiver,
+      this.livingAlone,
+      this.workedPriorToStroke,
       this.birthDate,
       this.age,
-        this.phone,
-        this.email,
-        this.imageResourceId,
-        this.activeSince,
-        this.addresses});
+      this.phone,
+      this.email,
+      this.imageResourceId,
+      this.activeSince,
+      this.addresses});
 
   Person.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -173,6 +193,12 @@ class Person {
     lastName = json['LastName'];
     displayName = json['DisplayName'];
     gender = json['Gender'];
+    maritalStatus = json['MaritalStatus'];
+    race = json['Race'];
+    ethnicity = json['Ethnicity'];
+    strokeSurvivorOrCaregiver = json['StrokeSurvivorOrCaregiver'];
+    livingAlone = json['LivingAlone'];
+    workedPriorToStroke = json['WorkedPriorToStroke'];
     if (json['BirthDate'] != null) {
       birthDate = DateTime.parse(json['BirthDate']);
     } else {
@@ -200,6 +226,12 @@ class Person {
     data['LastName'] = lastName;
     data['DisplayName'] = displayName;
     data['Gender'] = gender;
+    data['MaritalStatus'] = maritalStatus;
+    data['Ethnicity'] = ethnicity;
+    data['Race'] = race;
+    data['StrokeSurvivorOrCaregiver'] = strokeSurvivorOrCaregiver;
+    data['LivingAlone'] = livingAlone;
+    data['WorkedPriorToStroke'] = workedPriorToStroke;
     if (birthDate == null) {
       data['BirthDate'] = birthDate;
     } else {

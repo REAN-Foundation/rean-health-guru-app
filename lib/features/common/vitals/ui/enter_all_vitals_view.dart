@@ -9,6 +9,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class EnterAllVitalsView extends StatefulWidget {
@@ -165,7 +166,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 if (_weightController.text
                                     .toString()
                                     .isNotEmpty) {
-                                  addWeightVitals();
+                                  if(isNumeric(_weightController.text)) {
+                                    addWeightVitals();
+                                  }else{
+                                    showToast('Please enter valid input', context);
+                                  }
                                 }
                                 if (_systolicController.text
                                         .toString()
@@ -193,7 +198,11 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                                 if (_bodyTempratureController.text
                                     .toString()
                                     .isNotEmpty) {
-                                  addTemperatureVitals();
+                                  if(isNumeric(_bodyTempratureController.text)) {
+                                    addTemperatureVitals();
+                                  }else{
+                                    showToast('Please enter valid input', context);
+                                  }
                                 }
                               },
                               child: ExcludeSemantics(
@@ -272,6 +281,16 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         color: textBlack,
                         fontSize: 12),
                   ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Weight Information',
+                      description:
+                      'Achieving and maintaining a healthy weight is beneficial in loweing your risk for heart disease and stroke. Please refer to your doctor\'s recommended healthy weight range and frequency of measuring your weight at home.',
+                      height: 240),
                 ),
               ],
             ),
@@ -356,6 +375,16 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         fontWeight: FontWeight.w600,
                         fontSize: 14),
                     textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Expanded(
+                    child: InfoScreen(
+                        tittle: 'Blood Pressure Information',
+                        description:
+                        'If your blood pressure is below 120/80 mm Hg, be sure to get it checked at least once every two years, starting at age 20. If your blood pressure is higher, your doctor may want to check it more often. High blood pressure can be controlled through lifestyle changes and/or medication. \n*Normal: Less than 120/80 \n*Elevated: Systolic 120-129 AND Diastolic less than 80 \n*High Blood Pressure Stage 1: Systolic 130-139 OR Diastolic 80-89 \n*High Blood Pressure Stage 2: Systolic 140+ OR Diastolic 90+ \n*Hypertensive Crisis (Consult your doctor immediately): Systolic 180+ and/or Diastolic 120+',
+                        height: 408),
                   ),
                 ],
               ),
@@ -601,23 +630,53 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 SizedBox(
                   width: 8,
                 ),
-                Text(
-                  'Enter your blood glucose',
-                  style: TextStyle(
-                      color: textBlack,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14),
-                  textAlign: TextAlign.center,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Enter your blood glucose',
+                          style: TextStyle(
+                              color: textBlack,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14),
+                          textAlign: TextAlign.center,
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            text: ' (mg/dL) ',
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                color: textBlack,
+                                fontSize: 12),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 4,),
+                    Text(
+                      '(Also known as blood sugar)',
+                      style: TextStyle(
+                          color: textBlack,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
-                RichText(
-                  text: TextSpan(
-                    text: ' (mg/dL) ',
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w600,
-                        color: textBlack,
-                        fontSize: 12),
-                  ),
+
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Blood Glucose Information',
+                      description:
+                      'High blood glucose or "blood sugar" levels put you at greater risk of developing insulin resistance, prediabetes and type 2 diabetes. Prediabetes and Type 2 diabetes increases risk of heart disease and stroke. Blood glucose is measured through a blood test.\n\nPrediabetes: Fasting blood glucose range is 100 to 125 mg/dL\nDiabetes mellitus (Type 2 diabetes): 126 mg/dL',
+                      height: 320),
                 ),
               ],
             ),
@@ -682,6 +741,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 ImageIcon(
                   AssetImage('res/images/ic_oximeter.png'),
@@ -691,23 +751,38 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 SizedBox(
                   width: 8,
                 ),
-                Text(
-                  'Enter your blood oxygen saturation',
+                /*Text(
+                  'Enter your blood oxygen\nsaturation',
                   style: TextStyle(
                       color: textBlack,
                       fontWeight: FontWeight.w600,
                       fontSize: 14),
-                  textAlign: TextAlign.center,
-                ),
+                  textAlign: TextAlign.left,
+                ),*/
                 RichText(
                   text: TextSpan(
-                    text: ' (%) ',
+                    text: 'Enter your blood oxygen\nsaturation',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
                         color: textBlack,
-                        fontSize: 12),
+                        fontSize: 14),
+                    children: <TextSpan>[
+                       TextSpan(
+                          text: ' (%) ',
+                          style: TextStyle(fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              color: textBlack,
+                              fontSize: 12)),
+                    ],
                   ),
+                ),
+                SizedBox(width: 16,),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Blood Oxygen Saturation Information',
+                      description: "Pulse oximetry testing is conducted to estimate the percentage of hemoglobin in the blood that is saturated with oxygen.",
+                      height: 220),
                 ),
               ],
             ),
@@ -801,6 +876,16 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         fontSize: 12),
                   ),
                 ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Pulse Rate Information',
+                      description:
+                          'Your heart rate, or pulse, is the number of times your heart beats per minute. Normal heart rate varies from person to person. For most of us (adults), between 60 and 100 beats per minute (bpm) is normal. ',
+                      height: 240),
+                ),
               ],
             ),
             const SizedBox(
@@ -887,6 +972,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                         color: textBlack,
                         fontSize: 12),
                   ),
+                ),
+                SizedBox(width: 4,),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Body Temperature Information',
+                      description: "The optimal temperature of the human body is 37 °C (98.6 °F), but various factors can affect this value, including exposure to the elements in the environment.",
+                      height: 220),
                 ),
               ],
             ),

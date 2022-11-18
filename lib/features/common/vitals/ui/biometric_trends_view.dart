@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:patient/features/common/vitals/ui/biometric_blood_glucose_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_oxygen_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_pressure_vitals.dart';
-import 'package:patient/features/common/vitals/ui/biometric_blood_glucose_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_body_temperature_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_pulse_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_weight_vitals.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 
 import '../../../misc/ui/base_widget.dart';
 
@@ -102,6 +103,16 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Weight Information',
+                      description:
+                      'Achieving and maintaining a healthy weight is beneficial in loweing your risk for heart disease and stroke. Please refer to your doctor\'s recommended healthy weight range and frequency of measuring your weight at home.',
+                      height: 240),
+                ),
               ],
             ),
             SizedBox(
@@ -142,6 +153,16 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                         fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Expanded(
+                    child: InfoScreen(
+                        tittle: 'Blood Pressure Information',
+                        description:
+                        'If your blood pressure is below 120/80 mm Hg, be sure to get it checked at least once every two years, starting at age 20. If your blood pressure is higher, your doctor may want to check it more often. High blood pressure can be controlled through lifestyle changes and/or medication. \n*Normal: Less than 120/80 \n*Elevated: Systolic 120-129 AND Diastolic less than 80 \n*High Blood Pressure Stage 1: Systolic 130-139 OR Diastolic 80-89 \n*High Blood Pressure Stage 2: Systolic 140+ OR Diastolic 90+ \n*Hypertensive Crisis (Consult your doctor immediately): Systolic 180+ and/or Diastolic 120+',
+                        height: 408),
+                  ),
                 ],
               ),
               const SizedBox(
@@ -173,13 +194,38 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                 SizedBox(
                   width: 8,
                 ),
-                Text(
-                  'Blood Glucose',
-                  style: TextStyle(
-                      color: textBlack,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14),
-                  textAlign: TextAlign.center,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Blood Glucose',
+                      style: TextStyle(
+                          color: textBlack,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 4,),
+                    Text(
+                      '(Also known as blood sugar)',
+                      style: TextStyle(
+                          color: textBlack,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Blood Glucose Information',
+                      description:
+                      'High blood glucose or "blood sugar" levels put you at greater risk of developing insulin resistance, prediabetes and type 2 diabetes. Prediabetes and Type 2 diabetes increases risk of heart disease and stroke. Blood glucose is measured through a blood test.\n\nPrediabetes: Fasting blood glucose range is 100 to 125 mg/dL\nDiabetes mellitus (Type 2 diabetes): 126 mg/dL',
+                      height: 320),
                 ),
               ],
             ),
@@ -221,6 +267,13 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
+                SizedBox(width: 8,),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Blood Oxygen Saturation Information',
+                      description: "Pulse oximetry testing is conducted to estimate the percentage of hemoglobin in the blood that is saturated with oxygen.",
+                      height: 220),
+                ),
               ],
             ),
             const SizedBox(
@@ -261,6 +314,16 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Pulse Rate Information',
+                      description:
+                          'Your heart rate, or pulse, is the number of times your heart beats per minute. Normal heart rate varies from person to person. For most of us (adults), between 60 and 100 beats per minute (bpm) is normal. ',
+                      height: 240),
+                ),
               ],
             ),
             const SizedBox(
@@ -300,6 +363,13 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                       fontWeight: FontWeight.w600,
                       fontSize: 14),
                   textAlign: TextAlign.center,
+                ),
+                SizedBox(width: 8,),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Body Temperature Information',
+                      description: "The optimal temperature of the human body is 37 °C (98.6 °F), but various factors can affect this value, including exposure to the elements in the environment.",
+                      height: 220),
                 ),
               ],
             ),

@@ -59,8 +59,8 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                 child: Semantics(
                   focused: true,
                   child: Text(
-                    "How are you feeling?",
-                    semanticsLabel: "How are you feeling?",
+                    "How are you feeling today?",
+                    semanticsLabel: "How are you feeling today?",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18.0,
@@ -176,7 +176,8 @@ class _HowAreYouFeelingToday extends State<HowAreYouFeelingToday>
                                     height: 80,
                                     width: 80,
                                     child: Image.asset(
-                                      'res/images/dailyCheckIn/ic_same.png',
+                                      'res/images/dailyCheckIn/ic_netural.png',
+
                                       height: 80,
                                       width: 80,
                                     ),

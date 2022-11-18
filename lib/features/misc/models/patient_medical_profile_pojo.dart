@@ -83,6 +83,7 @@ class HealthProfile {
   bool? hasHeartAilment;
   String? maritalStatus;
   String? ethnicity;
+  String? race;
   String? nationality;
   String? occupation;
   bool? sedentaryLifestyle;
@@ -96,6 +97,10 @@ class HealthProfile {
   String? procedureHistory;
   String? obstetricHistory;
   String? otherInformation;
+  String? typeOfStroke;
+  bool? hasHighBloodPressure;
+  bool? hasHighCholesterol;
+  bool? hasAtrialFibrillation;
 
   HealthProfile(
       {this.id,
@@ -107,19 +112,24 @@ class HealthProfile {
       this.hasHeartAilment,
       this.maritalStatus,
       this.ethnicity,
-        this.nationality,
-        this.occupation,
-        this.sedentaryLifestyle,
-        this.isSmoker,
-        this.smokingSeverity,
-        this.smokingSince,
-        this.isDrinker,
-        this.drinkingSeverity,
-        this.drinkingSince,
-        this.substanceAbuse,
-        this.procedureHistory,
-        this.obstetricHistory,
-        this.otherInformation});
+      this.race,
+      this.nationality,
+      this.occupation,
+      this.sedentaryLifestyle,
+      this.isSmoker,
+      this.smokingSeverity,
+      this.smokingSince,
+      this.isDrinker,
+      this.drinkingSeverity,
+      this.drinkingSince,
+      this.substanceAbuse,
+      this.procedureHistory,
+      this.obstetricHistory,
+      this.otherInformation,
+      this.typeOfStroke,
+      this.hasHighBloodPressure,
+      this.hasHighCholesterol,
+      this.hasAtrialFibrillation});
 
   HealthProfile.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -131,6 +141,7 @@ class HealthProfile {
     hasHeartAilment = json['HasHeartAilment'];
     maritalStatus = json['MaritalStatus'];
     ethnicity = json['Ethnicity'];
+    race = json['Race'];
     nationality = json['Nationality'];
     occupation = json['Occupation'];
     sedentaryLifestyle = json['SedentaryLifestyle'];
@@ -144,6 +155,10 @@ class HealthProfile {
     procedureHistory = json['ProcedureHistory'];
     obstetricHistory = json['ObstetricHistory'];
     otherInformation = json['OtherInformation'];
+    typeOfStroke = json['TypeOfStroke'];
+    hasHighBloodPressure = json['HasHighBloodPressure'];
+    hasHighCholesterol = json['HasHighCholesterol'];
+    hasAtrialFibrillation = json['HasAtrialFibrillation'];
   }
 
   Map<String, dynamic> toJson() {
@@ -157,6 +172,7 @@ class HealthProfile {
     data['HasHeartAilment'] = hasHeartAilment;
     data['MaritalStatus'] = maritalStatus;
     data['Ethnicity'] = ethnicity;
+    data['Race'] = race;
     data['Nationality'] = nationality;
     data['Occupation'] = occupation;
     data['SedentaryLifestyle'] = sedentaryLifestyle;
@@ -170,6 +186,10 @@ class HealthProfile {
     data['ProcedureHistory'] = procedureHistory;
     data['ObstetricHistory'] = obstetricHistory;
     data['OtherInformation'] = otherInformation;
+    data['TypeOfStroke'] = typeOfStroke;
+    data['HasHighBloodPressure'] = hasHighBloodPressure;
+    data['HasHighCholesterol'] = hasHighCholesterol;
+    data['HasAtrialFibrillation'] = hasAtrialFibrillation;
     return data;
   }
 }

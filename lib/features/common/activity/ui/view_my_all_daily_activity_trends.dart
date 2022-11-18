@@ -17,6 +17,7 @@ import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/get_sleep_data.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 //ignore: must_be_immutable
@@ -496,14 +497,20 @@ class _ViewMyAllDailyActivityTrendsState
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Stand',
-                  semanticsLabel: 'Stand',
-                  style: TextStyle(
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.0,
-                      color: textBlack),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Stand',
+                      semanticsLabel: 'Stand',
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.0,
+                          color: textBlack),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 16,
@@ -530,7 +537,7 @@ class _ViewMyAllDailyActivityTrendsState
                     semanticsLabel: 'Duration',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
-                      color: Color(0xffa8a8a8),
+                      color: textBlack,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       fontStyle: FontStyle.normal,
@@ -538,6 +545,14 @@ class _ViewMyAllDailyActivityTrendsState
               ],
             ),
           ),
+          /*Positioned(
+            top: 4,
+            right: 4,
+            child: InfoScreen(
+              tittle: 'Stand Information',
+              description:
+              'Standing is better for the back than sitting. It strengthens leg muscles and improves balance. It burns more calories than sitting.',
+              height: 208),)*/
           /*Align(
             alignment: Alignment.topRight,
             child: Container(
@@ -568,11 +583,12 @@ class _ViewMyAllDailyActivityTrendsState
   Widget stepCounter() {
     int stepsToDisplay = 0;
     if (Platform.isIOS) {
-      if (steps > stepsMovements) {
+      /*if (steps > stepsMovements) {
         stepsToDisplay = steps;
       } else {
         stepsToDisplay = stepsMovements;
-      }
+      }*/
+      stepsToDisplay = steps + stepsMovements;
     } else {
       stepsToDisplay = stepsMovements;
     }
@@ -590,14 +606,20 @@ class _ViewMyAllDailyActivityTrendsState
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Steps',
-                  semanticsLabel: 'Steps',
-                  style: TextStyle(
-                      fontFamily: "Montserrat",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.0,
-                      color: textBlack),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Steps',
+                      semanticsLabel: 'Steps',
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.0,
+                          color: textBlack),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 16,
@@ -623,7 +645,7 @@ class _ViewMyAllDailyActivityTrendsState
                     semanticsLabel: 'Steps',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
-                      color: Color(0xffa8a8a8),
+                      color: secondaryTextBlack,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       fontStyle: FontStyle.normal,
@@ -631,6 +653,14 @@ class _ViewMyAllDailyActivityTrendsState
               ],
             ),
           ),
+          /*Positioned(
+            top: 4,
+            right: 4,
+            child: InfoScreen(
+              tittle: 'Steps Information',
+              description:
+              'Steps will increase cardiovascular and pulmonary (heart and lung) fitness. reduced risk of heart disease and stroke. improved management of conditions such as hypertension (high blood pressure), high cholesterol, joint, and muscular pain or stiffness, and diabetes. stronger bones and improved balance.',
+              height: 288),)*/
           /*Align(
             alignment: Alignment.topRight,
             child: Container(
@@ -725,7 +755,7 @@ class _ViewMyAllDailyActivityTrendsState
                     fontFamily: "Montserrat",
                     fontWeight: FontWeight.w600,
                     fontSize: 12.0,
-                    color: textGrey),
+                    color: secondaryTextBlack),
               ),
             ],
           ),
@@ -741,11 +771,13 @@ class _ViewMyAllDailyActivityTrendsState
     if (Platform.isIOS) {
       debugPrint(
           "Inside Exercise Time ==> ${data!.getExerciseTimeInMin().abs()}");
-      if (data!.getExerciseTimeInMin() > exerciseMovements) {
+      /*if (data!.getExerciseTimeInMin() > exerciseMovements) {
         exerciseToDisplay = data!.getExerciseTimeInMin().abs();
       } else {
         exerciseToDisplay = exerciseMovements;
-      }
+      }*/
+      exerciseToDisplay =
+          data!.getExerciseTimeInMin().abs() + exerciseMovements;
     } else {
       exerciseToDisplay = exerciseMovements;
     }
@@ -754,53 +786,71 @@ class _ViewMyAllDailyActivityTrendsState
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(12))),
-      child: Align(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Exercise',
-              semanticsLabel: 'Exercise',
-              style: TextStyle(
-                  fontFamily: "Montserrat",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.0,
-                  color: textBlack),
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Exercise',
+                      semanticsLabel: 'Exercise',
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18.0,
+                          color: textBlack),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                ImageIcon(
+                  AssetImage('res/images/ic_exercise_person.png'),
+                  size: 48,
+                  color: primaryColor,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(Conversion.durationFromMinToHrsToString(exerciseToDisplay),
+                    semanticsLabel:
+                        Conversion.durationFromMinToHrsToString(exerciseToDisplay),
+                    style: const TextStyle(
+                        color: textBlack,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: "Montserrat",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 22.0),
+                    textAlign: TextAlign.center),
+                Text("Duration",
+                    semanticsLabel: 'Duration',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: secondaryTextBlack,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      fontStyle: FontStyle.normal,
+                    )),
+              ],
             ),
-            SizedBox(
-              height: 16,
-            ),
-            ImageIcon(
-              AssetImage('res/images/ic_exercise_person.png'),
-              size: 48,
-              color: primaryColor,
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Text(Conversion.durationFromMinToHrsToString(exerciseToDisplay),
-                semanticsLabel:
-                    Conversion.durationFromMinToHrsToString(exerciseToDisplay),
-                style: const TextStyle(
-                    color: textBlack,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "Montserrat",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 22.0),
-                textAlign: TextAlign.center),
-            Text("Duration",
-                semanticsLabel: 'Duration',
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  color: Color(0xffa8a8a8),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  fontStyle: FontStyle.normal,
-                )),
-          ],
-        ),
+          ),
+          Positioned(
+            top: 4,
+            right: 4,
+            child: InfoScreen(
+              tittle: 'Exercise Information',
+              description:
+              'Fit in 150+\nGet at least 150 minutes per week of moderate-intensity aerobic activity or 75 minutes per week of vigorous aerobic activity (or a combination of both), preferably spread throughout the week.',
+              height: 248),)
+        ],
       ),
     );
   }
@@ -849,7 +899,7 @@ class _ViewMyAllDailyActivityTrendsState
                     semanticsLabel: 'Duration',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
-                      color: Color(0xffa8a8a8),
+                      color: secondaryTextBlack,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       fontStyle: FontStyle.normal,
@@ -931,7 +981,7 @@ class _ViewMyAllDailyActivityTrendsState
                 semanticsLabel: 'Duration',
                 style: TextStyle(
                   fontFamily: 'Montserrat',
-                  color: Color(0xffa8a8a8),
+                  color: secondaryTextBlack,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   fontStyle: FontStyle.normal,
@@ -1027,7 +1077,7 @@ class _ViewMyAllDailyActivityTrendsState
                 semanticsLabel: 'Cal',
                 style: TextStyle(
                   fontFamily: 'Montserrat',
-                  color: Color(0xffa8a8a8),
+                  color: secondaryTextBlack,
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   fontStyle: FontStyle.normal,
@@ -1078,7 +1128,7 @@ class _ViewMyAllDailyActivityTrendsState
                     semanticsLabel: 'Cal',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
-                      color: Color(0xffa8a8a8),
+                      color: secondaryTextBlack,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                       fontStyle: FontStyle.normal,

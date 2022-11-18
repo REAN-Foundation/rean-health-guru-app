@@ -75,7 +75,7 @@ class _PatientVitalsViewState extends State<PatientVitalsView> {
                 child: new Icon(Icons.add, color: Colors.white,),
                 backgroundColor: primaryColor,
                 onPressed: (){
-                  showDialog(
+                  barrierDismissible: false,
                     context: context,
                     builder: (BuildContext context) =>
                         _addOrEditVitalsDialog(context),

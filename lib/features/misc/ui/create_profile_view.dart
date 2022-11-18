@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:get_it/get_it.dart';
-import 'package:group_radio_button/group_radio_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +15,7 @@ import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/upload_image_response.dart';
 import 'package:patient/features/misc/models/user_data.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
+import 'package:patient/features/misc/ui/welcome.dart';
 import 'package:patient/features/misc/view_models/login_view_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
@@ -24,6 +24,7 @@ import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:provider/provider.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
+import 'package:status_alert/status_alert.dart';
 
 import 'base_widget.dart';
 
@@ -46,7 +47,7 @@ class _CreateProfileState extends State<CreateProfile> {
   final _firstNameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _sharedPrefUtils = SharedPrefUtils();
-  String selectedGender = 'Male';
+  String selectedGender = '';
   String dob = '';
   String unformatedDOB = '';
   String userId = '';
@@ -55,7 +56,7 @@ class _CreateProfileState extends State<CreateProfile> {
   String fullName = '';
   var dateFormat = DateFormat('MMM dd, yyyy');
 
-  final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
+  final List<String> radioItemsForGender = ['Female', 'Male', 'Non-binary', 'Prefer to self-describe', 'Prefer not to answer'];
 
   //Patient patient;
   //String profileImage = "";
@@ -281,9 +282,18 @@ class _CreateProfileState extends State<CreateProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -328,9 +338,18 @@ class _CreateProfileState extends State<CreateProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -450,7 +469,7 @@ class _CreateProfileState extends State<CreateProfile> {
                 } else if (unformatedDOB == '') {
                   showToast('Please select your date of birth', context);
                 } else if (selectedGender == '') {
-                  showToast('Please select your gender', context);
+                  showToast('Please select your sex', context);
                 } else {
                   progressDialog.show(max: 100, msg: 'Loading...');
                   progressDialog.show(max: 100, msg: 'Loading...');
@@ -470,7 +489,9 @@ class _CreateProfileState extends State<CreateProfile> {
                     if (updateProfileSuccess.status == 'success') {
                       progressDialog.close();
                       if (getAppType() == 'AHA') {
-                        showToast('Welcome to ' + getAppName(), context);
+                        if(getAppName() != 'Heart & Stroke Helper™ ') {
+                          showToast('Welcome to ' + getAppName(), context);
+                        }
                       } else {
                         showToast('Welcome to REAN HealthGuru', context);
                       }
@@ -513,14 +534,21 @@ class _CreateProfileState extends State<CreateProfile> {
           PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        _sharedPrefUtils.saveBoolean('login1.8.81', true);
+        _sharedPrefUtils.saveBoolean('login1.8.167', true);
         await _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
-        _sharedPrefUtils.saveBoolean('login1.8.81', true);
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) {
-          return HomeView(0);
-        }), (Route<dynamic> route) => false);
+        _sharedPrefUtils.saveBoolean('login1.8.167', true);
+        if(getAppName() == 'Heart & Stroke Helper™ ') {
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) {
+                return Welcome();
+              }), (Route<dynamic> route) => false);
+        }else{
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) {
+                return HomeView(0);
+              }), (Route<dynamic> route) => false);
+        }
         model.setBusy(false);
       } else {
         showToast(doctorListApiResponse.message!, context);
@@ -623,9 +651,18 @@ class _CreateProfileState extends State<CreateProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            'Gender',
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+          Row(
+            children: [
+              Text(
+                'Sex',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -652,7 +689,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   selectedGender = 'Intersex';
                 }
               })*/
-          RadioGroup<String>.builder(
+          /*RadioGroup<String>.builder(
             items: radioItemsForGender,
             groupValue: selectedGender.toString(),
             direction: Axis.horizontal,
@@ -666,7 +703,35 @@ class _CreateProfileState extends State<CreateProfile> {
               item,
               textPosition: RadioButtonTextPosition.right,
             ),
-          ),
+          ),*/
+           Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                    color: Colors.white),
+                child: DropdownButton<String>(
+                  isExpanded: true,
+                  value: selectedGender == ''
+                      ? null
+                      : selectedGender,
+                  items: radioItemsForGender.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  hint: Text('Choose an option'),
+                  onChanged: (data) {
+                    debugPrint(data);
+                    setState(() {
+                      selectedGender = data.toString();
+                    });
+                    setState(() {});
+                  },
+                ),
+              )
         ],
       ),
     );
@@ -678,9 +743,18 @@ class _CreateProfileState extends State<CreateProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              ),
+              Text(
+                '*',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -727,7 +801,7 @@ class _CreateProfileState extends State<CreateProfile> {
                 FocusScope.of(context).unfocus();
                 DatePicker.showDatePicker(context,
                     showTitleActions: true,
-                    minTime: DateTime(1940, 1, 1),
+                    minTime: DateTime(1900, 1, 1),
                     maxTime: DateTime.now().subtract(Duration(days: 1)),
                     onChanged: (date) {
                       debugPrint('change $date');
@@ -769,7 +843,15 @@ class _CreateProfileState extends State<CreateProfile> {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-
+  showAlert(String title, String subtitle) {
+    StatusAlert.show(
+      context,
+      duration: Duration(seconds: 10),
+      title: title,
+      subtitle: subtitle,
+      configuration: IconConfiguration(icon: Icons.check_circle_outline),
+    );
+  }
 
 
   openGallery() async {

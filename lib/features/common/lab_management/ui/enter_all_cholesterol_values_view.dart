@@ -6,6 +6,8 @@ import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class EnterAllCholesterolValuesView extends StatefulWidget {
@@ -80,10 +82,10 @@ class _EnterAllCholesterolValuesViewState
                   const SizedBox(
                     height: 8,
                   ),
-                  ratioFeilds(),
+                  /*ratioFeilds(),
                   const SizedBox(
                     height: 32,
-                  ),
+                  ),*/
                   Align(
                     alignment: Alignment.center,
                     child: model!.busy
@@ -174,6 +176,16 @@ class _EnterAllCholesterolValuesViewState
                         color: textBlack,
                         fontSize: 12),
                   ),
+                ),
+                SizedBox(
+                  width: 0,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'LDL Information',
+                      description:
+                          'LDL = BAD: Low-density lipoprotein is known as “bad” cholesterol.',
+                      height: 200),
                 ),
               ],
             ),
@@ -266,6 +278,16 @@ class _EnterAllCholesterolValuesViewState
                         fontSize: 12),
                   ),
                 ),
+                SizedBox(
+                  width: 0,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'HDL Information',
+                      description:
+                          'HDL = GOOD: High-density lipoprotein is known as “good” cholesterol.',
+                      height: 208),
+                ),
               ],
             ),
             const SizedBox(
@@ -328,35 +350,47 @@ class _EnterAllCholesterolValuesViewState
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                ImageIcon(
-                  AssetImage('res/images/ic_total_cholesterol.png'),
-                  size: 24,
-                  color: primaryColor,
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  'Enter your total cholesterol',
-                  style: TextStyle(
-                      color: textBlack,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14),
-                  textAlign: TextAlign.center,
-                ),
-                RichText(
-                  text: TextSpan(
-                    text: ' (mg/dl) ',
-                    style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w600,
-                        color: textBlack,
-                        fontSize: 12),
+            SingleChildScrollView(
+              child: Row(
+                children: [
+                  ImageIcon(
+                    AssetImage('res/images/ic_total_cholesterol.png'),
+                    size: 24,
+                    color: primaryColor,
                   ),
-                ),
-              ],
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    'Enter your total cholesterol',
+                    style: TextStyle(
+                        color: textBlack,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: ' (mg/dl)',
+                      style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          color: textBlack,
+                          fontSize: 12),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 0,
+                  ),
+                  Expanded(
+                    child: InfoScreen(
+                        tittle: 'Total Cholesterol Information',
+                        description:
+                            'Your total blood cholesterol is calculated by adding your HDL and LDL cholesterol levels, plus 20% of your triglyceride level. “Normal ranges” are less important than your overall cardiovascular risk. Like HDL and LDL cholesterol levels, your total blood cholesterol level should be considered in context with your other known risk factors. All adults age 20 or older should have their cholesterol (and other traditional risk factors) checked every four to six years. If certain factors put you at high risk, or if you already have heart disease, your doctor may ask you to check it more often. Work with your doctor to determine your risk for cardiovascular disease and stroke and create a plan to reduce your risk.',
+                        height: 420),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
               height: 8,
@@ -446,6 +480,16 @@ class _EnterAllCholesterolValuesViewState
                         fontSize: 12),
                   ),
                 ),
+                SizedBox(
+                  width: 0,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Triglycerides Information',
+                      description:
+                      'Triglycerides: The most common type of fat in the body.',
+                      height: 200),
+                ),
               ],
             ),
             const SizedBox(
@@ -534,6 +578,12 @@ class _EnterAllCholesterolValuesViewState
                         fontSize: 12),
                   ),
                 ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'A1C Level Information',
+                      description: "HbA1C (A1C or glycosylated hemoglobin test). The A1C test can diagnose prediabetes and diabetes. It measures your average blood glucose control for the past two to three months. Blood sugar is measured by the amount of glycosylated hemoglobin (A1C) in your blood. An A1C of 5.7% to 6.4% means that you have prediabetes, and you're at high risk for developing diabetes. Diabetes is diagnosed when the A1C is 6.5% or higher.",
+                      height: 320),
+                ),
               ],
             ),
             const SizedBox(
@@ -603,7 +653,7 @@ class _EnterAllCholesterolValuesViewState
                   color: primaryColor,
                 ),
                 SizedBox(
-                  width: 10,
+                  width: 8,
                 ),
                 Text(
                   'Enter your ratio',
@@ -679,26 +729,43 @@ class _EnterAllCholesterolValuesViewState
 
     if (_ldlController.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      addvitals('LDL', _ldlController.text.toString(), 'mg/dl');
     }
     if (_hdlcontroller.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      addvitals('HDL', _hdlcontroller.text.toString(), 'mg/dl');
     }
     if (_totalCholesterolController.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      addvitals('Total Cholesterol', _totalCholesterolController.text.toString(), 'mg/dl');
     }
     if (_triglyceridesController.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      addvitals('Triglyceride Level', _triglyceridesController.text.toString(), 'mg/dl');
     }
     if (_ratioController.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      addvitals('Cholesterol Ratio', _ratioController.text.toString(), '%');
     }
 
     if (_a1cLevelController.text.isNotEmpty) {
-      ifRecordsEnterted = true;
+      if(isNumeric(_a1cLevelController.text)) {
+        ifRecordsEnterted = true;
+        addvitals('A1C Level', _a1cLevelController.text.toString(), '%');
+      }else{
+        showToast('Please enter valid input', context);
+      }
+
+     /* if(isNumeric(_a1cLevelController.text){
+        ifRecordsEnterted = true;
+        addvitals('A1C Level', _a1cLevelController.text.toString(), '%');
+      }else{
+      showToast('Please enter valid input', context);
+      }*/
     }
 
     if (ifRecordsEnterted) {
-      addvitals();
+      clearAllFeilds();
     }
   }
 
@@ -708,7 +775,36 @@ class _EnterAllCholesterolValuesViewState
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  addvitals() async {
+  addvitals(String displayName, String value, String unit) async {
+    try {
+      //progressDialog!.show(max: 100, msg: 'Loading...');
+      final map = <String, dynamic>{};
+      map['TypeName'] = 'Cholesterol';
+      map['DisplayName'] = displayName;
+      map['PrimaryValue'] = value;
+      map['PatientUserId'] = patientUserId;
+      map['Unit'] = unit;
+      //map['RecordedByUserId'] = null;
+
+      final BaseResponse baseResponse = await model.addlipidProfile(map);
+
+      if (baseResponse.status == 'success') {
+        //progressDialog!.close();
+        //showToast(baseResponse.message!, context);
+        model.setBusy(false);
+      } else {
+        //progressDialog!.close();
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      //progressDialog!.close();
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  /*addvitals() async {
     try {
       progressDialog!.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
@@ -734,7 +830,7 @@ class _EnterAllCholesterolValuesViewState
         showToast(baseResponse.message!, context);
         progressDialog!.close();
         clearAllFeilds();
-        Navigator.pop(context);
+        //Navigator.pop(context);
       } else {
         progressDialog!.close();
         showToast(baseResponse.message!, context);
@@ -745,7 +841,7 @@ class _EnterAllCholesterolValuesViewState
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
-  }
+  }*/
 
   bool toastDisplay = true;
 
@@ -753,9 +849,9 @@ class _EnterAllCholesterolValuesViewState
     //if (toastDisplay) {
     _scrollController.animateTo(0.0,
         duration: Duration(seconds: 2), curve: Curves.ease);
-    /*   showToast('Record Updated Successfully!', context);
-      toastDisplay = false;
-    }*/
+       showToast('Record Created Successfully!', context);
+      //toastDisplay = false;
+    //}
 
     _ldlController.text = '';
     _ldlController.selection = TextSelection.fromPosition(

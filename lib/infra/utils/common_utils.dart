@@ -36,6 +36,8 @@ bool isDummyNumber = false;
 String? _currentLocale = '';
 String _appName = '';
 String _appType = '';
+String _appFlavour = '';
+String _sponsor = '';
 dynamic _roleId = '';
 final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
 String knowledgeLinkDisplayedDate = '';
@@ -47,6 +49,8 @@ String dailyMood = '';
 String dailyFeeling = '';
 List<String> dailyEnergyLevels = [];
 List<String> createdGoalsIds = [];
+var healthSystemGlobe;
+var healthSystemHospitalGlobe;
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');
@@ -142,12 +146,28 @@ dynamic getRoleId() {
   return _roleId;
 }
 
+void setSponsor(String name) {
+  _sponsor = name;
+}
+
+String getSponsor() {
+  return _sponsor;
+}
+
 void setAppType(String name) {
   _appType = name;
 }
 
 String getAppType() {
   return _appType;
+}
+
+void setAppFlavour(String appFlavour) {
+  _appFlavour = appFlavour;
+}
+
+String getAppFlavour() {
+  return _appFlavour;
 }
 
 void setAppName(String name) {
@@ -217,6 +237,15 @@ void showToastMsg(String msg, BuildContext context) {
   );
 }
 
+void announceText(String text) {
+  //SemanticsService.announce('I am saying something', TextDirection.ltr);
+  SemanticsService.announce(text, TextDirection.ltr);
+}
+
+hideKeyboard(){
+  FocusManager.instance.primaryFocus!.unfocus();
+}
+
 setImage(String url) {
   CachedNetworkImage(
     imageUrl:
@@ -224,6 +253,13 @@ setImage(String url) {
     placeholder: (context, url) => CircularProgressIndicator(),
     errorWidget: (context, url, error) => Icon(Icons.error),
   );
+}
+
+bool isNumeric(String s) {
+  if (s == null) {
+    return false;
+  }
+  return double.tryParse(s) != null;
 }
 
 circularImage() {
@@ -281,6 +317,7 @@ getDailyCheckInDate() async {
     debugPrint('dailyCheckInDate ==> $dailyCheckInDate ');
   } catch (Excepetion) {
     // do something
+
   }
   //return knowledgeLinkDisplayedDate ?? '';
 }

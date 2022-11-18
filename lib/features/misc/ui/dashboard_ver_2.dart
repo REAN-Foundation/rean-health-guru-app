@@ -17,6 +17,8 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_outlined_screen.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable
@@ -85,7 +87,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     model.setBusy(true);
     Future.delayed(
       Duration(seconds: 4),
-          () {
+      () {
         getTodaysKnowledgeTopic();
         //getTaskPlanSummary();
         getMyMedications();
@@ -97,13 +99,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
     super.initState();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
@@ -119,7 +121,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   getTaskPlanSummary() async {
     try {
       final TaskSummaryResponse taskSummaryResponse =
-      await model.getTaskPlanSummary();
+          await model.getTaskPlanSummary();
       debugPrint('Task Summary ==> ${taskSummaryResponse.toJson()}');
       if (taskSummaryResponse.status == 'success') {
         completedTaskCount =
@@ -140,7 +142,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
 
   sortMyMedication(GetMyMedicationsResponse response) {
     for (final medSummary
-    in response.data!.medicationSchedulesForDay!.schedules!) {
+        in response.data!.medicationSchedulesForDay!.schedules!) {
       if (medSummary.status == 'Unknown' ||
           medSummary.status == 'Upcoming' ||
           medSummary.status == 'Overdue') {
@@ -157,7 +159,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   getMedicationSummary() async {
     try {
       final TaskSummaryResponse taskSummaryResponse =
-      await model.getMedicationSummary(dateFormat.format(DateTime.now()));
+          await model.getMedicationSummary(dateFormat.format(DateTime.now()));
       debugPrint('Medication Summary ==> ${taskSummaryResponse.toJson()}');
       if (taskSummaryResponse.status == 'success') {
         completedMedicationCount = taskSummaryResponse.data!.summary!.taken! +
@@ -217,18 +219,18 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                howAreYoursymptoms(),
                 //if (incompleteMedicationCount > 0)
                 myMedication(),
                 // else
                 //   Container(),
-                myBiometrics(),
-                mylipidProfile(),
                 myNutrition(),
                 /*if (Platform.isIOS) ...[*/
                 myActivity(),
-                  myStress(),
+                myStress(),
                 //],
+                myBiometrics(),
+                howAreYoursymptoms(),
+                mylipidProfile(),
                 knowledgeTree(),
                 //myTasks(),
                 //searchNearMe(),
@@ -277,118 +279,144 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   SizedBox(
                     width: 8,
                   ),
-                  Text('Symptom Management',
+                  Text('Symptoms',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Montserrat')),
+                  Expanded(
+                    child: InfoOutlinedScreen(
+                      tittle: 'Symptoms Information',
+                      description:
+                      'Symptom management can help a person track how they are feeling day-to-day to notice changes over time. ',
+                      height: 200,
+                      infoIconcolor: Colors.grey,
+                    ),
+                  ),
+                  SizedBox(width: 16,)
                 ],
               ),
             ),
             Container(
+              height: 108,
               color: primaryLightColor,
               padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Stack(
                 children: [
-                  Semantics(
-                    label: 'Symptom is Better',
-                    button: true,
-                    child: ExcludeSemantics(
-                      child: InkWell(
-                        onTap: () {
-                          recordHowAreYouFeeling(1);
-                          //Navigator.pushNamed(context, RoutePaths.Symptoms);
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ImageIcon(
-                              AssetImage('res/images/ic_better_emoji.png'),
-                              size: 48,
-                              color: Color(0XFF007E1A),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Semantics(
+                        label: 'Symptom is Better',
+                        button: true,
+                        child: ExcludeSemantics(
+                          child: InkWell(
+                            onTap: () {
+                              recordHowAreYouFeeling(1);
+                              //Navigator.pushNamed(context, RoutePaths.Symptoms);
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                ImageIcon(
+                                  AssetImage('res/images/ic_better_emoji.png'),
+                                  size: 48,
+                                  color: Color(0XFF007E1A),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Better',
+                                    style: TextStyle(
+                                        color: Color(0XFF007E1A),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Montserrat')),
+                              ],
                             ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text('Better',
-                                style: TextStyle(
-                                    color: Color(0XFF007E1A),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Montserrat')),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                      Semantics(
+                        label: 'Symptom is Same',
+                        button: true,
+                        child: ExcludeSemantics(
+                          child: InkWell(
+                            onTap: () {
+                              recordHowAreYouFeeling(0);
+                              //Navigator.pushNamed(context, RoutePaths.Symptoms);
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                ImageIcon(
+                                  AssetImage('res/images/ic_same_emoji.png'),
+                                  size: 48,
+                                  color: textGrey,
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Same',
+                                    style: TextStyle(
+                                        color: textGrey,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Semantics(
+                        label: 'Symptom is Worse',
+                        button: true,
+                        child: ExcludeSemantics(
+                          child: InkWell(
+                            onTap: () {
+                              recordHowAreYouFeeling(-1);
+                              //Navigator.pushNamed(context, RoutePaths.Symptoms);
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                ImageIcon(
+                                  AssetImage('res/images/ic_worse_emoji.png'),
+                                  size: 48,
+                                  color: Color(0XFFC10E21),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text('Worse',
+                                    style: TextStyle(
+                                        color: Color(0XFFC10E21),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'Montserrat')),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                  Semantics(
-                    label: 'Symptom is Same',
-                    button: true,
-                    child: ExcludeSemantics(
-                      child: InkWell(
-                        onTap: () {
-                          recordHowAreYouFeeling(0);
-                          //Navigator.pushNamed(context, RoutePaths.Symptoms);
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ImageIcon(
-                              AssetImage('res/images/ic_same_emoji.png'),
-                              size: 48,
-                              color: textGrey,
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text('Same',
-                                style: TextStyle(
-                                    color: textGrey,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Montserrat')),
-                          ],
-                        ),
-                      ),
+                  /*Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: InfoOutlinedScreen(
+                      tittle: 'Symptoms Information',
+                      description:
+                          'Symptom management can help a person track how they are feeling day-to-day to notice changes over time. ',
+                      height: 200,
+                      infoIconcolor: Colors.grey,
                     ),
-                  ),
-                  Semantics(
-                    label: 'Symptom is Worse',
-                    button: true,
-                    child: ExcludeSemantics(
-                      child: InkWell(
-                        onTap: () {
-                          recordHowAreYouFeeling(-1);
-                          //Navigator.pushNamed(context, RoutePaths.Symptoms);
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ImageIcon(
-                              AssetImage('res/images/ic_worse_emoji.png'),
-                              size: 48,
-                              color: Color(0XFFC10E21),
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text('Worse',
-                                style: TextStyle(
-                                    color: Color(0XFFC10E21),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Montserrat')),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
+                  )*/
                 ],
               ),
             ),
@@ -683,24 +711,23 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                           child: Center(
                             child: model.busy
                                 ? SizedBox(
-                                width: 24,
-                                height: 24,
-                                child: CircularProgressIndicator(
-                                  valueColor:
-                                  AlwaysStoppedAnimation<Color>(
-                                      iconColor),
-                                ))
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          iconColor),
+                                    ))
                                 : Semantics(
-                              label: 'pendingTask',
-                              child: Text(
-                                incompleteTaskCount.toString(),
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Montserrat',
-                                    color: Colors.orange),
-                              ),
-                            ),
+                                    label: 'pendingTask',
+                                    child: Text(
+                                      incompleteTaskCount.toString(),
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'Montserrat',
+                                          color: Colors.orange),
+                                    ),
+                                  ),
                           ),
                         ),
                         SizedBox(
@@ -733,24 +760,23 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                           child: Center(
                             child: model.busy
                                 ? SizedBox(
-                                width: 24,
-                                height: 24,
-                                child: CircularProgressIndicator(
-                                  valueColor:
-                                  AlwaysStoppedAnimation<Color>(
-                                      iconColor),
-                                ))
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          iconColor),
+                                    ))
                                 : Semantics(
-                              label: 'completedTask',
-                              child: Text(
-                                completedTaskCount.toString(),
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Montserrat',
-                                    color: Color(0XFF007E1A)),
-                              ),
-                            ),
+                                    label: 'completedTask',
+                                    child: Text(
+                                      completedTaskCount.toString(),
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'Montserrat',
+                                          color: Color(0XFF007E1A)),
+                                    ),
+                                  ),
                           ),
                         ),
                         SizedBox(
@@ -814,7 +840,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 12,
                       ),
-                      Text('Medication Management',
+                      Text('Medications',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
@@ -822,19 +848,33 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  Semantics(
-                    label: 'Add medication',
-                    child: IconButton(
-                        icon: Icon(
-                          Icons.add_circle,
-                          size: 32,
-                          color: iconColor,
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(
-                              context, RoutePaths.ADD_MY_MEDICATION);
-                        }),
-                  )
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InfoOutlinedScreen(
+                        tittle: 'Medication Information',
+                        description:
+                        'Taking medications as directed by your health care professional gives you the best opportunity to manage your chronic condition and maintain the best possible health for yourself.',
+                        height: 220,
+                        infoIconcolor: Colors.grey,
+                      ),
+                      SizedBox(width: 8,),
+                      Semantics(
+                        label: 'Add medication',
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.add_circle,
+                              size: 32,
+                              color: iconColor,
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, RoutePaths.ADD_MY_MEDICATION, arguments: 'Dashboard');
+                            }),
+                      )
+                    ],
+                  ),
+
                 ],
               ),
             ),
@@ -847,78 +887,270 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                 child: CircularProgressIndicator(),
               )
                   : */
-                  Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  Stack(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Have you taken your medications today?',
+                          style: TextStyle(
+                              color: textBlack,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat')),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Semantics(
+                            label: 'Yes I have taken my medications',
+                            button: true,
+                            child: InkWell(
+                              onTap: () {
+                                if (currentMedicationList.isEmpty) {
+                                  showToast(
+                                      'Your medication list is empty. Please add your medications.',
+                                      context);
+                                } else {
+                                  markAllMedicationAsTaken();
+                                }
+                              },
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.thumb_up,
+                                      color: Color(0XFF007E1A),
+                                      size: 36,
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Yes',
+                                        style: TextStyle(
+                                            color: Color(0XFF007E1A),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Semantics(
+                            label: 'No I haven\'t taken my medications',
+                            button: true,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RoutePaths.My_Medications, arguments: 0);
+                              },
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.thumb_down,
+                                      color: primaryColor,
+                                      size: 36,
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('No',
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget myNutrition() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: widgetBackgroundColor),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0))),
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 48,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  color: widgetBackgroundColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(3.0),
+                      topRight: Radius.circular(3.0))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Semantics(
-                    label: 'Yes I have taken my medications',
-                    button: true,
-                    child: InkWell(
-                      onTap: () {
-                        if (currentMedicationList.isEmpty) {
-                          showToast(
-                              'Your medication list is empty. Please add your medications.',
-                              context);
-                        } else {
-                          markAllMedicationAsTaken();
-                        }
-                      },
-                      child: ExcludeSemantics(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.thumb_up,
-                              color: Color(0XFF007E1A),
-                              size: 36,
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text('Yes',
-                                style: TextStyle(
-                                    color: Color(0XFF007E1A),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Montserrat')),
-                          ],
-                        ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 8,
                       ),
-                    ),
+                      ImageIcon(
+                        AssetImage('res/images/ic_nutrition.png'),
+                        size: 32,
+                        color: iconColor,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text('Nutrition',
+                          style: TextStyle(
+                              color: textColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Montserrat')),
+                    ],
                   ),
-                  Semantics(
-                    label: 'No I haven\'t taken my medications',
-                    button: true,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, RoutePaths.My_Medications);
-                      },
-                      child: ExcludeSemantics(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.thumb_down,
-                              color: primaryColor,
-                              size: 36,
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text('No',
-                                style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Montserrat')),
-                          ],
-                        ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InfoOutlinedScreen(
+                        tittle: 'Nutrition Information',
+                        description:
+                        'A healthy diet and lifestyle are the keys to preventing and managing heart disease. Track your overall healthy eating pattern to keep your heart healthy such as eating whole foods, lots of fruits and vegetables, lean protein, nuts, seeds, and cooking in non-tropical oils.',
+                        height: 260,
+                        infoIconcolor: Colors.grey,
                       ),
-                    ),
+                      SizedBox(width: 8,),
+                      IconButton(
+                          icon: Icon(
+                            Icons.add_circle,
+                            size: 32,
+                            color: iconColor,
+                            semanticLabel: 'Add Nutrition',
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, RoutePaths.My_Nutrition,
+                                arguments: '');
+                          }),
+                    ],
                   )
+                ],
+              ),
+            ),
+            Container(
+              color: primaryLightColor,
+              padding: const EdgeInsets.all(16),
+              child: Stack(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Were most of your food choices healthy today?',
+                          style: TextStyle(
+                              color: textBlack,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Montserrat')),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Semantics(
+                            label: 'Yes, most of my food choices were healthy today.',
+                            button: true,
+                            child: InkWell(
+                              onTap: () {
+                                recordMyCaloriesConsumed(true);
+                              },
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.thumb_up,
+                                      color: Color(0XFF007E1A),
+                                      size: 36,
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Yes',
+                                        style: TextStyle(
+                                            color: Color(0XFF007E1A),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Semantics(
+                            label: 'No, most of my food choices were not healthy today.',
+                            button: true,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, RoutePaths.My_Nutrition,
+                                    arguments: '');
+                                //recordMyCaloriesConsumed(false);
+                              },
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.thumb_down,
+                                      color: primaryColor,
+                                      size: 36,
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('No',
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -970,7 +1202,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     color: iconColor,
                   ),*/
                   Icon(
-                    FontAwesomeIcons.kitMedical,
+                    FontAwesomeIcons.firstAid,
                     color: Colors.white,
                     size: 24,
                   ),
@@ -1057,7 +1289,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(
-                              FontAwesomeIcons.truckMedical,
+                              FontAwesomeIcons.ambulance,
                               color: primaryColor,
                               size: 36,
                             ),
@@ -1135,7 +1367,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             color: Colors.orange,
                             border: Border.all(color: Colors.white),
                             borderRadius:
-                            BorderRadius.all(Radius.circular(16.0))),
+                                BorderRadius.all(Radius.circular(16.0))),
                         child: Center(
                           child: Text(
                             '1',
@@ -1174,7 +1406,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             color: Color(0XFF007E1A),
                             border: Border.all(color: Colors.white),
                             borderRadius:
-                            BorderRadius.all(Radius.circular(16.0))),
+                                BorderRadius.all(Radius.circular(16.0))),
                         child: Center(
                           child: Text(
                             '3',
@@ -1245,7 +1477,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                   SizedBox(
                     width: 8,
                   ),
-                  Text('Knowledge Management',
+                  Text('Knowledge',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
@@ -1258,12 +1490,12 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
               color: primaryLightColor,
               padding: const EdgeInsets.all(8),
               child: getAppType() == 'AHA' &&
-                  knowledgeLinkDisplayedDate !=
-                      dateFormat.format(DateTime.now())
+                      knowledgeLinkDisplayedDate !=
+                          dateFormat.format(DateTime.now())
                   ? InkWell(
-                onTap: () async {
-                  final String url =
-                      'https://supportnetwork.heart.org/s/';
+                      onTap: () async {
+                        final String url =
+                            'https://supportnetwork.heart.org/s/';
 
                   if (await canLaunchUrl(Uri.parse(url))) {
                     await launchUrl(Uri.parse(url));
@@ -1294,30 +1526,30 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                 ),
               )
                   : model.busy
-                  ? Center(
-                  child: SizedBox(
-                      height: 32,
-                      width: 32,
-                      child: CircularProgressIndicator()))
-                  : RichText(
-                text: TextSpan(
-                  text: topicName.toString(),
-                  style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                      fontSize: 14),
-                  children: <TextSpan>[
-                    TextSpan(
-                        text: ' ' + briefInformation.toString(),
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                            fontFamily: 'Montserrat')),
-                  ],
-                ),
-              ),
+                      ? Center(
+                          child: SizedBox(
+                              height: 32,
+                              width: 32,
+                              child: CircularProgressIndicator()))
+                      : RichText(
+                          text: TextSpan(
+                            text: topicName.toString(),
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                                fontSize: 14),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: ' ' + briefInformation.toString(),
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                      fontFamily: 'Montserrat')),
+                            ],
+                          ),
+                        ),
             ),
           ],
         ),
@@ -1365,7 +1597,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Vital Management',
+                      Text('Vitals',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
@@ -1373,206 +1605,229 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  IconButton(
-                      icon: Icon(
-                        Icons.add_circle,
-                        size: 32,
-                        color: iconColor,
-                        semanticLabel: 'Add Vitals',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InfoOutlinedScreen(
+                        tittle: 'Vitals Information',
+                        description:
+                        'An important aspect of lowering risk of cardiovascular disease, also called coronary artery disease (CAD) also known as https://www.heart.org/en/health-topics/consumer-healthcare/what-is-cardiovascular-disease/coronary-artery-disease, is managing health behaviors and risk factors, such as nutrition, physical activity, tobacco product usage, body mass index (BMI), weight, blood pressure, total cholesterol or blood glucose (blood sugar).',
+                        height: 340,
+                        infoIconcolor: Colors.grey,
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, RoutePaths.My_Vitals);
-                      })
+                      SizedBox(width: 8,),
+                      IconButton(
+                          icon: Icon(
+                            Icons.add_circle,
+                            size: 32,
+                            color: iconColor,
+                            semanticLabel: 'Add Vitals',
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, RoutePaths.My_Vitals);
+                          }),
+                    ],
+                  )
                 ],
               ),
             ),
             Container(
+                height: 148,
                 color: primaryLightColor,
                 padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: Stack(
                   children: [
-                    Semantics(
-                      label: 'Add Weight',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context,
-                              RoutePaths.Biometric_Weight_Vitals_Care_Plan);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(8),
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage('res/images/ic_body_weight.png'),
-                                    size: 32,
-                                    color: iconColor,
-                                  ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Semantics(
+                          label: 'Add Weight',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context,
+                                  RoutePaths.Biometric_Weight_Vitals_Care_Plan);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(8),
+                                      height: 56,
+                                      width: 56,
+                                      decoration: BoxDecoration(
+                                          color: primaryColor,
+                                          border:
+                                              Border.all(color: primaryColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0))),
+                                      child: ImageIcon(
+                                        AssetImage(
+                                            'res/images/ic_body_weight.png'),
+                                        size: 32,
+                                        color: iconColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Weight',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Weight',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'Montserrat')),
-                              ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    Semantics(
-                      label: "Add Blood Pressure",
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context,
-                              RoutePaths
-                                  .Biometric_Blood_Presure_Vitals_Care_Plan);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(8),
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage(
-                                        'res/images/ic_blood_pressure.png'),
-                                    size: 32,
-                                    color: iconColor,
-                                  ),
+                        Semantics(
+                          label: "Add Blood Pressure",
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context,
+                                  RoutePaths
+                                      .Biometric_Blood_Presure_Vitals_Care_Plan);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(8),
+                                      height: 56,
+                                      width: 56,
+                                      decoration: BoxDecoration(
+                                          color: primaryColor,
+                                          border:
+                                              Border.all(color: primaryColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0))),
+                                      child: ImageIcon(
+                                        AssetImage(
+                                            'res/images/ic_blood_pressure.png'),
+                                        size: 32,
+                                        color: iconColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Blood\nPressure',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Blood\nPressure',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'Montserrat')),
-                              ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    Semantics(
-                      label: 'Add Blood Glucose',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context,
-                              RoutePaths
-                                  .Biometric_Blood_Glucose_Vitals_Care_Plan);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(12),
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage(
-                                        'res/images/ic_blood_glucose.png'),
-                                    size: 32,
-                                    color: iconColor,
-                                  ),
+                        Semantics(
+                          label: 'Add Blood Glucose',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context,
+                                  RoutePaths
+                                      .Biometric_Blood_Glucose_Vitals_Care_Plan);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(12),
+                                      height: 56,
+                                      width: 56,
+                                      decoration: BoxDecoration(
+                                          color: primaryColor,
+                                          border:
+                                              Border.all(color: primaryColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0))),
+                                      child: ImageIcon(
+                                        AssetImage(
+                                            'res/images/ic_blood_glucose.png'),
+                                        size: 32,
+                                        color: iconColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Blood\nGlucose',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Blood\nGlucose',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'Montserrat')),
-                              ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    Semantics(
-                      label: 'Add Pulse',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context,
-                              RoutePaths.Biometric_Pulse_Vitals_Care_Plan);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.only(right: 12),
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage('res/images/ic_pulse.png'),
-                                    size: 32,
-                                    color: iconColor,
-                                  ),
+                        Semantics(
+                          label: 'Add Pulse',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context,
+                                  RoutePaths.Biometric_Pulse_Vitals_Care_Plan);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(right: 12),
+                                      height: 56,
+                                      width: 56,
+                                      decoration: BoxDecoration(
+                                          color: primaryColor,
+                                          border:
+                                              Border.all(color: primaryColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0))),
+                                      child: ImageIcon(
+                                        AssetImage('res/images/ic_pulse.png'),
+                                        size: 32,
+                                        color: iconColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Pulse',
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Pulse',
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'Montserrat')),
-                              ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 )),
@@ -1620,7 +1875,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Lab Management',
+                      Text('Lab Values',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
@@ -1628,242 +1883,264 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  IconButton(
-                      icon: Icon(
-                        Icons.add_circle,
-                        size: 32,
-                        color: iconColor,
-                        semanticLabel: 'Add Lab Management records',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InfoOutlinedScreen(
+                        tittle: 'Lab Values Information',
+                        description:
+                        'Cholesterol circulates in the blood. As the amount of cholesterol in your blood increases, so does the risk to your health. High cholesterol contributes to a higher risk of cardiovascular diseases, such as heart disease and stroke. That’s why it’s important to have your cholesterol tested, so you can know your levels and track them here. ',
+                        height: 288,
+                        infoIconcolor: Colors.grey,
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, RoutePaths.Lipid_Profile);
-                      })
+                      SizedBox(width: 8,),
+                      IconButton(
+                          icon: Icon(
+                            Icons.add_circle,
+                            size: 32,
+                            color: iconColor,
+                            semanticLabel: 'Add Lab records',
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, RoutePaths.Lipid_Profile);
+                          }),
+                    ],
+                  )
                 ],
               ),
             ),
             Container(
+                height: 140,
                 color: primaryLightColor,
                 padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: Stack(
                   children: [
-                    Semantics(
-                      label: 'Add total cholestrol',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context,
-                              RoutePaths.Lipid_Profile_Total_Cholesterol);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage(
-                                        'res/images/ic_total_cholesterol.png'),
-                                    size: 32,
-                                    color: iconColor,
-                                  ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Semantics(
+                          label: 'Add total cholestrol',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context,
+                                  RoutePaths.Lipid_Profile_Total_Cholesterol);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 56,
+                                      width: 56,
+                                      decoration: BoxDecoration(
+                                          color: primaryColor,
+                                          border:
+                                              Border.all(color: primaryColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0))),
+                                      child: ImageIcon(
+                                        AssetImage(
+                                            'res/images/ic_total_cholesterol.png'),
+                                        size: 32,
+                                        color: iconColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Total\nCholesterol',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Total\nCholesterol',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'Montserrat')),
-                              ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                        Semantics(
+                          label: 'Add LDL',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, RoutePaths.Lipid_Profile_LDL);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 56,
+                                      width: 56,
+                                      decoration: BoxDecoration(
+                                          color: primaryColor,
+                                          border:
+                                              Border.all(color: primaryColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0))),
+                                      child: ImageIcon(
+                                        AssetImage('res/images/ic_ldl.png'),
+                                        size: 32,
+                                        color: iconColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('LDL',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Semantics(
+                          label: "Add HDL",
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, RoutePaths.Lipid_Profile_HDL);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 56,
+                                      width: 56,
+                                      decoration: BoxDecoration(
+                                          color: primaryColor,
+                                          border:
+                                              Border.all(color: primaryColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0))),
+                                      child: ImageIcon(
+                                        AssetImage('res/images/ic_hdl.png'),
+                                        size: 32,
+                                        color: iconColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('HDL',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Semantics(
+                          label: 'Add triglycerides',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context,
+                                  RoutePaths.Lipid_Profile_Triglyceroid);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 56,
+                                      width: 56,
+                                      decoration: BoxDecoration(
+                                          color: primaryColor,
+                                          border:
+                                              Border.all(color: primaryColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0))),
+                                      child: ImageIcon(
+                                        AssetImage(
+                                            'res/images/ic_triglycerides.png'),
+                                        size: 32,
+                                        color: iconColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Triglycerides',
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        /*Semantics(
+                          label: 'Add A1C Level',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, RoutePaths.Lipid_Profile_A1CLevel);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 56,
+                                      width: 56,
+                                      decoration: BoxDecoration(
+                                          color: primaryColor,
+                                          border: Border.all(color: primaryColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0))),
+                                      child: ImageIcon(
+                                        AssetImage(
+                                            'res/images/ic_a1c_level.png'),
+                                        size: 32,
+                                        color: iconColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('A1C Level',
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Montserrat')),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),*/
+                      ],
                     ),
-                    Semantics(
-                      label: 'Add LDL',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, RoutePaths.Lipid_Profile_LDL);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage('res/images/ic_ldl.png'),
-                                    size: 32,
-                                    color: iconColor,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('LDL',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'Montserrat')),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Semantics(
-                      label: "Add HDL",
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, RoutePaths.Lipid_Profile_HDL);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage('res/images/ic_hdl.png'),
-                                    size: 32,
-                                    color: iconColor,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('HDL',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'Montserrat')),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Semantics(
-                      label: 'Add triglycerides',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, RoutePaths.Lipid_Profile_Triglyceroid);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage(
-                                        'res/images/ic_triglycerides.png'),
-                                    size: 32,
-                                    color: iconColor,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Triglycerides',
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'Montserrat')),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    /*Semantics(
-                      label: 'Add A1C Level',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, RoutePaths.Lipid_Profile_A1CLevel);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage(
-                                        'res/images/ic_a1c_level.png'),
-                                    size: 32,
-                                    color: iconColor,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('A1C Level',
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'Montserrat')),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),*/
                   ],
                 )),
           ],
@@ -1872,7 +2149,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     );
   }
 
-  Widget myNutrition() {
+  Widget myNutritionOld() {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
       child: Container(
@@ -1910,12 +2187,19 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Nutrition Management',
+                      Text('Nutrition',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Montserrat')),
+                      InfoScreen(
+                        tittle: 'Nutrition Information',
+                        description:
+                            'Aim for an overall healthy eating pattern to keep your heart healthy such as eating whole foods, lots of fruits and vegetables, lean protein, nuts, seeds, and cooking in non-tropical oils.',
+                        height: 220,
+                        infoIconcolor: Colors.white,
+                      ),
                     ],
                   ),
                   IconButton(
@@ -2156,7 +2440,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Physical Health Management',
+                      Text('Physical Activity',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
@@ -2164,202 +2448,270 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  IconButton(
-                      icon: Icon(
-                        Icons.add_circle,
-                        size: 32,
-                        color: iconColor,
-                        semanticLabel: 'Add physical health record',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InfoOutlinedScreen(
+                        tittle: 'Physical Activity Information',
+                        description:
+                        'Get at least 150 minutes per week of moderate-intensity aerobic activity or 75 minutes per week of vigorous aerobic activity (or a combination of both), preferably spread throughout the week. Physical activity relieves stress, improves mood, gives you energy, helps with sleep and can lower your risk of chronic disease, including dementia and depression.',
+                        height: 288,
+                        infoIconcolor: Colors.grey,
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          RoutePaths.My_Activity_Trends,
-                            arguments: 0);
-                      })
+                      SizedBox(width: 8,),
+                      IconButton(
+                          padding: EdgeInsets.only(left: 6, bottom: 8, right: 16),
+                          constraints: BoxConstraints(),
+                          icon: Icon(
+                            Icons.add_circle,
+                            size: 32,
+                            color: iconColor,
+                            semanticLabel: 'Add physical health record',
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, RoutePaths.My_Activity_Trends,
+                                arguments: 0);
+                          }),
+                    ],
+                  )
                 ],
               ),
             ),
             Container(
                 color: primaryLightColor,
                 padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: Stack(
                   children: [
-                    Semantics(
-                      label: "Stand",
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, RoutePaths.My_Activity_Trends,
-                              arguments: 1);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(4.0),
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage(
-                                        'res/images/ic_stand_activity.png'),
-                                    size: 24,
-                                    color: iconColor,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Stand',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Montserrat')),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Semantics(
-                      label: 'Steps',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, RoutePaths.My_Activity_Trends,
-                              arguments: 1);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage('res/images/ic_steps.png'),
-                                    size: 32,
-                                    color: iconColor,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Steps',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Montserrat')),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Semantics(
-                      label: 'Exercise',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, RoutePaths.My_Activity_Trends,
-                              arguments: 1);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage('res/images/ic_exercise.png'),
-                                    size: 32,
-                                    color: iconColor,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Exercise',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Montserrat')),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    /*Semantics(
-                      label: 'Snacks',
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Nutrition,
-                              arguments: 'snacks');
-                        },
-                        child: Container(
-                          height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_snacks.png'),
-                                  size: 32,
-                                  color: iconColor,
+                    /*Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Semantics(
+                          label: "Stand",
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, RoutePaths.My_Activity_Trends,
+                                  arguments: 1);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(4.0),
+                                      height: 56,
+                                      width: 56,
+                                      decoration: BoxDecoration(
+                                          color: primaryColor,
+                                          border:
+                                              Border.all(color: primaryColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0))),
+                                      child: ImageIcon(
+                                        AssetImage(
+                                            'res/images/ic_stand_activity.png'),
+                                        size: 24,
+                                        color: iconColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Stand',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: 'Montserrat')),
+                                  ],
                                 ),
                               ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Snack',
-                                  style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat')),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),*/
+                        Semantics(
+                          label: 'Steps',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, RoutePaths.My_Activity_Trends,
+                                  arguments: 1);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 56,
+                                      width: 56,
+                                      decoration: BoxDecoration(
+                                          color: primaryColor,
+                                          border:
+                                              Border.all(color: primaryColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0))),
+                                      child: ImageIcon(
+                                        AssetImage('res/images/ic_steps.png'),
+                                        size: 32,
+                                        color: iconColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Steps',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: 'Montserrat')),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Semantics(
+                          label: 'Exercise',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, RoutePaths.My_Activity_Trends,
+                                  arguments: 1);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 56,
+                                      width: 56,
+                                      decoration: BoxDecoration(
+                                          color: primaryColor,
+                                          border:
+                                              Border.all(color: primaryColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0))),
+                                      child: ImageIcon(
+                                        AssetImage(
+                                            'res/images/ic_exercise.png'),
+                                        size: 32,
+                                        color: iconColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Exercise',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: 'Montserrat')),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        */
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Did you add movement to your day today?',
+                            style: TextStyle(
+                                color: textBlack,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Montserrat')),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Semantics(
+                              label: 'Yes, I had movement today.',
+                              button: true,
+                              child: InkWell(
+                                onTap: () {
+                                  recordMyPhysicalActivity(true);
+                                  Navigator.pushNamed(
+                                      context, RoutePaths.My_Activity_Trends,
+                                      arguments: 0);
+                                },
+                                child: ExcludeSemantics(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.thumb_up,
+                                        color: Color(0XFF007E1A),
+                                        size: 36,
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('Yes',
+                                          style: TextStyle(
+                                              color: Color(0XFF007E1A),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Semantics(
+                              label: 'No, I don\'t had any movement today.',
+                              button: true,
+                              child: InkWell(
+                                onTap: () {
+                                  recordMyPhysicalActivity(false);
+                                },
+                                child: ExcludeSemantics(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.thumb_down,
+                                        color: primaryColor,
+                                        size: 36,
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text('No',
+                                          style: TextStyle(
+                                              color: primaryColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              fontFamily: 'Montserrat')),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ],
                 )),
           ],
@@ -2406,7 +2758,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       SizedBox(
                         width: 8,
                       ),
-                      Text('Mental Health Management',
+                      Text('Mental Well-Being',
                           style: TextStyle(
                               color: textColor,
                               fontSize: 14,
@@ -2414,188 +2766,215 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                               fontFamily: 'Montserrat')),
                     ],
                   ),
-                  /*IconButton(
-                      icon: Icon(
-                        Icons.add_circle,
-                        size: 32,
-                        color: iconColor,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InfoOutlinedScreen(
+                        tittle: 'Mental Well-Being Information',
+                        description:
+                        'Practicing meditation or mindfulness may help you manage stress and high blood pressure. It also may help you sleep better, feel more balanced and connected and possibly lower your risk of heart disease.',
+                        height: 240,
+                        infoIconcolor: Colors.grey,
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, RoutePaths.My_Activity,
-                            arguments: '');
-                      })*/
+                      SizedBox(width: 8,),
+                      IconButton(
+                          icon: Icon(
+                            Icons.add_circle,
+                            size: 32,
+                            color: iconColor,
+                            semanticLabel: 'Add mental well-being record'
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
+                                arguments: 0);
+                          }),
+                    ],
+                  )
                 ],
               ),
             ),
             Container(
                 color: primaryLightColor,
                 padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: Stack(
                   children: [
-                    Semantics(
-                      label: 'Sleep',
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.MY_STRESS);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage('res/images/ic_sleep.png'),
-                                    size: 32,
-                                    color: iconColor,
-                                  ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Semantics(
+                          label: 'Sleep',
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                              /*Navigator.pushNamed(
+                                  context, RoutePaths.MY_STRESS);*/
+                              Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
+                                  arguments: 1);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 56,
+                                      width: 56,
+                                      decoration: BoxDecoration(
+                                          color: primaryColor,
+                                          border:
+                                              Border.all(color: primaryColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0))),
+                                      child: ImageIcon(
+                                        AssetImage('res/images/ic_sleep.png'),
+                                        size: 32,
+                                        color: iconColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Sleep',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: 'Montserrat')),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Sleep',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Montserrat')),
-                              ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    Semantics(
-                      label: "Mindfulness",
-                      button: true,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.MY_STRESS);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: ExcludeSemantics(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 56,
-                                  width: 56,
-                                  decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      border: Border.all(color: primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0))),
-                                  child: ImageIcon(
-                                    AssetImage('res/images/ic_medication.png'),
-                                    size: 32,
-                                    color: iconColor,
-                                  ),
+                        Semantics(
+                          label: "Mindfulness",
+                          button: true,
+                          child: InkWell(
+                            onTap: () {
+                             /* Navigator.pushNamed(
+                                  context, RoutePaths.MY_STRESS);*/
+                              Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
+                                  arguments: 1);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: ExcludeSemantics(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 56,
+                                      width: 56,
+                                      decoration: BoxDecoration(
+                                          color: primaryColor,
+                                          border:
+                                              Border.all(color: primaryColor),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0))),
+                                      child: ImageIcon(
+                                        AssetImage(
+                                            'res/images/ic_medication.png'),
+                                        size: 32,
+                                        color: iconColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text('Mindfulness',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: 'Montserrat')),
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text('Mindfulness',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: primaryColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Montserrat')),
-                              ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                        /*Semantics(
+                          label: 'Exercise',
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, RoutePaths.My_Activity);
+                            },
+                            child: Container(
+                              height: 96,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 56,
+                                    width: 56,
+                                    decoration: BoxDecoration(
+                                        color: primaryColor,
+                                        border: Border.all(color: primaryColor),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0))),
+                                    child: ImageIcon(
+                                      AssetImage('res/images/ic_exercise.png'),
+                                      size: 32,
+                                      color: iconColor,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text('Exercise',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: primaryColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'Montserrat')),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),*/
+                        /*Semantics(
+                          label: 'Snacks',
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, RoutePaths.My_Nutrition,
+                                  arguments: 'snacks');
+                            },
+                            child: Container(
+                              height: 96,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 56,
+                                    width: 56,
+                                    decoration: BoxDecoration(
+                                        color: primaryColor,
+                                        border: Border.all(color: primaryColor),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0))),
+                                    child: ImageIcon(
+                                      AssetImage('res/images/ic_snacks.png'),
+                                      size: 32,
+                                      color: iconColor,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text('Snack',
+                                      style: TextStyle(
+                                          color: primaryColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'Montserrat')),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),*/
+                      ],
                     ),
-                    /*Semantics(
-                      label: 'Exercise',
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Activity);
-                        },
-                        child: Container(
-                          height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_exercise.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Exercise',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat')),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),*/
-                    /*Semantics(
-                      label: 'Snacks',
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, RoutePaths.My_Nutrition,
-                              arguments: 'snacks');
-                        },
-                        child: Container(
-                          height: 96,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 56,
-                                width: 56,
-                                decoration: BoxDecoration(
-                                    color: primaryColor,
-                                    border: Border.all(color: primaryColor),
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(12.0))),
-                                child: ImageIcon(
-                                  AssetImage('res/images/ic_snacks.png'),
-                                  size: 32,
-                                  color: iconColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text('Snack',
-                                  style: TextStyle(
-                                      color: primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'Montserrat')),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),*/
                   ],
                 )),
           ],
@@ -2612,6 +2991,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
       );
     }
     showDialog(
+        barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),
@@ -2660,7 +3040,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   getTodaysKnowledgeTopic() async {
     try {
       final KnowledgeTopicResponse knowledgeTopicResponse =
-      await model.getTodaysKnowledgeTopic();
+          await model.getTodaysKnowledgeTopic();
       debugPrint(
           'Today Knowledge Topic ==> ${knowledgeTopicResponse.toJson()}');
       if (knowledgeTopicResponse.status == 'success') {
@@ -2689,7 +3069,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
       map['EmergencyDate'] = dateFormat.format(DateTime.now());
 
       final BaseResponse baseResponse =
-      await model.addMedicalEmergencyEvent(map);
+          await model.addMedicalEmergencyEvent(map);
       debugPrint('Base Response ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         _sharedPrefUtils.save(
@@ -2713,7 +3093,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     try {
       currentMedicationList.clear();
       final GetMyMedicationsResponse getMyMedicationsResponse =
-      await model.getMyMedications(dateFormat.format(DateTime.now()));
+          await model.getMyMedications(dateFormat.format(DateTime.now()));
       debugPrint('Medication ==> ${getMyMedicationsResponse.toJson()}');
       if (getMyMedicationsResponse.status == 'success') {
         debugPrint(
@@ -2752,7 +3132,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
         body['MedicationConsumptionIds'] = medicationIds;
 
         final BaseResponse baseResponse =
-        await model.markAllMedicationsAsTaken(body);
+            await model.markAllMedicationsAsTaken(body);
         debugPrint('Medication ==> ${baseResponse.toJson()}');
         if (baseResponse.status == 'success') {
           //progressDialog.close();
@@ -2774,6 +3154,63 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     }
   }
 
+  recordMyCaloriesConsumed(bool ateHealthyFood) async {
+    try {
+      var list = ['GenericNutrition'];
+
+      final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['FoodTypes'] = list;
+      map['UserResponse'] = ateHealthyFood;
+
+      final BaseResponse baseResponse =
+          await model.recordMyCaloriesConsumed(map);
+      if (baseResponse.status == 'success') {
+        if(ateHealthyFood) {
+          showToast('Yes, most of my food choices were healthy today.', context);
+        }else{
+          showToast('No, most of my food choices were not healthy today.', context);
+        }
+      } else {}
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+    /*catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ==> ' + CustomException.toString());
+    }*/
+  }
+
+  recordMyPhysicalActivity(bool haveYouDoneWithPhysicalActivity) async {
+    try {
+      final map = <String, dynamic>{};
+      map['PatientUserId'] = patientUserId;
+      map['PhysicalActivityQuestionAns'] = haveYouDoneWithPhysicalActivity;
+
+      final BaseResponse baseResponse =
+      await model.recordMyPhysicalHealth(map);
+      if (baseResponse.status == 'success') {
+        if(haveYouDoneWithPhysicalActivity) {
+          //showToast('Yes, I had movement today.', context);
+        }else{
+          showToast('Okay, try to add movement to your day it will help you to stay healthy.', context);
+        }
+      } else {}
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+    /*catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ==> ' + CustomException.toString());
+    }*/
+  }
+
   recordHowAreYouFeeling(int feeling) async {
     try {
       final body = <String, dynamic>{};
@@ -2784,7 +3221,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
       body['SymptomAssessmentId'] = '';
 
       final BaseResponse baseResponse =
-      await model.recordHowAreYouFeeling(body);
+          await model.recordHowAreYouFeeling(body);
       debugPrint('Medication ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         //progressDialog.close();
@@ -2812,8 +3249,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   getSymptomAssesmentTemplete() async {
     try {
       final SearchSymptomAssesmentTempleteResponse
-      searchSymptomAssesmentTempleteResponse =
-      await model.searchSymptomAssesmentTemplete('heart');
+          searchSymptomAssesmentTempleteResponse =
+          await model.searchSymptomAssesmentTemplete('heart');
       debugPrint(
           'Search Symptom Assesment Templete Response ==> ${searchSymptomAssesmentTempleteResponse.toJson()}');
       if (searchSymptomAssesmentTempleteResponse.status == 'success') {

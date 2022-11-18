@@ -506,6 +506,7 @@ class _BookingConfirmedViewState extends State<BookingConfirmedView> {
 
   Future<bool> _onBackPressed() {
     return showDialog(
+        barrierDismissible: false,
       context: context,
           builder: (context) => AlertDialog(
             title: Text('Thank You For Booking'),

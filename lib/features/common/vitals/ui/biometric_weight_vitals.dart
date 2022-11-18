@@ -5,16 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/activity/ui/add_height_cm_dialog.dart';
+import 'package:patient/features/common/activity/ui/add_height_ft_n_Inch_dialog.dart';
 import 'package:patient/features/common/vitals/models/get_my_vitals_history.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/utils/conversion.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
@@ -42,10 +46,14 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   GetHealthData getHealthData = GetIt.instance<GetHealthData>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   double weight = 0;
-  double height = 0;
+  int height = 0;
   double bmiValue = 0;
   String bmiResult = '';
   Color bmiResultColor = Colors.black87;
+  int heightInFt = 1;
+  int heightInInch = 0;
+  String heightInDouble = '0.0';
+  late var heightArry;
 
   @override
   void initState() {
@@ -63,14 +71,36 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
   }
 
   loadSharedPref() async {
-    height = await _sharedPrefUtils.readDouble('height');
+    var heightStored = await _sharedPrefUtils.readDouble('height');
+    debugPrint('Height Stored ==> $heightStored');
+    height = heightStored.toInt();
     weight = await _sharedPrefUtils.readDouble('weight');
 
     debugPrint('Height ==> $height');
 
     if (height != 0.0) {
       debugPrint('Height In ==> $height');
+      conversion();
       calculetBMI();
+    }
+  }
+
+  conversion() {
+    if (height != 0.0) {
+      debugPrint('Conversion Height in cms => $height');
+      heightInDouble = Conversion.cmToFeet(height.toInt());
+      debugPrint('Conversion Height in ft & inch => $heightInDouble');
+      heightArry = heightInDouble.toString().split('.');
+      heightInFt = int.parse(heightArry[0]);
+      heightInInch = int.parse(heightArry[1]);
+
+      if(heightInInch == 12){
+        heightInFt = heightInFt + 1;
+        heightInInch = 0;
+        heightInDouble = heightInFt.toString()+'.0';
+      }
+      calculetBMI();
+      debugPrint('Conversion Height => $heightInFt ft $heightInInch inch');
     }
   }
 
@@ -152,14 +182,14 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              /*const SizedBox(height: 16,),
+                    /*const SizedBox(height: 16,),
                     weightFeilds(),
                     const SizedBox(height: 16,),*/
-              weightHistoryListFeilds(),
-              const SizedBox(
-                height: 16,
-              ),
                     if (records.isEmpty) Container() else graph(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    weightHistoryListFeilds(),
                     //allGoal(),
                     //const SizedBox(height: 16,),
                   ],
@@ -200,6 +230,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     if (Platform.isAndroid) {
       setState(() {});
     }
+
+    announceText('Your recent BMI is ${bmiValue.toStringAsFixed(2)} and your recent BMI status is $bmiResult');
 
     /*new Timer(const Duration(milliseconds: 3000), () {
       setState(() {
@@ -268,6 +300,11 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                                 fontSize: 12.0,
                                 color: textBlack),
                           ),
+                    InfoScreen(
+                        tittle: 'BMI Information',
+                        description:
+                            'BMI stands for Body Mass Index.\nBMI is an indicator of the amount of body fat for most people. It is used as a screening tool to identify whether an adult is at a healthy weight. This is a numerical value of your weight in relation to your height. A BMI between 18.5 and 25 kg/m² indicates a normal weight. A BMI of less than 18.5 kg/m² is considered underweight. A BMI between 25 kg/m² and 29.9 kg/m² is considered overweight. A BMI of 30 kg/m² or higher is considered obese.',
+                        height: 340),
                   ],
                 ),
               ],
@@ -286,10 +323,37 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                       child: ExcludeSemantics(
                         child: InkWell(
                           onTap: () {
-                            showToast("Please add height by clicking on edit",
+                            /*if (getCurrentLocale() == 'US') {
+                              showHeightPickerInFoot(context);
+                            } else {
+                              showHeightPickerCms(context);
+                            }*/
+
+                            if (getCurrentLocale() == 'US') {
+                              showDialog(
+        barrierDismissible: false,
+                                  context: context,
+                                  builder: (_) {
+                                    return _addHeightInFtnInchDialog(context);
+                                  });
+                            } else {
+                              showDialog(
+        barrierDismissible: false,
+                                  context: context,
+                                  builder: (_) {
+                                    return _addHeightInCmDialog(context);
+                                  });
+                            }
+                            /*showDialog(
+        barrierDismissible: false,
+                                context: context,
+                                builder: (_) {
+                                  return _addBMIDetailsDialog(context);
+                                });*/
+                            /*showToast("Please add height by clicking on edit",
                                 context);
                             Navigator.popAndPushNamed(
-                                context, RoutePaths.My_Medical_Profile);
+                                context, RoutePaths.My_Medical_Profile);*/
                           },
                           child: Text(
                             height == 0
@@ -394,11 +458,29 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           const SizedBox(
             height: 16,
           ),
-          Text(
-            'Enter your weight:',
-            style: TextStyle(
-                color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
-            textAlign: TextAlign.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'Enter your weight:',
+                style: TextStyle(
+                    color: textBlack,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+              Expanded(
+                child: InfoScreen(
+                    tittle: 'Weight Information',
+                    description:
+                        'Achieving and maintaining a healthy weight is beneficial in loweing your risk for heart disease and stroke. Please refer to your doctor\'s recommended healthy weight range and frequency of measuring your weight at home.',
+                    height: 240),
+              ),
+            ],
           ),
           const SizedBox(
             height: 16,
@@ -469,8 +551,10 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                 onTap: () {
                   if (_weightController.text.toString().isEmpty) {
                     showToast('Please enter your weight', context);
-                  } else {
+                  } else if(isNumeric(_weightController.text)) {
                     addvitals();
+                  } else{
+                    showToast('Please enter valid input', context);
                   }
                 },
                 child: ExcludeSemantics(
@@ -508,47 +592,63 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     return Container(
       color: colorF6F6FF,
       constraints: BoxConstraints(
-          minHeight: 100, minWidth: double.infinity, maxHeight: 160),
+          minHeight: 160, minWidth: double.infinity, maxHeight: 200),
       padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16, bottom: 16),
       //height: 160,
       child: model.busy
           ? Center(
-        child: CircularProgressIndicator(),
-      )
+              child: CircularProgressIndicator(),
+            )
           : (records.isEmpty
-          ? noHistoryFound()
-          : Column(
-        children: [
-          Padding(
+              ? noHistoryFound()
+              : Column(
+                  children: [
+                    Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Date',
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  'Weight ',
-                  style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Date',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              unit == 'lbs' ? 'Weight\n(lbs)' : 'Weight\n(Kg)',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: ExcludeSemantics(
+                              child: SizedBox(
+                                height: 32,
+                                width: 32,
+                              ),
+                            ),
+                          )
+                        ],
             ),
           ),
           const SizedBox(
-            height: 16,
-          ),
+            height: 8,
+                    ),
           Expanded(
             child: Scrollbar(
               thumbVisibility: true,
@@ -561,8 +661,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                     separatorBuilder:
                         (BuildContext context, int index) {
                       return SizedBox(
-                        height: 8,
-                      );
+                        height: 0,
+                                );
                     },
                     itemCount: records.length,
                     scrollDirection: Axis.vertical,
@@ -597,37 +697,68 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Semantics(
-              child: Text(
-                dateFormatStandard.format(
-                    records.elementAt(index).recordDate == null
-                        ? DateTime.now()
-                        : DateTime.parse(records.elementAt(index).recordDate!)),
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+            Expanded(
+              flex: 3,
+              child: Semantics(
+                child: Text(
+                  dateFormatStandard.format(records
+                              .elementAt(index)
+                              .recordDate ==
+                          null
+                      ? DateTime.now()
+                      : DateTime.parse(records.elementAt(index).recordDate!)),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
-            Semantics(
-              label: 'Weight ',
-              readOnly: true,
-              child: Text(
-                unit == 'lbs'
-                    ? (double.parse(record.bodyWeight.toString()) * 2.20462)
-                            .toStringAsFixed(1) +
-                        ' lbs'
-                    : record.bodyWeight.toStringAsFixed(1) + ' Kgs',
-                style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+            Expanded(
+              flex: 2,
+              child: Semantics(
+                label: 'Weight ',
+                readOnly: true,
+                child: Text(
+                  unit == 'lbs'
+                      ? (double.parse(record.bodyWeight.toString()) * 2.20462)
+                          .toStringAsFixed(1)
+                      : record.bodyWeight.toString(),
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300),
+                  maxLines: 1,
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
+            IconButton(
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(),
+                onPressed: () {
+                  ConfirmationBottomSheet(
+                      context: context,
+                      height: 180,
+                      onPositiveButtonClickListner: () {
+                        //debugPrint('Positive Button Click');
+                        deleteVitals(record.id.toString());
+                      },
+                      onNegativeButtonClickListner: () {
+                        //debugPrint('Negative Button Click');
+                      },
+                      question: 'Are you sure you want to delete this record?',
+                      tittle: 'Alert!');
+                },
+                icon: Icon(
+                  Icons.delete_rounded,
+                  color: primaryColor,
+                  size: 24,
+                  semanticLabel: 'Weight Delete',
+                ))
           ],
         ),
       ),
@@ -853,6 +984,79 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
     );
   }
 
+  /* Widget _addBMIDetailsDialog(BuildContext context) {
+    return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        //child: addOrEditAllergiesDialog(context),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 240,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Height',
+                        semanticsLabel: 'Height',
+                        style: TextStyle(
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                            fontSize: 18.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    alignment: Alignment.topRight,
+                    icon: Icon(
+                      Icons.close,
+                      color: primaryColor,
+                      semanticLabel: 'Close',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: AddHeightDialog(
+                  submitButtonListner: (double height) {
+                    _sharedPrefUtils.saveDouble('height', height);
+                    this.height = height;
+                    showToast('Height record created successfully!', context);
+                    calculetBMI();
+                    debugPrint('Height : $height');
+                    Navigator.of(context, rootNavigator: true).pop();
+                    setState(() {});
+                  },
+                  height: height.toInt(),
+                ),
+              )
+            ],
+          ),
+        ));
+  }*/
+
   addvitals() async {
     try {
       progressDialog.show(max: 100, msg: 'Loading...');
@@ -875,10 +1079,40 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
+        _weightController.clear();
         _sharedPrefUtils.saveDouble(
             'weight', double.parse(entertedWeight.toString()));
         showToast(baseResponse.message!, context);
-        Navigator.pop(context);
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
+      } else {
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      progressDialog.close();
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  deleteVitals(String recordId) async {
+    try {
+      progressDialog.show(max: 100, msg: 'Loading...');
+
+      final BaseResponse baseResponse =
+          await model.deleteVitalsRecord('body-weights', recordId);
+
+      if (baseResponse.status == 'success') {
+        if (progressDialog.isOpen()) {
+          progressDialog.close();
+        }
+        showToast(baseResponse.message!, context);
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
       } else {
         progressDialog.close();
         showToast(baseResponse.message!, context);
@@ -902,6 +1136,9 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         if (records.isNotEmpty) {
           weight = double.parse(records.elementAt(0).bodyWeight.toString());
           _sharedPrefUtils.saveDouble('weight', weight);
+        } else {
+          weight = 0.0;
+          _sharedPrefUtils.saveDouble('weight', weight);
         }
         if (height != 0) {
           debugPrint('Inside');
@@ -915,5 +1152,247 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
+  }
+
+/*  showHeightPickerInFoot(BuildContext context) {
+    Picker(
+        adapter: NumberPickerAdapter(data: [
+          NumberPickerColumn(
+            begin: 1,
+            end: 9,
+            initValue: heightInFt,
+            suffix: Text('  ft'),
+          ),
+          NumberPickerColumn(
+            begin: 0,
+            end: 11,
+            initValue: heightInInch,
+            suffix: Text('  inch'),
+          ),
+        ]),
+        delimiter: [
+          PickerDelimiter(
+              child: Container(
+            width: 30.0,
+            alignment: Alignment.center,
+            child: Icon(Icons.more_vert),
+          ))
+        ],
+        hideHeader: true,
+        title: Center(
+            child: Text(
+          " Height",
+          style: TextStyle(
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w600,
+              color: primaryColor,
+              fontSize: 18.0),
+          textAlign: TextAlign.center,
+        )),
+        selectedTextStyle: TextStyle(color: Colors.blue),
+        onConfirm: (Picker picker, List value) {
+          var localHeight = Conversion.FeetAndInchToCm(
+              picker.getSelectedValues().elementAt(0),
+              picker.getSelectedValues().elementAt(1));
+          _sharedPrefUtils.saveDouble('height', double.parse(localHeight));
+          height = int.parse(localHeight);
+          conversion();
+          calculetBMI();
+          debugPrint('Selected Height ==> $localHeight');
+          setState(() {
+            showToast('Height record created successfully!', context);
+          });
+        }).showDialog(
+        barrierDismissible: false,context);
+  }
+
+  showHeightPickerCms(BuildContext context) {
+    Picker(
+        adapter: NumberPickerAdapter(data: [
+          NumberPickerColumn(
+            begin: 1,
+            end: 250,
+            initValue: height.toInt(),
+            suffix: Text('  cm'),
+          ),
+        ]),
+        hideHeader: true,
+        title: Center(
+            child: Text(
+          " Height",
+          style: TextStyle(
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w600,
+              color: primaryColor,
+              fontSize: 18.0),
+          textAlign: TextAlign.center,
+        )),
+        selectedTextStyle: TextStyle(color: Colors.blue),
+        onConfirm: (Picker picker, List value) {
+          var localHeight =
+              double.parse(picker.getSelectedValues().elementAt(0).toString());
+          _sharedPrefUtils.saveDouble('height', localHeight);
+          height = localHeight.toInt();
+          conversion();
+          calculetBMI();
+          debugPrint('Selected Height ==> $localHeight');
+          setState(() {
+            showToast('Height record created successfully!', context);
+          });
+        }).showDialog(context);
+  }*/
+
+  Widget _addHeightInFtnInchDialog(BuildContext context) {
+    return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        //child: addOrEditAllergiesDialog(context),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 240,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Height',
+                        semanticsLabel: 'Height',
+                        style: TextStyle(
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                            fontSize: 18.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    alignment: Alignment.topRight,
+                    icon: Icon(
+                      Icons.close,
+                      color: primaryColor,
+                      semanticLabel: 'Close',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: AddHeightInFtNInchDialog(
+                  submitButtonListner: (int heightInFeet, int heightInInches) {
+                    var localHeight = Conversion.FeetAndInchToCm(
+                        heightInFeet,
+                        heightInInches);
+                    _sharedPrefUtils.saveDouble('height', double.parse(localHeight));
+                    height = int.parse(localHeight);
+                    conversion();
+                    debugPrint('Selected Height ==> $localHeight');
+                    setState(() {
+                      showToast('Height record created successfully!', context);
+                    });
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  heightInFeet: heightInFt,
+                  heightInInches: heightInInch,
+                ),
+              )
+            ],
+          ),
+        ));
+  }
+
+  Widget _addHeightInCmDialog(BuildContext context) {
+    return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        //child: addOrEditAllergiesDialog(context),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 240,
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ExcludeSemantics(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Height',
+                        semanticsLabel: 'Height',
+                        style: TextStyle(
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                            fontSize: 18.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    alignment: Alignment.topRight,
+                    icon: Icon(
+                      Icons.close,
+                      color: primaryColor,
+                      semanticLabel: 'Close',
+                    ),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: AddHeightInCmDialog(
+                  submitButtonListner: (int heightInCm) {
+                    var localHeight =
+                    double.parse(heightInCm.toString());
+                    _sharedPrefUtils.saveDouble('height', localHeight);
+                    height = localHeight.toInt();
+                    conversion();
+                    debugPrint('Selected Height ==> $localHeight');
+                    setState(() {
+                      showToast('Height record created successfully!', context);
+                    });
+                    Navigator.of(context, rootNavigator: true).pop();
+                  },
+                  heightInCm: height.toInt(),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }

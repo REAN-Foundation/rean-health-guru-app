@@ -11,6 +11,8 @@ import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class MyCurrentMedicationView extends StatefulWidget {
@@ -58,6 +60,8 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       if (medicationList.elementAt(i).endDate!.isAfter(DateTime.now())) {
         currentMedicationList.add(medicationList.elementAt(i));
         debugPrint('End Data ==> ${medicationList.elementAt(i).endDate}');
+      } else if (medicationList.elementAt(i).frequencyUnit == 'Other') {
+        currentMedicationList.add(medicationList.elementAt(i));
       }
     }
     setState(() {});
@@ -73,7 +77,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
             key: _scaffoldKey,
             backgroundColor: Colors.white,
             body: Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(8.0),
               child: model!.busy
                   ? Center(
                       child: SizedBox(
@@ -97,7 +101,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   ),
                   backgroundColor: primaryColor,
                   onPressed: () {
-                    Navigator.pushNamed(context, RoutePaths.ADD_MY_MEDICATION)
+                    Navigator.pushNamed(context, RoutePaths.ADD_MY_MEDICATION, arguments: 'Medication')
                         .then((value) {
                       getMyMedications();
                     });
@@ -109,12 +113,25 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
 
   Widget noMedicationFound() {
     return Center(
-      child: Text('No medication added',
-          style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 14,
-              fontFamily: 'Montserrat',
-              color: primaryColor)),
+      child: Container(
+        height: 40,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('No medications added',
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    fontFamily: 'Montserrat',
+                    color: primaryColor)),
+            InfoScreen(
+                tittle: 'Medications Information',
+                description: 'Add your medications by pressing the + sign.',
+                height: 180)
+          ],
+        ),
+      ),
     );
   }
 
@@ -145,6 +162,8 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
             border: Border.all(color: primaryColor, width: 0.8),
             borderRadius: BorderRadius.all(Radius.circular(8.0))),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
               flex: 9,
@@ -152,19 +171,44 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Semantics(
-                    child: Text(medication.drugName!,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: primaryColor)),
+                  Row(
+                    children: [
+                      medication.imageResourceId != null
+                          ? Container(
+                        height: 24,
+                        width: 24,
+                        child: Semantics(
+                          label: 'Medication ',
+                          child: CachedNetworkImage(
+                            imageUrl: apiProvider!.getBaseUrl()! +
+                                '/file-resources/' +
+                                medication.imageResourceId! +
+                                '/download-by-version-name/1',
+                          ),
+                        ),
+                      )
+                          : Container(),
+                      SizedBox(width: 8,),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 124,
+                        child: Semantics(
+                            child: Text(medication.drugName!,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: primaryColor)),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   Text(
-                      medication.dose.toString() + ' ' + medication.dosageUnit!,
+                      medication.dose.toString() +
+                          ' ' +
+                          medication.dosageUnit!,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -174,7 +218,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   const SizedBox(
                     height: 8,
                   ),
-                  Text(
+                  Text(medication.frequencyUnit.toString() == "Other" ? medication.frequencyUnit.toString() :
                       medication.frequencyUnit.toString() +
                           ' - ' +
                           medication.timeSchedules!.join(', '),
@@ -194,8 +238,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                           fontSize: 14,
                           fontWeight: FontWeight.w300,
                           color: Colors.grey)),
-                  Text(
-                      medication.instructions ?? ' ',
+                  Text(medication.instructions ?? ' ',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -206,21 +249,40 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                 ],
               ),
             ),
-            if (medication.imageResourceId != null)
-              Expanded(
-                flex: 1,
-                child: Semantics(
-                  label: 'Medication ',
-                  child: CachedNetworkImage(
-                    imageUrl: apiProvider!.getBaseUrl()! +
-                        '/file-resources/' +
-                        medication.imageResourceId! +
-                        '/download-by-version-name/1',
-                  ),
-                ),
-              )
-            else
-              Container(),
+            Expanded(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  IconButton(
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(),
+                      onPressed: () {
+                        ConfirmationBottomSheet(
+                            context: context,
+                            height: 180,
+                            onPositiveButtonClickListner: () {
+                              //debugPrint('Positive Button Click');
+                              deleteMedication(medication.id.toString());
+                            },
+                            onNegativeButtonClickListner: () {
+                              //debugPrint('Negative Button Click');
+                            },
+                            question:
+                            'Are you sure you want to delete this medication?',
+                            tittle: 'Alert!');
+                      },
+                      icon: Icon(
+                        Icons.delete_rounded,
+                        color: primaryColor,
+                        size: 24,
+                        semanticLabel: medication.drugName! + ' Delete',
+                      )),
+
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -442,6 +504,32 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
+  deleteMedication(String recordId) async {
+    try {
+      progressDialog.show(max: 100, msg: 'Loading...');
+
+      final BaseResponse baseResponse = await model.deleteMedication(recordId);
+
+      if (baseResponse.status == 'success') {
+        if (progressDialog.isOpen()) {
+          progressDialog.close();
+        }
+        showToast(baseResponse.message!, context);
+        //Navigator.pop(context);
+        getMyMedications();
+        model.setBusy(true);
+      } else {
+        progressDialog.close();
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      progressDialog.close();
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 }

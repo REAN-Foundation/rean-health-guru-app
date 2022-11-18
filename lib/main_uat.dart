@@ -21,7 +21,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool? login = prefs.getBool('login1.8.81');
+  bool? login = prefs.getBool('login1.8.167');
   login ??= false;
   runApp(MyApp(login));
 }
@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
     this.isLogin = isLogin;
     setSessionFlag(isLogin);
     setBaseUrl(_baseUrl);
+    setAppFlavour('RHG-UAT');
     GetIt.instance.registerSingleton<ApiProvider>(ApiProvider(_baseUrl));
     GetIt.instance
         .registerSingleton<ChatApiProvider>(ChatApiProvider(_botBaseUrl));

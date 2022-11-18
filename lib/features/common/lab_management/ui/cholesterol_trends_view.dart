@@ -8,6 +8,7 @@ import 'package:patient/features/common/lab_management/ui/lipid_profile_total_ch
 import 'package:patient/features/common/lab_management/ui/lipid_profile_triglycerides.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 
 import '../../../misc/ui/base_widget.dart';
 
@@ -42,15 +43,15 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
+                        totalCholesterolTrends(),
+                        const SizedBox(
+                          height: 8,
+                        ),
                         ldlTrends(),
                         const SizedBox(
                           height: 8,
                         ),
                         hdlTrends(),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        totalCholesterolTrends(),
                         const SizedBox(
                           height: 8,
                         ),
@@ -62,10 +63,10 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                         const SizedBox(
                           height: 8,
                         ),
-                        ratioTrends(),
+                        /*ratioTrends(),
                         const SizedBox(
                           height: 32,
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
@@ -100,6 +101,16 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                       fontWeight: FontWeight.w600,
                       fontSize: 14),
                   textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'LDL Information',
+                      description:
+                          'LDL = BAD: Low-density lipoprotein is known as “bad” cholesterol.',
+                      height: 200),
                 ),
               ],
             ),
@@ -141,6 +152,16 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'HDL Information',
+                      description:
+                          'HDL = GOOD: High-density lipoprotein is known as “good” cholesterol.',
+                      height: 208),
+                ),
               ],
             ),
             const SizedBox(
@@ -181,6 +202,16 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                       fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Total Cholesterol Information',
+                      description:
+                          'Your total blood cholesterol is calculated by adding your HDL and LDL cholesterol levels, plus 20% of your triglyceride level. “Normal ranges” are less important than your overall cardiovascular risk. Like HDL and LDL cholesterol levels, your total blood cholesterol level should be considered in context with your other known risk factors. All adults age 20 or older should have their cholesterol (and other traditional risk factors) checked every four to six years. If certain factors put you at high risk, or if you already have heart disease, your doctor may ask you to check it more often. Work with your doctor to determine your risk for cardiovascular disease and stroke and create a plan to reduce your risk.',
+                      height: 420),
+                ),
               ],
             ),
             const SizedBox(
@@ -214,12 +245,22 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                   width: 8,
                 ),
                 Text(
-                  'Triglycerieds',
+                  'Triglycerides',
                   style: TextStyle(
                       color: textBlack,
                       fontWeight: FontWeight.w600,
                       fontSize: 14),
                   textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Triglycerides Information',
+                      description:
+                          'Triglycerides: The most common type of fat in the body.',
+                      height: 200),
                 ),
               ],
             ),
@@ -260,6 +301,12 @@ class _CholesterolTrendViewState extends State<CholesterolTrendView> {
                       fontWeight: FontWeight.w600,
                       fontSize: 14),
                   textAlign: TextAlign.center,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'A1C Level Information',
+                      description: "HbA1C (A1C or glycosylated hemoglobin test). The A1C test can diagnose prediabetes and diabetes. It measures your average blood glucose control for the past two to three months. Blood sugar is measured by the amount of glycosylated hemoglobin (A1C) in your blood. An A1C of 5.7% to 6.4% means that you have prediabetes, and you're at high risk for developing diabetes. Diabetes is diagnosed when the A1C is 6.5% or higher.",
+                      height: 320)
                 ),
               ],
             ),

@@ -22,10 +22,13 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool? login = prefs.getBool('login1.8.81');
+  bool? login = prefs.getBool('login1.8.167');
   login ??= false;
   primaryColor = Color(0XFFc10e21);
   primaryLightColor = Color(0XFFFFFFFF);
+  primaryExtraLightColor =  Color(0XFFFF8B90);
+  String? sponsor = prefs.getString('Sponsor');
+  setSponsor(sponsor??'');
   runApp(MyApp(login));
 }
 
@@ -60,7 +63,8 @@ class MyApp extends StatelessWidget {
     this.isLogin = isLogin;
     setSessionFlag(isLogin);
     setAppType('AHA');
-    setAppName('Lipid Helper');
+    setAppName('Heart & Stroke Helper™ ');
+    setAppFlavour('Heart & Stroke Helper™ ');
     setBaseUrl(_baseUrl);
     GetIt.instance.registerSingleton<ApiProvider>(ApiProvider(_baseUrl));
     GetIt.instance
@@ -81,7 +85,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: providers,
       child: MaterialApp(
-        title: 'Lipid Helper',
+        title: 'Heart & Stroke Helper™ ',
         showSemanticsDebugger: false,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(primarySwatch: colorCustom, fontFamily: 'Montserrat'),

@@ -7,12 +7,14 @@ import 'package:get_it/get_it.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:package_info/package_info.dart';
+import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/user_data.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/ui/create_profile_view.dart';
 import 'package:patient/features/misc/ui/home_view.dart';
+import 'package:patient/features/misc/ui/welcome.dart';
 import 'package:patient/features/misc/view_models/login_view_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
@@ -42,6 +44,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
   String? _fcmToken = '';
   bool loginOTP = false;
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
+  OtpFieldController otpController = OtpFieldController();
 
   @override
   void initState() {
@@ -228,6 +231,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
             height: 8,
           ),
           OTPTextField(
+            controller: otpController,
+            contentPadding: const EdgeInsets.symmetric(vertical: 16.0),
             length: 6,
             width: MediaQuery.of(context).size.width,
             fieldWidth: 40,
@@ -372,11 +377,14 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         showToast(
             'One-time PIN has been successfully sent on your mobile number',
             context);
-        model.setBusy(false);
-      } else {
-        model.setBusy(false);
-        showToast(doctorListApiResponse.message!, context);
+        otpController.clear();
+        otpController.setFocus(0);
         setState(() {});
+        //model.setBusy(false);
+      } else {
+        //model.setBusy(false);
+        showToast(doctorListApiResponse.message!, context);
+        /*setState(() {});*/
       }
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -407,8 +415,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
         body['OSType'] = 'iOS';
         body['OSVersion'] = Platform.operatingSystemVersion;
       }
-      body['AppName'] =
-          getAppType() == "AHA" ? getAppType() : "REAN HealthGuru";
+      body['AppName'] = getAppName();
       body['AppVersion'] = _packageInfo.version;
 
       final response = await apiProvider!
@@ -450,12 +457,13 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       if (userData.status == 'success') {
         _sharedPrefUtils.save('user', userData.toJson());
         if (userData.data!.isProfileComplete!) {
-          /* _sharedPrefUtils.saveBoolean("login1.8.81", true);
+          /* _sharedPrefUtils.saveBoolean("login1.8.167", true);
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
                 return HomeView(0);
               }), (Route<dynamic> route) => false);*/
-
+          getCarePlan(
+              model, userData.data!.accessToken!, userData.data!.user!.id!);
           getPatientDetails(
               model, userData.data!.accessToken!, userData.data!.user!.id!);
           userDiviceData(
@@ -480,6 +488,28 @@ class _OTPScreenViewState extends State<OTPScreenView> {
     }
   }
 
+ getCarePlan(LoginViewModel model, String auth, String userId) async {
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth;
+
+    final response = await apiProvider!.get(
+        '/care-plans/patients/' + userId + '/enrollments',
+        header: map);
+    // Convert and return
+    GetCarePlanEnrollmentForPatient carePlanEnrollmentForPatient =  GetCarePlanEnrollmentForPatient.fromJson(response);
+
+    if (carePlanEnrollmentForPatient.status == 'success') {
+      if (carePlanEnrollmentForPatient.data!.patientEnrollments!.isNotEmpty) {
+        carePlanEnrollmentForPatientGlobe = carePlanEnrollmentForPatient;
+      }else{
+        carePlanEnrollmentForPatientGlobe = null;
+      }
+      /*_sharedPrefUtils.save(
+          'CarePlan', carePlanEnrollmentForPatient.toJson());*/
+    }
+  }
+
   getPatientDetails(LoginViewModel model, String auth, String userId) async {
     try {
       //ApiProvider apiProvider = new ApiProvider();
@@ -496,17 +526,26 @@ class _OTPScreenViewState extends State<OTPScreenView> {
 
       if (doctorListApiResponse.status == 'success') {
         if (getAppType() == 'AHA') {
-          showToast('Welcome to ' + getAppName(), context);
+          if(getAppName() != 'Heart & Stroke Helper™ ') {
+            showToast('Welcome to ' + getAppName(), context);
+          }
         } else {
           showToast('Welcome to REAN HealthGuru', context);
         }
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
-        _sharedPrefUtils.saveBoolean('login1.8.81', true);
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) {
-          return HomeView(0);
-        }), (Route<dynamic> route) => false);
+        _sharedPrefUtils.saveBoolean('login1.8.167', true);
+        if(getAppName() == 'Heart & Stroke Helper™ ') {
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) {
+                return Welcome();
+              }), (Route<dynamic> route) => false);
+        }else{
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) {
+                return HomeView(0);
+              }), (Route<dynamic> route) => false);
+        }
         model.setBusy(false);
       } else {
         model.setBusy(false);

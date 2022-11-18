@@ -2,7 +2,7 @@ default_platform :ios
 
 platform :ios do
   before_all do
-    xcversion(version: "13.1")
+    xcversion(version: "~> 13.1")
     setup_ci
   end
 
@@ -172,7 +172,7 @@ platform :ios do
   end
 
   lane :upload_build_to_testflight_rf do |options|
-    upload_build_to_testflight(flavorId: options[:flavor] , mode: options[:mode], app_store_app_id:"1569585646", flavor: options[:flavor], changelog: "ReanCare Patient Test Build", description: "REAN Care Patient")
+    upload_build_to_testflight(flavorId: options[:flavor] , mode: options[:mode], app_store_app_id:"1569585646", flavor: options[:flavor], changelog: "REAN HealthGuru Test Build", description: "REAN Care Patient")
   end
 
   lane :upload_build_to_testflight_aha do |options|
@@ -185,9 +185,9 @@ platform :ios do
 
   lane :upload_build_to_testflight_aha_chol do |options|
     if options[:flavor]["_"]
-      upload_build_to_testflight(flavorId: options[:flavor].partition('_').last , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog: "Lipid Helper Test Build", description: "Lipid Helper")
+      upload_build_to_testflight(flavorId: options[:flavor].partition('_').last , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog: "Heart & Stroke Helper Test Build", description: "Heart & Stroke Helper")
     else
-      upload_build_to_testflight(flavorId: options[:flavor] , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog: "Lipid Helper Build", description: "Lipid Helper")
+      upload_build_to_testflight(flavorId: options[:flavor] , mode: options[:mode] , app_store_app_id:"1595805024", flavor: options[:flavor], changelog: "Heart & Stroke Helper Build", description: "Heart & Stroke Helper")
     end
   end
 
@@ -226,14 +226,26 @@ platform :ios do
     )
   end
 
-  desc "Submit to App Store RF"
-  lane :submit_beta_to_app_store_rf do
+  lane :submit_beta_to_app_store_aha do |options|
+    submit_beta_to_app_store(app_identifier: "org.heart.hfpatient", metadata_path: "./fastlane/metadata/aha_prod")
+  end
+  
+  lane :submit_beta_to_app_store_aha_chol do |options|
+    submit_beta_to_app_store(app_identifier: "org.heart.lipidhelper", metadata_path: "./fastlane/metadata/aha_prod_chol")
+  end
+
+  lane :submit_beta_to_app_store_rf do |options|
+    submit_beta_to_app_store(app_identifier: "org.reanfoundation.patient", metadata_path: "./fastlane/metadata/rf_prod")
+  end
+
+  desc "Submit to App Store"
+  lane :submit_beta_to_app_store do |options|
     latest_testflight_build_number(
       api_key: get_api_key,
-      app_identifier: "org.reanfoundation.patient"
+      app_identifier: options[:app_identifier]
     )
     upload_to_app_store(
-      app_identifier: "org.reanfoundation.patient",
+      app_identifier: options[:app_identifier],
       precheck_include_in_app_purchases: false,
       submit_for_review: true,
       skip_binary_upload: true,
@@ -241,7 +253,7 @@ platform :ios do
       skip_metadata: false,
       force: true, # Skip HTMl report verification
       skip_screenshots: true,
-      metadata_path: "./fastlane/metadata/rf_prod",
+      metadata_path: options[:metadata_path],
       platform: "ios",
       submission_information: {
         add_id_info_uses_idfa: false,
@@ -254,35 +266,5 @@ platform :ios do
       app_version: lane_context[SharedValues::LATEST_TESTFLIGHT_VERSION],
     )
   end
-
-  desc "Submit to App Store AHA"
-  lane :submit_beta_to_app_store_aha do
-    latest_testflight_build_number(
-      api_key: get_api_key,
-      app_identifier: "org.heart.hfpatient"
-    )
-    upload_to_app_store(
-      app_identifier: "org.heart.hfpatient",
-      precheck_include_in_app_purchases: false,
-      submit_for_review: true,
-      skip_binary_upload: true,
-      automatic_release: true,
-      skip_metadata: false,
-      force: true, # Skip HTMl report verification
-      skip_screenshots: true,
-      platform: "ios",
-      metadata_path: "./fastlane/metadata/aha_prod",
-      submission_information: {
-        add_id_info_uses_idfa: false,
-        add_id_info_serves_ads: false,
-        add_id_info_tracks_install: false,
-        add_id_info_tracks_action: false,
-        add_id_info_limits_tracking: false
-      },
-      api_key: get_api_key,
-      app_version: lane_context[SharedValues::LATEST_TESTFLIGHT_VERSION],
-    )
-  end
-
 
 end

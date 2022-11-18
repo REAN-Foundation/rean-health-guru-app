@@ -1,22 +1,29 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:patient/features/common/appointment_booking/models/doctor_list_api_response.dart';
 import 'package:patient/features/common/emergency/models/emergency_contact_response.dart';
+import 'package:patient/features/common/emergency/models/health_syetem_hospital_pojo.dart';
+import 'package:patient/features/common/emergency/models/health_system_pojo.dart';
 import 'package:patient/features/common/emergency/ui/add_doctor_details_dialog.dart';
 import 'package:patient/features/common/emergency/ui/add_family_member_dialog.dart';
 import 'package:patient/features/common/emergency/ui/add_nurse_dialog.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/dashboard_tile.dart';
+import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/features/misc/view_models/common_config_model.dart';
+import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EmergencyContactView extends StatefulWidget {
@@ -41,6 +48,10 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   Color iconColor = Colors.white;
   Color textColor = Colors.white;
   var emergencyDetailsTextControler = TextEditingController();
+  var healthSystemList = <String>[];
+  var healthSystemHospitalList = <String>[];
+  List<HealthSystems>? _healthSystems;
+  ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
 
   getEmergencyTeam() async {
     try {
@@ -57,6 +68,50 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         _sortTeamMembers(emergencyContactResponse);
       } else {
         showToast(emergencyContactResponse.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+  }
+
+  getHealthSystem() async {
+    try {
+      healthSystemList.clear();
+      final HealthSystemPojo healthSystemPojo =
+      await model.getHealthSystem();
+
+      if (healthSystemPojo.status == 'success') {
+        _healthSystems = healthSystemPojo.data!.healthSystems;
+        for(int i = 0 ; i < healthSystemPojo.data!.healthSystems!.length ; i++ ){
+          healthSystemList.add(healthSystemPojo.data!.healthSystems![i].name.toString());
+        }
+        setState(() {});
+      } else {
+        showToast(healthSystemPojo.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+  }
+
+  getHealthSystemHospital(String healthSystemId) async {
+    try {
+      healthSystemHospitalList.clear();
+      final HealthSyetemHospitalPojo systemHospitals =
+      await model.getHealthSystemHospital(healthSystemId);
+
+      if (systemHospitals.status == 'success') {
+
+        for(int i = 0 ; i < systemHospitals.data!.healthSystemHospitals!.length ; i++ ){
+          healthSystemHospitalList.add(systemHospitals.data!.healthSystemHospitals![i].name.toString());
+        }
+        setState(() {});
+      } else {
+        showToast(systemHospitals.message!, context);
       }
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
@@ -92,14 +147,19 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
     }
-    /*catch (Excepetion) {
+    catch (Excepetion) {
       // do something
-      debugPrint(Excepetion.toString());
-    }*/
+      emergencyDashboardTile = null;
+      debugPrint('error caught : ${Excepetion.toString()}');
+      setState(() {
+
+      });
+    }
   }
 
   @override
   void initState() {
+    getHealthSystem();
     loadSharedPrefs();
     getEmergencyTeam();
     super.initState();
@@ -122,15 +182,49 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   emergency(),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      'Emergency Contact ',
-                      style: TextStyle(
-                          color: primaryColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16),
-                    ),
+
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, top: 16, bottom: 16),
+                        child: Text(
+                          'Health System ',
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16),
+                        ),
+                      ),
+                      Expanded(
+                        child: InfoScreen(
+                            tittle: 'Health System Information',
+                            description: "Select your health system details here.",
+                            height: 180),
+                      ),
+                      SizedBox(width: 8,),
+                    ],
+                  ),
+                  healthSystem(),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, top: 16, bottom: 16),
+                        child: Text(
+                          'Emergency Contact ',
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16),
+                        ),
+                      ),
+                      Expanded(
+                        child: InfoScreen(
+                            tittle: 'Emergency Contact Information',
+                            description: "Add details of your emergency contact here.",
+                            height: 180),
+                      ),
+                      SizedBox(width: 8,),
+                    ],
                   ),
                   sectionHeader('Doctors'),
                   if (model!.busy)
@@ -192,6 +286,120 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     );
   }
 
+  Widget healthSystem(){
+    debugPrint('Health System Globe ==> $healthSystemGlobe');
+    debugPrint('Health System Hospital Globe ==> $healthSystemHospitalGlobe');
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Select Health System',
+            style: TextStyle(
+                color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                      border: Border.all(color: primaryColor, width: 0.80),
+                      color: Colors.white),
+                  child: Semantics(
+                    label: 'Select Health System',
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      value: healthSystemGlobe,
+                      items: healthSystemList.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      hint: Text(healthSystemGlobe ?? 'Choose an option'),
+                      onChanged: (data) {
+                        debugPrint(data);
+                        setState(() {
+                          healthSystemGlobe = data.toString();
+                          healthSystemHospitalGlobe = null;
+                        });
+                        for(int i = 0 ; i < _healthSystems!.length ; i++ ){
+                          if(_healthSystems![i].name.toString() == data){
+                           getHealthSystemHospital(_healthSystems![i].id.toString());
+                          }
+                        }
+
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16,),
+          Text(
+            'Select Hospital',
+            style: TextStyle(
+                color: textBlack, fontSize: 16, fontWeight: FontWeight.w700),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                      border: Border.all(color: primaryColor, width: 0.80),
+                      color: Colors.white),
+                  child: Semantics(
+                    label: 'Select Hospital',
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      value: healthSystemHospitalGlobe,
+                      items: healthSystemHospitalList.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value, maxLines: 2, overflow: TextOverflow.ellipsis,),
+                        );
+                      }).toList(),
+                      hint: Text(healthSystemHospitalGlobe ?? 'Choose an option', maxLines: 2, overflow: TextOverflow.ellipsis,),
+                      onChanged: (data) {
+                        debugPrint(data);
+                        setState(() {
+                          healthSystemHospitalGlobe = data.toString();
+                        });
+                        setState(() {});
+                        updateHospitalSystem();
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+
   Widget emergency() {
     String? discription = '';
 
@@ -241,7 +449,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   SizedBox(
                     width: 12,
                   ),
-                  Text('Did you have an emergency?',
+                  Text('Have you been hospitalized?',
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
@@ -295,23 +503,56 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                     fontWeight: FontWeight.w500,
                                     fontFamily: 'Montserrat')),
                           ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.edit,
-                              size: 24,
-                              color: primaryColor,
-                              semanticLabel: 'edit emergency text',
-                            ),
-                            onPressed: () {
-                              _emergencyDetailDialog(true);
-                            },
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                constraints: BoxConstraints(),
+                                icon: Icon(
+                                  Icons.edit,
+                                  size: 24,
+                                  color: primaryColor,
+                                  semanticLabel: 'edit hospitalization details',
+                                ),
+                                onPressed: () {
+                                  _emergencyDetailDialog(true);
+                                },
+                              ),
+                              SizedBox(height: 16,),
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                constraints: BoxConstraints(),
+                                icon: Icon(
+                                  Icons.delete,
+                                  size: 24,
+                                  color: primaryColor,
+                                  semanticLabel: 'delete hospitalization details',
+                                ),
+                                onPressed: () {
+                                  ConfirmationBottomSheet(
+                                      context: context,
+                                      height: 180,
+                                      onPositiveButtonClickListner: () {
+                                        deleteMedicalEmergencyEvent();
+                                        //debugPrint('Positive Button Click');
+                                      },
+                                      onNegativeButtonClickListner: () {
+                                        //debugPrint('Negative Button Click');
+                                      },
+                                      question: 'Are you sure you want to delete this record?',
+                                      tittle: 'Alert!');
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     )
                   else
                     Semantics(
-                      label: 'Yes, I had an emergency',
+                      label: 'Yes, I have been hospitalized',
                       button: true,
                       child: ExcludeSemantics(
                         child: InkWell(
@@ -360,26 +601,42 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       );
     }
     showDialog(
+        barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),
         content: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Semantics(
-            label: 'updateEmergencyText',
-            child: TextField(
-              controller: emergencyDetailsTextControler,
-              autofocus: true,
-              style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontStyle: FontStyle.normal,
-                  fontSize: 16.0,
-                  color: Colors.black),
-              decoration: InputDecoration(
-                  labelStyle: TextStyle(fontSize: 16),
-                  labelText: 'Enter emergency details',
-                  hintText: ''),
-            ),
+          height: 90,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Enter your hospitalization details\n(Date & Reason)',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Montserrat')),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 2),
+                child: Semantics(
+                  child: TextField(
+                    controller: emergencyDetailsTextControler,
+                    autofocus: true,
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16.0,
+                        color: Colors.black),
+                    decoration: InputDecoration(
+                        labelStyle: TextStyle(fontSize: 16),
+                        //labelText: 'Enter your hospitalization details (Date & Reason)',
+                        hintText: ''),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         actions: <Widget>[
@@ -393,7 +650,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
               child: const Text('Submit'),
               onPressed: () {
                 if (emergencyDetailsTextControler.text.trim().isEmpty) {
-                  showToastMsg('Please enter emergency details', context);
+                  showToastMsg('Please enter hospitalization details', context);
                 } else {
                   addMedicalEmergencyEvent(
                       emergencyDetailsTextControler.text.trim());
@@ -433,46 +690,62 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 Expanded(
-                  child: Semantics(
-                    label: 'Add ' + tittle + ' details',
-                    button: true,
-                    child: InkWell(
-                      onTap: () {
-                        //showToast(tittle);
-                        if (tittle == 'Doctors') {
-                          showDialog(
-                              context: context,
-                              builder: (_) {
-                                return _addEmergencyDoctorDialog(context);
-                              });
-                        } else if (tittle == 'Pharmacies') {
-                        } else if (tittle == 'Nurses / Social Health Workers') {
-                          showDialog(
-                              context: context,
-                              builder: (_) {
-                                return _addNurseDialog(context);
-                              });
-                        } else if (tittle == 'Family Members / Friends') {
-                          showDialog(
-                              context: context,
-                              builder: (_) {
-                                return _addFamilyMemberDialog(context);
-                              });
-                        }
-                      },
-                      child: Container(
-                        key: Key(tittle),
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.add_circle,
-                            color: primaryColor,
-                            size: 24,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      /*if (tittle == 'Doctors')
+                        InfoScreen(
+                            tittle: 'Information',
+                            description:
+                                'To share your health information with your doctor, you must include their email address in the doctor profile.',
+                            height: 208),*/
+                      Semantics(
+                        label: 'Add ' + tittle + ' details',
+                        button: true,
+                        child: InkWell(
+                          onTap: () {
+                            //showToast(tittle);
+                            if (tittle == 'Doctors') {
+                              showDialog(
+        barrierDismissible: false,
+                                  context: context,
+                                  builder: (_) {
+                                    return _addEmergencyDoctorDialog(context);
+                                  });
+                            } else if (tittle == 'Pharmacies') {
+                            } else if (tittle ==
+                                'Nurses / Social Health Workers') {
+                              showDialog(
+        barrierDismissible: false,
+                                  context: context,
+                                  builder: (_) {
+                                    return _addNurseDialog(context);
+                                  });
+                            } else if (tittle == 'Family Members / Friends') {
+                              showDialog(
+        barrierDismissible: false,
+                                  context: context,
+                                  builder: (_) {
+                                    return _addFamilyMemberDialog(context);
+                                  });
+                            }
+                          },
+                          child: Container(
+                            key: Key(tittle),
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.add_circle,
+                                color: primaryColor,
+                                size: 24,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
                 const SizedBox(
@@ -634,7 +907,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                             SizedBox(
                               height: 4,
                             ),
-                            if (details.contactPerson!.email != null)
+                            /*if (details.contactPerson!.email != null)
                               Semantics(
                                 label:
                                     "Email: " + details.contactPerson!.email!,
@@ -647,12 +920,12 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            /*Text(
+                                            *//*Text(
                                                 'Email:  ',
                                                 style: TextStyle(
                                                     fontSize: 12.0,
                                                     fontWeight: FontWeight.w300,
-                                                    color: primaryColor)),*/
+                                                    color: primaryColor)),*//*
                                             Expanded(
                                               child: Text(
                                                   details.contactPerson!.email!,
@@ -660,7 +933,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                                       fontSize: 12.0,
                                                       fontWeight:
                                                           FontWeight.w300,
-                                                      color: textGrey)),
+                                                      color: textBlack)),
                                             ),
                                           ],
                                         ),
@@ -671,12 +944,12 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                     ],
                                   ),
                                 ),
-                              ),
+                              ),*/
                             Text("Doctor",
                                 style: TextStyle(
                                     fontSize: 12.0,
                                     fontWeight: FontWeight.w300,
-                                    color: textGrey)),
+                                    color: textBlack)),
                           ],
                         ),
                       ),
@@ -809,7 +1082,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                               style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w300,
-                                  color: textGrey)),
+                                  color: textBlack)),
                         ],
                       ),
                     ),
@@ -981,7 +1254,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w200,
-                                      color: textGrey),
+                                      color: textBlack),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -1160,7 +1433,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w200,
-                                      color: textGrey),
+                                      color: textBlack),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -1191,7 +1464,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
         //child: addOrEditAllergiesDialog(context),
         child: Container(
           width: double.infinity,
-          height: 640,
+          height: 460,
           child: Column(
             children: [
               Row(
@@ -1473,7 +1746,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   }
 
   _removeConfirmation(Items contact) {
-    showDialog(
+    /*showDialog(
+        barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         content: ListTile(
@@ -1509,7 +1783,19 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
           ),
         ],
       ),
-    );
+    );*/
+    ConfirmationBottomSheet(
+        context: context,
+        height: 180,
+        onPositiveButtonClickListner: () {
+          //debugPrint('Positive Button Click');
+          removeTeamMembers(contact.id!);
+        },
+        onNegativeButtonClickListner: () {
+          //debugPrint('Negative Button Click');
+        },
+        question: 'Are you sure you want to remove this contact?',
+        tittle: 'Alert!');
   }
 
   removeTeamMembers(String emergencyContactId) async {
@@ -1532,6 +1818,17 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     }
   }
 
+  deleteMedicalEmergencyEvent() async {
+    try {
+        _sharedPrefUtils.remove('emergency');
+        showToast('Hospitalization details record deleted successfully!', context);
+        loadSharedPrefs();
+    } catch (CustomException) {
+      showToast(CustomException.toString(), context);
+      debugPrint('Error ' + CustomException.toString());
+    }
+  }
+
   addMedicalEmergencyEvent(String emergencyBreif) async {
     try {
       final map = <String, String?>{};
@@ -1547,7 +1844,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
             'emergency',
             DashboardTile(DateTime.now(), 'emergency', emergencyBreif)
                 .toJson());
-        showToast('Emergency details saved successfully!', context);
+        showToast('Hospitalization details saved successfully!', context);
         loadSharedPrefs();
         setState(() {});
       } else {
@@ -1559,4 +1856,65 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       debugPrint('Error ' + CustomException.toString());
     }
   }
+
+  updateHospitalSystem() async {
+
+    final map = <String, dynamic>{};
+    map['HealthSystem'] = healthSystemGlobe;
+    map['AssociatedHospital'] = healthSystemHospitalGlobe;
+
+    try {
+      final BaseResponse updateProfileSuccess = await model
+          .updateProfilePatient(map);
+
+      if (updateProfileSuccess.status == 'success') {
+        showToast('Patient Health System details updated successfully!', context);
+
+
+        getPatientDetails();
+        //Navigator.pushNamed(context, RoutePaths.Home);
+      } else {
+        showToast(updateProfileSuccess.message!, context);
+      }
+    } on FetchDataException catch (e) {
+      debugPrint("3");
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
+    }
+  }
+
+  getPatientDetails() async {
+    try {
+      /*//ApiProvider apiProvider = new ApiProvider();
+
+      ApiProvider apiProvider = GetIt.instance<ApiProvider>();*/
+
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth!;
+
+      final response =
+      await apiProvider!.get('/patients/' + patientUserId!, header: map);
+
+      final PatientApiDetails doctorListApiResponse =
+      PatientApiDetails.fromJson(response);
+
+      if (doctorListApiResponse.status == 'success') {
+        debugPrint(doctorListApiResponse.data!.patient!.user!.person!
+            .toJson()
+            .toString());
+        await _sharedPrefUtils.save(
+            'patientDetails', doctorListApiResponse.data!.patient!.toJson());
+      } else {
+        showToast(doctorListApiResponse.message!, context);
+        model.setBusy(false);
+      }
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint(CustomException.toString());
+    }
+  }
+
 }

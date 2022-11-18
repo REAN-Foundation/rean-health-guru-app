@@ -23,8 +23,10 @@ Future<void> main() async {
   await FirebaseMessaging.instance.requestPermission();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool? login = prefs.getBool('login1.8.81');
+  bool? login = prefs.getBool('login1.8.167');
   login ??= false;
+  String? sponsor = prefs.getString('Sponsor');
+  setSponsor(sponsor??'');
   runApp(MyApp(login));
 }
 //ignore: must_be_immutable
@@ -44,6 +46,8 @@ class MyApp extends StatelessWidget {
     this.isLogin = isLogin;
     setSessionFlag(isLogin);
     setBaseUrl(_baseUrl);
+    setAppName('REAN HealthGuru');
+    setAppFlavour('RHG-Dev');
     GetIt.instance.registerSingleton<ApiProvider>(ApiProvider(_baseUrl));
     GetIt.instance
         .registerSingleton<ChatApiProvider>(ChatApiProvider(_botBaseUrl));

@@ -83,6 +83,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
   addCaloriesDialog() {
     if (widget.mode != '') {
       showDialog(
+          barrierDismissible: false,
           context: context,
           builder: (_) {
             return _addCaloriesConsumedDialog(context, widget.mode);
@@ -274,6 +275,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             IconButton(
                               onPressed: () {
                                 showDialog(
+                                    barrierDismissible: false,
                                     context: context,
                                     builder: (_) {
                                       return _addCaloriesConsumedDialog(
@@ -355,6 +357,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             IconButton(
                               onPressed: () {
                                 showDialog(
+                                    barrierDismissible: false,
                                     context: context,
                                     builder: (_) {
                                       return _addCaloriesConsumedDialog(
@@ -437,6 +440,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             IconButton(
                               onPressed: () {
                                 showDialog(
+        barrierDismissible: false,
                                     context: context,
                                     builder: (_) {
                                       return _addCaloriesConsumedDialog(
@@ -520,6 +524,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                             IconButton(
                               onPressed: () {
                                 showDialog(
+        barrierDismissible: false,
                                     context: context,
                                     builder: (_) {
                                       return _addCaloriesConsumedDialog(
@@ -597,6 +602,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                   InkWell(
                                       onTap: () {
                                         showDialog(
+        barrierDismissible: false,
                                             context: context,
                                             builder: (_) {
                                               return _addCaloriesConsumedDialog(
@@ -668,6 +674,7 @@ class _NutritionDailyViewState extends State<NutritionDailyView> {
                                   InkWell(
                                       onTap: () {
                                         showDialog(
+        barrierDismissible: false,
                                             context: context,
                                             builder: (_) {
                                               return _addCaloriesConsumedDialog(

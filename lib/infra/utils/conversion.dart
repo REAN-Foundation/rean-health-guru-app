@@ -9,14 +9,30 @@ class Conversion {
     return weightInLbs / 2.20462;
   }
 
-  static double cmToFeet(double lenghtInCm) {
+  static String cmToFeet(int lenghtInCm) {
     debugPrint('Height In cm ==> $lenghtInCm');
-    return double.parse((lenghtInCm / 30.48).toStringAsFixed(1));
+    double heightInInches = lenghtInCm * 0.393701;
+    double heightInFoot = heightInInches / 12;
+    double heightInInch = heightInInches % 12;
+    return heightInFoot.toInt().toString() +
+        '.' +
+        heightInInch.round().toString();
   }
 
   static double FeetToCm(double lenghtInFeet) {
     debugPrint('Height In Feet ==> $lenghtInFeet');
     return double.parse((lenghtInFeet * 30.48).toStringAsFixed(3));
+  }
+
+  static String FeetAndInchToCm(int lenghtInFeet, int lenghtInInch) {
+    debugPrint('Height In Feet ==> $lenghtInFeet');
+    debugPrint('Height In Inch ==> $lenghtInInch');
+
+    double heightInInches = lenghtInFeet * 12;
+    heightInInches = heightInInches + lenghtInInch;
+    double heightInCm = heightInInches * 2.54;
+    debugPrint('Height In Cm in Conversion ==> $heightInCm');
+    return heightInCm.round().toString();
   }
 
   static String durationFromMinToHrsToString(int minutes) {

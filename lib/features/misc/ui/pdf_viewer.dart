@@ -35,16 +35,18 @@ class PDFScreen extends StatelessWidget {
           ),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.share),
+              icon: Icon(Icons.share, semanticLabel: 'Share',),
               onPressed: () {
                 urlFileShare();
               },
             ),
           ],
         ),
-        body: SfPdfViewer.file(
-          file,
-          key: _pdfViewerKey,
+        body: ExcludeSemantics(
+          child: SfPdfViewer.file(
+            file,
+            key: _pdfViewerKey,
+          ),
         ));
   }
 

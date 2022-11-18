@@ -105,6 +105,12 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             : '';
       });
 
+      healthSystemGlobe =  patient.healthSystem?.toString();
+      healthSystemHospitalGlobe = patient.associatedHospital?.toString();
+
+      debugPrint('Health System Globe ==> ${patient.healthSystem.toString()}');
+      debugPrint('Health System Hospital Globe ==> ${patient.associatedHospital.toString()}');
+
       /*if (!user.data.isProfileComplete ||
           user.data.isProfileComplete == null) {
         startCarePlanResponseGlob = null;
@@ -175,11 +181,26 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
               .elementAt(0)
               .id
               .toString());
+
+          if(carePlanEnrollmentForPatient
+              .data!.patientEnrollments!
+              .elementAt(0).planCode == 'Stroke'){
+            debugPrint('CarePlan ==> Stroke');
+            _sharedPrefUtils.save('Sponsor', 'The HCA Healthcare Foundation is proud to be a national supporter of the American Stroke Association’s Together to End Stroke™');
+          }else if(carePlanEnrollmentForPatient
+              .data!.patientEnrollments!
+              .elementAt(0).planCode == 'Cholesterol'){
+            debugPrint('CarePlan ==> Cholesterol');
+            _sharedPrefUtils.save('Sponsor', 'Novartis is a proud supporter of the American Heart Association’s');
+          }
+
         }
         //showToast(startCarePlanResponse.message);
       } else {
         //showToast(startCarePlanResponse.message);
       }
+
+
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
@@ -288,17 +309,44 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     )..show();
   }*/
 
+  healthJourneyCheck(){
+    if(getAppFlavour() != 'HF Helper') {
+      if (carePlanEnrollmentForPatientGlobe == null) {
+        /*if(getBaseUrl()!.contains('aha-api-uat') ||
+          getBaseUrl()!.contains('reancare-api-dev') ||
+          getAppName() == 'Heart & Stroke Helper™ ') {*/
+        debugPrint('Health Journey');
+        Future.delayed(
+            const Duration(seconds: 2), () => showHealthJourneyDialog());
+        /* }else{
+        debugPrint('Daily Check-In');
+        Future.delayed(
+            const Duration(seconds: 2), () => showDailyCheckIn());
+      }*/
+      } else {
+        debugPrint('Daily Check-In');
+        Future.delayed(
+            const Duration(seconds: 2), () => showDailyCheckIn());
+      }
+    }else{
+      Future.delayed(
+          const Duration(seconds: 2), () => showDailyCheckIn());
+    }
+  }
+
   void showTutorial() {
     coackMarkUtilites.displayCoachMark(context, targets,
         onCoachMartkFinish: () {
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
-      Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
+          Future.delayed(
+              const Duration(seconds: 2), () => healthJourneyCheck());
       debugPrint('Coach Mark Finish');
     }, onCoachMartkSkip: () {
           _sharedPrefUtils.saveBoolean(
           StringConstant.Is_Home_View_Coach_Mark_Completed, true);
-      Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
+          Future.delayed(
+              const Duration(seconds: 1), () => healthJourneyCheck());
       debugPrint('Coach Mark Skip');
     }, onCoachMartkClickTarget: (target) {
       debugPrint('Coach Mark target click');
@@ -312,21 +360,21 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         _keyNavigation_drawer,
         (targets.length + 1).toString(),
         'Navigation Menu',
-        'Update your profile, add vitals and medical information.',
+        'Update your profile and medical information.',
         CoachMarkContentPosition.bottom,
         ShapeLightFocus.Circle));
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyMyTasks,
         (targets.length + 1).toString(),
-        'Daily Tasks',
+        'My Tasks',
         'Keep a watch on your daily tasks.',
         CoachMarkContentPosition.top,
         ShapeLightFocus.Circle));
     targets.add(coackMarkUtilites.getTargetFocus(
         _keyUploadReports,
         (targets.length + 1).toString(),
-        'Upload Reports',
-        'Upload all your reports here.',
+        'Upload Medical Records',
+        'Upload all your medical records here.',
         CoachMarkContentPosition.top,
         ShapeLightFocus.Circle));
     //targets.add(GetTargetFocus.getTargetFocus(_keyViewAppointments, (targets.length + 1).toString(), 'Appointments List', 'View all your Appointments here.', CoachMarkContentPosition.top));
@@ -351,11 +399,11 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    getCarePlanSubscribe();
     _initPackageInfo();
     getDailyCheckInDate();
     loadSharedPrefs();
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
-    getCarePlanSubscribe();
     initTargets();
     WidgetsBinding.instance.addPostFrameCallback(_layout);
     super.initState();
@@ -380,7 +428,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   showDailyCheckIn() {
     debugPrint('Inside Daily Check In');
     healthData = GetIt.instance<GetHealthData>();
-    if (dailyCheckInDate != dateFormat.format(DateTime.now())) {
+    if (dailyCheckInDate != dateFormat.format(DateTime.now()) || dailyCheckInDate == '') {
+      debugPrint('Inside Daily Check Inside Date');
       showMaterialModalBottomSheet(
           isDismissible: true,
           backgroundColor: Colors.transparent,
@@ -390,6 +439,155 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           context: context,
           builder: (context) => HowAreYouFeelingToday());
     }
+  }
+
+  showHealthJourneyDialog() {
+    Dialog sucsessDialog = Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      backgroundColor: Colors.transparent,
+      insetPadding: EdgeInsets.all(24),
+      //this right here
+      child: Card(
+        elevation: 0.0,
+        margin: EdgeInsets.zero,
+        semanticContainer: false,
+        child: Container(
+          height: 340.0,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(4),
+                      topLeft: Radius.circular(4)),
+                  color: getAppType() == 'AHA' ? redLightAha : primaryLightColor,
+                ),
+                child: Center(
+                  child: Container(
+                    height: 160,
+                    child: ExcludeSemantics(
+                      child: Image.asset(
+                        getAppType() == 'AHA' ? 'res/images/ic_health_journey.png' : 'res/images/ic_health_journey_blue.png',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 24,),
+              Text(
+                'Start your health journey here',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Montserrat",
+                    fontStyle: FontStyle.normal,
+                    fontSize: 18.0),
+              ),
+              Padding(padding: EdgeInsets.only(top: 20.0)),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Semantics(
+                        button: true,
+                        label: 'Cancel health journey',
+                        child: ExcludeSemantics(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                              Future.delayed(const Duration(seconds: 2), () => showDailyCheckIn());
+                            },
+                            child: Container(
+                              height: 48,
+                              width: MediaQuery.of(context).size.width - 32,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border:
+                                      Border.all(color: primaryColor, width: 1),
+                                  color: Colors.white),
+                              child: Center(
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: primaryColor,
+                                      fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Semantics(
+                        button: true,
+                        label: 'Get Started health journey',
+                        child: ExcludeSemantics(
+                          child: InkWell(
+                            onTap: () {
+                              if (carePlanEnrollmentForPatientGlobe == null) {
+                                Navigator.popAndPushNamed(
+                                    context, RoutePaths.Select_Care_Plan);
+                              } else {
+                                Navigator.popAndPushNamed(context, RoutePaths.My_Care_Plan);
+                              }
+                            },
+                            child: Container(
+                              height: 48,
+                              width: MediaQuery.of(context).size.width - 32,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6.0),
+                                  border:
+                                      Border.all(color: primaryColor, width: 1),
+                                  color: primaryColor),
+                              child: Center(
+                                child: Text(
+                                  'Get Started',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                      fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) => sucsessDialog);
   }
 
   @override
@@ -501,7 +699,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
               ),
               actions: <Widget>[
                 /*Badge(
-                  position: BadgePosition.topRight(top: 4, right: 4),
+                  position: BadgePosition.topEnd(top: 4, end: 4),
                   animationType: BadgeAnimationType.scale,
                   badgeColor: primaryColor,
                   badgeContent: Text(
@@ -512,6 +710,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                     icon: new Image.asset("res/images/ic_notification.png"),
                     onPressed: () {
                       debugPrint("Clicked on notification icon");
+                      showSuccessDialog();
                     },
                   ),
                 ),*/

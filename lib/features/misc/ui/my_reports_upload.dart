@@ -24,6 +24,8 @@ import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:share/share.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
@@ -201,14 +203,24 @@ class _MyReportsViewState extends State<MyReportsView> {
                     height: 16,
                   ),
                   uploadWidget(),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text('Medical Records',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: textBlack,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'Montserrat')),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16.0, top: 16, bottom: 16),
+                        child: Text('Medical Records',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: textBlack,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Montserrat')),
+                      ),
+                      Expanded(
+                        child: InfoScreen(
+                            tittle: 'Medical Records Information',
+                            description: "Save your medical records here for easy access.",
+                            height: 172),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 0,
@@ -621,6 +633,7 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   Future<String?> _askForDocsType() async {
     return showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -716,7 +729,7 @@ class _MyReportsViewState extends State<MyReportsView> {
   }
 
   _removeConfirmation(Items document) {
-    showDialog(
+    /* showDialog(
       context: context,
       builder: (context) => AlertDialog(
         content: ListTile(
@@ -752,7 +765,19 @@ class _MyReportsViewState extends State<MyReportsView> {
           ),
         ],
       ),
-    );
+    );*/
+    ConfirmationBottomSheet(
+        context: context,
+        height: 180,
+        onPositiveButtonClickListner: () {
+          //debugPrint('Positive Button Click');
+          deleteDocument(document.id!);
+        },
+        onNegativeButtonClickListner: () {
+          //debugPrint('Negative Button Click');
+        },
+        question: 'Are you sure you want to delete this record?',
+        tittle: 'Alert!');
   }
 
   _renameDialog(Items document) async {
@@ -761,6 +786,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       TextPosition(offset: renameControler.text.length - 4),
     );
     showDialog(
+        barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),

@@ -189,6 +189,15 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
+                          /*Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              InfoScreen(
+                                    tittle: 'Medications Remainder Information',
+                                    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+                                    height: 240),
+                            ],
+                          ),*/
                           if (morningMedicationList.isNotEmpty)
                             medicationTimeWiseSection(
                                 'Morning',
@@ -254,7 +263,8 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(width: 16),
-                Image.asset(imagePath, width: 24, height: 24),
+                ExcludeSemantics(
+                    child: Image.asset(imagePath, width: 24, height: 24)),
                 SizedBox(width: 8),
                 Text(tittle,
                     style: TextStyle(
@@ -282,7 +292,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
     debugPrint('No Medication');
     return Container(
       child: Center(
-        child: Text('No medication for today',
+        child: Text('No medications for today',
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
@@ -371,6 +381,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
             }
           });
           /*final bool res = await showDialog(
+        barrierDismissible: false,
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(

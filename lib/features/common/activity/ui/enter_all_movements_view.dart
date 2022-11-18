@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/activity/models/movements_tracking.dart';
+import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -9,6 +10,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class EnterAllMovementsView extends StatefulWidget {
@@ -32,12 +34,104 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
   final ScrollController _scrollController = ScrollController();
   DateTime? startDate;
   var dateFormat = DateFormat('yyyy-MM-dd');
+  MovementsTracking? _standMovemntsTracking;
+  int standMovements = 0;
+  MovementsTracking? _stepsMovemntsTracking;
+  int stepsMovements = 0;
+  MovementsTracking? _exerciseMovemntsTracking;
+  int exerciseMovements = 0;
+  DateTime? todaysDate;
+  var exersizeType = <Answer>[];
+  String radioItem = '';
+  // Group Value for Radio Button.
+  int id = 0;
 
   @override
   void initState() {
     startDate = DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
+    todaysDate = DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
+    loadStandMovement();
+    loadStepsMovement();
+    loadExerciseMovement();
+    processAnswer();
     super.initState();
+  }
+
+  processAnswer() {
+
+    exersizeType.add(Answer(
+          1,
+          'Cardio'));
+    exersizeType.add(Answer(
+        2,
+        'Strength'));
+    exersizeType.add(Answer(
+        3,
+        'Mix'));
+
+    setState(() {});
+  }
+
+  loadStandMovement() async {
+    try {
+      final movements = await _sharedPrefUtils.read('standTime');
+
+      if (movements != null) {
+        _standMovemntsTracking = MovementsTracking.fromJson(movements);
+      }
+
+      if (_standMovemntsTracking != null) {
+        if (todaysDate == _standMovemntsTracking!.date) {
+          debugPrint('Stand ==> ${_standMovemntsTracking!.value!}');
+          standMovements = _standMovemntsTracking!.value!;
+        }
+      }
+      setState(() {});
+    } catch (e) {
+      debugPrint('error caught: $e');
+    }
+  }
+
+  loadStepsMovement() async {
+    try {
+      final movements = await _sharedPrefUtils.read('stepCount');
+
+      if (movements != null) {
+        _stepsMovemntsTracking = MovementsTracking.fromJson(movements);
+      }
+
+      if (_stepsMovemntsTracking != null) {
+        if (todaysDate == _stepsMovemntsTracking!.date) {
+          debugPrint('Steps ==> ${_stepsMovemntsTracking!.value!}');
+          stepsMovements = _stepsMovemntsTracking!.value!;
+        }
+      }
+      setState(() {});
+    } catch (e) {
+      debugPrint('error caught: $e');
+    }
+  }
+
+  loadExerciseMovement() async {
+    try {
+      final movements = await _sharedPrefUtils.read('exerciseTime');
+
+      if (movements != null) {
+        _exerciseMovemntsTracking = MovementsTracking.fromJson(movements);
+      }
+
+      if (_exerciseMovemntsTracking != null) {
+        if (todaysDate == _exerciseMovemntsTracking!.date) {
+          debugPrint('Exercise ==> ${_exerciseMovemntsTracking!.value!}');
+          exerciseMovements = _exerciseMovemntsTracking!.value!;
+        }
+      }
+      setState(() {});
+    } catch (e) {
+      debugPrint('error caught: $e');
+    }
   }
 
   @override
@@ -187,6 +281,13 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                         fontSize: 12),
                   ),
                 ),
+                /*Expanded(
+                  child: InfoScreen(
+                      tittle: 'Stand Information',
+                      description:
+                          'Standing is better for the back than sitting. It strengthens leg muscles and improves balance. It burns more calories than sitting.',
+                      height: 208),
+                ),*/
               ],
             ),
             const SizedBox(
@@ -279,6 +380,13 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                         fontSize: 12),
                   ),
                 ),
+                /*Expanded(
+                  child: InfoScreen(
+                      tittle: 'Steps Information',
+                      description:
+                          'Steps will increase cardiovascular and pulmonary (heart and lung) fitness. reduced risk of heart disease and stroke. improved management of conditions such as hypertension (high blood pressure), high cholesterol, joint, and muscular pain or stiffness, and diabetes. stronger bones and improved balance.',
+                      height: 288),
+                ),*/
               ],
             ),
             const SizedBox(
@@ -369,6 +477,13 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                         fontSize: 12),
                   ),
                 ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Exercise Information',
+                      description:
+                          'Fit in 150+\nGet at least 150 minutes per week of moderate-intensity aerobic activity or 75 minutes per week of vigorous aerobic activity (or a combination of both), preferably spread throughout the week.',
+                      height: 248),
+                ),
               ],
             ),
             const SizedBox(
@@ -412,6 +527,21 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                 ),
               ],
             ),
+            Column(
+              children: exersizeType
+                  .map((data) => RadioListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(data.text),
+                groupValue: id,
+                value: data.index,
+                onChanged: (dynamic val) {
+                  setState(() {
+                    radioItem = data.text;
+                    id = data.index;
+                  });
+                },
+              )).toList(),
+            ),
           ],
         ),
       ),
@@ -426,8 +556,13 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
 
   recordMyStandTimeInMinutes(int time) async {
     try {
-      _sharedPrefUtils.save(
-          'standTime', MovementsTracking(startDate, time, '').toJson());
+      if (_standMovemntsTracking == null) {
+        _sharedPrefUtils.save(
+            'standTime', MovementsTracking(startDate, time, '').toJson());
+      } else {
+        _standMovemntsTracking!.value = _standMovemntsTracking!.value! + time;
+        _sharedPrefUtils.save('standTime', _standMovemntsTracking!.toJson());
+      }
       _standController.text = '';
       _standController.selection = TextSelection.fromPosition(
         TextPosition(offset: _standController.text.length),
@@ -452,8 +587,13 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
 
   recordMyStepCount(int count) async {
     try {
-      _sharedPrefUtils.save(
-          'stepCount', MovementsTracking(startDate, count, '').toJson());
+      if (_stepsMovemntsTracking == null) {
+        _sharedPrefUtils.save(
+            'stepCount', MovementsTracking(startDate, count, '').toJson());
+      } else {
+        _stepsMovemntsTracking!.value = _stepsMovemntsTracking!.value! + count;
+        _sharedPrefUtils.save('stepCount', _stepsMovemntsTracking!.toJson());
+      }
       _stepscontroller.text = '';
       _stepscontroller.selection = TextSelection.fromPosition(
         TextPosition(offset: _stepscontroller.text.length),
@@ -479,8 +619,16 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
 
   recordMyExcerciseTimeInMinutes(int time) async {
     try {
-      _sharedPrefUtils.save(
-          'exerciseTime', MovementsTracking(startDate, time, '').toJson());
+      if (_exerciseMovemntsTracking == null) {
+        _sharedPrefUtils.save(
+            'exerciseTime', MovementsTracking(startDate, time, '').toJson());
+      } else {
+        _exerciseMovemntsTracking!.value =
+            _exerciseMovemntsTracking!.value! + time;
+        _exerciseMovemntsTracking!.date = startDate;
+        _sharedPrefUtils.save(
+            'exerciseTime', _exerciseMovemntsTracking!.toJson());
+      }
       _exerciseController.text = '';
       _exerciseController.selection = TextSelection.fromPosition(
         TextPosition(offset: _exerciseController.text.length),
@@ -507,11 +655,16 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
 
   clearAllFeilds() {
     if (toastDisplay) {
+      id = 0;
+      radioItem = '';
       _scrollController.animateTo(0.0,
           duration: Duration(seconds: 2), curve: Curves.ease);
       showToast('Record Updated Successfully!', context);
       toastDisplay = false;
     }
+    setState(() {
+
+    });
   }
 
   recordMySteps() async {

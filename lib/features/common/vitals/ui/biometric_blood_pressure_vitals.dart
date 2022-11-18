@@ -11,6 +11,8 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/get_health_data.dart';
 import 'package:patient/infra/utils/simple_time_series_chart.dart';
+import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 //ignore: must_be_immutable
@@ -39,6 +41,8 @@ class _BiometricBloodPresureVitalsViewState
   final _systolicFocus = FocusNode();
   final _diastolicFocus = FocusNode();
   GetHealthData getHealthData = GetIt.instance<GetHealthData>();
+  int sytolicBloodPressure = 0;
+  int diastolicBloodPressure = 0;
 
   late ProgressDialog progressDialog;
 
@@ -106,19 +110,20 @@ class _BiometricBloodPresureVitalsViewState
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         bloodPresureFeilds(),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        historyListFeilds(),
-                        const SizedBox(
-                          height: 16,
-                        ),
+                        if (records.isEmpty) Container() else bpScale(),
                         if (records.isEmpty) Container() else _systolicgraph(),
                         const SizedBox(
                           height: 16,
                         ),
                         if (records.isEmpty) Container() else _diastolicgraph(),
                         //allGoal(),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        historyListFeilds(),
                         const SizedBox(
                           height: 16,
                         ),
@@ -134,15 +139,15 @@ class _BiometricBloodPresureVitalsViewState
                   children: <Widget>[
                     /*bloodPresureFeilds(),
                     const SizedBox(height: 16,),*/
-                    historyListFeilds(),
-                    const SizedBox(
-                      height: 16,
-                    ),
                     if (records.isEmpty) Container() else _systolicgraph(),
                     const SizedBox(
                       height: 16,
                     ),
                     if (records.isEmpty) Container() else _diastolicgraph(),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    historyListFeilds(),
                     //allGoal(),
                     //const SizedBox(height: 16,),
                   ],
@@ -162,11 +167,29 @@ class _BiometricBloodPresureVitalsViewState
             const SizedBox(
               height: 16,
             ),
-            Text(
-              'Enter your blood pressure:',
-              style: TextStyle(
-                  color: textBlack, fontWeight: FontWeight.w600, fontSize: 16),
-              textAlign: TextAlign.center,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Enter your blood pressure:',
+                  style: TextStyle(
+                      color: textBlack,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: InfoScreen(
+                      tittle: 'Blood Pressure Information',
+                      description:
+                          'If your blood pressure is below 120/80 mm Hg, be sure to get it checked at least once every two years, starting at age 20. If your blood pressure is higher, your doctor may want to check it more often. High blood pressure can be controlled through lifestyle changes and/or medication. \n*Normal: Less than 120/80 \n*Elevated: Systolic 120-129 AND Diastolic less than 80 \n*High Blood Pressure Stage 1: Systolic 130-139 OR Diastolic 80-89 \n*High Blood Pressure Stage 2: Systolic 140+ OR Diastolic 90+ \n*Hypertensive Crisis (Consult your doctor immediately): Systolic 180+ and/or Diastolic 120+',
+                      height: 408),
+                ),
+              ],
             ),
             const SizedBox(
               height: 16,
@@ -295,7 +318,7 @@ class _BiometricBloodPresureVitalsViewState
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Semantics(
+                model.busy ? CircularProgressIndicator() :Semantics(
                   label: "Save",
                   button: true,
                   child: InkWell(
@@ -341,11 +364,307 @@ class _BiometricBloodPresureVitalsViewState
         ));
   }
 
+  /*oldLogic(){
+    int bmiLeftSideValue = 0;
+    int bmiRightSideValue = 0;
+    String value = '';
+    Color valeTextColor = textBlack;
+
+    if(sytolicBloodPressure <= 119 && diastolicBloodPressure <= 80){
+      bmiLeftSideValue = 2;
+      bmiRightSideValue = 28;
+      debugPrint('Normal BP');
+      value = 'Normal';
+      valeTextColor = Color(0XFFA6CE39);
+    }else if((sytolicBloodPressure >= 120 && sytolicBloodPressure <= 129) && diastolicBloodPressure <= 80){
+      bmiLeftSideValue = 9;
+      bmiRightSideValue = 23;
+      debugPrint('Elevated BP');
+      value = 'Elevated';
+      valeTextColor = Color(0XFFFBED4F);
+    }else if(sytolicBloodPressure >= 130 && sytolicBloodPressure <= 139 *//*|| (diastolicBloodPressure >= 81 && diastolicBloodPressure <= 89)*//*){
+      bmiLeftSideValue = 17;
+      bmiRightSideValue = 17;
+      debugPrint('Stage 1 BP');
+      value = 'Stage 1';
+      valeTextColor = Color(0XFFFBB601);
+    }else if(sytolicBloodPressure >= 140 && sytolicBloodPressure <= 180 *//*|| (diastolicBloodPressure >= 90 && diastolicBloodPressure <= 120)*//*){
+      bmiLeftSideValue = 23;
+      bmiRightSideValue = 9;
+      debugPrint('Stage 2 BP');
+      value = 'Stage 2';
+      valeTextColor = Color(0XFFBA3903);
+    }else if(sytolicBloodPressure > 180 *//*&& diastolicBloodPressure > 120*//*){
+      bmiLeftSideValue = 28;
+      bmiRightSideValue = 2;
+      debugPrint('Crisis BP');
+      value = 'Crisis';
+      valeTextColor = Color(0XFF991112);
+    }
+  }*/
+
+
+  Widget bpScale(){
+    int bmiLeftSideValue = 0;
+    int bmiRightSideValue = 0;
+    String value = '';
+    Color valeTextColor = textBlack;
+    debugPrint('BP Systolic Value ==> $sytolicBloodPressure BP Diastolic Value ==> $diastolicBloodPressure');
+    /*if (bmiValue != 0.0) {
+      bmiLeftSideValue = int.parse(bmiValue.toStringAsFixed(0)) - 1;
+      bmiRightSideValue = (60 - int.parse(bmiValue.toStringAsFixed(0))) - 1;
+    }*/
+
+    if(sytolicBloodPressure <= 119 ){
+      bmiLeftSideValue = 2;
+      bmiRightSideValue = 28;
+      debugPrint('Normal BP');
+      value = 'Normal';
+      valeTextColor = Color(0XFFA6CE39);
+
+      if(diastolicBloodPressure < 80){
+        bmiLeftSideValue = 2;
+        bmiRightSideValue = 28;
+        debugPrint('Diastolic Normal BP');
+        value = 'Normal';
+        valeTextColor = Color(0XFFA6CE39);
+      }else if(diastolicBloodPressure < 80){
+        bmiLeftSideValue = 9;
+        bmiRightSideValue = 23;
+        debugPrint('Diastolic Elevated BP');
+        value = 'Elevated';
+        valeTextColor = Color(0XFFFBED4F);
+      }else if(diastolicBloodPressure >= 80 && diastolicBloodPressure <= 89){
+        bmiLeftSideValue = 17;
+        bmiRightSideValue = 17;
+        debugPrint('Diastolic Stage 1 BP');
+        value = 'Stage 1';
+        valeTextColor = Color(0XFFFBB601);
+      }else if(diastolicBloodPressure >= 90 && diastolicBloodPressure <= 120){
+        bmiLeftSideValue = 23;
+        bmiRightSideValue = 9;
+        debugPrint('Diastolic Stage 2 BP');
+        value = 'Stage 2';
+        valeTextColor = Color(0XFFBA3903);
+      }else if(diastolicBloodPressure > 120){
+        bmiLeftSideValue = 28;
+        bmiRightSideValue = 2;
+        debugPrint('Diastolic Crisis BP');
+        value = 'Crisis';
+        valeTextColor = Color(0XFF991112);
+      }
+
+    }else if(sytolicBloodPressure >= 120 && sytolicBloodPressure <= 129 /*&& diastolicBloodPressure <= 80*/){
+      bmiLeftSideValue = 9;
+      bmiRightSideValue = 23;
+      debugPrint('Elevated BP');
+      value = 'Elevated';
+      valeTextColor = Color(0XFFFBED4F);
+      if(diastolicBloodPressure < 80){
+        bmiLeftSideValue = 9;
+        bmiRightSideValue = 23;
+        debugPrint('Diastolic Elevated BP');
+        value = 'Elevated';
+        valeTextColor = Color(0XFFFBED4F);
+      }else if(diastolicBloodPressure >= 80 && diastolicBloodPressure <= 89){
+        bmiLeftSideValue = 17;
+        bmiRightSideValue = 17;
+        debugPrint('Diastolic Stage 1 BP');
+        value = 'Stage 1';
+        valeTextColor = Color(0XFFFBB601);
+      }else if(diastolicBloodPressure >= 90 && diastolicBloodPressure <= 120){
+        bmiLeftSideValue = 23;
+        bmiRightSideValue = 9;
+        debugPrint('Diastolic Stage 2 BP');
+        value = 'Stage 2';
+        valeTextColor = Color(0XFFBA3903);
+      }else if(diastolicBloodPressure > 120){
+        bmiLeftSideValue = 28;
+        bmiRightSideValue = 2;
+        debugPrint('Diastolic Crisis BP');
+        value = 'Crisis';
+        valeTextColor = Color(0XFF991112);
+      }
+    }else if(sytolicBloodPressure >= 130 && sytolicBloodPressure <= 139 /*|| (diastolicBloodPressure >= 81 && diastolicBloodPressure <= 89)*/){
+      bmiLeftSideValue = 17;
+      bmiRightSideValue = 17;
+      debugPrint('Stage 1 BP');
+      value = 'Stage 1';
+      valeTextColor = Color(0XFFFBB601);
+      if(diastolicBloodPressure >= 80 && diastolicBloodPressure <= 89){
+        bmiLeftSideValue = 17;
+        bmiRightSideValue = 17;
+        debugPrint('Diastolic Stage 1 BP');
+        value = 'Stage 1';
+        valeTextColor = Color(0XFFFBB601);
+      }else if(diastolicBloodPressure >= 90 && diastolicBloodPressure <= 120){
+        bmiLeftSideValue = 23;
+        bmiRightSideValue = 9;
+        debugPrint('Diastolic Stage 2 BP');
+        value = 'Stage 2';
+        valeTextColor = Color(0XFFBA3903);
+      }else if(diastolicBloodPressure > 120){
+        bmiLeftSideValue = 28;
+        bmiRightSideValue = 2;
+        debugPrint('Diastolic Crisis BP');
+        value = 'Crisis';
+        valeTextColor = Color(0XFF991112);
+      }
+    }else if(sytolicBloodPressure >= 140 && sytolicBloodPressure <= 180 /*|| (diastolicBloodPressure >= 90 && diastolicBloodPressure <= 120)*/){
+      bmiLeftSideValue = 23;
+      bmiRightSideValue = 9;
+      debugPrint('Stage 2 BP');
+      value = 'Stage 2';
+      valeTextColor = Color(0XFFBA3903);
+      if(diastolicBloodPressure >= 90 && diastolicBloodPressure <= 120){
+        bmiLeftSideValue = 23;
+        bmiRightSideValue = 9;
+        debugPrint('Diastolic Stage 2 BP');
+        value = 'Stage 2';
+        valeTextColor = Color(0XFFBA3903);
+      }else if(diastolicBloodPressure > 120){
+        bmiLeftSideValue = 28;
+        bmiRightSideValue = 2;
+        debugPrint('Diastolic Crisis BP');
+        value = 'Crisis';
+        valeTextColor = Color(0XFF991112);
+      }
+    }else if(sytolicBloodPressure > 180 /*&& diastolicBloodPressure > 120*/){
+      bmiLeftSideValue = 28;
+      bmiRightSideValue = 2;
+      debugPrint('Crisis BP');
+      value = 'Crisis';
+      valeTextColor = Color(0XFF991112);
+      /*if(diastolicBloodPressure <= 80){
+        bmiLeftSideValue = 2;
+        bmiRightSideValue = 28;
+        debugPrint('Diastolic Normal BP');
+        value = 'Normal';
+        valeTextColor = Color(0XFFA6CE39);
+      }else if(diastolicBloodPressure <= 80){
+        bmiLeftSideValue = 9;
+        bmiRightSideValue = 23;
+        debugPrint('Diastolic Elevated BP');
+        value = 'Elevated';
+        valeTextColor = Color(0XFFFBED4F);
+      }else if(diastolicBloodPressure >= 80 && diastolicBloodPressure <= 89){
+        bmiLeftSideValue = 17;
+        bmiRightSideValue = 17;
+        debugPrint('Diastolic Stage 1 BP');
+        value = 'Stage 1';
+        valeTextColor = Color(0XFFFBB601);
+      }else if(diastolicBloodPressure >= 90 && diastolicBloodPressure <= 120){
+        bmiLeftSideValue = 23;
+        bmiRightSideValue = 9;
+        debugPrint('Diastolic Stage 2 BP');
+        value = 'Stage 2';
+        valeTextColor = Color(0XFFBA3903);
+      }else{
+        bmiLeftSideValue = 28;
+        bmiRightSideValue = 2;
+        debugPrint('Diastolic Crisis BP');
+        value = 'Crisis';
+        valeTextColor = Color(0XFF991112);
+      }*/
+    }
+    announceText('Your recent Blood Pressure is $value');
+
+      return Card(
+      semanticContainer: false,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ImageIcon(
+                      AssetImage('res/images/ic_blood_pressure.png'),
+                      size: 24,
+                      color: primaryColor,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      'Blood Pressure Category',
+                      semanticsLabel: 'BLOOD PRESSURE CATEGORY',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16.0,
+                          color: primaryColor),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  value,
+                  semanticsLabel: value,
+                  style: TextStyle(
+                      fontSize: 14.0,
+                      color: valeTextColor,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            value != '' ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(flex: bmiLeftSideValue, child: Container()),
+                        Expanded(
+                            flex: 1,
+                            child: ImageIcon(
+                                AssetImage('res/images/triangle.png'),
+                            )),
+                        Expanded(flex: bmiRightSideValue, child: Container())
+                      ],
+                    ),
+                  ) : Container(),
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Image.asset(
+                        'res/images/blood_presure_scale.png',
+                        semanticLabel: 'Blood Pressure scale',
+                      )),
+                  SizedBox(height: 16,),
+                ],
+              )
+      )
+    );
+
+  }
+
   Widget historyListFeilds() {
     return Container(
       color: colorF6F6FF,
       constraints: BoxConstraints(
-          minHeight: 100, minWidth: double.infinity, maxHeight: 160),
+          minHeight: 160, minWidth: double.infinity, maxHeight: 200),
       padding: EdgeInsets.only(left: 0.0, right: 0.0, top: 16, bottom: 16),
       height: 160,
       child: model.busy
@@ -363,55 +682,65 @@ class _BiometricBloodPresureVitalsViewState
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Expanded(
-                            flex: 1,
+                            flex: 4,
+                            child: Text(
+                              'Date',
+                              semanticsLabel: 'Date',
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              maxLines: 1,
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
                             child: Center(
                               child: Text(
-                                'Date',
-                                semanticsLabel: 'Date',
+                                'Systolic\n(mm Hg)',
+                                semanticsLabel: 'Systolic\n(mm Hg)',
                                 style: TextStyle(
                                     color: primaryColor,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600),
-                                maxLines: 1,
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Center(
+                              child: Text(
+                                'Diastolic\n(mm Hg)',
+                                semanticsLabel: 'Diastolic\n(mm Hg)',
+                                style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600),
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ),
                           Expanded(
                             flex: 1,
-                            child: Center(
-                              child: Text(
-                                'Systolic',
-                                semanticsLabel: 'Systolic',
-                                style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
+                            child: ExcludeSemantics(
+                              child: SizedBox(
+                                height: 32,
+                                width: 32,
                               ),
                             ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Center(
-                              child: Text(
-                                'Diastolic ',
-                                semanticsLabel: 'Diastolic',
-                                style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
+                          )
                         ],
                       ),
                     ),
                     const SizedBox(
-                      height: 16,
+                      height: 8,
                     ),
                     Expanded(
                       child: Padding(
@@ -425,7 +754,7 @@ class _BiometricBloodPresureVitalsViewState
                               separatorBuilder:
                                   (BuildContext context, int index) {
                                 return SizedBox(
-                                  height: 8,
+                                  height: 0,
                                 );
                               },
                               itemCount: records.length,
@@ -453,18 +782,18 @@ class _BiometricBloodPresureVitalsViewState
   Widget _makeWeightList(BuildContext context, int index) {
     final Items record = records.elementAt(index);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 0),
       child: Card(
         semanticContainer: false,
         elevation: 0,
         child: Container(
           color: colorF6F6FF,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                flex: 1,
+                flex: 3,
                 child: Text(
                   dateFormatStandard.format(DateTime.parse(record.recordDate!)),
                   style: TextStyle(
@@ -472,43 +801,70 @@ class _BiometricBloodPresureVitalsViewState
                       fontSize: 14,
                       fontWeight: FontWeight.w300),
                   maxLines: 1,
+                  textAlign: TextAlign.left,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Center(
                   child: Semantics(
                     label: 'Systolic Blood Pressure ',
                     child: Text(
-                      record.systolic.toString() + ' mm Hg',
+                      record.systolic.toString() + ' ',
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
                           fontWeight: FontWeight.w300),
                       maxLines: 1,
+                      textAlign: TextAlign.left,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
               ),
               Expanded(
-                flex: 1,
+                flex: 2,
                 child: Center(
                   child: Semantics(
                     label: 'Diastolic Blood Pressure ',
                     child: Text(
-                      record.diastolic.toString() + ' mm Hg',
+                      record.diastolic.toString(),
                       style: TextStyle(
                           color: primaryColor,
                           fontSize: 14,
                           fontWeight: FontWeight.w500),
                       maxLines: 1,
+                      textAlign: TextAlign.left,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
               ),
+              IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: BoxConstraints(),
+                  onPressed: () {
+                    ConfirmationBottomSheet(
+                        context: context,
+                        height: 180,
+                        onPositiveButtonClickListner: () {
+                          //debugPrint('Positive Button Click');
+                          deleteVitals(record.id.toString());
+                        },
+                        onNegativeButtonClickListner: () {
+                          //debugPrint('Negative Button Click');
+                        },
+                        question:
+                            'Are you sure you want to delete this record?',
+                        tittle: 'Alert!');
+                  },
+                  icon: Icon(
+                    Icons.delete_rounded,
+                    color: primaryColor,
+                    size: 24,
+                    semanticLabel: 'Blood Pressure Delete',
+                  ))
             ],
           ),
         ),
@@ -969,7 +1325,7 @@ class _BiometricBloodPresureVitalsViewState
 
   addvitals() async {
     try {
-      progressDialog.show(max: 100, msg: 'Loading...');
+      //progressDialog.show(max: 100, msg: 'Loading...');
       final map = <String, dynamic>{};
       map['Systolic'] = _systolicController.text.toString();
       map['Diastolic'] = _diastolicController.text.toString();
@@ -979,11 +1335,44 @@ class _BiometricBloodPresureVitalsViewState
 
       final BaseResponse baseResponse =
           await model.addMyVitals('blood-pressures', map);
-
+      progressDialog.close();
       if (baseResponse.status == 'success') {
+        if(progressDialog.isOpen()) {
+          progressDialog.close();
+        }
+        showToast(baseResponse.message!, context);
+        _systolicController.clear();
+        _diastolicController.clear();
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
+      } else {
         progressDialog.close();
         showToast(baseResponse.message!, context);
-        Navigator.pop(context);
+      }
+    } catch (e) {
+      progressDialog.close();
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  deleteVitals(String recordId) async {
+    try {
+      progressDialog.show(max: 100, msg: 'Loading...');
+
+      final BaseResponse baseResponse =
+          await model.deleteVitalsRecord('blood-pressures', recordId);
+
+      if (baseResponse.status == 'success') {
+        if (progressDialog.isOpen()) {
+          progressDialog.close();
+        }
+        showToast(baseResponse.message!, context);
+        //Navigator.pop(context);
+        getVitalsHistory();
+        model.setBusy(true);
       } else {
         progressDialog.close();
         showToast(baseResponse.message!, context);
@@ -1001,8 +1390,18 @@ class _BiometricBloodPresureVitalsViewState
       final GetMyVitalsHistory getMyVitalsHistory =
           await model.getMyVitalsHistory('blood-pressures');
       if (getMyVitalsHistory.status == 'success') {
+        model.setBusy(false);
         records.clear();
         records.addAll(getMyVitalsHistory.data!.bloodPressureRecords!.items!);
+        if(records.isNotEmpty){
+          debugPrint('BP Systolic Value ==> $sytolicBloodPressure BP Diastolic Value ==> $diastolicBloodPressure');
+          sytolicBloodPressure = int.parse(records.elementAt(0).systolic.toString());
+          diastolicBloodPressure = int.parse(records.elementAt(0).diastolic.toString());
+          setState(() {
+
+          });
+        }
+
       } else {
         showToast(getMyVitalsHistory.message!, context);
       }

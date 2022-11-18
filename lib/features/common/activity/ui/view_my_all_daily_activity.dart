@@ -462,7 +462,7 @@ class _ViewMyAllDailyActivityState extends State<ViewMyAllDailyActivity> {
               backgroundColor: primaryColor,
               systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
               title: Text(
-                'Physical Health Management',
+                'Physical Health',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,

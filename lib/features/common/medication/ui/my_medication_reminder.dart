@@ -36,6 +36,7 @@ class _MyMedicationRemainderViewState extends State<MyMedicationRemainderView> {
       debugPrint('Medication ==> ${getMyMedicationsResponse.toJson()}');
       if (getMyMedicationsResponse.status == 'success') {
         medConsumptions.clear();
+        debugPrint('Medication Length ==> ${medConsumptions.length}');
         medConsumptions.addAll(getMyMedicationsResponse
             .data!.medicationSchedulesForDay!.schedules!);
       } else {

@@ -183,6 +183,7 @@ class _SetUpFamilyMemberForCarePlanViewState
               mini: false,
               onPressed: () {
                 showDialog(
+        barrierDismissible: false,
                     context: context,
                     builder: (_) {
                       return _addFamilyMemberDialog(context);

@@ -121,7 +121,7 @@ class _SymptomsViewState extends State<SymptomsView> {
             backgroundColor: Colors.white,
             systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
-              'Symptom Management',
+              'Symptoms',
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,

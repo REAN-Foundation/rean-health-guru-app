@@ -124,13 +124,15 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
-                                      height: 200,
-                                      child: getAppType() == 'AHA'
-                                          ? Image.asset(
-                                              'res/images/medication_aha_bg.png')
-                                          : Image.asset(
-                                              'res/images/medication_rean_bg.png')),
+                                  ExcludeSemantics(
+                                    child: Container(
+                                        height: 200,
+                                        child: getAppType() == 'AHA'
+                                            ? Image.asset(
+                                                'res/images/medication_aha_bg.png')
+                                            : Image.asset(
+                                                'res/images/medication_rean_bg.png')),
+                                  ),
                                   SizedBox(
                                     height: 8,
                                   ),
@@ -148,14 +150,18 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                   Stack(
                                     children: [
                                       getAppType() == 'AHA'
-                                          ? Image.asset(
-                                              'res/images/medication_aha_bottom_bg.png')
-                                          : Image.asset(
-                                              'res/images/medication_rean_bottom_bg.png',
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                            ),
+                                          ? ExcludeSemantics(
+                                            child: Image.asset(
+                                                'res/images/medication_aha_bottom_bg.png'),
+                                          )
+                                          : ExcludeSemantics(
+                                            child: Image.asset(
+                                                'res/images/medication_rean_bottom_bg.png',
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                              ),
+                                          ),
                                       Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -245,6 +251,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                                               primaryColor,
                                                                           size:
                                                                               64,
+                                                                          semanticLabel: 'Play',
                                                                         ),
                                                                       ],
                                                                     ),
@@ -299,6 +306,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                           Icon(
                                                             Icons.pause,
                                                             color: primaryColor,
+                                                            semanticLabel: 'Pause',
                                                             size: 64,
                                                           ),
                                                         ],
@@ -328,6 +336,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                     child: ElevatedButton(
                                                       child: Text('Finish'),
                                                       onPressed: () {
+                                                        showToast('Mindfulness duration recorded successfully', context);
                                                         saveMindfulnessTime();
                                                       },
                                                       style: ElevatedButton.styleFrom(

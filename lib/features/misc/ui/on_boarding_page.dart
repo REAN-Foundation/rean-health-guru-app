@@ -89,7 +89,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: 'Vital Management',
+          title: 'Vitals',
           body:
               'Monitor your body vitals. Keep a close watch over your health.',
           image: _buildImage('walkthrough_img_2.png'),

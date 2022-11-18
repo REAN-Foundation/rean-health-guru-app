@@ -121,6 +121,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('Sponsor ==> ${getSponsor()}');
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: getAppType() == 'AHA' ? primaryLightColor : primaryColor,
@@ -195,7 +196,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   Expanded(
                     flex: 1,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color?>(
@@ -223,6 +225,25 @@ class _SplashScreenState extends State<SplashScreen> {
                                       ? primaryColor
                                       : Colors.white)),
                         ),
+                        SizedBox(height: 20,),
+                        if(getSponsor().isNotEmpty)...[
+                          Semantics(
+                            readOnly: true,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                  getSponsor(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w300,
+                                      color: getAppType() == 'AHA'
+                                          ? primaryColor
+                                          : Colors.white)),
+                            ),
+                          ),
+                        ],
+                        SizedBox(height: 8,),
                       ],
                     ),
                   ),

@@ -45,7 +45,7 @@ class _AllMovementsViewState extends State<AllMovementsView> {
             backgroundColor: Colors.white,
             systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
-              'Physical Health Management',
+              'Physical Activity',
               style: TextStyle(
                   fontSize: 16.0,
                   color: primaryColor,
@@ -111,7 +111,7 @@ class _AllMovementsViewState extends State<AllMovementsView> {
                         size: 24,
                         color: widget._currentIndex == 0
                             ? Colors.white
-                            : Colors.grey,
+                            : primaryExtraLightColor,
                       ),
                       SizedBox(
                         height: 4,
@@ -121,7 +121,7 @@ class _AllMovementsViewState extends State<AllMovementsView> {
                         style: TextStyle(
                             color: widget._currentIndex == 0
                                 ? Colors.white
-                                : Colors.grey,
+                                : primaryExtraLightColor,
                             fontSize: 10),
                       ),
                     ],
@@ -151,7 +151,7 @@ class _AllMovementsViewState extends State<AllMovementsView> {
                         size: 28,
                         color: widget._currentIndex == 1
                             ? Colors.white
-                            : Colors.grey,
+                            : primaryExtraLightColor,
                       ),
                       SizedBox(
                         height: 4,
@@ -161,7 +161,7 @@ class _AllMovementsViewState extends State<AllMovementsView> {
                         style: TextStyle(
                             color: widget._currentIndex == 1
                                 ? Colors.white
-                                : Colors.grey,
+                                : primaryExtraLightColor,
                             fontSize: 10),
                       ),
                     ],

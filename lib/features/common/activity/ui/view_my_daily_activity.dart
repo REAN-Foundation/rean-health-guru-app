@@ -34,7 +34,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
   GetSleepData? sleepData;
   int steps = 0;
   double weight = 0;
-  double height = 0;
+  int height = 0;
   double totalActiveCalories = 0;
   double totalBasalCalories = 0;
   double totalCalories = 0;
@@ -48,11 +48,14 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
   int heartRateBmp = 0;
 
   loadSharedPref() async {
-    height = await _sharedPrefUtils.readDouble('height');
+    var heightStored = await _sharedPrefUtils.readDouble('height');
+    debugPrint('Height Stored ==> $heightStored');
+    height = heightStored.toInt();
     weight = await _sharedPrefUtils.readDouble('weight');
 
     /*if (height == 0.0 || weight == 0.0) {
       showDialog(
+        barrierDismissible: false,
           context: context,
           builder: (_) {
             return _addBMIDetailsDialog(context);
@@ -621,6 +624,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                 InkWell(
                     onTap: () {
                       showDialog(
+        barrierDismissible: false,
                           context: context,
                           builder: (_) {
                             return _addBMIDetailsDialog(context);
@@ -982,7 +986,7 @@ class _ViewMyDailyActivityState extends State<ViewMyDailyActivity> {
                   submitButtonListner: (double weight, double height) {
                     _sharedPrefUtils.saveDouble('height', height);
                     _sharedPrefUtils.saveDouble('weight', weight);
-                    this.height = height;
+                    this.height = height.toInt();
                     this.weight = weight;
                     calculetBMI();
                     debugPrint(

@@ -57,17 +57,15 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
         tasksList.clear();
         //tasksList.addAll(userTaskResponse.data.userTasks.items);
         if (userTaskResponse.data!.userTasks!.items!.isEmpty) {
-          debugPrint('Debug ==> 1');
           getAllUserTask();
         } else {
-          debugPrint('Debug ==> 3');
           _sortUserTask(
               userTaskResponse.data!.userTasks!.items!, 'Educational');
         }
 
-        debugPrint('User Educational Tasks ==> ${userTaskResponse.toJson()}');
+       /* debugPrint('User Educational Tasks ==> ${userTaskResponse.toJson()}');
         debugPrint(
-            'User Tasks Educational Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');
+            'User Tasks Educational Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');*/
       } else {
         tasksList.clear();
         showToast(userTaskResponse.message!, context);
@@ -83,33 +81,49 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   getAllUserTask() async {
     try {
       var dateTill;
-      if (getBaseUrl()!.contains('aha-api-uat.services') ||
-          getAppName() == 'Lipid Helper') {
+      var dateFrom;
+      /*if (getBaseUrl()!.contains('aha-api-uat.services') ||
+          getAppName() == 'Heart & Stroke Helper™ ') {
         dateTill = DateTime.now();
-      } else {
-        dateTill = DateTime.now().add(Duration(days: 82));
+      } else {*/
+      if(getBaseUrl()!.contains('reancare-api-dev')){
+        dateTill = DateTime.now().add(Duration(days: 91));
+      }else{
+        dateTill = DateTime.now().add(Duration(days: 0));
       }
+
+      if(carePlanEnrollmentForPatientGlobe != null){
+        DateTime startDate = DateTime.parse(
+            carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+                .elementAt(0)
+                .startAt
+                .toString());
+        if(startDate.isAfter(DateTime.now())){
+          dateFrom = dateQueryFormat.format(DateTime.now());
+        }else {
+          dateFrom = dateQueryFormat.format(startDate);
+        }
+      }else{
+        dateFrom = dateQueryFormat.format(DateTime.now());
+      }
+
+      //}
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
       userTaskResponse = await model.getUserTasks(
-          query,
+          query, dateFrom,
           carePlanEnrollmentForPatientGlobe != null
-              ? dateQueryFormat.format(DateTime.parse(
-                  carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
-                      .elementAt(0)
-                      .startAt
-                      .toString()))
-              : dateQueryFormat.format(dateTill.subtract(Duration(days: 0))),
-          dateQueryFormat.format(dateTill));
+              ? dateQueryFormat.format(dateTill)
+              : dateQueryFormat.format(DateTime.now()));
 
       if (userTaskResponse.status == 'success') {
         tasksList.clear();
         //tasksList.addAll(userTaskResponse.data.userTasks.items);
         _sortUserTask(userTaskResponse.data!.userTasks!.items!, 'allTask');
-        debugPrint('User Tasks ==> ${userTaskResponse.toJson()}');
+        /* debugPrint('User Tasks ==> ${userTaskResponse.toJson()}');
         debugPrint(
             'User Tasks Count ==> ${userTaskResponse.data!.userTasks!.items!.length}');
         debugPrint(
-            'User Tasks Action ==> ${userTaskResponse.data!.userTasks!.items!.elementAt(1).action!.patientUserId}');
+            'User Tasks Action ==> ${userTaskResponse.data!.userTasks!.items!.elementAt(1).action!.patientUserId}');*/
       } else {
         tasksList.clear();
         showToast(userTaskResponse.message!, context);
@@ -128,12 +142,12 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   }
 
   getUserTask() async {
-    if (getBaseUrl()!.contains('aha-api-uat.services') ||
-        getAppName() == 'Lipid Helper') {
+    /*if (getBaseUrl()!.contains('aha-api-uat.services') ||
+        getAppName() == 'Heart & Stroke Helper™ ') {
       getEducationUserTask();
-    } else {
-      getAllUserTask();
-    }
+    } else {*/
+    getAllUserTask();
+    //}
   }
 
   _sortUserTask(List<Items> tasks, String fromMethod) {
@@ -144,12 +158,10 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
             task.status == 'Pending' ||
             task.status == 'Upcoming' ||
             task.status == 'Overdue') {
-          debugPrint('Debug ==> 4');
           tasksList.add(task);
         }
       } else {
         if (task.status == 'Completed' || task.status == 'Cancelled') {
-          debugPrint('Debug ==> 5');
           tasksList.add(task);
         }
       }
@@ -384,7 +396,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   Widget _createToDos(BuildContext context, int index) {
     final Items task = tasksList.elementAt(index);
-
+    debugPrint('Type ==> ${task.actionType}');
     return /*task.task == 'News feed'
         ? Container()
         : */
@@ -746,6 +758,28 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
                                       color: Color(0XFF909CAC))),
+                              task.task == 'Quality of Life Questionnaire' && task.finished ?
+                              Semantics(
+                                button: true,
+                                child: Text('Show my score',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        shadows: [
+                                          Shadow(
+                                              color: Colors.blue,
+                                              offset: Offset(0, -5))
+                                        ],
+                                        fontSize: 12.0,
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w300,
+                                        color: Colors.transparent,
+                                        decoration:
+                                        TextDecoration.underline,
+                                        decorationColor: Colors.blue,
+                                        decorationThickness: 1,)),
+                              )
+                                  : Container()
                             ],
                           ),
                         ),
@@ -1148,7 +1182,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
-                                      color: primaryColor)),
+                                      color: primaryColor,)),
                               SizedBox(
                                 width: 8,
                               ),
@@ -1203,10 +1237,23 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                             Icons.info_outline_rounded,
                                             color: primaryColor,
                                             size: 24,
+                                            semanticLabel: 'Survey information',
                                           ))
                                       : Container(),
                                 ],
                               ),
+                              task.task == 'Quality of Life Questionnaire' && task.finished ?
+                              Semantics(
+                                button: true,
+                                child: Text('Show my score',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w300,
+                                        color: textBlack)),
+                              )
+                                  : Container()
                               /*SizedBox(
                                 height: 4,
                               ),
@@ -1915,10 +1962,21 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               //showToast('Task completed successfully', context);
             });
           } else {
-            showToast('Task is already completed', context);
+            if(task.action!.assessment!.title == 'Quality of Life Questionnaire') {
+              Navigator.pushNamed(
+                  context, RoutePaths.Assessment_Score_Navigator,
+                  arguments: task.action!.assessment!.id)
+                  .then((value) {
+                getUserTask();
+                //showToast('Task completed successfully', context);
+              });
+            }else {
+              showToast('Task is already completed', context);
+            }
           }
           //Navigator.pushNamed(context, RoutePaths.Assessment_Start_Care_Plan);
           break;
+        case 'Article':
         case 'Link':
           _launchURL(task.action!.url!.replaceAll(' ', '%20')).then((value) {
             getUserTask();
@@ -2088,21 +2146,34 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           }
           break;
         case 'Web':
-          final AssortedViewConfigs newAssortedViewConfigs =
-              AssortedViewConfigs();
-          newAssortedViewConfigs.toShow = '1';
-          newAssortedViewConfigs.testToshow = '2';
-          newAssortedViewConfigs.isNextButtonVisible = false;
-          newAssortedViewConfigs.header = task.task;
-          newAssortedViewConfigs.task = task;
+          debugPrint('Web Category ==> ${task.action!.category}');
+          if (task.action!.category == 'Educational-NewsFeed') {
+            final AssortedViewConfigs newAssortedViewConfigs =
+                AssortedViewConfigs();
+            newAssortedViewConfigs.toShow = '1';
+            newAssortedViewConfigs.testToshow = '2';
+            newAssortedViewConfigs.isNextButtonVisible = false;
+            newAssortedViewConfigs.header = task.task;
+            newAssortedViewConfigs.task = task;
 
-          Navigator.pushNamed(context, RoutePaths.RSS_FEED_LIST,
-                  arguments: newAssortedViewConfigs)
-              .then((value) {
-            //getUserTask();
-            //showToast('Task completed successfully');
-          });
-
+            Navigator.pushNamed(context, RoutePaths.RSS_FEED_LIST,
+                    arguments: newAssortedViewConfigs)
+                .then((value) {
+              //getUserTask();
+              //showToast('Task completed successfully');
+            });
+          } else {
+            //Educational-Link
+            debugPrint('URL ==> ${task.action!.url!.replaceAll(' ', '%20')}');
+            _launchURL(task.action!.url!.replaceAll(' ', '%20')).then((value) {
+              getUserTask();
+              //showToast('Task completed successfully');
+            });
+            if (!task.finished) {
+              completeMessageTaskOfAHACarePlan(
+                  task.action!.userTaskId.toString());
+            }
+          }
           /*if (!task.finished) {
             completeMessageTaskOfAHACarePlan(task);
           }*/
@@ -2167,7 +2238,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Info',
+                  'Survey Information',
                   style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.w700,
@@ -2199,7 +2270,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                   children: [
                     Semantics(
                       button: true,
-                      label: 'Alright',
+                      label: 'Okay',
                       child: ExcludeSemantics(
                         child: InkWell(
                           onTap: () {
@@ -2218,7 +2289,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                 color: primaryColor),
                             child: Center(
                               child: Text(
-                                'Alright',
+                                'Okay',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     color: Colors.white,

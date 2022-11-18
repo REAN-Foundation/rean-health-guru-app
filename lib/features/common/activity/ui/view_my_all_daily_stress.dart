@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
-import 'package:patient/core/constants/route_paths.dart';
+import 'package:patient/features/common/activity/models/movements_tracking.dart';
 import 'package:patient/features/common/nutrition/models/glass_of_water_consumption.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -21,9 +21,17 @@ import 'package:patient/infra/utils/get_sleep_data.dart';
 import 'package:patient/infra/utils/get_sleep_data_in_bed.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 
 //ignore: must_be_immutable
 class ViewMyAllDailyStress extends StatefulWidget {
+
+  bool _appBarView = true;
+
+  ViewMyAllDailyStress(bool appBarView) {
+    _appBarView = appBarView;
+  }
+
   @override
   _ViewMyAllDailyStressState createState() => _ViewMyAllDailyStressState();
 }
@@ -56,6 +64,9 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
   DashboardTile? mindfulnessTimeDashboardTile;
   int oldStoreSec = 0;
   late Timer _timerRefrehs;
+  MovementsTracking? _sleepTracking;
+  int _sleepHrs = 0;
+  DateTime? todaysDate;
 
   loadSharedPrefs() async {
     try {
@@ -83,7 +94,10 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
         DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     endDate = DateTime(DateTime.now().year, DateTime.now().month,
         DateTime.now().day, 23, 59, 59);
+    todaysDate = DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0, 0);
     loadSharedPrefs();
+    loadSleepMovement();
     //loadWaterConsuption();
     if (Platform.isIOS) {
       fetchData();
@@ -101,6 +115,28 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
   void dispose() {
     _timerRefrehs.cancel();
     super.dispose();
+  }
+
+  loadSleepMovement() async {
+    try {
+      final movements = await _sharedPrefUtils.read('sleepTime');
+
+      if (movements != null) {
+        debugPrint('Sleep Inside');
+        _sleepTracking = MovementsTracking.fromJson(movements);
+        debugPrint('Sleep ${_sleepTracking!.date}');
+      }
+
+      if (_sleepTracking != null) {
+        if (todaysDate == _sleepTracking!.date) {
+          debugPrint('Sleep ==> ${_sleepTracking!.value!} Hrs');
+          _sleepHrs = _sleepTracking!.value!;
+        }
+      }
+      setState(() {});
+    } catch (e) {
+      debugPrint('error caught: $e');
+    }
   }
 
   Future<void> fetchData() async {
@@ -281,12 +317,13 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
         child: Scaffold(
             key: _scaffoldKey,
             backgroundColor: Colors.white,
-            appBar: AppBar(
+
+            appBar: widget._appBarView ? AppBar(
               elevation: 0,
               backgroundColor: primaryColor,
               systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
               title: Text(
-                'Mental Health Management',
+                'Mental Well-Being',
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.white,
@@ -305,8 +342,13 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                 },
               )*/
               ],
+            ) : PreferredSize(
+                preferredSize: Size.fromHeight(0.0), // here the desired height
+                child: AppBar(
+
+                )
             ),
-            body: Stack(
+            body: widget._appBarView ? Stack(
               children: [
                 Positioned(
                     top: 0,
@@ -355,14 +397,32 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                   children: [
                 ),*/
               ],
-            )),
+            ):
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              color: Color(0XFFf7f5f5),
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (Platform.isIOS) _content(),
+                    if (Platform.isAndroid) _contentDataReady(),
+                  ],
+                ),
+              ),
+            ),
+        ),
       ),
     );
   }
 
   Widget sleepTime() {
     var sleepToDisplay = 0;
-    if (Platform.isIOS) {
+    if(_sleepHrs != 0){
+      sleepToDisplay = _sleepHrs * 60;
+    }else if (Platform.isIOS) {
       debugPrint(
           'Sleep in Bed ==>${sleepDataInBed!.getSleepDurationInBed().abs()} ');
       debugPrint(
@@ -385,101 +445,116 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(12))),
-      child: Align(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Sleep',
-              semanticsLabel: 'Sleep',
-              style: TextStyle(
-                  fontFamily: "Montserrat",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.0,
-                  color: textBlack),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            ImageIcon(
-              AssetImage('res/images/ic_sleep_2.png'),
-              size: 48,
-              color: primaryColor,
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Text(Conversion.durationFromMinToHrsToString(sleepToDisplay),
-                semanticsLabel:
-                    Conversion.durationFromMinToHrsToString(sleepToDisplay),
-                style: const TextStyle(
-                    color: textBlack,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "Montserrat",
-                    fontStyle: FontStyle.normal,
-                    fontSize: 22.0),
-                textAlign: TextAlign.center),
-            Text("Duration",
-                semanticsLabel: 'Duration',
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  color: Color(0xffa8a8a8),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  fontStyle: FontStyle.normal,
-                )),
-            SizedBox(
-              height: 8,
-            ),
-            if (sleepToDisplay < 420)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Container(
-                  height: 48,
-                  decoration: BoxDecoration(
-                      color: primaryLightColor,
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 16,
-                      ),
-                      Icon(
-                        Icons.info_outline_rounded,
-                        color: primaryColor,
-                        size: 32,
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Expanded(
-                        child: Text(
-                            "You didn’t have enough sleep. Its better to sleep 7-9 hours everyday.",
-                            semanticsLabel:
-                            'You didn’tt have enough sleep. Its better to sleep 7-9 hours everyday.',
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: primaryColor,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500,
-                              fontStyle: FontStyle.normal,
-                            )),
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                    ],
+      child: Stack(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Sleep',
+                    semanticsLabel: 'Sleep',
+                    style: TextStyle(
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18.0,
+                        color: textBlack),
                   ),
-                ),
-              )
-          ],
-        ),
+                ],
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              ImageIcon(
+                AssetImage('res/images/ic_sleep_2.png'),
+                size: 48,
+                color: primaryColor,
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Text(Conversion.durationFromMinToHrsToString(sleepToDisplay),
+                  semanticsLabel:
+                      Conversion.durationFromMinToHrsToString(sleepToDisplay),
+                  style: const TextStyle(
+                      color: textBlack,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "Montserrat",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 22.0),
+                  textAlign: TextAlign.center),
+              Text("Duration",
+                  semanticsLabel: 'Duration',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    color: Color(0xffa8a8a8),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    fontStyle: FontStyle.normal,
+                  )),
+              SizedBox(
+                height: 8,
+              ),
+              if (sleepToDisplay < 420)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Container(
+                    height: 48,
+                    decoration: BoxDecoration(
+                        color: primaryLightColor,
+                        borderRadius: BorderRadius.all(Radius.circular(12))),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Icon(
+                          Icons.info_outline_rounded,
+                          color: primaryColor,
+                          size: 32,
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
+                          child: Text(
+                              "You didn’t have enough sleep. It's better to sleep 7-9 hours everyday.",
+                              semanticsLabel:
+                                  "You didn’tt have enough sleep. It's better to sleep 7-9 hours everyday.",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: primaryColor,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w500,
+                                fontStyle: FontStyle.normal,
+                              )),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+            ],
+          ),
+          Positioned(
+              top: 4,
+              right: 4,
+              child: InfoScreen(
+                  tittle: 'Sleep Information',
+                  description:
+                  'Getting a good night’s sleep every night is vital to cardiovascular health. Adults should aim for an average of 7-9 hours. Too little or too much sleep is associated with heart disease.',
+                  height: 224),)
+        ],
       ),
     );
   }
@@ -491,76 +566,93 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(12))),
-      child: Align(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'Mindfulness',
-              semanticsLabel: 'Mindfulness',
-              style: TextStyle(
-                  fontFamily: "Montserrat",
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.0,
-                  color: textBlack),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            ImageIcon(
-              AssetImage('res/images/ic_mindfulness.png'),
-              size: 48,
-              color: primaryColor,
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Text(Conversion.durationFromSecToMinToString(oldStoreSec),
-                semanticsLabel:
-                    Conversion.durationFromSecToMinToString(oldStoreSec),
-                style: const TextStyle(
-                    color: textBlack,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "Montserrat",
+      child: Stack(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Mindfulness',
+                    semanticsLabel: 'Mindfulness',
+                    style: TextStyle(
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18.0,
+                        color: textBlack),
+                  ),
+
+                ],
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              ImageIcon(
+                AssetImage('res/images/ic_mindfulness.png'),
+                size: 48,
+                color: primaryColor,
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Text(Conversion.durationFromSecToMinToString(oldStoreSec),
+                  semanticsLabel:
+                      Conversion.durationFromSecToMinToString(oldStoreSec),
+                  style: const TextStyle(
+                      color: textBlack,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "Montserrat",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 22.0),
+                  textAlign: TextAlign.center),
+              Text("Duration",
+                  semanticsLabel: 'Duration',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    color: Color(0xffa8a8a8),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
                     fontStyle: FontStyle.normal,
-                    fontSize: 22.0),
-                textAlign: TextAlign.center),
-            Text("Duration",
-                semanticsLabel: 'Duration',
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  color: Color(0xffa8a8a8),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  fontStyle: FontStyle.normal,
-                )),
-            SizedBox(
-              height: 8,
-            ),
-            SizedBox(
-              child: OutlinedButton(
-                child: Text('Start'),
-                onPressed: () {
-                  Navigator.pushNamed(context, RoutePaths.Meditation).then((_) {
-                    loadSharedPrefs();
-                  });
-                },
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(width: 1.0, color: primaryColor),
-                  padding: EdgeInsets.symmetric(horizontal: 64, vertical: 8),
-                  textStyle:
-                      TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                  primary: primaryColor,
-                  shape: BeveledRectangleBorder(
-                    borderRadius: BorderRadius.circular(2),
+                  )),
+              SizedBox(
+                height: 8,
+              ),
+              /*SizedBox(
+                child: OutlinedButton(
+                  child: Text('Start'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, RoutePaths.Meditation).then((_) {
+                      loadSharedPrefs();
+                    });
+                  },
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(width: 1.0, color: primaryColor),
+                    padding: EdgeInsets.symmetric(horizontal: 64, vertical: 8),
+                    textStyle:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    primary: primaryColor,
+                    shape: BeveledRectangleBorder(
+                      borderRadius: BorderRadius.circular(2),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ],
-        ),
+              ),*/
+            ],
+          ),
+          Positioned(
+            top: 4,
+            right: 4,
+            child:  InfoScreen(
+                tittle: 'Mindfulness Information',
+                description:
+                'Practicing mindfulness and meditation may help you manage stress and high blood pressure, sleep better, feel more balanced and connected, and even lower your risk of heart disease.',
+                height: 240),
+          )
+        ],
       ),
     );
   }

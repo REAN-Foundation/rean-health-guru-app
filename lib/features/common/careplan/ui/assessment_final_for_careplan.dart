@@ -318,6 +318,7 @@ class _AssessmentFinalCarePlanViewState
                           InkWell(
                             onTap: () {
                               showDialog(
+        barrierDismissible: false,
                                   context: context,
                                   builder: (_) {
                                     return _dialog(context);

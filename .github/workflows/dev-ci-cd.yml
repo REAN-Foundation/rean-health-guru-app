@@ -241,9 +241,6 @@ jobs:
           echo $FIREBASE_CONFIG > ./ios/config/dev/GoogleService-Info.plist
           # echo $FLUTTER_DOTENV > ./res/.env
 
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
-        
       # Flutter Build Artifact
       - name: Flutter Build
         run: flutter build ios --release --no-codesign --flavor dev -t "lib/main_dev.dart" -v

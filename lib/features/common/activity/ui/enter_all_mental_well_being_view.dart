@@ -411,7 +411,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                         padding: EdgeInsets.symmetric(horizontal: 32, vertical: 8),
                         textStyle:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                        primary: primaryColor,
+                        foregroundColor: primaryColor,
                         shape: BeveledRectangleBorder(
                           borderRadius: BorderRadius.circular(2),
                         ),

@@ -322,7 +322,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
           ),
           Expanded(
             child: Scrollbar(
-              isAlwaysShown: true,
+              thumbVisibility: true,
               controller: _scrollController,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -259,9 +259,9 @@ class _SupportViewState extends State<SupportView> {
                                                       ''
                                                           '',
                                                 });
-                                            await launchUrl(_emailLaunchUri
+                                            await launchUrl(Uri.parse(_emailLaunchUri
                                                 .toString()
-                                                .replaceAll('+', '%20'));
+                                                .replaceAll('+', '%20')));
 
                                             debugPrint(
                                                 'Could not launch ${link.toString()}');

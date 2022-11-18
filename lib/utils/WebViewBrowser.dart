@@ -1,6 +1,3 @@
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -29,8 +26,8 @@ class _WebViewBrowserState extends State<WebViewBrowser> {
   @override
   void initState() {
     super.initState();
-    if (Platform.isAndroid)
-      WebView.platform = AndroidWebView();
+    /*if (Platform.isAndroid)
+      WebView.platform = AndroidWebView();*/
   }
 
   @override

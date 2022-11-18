@@ -154,7 +154,7 @@ class _AssessmentMultiChoiceQuestionViewState
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Scrollbar(
-                isAlwaysShown: true,
+                thumbVisibility: true,
                 child: ListView.builder(
                     itemCount: widget.assesment!.options!.length,
                     itemBuilder: (BuildContext context, int index) {

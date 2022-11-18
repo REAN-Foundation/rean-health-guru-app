@@ -78,10 +78,10 @@
 @import health;
 #endif
 
-#if __has_include(<image_picker_ios/FLTImagePickerPlugin.h>)
-#import <image_picker_ios/FLTImagePickerPlugin.h>
+#if __has_include(<image_picker/FLTImagePickerPlugin.h>)
+#import <image_picker/FLTImagePickerPlugin.h>
 #else
-@import image_picker_ios;
+@import image_picker;
 #endif
 
 #if __has_include(<package_info/FLTPackageInfoPlugin.h>)
@@ -90,10 +90,10 @@
 @import package_info;
 #endif
 
-#if __has_include(<path_provider_ios/FLTPathProviderPlugin.h>)
-#import <path_provider_ios/FLTPathProviderPlugin.h>
+#if __has_include(<path_provider/FLTPathProviderPlugin.h>)
+#import <path_provider/FLTPathProviderPlugin.h>
 #else
-@import path_provider_ios;
+@import path_provider;
 #endif
 
 #if __has_include(<phone_number/PhoneNumberPlugin.h>)
@@ -144,11 +144,10 @@
 @import wakelock;
 #endif
 
-
-#if __has_include(<webview_flutter_wkwebview/FLTWebViewFlutterPlugin.h>)
-#import <webview_flutter_wkwebview/FLTWebViewFlutterPlugin.h>
+#if __has_include(<webview_flutter/FLTWebViewFlutterPlugin.h>)
+#import <webview_flutter/FLTWebViewFlutterPlugin.h>
 #else
-@import webview_flutter_wkwebview;
+@import webview_flutter;
 #endif
 
 @implementation GeneratedPluginRegistrant

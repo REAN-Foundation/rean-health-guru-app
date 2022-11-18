@@ -322,7 +322,7 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
           ),
           Expanded(
             child: Scrollbar(
-              isAlwaysShown: true,
+              thumbVisibility: true,
               controller: _scrollController,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -269,7 +269,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                                 children: [
                                   Expanded(
                                     child: Scrollbar(
-                                      isAlwaysShown: true,
+                                      thumbVisibility: true,
                                       child: SingleChildScrollView(
                                         child: Column(
                                           mainAxisAlignment:
@@ -574,8 +574,8 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     color: textBlack, fontSize: 16, fontFamily: 'Montserrat', fontWeight: FontWeight.w200,),),*/
               Linkify(
                 onOpen: (link) async {
-                  if (await canLaunch(link.url)) {
-                    await launch(link.url);
+                  if (await canLaunchUrl(Uri.parse(link.url))) {
+                    await launchUrl(Uri.parse(link.url));
                   } else {
                     throw 'Could not launch $link';
                   }

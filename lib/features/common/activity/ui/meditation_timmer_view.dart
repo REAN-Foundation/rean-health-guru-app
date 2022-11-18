@@ -340,7 +340,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                         saveMindfulnessTime();
                                                       },
                                                       style: ElevatedButton.styleFrom(
-                                                          primary: primaryColor,
+                                                          backgroundColor: primaryColor,
                                                           padding: EdgeInsets
                                                               .symmetric(
                                                                   horizontal:

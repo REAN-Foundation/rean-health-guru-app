@@ -99,13 +99,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -1202,7 +1202,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     color: iconColor,
                   ),*/
                   Icon(
-                    FontAwesomeIcons.firstAid,
+                    FontAwesomeIcons.kitMedical,
                     color: Colors.white,
                     size: 24,
                   ),
@@ -1289,7 +1289,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(
-                              FontAwesomeIcons.ambulance,
+                              FontAwesomeIcons.truckMedical,
                               color: primaryColor,
                               size: 36,
                             ),

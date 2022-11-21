@@ -179,6 +179,7 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
               mini: false,
               onPressed: () {
                 showDialog(
+        barrierDismissible: false,
                     context: context,
                     builder: (_) {
                       return _addNurseDialog(context);

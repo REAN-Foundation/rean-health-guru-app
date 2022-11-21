@@ -23,7 +23,7 @@ Future<void> main() async {
   await FirebaseMessaging.instance.requestPermission();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool? login = prefs.getBool('login1.8.141');
+  bool? login = prefs.getBool('login1.8.167');
   login ??= false;
   String? sponsor = prefs.getString('Sponsor');
   setSponsor(sponsor??'');

@@ -271,10 +271,10 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
           Visibility(
+            visible: getAppFlavour() != 'HF Helper',
             /*visible: getBaseUrl()!.contains('aha-api-uat') ||
                 getBaseUrl()!.contains('reancare-api-dev') ||
                 getAppName() == 'Heart & Stroke Helper™ ',*/
-            visible: true,
             child: InkWell(
               onTap: () {
                 if (carePlanEnrollmentForPatientGlobe == null) {

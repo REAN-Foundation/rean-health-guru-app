@@ -49,6 +49,8 @@ String dailyMood = '';
 String dailyFeeling = '';
 List<String> dailyEnergyLevels = [];
 List<String> createdGoalsIds = [];
+var healthSystemGlobe;
+var healthSystemHospitalGlobe;
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');
@@ -238,6 +240,10 @@ void showToastMsg(String msg, BuildContext context) {
 void announceText(String text) {
   //SemanticsService.announce('I am saying something', TextDirection.ltr);
   SemanticsService.announce(text, TextDirection.ltr);
+}
+
+hideKeyboard(){
+  FocusManager.instance.primaryFocus!.unfocus();
 }
 
 setImage(String url) {

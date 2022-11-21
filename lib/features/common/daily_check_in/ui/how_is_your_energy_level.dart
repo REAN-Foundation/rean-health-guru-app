@@ -54,7 +54,7 @@ class _HowIsYourEnergyLevel extends State<HowIsYourEnergyLevel>
               ),
               DelayedAnimation(
                 child: Text(
-                  "How is your energy level?",
+                  "How is your energy level today?",
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 18.0,

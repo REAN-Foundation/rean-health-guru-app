@@ -173,7 +173,7 @@ class _EditPatientMedicalProfileViewState
 
     if( widget.healthProfile!.isDiabetic != null)
       isDiabetic = yesOrNo(widget.healthProfile!.isDiabetic!);
-    
+
     if(widget.healthProfile!.hasHighBloodPressure != null) {
       isBloodPressure = yesOrNo(widget.healthProfile!.hasHighBloodPressure!);
     }

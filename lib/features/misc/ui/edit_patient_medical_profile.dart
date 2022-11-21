@@ -59,11 +59,11 @@ class _EditPatientMedicalProfileViewState
   var isDiabetic;
   var hasHeartAilment;
   var sedentaryLifestyle;
-  var isSmoker;
-  var isDrinker;
-  var isBloodPressure;
-  var isHighCholesterol;
-  var isAtrialfibrillation;
+  var isSmoker = '';
+  var isDrinker = '';
+  var isBloodPressure = '';
+  var isHighCholesterol = '';
+  var isAtrialfibrillation = '';
   /*  String _ethnicityValue = '';
   String _raceValue = '';*/
 
@@ -1520,9 +1520,9 @@ class _EditPatientMedicalProfileViewState
       final Map<String, dynamic> data = <String, dynamic>{};
       data['BloodGroup'] = _bloodgroupValue;
       data['MajorAilment'] = _majorAilmentController.text;
-      data['IsDiabetic'] = isDiabetic == 'Yes';
-      data['IsSmoker'] = isSmoker == 'Yes';
-      data['HasHeartAilment'] = hasHeartAilment == 'Yes';
+      data['IsDiabetic'] = isDiabetic == '' ? null : isDiabetic == 'Yes' ? true : false;
+      data['IsSmoker'] = isSmoker == '' ? null : isSmoker == 'Yes' ? true : false;
+      data['HasHeartAilment'] = hasHeartAilment == '' ? null : hasHeartAilment == 'Yes' ? true : false;
       /*data['Ethnicity'] = _ethnicityValue;
       data['Race'] = _raceValue;*/
       data['TypeOfStroke'] = _typeOfStrokeValue == '' ? null : _typeOfStrokeValue;

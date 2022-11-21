@@ -21,6 +21,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SelectCarePlanView extends StatefulWidget {
@@ -48,6 +49,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   List<HealthSystems>? _healthSystems;
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
+  late ProgressDialog progressDialog;
 
   getHealthSystem() async {
     try {
@@ -75,12 +77,12 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
     try {
       healthSystemHospitalList.clear();
       final HealthSyetemHospitalPojo systemHospitals =
-          await model.getHealthSystemHospital(healthSystemId);
+      await model.getHealthSystemHospital(healthSystemId);
 
       if (systemHospitals.status == 'success') {
         for (int i = 0;
-            i < systemHospitals.data!.healthSystemHospitals!.length;
-            i++) {
+        i < systemHospitals.data!.healthSystemHospitals!.length;
+        i++) {
           healthSystemHospitalList.add(
               systemHospitals.data!.healthSystemHospitals![i].name.toString());
         }
@@ -97,6 +99,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   @override
   void initState() {
+    progressDialog = ProgressDialog(context: context);
     model.setBusy(true);
     getHealthSystem();
     getAHACarePlans();
@@ -171,8 +174,8 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   getCarePlanDetails() {
     for (int i = 0;
-        i < _ahaCarePlansResponse.data!.availablePlans!.length;
-        i++) {
+    i < _ahaCarePlansResponse.data!.availablePlans!.length;
+    i++) {
       if (selectedCarePlan ==
           _ahaCarePlansResponse.data!.availablePlans!
               .elementAt(i)
@@ -260,60 +263,60 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                                 topLeft: Radius.circular(12))),
                         child: model!.busy
                             ? Center(
-                                child: CircularProgressIndicator(),
-                              )
+                          child: CircularProgressIndicator(),
+                        )
                             : Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: Scrollbar(
-                                      isAlwaysShown: true,
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            SizedBox(height: 16,),
-                                            Semantics(
-                                              label: 'Health Journey image',
-                                              image: true,
-                                              child: Image.asset(
-                                                'res/images/ic_hf_care_plan.png',
-                                                color: primaryColor,
-                                                width: 120,
-                                                height: 120,
-                                              ),
-                                            ),
-                                            SizedBox(height: 8,),
-                                            Text(
-                                              'Health Journey',
-                                              style: TextStyle(color: textBlack, fontWeight: FontWeight.w700, fontSize: 22),
-                                            ),
-                                            SizedBox(height: 16,),
-                                            selectCarePlanDropDown(),
-                                            startCarePlanDate(),
-                                            SizedBox(height: 8,),
-                                            healthSystem(),
-                                            //checkElegibility(),
-                                            /* if (selectedCarePlan == '')
-                                              Container()
-                                            else*/
-                                            decription != ''
-                                                ? descriptionOfCarePlan()
-                                                : Container(),
-                                            //eligibilityOfCarePlan(),
-                                            //recomandationForCarePlan(),
-                                          ],
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Scrollbar(
+                                isAlwaysShown: true,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      SizedBox(height: 16,),
+                                      Semantics(
+                                        label: 'Health Journey image',
+                                        image: true,
+                                        child: Image.asset(
+                                          'res/images/ic_hf_care_plan.png',
+                                          color: primaryColor,
+                                          width: 120,
+                                          height: 120,
                                         ),
                                       ),
-                                    ),
+                                      SizedBox(height: 8,),
+                                      Text(
+                                        'Health Journey',
+                                        style: TextStyle(color: textBlack, fontWeight: FontWeight.w700, fontSize: 22),
+                                      ),
+                                      SizedBox(height: 16,),
+                                      selectCarePlanDropDown(),
+                                      startCarePlanDate(),
+                                      SizedBox(height: 8,),
+                                      healthSystem(),
+                                      //checkElegibility(),
+                                      /* if (selectedCarePlan == '')
+                                              Container()
+                                            else*/
+                                      decription != ''
+                                          ? descriptionOfCarePlan()
+                                          : Container(),
+                                      //eligibilityOfCarePlan(),
+                                      //recomandationForCarePlan(),
+                                    ],
                                   ),
-                                  registerFooter(),
-                                ],
+                                ),
                               ),
+                            ),
+                            registerFooter(),
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -345,7 +348,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   Widget selectCarePlanDropDown() {
     return Padding(
       padding:
-          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
+      const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -384,7 +387,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     fontWeight: FontWeight.w600),
               ),
               items:
-                  _carePlanMenuItems /*[
+              _carePlanMenuItems /*[
                   DropdownMenuItem(
                     value: "Heart Failure - AHAHF ",
                     child: Text(
@@ -485,17 +488,17 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     showTitleActions: true,
                     minTime: DateTime.now().subtract(Duration(days: 0)),
                     onChanged: (date) {
-                  debugPrint('change $date');
-                }, onConfirm: (date) {
-                  unformatedDOB = date.toIso8601String();
-                  setState(() {
-                    dob = dateFormat.format(date);
-                    startDate =
-                        dateFormatStandard.format(date) + 'T00:00:00.000Z';
-                  });
-                  debugPrint('confirm $date');
-                  debugPrint('confirm formated $startDate');
-                }, currentTime: DateTime.now(), locale: LocaleType.en);
+                      debugPrint('change $date');
+                    }, onConfirm: (date) {
+                      unformatedDOB = date.toIso8601String();
+                      setState(() {
+                        dob = dateFormat.format(date);
+                        startDate =
+                            dateFormatStandard.format(date) + 'T00:00:00.000Z';
+                      });
+                      debugPrint('confirm $date');
+                      debugPrint('confirm formated $startDate');
+                    }, currentTime: DateTime.now(), locale: LocaleType.en);
               },
             ),
           ),
@@ -520,7 +523,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     backgroundColor: Colors.transparent,
                     shape: RoundedRectangleBorder(
                       borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(25.0)),
+                      BorderRadius.vertical(top: Radius.circular(25.0)),
                     ),
                     context: context,
                     builder: (context) => eligibilityOfCarePlan());
@@ -571,24 +574,24 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 ),
                 /* Text("dfbbd", style: TextStyle(
                     color: textBlack, fontSize: 16, fontFamily: 'Montserrat', fontWeight: FontWeight.w200,),),*/
-              Linkify(
-                onOpen: (link) async {
-                  if (await canLaunch(link.url)) {
-                    await launch(link.url);
-                  } else {
-                    throw 'Could not launch $link';
-                  }
-                },
-                options: LinkifyOptions(humanize: false),
-                text: decription.toString(),
-                style: TextStyle(color: textGrey, fontSize: 14),
-                linkStyle: TextStyle(color: Colors.lightBlueAccent),
-              ),
-                    ],
-                  ),
+                Linkify(
+                  onOpen: (link) async {
+                    if (await canLaunch(link.url)) {
+                      await launch(link.url);
+                    } else {
+                      throw 'Could not launch $link';
+                    }
+                  },
+                  options: LinkifyOptions(humanize: false),
+                  text: decription.toString(),
+                  style: TextStyle(color: textGrey, fontSize: 14),
+                  linkStyle: TextStyle(color: Colors.lightBlueAccent),
                 ),
-    ),
-    ],
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -633,7 +636,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 RichText(
                   text: TextSpan(
                     text:
-                        'People of all ages with heart conditions can benefit from a cardiac rehab program. You may benefit if you have or have experienced a:',
+                    'People of all ages with heart conditions can benefit from a cardiac rehab program. You may benefit if you have or have experienced a:',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w500,
@@ -652,7 +655,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                       ),
                       TextSpan(
                           text:
-                              '\n• heart condition, such as coronary artery disease (CAD), angina or heart failure',
+                          '\n• heart condition, such as coronary artery disease (CAD), angina or heart failure',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w500,
@@ -661,7 +664,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           )),
                       TextSpan(
                           text:
-                              '\n• heart procedure or surgery, including coronary artery bypass graft (CABG) surgery, percutaneous coronary intervention (PCI, including coronary or balloon angioplasty and stenting), valve replacement, a pacemaker or implantable cardioverter defibrillator (ICD)',
+                          '\n• heart procedure or surgery, including coronary artery bypass graft (CABG) surgery, percutaneous coronary intervention (PCI, including coronary or balloon angioplasty and stenting), valve replacement, a pacemaker or implantable cardioverter defibrillator (ICD)',
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w500,
@@ -694,7 +697,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(6.0),
                                 border:
-                                    Border.all(color: primaryColor, width: 1),
+                                Border.all(color: primaryColor, width: 1),
                                 color: primaryColor),
                             child: Center(
                               child: Text(
@@ -722,7 +725,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   Widget recomandationForCarePlan() {
     return Padding(
       padding:
-          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
+      const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -815,22 +818,22 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           children: [
             carePlanEligibilityMsg != '' || carePlanEligibilityMsg != null
                 ? Linkify(
-                    onOpen: (link) async {
-                      if (await canLaunch(link.url)) {
-                        await launch(link.url);
-                      } else {
-                        throw 'Could not launch $link';
-                      }
-                    },
-                    options: LinkifyOptions(humanize: false),
-                    text: carePlanEligibilityMsg.toString(),
-                    maxLines: 2,
-                    style: TextStyle(color: Colors.red),
-                    linkStyle: TextStyle(color: Colors.lightBlueAccent),
-                  )
+              onOpen: (link) async {
+                if (await canLaunch(link.url)) {
+                  await launch(link.url);
+                } else {
+                  throw 'Could not launch $link';
+                }
+              },
+              options: LinkifyOptions(humanize: false),
+              text: carePlanEligibilityMsg.toString(),
+              maxLines: 2,
+              style: TextStyle(color: Colors.red),
+              linkStyle: TextStyle(color: Colors.lightBlueAccent),
+            )
                 : SizedBox(
-                    height: 0,
-                  ),
+              height: 0,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -882,6 +885,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
   startCarePlan() async {
     try {
+      progressDialog.show(max: 100, msg: 'Loading...');
       model.setBusy(true);
       final map = <String, String?>{};
       map['Provider'] = carePlanTypes!.provider;
@@ -891,12 +895,23 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       final EnrollCarePlanResponse response = await model.startCarePlan(map);
       debugPrint('Registered Health Journey ==> ${response.toJson()}');
       if (response.status == 'success') {
+        progressDialog.close();
+        if(progressDialog.isOpen()){
+          progressDialog.close();
+        }
         showSuccessDialog();
         //showToast(response.message!, context);
       } else {
         showToast(response.message!, context);
       }
+      if(progressDialog.isOpen()){
+        progressDialog.close();
+      }
     } catch (CustomException) {
+      progressDialog.close();
+      if(progressDialog.isOpen()){
+        progressDialog.close();
+      }
       model.setBusy(false);
       showToast(CustomException.toString(), context);
       debugPrint('Error ' + CustomException.toString());
@@ -906,7 +921,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
   _checkCareplanEligibility(String code) async {
     try {
       final CheckCareplanEligibility response =
-          await model.checkCarePlanEligibility(code);
+      await model.checkCarePlanEligibility(code);
       debugPrint('Eligibility of Health Journey ==> ${response.toJson()}');
       if (response.status == 'success') {
         carePlanEligibility = response.data!.eligibility!.eligible;
@@ -980,8 +995,8 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     onTap: () {
                       Navigator.pushAndRemoveUntil(context,
                           MaterialPageRoute(builder: (context) {
-                        return HomeView(0);
-                      }), (Route<dynamic> route) => false);
+                            return HomeView(0);
+                          }), (Route<dynamic> route) => false);
                     },
                     child: Container(
                       height: 48,
@@ -1146,7 +1161,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
 
     try {
       final BaseResponse updateProfileSuccess =
-          await model.updateProfilePatient(map);
+      await model.updateProfilePatient(map);
 
       if (updateProfileSuccess.status == 'success') {
         showToast(
@@ -1193,10 +1208,10 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       map['authorization'] = 'Bearer ' + auth!;
 
       final response =
-          await apiProvider!.get('/patients/' + patientUserId!, header: map);
+      await apiProvider!.get('/patients/' + patientUserId!, header: map);
 
       final PatientApiDetails doctorListApiResponse =
-          PatientApiDetails.fromJson(response);
+      PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
         debugPrint(doctorListApiResponse.data!.patient!.user!.person!

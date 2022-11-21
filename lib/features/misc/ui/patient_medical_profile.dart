@@ -347,6 +347,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               SizedBox(
                                 height: 8,
                               ),
+                              if(healthProfile!.isSmoker != null)
                               Text('' + yesOrNo(healthProfile!.isSmoker!),
                                   style: TextStyle(
                                       fontSize: 16.0,
@@ -369,6 +370,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                               SizedBox(
                                 width: 8,
                               ),
+                              if(healthProfile!.hasHeartAilment != null)
                               Text(
                                   '' + yesOrNo(healthProfile!.hasHeartAilment!),
                                   style: TextStyle(
@@ -729,7 +731,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
   }
 
   String yesOrNo(bool flag) {
-    return flag ? 'Yes' : 'No';
+    return flag == null ? '' : flag ? 'Yes' : 'No';
   }
 
   _getPatientMedicalProfile() async {

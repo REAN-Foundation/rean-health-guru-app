@@ -56,14 +56,14 @@ class _EditPatientMedicalProfileViewState
 
   final _obstetricHistoryFocus = FocusNode();
 
-  var isDiabetic;
-  var hasHeartAilment;
+  var isDiabetic = '';
+  var hasHeartAilment = '';
   var sedentaryLifestyle;
-  var isSmoker;
-  var isDrinker;
-  var isBloodPressure;
-  var isHighCholesterol;
-  var isAtrialfibrillation;
+  var isSmoker = '';
+  var isDrinker = '';
+  var isBloodPressure = '';
+  var isHighCholesterol = '';
+  var isAtrialfibrillation = '';
   /*  String _ethnicityValue = '';
   String _raceValue = '';*/
 
@@ -150,8 +150,13 @@ class _EditPatientMedicalProfileViewState
       TextPosition(offset: _ocupationController.text.length),
     );
 
+    if(widget.healthProfile!.isDiabetic != null)
     isDiabetic = yesOrNo(widget.healthProfile!.isDiabetic!);
+
+    if(widget.healthProfile!.isSmoker != null)
     isSmoker = yesOrNo(widget.healthProfile!.isSmoker!);
+
+    if(widget.healthProfile!.hasHeartAilment != null)
     hasHeartAilment = yesOrNo(widget.healthProfile!.hasHeartAilment!);
 
     _procedureHistoryController.text =
@@ -166,7 +171,9 @@ class _EditPatientMedicalProfileViewState
 
     _typeOfStrokeValue = widget.healthProfile!.typeOfStroke ?? '';
 
-    isDiabetic = widget.healthProfile!.isDiabetic! == null ? '' : yesOrNo(widget.healthProfile!.isDiabetic!);
+    if( widget.healthProfile!.isDiabetic != null)
+      isDiabetic = yesOrNo(widget.healthProfile!.isDiabetic!);
+
     if(widget.healthProfile!.hasHighBloodPressure != null) {
       isBloodPressure = yesOrNo(widget.healthProfile!.hasHighBloodPressure!);
     }
@@ -1513,9 +1520,9 @@ class _EditPatientMedicalProfileViewState
       final Map<String, dynamic> data = <String, dynamic>{};
       data['BloodGroup'] = _bloodgroupValue;
       data['MajorAilment'] = _majorAilmentController.text;
-      data['IsDiabetic'] = isDiabetic == 'Yes';
-      data['IsSmoker'] = isSmoker == 'Yes';
-      data['HasHeartAilment'] = hasHeartAilment == 'Yes';
+      data['IsDiabetic'] = isDiabetic == '' ? null : isDiabetic == 'Yes' ? true : false;
+      data['IsSmoker'] = isSmoker == '' ? null : isSmoker == 'Yes' ? true : false;
+      data['HasHeartAilment'] = hasHeartAilment == '' ? null : hasHeartAilment == 'Yes' ? true : false;
       /*data['Ethnicity'] = _ethnicityValue;
       data['Race'] = _raceValue;*/
       data['TypeOfStroke'] = _typeOfStrokeValue == '' ? null : _typeOfStrokeValue;

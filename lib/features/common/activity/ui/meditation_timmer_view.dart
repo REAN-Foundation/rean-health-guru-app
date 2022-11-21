@@ -213,7 +213,6 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                       if (_timer != null) ...[
                                                         _timer!.isActive
                                                             ? Semantics(
-                                                                label: 'Play',
                                                                 button: true,
                                                                 child:
                                                                     ExcludeSemantics(
@@ -278,7 +277,6 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                             Radius.circular(
                                                                 70.0))),
                                                 child: Semantics(
-                                                  label: 'Pause',
                                                   button: true,
                                                   child: ExcludeSemantics(
                                                     child: Container(

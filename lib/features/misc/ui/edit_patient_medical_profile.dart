@@ -56,8 +56,8 @@ class _EditPatientMedicalProfileViewState
 
   final _obstetricHistoryFocus = FocusNode();
 
-  var isDiabetic;
-  var hasHeartAilment;
+  var isDiabetic = '';
+  var hasHeartAilment = '';
   var sedentaryLifestyle;
   var isSmoker = '';
   var isDrinker = '';

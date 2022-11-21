@@ -150,8 +150,13 @@ class _EditPatientMedicalProfileViewState
       TextPosition(offset: _ocupationController.text.length),
     );
 
+    if(widget.healthProfile!.isDiabetic != null)
     isDiabetic = yesOrNo(widget.healthProfile!.isDiabetic!);
+
+    if(widget.healthProfile!.isSmoker != null)
     isSmoker = yesOrNo(widget.healthProfile!.isSmoker!);
+
+    if(widget.healthProfile!.hasHeartAilment != null)
     hasHeartAilment = yesOrNo(widget.healthProfile!.hasHeartAilment!);
 
     _procedureHistoryController.text =
@@ -166,7 +171,9 @@ class _EditPatientMedicalProfileViewState
 
     _typeOfStrokeValue = widget.healthProfile!.typeOfStroke ?? '';
 
-    isDiabetic = widget.healthProfile!.isDiabetic! == null ? '' : yesOrNo(widget.healthProfile!.isDiabetic!);
+    if( widget.healthProfile!.isDiabetic != null)
+      isDiabetic = yesOrNo(widget.healthProfile!.isDiabetic!);
+    
     if(widget.healthProfile!.hasHighBloodPressure != null) {
       isBloodPressure = yesOrNo(widget.healthProfile!.hasHighBloodPressure!);
     }

@@ -1265,7 +1265,7 @@
 		};
 		D3AEFBD92552E61000C82377 /* Debug-dev */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FB83C4EAB462811138BCB720 /* Pods-Runner.debug-dev.xcconfig */;
+			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
 				APP_DISPLAY_NAME = "RHG-Dev";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

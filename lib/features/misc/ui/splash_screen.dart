@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:core';
-
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
@@ -49,6 +49,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  final remoteConfig = FirebaseRemoteConfig.instance;
   PackageInfo _packageInfo = PackageInfo(
     appName: '',
     packageName: '',
@@ -84,6 +86,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    setupFirebaseConfig();
     GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
     GetIt.instance.registerSingleton<GetSleepData>(GetSleepData());
     GetIt.instance.registerSingleton<GetSleepDataInBed>(GetSleepDataInBed());
@@ -118,6 +121,25 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     });
   }
+
+  setupFirebaseConfig() async {
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval: const Duration(seconds: 10),
+    ));
+
+    await remoteConfig.setDefaults(const {
+      "sample_string_value": "Hello, world!",
+    });
+
+    await remoteConfig.fetchAndActivate();
+
+    GetIt.instance.registerSingleton<FirebaseRemoteConfig>(remoteConfig);
+
+    debugPrint(
+        'Firebase Remote Config ==> ${remoteConfig.getString('sample_string_value')}');
+  }
+
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,9 @@
 
 
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/medication/models/get_my_medications_response.dart';
@@ -52,6 +54,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   int? incompleteTaskCount = 0;
   int completedMedicationCount = 0;
   int incompleteMedicationCount = 0;
+  var remoteConfig = GetIt.instance<FirebaseRemoteConfig>();
 
 /*  Weight weight;
   BloodPressure bloodPressure;
@@ -83,6 +86,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
 
   @override
   void initState() {
+    debugPrint(
+        'Firebase Remote Config ==> ${remoteConfig.getBool('dashboard_vitals_visibility')}');
     loadSharedPrefs();
     model.setBusy(true);
     Future.delayed(
@@ -228,8 +233,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                 myActivity(),
                 myStress(),
                 //],
-                myBiometrics(),
-                howAreYoursymptoms(),
+                Visibility(visible:remoteConfig.getBool('dashboard_vitals_visibility'), child:myBiometrics()),
+                Visibility(visible:remoteConfig.getBool('dashboard_symptoms_visibility'), child: howAreYoursymptoms()),
                 mylipidProfile(),
                 knowledgeTree(),
                 //myTasks(),

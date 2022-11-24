@@ -183,7 +183,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                 children: [
                   emergency(),
 
-                  Row(
+                  /*Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 16.0, top: 16, bottom: 16),
@@ -204,7 +204,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                       SizedBox(width: 8,),
                     ],
                   ),
-                  healthSystem(),
+                  healthSystem(),*/
                   Row(
                     children: [
                       Padding(

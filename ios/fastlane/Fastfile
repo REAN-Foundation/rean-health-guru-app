@@ -2,7 +2,7 @@ default_platform :ios
 
 platform :ios do
   before_all do
-    xcversion(version: "~> 13.4")
+    xcversion(version: "~> 14.1")
     setup_ci
   end
 

@@ -1,6 +1,9 @@
-import 'package:flutter/cupertino.dart';
+
+
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/medication/models/get_my_medications_response.dart';
@@ -51,6 +54,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   int? incompleteTaskCount = 0;
   int completedMedicationCount = 0;
   int incompleteMedicationCount = 0;
+  var remoteConfig = GetIt.instance<FirebaseRemoteConfig>();
 
 /*  Weight weight;
   BloodPressure bloodPressure;
@@ -82,6 +86,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
 
   @override
   void initState() {
+    debugPrint(
+        'Firebase Remote Config ==> ${remoteConfig.getBool('dashboard_vitals_visibility')}');
     loadSharedPrefs();
     model.setBusy(true);
     Future.delayed(
@@ -98,13 +104,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -227,8 +233,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                 myActivity(),
                 myStress(),
                 //],
-                myBiometrics(),
-                howAreYoursymptoms(),
+                Visibility(visible:remoteConfig.getBool('dashboard_vitals_visibility'), child:myBiometrics()),
+                Visibility(visible:remoteConfig.getBool('dashboard_symptoms_visibility'), child: howAreYoursymptoms()),
                 mylipidProfile(),
                 knowledgeTree(),
                 //myTasks(),
@@ -1201,7 +1207,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     color: iconColor,
                   ),*/
                   Icon(
-                    FontAwesomeIcons.firstAid,
+                    FontAwesomeIcons.kitMedical,
                     color: Colors.white,
                     size: 24,
                   ),
@@ -1288,7 +1294,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(
-                              FontAwesomeIcons.ambulance,
+                              FontAwesomeIcons.truckMedical,
                               color: primaryColor,
                               size: 36,
                             ),
@@ -1496,34 +1502,34 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         final String url =
                             'https://supportnetwork.heart.org/s/';
 
-                        if (await canLaunch(url)) {
-                          await launch(url);
-                        } else {
-                          throw 'Could not launch $url';
-                        }
-                      },
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Visit: ',
-                          style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontSize: 16),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'https://supportnetwork.heart.org/s/',
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 16.0,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            )
-                          ],
+                  if (await canLaunchUrl(Uri.parse(url))) {
+                    await launchUrl(Uri.parse(url));
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Visit: ',
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 16),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'https://supportnetwork.heart.org/s/',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 16.0,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
                         ),
-                      ),
-                    )
+                      )
+                    ],
+                  ),
+                ),
+              )
                   : model.busy
                       ? Center(
                           child: SizedBox(

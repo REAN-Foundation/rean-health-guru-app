@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/dashboard_tile.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -66,7 +67,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
             backgroundColor: Colors.white,
             appBar: AppBar(
               backgroundColor: primaryColor,
-              brightness: Brightness.dark,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
               title: Text(
                 'Mindfulness',
                 style: TextStyle(
@@ -339,7 +340,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                         saveMindfulnessTime();
                                                       },
                                                       style: ElevatedButton.styleFrom(
-                                                          primary: primaryColor,
+                                                          backgroundColor: primaryColor,
                                                           padding: EdgeInsets
                                                               .symmetric(
                                                                   horizontal:

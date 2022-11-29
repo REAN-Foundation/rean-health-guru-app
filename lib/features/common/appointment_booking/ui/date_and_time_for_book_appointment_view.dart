@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/appointment_booking/models/check_conflict_response.dart';
@@ -193,7 +194,7 @@ class _DateAndTimeForBookAppoinmentViewState
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Book A Visit',
               style: TextStyle(

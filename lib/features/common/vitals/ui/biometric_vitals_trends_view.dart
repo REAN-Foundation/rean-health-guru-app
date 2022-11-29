@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/vitals/ui/biometric_trends_view.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -38,7 +39,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Vitals',
               style: TextStyle(

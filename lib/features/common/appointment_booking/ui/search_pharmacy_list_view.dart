@@ -115,7 +115,7 @@ class _SearchPharmacyListViewState extends State<SearchPharmacyListView> {
             preferredSize: Size.fromHeight(60.0),
             child: AppBar(
               backgroundColor: Colors.white,
-              brightness: Brightness.light,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
               title: Text('Lab List',
                     style: TextStyle(
                     fontSize: 16.0,

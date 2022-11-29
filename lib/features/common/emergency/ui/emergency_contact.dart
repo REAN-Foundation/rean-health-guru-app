@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
@@ -174,7 +174,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
           key: _scaffoldKey,
           backgroundColor: Colors.white,
           body: Scrollbar(
-            isAlwaysShown: true,
+            thumbVisibility: true,
             controller: _scrollController,
             child: SingleChildScrollView(
               child: Column(
@@ -442,7 +442,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                     color: iconColor,
                   ),*/
                   Icon(
-                    FontAwesomeIcons.firstAid,
+                    FontAwesomeIcons.kitMedical,
                     color: Colors.white,
                     size: 24,
                   ),
@@ -565,7 +565,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
-                                  FontAwesomeIcons.ambulance,
+                                  FontAwesomeIcons.truckMedical,
                                   color: primaryColor,
                                   size: 36,
                                 ),
@@ -840,8 +840,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                               onTap: () async {
                                 final String url =
                                     'tel://' + details.contactPerson!.phone!;
-                                if (await canLaunch(url)) {
-                                  await launch(url);
+                                if (await canLaunchUrl(Uri.parse(url))) {
+                                  await launchUrl(Uri.parse(url));
                                 } else {
                                   showToast('Unable to dial number', context);
                                   debugPrint('Could not launch $url');
@@ -969,7 +969,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
     final link = 'mailto:' +
         email +
         '?subject=Emergency';
-    if (await canLaunch(
+    if (await canLaunchUrl(
     link.toString())) {
     await launch(link.toString());
     } else {
@@ -1182,8 +1182,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   onTap: () async {
                                     final String url = 'tel://' +
                                         details.contactPerson!.phone!;
-                                    if (await canLaunch(url)) {
-                                      await launch(url);
+                                    if (await canLaunchUrl(Uri.parse(url))) {
+                                      await launchUrl(Uri.parse(url));
                                     } else {
                                       showToast(
                                           'Unable to dial number', context);
@@ -1361,8 +1361,8 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
                                   onTap: () async {
                                     final String url = 'tel://' +
                                         details.contactPerson!.phone!;
-                                    if (await canLaunch(url)) {
-                                      await launch(url);
+                                    if (await canLaunchUrl(Uri.parse(url))) {
+                                      await launchUrl(Uri.parse(url));
                                     } else {
                                       showToast(
                                           'Unable to dial number', context);

@@ -2,6 +2,8 @@
 //  Generated file. Do not edit.
 //
 
+// clang-format off
+
 #import "GeneratedPluginRegistrant.h"
 
 #if __has_include(<device_info_plus/FLTDeviceInfoPlusPlugin.h>)
@@ -32,6 +34,12 @@
 #import <firebase_messaging/FLTFirebaseMessagingPlugin.h>
 #else
 @import firebase_messaging;
+#endif
+
+#if __has_include(<firebase_remote_config/FLTFirebaseRemoteConfigPlugin.h>)
+#import <firebase_remote_config/FLTFirebaseRemoteConfigPlugin.h>
+#else
+@import firebase_remote_config;
 #endif
 
 #if __has_include(<flutter_document_picker/FlutterDocumentPickerPlugin.h>)
@@ -100,10 +108,10 @@
 @import share;
 #endif
 
-#if __has_include(<shared_preferences/FLTSharedPreferencesPlugin.h>)
-#import <shared_preferences/FLTSharedPreferencesPlugin.h>
+#if __has_include(<shared_preferences_ios/FLTSharedPreferencesPlugin.h>)
+#import <shared_preferences_ios/FLTSharedPreferencesPlugin.h>
 #else
-@import shared_preferences;
+@import shared_preferences_ios;
 #endif
 
 #if __has_include(<sqflite/SqflitePlugin.h>)
@@ -118,10 +126,10 @@
 @import syncfusion_flutter_pdfviewer;
 #endif
 
-#if __has_include(<url_launcher/FLTURLLauncherPlugin.h>)
-#import <url_launcher/FLTURLLauncherPlugin.h>
+#if __has_include(<url_launcher_ios/FLTURLLauncherPlugin.h>)
+#import <url_launcher_ios/FLTURLLauncherPlugin.h>
 #else
-@import url_launcher;
+@import url_launcher_ios;
 #endif
 
 #if __has_include(<video_player/FLTVideoPlayerPlugin.h>)
@@ -150,6 +158,7 @@
   [FLTFirebaseAnalyticsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAnalyticsPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [FLTFirebaseMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseMessagingPlugin"]];
+  [FLTFirebaseRemoteConfigPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseRemoteConfigPlugin"]];
   [FlutterDocumentPickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterDocumentPickerPlugin"]];
   [InAppWebViewFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"InAppWebViewFlutterPlugin"]];
   [FlutterKeyboardVisibilityPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterKeyboardVisibilityPlugin"]];

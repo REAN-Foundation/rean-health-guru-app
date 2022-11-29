@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/appointment_booking/models/doctor_appointment_booked_successfully.dart';
@@ -95,7 +96,7 @@ class _BookingAppoinmentConfirmationViewViewState
           appBar: AppBar(
             elevation: 0.0,
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Confirm Booking',
               style: TextStyle(
@@ -476,8 +477,8 @@ class _BookingAppoinmentConfirmationViewViewState
                   linkStyle: TextStyle(color: Colors.blue),
                   onPhoneTap: (link) async {
                     final String url = 'tel://' + link;
-                    if (await canLaunch(url)) {
-                      await launch(url);
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(Uri.parse(url))
                     } else {
                       throw 'Could not launch $url';
                     }
@@ -635,8 +636,8 @@ class _BookingAppoinmentConfirmationViewViewState
                   linkStyle: TextStyle(color: Colors.blue),
                   onPhoneTap: (link) async {
                     final String url = 'tel://' + link;
-                    if (await canLaunch(url)) {
-                      await launch(url);
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(Uri.parse(url))
                     } else {
                       throw 'Could not launch $url';
                     }

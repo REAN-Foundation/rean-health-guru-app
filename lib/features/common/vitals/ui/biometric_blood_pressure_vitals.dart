@@ -81,7 +81,7 @@ class _BiometricBloodPresureVitalsViewState
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                   backgroundColor: Colors.white,
-                  brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                   title: Text(
                     'Blood Pressure',
                     style: TextStyle(
@@ -746,7 +746,7 @@ class _BiometricBloodPresureVitalsViewState
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Scrollbar(
-                          isAlwaysShown: true,
+                          thumbVisibility: true,
                           controller: _scrollController,
                           child: ListView.separated(
                               itemBuilder: (context, index) =>

@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/careplan/models/get_action_plan_list.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -61,7 +62,7 @@ class _DeterminActionPlansForCarePlanViewState
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
               'Set Action for Goals',
               style: TextStyle(

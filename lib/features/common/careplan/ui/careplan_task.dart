@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -174,7 +174,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -190,7 +190,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     progressDialog = ProgressDialog(context: context);
     //debugPrint("startCarePlanResponseGlob ==> ${startCarePlanResponseGlob}");
     triggerApiCall();
@@ -379,7 +379,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   Widget listWidget() {
     return Scrollbar(
-      isAlwaysShown: true,
+      thumbVisibility: true,
       controller: _scrollController,
       child: ListView.separated(
           itemBuilder: (context, index) => _createToDos(context, index),
@@ -2203,8 +2203,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   }
 
   _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
     } else {
       showToast('Could not launch $url', context);
       //throw 'Could not launch $url';

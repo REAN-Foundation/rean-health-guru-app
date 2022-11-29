@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -27,6 +26,8 @@ class _WebViewBrowserState extends State<WebViewBrowser> {
   @override
   void initState() {
     super.initState();
+    /*if (Platform.isAndroid)
+      WebView.platform = AndroidWebView();*/
   }
 
   @override
@@ -38,7 +39,7 @@ class _WebViewBrowserState extends State<WebViewBrowser> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: primaryColor,
-        brightness: Brightness.dark,
+        systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
         title: Text(
           widget._tittle!.substring(0, 1).toUpperCase() +
               widget._tittle!.substring(1),

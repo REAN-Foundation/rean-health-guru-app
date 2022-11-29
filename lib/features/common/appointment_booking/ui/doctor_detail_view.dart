@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/appointment_booking/models/doctor_list_api_response.dart';
 import 'package:patient/features/common/appointment_booking/ui/doctor_tile_widget.dart';
@@ -104,7 +105,7 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
             preferredSize: Size.fromHeight(60.0),
             child: AppBar(
               backgroundColor: Colors.white,
-              brightness: Brightness.light,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
               title: Text(
                 'Doctors Profile',
                 style: TextStyle(
@@ -235,8 +236,8 @@ class _DoctorDetailsViewState extends State<DoctorDetailsView> {
                               linkStyle: TextStyle(color: Colors.blue),
                               onPhoneTap: (link) async {
                                 final String url = 'tel://' + link;
-                                if (await canLaunch(url)) {
-                                  await launch(url);
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(Uri.parse(url))
                                 } else {
                                   throw 'Could not launch $url';
                                 }

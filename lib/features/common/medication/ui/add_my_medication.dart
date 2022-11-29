@@ -165,7 +165,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               backgroundColor: Colors.white,
               appBar: AppBar(
                 backgroundColor: Colors.white,
-                brightness: Brightness.light,
+                systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                 title: Text(
                   'Medications',
                   style: TextStyle(

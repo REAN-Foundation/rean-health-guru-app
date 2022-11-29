@@ -1,5 +1,4 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,7 +34,9 @@ class MyApp extends StatelessWidget {
   bool? isLogin;
   String? _baseUrl;
   String? _botBaseUrl;
-  FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer =
+  FirebaseAnalyticsObserver(analytics: analytics);
   Map<int, Color> color = {
     50: Color(0xFFFFEBEE),
     100: Color(0xFFFFCDD2),

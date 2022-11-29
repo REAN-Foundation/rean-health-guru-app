@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get_it/get_it.dart';
@@ -211,7 +212,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
             appBar: AppBar(
               elevation: 0,
               backgroundColor: primaryColor,
-              brightness: Brightness.dark,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
               title: Text(
                 '',//'Select Health Journey',
                 style: TextStyle(
@@ -266,57 +267,57 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                           child: CircularProgressIndicator(),
                         )
                             : Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Scrollbar(
-                                isAlwaysShown: true,
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      SizedBox(height: 16,),
-                                      Semantics(
-                                        label: 'Health Journey image',
-                                        image: true,
-                                        child: Image.asset(
-                                          'res/images/ic_hf_care_plan.png',
-                                          color: primaryColor,
-                                          width: 120,
-                                          height: 120,
-                                        ),
-                                      ),
-                                      SizedBox(height: 8,),
-                                      Text(
-                                        'Health Journey',
-                                        style: TextStyle(color: textBlack, fontWeight: FontWeight.w700, fontSize: 22),
-                                      ),
-                                      SizedBox(height: 16,),
-                                      selectCarePlanDropDown(),
-                                      startCarePlanDate(),
-                                      SizedBox(height: 8,),
-                                      healthSystem(),
-                                      //checkElegibility(),
-                                      /* if (selectedCarePlan == '')
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Scrollbar(
+                                      thumbVisibility: true,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            SizedBox(height: 16,),
+                                            Semantics(
+                                              label: 'Health Journey image',
+                                              image: true,
+                                              child: Image.asset(
+                                                'res/images/ic_hf_care_plan.png',
+                                                color: primaryColor,
+                                                width: 120,
+                                                height: 120,
+                                              ),
+                                            ),
+                                            SizedBox(height: 8,),
+                                            Text(
+                                              'Health Journey',
+                                              style: TextStyle(color: textBlack, fontWeight: FontWeight.w700, fontSize: 22),
+                                            ),
+                                            SizedBox(height: 16,),
+                                            selectCarePlanDropDown(),
+                                            startCarePlanDate(),
+                                            SizedBox(height: 8,),
+                                            healthSystem(),
+                                            //checkElegibility(),
+                                            /* if (selectedCarePlan == '')
                                               Container()
                                             else*/
-                                      decription != ''
-                                          ? descriptionOfCarePlan()
-                                          : Container(),
-                                      //eligibilityOfCarePlan(),
-                                      //recomandationForCarePlan(),
-                                    ],
+                                            decription != ''
+                                                ? descriptionOfCarePlan()
+                                                : Container(),
+                                            //eligibilityOfCarePlan(),
+                                            //recomandationForCarePlan(),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  registerFooter(),
+                                ],
                               ),
-                            ),
-                            registerFooter(),
-                          ],
-                        ),
                       ),
                     )
                   ],
@@ -574,24 +575,24 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 ),
                 /* Text("dfbbd", style: TextStyle(
                     color: textBlack, fontSize: 16, fontFamily: 'Montserrat', fontWeight: FontWeight.w200,),),*/
-                Linkify(
-                  onOpen: (link) async {
-                    if (await canLaunch(link.url)) {
-                      await launch(link.url);
-                    } else {
-                      throw 'Could not launch $link';
-                    }
-                  },
-                  options: LinkifyOptions(humanize: false),
-                  text: decription.toString(),
-                  style: TextStyle(color: textGrey, fontSize: 14),
-                  linkStyle: TextStyle(color: Colors.lightBlueAccent),
+              Linkify(
+                onOpen: (link) async {
+                  if (await canLaunchUrl(Uri.parse(link.url))) {
+                    await launchUrl(Uri.parse(link.url));
+                  } else {
+                    throw 'Could not launch $link';
+                  }
+                },
+                options: LinkifyOptions(humanize: false),
+                text: decription.toString(),
+                style: TextStyle(color: textGrey, fontSize: 14),
+                linkStyle: TextStyle(color: Colors.lightBlueAccent),
+              ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      ],
+    ),
+    ],
     );
   }
 
@@ -818,19 +819,19 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           children: [
             carePlanEligibilityMsg != '' || carePlanEligibilityMsg != null
                 ? Linkify(
-              onOpen: (link) async {
-                if (await canLaunch(link.url)) {
-                  await launch(link.url);
-                } else {
-                  throw 'Could not launch $link';
-                }
-              },
-              options: LinkifyOptions(humanize: false),
-              text: carePlanEligibilityMsg.toString(),
-              maxLines: 2,
-              style: TextStyle(color: Colors.red),
-              linkStyle: TextStyle(color: Colors.lightBlueAccent),
-            )
+                    onOpen: (link) async {
+                      if (await canLaunchUrl(Uri.parse(link.url))) {
+                        await launchUrl(Uri.parse(link.url));
+                      } else {
+                        throw 'Could not launch $link';
+                      }
+                    },
+                    options: LinkifyOptions(humanize: false),
+                    text: carePlanEligibilityMsg.toString(),
+                    maxLines: 2,
+                    style: TextStyle(color: Colors.red),
+                    linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                  )
                 : SizedBox(
               height: 0,
             ),

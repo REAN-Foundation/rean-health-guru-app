@@ -60,7 +60,7 @@ class _LipidProfileTotalCholesterolViewState
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                   backgroundColor: Colors.white,
-                  brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                   title: Text(
                     'Total Cholesterol',
                     style: TextStyle(
@@ -325,7 +325,7 @@ class _LipidProfileTotalCholesterolViewState
                     ),
                     Expanded(
                       child: Scrollbar(
-                        isAlwaysShown: true,
+                        thumbVisibility: true,
                         controller: _scrollController,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
@@ -52,7 +53,7 @@ class _AssessmentMultiChoiceQuestionViewState
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
               'Assessment',
               style: TextStyle(
@@ -153,7 +154,7 @@ class _AssessmentMultiChoiceQuestionViewState
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Scrollbar(
-                isAlwaysShown: true,
+                thumbVisibility: true,
                 child: ListView.builder(
                     itemCount: widget.assesment!.options!.length,
                     itemBuilder: (BuildContext context, int index) {

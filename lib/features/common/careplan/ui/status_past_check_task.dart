@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/careplan/models/get_task_of_aha_careplan_response.dart';
 import 'package:patient/features/common/careplan/ui/goals/select_goal_set_careplan_goals.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
@@ -60,7 +61,7 @@ class _statusPastCheckTaskViewState extends State<StatusPastCheckTask> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Care Plan Status',
               style: TextStyle(

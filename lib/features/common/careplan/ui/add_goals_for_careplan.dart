@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/careplan/ui/goals/add_blood_pressure_goals_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/goals/add_cholesterol_goals_for_careplan.dart';
 import 'package:patient/features/common/careplan/ui/goals/add_glucose_level_goals_for_careplan.dart';
@@ -59,7 +60,7 @@ class _AddGoalsForCarePlanViewState extends State<AddGoalsForCarePlanView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Semantics(
               label: 'add new goals for care plan',
               readOnly: true,

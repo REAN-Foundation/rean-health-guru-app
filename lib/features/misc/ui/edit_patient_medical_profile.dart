@@ -1,5 +1,4 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/features/common/activity/ui/add_height_cm_dialog.dart';
@@ -207,7 +206,7 @@ class _EditPatientMedicalProfileViewState
         model: model,
         builder: (context, model, child) => Scaffold(
               appBar: AppBar(
-                brightness: Brightness.light,
+                systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                 backgroundColor: Colors.white,
                 title: Text(
                   'Edit Medical Profile',

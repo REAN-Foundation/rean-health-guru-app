@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/medication/view_models/patients_medication.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -39,7 +40,7 @@ class _AddNutritionGoalsForCarePlanViewState
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Set Care Plan Goals',
               style: TextStyle(

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:health/health.dart';
@@ -479,7 +478,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
               ),
               Text(Conversion.durationFromMinToHrsToString(sleepToDisplay),
                   semanticsLabel:
-                      Conversion.durationFromMinToHrsToString(sleepToDisplay),
+                      Conversion.durationFromMinToHrsToString(sleepToDisplay).replaceAll('hr', 'hours').replaceAll('min', 'minutes'),
                   style: const TextStyle(
                       color: textBlack,
                       fontWeight: FontWeight.w700,
@@ -487,15 +486,17 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                       fontStyle: FontStyle.normal,
                       fontSize: 22.0),
                   textAlign: TextAlign.center),
-              Text("Duration",
-                  semanticsLabel: 'Duration',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: Color(0xffa8a8a8),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    fontStyle: FontStyle.normal,
-                  )),
+              ExcludeSemantics(
+                child: Text("Duration",
+                    semanticsLabel: 'Duration',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Color(0xffa8a8a8),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      fontStyle: FontStyle.normal,
+                    )),
+              ),
               SizedBox(
                 height: 8,
               ),
@@ -601,7 +602,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
               ),
               Text(Conversion.durationFromSecToMinToString(oldStoreSec),
                   semanticsLabel:
-                      Conversion.durationFromSecToMinToString(oldStoreSec),
+                      Conversion.durationFromSecToMinToString(oldStoreSec).replaceAll('sec', 'second').replaceAll('min', 'minutes'),
                   style: const TextStyle(
                       color: textBlack,
                       fontWeight: FontWeight.w700,
@@ -609,15 +610,17 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                       fontStyle: FontStyle.normal,
                       fontSize: 22.0),
                   textAlign: TextAlign.center),
-              Text("Duration",
-                  semanticsLabel: 'Duration',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: Color(0xffa8a8a8),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    fontStyle: FontStyle.normal,
-                  )),
+              ExcludeSemantics(
+                child: Text("Duration",
+                    semanticsLabel: 'Duration',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Color(0xffa8a8a8),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      fontStyle: FontStyle.normal,
+                    )),
+              ),
               SizedBox(
                 height: 8,
               ),

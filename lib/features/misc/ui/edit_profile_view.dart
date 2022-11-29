@@ -2556,17 +2556,17 @@ class _EditProfileState extends State<EditProfile> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Material(
-          //Wrap with Material
-          shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
-          elevation: 4.0,
-          color: primaryColor,
-          clipBehavior: Clip.antiAlias,
-          // Add This
-          child: Semantics(
-            label: 'Save Profile',
-            button: true,
+        Semantics(
+          label: 'Save Profile',
+          button: true,
+          child: Material(
+            //Wrap with Material
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
+            elevation: 4.0,
+            color: primaryColor,
+            clipBehavior: Clip.antiAlias,
+            // Add This
             child: MaterialButton(
                 minWidth: 200,
                 child: Text('Save',

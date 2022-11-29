@@ -90,7 +90,7 @@ class _BiometricCholesterolTrendsViewState
             flex: 1,
             child: Semantics(
               label: 'Record Lab Values 1 of 2',
-              selected: _currentIndex == 0 ? true : false,
+              //selected: _currentIndex == 0 ? true : false,
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -127,7 +127,7 @@ class _BiometricCholesterolTrendsViewState
             flex: 1,
             child: Semantics(
               label: 'View Trends 2 of 2',
-              selected: _currentIndex == 1 ? true : false,
+              //selected: _currentIndex == 1 ? true : false,
               child: InkWell(
                 onTap: () {
                   setState(() {

@@ -252,6 +252,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 width: 8,
                               ),
                               Text('' + replaceNull(healthProfile!.bloodGroup),
+                                  semanticsLabel: replaceNull(healthProfile!.bloodGroup).contains('+') ? replaceNull(healthProfile!.bloodGroup).replaceAll('+', ' Positive') : replaceNull(healthProfile!.bloodGroup).replaceAll('-', ' Negative') ,
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w500,

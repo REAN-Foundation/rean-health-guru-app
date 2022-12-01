@@ -1217,7 +1217,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                           fontSize: 14,
                                           fontWeight: FontWeight.w200,
                                           color: textBlack)),
-                                  task.task == 'Survey'
+                                  task.task == 'Survey' || task.task == 'Patient Satisfaction Survey'
                                       ? IconButton(
                                           onPressed: () {
                                             showMaterialModalBottomSheet(
@@ -1231,7 +1231,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                                               25.0)),
                                                 ),
                                                 context: context,
-                                                builder: (context) => _info());
+                                                builder: (context) => _info(task.task.toString()));
                                           },
                                           icon: Icon(
                                             Icons.info_outline_rounded,
@@ -1253,17 +1253,14 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                         fontWeight: FontWeight.w300,
                                         color: textBlack)),
                               )
-                                  : Container()
-                              /*SizedBox(
-                                height: 4,
-                              ),
+                                  : Container(),
                               Text(task.description ?? '',
                                   maxLines: 4,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
-                                      color: Color(0XFF909CAC))),*/
+                                      color: Color(0XFF909CAC))),
                             ],
                           ),
                         ),
@@ -1862,6 +1859,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     setTask(task);
     if (task != null) {
       switch (task.task) {
+        case 'Patient Satisfaction Survey':
         case 'Survey':
           _launchURL(task.action!.details!.link!.replaceAll(' ', '%20'))
               .then((value) {
@@ -2211,7 +2209,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     }
   }
 
-  Widget _info() {
+  Widget _info(String taskType) {
     return Card(
       semanticContainer: false,
       elevation: 0.0,
@@ -2249,7 +2247,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                 const SizedBox(
                   height: 24,
                 ),
-                RichText(
+                if(taskType == 'Survey')
+                  RichText(
                   text: TextSpan(
                     text:
                         'As a part of the American Heart Association’s focus on heart failure, we are asking patients to complete a 5- to 10-minute confidential survey. This will help us better understand how different resources can support patients in managing their heart failure. You will receive a \u002410 e-gift card to thank you for completing the survey. You can earn additional e-gift cards by participating in follow-up surveys. ',
@@ -2262,6 +2261,20 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                     children: <TextSpan>[],
                   ),
                 ),
+                if(taskType == 'Patient Satisfaction Survey')
+                  RichText(
+                    text: TextSpan(
+                      text:
+                      'As part of the American Heart Association’s (AHA) focus on cholesterol, we would like to know what you thought of the Heart & Stroke Helper. To provide an opportunity to hear from you, the AHA’s program study team invites you to complete this 5-10 minute survey. \n\nYou will receive a \u002410 Amazon gift card as a token of appreciation for completing the full survey.',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: textGrey,
+                      ),
+                      children: <TextSpan>[],
+                    ),
+                  ),
                 const SizedBox(
                   height: 24,
                 ),

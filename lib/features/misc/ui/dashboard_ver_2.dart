@@ -2471,7 +2471,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             Icons.add_circle,
                             size: 32,
                             color: iconColor,
-                            semanticLabel: 'Add physical health record',
+                            semanticLabel: 'Add physical activity',
                           ),
                           onPressed: () {
                             Navigator.pushNamed(

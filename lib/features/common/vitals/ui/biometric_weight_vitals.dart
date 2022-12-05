@@ -231,7 +231,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
       setState(() {});
     }
 
-    announceText('Your recent BMI is ${bmiValue.toStringAsFixed(2)} and your recent BMI status is $bmiResult');
+    Future.delayed(const Duration(seconds: 4), () => announceText('Your recent BMI is ${bmiValue.toStringAsFixed(2)} and your recent BMI status is $bmiResult'));
 
     /*new Timer(const Duration(milliseconds: 3000), () {
       setState(() {

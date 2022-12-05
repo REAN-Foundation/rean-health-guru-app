@@ -94,7 +94,6 @@ class _AllMovementsViewState extends State<AllMovementsView> {
             flex: 1,
             child: Semantics(
               label: 'Record Movements 1 of 2',
-              selected: true,
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -134,7 +133,6 @@ class _AllMovementsViewState extends State<AllMovementsView> {
             flex: 1,
             child: Semantics(
               label: 'View Moments 2 of 2',
-              selected: true,
               child: InkWell(
                 onTap: () {
                   setState(() {

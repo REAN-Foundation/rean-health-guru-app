@@ -176,10 +176,12 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                             child: InkWell(
                               onTap: () {
                                 toastDisplay = true;
+                                bool validationToastDisplay = true;
                                 if (_standController.text != null &&
                                     _standController.text.trim().isNotEmpty) {
                                   debugPrint(
                                       'Stand ==> ${_standController.text}');
+                                  validationToastDisplay = false;
                                   recordMyStand();
                                   recordMyStandTimeInMinutes(
                                       int.parse(_standController.text));
@@ -189,6 +191,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                                     _stepscontroller.text.trim().isNotEmpty) {
                                   debugPrint(
                                       'Steps ==> ${_stepscontroller.text}');
+                                  validationToastDisplay = false;
                                   recordMySteps();
                                   recordMyStepCount(
                                       int.parse(_stepscontroller.text));
@@ -200,8 +203,13 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                                         .isNotEmpty) {
                                   debugPrint(
                                       'Exercise ==> ${_exerciseController.text}');
+                                  validationToastDisplay = false;
                                   recordMyExcerciseTimeInMinutes(
                                       int.parse(_exerciseController.text));
+                                }
+
+                                if(validationToastDisplay){
+                                  showToast('Please enter valid input', context);
                                 }
                               },
                               child: ExcludeSemantics(

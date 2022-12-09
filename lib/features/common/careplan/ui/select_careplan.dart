@@ -363,6 +363,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               ),
               Text(
                 '*',
+                semanticsLabel: 'Mandatory feild',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
@@ -438,6 +439,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               ),
               Text(
                 '*',
+                semanticsLabel: 'Mandatory feild',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
@@ -586,7 +588,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 options: LinkifyOptions(humanize: false),
                 text: decription.toString(),
                 style: TextStyle(color: textGrey, fontSize: 14),
-                linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                linkStyle: TextStyle(color: hyperLinkTextColor),
               ),
                     ],
                   ),
@@ -830,7 +832,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     text: carePlanEligibilityMsg.toString(),
                     maxLines: 2,
                     style: TextStyle(color: Colors.red),
-                    linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                    linkStyle: TextStyle(color: hyperLinkTextColor),
                   )
                 : SizedBox(
               height: 0,

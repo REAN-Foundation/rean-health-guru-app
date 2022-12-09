@@ -226,7 +226,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                             color: Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.w500),
-                        linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                        linkStyle: TextStyle(color: hyperLinkTextColor),
                       ),
 
                       SizedBox(
@@ -265,7 +265,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                             color: Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.w500),
-                        linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                        linkStyle: TextStyle(color: hyperLinkTextColor),
                       ),
       ],
                     ],

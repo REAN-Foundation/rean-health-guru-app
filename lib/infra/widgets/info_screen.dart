@@ -115,7 +115,7 @@ class _InfoScreenState extends State<InfoScreen> {
                           fontSize: 14,
                           color: textGrey,
                         ),
-                      linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                      linkStyle: TextStyle(color: hyperLinkTextColor),
                     ),
                   ),
                 ],

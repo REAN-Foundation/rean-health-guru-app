@@ -234,6 +234,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
               ),
               Text(
                 '*',
+                semanticsLabel: 'Mandatory feild',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
@@ -288,6 +289,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
               ),
               Text(
                 '*',
+                semanticsLabel: 'Mandatory feild',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
@@ -343,6 +345,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
               ),
               Text(
                 '*',
+                semanticsLabel: 'Mandatory feild',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
@@ -523,6 +526,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
               ),
               Text(
                 '*',
+                semanticsLabel: 'Mandatory feild',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),

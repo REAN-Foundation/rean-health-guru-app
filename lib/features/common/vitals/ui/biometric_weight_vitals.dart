@@ -364,7 +364,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.w500,
                                 fontSize: bmiValue == 0.0 ? 14 : 28.0,
-                                color: Colors.lightBlueAccent),
+                                color: hyperLinkTextColor),
                           ),
                         ),
                       ),

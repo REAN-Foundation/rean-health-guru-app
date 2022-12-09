@@ -352,6 +352,9 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
             Expanded(
               child: Text.rich(
                 TextSpan(
+                  semanticsLabel: getAppType() == "AHA"
+                      ? 'I agree to the American Heart Association’s privacy policy and terms of service'
+                      : "I agree to the REAN HealthGuru privacy policy",
                   children: [
                     TextSpan(
                         text: getAppType() == "AHA"

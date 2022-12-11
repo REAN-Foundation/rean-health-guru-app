@@ -49,9 +49,14 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   int? maxLengthOfPhone = 0;
   bool? isPrivacyPolicyChecked = false;
   bool privacyPolicyErrorVisibility = false;
+  String privacySemanticsLabel = '';
 
   @override
   void initState() {
+    if(getAppType() == "AHA"){
+      privacySemanticsLabel = 'I agree to the American Heart Association’s privacy policy and terms of service';
+      privacySemanticsLabel = "I agree to the REAN HealthGuru privacy policy";
+    }
     progressDialog = ProgressDialog(context: context);
     getKnowdledgeLinkLastViewDate();
     permissionDialog();
@@ -352,9 +357,6 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
             Expanded(
               child: Text.rich(
                 TextSpan(
-                  semanticsLabel: getAppType() == "AHA"
-                      ? 'I agree to the American Heart Association’s privacy policy and terms of service'
-                      : "I agree to the REAN HealthGuru privacy policy",
                   children: [
                     TextSpan(
                         text: getAppType() == "AHA"

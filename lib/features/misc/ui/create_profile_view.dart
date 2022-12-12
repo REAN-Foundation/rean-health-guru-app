@@ -56,7 +56,7 @@ class _CreateProfileState extends State<CreateProfile> {
   String fullName = '';
   var dateFormat = DateFormat('MMM dd, yyyy');
 
-  final List<String> radioItemsForGender = ['Female', 'Male', 'Non-binary', 'Prefer to self-describe', 'Prefer not to answer'];
+  final List<String> radioItemsForGender = ['Male', 'Intersex', 'Female'];
 
   //Patient patient;
   //String profileImage = "";

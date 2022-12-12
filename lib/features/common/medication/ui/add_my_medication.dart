@@ -278,6 +278,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
             Text(
               '*',
+              semanticsLabel: 'Mandatory feild',
               style: TextStyle(
                   color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
             ),
@@ -412,6 +413,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
             Text(
               '*',
+              semanticsLabel: 'Mandatory feild',
               style: TextStyle(
                   color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
             ),
@@ -513,6 +515,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
             Text(
               '*',
+              semanticsLabel: 'Mandatory feild',
               style: TextStyle(
                   color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
             ),
@@ -591,6 +594,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
             ),
             Text(
               '*',
+              semanticsLabel: 'Mandatory feild',
               style: TextStyle(
                   color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
             ),
@@ -1123,6 +1127,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
             Text(
               '*',
+              semanticsLabel: 'Mandatory feild',
               style: TextStyle(
                   color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
             ),

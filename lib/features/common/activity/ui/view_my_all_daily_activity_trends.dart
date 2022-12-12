@@ -525,7 +525,7 @@ class _ViewMyAllDailyActivityTrendsState
                 ),
                 Text(Conversion.durationFromMinToHrsToString(standMovements),
                     semanticsLabel:
-                        Conversion.durationFromMinToHrsToString(standMovements),
+                        Conversion.durationFromMinToHrsToString(standMovements).replaceAll('min', 'minutes').replaceAll('hr', 'hours'),
                     style: const TextStyle(
                         color: textBlack,
                         fontWeight: FontWeight.w700,
@@ -822,7 +822,7 @@ class _ViewMyAllDailyActivityTrendsState
                 ),
                 Text(Conversion.durationFromMinToHrsToString(exerciseToDisplay),
                     semanticsLabel:
-                        Conversion.durationFromMinToHrsToString(exerciseToDisplay),
+                        Conversion.durationFromMinToHrsToString(exerciseToDisplay).replaceAll('min', 'minutes').replaceAll('hr', 'hours'),
                     style: const TextStyle(
                         color: textBlack,
                         fontWeight: FontWeight.w700,

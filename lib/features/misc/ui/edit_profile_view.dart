@@ -95,7 +95,7 @@ class _EditProfileState extends State<EditProfile> {
   String? imageResourceId = '';
   var _api_key;
 
-  final List<String> radioItemsForGender = ['Female', 'Male', 'Non-binary', 'Prefer to self-describe', 'Prefer not to answer'];
+  final List<String> radioItemsForGender = ['Male', 'Intersex', 'Female'];
   String _maritalStatusValue = '';
   String _countryValue = '';
   List<String> countryList = [];

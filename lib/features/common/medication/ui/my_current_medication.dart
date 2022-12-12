@@ -87,7 +87,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
               size: 24,
             ),*/
             child: Text(
-              'Add medication',
+              'Add Medication',
               style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.white,

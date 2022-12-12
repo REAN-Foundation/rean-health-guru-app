@@ -43,7 +43,7 @@ class _MyDialogState extends State<AddNurseDialog> {
   String? mobileNumber = '';
   String? countryCode = '';
   int? maxLengthOfPhone = 0;
-  final List<String> radioItemsForGender = ['Female', 'Male', 'Non-binary', 'Prefer to self-describe', 'Prefer not to answer'];
+  final List<String> radioItemsForGender = ['Male', 'Intersex', 'Female'];
 
   @override
   void initState() {

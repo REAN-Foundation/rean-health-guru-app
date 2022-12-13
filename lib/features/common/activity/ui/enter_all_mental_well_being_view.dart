@@ -243,6 +243,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                               onPressed: () {
                                 if (_sleepHrs != 0) {
                                   _sleepHrs = _sleepHrs - 1;
+                                  announceText('$_sleepHrs hours of sleep');
                                   setState(() {});
                                   //recordMySleepTimeInHrs();
                                 }
@@ -251,14 +252,14 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                                 Icons.remove,
                                 color: primaryColor,
                                 semanticLabel:
-                                'decrease sleep in hrs',
+                                'decrease sleep in hours',
                                 size: 24,
                               ),
                             ),
                           ),
                         ),
                         Semantics(
-                          label: '',
+                          label: '$_sleepHrs hours of sleep',
                           child: ExcludeSemantics(
                             child: Container(
                               width: 180,
@@ -311,6 +312,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                             child: IconButton(
                               onPressed: () {
                                 _sleepHrs = _sleepHrs + 1;
+                                announceText('$_sleepHrs hours of sleep');
                                 setState(() {});
                                 debugPrint(
                                     "_sleepHrs ==> $_sleepHrs");
@@ -322,7 +324,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                                 Icons.add,
                                 color: primaryColor,
                                 semanticLabel:
-                                'increase sleep in hrs',
+                                'increase sleep in hours',
                                 size: 24,
                               ),
                             ),
@@ -390,7 +392,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                 children: [
                   Text(Conversion.durationFromSecToMinToString(oldStoreSec),
                       semanticsLabel:
-                      Conversion.durationFromSecToMinToString(oldStoreSec),
+                      Conversion.durationFromSecToMinToString(oldStoreSec).replaceAll('sec', 'second').replaceAll('min', 'minutes'),
                       style: const TextStyle(
                           color: textBlack,
                           fontWeight: FontWeight.w500,

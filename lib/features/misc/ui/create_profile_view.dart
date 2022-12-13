@@ -56,7 +56,7 @@ class _CreateProfileState extends State<CreateProfile> {
   String fullName = '';
   var dateFormat = DateFormat('MMM dd, yyyy');
 
-  final List<String> radioItemsForGender = ['Male', 'Intersex', 'Female'];
+  final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
 
   //Patient patient;
   //String profileImage = "";
@@ -290,7 +290,7 @@ class _CreateProfileState extends State<CreateProfile> {
               ),
               Text(
                 '*',
-                semanticsLabel: 'Mandatory feild',
+                semanticsLabel: 'required',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
@@ -311,6 +311,7 @@ class _CreateProfileState extends State<CreateProfile> {
             ),
             child: Semantics(
               label: 'First Name ' + _firstNameController.text.toString(),
+              hint: 'required',
               child: TextFormField(
                   textCapitalization: TextCapitalization.sentences,
                   obscureText: isPassword,
@@ -347,7 +348,7 @@ class _CreateProfileState extends State<CreateProfile> {
               ),
               Text(
                 '*',
-                semanticsLabel: 'Mandatory feild',
+                semanticsLabel: 'required',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
@@ -368,6 +369,7 @@ class _CreateProfileState extends State<CreateProfile> {
             ),
             child: Semantics(
               label: 'Last name ' + _lastNameController.text.toString(),
+              hint: 'required',
               child: TextFormField(
                   textCapitalization: TextCapitalization.sentences,
                   obscureText: isPassword,
@@ -661,7 +663,7 @@ class _CreateProfileState extends State<CreateProfile> {
               ),
               Text(
                 '*',
-                semanticsLabel: 'Mandatory feild',
+                semanticsLabel: 'required',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
@@ -707,34 +709,37 @@ class _CreateProfileState extends State<CreateProfile> {
               textPosition: RadioButtonTextPosition.right,
             ),
           ),*/
-           Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4.0),
-                    border: Border.all(color: Color(0XFF909CAC), width: 0.80),
-                    color: Colors.white),
-                child: DropdownButton<String>(
-                  isExpanded: true,
-                  value: selectedGender == ''
-                      ? null
-                      : selectedGender,
-                  items: radioItemsForGender.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  hint: Text('Choose an option'),
-                  onChanged: (data) {
-                    debugPrint(data);
-                    setState(() {
-                      selectedGender = data.toString();
-                    });
-                    setState(() {});
-                  },
+           Semantics(
+             hint: 'required',
+             child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                      border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                      color: Colors.white),
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: selectedGender == ''
+                        ? null
+                        : selectedGender,
+                    items: radioItemsForGender.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: Text('Choose an option'),
+                    onChanged: (data) {
+                      debugPrint(data);
+                      setState(() {
+                        selectedGender = data.toString();
+                      });
+                      setState(() {});
+                    },
+                  ),
                 ),
-              )
+           )
         ],
       ),
     );
@@ -754,7 +759,7 @@ class _CreateProfileState extends State<CreateProfile> {
               ),
               Text(
                 '*',
-                semanticsLabel: 'Mandatory feild',
+                semanticsLabel: 'required',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
@@ -766,6 +771,7 @@ class _CreateProfileState extends State<CreateProfile> {
           Semantics(
             label: 'Date of Birth ' + dob,
             button: true,
+            hint: 'required',
             child: GestureDetector(
               child: Container(
                 width: MediaQuery.of(context).size.width,

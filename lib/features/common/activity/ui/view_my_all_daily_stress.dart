@@ -632,6 +632,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
               SizedBox(
                 height: 8,
               ),
+              
               /*SizedBox(
                 child: OutlinedButton(
                   child: Text('Start'),

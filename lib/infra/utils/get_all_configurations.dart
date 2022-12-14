@@ -15,7 +15,7 @@ class GetAllConfigrations {
     _getMedicationDosageUnits();
     _getMedicationFrequencies();
     _getMedicationDurationUnits();
-    _generateReport();
+    //_generateReport();
     //_getAllLabSamples();
     //_getAllSymptoms();
     //_getAllDygnoses();

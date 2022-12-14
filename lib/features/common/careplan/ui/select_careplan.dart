@@ -363,6 +363,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               ),
               Text(
                 '*',
+                semanticsLabel: 'required',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
@@ -371,42 +372,45 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           const SizedBox(
             height: 4,
           ),
-          Container(
-            height: 48,
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              border: Border.all(color: Colors.grey, width: 1),
-            ),
-            child: DropdownButton<String>(
-              isExpanded: true,
-              hint: Text('Choose an option',
-                style: TextStyle(
-                    color: textBlack,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600),
+          Semantics(
+            hint: 'required',
+            child: Container(
+              height: 48,
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(color: Colors.grey, width: 1),
               ),
-              items:
-              _carePlanMenuItems /*[
-                  DropdownMenuItem(
-                    value: "Heart Failure - AHAHF ",
-                    child: Text(
-                      "Heart Failure - AHAHF ",
-                      style: TextStyle(
-                          color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
+              child: DropdownButton<String>(
+                isExpanded: true,
+                hint: Text('Choose an option',
+                  style: TextStyle(
+                      color: textBlack,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                ),
+                items:
+                _carePlanMenuItems /*[
+                    DropdownMenuItem(
+                      value: "Heart Failure - AHAHF ",
+                      child: Text(
+                        "Heart Failure - AHAHF ",
+                        style: TextStyle(
+                            color: textBlack, fontSize: 14, fontWeight: FontWeight.w600),
+                      ),
                     ),
-                  ),
 
-                ]*/
-              ,
-              onChanged: (value) {
-                setState(() {
-                  selectedCarePlan = value;
-                  getCarePlanDetails();
-                });
-              },
-              value: selectedCarePlan == '' ? null : selectedCarePlan,
+                  ]*/
+                ,
+                onChanged: (value) {
+                  setState(() {
+                    selectedCarePlan = value;
+                    getCarePlanDetails();
+                  });
+                },
+                value: selectedCarePlan == '' ? null : selectedCarePlan,
+              ),
             ),
           ),
           const SizedBox(
@@ -438,6 +442,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
               ),
               Text(
                 '*',
+                semanticsLabel: 'required',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
@@ -449,6 +454,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           Semantics(
             label: 'Select start date ' + dob,
             button: true,
+            hint: 'required',
             child: GestureDetector(
               child: ExcludeSemantics(
                 child: Container(
@@ -586,7 +592,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                 options: LinkifyOptions(humanize: false),
                 text: decription.toString(),
                 style: TextStyle(color: textGrey, fontSize: 14),
-                linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                linkStyle: TextStyle(color: hyperLinkTextColor),
               ),
                     ],
                   ),
@@ -830,7 +836,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                     text: carePlanEligibilityMsg.toString(),
                     maxLines: 2,
                     style: TextStyle(color: Colors.red),
-                    linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                    linkStyle: TextStyle(color: hyperLinkTextColor),
                   )
                 : SizedBox(
               height: 0,

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
@@ -29,7 +28,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.get(
-        '/care-plans/patients/' + patientUserId! + '/enrollments',
+        '/care-plans/patients/' + patientUserId! + '/enrollments?isAcvtive=true',
         header: map);
     setBusy(false);
     // Convert and return

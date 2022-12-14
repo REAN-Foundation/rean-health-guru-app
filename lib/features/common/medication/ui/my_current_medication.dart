@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -67,6 +66,47 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
     setState(() {});
   }
 
+  Widget addButtonWidget() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width - 20,
+          height: 40,
+          child: ElevatedButton(
+            //.icon
+            onPressed: () async {
+              Navigator.pushNamed(context, RoutePaths.ADD_MY_MEDICATION, arguments: 'Medication')
+                  .then((value) {
+                getMyMedications();
+              });
+            },
+            /*icon: Icon(
+              Icons.file_upload,
+              color: Colors.white,
+              size: 24,
+            ),*/
+            child: Text(
+              'Add Medication',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600),
+            ),
+            style: ButtonStyle(
+                foregroundColor:
+                MaterialStateProperty.all<Color>(primaryLightColor),
+                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
+                        side: BorderSide(color: primaryColor)))),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     progressDialog = ProgressDialog(context: context);
@@ -76,19 +116,26 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
         child: Scaffold(
             key: _scaffoldKey,
             backgroundColor: Colors.white,
-            body: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: model!.busy
-                  ? Center(
-                      child: SizedBox(
-                          height: 32,
-                          width: 32,
-                          child: CircularProgressIndicator()))
-                  : (currentMedicationList.isEmpty
-                      ? noMedicationFound()
-                      : listWidget()),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                addButtonWidget(),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: model!.busy
+                      ? Center(
+                          child: SizedBox(
+                              height: 32,
+                              width: 32,
+                              child: CircularProgressIndicator()))
+                      : (currentMedicationList.isEmpty
+                          ? noMedicationFound()
+                          : listWidget()),
+                ),
+              ],
             ),
-            floatingActionButton: Semantics(
+            /*floatingActionButton: Semantics(
               label: 'Add new medication',
               button: true,
               container: true,
@@ -105,9 +152,8 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                         .then((value) {
                       getMyMedications();
                     });
-                  }),
+                  }),*/
             )),
-      ),
     );
   }
 
@@ -127,7 +173,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                     color: primaryColor)),
             InfoScreen(
                 tittle: 'Medications Information',
-                description: 'Add your medications by pressing the + sign.',
+                description: 'Add your medications by pressing the add medication button.',
                 height: 180)
           ],
         ),

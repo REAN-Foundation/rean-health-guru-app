@@ -251,7 +251,6 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                                               primaryColor,
                                                                           size:
                                                                               64,
-                                                                          semanticLabel: 'Play',
                                                                         ),
                                                                       ],
                                                                     ),
@@ -306,7 +305,6 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                           Icon(
                                                             Icons.pause,
                                                             color: primaryColor,
-                                                            semanticLabel: 'Pause',
                                                             size: 64,
                                                           ),
                                                         ],

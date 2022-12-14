@@ -278,6 +278,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
             Text(
               '*',
+              semanticsLabel: 'required',
               style: TextStyle(
                   color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
             ),
@@ -353,6 +354,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 child: Center(
                   child: Semantics(
                     label: 'Search new drug',
+                    hint: 'required',
                     button: true,
                     child: InkWell(
                       onTap: () {
@@ -412,6 +414,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
             Text(
               '*',
+              semanticsLabel: 'required',
               style: TextStyle(
                   color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
             ),
@@ -435,6 +438,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   color: Colors.white),
               child: Semantics(
                 label: 'units',
+                hint: 'required',
                 child: TextFormField(
                     controller: _unitController,
                     maxLines: 1,
@@ -513,6 +517,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
             Text(
               '*',
+              semanticsLabel: 'required',
               style: TextStyle(
                   color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
             ),
@@ -535,6 +540,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     color: Colors.white),
                 child: Semantics(
                   label: 'Frequency of medicine',
+                  hint: 'required',
                   child: DropdownButton<String>(
                     isExpanded: true,
                     value: _frequencyUnit == '' ? null : _frequencyUnit,
@@ -591,6 +597,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
             ),
             Text(
               '*',
+              semanticsLabel: 'required',
               style: TextStyle(
                   color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
             ),
@@ -1123,6 +1130,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600)),
             Text(
               '*',
+              semanticsLabel: 'required',
               style: TextStyle(
                   color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
             ),

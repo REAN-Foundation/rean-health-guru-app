@@ -523,25 +523,31 @@ class _ViewMyAllDailyActivityTrendsState
                 SizedBox(
                   height: 16,
                 ),
-                Text(Conversion.durationFromMinToHrsToString(standMovements),
-                    semanticsLabel:
-                        Conversion.durationFromMinToHrsToString(standMovements),
-                    style: const TextStyle(
-                        color: textBlack,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: "Montserrat",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 22.0),
-                    textAlign: TextAlign.center),
-                Text("Duration",
-                    semanticsLabel: 'Duration',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color: textBlack,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.normal,
-                    )),
+                MergeSemantics(
+                  child: Column(
+                    children: [
+                      Text(Conversion.durationFromMinToHrsToString(standMovements),
+                          semanticsLabel:
+                              Conversion.durationFromMinToHrsToString(standMovements).replaceAll('min', 'minutes').replaceAll('hr', 'hours'),
+                          style: const TextStyle(
+                              color: textBlack,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "Montserrat",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 22.0),
+                          textAlign: TextAlign.center),
+                      Text("Duration",
+                          semanticsLabel: 'Duration',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: textBlack,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal,
+                          )),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -632,24 +638,31 @@ class _ViewMyAllDailyActivityTrendsState
                 SizedBox(
                   height: 16,
                 ),
-                Text(stepsToDisplay.toString(),
-                    semanticsLabel: stepsToDisplay.toString(),
-                    style: const TextStyle(
-                        color: textBlack,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: "Montserrat",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 22.0),
-                    textAlign: TextAlign.center),
-                Text("Steps",
-                    semanticsLabel: 'Steps',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color: secondaryTextBlack,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.normal,
-                    )),
+                MergeSemantics(
+                  child: Column(
+                    children: [
+                      Text(stepsToDisplay.toString(),
+                          semanticsLabel: stepsToDisplay.toString(),
+                          style: const TextStyle(
+                              color: textBlack,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "Montserrat",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 22.0),
+                          textAlign: TextAlign.center),
+                      Text("Steps",
+                          semanticsLabel: 'Steps',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: secondaryTextBlack,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal,
+                          )),
+                    ],
+                  ),
+                ),
+
               ],
             ),
           ),
@@ -736,26 +749,32 @@ class _ViewMyAllDailyActivityTrendsState
               SizedBox(
                 height: 16,
               ),
-              Text(
-                steps.toString(),
-                semanticsLabel: steps.toString(),
-                style: TextStyle(
-                    fontFamily: "Montserrat",
-                    fontWeight: FontWeight.w700,
-                    fontSize: 22.0,
-                    color: textBlack),
-              ),
-              SizedBox(
-                height: 2,
-              ),
-              Text(
-                'Steps',
-                semanticsLabel: 'Steps',
-                style: TextStyle(
-                    fontFamily: "Montserrat",
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12.0,
-                    color: secondaryTextBlack),
+              MergeSemantics(
+                child: Column(
+                  children: [
+                    Text(
+                      steps.toString(),
+                      semanticsLabel: steps.toString(),
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 22.0,
+                          color: textBlack),
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      'Steps',
+                      semanticsLabel: 'Steps',
+                      style: TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12.0,
+                          color: secondaryTextBlack),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -820,25 +839,31 @@ class _ViewMyAllDailyActivityTrendsState
                 SizedBox(
                   height: 16,
                 ),
-                Text(Conversion.durationFromMinToHrsToString(exerciseToDisplay),
-                    semanticsLabel:
-                        Conversion.durationFromMinToHrsToString(exerciseToDisplay),
-                    style: const TextStyle(
-                        color: textBlack,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: "Montserrat",
-                        fontStyle: FontStyle.normal,
-                        fontSize: 22.0),
-                    textAlign: TextAlign.center),
-                Text("Duration",
-                    semanticsLabel: 'Duration',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      color: secondaryTextBlack,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.normal,
-                    )),
+                MergeSemantics(
+                  child: Column(
+                    children: [
+                      Text(Conversion.durationFromMinToHrsToString(exerciseToDisplay),
+                          semanticsLabel:
+                              Conversion.durationFromMinToHrsToString(exerciseToDisplay).replaceAll('min', 'minutes').replaceAll('hr', 'hours'),
+                          style: const TextStyle(
+                              color: textBlack,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "Montserrat",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 22.0),
+                          textAlign: TextAlign.center),
+                      Text("Duration",
+                          semanticsLabel: 'Duration',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: secondaryTextBlack,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal,
+                          )),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

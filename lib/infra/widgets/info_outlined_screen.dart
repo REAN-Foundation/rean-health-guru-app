@@ -110,7 +110,7 @@ class _InfoScreenState extends State<InfoOutlinedScreen> {
                         fontSize: 14,
                         color: textGrey,
                       ),
-                      linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                      linkStyle: TextStyle(color: hyperLinkTextColor),
                     ),
                   ),
                 ],

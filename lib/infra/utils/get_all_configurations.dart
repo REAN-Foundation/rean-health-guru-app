@@ -60,12 +60,12 @@ class GetAllConfigrations {
     // Convert and return
   }
 
-  _generateReport() async {
+  /*_generateReport() async {
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';
     map['authorization'] = 'Bearer ' + auth!;
     final response = await apiProvider!
         .get('/patient-statistics/'+patientUserId.toString()+'/report', header: map);
     debugPrint('Report Generation ==> $response');
-  }
+  }*/
 }

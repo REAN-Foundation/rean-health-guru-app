@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -387,7 +388,7 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
       Navigator.push(context,
           MaterialPageRoute(
               builder: (context) =>
-                  PDFScreen(file.path)));
+                  PDFScreen(file.path, '')));
     }else{
       progressDialog.close();
       showToast('Unable to view report, Please try again later.', context);

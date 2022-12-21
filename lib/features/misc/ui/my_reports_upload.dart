@@ -341,7 +341,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                 .then((f) {
               progressDialog.close();
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PDFScreen(f.path)));
+                  MaterialPageRoute(builder: (context) => PDFScreen(f.path, 'Reports')));
             });
           } else if (document.mimeType!.contains('image')) {
             createFileOfPdfUrl(document.authenticatedUrl!, document.fileName)

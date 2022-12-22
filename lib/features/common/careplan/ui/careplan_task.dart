@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as tabs;
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:path_provider/path_provider.dart';
@@ -2215,7 +2216,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
       });
     }else {
       if (await canLaunchUrl(Uri.parse(url))) {
-        await launchUrl(Uri.parse(url));
+        await tabs.launch(url);
       } else {
         showToast('Could not launch $url', context);
         //throw 'Could not launch $url';

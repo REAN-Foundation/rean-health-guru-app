@@ -67,6 +67,8 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - Flutter (1.0.0)
+  - flutter_custom_tabs (0.0.1):
+    - Flutter
   - flutter_document_picker (0.0.1):
     - Flutter
   - flutter_inappwebview (0.0.1):
@@ -161,6 +163,7 @@ DEPENDENCIES:
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
   - Flutter (from `Flutter`)
+  - flutter_custom_tabs (from `.symlinks/plugins/flutter_custom_tabs/ios`)
   - flutter_document_picker (from `.symlinks/plugins/flutter_document_picker/ios`)
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
@@ -215,6 +218,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_remote_config/ios"
   Flutter:
     :path: Flutter
+  flutter_custom_tabs:
+    :path: ".symlinks/plugins/flutter_custom_tabs/ios"
   flutter_document_picker:
     :path: ".symlinks/plugins/flutter_document_picker/ios"
   flutter_inappwebview:
@@ -268,6 +273,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: cc9f40f5b7494680f3844d08e517e92aa4e8d9f7
   FirebaseRemoteConfig: 5bdeadd64a042dad0f6a38fee7e017818240c3d2
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_custom_tabs: 7a10a08686955cb748e5d26e0ae586d30689bf89
   flutter_document_picker: 109ba1c4622e6e62bfced17c22ff544a9a3541f4
   flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069

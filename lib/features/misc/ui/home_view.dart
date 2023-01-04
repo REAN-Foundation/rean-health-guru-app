@@ -15,6 +15,7 @@ import 'package:patient/features/common/daily_check_in/ui/how_are_you_feeling.da
 import 'package:patient/features/common/emergency/ui/emergency_contact.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/user_data.dart';
+import 'package:patient/features/misc/ui/dashboard_ver_3.dart';
 import 'package:patient/features/misc/ui/my_reports_upload.dart';
 import 'package:patient/features/misc/view_models/common_config_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
@@ -29,6 +30,7 @@ import 'package:patient/infra/utils/string_constant.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/app_drawer.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+
 import '../../common/careplan/ui/careplan_task.dart';
 import 'base_widget.dart';
 import 'dashboard_ver_2.dart';
@@ -602,7 +604,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     );
     switch (_currentNav) {
       case 0:
-        screen = DashBoardVer2View(
+        screen = DashBoardVer3View(
           positionToChangeNavigationBar: (int tabPosition) {
             debugPrint('Tapped Tab $tabPosition');
             _selectedTab(tabPosition);

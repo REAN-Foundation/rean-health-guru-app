@@ -25,19 +25,19 @@ import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable
-class DashBoardVer2View extends StatefulWidget {
+class DashBoardVer3View extends StatefulWidget {
   late Function positionToChangeNavigationBar;
 
-  DashBoardVer2View({Key? key, required Function positionToChangeNavigationBar})
+  DashBoardVer3View({Key? key, required Function positionToChangeNavigationBar})
       : super(key: key) {
     this.positionToChangeNavigationBar = positionToChangeNavigationBar;
   }
 
   @override
-  _DashBoardVer2ViewState createState() => _DashBoardVer2ViewState();
+  _DashBoardVer3ViewState createState() => _DashBoardVer3ViewState();
 }
 
-class _DashBoardVer2ViewState extends State<DashBoardVer2View>
+class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     with WidgetsBindingObserver {
   var model = DashboardSummaryModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -223,21 +223,25 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                //if (incompleteMedicationCount > 0)
-                myMedication(),
-                // else
-                //   Container(),
-                myNutrition(),
-                /*if (Platform.isIOS) ...[*/
-                myActivity(),
-                myStress(),
-                //],
-                Visibility(visible: RemoteConfigValues.dashboardVitalsVisibility, child:myBiometrics()),
-                Visibility(visible: RemoteConfigValues.dashboardVitalsVisibility, child: howAreYoursymptoms()),
-                mylipidProfile(),
-                knowledgeTree(),
-                //myTasks(),
-                //searchNearMe(),
+
+                for (int i = 0 ; i < RemoteConfigValues.dashboardTile.length ; i++)...[
+                  if(RemoteConfigValues.dashboardTile[i] == 'Medications')
+                    myMedication(),
+                  if(RemoteConfigValues.dashboardTile[i] == 'Nutrition')
+                    myNutrition(),
+                  if(RemoteConfigValues.dashboardTile[i] == 'Physical Activity')
+                    myActivity(),
+                  if(RemoteConfigValues.dashboardTile[i] == 'Mental Well-Being')
+                    myStress(),
+                  if(RemoteConfigValues.dashboardTile[i] == 'Vitals')
+                    myBiometrics(),
+                  if(RemoteConfigValues.dashboardTile[i] == 'Symptoms')
+                    howAreYoursymptoms(),
+                  if(RemoteConfigValues.dashboardTile[i] == 'Lab Values')
+                    mylipidProfile(),
+                  if(RemoteConfigValues.dashboardTile[i] == 'Knowledge')
+                    knowledgeTree(),
+                ],
                 SizedBox(
                   height: 32,
                 )

@@ -155,6 +155,21 @@ class PatientMedicationViewModel extends BaseModel {
     return BaseResponse.fromJson(response);
   }
 
+  Future<BaseResponse> updateMedicationforVisit(Map body, String medicationId) async {
+    setBusy(true);
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.put('/clinical/medications/'+medicationId,
+        body: body, header: map); //4c47a191-9cb6-4377-b828-83eb9ab48d0a
+
+    debugPrint(response.toString());
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
+
   Future<BaseResponse> addDrugToLibrary(Map body) async {
     final map = <String, String>{};
     map['Content-Type'] = 'application/json';

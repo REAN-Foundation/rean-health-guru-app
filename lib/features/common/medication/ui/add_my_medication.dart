@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/medication/models/drugs_library_pojo.dart';
 import 'package:patient/features/common/medication/models/get_medication_stock_images.dart';
+import 'package:patient/features/common/medication/models/my_current_medication.dart' as med;
 import 'package:patient/features/common/medication/models/nih_medication_search_response.dart';
 import 'package:patient/features/common/medication/view_models/patients_medication.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -70,10 +71,58 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   String? medcationResourceId = '';
 
+  setData(med.Items medication){
+    _typeAheadController.text = medication.drugName.toString();
+    _typeAheadController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _typeAheadController.text.length),
+    );
+
+    _frequencyUnit = medication.frequencyUnit.toString();
+
+    if(medication.timeSchedules!.contains('Morning')){
+      morningCheck = true;
+    }
+    if(medication.timeSchedules!.contains('Afternoon')){
+      afternoonCheck = true;
+    }
+    if(medication.timeSchedules!.contains('Evening')){
+      eveningCheck = true;
+    }
+    if(medication.timeSchedules!.contains('Night')){
+      nightCheck = true;
+    }
+
+    _durationController.text = medication.duration.toString();
+    _durationController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _durationController.text.length),
+    );
+    _unitController.text = medication.dose.toString();
+    _unitController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _unitController.text.length),
+    );
+    _dosageUnit = medication.dosageUnit.toString();
+    _instructionController.text = medication.instructions.toString();
+    _instructionController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _instructionController.text.length),
+    );
+
+    medcationResourceId = medication.imageResourceId;
+
+    debugPrint('Medcation Resource Id ==> $medcationResourceId');
+
+    setState(() {
+
+    });
+
+  }
+
   @override
   void initState() {
     loadSharedPrefs();
     _getMedicaionStockImages();
+    if(globeMedication != null){
+      setData(globeMedication!);
+    }
     /*if (widget._visitInformation.drugOrderId == "") {
       _addPatientMedicationOrderId();
     }*/
@@ -728,6 +777,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     final MedicationStockImages images =
     medicationStockImagesList.elementAt(index);
 
+    if(medcationResourceId == images.resourceId){
+      images.isSelected = true;
+    }
+
     Color selcetedColor = Colors.white;
     //debugPrint("isAvailable ${slot.isAvailable} isSelected ${slot.isSelected}, Time Slot ${slot.slotStart.substring(0,5)+" - "+slot.slotEnd.substring(0,5)}");
     if (images.isSelected) {
@@ -822,7 +875,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     setState(() {});
   }
 
-/*  Widget _startDate() {
+/*  Widget _startDate() {267c5ee8-c0f8-4bcb-b515-1432c6609e24
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1455,7 +1508,15 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       map['Instructions'] = _instructionController.text;
       map['ImageResourceId'] = medcationResourceId;
 
-      final BaseResponse baseResponse = await model.addMedicationforVisit(map);
+      late BaseResponse baseResponse;
+
+      if(globeMedication != null) {
+        baseResponse = await model.updateMedicationforVisit(
+            map,globeMedication!.id.toString());;
+      }else {
+        baseResponse = await model.addMedicationforVisit(
+            map);
+      }
 
       if (baseResponse.status == 'success') {
         showToast('Medication was added successfully.', context);

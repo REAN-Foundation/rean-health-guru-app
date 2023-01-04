@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/activity/ui/all_mental_well_being_view.dart';
 import 'package:patient/features/common/activity/ui/all_movements_view.dart';

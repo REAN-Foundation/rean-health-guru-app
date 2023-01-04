@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/lab_management/ui/cholesterol_trends_view.dart';
 import 'package:patient/features/common/lab_management/ui/enter_all_cholesterol_values_view.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
@@ -38,7 +39,7 @@ class _BiometricCholesterolTrendsViewState
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Lab Values',
               style: TextStyle(
@@ -89,7 +90,7 @@ class _BiometricCholesterolTrendsViewState
             flex: 1,
             child: Semantics(
               label: 'Record Lab Values 1 of 2',
-              selected: _currentIndex == 0 ? true : false,
+              //selected: _currentIndex == 0 ? true : false,
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -126,7 +127,7 @@ class _BiometricCholesterolTrendsViewState
             flex: 1,
             child: Semantics(
               label: 'View Trends 2 of 2',
-              selected: _currentIndex == 1 ? true : false,
+              //selected: _currentIndex == 1 ? true : false,
               child: InkWell(
                 onTap: () {
                   setState(() {

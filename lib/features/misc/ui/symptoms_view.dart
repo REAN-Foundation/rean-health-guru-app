@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -93,7 +94,7 @@ class _SymptomsViewState extends State<SymptomsView> {
       debugPrint('Coach Mark target click');
     }, onCoachMartkClickOverlay: () {
       debugPrint('Coach Mark overlay click');
-    }).show();
+    }).show(context: context);
   }
 
 /*  _layout(_) async {
@@ -118,7 +119,7 @@ class _SymptomsViewState extends State<SymptomsView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Symptoms',
               style: TextStyle(
@@ -401,6 +402,7 @@ class _SymptomsViewState extends State<SymptomsView> {
             assessmentTemplate!.templateSymptomTypes!.removeAt(index);
           });
         }
+        return true;
       },
     );
   }

@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/create_goal_response.dart';
 import 'package:patient/features/common/careplan/models/create_health_priority_response.dart';
@@ -72,7 +73,7 @@ class _SelectGoalsForCarePlanViewState
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
               'Set Care Plan Goals',
               style: TextStyle(

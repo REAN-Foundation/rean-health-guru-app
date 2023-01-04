@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/activity/ui/enter_all_movements_view.dart';
 import 'package:patient/features/common/activity/ui/view_my_all_daily_activity_trends.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
@@ -42,7 +43,7 @@ class _AllMovementsViewState extends State<AllMovementsView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Physical Activity',
               style: TextStyle(
@@ -93,7 +94,6 @@ class _AllMovementsViewState extends State<AllMovementsView> {
             flex: 1,
             child: Semantics(
               label: 'Record Movements 1 of 2',
-              selected: true,
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -133,7 +133,6 @@ class _AllMovementsViewState extends State<AllMovementsView> {
             flex: 1,
             child: Semantics(
               label: 'View Moments 2 of 2',
-              selected: true,
               child: InkWell(
                 onTap: () {
                   setState(() {

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
+
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:patient/features/common/appointment_booking/models/check_conflict_response.dart';
 import 'package:patient/features/common/appointment_booking/models/doctor_appointment_booked_successfully.dart';

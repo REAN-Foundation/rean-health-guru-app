@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/appointment_booking/models/lab_details_response.dart';
 import 'package:patient/features/common/appointment_booking/models/labs_list_api_response.dart';
@@ -166,7 +167,7 @@ class _SearchLabListViewState extends State<SearchLabListView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Lab List',
               style: TextStyle(

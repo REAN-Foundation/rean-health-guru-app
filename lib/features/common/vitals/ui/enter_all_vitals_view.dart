@@ -158,51 +158,75 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                             child: InkWell(
                               onTap: () {
                                 toastDisplay = true;
+                                validationToastDisplay = true;
                                 /*if(_controller.text.toString().isEmpty){
                                 showToast('Please enter your pulse', context);
                               }else{
                                 addvitals();
                               }*/
+
                                 if (_weightController.text
                                     .toString()
                                     .isNotEmpty) {
                                   if(isNumeric(_weightController.text)) {
+                                    validationToastDisplay = false;
                                     addWeightVitals();
                                   }else{
                                     showToast('Please enter valid input', context);
                                   }
-                                }
+                                }/*else{
+                                  validationToastDisplay = true;
+                                }*/
                                 if (_systolicController.text
                                         .toString()
                                         .isNotEmpty &&
                                     _diastolicController.text
                                         .toString()
                                         .isNotEmpty) {
+                                  validationToastDisplay = false;
                                   addBPVitals();
-                                }
+                                }/*else{
+                                  validationToastDisplay = true;
+                                }*/
                                 if (_bloodGlucosecontroller.text
                                     .toString()
                                     .isNotEmpty) {
+                                  validationToastDisplay = false;
                                   addBloodGlucoseVitals();
-                                }
+                                }/*else{
+                                  validationToastDisplay = true;
+                                }*/
                                 if (_bloodOxygenSaturationController.text
                                     .toString()
                                     .isNotEmpty) {
+                                  validationToastDisplay = false;
                                   addBloodOxygenSaturationVitals();
-                                }
+                                }/*else{
+                                  validationToastDisplay = true;
+                                }*/
                                 if (_pulseRateController.text
                                     .toString()
                                     .isNotEmpty) {
+                                  validationToastDisplay = false;
                                   addPulseVitals();
-                                }
+                                }/*else{
+                                  validationToastDisplay = true;
+                                }*/
                                 if (_bodyTempratureController.text
                                     .toString()
                                     .isNotEmpty) {
                                   if(isNumeric(_bodyTempratureController.text)) {
+                                    validationToastDisplay = false;
                                     addTemperatureVitals();
                                   }else{
                                     showToast('Please enter valid input', context);
                                   }
+                                }/*else{
+                                  validationToastDisplay = true;
+                                }*/
+
+                                if(validationToastDisplay){
+                                  showToast('Please enter valid input', context);
                                 }
                               },
                               child: ExcludeSemantics(
@@ -1182,6 +1206,7 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
   }
 
   bool toastDisplay = true;
+  bool validationToastDisplay = false;
 
   clearAllFeilds() {
     if (toastDisplay) {

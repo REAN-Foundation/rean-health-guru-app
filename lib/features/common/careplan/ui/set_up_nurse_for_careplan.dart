@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/add_team_member_response.dart';
 import 'package:patient/features/common/careplan/models/start_careplan_response.dart';
@@ -59,7 +60,7 @@ class _SetUpNurseForCarePlanViewState extends State<SetUpNurseForCarePlanView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Set up Your Team',
               style: TextStyle(

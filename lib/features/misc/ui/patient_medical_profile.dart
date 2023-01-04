@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/nutrition/models/alcohol_consumption.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -112,7 +113,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
         builder: (context, model, child) => Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              brightness: Brightness.light,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
               backgroundColor: Colors.white,
               title: Text(
                 'Medical Profile',
@@ -251,6 +252,7 @@ class _PatientMedicalProfileViewState extends State<PatientMedicalProfileView> {
                                 width: 8,
                               ),
                               Text('' + replaceNull(healthProfile!.bloodGroup),
+                                  semanticsLabel: replaceNull(healthProfile!.bloodGroup).contains('+') ? replaceNull(healthProfile!.bloodGroup).replaceAll('+', ' Positive') : replaceNull(healthProfile!.bloodGroup).replaceAll('-', ' Negative') ,
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w500,

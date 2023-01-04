@@ -124,7 +124,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Weight',
               style: TextStyle(
@@ -231,7 +231,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
       setState(() {});
     }
 
-    announceText('Your recent BMI is ${bmiValue.toStringAsFixed(2)} and your recent BMI status is $bmiResult');
+    Future.delayed(const Duration(seconds: 4), () => announceText('Your recent BMI is ${bmiValue.toStringAsFixed(2)} and your recent BMI status is $bmiResult'));
 
     /*new Timer(const Duration(milliseconds: 3000), () {
       setState(() {
@@ -364,7 +364,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.w500,
                                 fontSize: bmiValue == 0.0 ? 14 : 28.0,
-                                color: Colors.lightBlueAccent),
+                                color: hyperLinkTextColor),
                           ),
                         ),
                       ),
@@ -651,7 +651,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                     ),
           Expanded(
             child: Scrollbar(
-              isAlwaysShown: true,
+              thumbVisibility: true,
               controller: _scrollController,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

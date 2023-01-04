@@ -57,7 +57,7 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                   backgroundColor: Colors.white,
-                  brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                   title: Text(
                     'LDL',
                     style: TextStyle(
@@ -322,7 +322,7 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
           ),
           Expanded(
             child: Scrollbar(
-              isAlwaysShown: true,
+              thumbVisibility: true,
               controller: _scrollController,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

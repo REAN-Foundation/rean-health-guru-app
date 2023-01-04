@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path_provider/path_provider.dart';
@@ -153,7 +153,7 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
               'Assessment Score',
               style: TextStyle(
@@ -208,7 +208,7 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
                               child: CircularProgressIndicator(),
                             )
                           : Scrollbar(
-                            isAlwaysShown: true,
+                            thumbVisibility: true,
                             child: SingleChildScrollView(
                               child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -388,7 +388,7 @@ class _AssessmentScorePlanViewState extends State<AssessmentScorePlanView> {
       Navigator.push(context,
           MaterialPageRoute(
               builder: (context) =>
-                  PDFScreen(file.path)));
+                  PDFScreen(file.path, '')));
     }else{
       progressDialog.close();
       showToast('Unable to view report, Please try again later.', context);

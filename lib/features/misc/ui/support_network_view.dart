@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
@@ -70,7 +70,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: primaryColor,
-          brightness: Brightness.dark,
+          systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
           title: Text(
             '',
             style: TextStyle(
@@ -140,7 +140,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
         children: [
           Expanded(
             child: Scrollbar(
-              isAlwaysShown: true,
+              thumbVisibility: true,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: SingleChildScrollView(
@@ -210,8 +210,8 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                       ),
                       Linkify(
                         onOpen: (link) async {
-                          if (await canLaunch(link.url)) {
-                            await launch(link.url);
+                          if (await canLaunchUrl(Uri.parse(link.url))) {
+                            await launchUrl(Uri.parse(link.url));
                           } else {
                             throw 'Could not launch $link';
                           }
@@ -226,7 +226,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                             color: Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.w500),
-                        linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                        linkStyle: TextStyle(color: hyperLinkTextColor),
                       ),
 
                       SizedBox(
@@ -249,8 +249,8 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                       ),
                       Linkify(
                         onOpen: (link) async {
-                          if (await canLaunch(link.url)) {
-                            await launch(link.url);
+                          if (await canLaunchUrl(Uri.parse(link.url))) {
+                            await launchUrl(Uri.parse(link.url));
                           } else {
                             throw 'Could not launch $link';
                           }
@@ -265,7 +265,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                             color: Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.w500),
-                        linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                        linkStyle: TextStyle(color: hyperLinkTextColor),
                       ),
       ],
                     ],

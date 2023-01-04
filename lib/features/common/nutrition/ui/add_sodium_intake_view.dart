@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
@@ -49,7 +49,7 @@ class _MySodiumIntakeViewState extends State<AddSodiumIntakeView> {
             appBar: AppBar(
               elevation: 0,
               backgroundColor: primaryColor,
-              brightness: Brightness.dark,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
               title: Text(
                 'Sodium Intake',
                 style: TextStyle(

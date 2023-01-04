@@ -25,7 +25,7 @@ class _PaymentConfirmationViewState extends State<PaymentConfirmationView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Payment',
               style: TextStyle(

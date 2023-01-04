@@ -57,7 +57,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                   backgroundColor: Colors.white,
-                  brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                   title: Text(
                     'HDL',
                     style: TextStyle(
@@ -322,7 +322,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
           ),
           Expanded(
             child: Scrollbar(
-              isAlwaysShown: true,
+              thumbVisibility: true,
               controller: _scrollController,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

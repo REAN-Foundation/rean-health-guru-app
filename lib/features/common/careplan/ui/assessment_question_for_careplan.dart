@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
@@ -63,7 +64,7 @@ class _AssessmentQuestionCarePlanViewState
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
               'Assessment',
               style: TextStyle(

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:health/health.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/activity/models/movements_tracking.dart';
@@ -320,7 +320,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
             appBar: widget._appBarView ? AppBar(
               elevation: 0,
               backgroundColor: primaryColor,
-              brightness: Brightness.dark,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
               title: Text(
                 'Mental Well-Being',
                 style: TextStyle(
@@ -476,25 +476,31 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
               SizedBox(
                 height: 16,
               ),
-              Text(Conversion.durationFromMinToHrsToString(sleepToDisplay),
-                  semanticsLabel:
-                      Conversion.durationFromMinToHrsToString(sleepToDisplay),
-                  style: const TextStyle(
-                      color: textBlack,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: "Montserrat",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 22.0),
-                  textAlign: TextAlign.center),
-              Text("Duration",
-                  semanticsLabel: 'Duration',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: Color(0xffa8a8a8),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    fontStyle: FontStyle.normal,
-                  )),
+              MergeSemantics(
+                child: Column(
+                  children: [
+                    Text(Conversion.durationFromMinToHrsToString(sleepToDisplay),
+                        semanticsLabel:
+                            Conversion.durationFromMinToHrsToString(sleepToDisplay).replaceAll('hr', 'hours').replaceAll('min', 'minutes'),
+                        style: const TextStyle(
+                            color: textBlack,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Montserrat",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 22.0),
+                        textAlign: TextAlign.center),
+                    Text("Duration",
+                        semanticsLabel: 'Duration',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color: secondaryTextBlack,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          fontStyle: FontStyle.normal,
+                        )),
+                  ],
+                ),
+              ),
               SizedBox(
                 height: 8,
               ),
@@ -598,28 +604,35 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
               SizedBox(
                 height: 16,
               ),
-              Text(Conversion.durationFromSecToMinToString(oldStoreSec),
-                  semanticsLabel:
-                      Conversion.durationFromSecToMinToString(oldStoreSec),
-                  style: const TextStyle(
-                      color: textBlack,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: "Montserrat",
-                      fontStyle: FontStyle.normal,
-                      fontSize: 22.0),
-                  textAlign: TextAlign.center),
-              Text("Duration",
-                  semanticsLabel: 'Duration',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: Color(0xffa8a8a8),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    fontStyle: FontStyle.normal,
-                  )),
+              MergeSemantics(
+                child: Column(
+                  children: [
+                    Text(Conversion.durationFromSecToMinToString(oldStoreSec),
+                        semanticsLabel:
+                            Conversion.durationFromSecToMinToString(oldStoreSec).replaceAll('sec', 'second').replaceAll('min', 'minutes') + 'Duration',
+                        style: const TextStyle(
+                            color: textBlack,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Montserrat",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 22.0),
+                        textAlign: TextAlign.center),
+                    Text("Duration",
+                        semanticsLabel: 'Duration',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          color: secondaryTextBlack,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          fontStyle: FontStyle.normal,
+                        )),
+                  ],
+                ),
+              ),
               SizedBox(
                 height: 8,
               ),
+
               /*SizedBox(
                 child: OutlinedButton(
                   child: Text('Start'),

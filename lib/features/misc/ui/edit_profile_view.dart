@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -95,7 +95,7 @@ class _EditProfileState extends State<EditProfile> {
   String? imageResourceId = '';
   var _api_key;
 
-  final List<String> radioItemsForGender = ['Female', 'Male', 'Non-binary', 'Prefer to self-describe', 'Prefer not to answer'];
+  final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
   String _maritalStatusValue = '';
   String _countryValue = '';
   List<String> countryList = [];
@@ -550,7 +550,7 @@ class _EditProfileState extends State<EditProfile> {
               child: Scaffold(
                 backgroundColor: Colors.white,
                 appBar: AppBar(
-                  brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
               backgroundColor: Colors.white,
               title: Text(
                 isEditable ? 'Edit Profile' : 'View Profile',
@@ -2556,104 +2556,109 @@ class _EditProfileState extends State<EditProfile> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Material(
-          //Wrap with Material
-          shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0)),
-          elevation: 4.0,
-          color: primaryColor,
-          clipBehavior: Clip.antiAlias,
-          // Add This
-          child: Semantics(
-            label: 'Save Profile',
-            button: true,
-            child: MaterialButton(
-                minWidth: 200,
-                child: Text('Save',
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600)),
-                onPressed: () async {
-                  if (_emailController.text.toString() != '' &&
-                      !_emailController.text.toString().isValidEmail()) {
-                    showToast('Please enter valid email', context);
+        SizedBox(
+          width: 200,
+          height: 48,
+          child: ElevatedButton(
+              style: ButtonStyle(
+                  foregroundColor:
+                  MaterialStateProperty.all<Color>(
+                      primaryLightColor),
+                  backgroundColor:
+                  MaterialStateProperty.all<Color>(
+                      primaryColor),
+                  shape: MaterialStateProperty.all<
+                      RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.circular(24),
+                          side: BorderSide(
+                              color: primaryColor)))),
+              child: Text('Save',
+                  semanticsLabel: 'Save Profile',
+                  style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600)),
+              onPressed: () async {
+                if (_emailController.text.toString() != '' &&
+                    !_emailController.text.toString().isValidEmail()) {
+                  showToast('Please enter valid email', context);
+                }
+                /*else if () {
+                  showToast('Please enter valid email', context);
+                } else if (_addressController.text.toString().trim() == '') {
+                  showToast('Please enter address', context);
+                } else if (_cityController.text.toString().trim() == '') {
+                  showToast('Please enter city', context);
+                } else if (_countryController.text.toString().trim() == '') {
+                  showToast('Please enter country', context);
+                }*/
+                /*else if (_postalCodeController.text.toString() == '') {
+                  showToast('Please enter postal code', context);
+                } */
+                else {
+                  progressDialog.show(max: 100, msg: 'Loading...');
+
+                  final map = <String, dynamic>{};
+                  map['Gender'] = selectedGender;
+                  map['BirthDate'] = DateFormat('yyyy-MM-dd')
+                      .format(DateTime.parse(unformatedDOB));
+                  map['FirstName'] = _firstNameController.text;
+                  map['MiddleName'] = _middleNameController.text;
+                  map['LastName'] = _lastNameController.text;
+                  map['MaritalStatus'] = _maritalStatusValue;
+                  map['Ethnicity'] = _ethnicityValue;
+                  map['StrokeSurvivorOrCaregiver'] = _surviourOrCaregiverValue == '' ? null : _surviourOrCaregiverValue;
+                  map['LivingAlone'] = _liveAloneValue == '' ? null : _liveAloneValue == 'Yes' ? true : false;
+                  map['WorkedPriorToStroke'] = workPriorToStrokeValue == '' ? null : workPriorToStrokeValue == 'Yes' ? true : false;
+                  map['Race'] = _raceValue;
+                  final address = <String, String?>{};
+                  address['AddressLine'] = _addressController.text.trim();
+                  address['City'] = _cityController.text.trim();
+                  address['Country'] = _countryController.text.trim();
+                  address['PostalCode'] = _postalCodeController.text.isEmpty
+                      ? null
+                      : _postalCodeController.text.trim();
+                  map['Address'] = address;
+
+                  //map['Locality'] = _cityController.text;
+                  //map['Address'] = _addressController.text;
+                  map['ImageResourceId'] =
+                      imageResourceId == '' ? null : imageResourceId;
+                  //map['EmergencyContactNumber'] =
+                  //  _emergencyMobileNumberController.text;
+                  if (_emailController.text != '') {
+                    map['Email'] = _emailController.text;
                   }
-                  /*else if () {
-                    showToast('Please enter valid email', context);
-                  } else if (_addressController.text.toString().trim() == '') {
-                    showToast('Please enter address', context);
-                  } else if (_cityController.text.toString().trim() == '') {
-                    showToast('Please enter city', context);
-                  } else if (_countryController.text.toString().trim() == '') {
-                    showToast('Please enter country', context);
+                  //map['LocationCoords_Longitude'] = null;
+                  //map['LocationCoords_Lattitude'] = null;
+
+                  try {
+                    final BaseResponse updateProfileSuccess = await model
+                        .updateProfile(map, userId, 'Bearer ' + auth!);
+
+                    if (updateProfileSuccess.status == 'success') {
+                      progressDialog.close();
+                      showToast('Patient profile details updated successfully!', context);
+                      /* if (Navigator.canPop(context)) {
+                    Navigator.pop(context);
                   }*/
-                  /*else if (_postalCodeController.text.toString() == '') {
-                    showToast('Please enter postal code', context);
-                  } */
-                  else {
-                    progressDialog.show(max: 100, msg: 'Loading...');
 
-                    final map = <String, dynamic>{};
-                    map['Gender'] = selectedGender;
-                    map['BirthDate'] = DateFormat('yyyy-MM-dd')
-                        .format(DateTime.parse(unformatedDOB));
-                    map['FirstName'] = _firstNameController.text;
-                    map['MiddleName'] = _middleNameController.text;
-                    map['LastName'] = _lastNameController.text;
-                    map['MaritalStatus'] = _maritalStatusValue;
-                    map['Ethnicity'] = _ethnicityValue;
-                    map['StrokeSurvivorOrCaregiver'] = _surviourOrCaregiverValue == '' ? null : _surviourOrCaregiverValue;
-                    map['LivingAlone'] = _liveAloneValue == '' ? null : _liveAloneValue == 'Yes' ? true : false;
-                    map['WorkedPriorToStroke'] = workPriorToStrokeValue == '' ? null : workPriorToStrokeValue == 'Yes' ? true : false;
-                    map['Race'] = _raceValue;
-                    final address = <String, String?>{};
-                    address['AddressLine'] = _addressController.text.trim();
-                    address['City'] = _cityController.text.trim();
-                    address['Country'] = _countryController.text.trim();
-                    address['PostalCode'] = _postalCodeController.text.isEmpty
-                        ? null
-                        : _postalCodeController.text.trim();
-                    map['Address'] = address;
-
-                    //map['Locality'] = _cityController.text;
-                    //map['Address'] = _addressController.text;
-                    map['ImageResourceId'] =
-                        imageResourceId == '' ? null : imageResourceId;
-                    //map['EmergencyContactNumber'] =
-                    //  _emergencyMobileNumberController.text;
-                    if (_emailController.text != '') {
-                      map['Email'] = _emailController.text;
+                      getPatientDetails(model, auth!, userId);
+                      //Navigator.pushNamed(context, RoutePaths.Home);
+                    } else {
+                      progressDialog.close();
+                      showToast(updateProfileSuccess.message!, context);
                     }
-                    //map['LocationCoords_Longitude'] = null;
-                    //map['LocationCoords_Lattitude'] = null;
-
-                    try {
-                      final BaseResponse updateProfileSuccess = await model
-                          .updateProfile(map, userId, 'Bearer ' + auth!);
-
-                      if (updateProfileSuccess.status == 'success') {
-                        progressDialog.close();
-                        showToast('Patient profile details updated successfully!', context);
-                        /* if (Navigator.canPop(context)) {
-                      Navigator.pop(context);
-                    }*/
-
-                        getPatientDetails(model, auth!, userId);
-                        //Navigator.pushNamed(context, RoutePaths.Home);
-                      } else {
-                        progressDialog.close();
-                        showToast(updateProfileSuccess.message!, context);
-                      }
-                    } on FetchDataException catch (e) {
-                      debugPrint("3");
-                      debugPrint('error caught: $e');
-                      model.setBusy(false);
-                      showToast(e.toString(), context);
-                    }
+                  } on FetchDataException catch (e) {
+                    debugPrint("3");
+                    debugPrint('error caught: $e');
+                    model.setBusy(false);
+                    showToast(e.toString(), context);
                   }
-                }),
-          ),
+                }
+              }),
         ),
       ],
     );

@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/chat_bot/models/chat_api_response.dart';
 import 'package:patient/features/common/chat_bot/models/faq_chat_model_pojo.dart';
 import 'package:patient/features/common/chat_bot/view_models/bot_view_model.dart';
@@ -77,7 +78,7 @@ class FAQChatScreenState extends State<FAQChatScreen> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Support',
               style: TextStyle(

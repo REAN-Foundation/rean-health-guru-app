@@ -45,7 +45,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
   String? mobileNumber = '';
   String? countryCode = '';
   int? maxLengthOfPhone = 0;
-  final List<String> radioItemsForGender = ['Female', 'Male', 'Non-binary', 'Prefer to self-describe', 'Prefer not to answer'];
+  final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
 
   @override
   void initState() {
@@ -146,46 +146,45 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(vertical: 10),
-      child: Semantics(
-        label: 'Sex of the family member or friend',
-        enabled: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ExcludeSemantics(
-              child: Row(
-                children: [
-                  Text(
-                    'Sex',
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
-                  ),
-                  Text(
-                    '*',
-                    style: TextStyle(
-                        color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
-                  ),
-                ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: [
+              Text(
+                'Sex',
+                semanticsLabel: 'Sex of family member or friend',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-           /* RadioGroup<String>.builder(
-              items: radioItemsForGender,
-              groupValue: selectedGender.toString(),
-              direction: Axis.horizontal,
-              horizontalAlignment: MainAxisAlignment.start,
-              onChanged: (item) {
-                debugPrint(item);
-                selectedGender = item.toString();
-                setState(() {});
-              },
-              itemBuilder: (item) => RadioButtonBuilder(
-                item,
-                textPosition: RadioButtonTextPosition.right,
+              Text(
+                '*',
+                semanticsLabel: 'required',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
-            ),*/
-            Container(
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+         /* RadioGroup<String>.builder(
+            items: radioItemsForGender,
+            groupValue: selectedGender.toString(),
+            direction: Axis.horizontal,
+            horizontalAlignment: MainAxisAlignment.start,
+            onChanged: (item) {
+              debugPrint(item);
+              selectedGender = item.toString();
+              setState(() {});
+            },
+            itemBuilder: (item) => RadioButtonBuilder(
+              item,
+              textPosition: RadioButtonTextPosition.right,
+            ),
+          ),*/
+          Semantics(
+            hint: 'required',
+            child: Container(
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.symmetric(horizontal: 10.0),
               decoration: BoxDecoration(
@@ -212,9 +211,9 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
                   setState(() {});
                 },
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -234,6 +233,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
               ),
               Text(
                 '*',
+                semanticsLabel: 'required',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
@@ -288,6 +288,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
               ),
               Text(
                 '*',
+                semanticsLabel: 'required',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
@@ -343,6 +344,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
               ),
               Text(
                 '*',
+                semanticsLabel: 'required',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),
@@ -523,6 +525,7 @@ class _MyDialogState extends State<AddFamilyMemberDialog> {
               ),
               Text(
                 '*',
+                semanticsLabel: 'required',
                 style: TextStyle(
                     color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
               ),

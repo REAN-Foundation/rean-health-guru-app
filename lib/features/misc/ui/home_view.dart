@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:devicelocale/devicelocale.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +29,6 @@ import 'package:patient/infra/utils/string_constant.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/app_drawer.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
-
 import '../../common/careplan/ui/careplan_task.dart';
 import 'base_widget.dart';
 import 'dashboard_ver_2.dart';
@@ -352,7 +351,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       debugPrint('Coach Mark target click');
     }, onCoachMartkClickOverlay: () {
       debugPrint('Coach Mark overlay click');
-    }).show();
+    }).show(context: context);
   }
 
   void initTargets() {
@@ -405,14 +404,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     loadSharedPrefs();
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
     initTargets();
-    WidgetsBinding.instance!.addPostFrameCallback(_layout);
+    WidgetsBinding.instance.addPostFrameCallback(_layout);
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -635,7 +634,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             child: AppBar(
               elevation: 10.0,
               backgroundColor: Colors.white,
-              brightness: Brightness.light,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
               title: RichText(
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -805,7 +804,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                       label: 'emergency contact',
                       selected: true,
                       child: Icon(
-                        FontAwesomeIcons.ambulance,
+                        FontAwesomeIcons.truckMedical,
                         color: _currentNav == 3 ? Colors.white : Colors.white54,
                         size: 20,
                       )),

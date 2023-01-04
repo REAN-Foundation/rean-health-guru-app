@@ -301,6 +301,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               Expanded(
                 child: Semantics(
                   label: 'Drug Name',
+                  hint: 'required',
                   focusable: true,
                   child: TypeAheadFormField(
                     textFieldConfiguration: TextFieldConfiguration(
@@ -625,6 +626,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     color: Colors.white),
                 child: Semantics(
                   label: 'Duration of dose',
+                  hint: 'required',
                   child: TextFormField(
                       controller: _durationController,
                       focusNode: _durationFocus,

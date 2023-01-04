@@ -42,6 +42,12 @@
 @import firebase_remote_config;
 #endif
 
+#if __has_include(<flutter_custom_tabs/GDBCustomTabsPlugin.h>)
+#import <flutter_custom_tabs/GDBCustomTabsPlugin.h>
+#else
+@import flutter_custom_tabs;
+#endif
+
 #if __has_include(<flutter_document_picker/FlutterDocumentPickerPlugin.h>)
 #import <flutter_document_picker/FlutterDocumentPickerPlugin.h>
 #else
@@ -159,6 +165,7 @@
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [FLTFirebaseMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseMessagingPlugin"]];
   [FLTFirebaseRemoteConfigPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseRemoteConfigPlugin"]];
+  [GDBCustomTabsPlugin registerWithRegistrar:[registry registrarForPlugin:@"GDBCustomTabsPlugin"]];
   [FlutterDocumentPickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterDocumentPickerPlugin"]];
   [InAppWebViewFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"InAppWebViewFlutterPlugin"]];
   [FlutterKeyboardVisibilityPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterKeyboardVisibilityPlugin"]];

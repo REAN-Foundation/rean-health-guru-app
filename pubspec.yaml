@@ -12,7 +12,7 @@ description: A new Flutter application.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.8.183+144
+version: 1.8.190+148
 
 publish_to: none
 
@@ -92,7 +92,7 @@ dependencies:
   phone_number: ^0.12.0+1
   flutter_sim_country_code: ^0.1.2
   device_info_plus: ^3.2.2
-  webview_flutter: 2.0.4
+  #webview_flutter: 2.0.4
   webfeed: ^0.7.0
   pinch_zoom: ^1.0.0
   xml2json: ^5.3.2
@@ -102,6 +102,7 @@ dependencies:
   flutter_picker: 2.0.5
   syncfusion_flutter_gauges: ^20.3.57
   flutter_html: 2.2.1
+  flutter_custom_tabs: ^1.0.4
 
 dev_dependencies:
   #test: any

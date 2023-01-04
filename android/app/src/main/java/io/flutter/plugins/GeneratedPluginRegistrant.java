@@ -46,6 +46,11 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin firebase_remote_config, io.flutter.plugins.firebase.firebaseremoteconfig.FirebaseRemoteConfigPlugin", e);
     }
     try {
+      flutterEngine.getPlugins().add(new com.github.droibit.flutter.plugins.customtabs.CustomTabsPlugin());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin flutter_custom_tabs, com.github.droibit.flutter.plugins.customtabs.CustomTabsPlugin", e);
+    }
+    try {
       flutterEngine.getPlugins().add(new com.sidlatau.flutterdocumentpicker.FlutterDocumentPickerPlugin());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin flutter_document_picker, com.sidlatau.flutterdocumentpicker.FlutterDocumentPickerPlugin", e);

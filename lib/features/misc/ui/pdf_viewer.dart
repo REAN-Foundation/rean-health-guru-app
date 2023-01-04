@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -10,9 +9,10 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 //ignore: must_be_immutable
 class PDFScreen extends StatelessWidget {
   String pathPDF = '';
+  String screenTittle = 'Reports';
   final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
 
-  PDFScreen(this.pathPDF);
+  PDFScreen(this.pathPDF, this.screenTittle);
 
   late File file;
   static final GlobalKey _globalKey = GlobalKey();
@@ -27,7 +27,7 @@ class PDFScreen extends StatelessWidget {
           systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
           iconTheme: IconThemeData(color: Colors.black),
           title: Text(
-            "Reports",
+            screenTittle,
             style: TextStyle(
                 fontSize: 16.0,
                 color: primaryColor,

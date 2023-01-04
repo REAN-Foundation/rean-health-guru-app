@@ -314,7 +314,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                         border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Stand measures in miutes',
+                      label: 'Stand measures in minutes',
                       child: TextFormField(
                           controller: _standController,
                           focusNode: _standFocus,

@@ -645,12 +645,12 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 ],
               ),
             ),
-            Text(
+            /*Text(
               '*',
               semanticsLabel: 'required',
               style: TextStyle(
                   color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
-            ),
+            ),*/
           ],
         ),
         /*Text('Duration'+_frequencyUnit == 'Daily' ? ' (in days)',
@@ -675,7 +675,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     color: Colors.white),
                 child: Semantics(
                   label: 'Duration of dose',
-                  hint: 'required',
+                  //hint: 'required',
                   child: TextFormField(
                       controller: _durationController,
                       focusNode: _durationFocus,
@@ -1037,10 +1037,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     showToast('Please select frequency', context);
                   } else if (_frequencyUnit == 'Daily' && frequency == 0) {
                         showToast('Please select daily time schedule', context);
-                      } else if (_durationController.text.trim() == '' &&
+                      }/* else if (_durationController.text.trim() == '' &&
                           _frequencyUnit != 'Other') {
                         showToast('Please enter duration', context);
-                      } else if (validationForDuration()) {
+                      }*/ else if (validationForDuration()) {
                         if (_frequencyUnit == 'Daily') {
                           showToast(
                               'You can add medication for the next 180 days',

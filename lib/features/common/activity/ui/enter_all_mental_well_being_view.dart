@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/activity/models/movements_tracking.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
+import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/dashboard_tile.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
@@ -12,6 +14,8 @@ import 'package:patient/infra/utils/conversion.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
+
+import '../../../../infra/utils/string_utility.dart';
 
 class EnterAllMentalWellBeingView extends StatefulWidget {
   @override
@@ -35,6 +39,8 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
   Color buttonColor = Color(0XFFCFB4FF);
   DashboardTile? mindfulnessTimeDashboardTile;
   int oldStoreSec = 0;
+  var _mindfulnessController = TextEditingController();
+  var _mindfulnessFocus = FocusNode();
 
   @override
   void initState() {
@@ -128,6 +134,9 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                             child: InkWell(
                               onTap: () {
                                 recordMySleepTimeInHrs();
+                                if(_mindfulnessController.text.toString().isNotEmpty){
+                                  saveMindfulnessTime(int.parse(_mindfulnessController.text.toString()));
+                                }
                               },
                               child: ExcludeSemantics(
                                 child: Container(
@@ -383,7 +392,100 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                     height: 240),
               ],
             ),
-
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Enter number of mindful minutes',
+                        style: TextStyle(
+                            color: textBlack,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: '',
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              color: textBlack,
+                              fontSize: 12),
+                        ),
+                      ),
+                      /*Expanded(
+                        child: InfoScreen(
+                            tittle: 'Stand Information',
+                            description:
+                                'Standing is better for the back than sitting. It strengthens leg muscles and improves balance. It burns more calories than sitting.',
+                            height: 208),
+                      ),*/
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        flex: 8,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              border: Border.all(color: textGrey, width: 1),
+                              color: Colors.white),
+                          child: Semantics(
+                            label: 'mindfulness measures in minutes',
+                            child: TextFormField(
+                                controller: _mindfulnessController,
+                                focusNode: _mindfulnessFocus,
+                                maxLines: 1,
+                                textInputAction: TextInputAction.done,
+                                keyboardType: TextInputType.number,
+                                onFieldSubmitted: (term) {
+                                },
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                                ],
+                                decoration: InputDecoration(
+                                  /*hintText: unit == 'lbs'
+                                    ? '(100 to 200)'
+                                    : '(50 to 100)',*/
+                                    hintStyle: TextStyle(
+                                      fontSize: 12,
+                                    ),
+                                    contentPadding: EdgeInsets.all(0),
+                                    border: InputBorder.none,
+                                    fillColor: Colors.white,
+                                    filled: true)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'or',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -448,19 +550,45 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
         showToast("Sleep time recorded successfully", context);
       }
       setState(() {});
-      /* final map = <String, dynamic>{};
+       final map = <String, dynamic>{};
       map['PatientUserId'] = patientUserId;
-      map['Volume'] = waterGlass;
-      map['Time'] = dateFormat.format(DateTime.now());
+      map['SleepDuration'] = _sleepHrs;
+      map['Unit'] = 'Hrs';
+      map['RecordDate'] = dateFormat.format(DateTime.now());
 
-      final BaseResponse baseResponse = await model.recordMyWaterCount(map);
+      final BaseResponse baseResponse = await model.recordMySleep(map);
       if (baseResponse.status == 'success') {
-      } else {}*/
+      } else {}
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);
       debugPrint('Error ==> ' + e.toString());
     }
+  }
+
+  saveMindfulnessTime(int minutes) async {
+    debugPrint('New Mindful min ==> $minutes');
+    int newSec = Duration(minutes: minutes).inSeconds;
+    newSec = newSec + oldStoreSec;
+    _sharedPrefUtils.save(
+        'mindfulnessTime',
+        DashboardTile(DateTime.now(), 'mindfulnessTime', newSec.toString())
+            .toJson());
+
+    oldStoreSec = newSec;
+    _mindfulnessController.clear();
+    loadSharedPrefs();
+    setState(() {});
+    final map = <String, dynamic>{};
+    map['PatientUserId'] = patientUserId;
+    map['MeditationDuration'] = newSec.toString();
+    map['Unit'] = 'Sec';
+    map['RecordDate'] = dateFormat.format(DateTime.now());
+
+    final BaseResponse baseResponse = await model.recordMyMindfulness(map);
+    if (baseResponse.status == 'success') {
+    } else {}
+    setState(() {});
   }
 
 }

@@ -138,24 +138,29 @@ class ApiProvider {
   }
 
   dynamic _response(http.Response response) {
+    final responseJson = json.decode(response.body.toString());
+    if(BaseResponse.fromJson(responseJson).message!.contains("Forbidden user access")){
+      showToast('Your session has expired, please login', getAppBuildContext());
+
+      Navigator.pushAndRemoveUntil(getAppBuildContext(),
+          MaterialPageRoute(builder: (context) {
+            return LoginWithOTPView();
+          }), (Route<dynamic> route) => false);
+      debugPrint(responseJson.toString());
+
+      BaseResponse response = BaseResponse.fromJson(responseJson);
+
+      response.message = 'Your session has expired, please login';
+
+      return response.toJson();
+    }
+
     switch (response.statusCode) {
       case 200:
       case 201:
       case 400:
       case 401:
       case 403:
-        final responseJson = json.decode(response.body.toString());
-        if(BaseResponse.fromJson(responseJson).message == 'Forbidden user access'){
-          showToast('Your session has expired, please login', getAppBuildContext());
-
-          Navigator.pushAndRemoveUntil(getAppBuildContext(),
-              MaterialPageRoute(builder: (context) {
-                return LoginWithOTPView();
-              }), (Route<dynamic> route) => false);
-          break;
-        }
-        debugPrint(responseJson.toString());
-      return responseJson;
       case 404:
       case 409:
       case 422:

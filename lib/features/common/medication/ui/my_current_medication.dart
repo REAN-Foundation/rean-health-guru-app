@@ -311,35 +311,37 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                         children: [
                           Semantics(
                             button: true,
-                            child: InkWell(
-                                onTap: () {
-                                  globeMedication = medication;
-                                  Navigator.pushNamed(context, RoutePaths.ADD_MY_MEDICATION, arguments: 'Medication')
-                                      .then((value) {
-                                    getMyMedications();
-                                  });
-                                },
-                                child: Container(
-                                  height: 30,
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.edit,
-                                        color: primaryColor,
-                                        size: 20,
-                                      ),
-                                      SizedBox(
-                                        width: 4,
-                                      ),
-                                      Text('Edit',
-                                          semanticsLabel: medication.drugName! + 'edit',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600,
-                                              color: primaryColor)),
-                                    ],
-                                  ),
-                                )),
+                            label: 'Edit '+ medication.drugName.toString(),
+                            child: ExcludeSemantics(
+                              child: InkWell(
+                                  onTap: () {
+                                    globeMedication = medication;
+                                    Navigator.pushNamed(context, RoutePaths.ADD_MY_MEDICATION, arguments: 'Medication')
+                                        .then((value) {
+                                      getMyMedications();
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 30,
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.edit,
+                                          color: primaryColor,
+                                          size: 20,
+                                        ),
+                                        SizedBox(
+                                          width: 4,
+                                        ),
+                                        Text('Edit',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600,
+                                                color: primaryColor)),
+                                      ],
+                                    ),
+                                  )),
+                            ),
                           ),
                           Semantics(
                             button: true,

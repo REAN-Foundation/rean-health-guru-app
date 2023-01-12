@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -26,6 +25,8 @@ void setStartTaskOfAHACarePlanResponse(StartTaskOfAHACarePlanResponse response) 
 StartTaskOfAHACarePlanResponse getStartTaskOfAHACarePlanResponse() {
   return _startTaskOfAHACarePlanResponseGlobe;
 }*/
+
+late BuildContext _buildContext;
 
 bool _isLogin = false;
 String? _baseUrl = '';
@@ -160,6 +161,14 @@ void setAppType(String name) {
 
 String getAppType() {
   return _appType;
+}
+
+void setAppBuildContext(BuildContext context) {
+  _buildContext = context;
+}
+
+BuildContext getAppBuildContext() {
+  return _buildContext;
 }
 
 void setAppFlavour(String appFlavour) {

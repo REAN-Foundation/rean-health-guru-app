@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:patient/features/misc/models/base_response.dart';
+import 'package:patient/features/misc/ui/login_with_otp_view.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 
 import 'custom_exception.dart';
 
@@ -142,6 +144,18 @@ class ApiProvider {
       case 400:
       case 401:
       case 403:
+        final responseJson = json.decode(response.body.toString());
+        if(BaseResponse.fromJson(responseJson).message == 'Forbidden user access'){
+          showToast('Your session has expired, please login', getAppBuildContext());
+
+          Navigator.pushAndRemoveUntil(getAppBuildContext(),
+              MaterialPageRoute(builder: (context) {
+                return LoginWithOTPView();
+              }), (Route<dynamic> route) => false);
+          break;
+        }
+        debugPrint(responseJson.toString());
+      return responseJson;
       case 404:
       case 409:
       case 422:

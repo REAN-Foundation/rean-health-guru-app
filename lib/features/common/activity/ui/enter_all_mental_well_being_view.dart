@@ -39,8 +39,8 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
   Color buttonColor = Color(0XFFCFB4FF);
   DashboardTile? mindfulnessTimeDashboardTile;
   int oldStoreSec = 0;
-  var _mindfulnessController = TextEditingController();
-  var _mindfulnessFocus = FocusNode();
+  var mindfulnessController = TextEditingController();
+  var mindfulnessFocus = FocusNode();
 
   @override
   void initState() {
@@ -134,8 +134,8 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                             child: InkWell(
                               onTap: () {
                                 recordMySleepTimeInHrs();
-                                if(_mindfulnessController.text.toString().isNotEmpty){
-                                  saveMindfulnessTime(int.parse(_mindfulnessController.text.toString()));
+                                if(mindfulnessController.text.toString().isNotEmpty){
+                                  saveMindfulnessTime(int.parse(mindfulnessController.text.toString()));
                                 }
                               },
                               child: ExcludeSemantics(
@@ -443,8 +443,8 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                           child: Semantics(
                             label: 'mindfulness measures in minutes',
                             child: TextFormField(
-                                controller: _mindfulnessController,
-                                focusNode: _mindfulnessFocus,
+                                controller: mindfulnessController,
+                                focusNode: mindfulnessFocus,
                                 maxLines: 1,
                                 textInputAction: TextInputAction.done,
                                 keyboardType: TextInputType.number,
@@ -576,7 +576,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
             .toJson());
 
     oldStoreSec = newSec;
-    _mindfulnessController.clear();
+    mindfulnessController.clear();
     loadSharedPrefs();
     setState(() {});
     final map = <String, dynamic>{};

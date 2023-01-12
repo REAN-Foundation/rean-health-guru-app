@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_glucose_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_oxygen_vitals.dart';
 import 'package:patient/features/common/vitals/ui/biometric_blood_pressure_vitals.dart';
@@ -44,27 +45,24 @@ class _BiometricTrendViewState extends State<BiometricTrendView> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        weightTrends(),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        bloodPresureTrends(),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        bloodGlucoseTrends(),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        bloodOxygenSaturationTrends(),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        pulseRateTrends(),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        bodyTempratureTrends(),
+
+                        for (int i = 0 ; i < RemoteConfigValues.vitalScreenTile.length ; i++)...[
+                          if(RemoteConfigValues.vitalScreenTile[i] == 'Weight')
+                            weightTrends(),
+                          if(RemoteConfigValues.vitalScreenTile[i] == 'Blood Pressure')
+                            bloodPresureTrends(),
+                          if(RemoteConfigValues.vitalScreenTile[i] == 'Blood Glucose')
+                            bloodGlucoseTrends(),
+                          if(RemoteConfigValues.vitalScreenTile[i] == 'Blood Oxygen Sturation')
+                            bloodOxygenSaturationTrends(),
+                          if(RemoteConfigValues.vitalScreenTile[i] == 'Pulse Rate')
+                            pulseRateTrends(),
+                          if(RemoteConfigValues.vitalScreenTile[i] == 'Body Temprature')
+                            bodyTempratureTrends(),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                        ],
                         const SizedBox(
                           height: 32,
                         ),

@@ -1,9 +1,7 @@
 
 
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
@@ -224,22 +222,22 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
 
-                for (int i = 0 ; i < RemoteConfigValues.dashboardTile.length ; i++)...[
-                  if(RemoteConfigValues.dashboardTile[i] == 'Medications')
+                for (int i = 0 ; i < RemoteConfigValues.homeScreenTile.length ; i++)...[
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Medications')
                     myMedication(),
-                  if(RemoteConfigValues.dashboardTile[i] == 'Nutrition')
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Nutrition')
                     myNutrition(),
-                  if(RemoteConfigValues.dashboardTile[i] == 'Physical Activity')
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Physical Activity')
                     myActivity(),
-                  if(RemoteConfigValues.dashboardTile[i] == 'Mental Well-Being')
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Mental Well-Being')
                     myStress(),
-                  if(RemoteConfigValues.dashboardTile[i] == 'Vitals')
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Vitals')
                     myBiometrics(),
-                  if(RemoteConfigValues.dashboardTile[i] == 'Symptoms')
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Symptoms')
                     howAreYoursymptoms(),
-                  if(RemoteConfigValues.dashboardTile[i] == 'Lab Values')
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Lab Values')
                     mylipidProfile(),
-                  if(RemoteConfigValues.dashboardTile[i] == 'Knowledge')
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Knowledge')
                     knowledgeTree(),
                 ],
                 SizedBox(
@@ -1649,6 +1647,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        if(RemoteConfigValues.vitalScreenTile.contains('Weight'))
                         Semantics(
                           label: 'Add Weight',
                           button: true,
@@ -1695,6 +1694,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             ),
                           ),
                         ),
+                        if(RemoteConfigValues.vitalScreenTile.contains('Blood Pressure'))
                         Semantics(
                           label: "Add Blood Pressure",
                           button: true,
@@ -1743,6 +1743,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             ),
                           ),
                         ),
+                        if(RemoteConfigValues.vitalScreenTile.contains('Blood Glucose'))
                         Semantics(
                           label: 'Add Blood Glucose',
                           button: true,
@@ -1791,6 +1792,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                             ),
                           ),
                         ),
+                        if(RemoteConfigValues.vitalScreenTile.contains('Pulse Rate'))
                         Semantics(
                           label: 'Add Pulse',
                           button: true,

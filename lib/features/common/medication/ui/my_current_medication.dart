@@ -183,16 +183,18 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   }
 
   Widget listWidget() {
-    return ListView.separated(
-        itemBuilder: (context, index) => _makeMedicineCard(context, index),
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            height: 8,
-          );
-        },
-        itemCount: currentMedicationList.length,
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true);
+    return Expanded(
+      child: ListView.separated(
+          itemBuilder: (context, index) => _makeMedicineCard(context, index),
+          separatorBuilder: (BuildContext context, int index) {
+            return SizedBox(
+              height: 8,
+            );
+          },
+          itemCount: currentMedicationList.length,
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true),
+    );
   }
 
   Widget _makeMedicineCard(BuildContext context, int index) {

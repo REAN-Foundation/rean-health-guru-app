@@ -23,6 +23,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 
 //ignore: must_be_immutable
 class AddMyMedicationView extends StatefulWidget {
@@ -354,6 +355,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   focusable: true,
                   child: TypeAheadFormField(
                     textFieldConfiguration: TextFieldConfiguration(
+                      enabled: globeMedication == null,
                       controller: _typeAheadController,
                       onChanged: (text) {
                         debugPrint(text);
@@ -621,6 +623,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             RichText(
               text: TextSpan(
@@ -644,6 +648,13 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                           fontStyle: FontStyle.italic)),
                 ],
               ),
+            ),
+            InfoScreen(
+              tittle: 'Note',
+              description:
+              'If the Duration is blank, then you will get medication reminders based on the frequency\n\n1. If daily, then you will reminded for 90days\n2. If weekly then you will get reminders for 12 weeks\n3. If monthly, then you will get reminders for 3 months\n',
+              height: 308,
+              infoIconcolor: Colors.grey,
             ),
             /*Text(
               '*',

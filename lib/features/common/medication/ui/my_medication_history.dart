@@ -17,6 +17,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<MedicationConsumptionSummary> summarys =
       <MedicationConsumptionSummary>[];
+  Color buttonColor = Color(0XFFCFB4FF);
 
   getMyMedicationSummary() async {
     try {
@@ -44,6 +45,9 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
 
   @override
   void initState() {
+    if (getAppType() == 'AHA') {
+      buttonColor = redLightAha;
+    }
     getMyMedicationSummary();
     super.initState();
   }
@@ -57,7 +61,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
           key: _scaffoldKey,
           backgroundColor: Colors.white,
           body: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(0.0),
             child: model!.busy
                 ? Center(
                     child: SizedBox(
@@ -95,17 +99,129 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                 height: 240),
           ],
         ),*/
-        ListView.separated(
-            itemBuilder: (context, index) =>
-                _makeMedicinePrescriptionCard(context, index),
-            separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(
-                height: 8,
-              );
-            },
-            itemCount: summarys.length,
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListView.separated(
+                itemBuilder: (context, index) =>
+                    _makeMedicinePrescriptionCard(context, index),
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    height: 8,
+                  );
+                },
+                itemCount: summarys.length,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true),
+          ),
+        ),
+
+          Card(
+            margin: EdgeInsets.zero,
+            elevation: 12,
+            child: Container(
+              height: 40,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+              ),
+              child: Semantics(
+                label: 'Indicators',
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Semantics(
+                      label: 'Medication status Taken',
+                      child: ExcludeSemantics(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 16,
+                              height: 16,
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text('Taken',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: textBlack)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Semantics(
+                      label: 'Medication status Missed',
+                      child: ExcludeSemantics(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 16,
+                              height: 16,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.red),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text('Misssed',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: textBlack)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Semantics(
+                      label: 'Medication status unknown',
+                      child: ExcludeSemantics(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.help_outline,
+                              size: 18,
+                              color: primaryColor,
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text('Unknown',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: textBlack)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+        ),
+          ),
+
       ],
     );
   }
@@ -185,7 +301,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                               ),
                               Icon(
                                 Icons.help_outline,
-                                size: 16,
+                                size: 18,
                                 color: primaryColor,
                               )
                             ],

@@ -36,6 +36,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
   DateTime? todaysDate;
   MovementsTracking? _sleepTracking;
   int _sleepHrs = 0;
+  int _sleepingHrs = 0;
   Color buttonColor = Color(0XFFCFB4FF);
   DashboardTile? mindfulnessTimeDashboardTile;
   int oldStoreSec = 0;
@@ -69,6 +70,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
         if (todaysDate == _sleepTracking!.date) {
           debugPrint('Sleep ==> ${_sleepTracking!.value!} Hrs');
           _sleepHrs = _sleepTracking!.value!;
+          _sleepingHrs = _sleepHrs;
         }
       }
       setState(() {});
@@ -133,9 +135,16 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                             button: true,
                             child: InkWell(
                               onTap: () {
-                                recordMySleepTimeInHrs();
-                                if(mindfulnessController.text.toString().isNotEmpty){
-                                  saveMindfulnessTime(int.parse(mindfulnessController.text.toString()));
+                                if(_sleepingHrs == _sleepHrs && mindfulnessController.text.toString().isEmpty){
+                                  showToast('Please enter valid input', context);
+                                }else {
+                                  recordMySleepTimeInHrs();
+                                  if (mindfulnessController.text
+                                      .toString()
+                                      .isNotEmpty) {
+                                    saveMindfulnessTime(int.parse(
+                                        mindfulnessController.text.toString()));
+                                  }
                                 }
                               },
                               child: ExcludeSemantics(
@@ -352,6 +361,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
   }
 
   Widget mindfulness() {
+    debugPrint('oldStoreSec ==> ${oldStoreSec}');
     return Card(
       semanticContainer: false,
       elevation: 0,
@@ -494,7 +504,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                 children: [
                   Text(Conversion.durationFromSecToMinToString(oldStoreSec),
                       semanticsLabel:
-                      Conversion.durationFromSecToMinToString(oldStoreSec).replaceAll('sec', 'second').replaceAll('min', 'minutes'),
+                      Conversion.durationFromSecToMinToString(oldStoreSec).replaceAll('sec', 'second').replaceAll('min', 'minutes').replaceAll('hrs', 'hours'),
                       style: const TextStyle(
                           color: textBlack,
                           fontWeight: FontWeight.w500,
@@ -567,6 +577,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
   }
 
   saveMindfulnessTime(int minutes) async {
+    hideKeyboard();
     debugPrint('New Mindful min ==> $minutes');
     int newSec = Duration(minutes: minutes).inSeconds;
     newSec = newSec + oldStoreSec;
@@ -581,12 +592,12 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
     setState(() {});
     final map = <String, dynamic>{};
     map['PatientUserId'] = patientUserId;
-    map['MeditationDuration'] = newSec.toString();
-    map['Unit'] = 'Sec';
+    map['DurationInMins'] = Duration(minutes: newSec).inMinutes.toString();
     map['RecordDate'] = dateFormat.format(DateTime.now());
 
     final BaseResponse baseResponse = await model.recordMyMindfulness(map);
     if (baseResponse.status == 'success') {
+      showToast("Mindfulness minutes recorded successfully", context);
     } else {}
     setState(() {});
   }

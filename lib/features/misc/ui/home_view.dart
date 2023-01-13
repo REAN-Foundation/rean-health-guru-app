@@ -148,6 +148,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         //debugPrint("CarePlan ==> ${startCarePlanResponseGlob.data.carePlan.carePlanCode}");
       }
       Timer(Duration(seconds: 2), () {
+        getPatientDetails();
         getCarePlan();
       });
       Future.delayed(
@@ -156,6 +157,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       );
     } catch (Excepetion) {
       Timer(Duration(seconds: 2), () {
+        getPatientDetails();
         getCarePlan();
       });
       Future.delayed(

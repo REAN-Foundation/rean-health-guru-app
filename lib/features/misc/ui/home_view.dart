@@ -604,6 +604,49 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         builder: (BuildContext context) => sucsessDialog);
   }
 
+  getPatientDetails() async {
+    try {
+
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth!;
+
+      final response =
+      await apiProvider!.get('/patients/' + patientUserId!, header: map);
+
+      final PatientApiDetails apiResponse =
+      PatientApiDetails.fromJson(response);
+
+      if (apiResponse.status == 'success') {
+        debugPrint("Patient User Details ==> ${apiResponse.data!.patient!.user!.person!
+            .toJson()
+            .toString()}");
+        await _sharedPrefUtils.save(
+            'patientDetails', apiResponse.data!.patient!.toJson());
+      } else {
+        autoLogOut(apiResponse);
+        model.setBusy(false);
+      }
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint(CustomException.toString());
+    }
+  }
+
+  autoLogOut(PatientApiDetails apiResponse){
+    if(apiResponse.message! == "Forbidden user access"){
+      //showToast('Your session has expired, please login', getAppBuildContext());
+      showToast("Test Message 1", context);
+      Navigator.pushAndRemoveUntil(getAppBuildContext(),
+          MaterialPageRoute(builder: (context) {
+            return LoginWithOTPView();
+          }), (Route<dynamic> route) => false);
+    }else{
+      showToast("Test Message 2", context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     setAppBuildContext(context);

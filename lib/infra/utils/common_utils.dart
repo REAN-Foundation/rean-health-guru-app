@@ -51,7 +51,7 @@ List<String> dailyEnergyLevels = [];
 List<String> createdGoalsIds = [];
 var healthSystemGlobe;
 var healthSystemHospitalGlobe;
-med.Items? globeMedication = null;
+med.Items? globeMedication;
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');

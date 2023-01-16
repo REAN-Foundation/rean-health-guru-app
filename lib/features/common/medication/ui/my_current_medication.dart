@@ -8,6 +8,7 @@ import 'package:patient/features/common/medication/view_models/patients_medicati
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
@@ -48,6 +49,10 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       } else {
         showToast(currentMedication.message!, context);
       }
+    }on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
@@ -122,17 +127,19 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 addButtonWidget(),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: model!.busy
-                      ? Center(
-                          child: SizedBox(
-                              height: 32,
-                              width: 32,
-                              child: CircularProgressIndicator()))
-                      : (currentMedicationList.isEmpty
-                          ? noMedicationFound()
-                          : listWidget()),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: model!.busy
+                        ? Center(
+                            child: SizedBox(
+                                height: 32,
+                                width: 32,
+                                child: CircularProgressIndicator()))
+                        : (currentMedicationList.isEmpty
+                            ? noMedicationFound()
+                            : listWidget()),
+                  ),
                 ),
               ],
             ),
@@ -183,18 +190,16 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   }
 
   Widget listWidget() {
-    return Expanded(
-      child: ListView.separated(
-          itemBuilder: (context, index) => _makeMedicineCard(context, index),
-          separatorBuilder: (BuildContext context, int index) {
-            return SizedBox(
-              height: 8,
-            );
-          },
-          itemCount: currentMedicationList.length,
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true),
-    );
+    return ListView.separated(
+        itemBuilder: (context, index) => _makeMedicineCard(context, index),
+        separatorBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            height: 8,
+          );
+        },
+        itemCount: currentMedicationList.length,
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true);
   }
 
   Widget _makeMedicineCard(BuildContext context, int index) {

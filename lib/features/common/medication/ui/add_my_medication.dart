@@ -93,10 +93,14 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       nightCheck = true;
     }
 
-    _durationController.text = medication.duration.toString();
-    _durationController.selection = TextSelection.fromPosition(
-      TextPosition(offset: _durationController.text.length),
-    );
+    debugPrint('_durationController ==> ${_durationController.text.toString()}');
+
+    if(_durationController.text.toString() != "") {
+      _durationController.text = medication.duration.toString();
+      _durationController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _durationController.text.length),
+      );
+    }
     _unitController.text = medication.dose.toString();
     _unitController.selection = TextSelection.fromPosition(
       TextPosition(offset: _unitController.text.length),
@@ -355,6 +359,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   focusable: true,
                   child: TypeAheadFormField(
                     textFieldConfiguration: TextFieldConfiguration(
+                      style: TextStyle(
+                        color: globeMedication != null ? textGrey : textBlack,
+                      ),
                       enabled: globeMedication == null,
                       controller: _typeAheadController,
                       onChanged: (text) {
@@ -650,11 +657,11 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               ),
             ),
             InfoScreen(
-              tittle: 'Note',
+              tittle: 'Duration Information',
               description:
-              'If the Duration is blank, then you will get medication reminders based on the frequency\n\n1. If daily, then you will reminded for 90days\n2. If weekly then you will get reminders for 12 weeks\n3. If monthly, then you will get reminders for 3 months\n',
+              'If the Duration is blank, then you will get medication reminders based on the frequency\n\n1. If daily, then you will get reminders for 90 days.\n2. If weekly, then you will get reminders for 12 weeks.\n3. If monthly, then you will get reminders for 3 months.\n',
               height: 308,
-              infoIconcolor: Colors.grey,
+              infoIconcolor: primaryColor,
             ),
             /*Text(
               '*',
@@ -1051,7 +1058,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                       }/* else if (_durationController.text.trim() == '' &&
                           _frequencyUnit != 'Other') {
                         showToast('Please enter duration', context);
-                      }*/ else if (validationForDuration()) {
+                      } else if (validationForDuration()) {
                         if (_frequencyUnit == 'Daily') {
                           showToast(
                               'You can add medication for the next 180 days',
@@ -1068,7 +1075,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     /*showToast(
                             'Please enter valid duration 6 months / 26 weeks / 180 days',
                             context);*/
-                  } else if (_unitController.text.trim() == '') {
+                  }*/ else if (_unitController.text.trim() == '') {
                     showToast('Please enter unit quantity', context);
                   } else if (_dosageUnit == '') {
                         showToast('Please Select dosage unit', context);
@@ -1087,17 +1094,21 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   }
 
   bool validationForDuration() {
-    if (_frequencyUnit == 'Daily' &&
-        double.parse(_durationController.text.toString()) > 180) {
+    if(_durationController.text.isNotEmpty) {
+      if (_frequencyUnit == 'Daily' &&
+          double.parse(_durationController.text.toString()) > 180) {
+        return true;
+      } else if (_frequencyUnit == 'Weekly' &&
+          double.parse(_durationController.text.toString()) > 26) {
+        return true;
+      } else if (_frequencyUnit == 'Monthly' &&
+          double.parse(_durationController.text.toString()) > 6) {
+        return true;
+      } else {
+        return false;
+      }
+    }else{
       return true;
-    } else if (_frequencyUnit == 'Weekly' &&
-        double.parse(_durationController.text.toString()) > 26) {
-      return true;
-    } else if (_frequencyUnit == 'Monthly' &&
-        double.parse(_durationController.text.toString()) > 6) {
-      return true;
-    } else {
-      return false;
     }
   }
 
@@ -1523,14 +1534,18 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
       if(globeMedication != null) {
         baseResponse = await model.updateMedicationforVisit(
-            map,globeMedication!.id.toString());;
+            map,globeMedication!.id.toString());
       }else {
         baseResponse = await model.addMedicationforVisit(
             map);
       }
 
       if (baseResponse.status == 'success') {
-        showToast('Medication was added successfully.', context);
+        if(globeMedication == null) {
+          showToast('Medication was added successfully.', context);
+        }else{
+          showToast('Medication was updated successfully.', context);
+        }
         //widget._submitButtonListner();
         if(widget._path == 'Dashboard'){
           Navigator.popAndPushNamed(context, RoutePaths.My_Medications, arguments: 1);

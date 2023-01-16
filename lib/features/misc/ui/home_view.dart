@@ -637,15 +637,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   }
 
   autoLogOut(PatientApiDetails apiResponse){
-    if(apiResponse.message! == "Forbidden user access"){
-      //showToast('Your session has expired, please login', getAppBuildContext());
-      showToast("Test Message 1", context);
+    //debugPrint('apiResponse.message ==> ${apiResponse.message}');
+    if(apiResponse.message! == "Forebidden user access"){
+      showToast('Your session has expired, please login', getAppBuildContext());
+      //showToast("Test Message 1", context);
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
             return LoginWithOTPView();
           }), (Route<dynamic> route) => false);
-    }else{
-      showToast("Test Message 2", context);
     }
   }
 

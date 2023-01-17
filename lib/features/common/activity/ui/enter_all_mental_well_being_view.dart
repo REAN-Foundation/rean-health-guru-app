@@ -135,10 +135,13 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                             button: true,
                             child: InkWell(
                               onTap: () {
+                                toastDisplay = true;
                                 if(_sleepingHrs == _sleepHrs && mindfulnessController.text.toString().isEmpty){
                                   showToast('Please enter valid input', context);
                                 }else {
-                                  recordMySleepTimeInHrs();
+                                  if(_sleepingHrs != _sleepHrs) {
+                                    recordMySleepTimeInHrs();
+                                  }
                                   if (mindfulnessController.text
                                       .toString()
                                       .isNotEmpty) {
@@ -409,7 +412,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                   Row(
                     children: [
                       Text(
-                        'Enter number of mindful minutes',
+                        'Enter number of your mindful minutes',
                         style: TextStyle(
                             color: textBlack,
                             fontWeight: FontWeight.w600,
@@ -556,8 +559,8 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
         _sleepTracking!.date = startDate;
         _sharedPrefUtils.save('sleepTime', _sleepTracking!.toJson());
       }
-
-        showToast("Sleep time recorded successfully", context);
+      clearAllFeilds();
+        //showToast("Sleep time recorded successfully", context);
       }
       setState(() {});
        final map = <String, dynamic>{};
@@ -597,9 +600,21 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
 
     final BaseResponse baseResponse = await model.recordMyMindfulness(map);
     if (baseResponse.status == 'success') {
-      showToast("Mindfulness minutes recorded successfully", context);
+      clearAllFeilds();
+      //showToast("Mindfulness minutes recorded successfully", context);
     } else {}
     setState(() {});
+  }
+
+  bool toastDisplay = true;
+
+  clearAllFeilds() {
+    if (toastDisplay) {
+      _scrollController.animateTo(0.0,
+          duration: Duration(seconds: 2), curve: Curves.ease);
+      showToast('Record Updated Successfully!', context);
+      toastDisplay = false;
+    }
   }
 
 }

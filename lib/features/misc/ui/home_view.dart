@@ -638,7 +638,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
 
   autoLogOut(PatientApiDetails apiResponse){
     //debugPrint('apiResponse.message ==> ${apiResponse.message}');
-    if(apiResponse.message! == "Forebidden user access"){
+    if(apiResponse.message! == "Forbidden user access" || apiResponse.message! == "Forebidden user access"){
       showToast('Your session has expired, please login', getAppBuildContext());
       //showToast("Test Message 1", context);
       Navigator.pushAndRemoveUntil(context,

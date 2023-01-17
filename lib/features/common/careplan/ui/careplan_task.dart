@@ -92,7 +92,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           getAppName() == 'Heart & Stroke Helper™ ') {
         dateTill = DateTime.now();
       } else {*/
-      if(getBaseUrl()!.contains('reancare-api-dev')){
+      if(getBaseUrl()!.contains('reancare-api-dev') || getBaseUrl()!.contains('aha-api-uat.services')){
         dateTill = DateTime.now().add(Duration(days: 91));
       }else{
         dateTill = DateTime.now().add(Duration(days: 0));

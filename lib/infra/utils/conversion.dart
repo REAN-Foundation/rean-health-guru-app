@@ -43,9 +43,7 @@ class Conversion {
 
   static String durationFromSecToMinToString(int seconds) {
     final d = Duration(seconds: seconds);
-    debugPrint('D ==> ${d}');
     final List<String> parts = d.toString().split(':');
-    debugPrint('D 0 ==> ${parts[0]}');
     if(parts[0] == '0') {
       return '${parts[1].padLeft(2, '0')} min ${parts[2]
           .padLeft(2, '0')

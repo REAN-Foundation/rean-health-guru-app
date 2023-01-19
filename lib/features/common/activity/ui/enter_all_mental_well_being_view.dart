@@ -364,7 +364,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
   }
 
   Widget mindfulness() {
-    debugPrint('oldStoreSec ==> ${oldStoreSec}');
+    debugPrint('oldStoreSec ==> $oldStoreSec');
     return Card(
       semanticContainer: false,
       elevation: 0,

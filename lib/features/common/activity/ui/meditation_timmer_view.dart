@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:patient/features/common/nutrition/view_models/patients_health_marker.dart';
 import 'package:patient/features/misc/models/dashboard_tile.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -10,6 +11,9 @@ import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
+
+import '../../../../infra/utils/string_utility.dart';
+import '../../../misc/models/base_response.dart';
 
 class MeditationTimmerView extends StatefulWidget {
   @override
@@ -27,6 +31,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
   bool isPause = false;
   DashboardTile? mindfulnessTimeDashboardTile;
   int oldStoreSec = 0;
+  var dateFormat = DateFormat('yyyy-MM-dd');
 
   loadSharedPrefs() async {
     try {
@@ -214,7 +219,6 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                       if (_timer != null) ...[
                                                         _timer!.isActive
                                                             ? Semantics(
-                                                                label: 'Play',
                                                                 button: true,
                                                                 child:
                                                                     ExcludeSemantics(
@@ -251,6 +255,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                                               primaryColor,
                                                                           size:
                                                                               64,
+                                                                          semanticLabel: 'Play',
                                                                         ),
                                                                       ],
                                                                     ),
@@ -278,7 +283,6 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                             Radius.circular(
                                                                 70.0))),
                                                 child: Semantics(
-                                                  label: 'Pause',
                                                   button: true,
                                                   child: ExcludeSemantics(
                                                     child: Container(
@@ -305,6 +309,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                           Icon(
                                                             Icons.pause,
                                                             color: primaryColor,
+                                                            semanticLabel: 'Pause',
                                                             size: 64,
                                                           ),
                                                         ],
@@ -471,7 +476,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
     );
   }
 
-  saveMindfulnessTime() {
+  saveMindfulnessTime() async {
     int newSec = Duration(minutes: minutes).inSeconds;
     newSec = newSec + seconds + oldStoreSec;
     _sharedPrefUtils.save(
@@ -483,6 +488,15 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
     minutes = 0;
     seconds = 0;
     hours = 0;
+    final map = <String, dynamic>{};
+    map['PatientUserId'] = patientUserId;
+    map['MeditationDuration'] = newSec.toString();
+    map['Unit'] = 'Sec';
+    map['RecordDate'] = dateFormat.format(DateTime.now());
+
+    final BaseResponse baseResponse = await model.recordMyMindfulness(map);
+    if (baseResponse.status == 'success') {
+    } else {}
     setState(() {});
     Navigator.of(context).pop();
   }

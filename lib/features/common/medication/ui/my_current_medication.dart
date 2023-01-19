@@ -8,6 +8,7 @@ import 'package:patient/features/common/medication/view_models/patients_medicati
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/networking/api_provider.dart';
+import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
@@ -37,6 +38,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
 
   getMyMedications() async {
     try {
+      globeMedication = null;
       final MyCurrentMedication currentMedication =
           await model.getMyCurrentMedications();
       debugPrint('Medication ==> ${currentMedication.toJson()}');
@@ -47,6 +49,10 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       } else {
         showToast(currentMedication.message!, context);
       }
+    }on FetchDataException catch (e) {
+      debugPrint('error caught: $e');
+      model.setBusy(false);
+      showToast(e.toString(), context);
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
@@ -121,17 +127,19 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 addButtonWidget(),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: model!.busy
-                      ? Center(
-                          child: SizedBox(
-                              height: 32,
-                              width: 32,
-                              child: CircularProgressIndicator()))
-                      : (currentMedicationList.isEmpty
-                          ? noMedicationFound()
-                          : listWidget()),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: model!.busy
+                        ? Center(
+                            child: SizedBox(
+                                height: 32,
+                                width: 32,
+                                child: CircularProgressIndicator()))
+                        : (currentMedicationList.isEmpty
+                            ? noMedicationFound()
+                            : listWidget()),
+                  ),
                 ),
               ],
             ),
@@ -202,7 +210,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
       elevation: 0,
       child: Container(
         padding: const EdgeInsets.only(
-            left: 16.0, right: 16.0, top: 16.0, bottom: 16.0),
+            left: 16.0, right: 16.0, top: 16.0, bottom: 8.0),
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: primaryColor, width: 0.8),
@@ -292,10 +300,105 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                           fontWeight: FontWeight.w300,
                           color: Colors.grey)),
                   //const SizedBox(height: 16,),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 1,
+                        color: Colors.black12,
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Semantics(
+                            button: true,
+                            label: 'Edit '+ medication.drugName.toString(),
+                            child: ExcludeSemantics(
+                              child: InkWell(
+                                  onTap: () {
+                                    globeMedication = medication;
+                                    Navigator.pushNamed(context, RoutePaths.ADD_MY_MEDICATION, arguments: 'Medication')
+                                        .then((value) {
+                                      getMyMedications();
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 30,
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.edit,
+                                          color: primaryColor,
+                                          size: 20,
+                                        ),
+                                        SizedBox(
+                                          width: 4,
+                                        ),
+                                        Text('Edit',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600,
+                                                color: primaryColor)),
+                                      ],
+                                    ),
+                                  )),
+                            ),
+                          ),
+                          Semantics(
+                            button: true,
+                            child: InkWell(
+                                onTap: () {
+                                  ConfirmationBottomSheet(
+                                      context: context,
+                                      height: 180,
+                                      onPositiveButtonClickListner: () {
+                                        //debugPrint('Positive Button Click');
+                                        deleteMedication(medication.id.toString());
+                                      },
+                                      onNegativeButtonClickListner: () {
+                                        //debugPrint('Negative Button Click');
+                                      },
+                                      question:
+                                      'Are you sure you want to delete this medication?',
+                                      tittle: 'Alert!');
+                                },
+                                child: Container(
+                                  height: 30,
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.delete_forever,
+                                        color: primaryColor,
+                                        size: 20,
+                                      ),
+                                      SizedBox(
+                                        width: 4,
+                                      ),
+                                      Text('Delete',
+                                          semanticsLabel: medication.drugName! +'delete',
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              color: primaryColor)),
+                                    ],
+                                  ),
+                                )),
+                          ),
+
+                        ],
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
-            Expanded(
+            /*Expanded(
               flex: 1,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -325,10 +428,9 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                         size: 24,
                         semanticLabel: medication.drugName! + ' Delete',
                       )),
-
                 ],
               ),
-            ),
+            ),*/
           ],
         ),
       ),

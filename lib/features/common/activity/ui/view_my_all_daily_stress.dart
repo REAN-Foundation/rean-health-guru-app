@@ -609,7 +609,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                   children: [
                     Text(Conversion.durationFromSecToMinToString(oldStoreSec),
                         semanticsLabel:
-                            Conversion.durationFromSecToMinToString(oldStoreSec).replaceAll('sec', 'second').replaceAll('min', 'minutes') + 'Duration',
+                            Conversion.durationFromSecToMinToString(oldStoreSec).replaceAll('sec', 'second').replaceAll('min', 'minutes').replaceAll('hrs', 'hours') + 'Duration',
                         style: const TextStyle(
                             color: textBlack,
                             fontWeight: FontWeight.w700,
@@ -617,15 +617,17 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
                             fontStyle: FontStyle.normal,
                             fontSize: 22.0),
                         textAlign: TextAlign.center),
-                    Text("Duration",
-                        semanticsLabel: 'Duration',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          color: secondaryTextBlack,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          fontStyle: FontStyle.normal,
-                        )),
+                    ExcludeSemantics(
+                      child: Text("Duration",
+                          semanticsLabel: 'Duration',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: secondaryTextBlack,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal,
+                          )),
+                    ),
                   ],
                 ),
               ),

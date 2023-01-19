@@ -272,7 +272,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                   width: 8,
                 ),
                 Text(
-                  'Enter your stand minutes',
+                  'Enter number of minutes standing',
                   style: TextStyle(
                       color: textBlack,
                       fontWeight: FontWeight.w600,

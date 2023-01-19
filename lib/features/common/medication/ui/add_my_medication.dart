@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/medication/models/drugs_library_pojo.dart';
 import 'package:patient/features/common/medication/models/get_medication_stock_images.dart';
+import 'package:patient/features/common/medication/models/my_current_medication.dart' as med;
 import 'package:patient/features/common/medication/models/nih_medication_search_response.dart';
 import 'package:patient/features/common/medication/view_models/patients_medication.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -22,6 +23,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
+import 'package:patient/infra/widgets/info_screen.dart';
 
 //ignore: must_be_immutable
 class AddMyMedicationView extends StatefulWidget {
@@ -70,10 +72,62 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
   String? medcationResourceId = '';
 
+  setData(med.Items medication){
+    _typeAheadController.text = medication.drugName.toString();
+    _typeAheadController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _typeAheadController.text.length),
+    );
+
+    _frequencyUnit = medication.frequencyUnit.toString();
+
+    if(medication.timeSchedules!.contains('Morning')){
+      morningCheck = true;
+    }
+    if(medication.timeSchedules!.contains('Afternoon')){
+      afternoonCheck = true;
+    }
+    if(medication.timeSchedules!.contains('Evening')){
+      eveningCheck = true;
+    }
+    if(medication.timeSchedules!.contains('Night')){
+      nightCheck = true;
+    }
+
+    debugPrint('_durationController ==> ${_durationController.text.toString()}');
+
+    if(medication.duration.toString() != "" || medication.duration.toString() != null ) {
+      _durationController.text = medication.duration.toString();
+      _durationController.selection = TextSelection.fromPosition(
+        TextPosition(offset: _durationController.text.length),
+      );
+    }
+    _unitController.text = medication.dose.toString();
+    _unitController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _unitController.text.length),
+    );
+    _dosageUnit = medication.dosageUnit.toString();
+    _instructionController.text = medication.instructions.toString();
+    _instructionController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _instructionController.text.length),
+    );
+
+    medcationResourceId = medication.imageResourceId;
+
+    debugPrint('Medcation Resource Id ==> $medcationResourceId');
+
+    setState(() {
+
+    });
+
+  }
+
   @override
   void initState() {
     loadSharedPrefs();
     _getMedicaionStockImages();
+    if(globeMedication != null){
+      setData(globeMedication!);
+    }
     /*if (widget._visitInformation.drugOrderId == "") {
       _addPatientMedicationOrderId();
     }*/
@@ -305,6 +359,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                   focusable: true,
                   child: TypeAheadFormField(
                     textFieldConfiguration: TextFieldConfiguration(
+                      style: TextStyle(
+                        color: globeMedication != null ? textGrey : textBlack,
+                      ),
+                      enabled: globeMedication == null,
                       controller: _typeAheadController,
                       onChanged: (text) {
                         debugPrint(text);
@@ -572,6 +630,8 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             RichText(
               text: TextSpan(
@@ -596,12 +656,19 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                 ],
               ),
             ),
-            Text(
+            InfoScreen(
+              tittle: 'Duration Information',
+              description:
+              'If the Duration is blank, then you will get medication reminders based on the frequency\n\n1. If daily, then you will get reminders for 90 days.\n2. If weekly, then you will get reminders for 12 weeks.\n3. If monthly, then you will get reminders for 3 months.\n',
+              height: 308,
+              infoIconcolor: primaryColor,
+            ),
+            /*Text(
               '*',
               semanticsLabel: 'required',
               style: TextStyle(
                   color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
-            ),
+            ),*/
           ],
         ),
         /*Text('Duration'+_frequencyUnit == 'Daily' ? ' (in days)',
@@ -626,7 +693,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     color: Colors.white),
                 child: Semantics(
                   label: 'Duration of dose',
-                  hint: 'required',
+                  //hint: 'required',
                   child: TextFormField(
                       controller: _durationController,
                       focusNode: _durationFocus,
@@ -728,6 +795,10 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     final MedicationStockImages images =
     medicationStockImagesList.elementAt(index);
 
+    if(medcationResourceId == images.resourceId){
+      images.isSelected = true;
+    }
+
     Color selcetedColor = Colors.white;
     //debugPrint("isAvailable ${slot.isAvailable} isSelected ${slot.isSelected}, Time Slot ${slot.slotStart.substring(0,5)+" - "+slot.slotEnd.substring(0,5)}");
     if (images.isSelected) {
@@ -822,7 +893,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     setState(() {});
   }
 
-/*  Widget _startDate() {
+/*  Widget _startDate() {267c5ee8-c0f8-4bcb-b515-1432c6609e24
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -984,7 +1055,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     showToast('Please select frequency', context);
                   } else if (_frequencyUnit == 'Daily' && frequency == 0) {
                         showToast('Please select daily time schedule', context);
-                      } else if (_durationController.text.trim() == '' &&
+                      }/* else if (_durationController.text.trim() == '' &&
                           _frequencyUnit != 'Other') {
                         showToast('Please enter duration', context);
                       } else if (validationForDuration()) {
@@ -1004,7 +1075,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                     /*showToast(
                             'Please enter valid duration 6 months / 26 weeks / 180 days',
                             context);*/
-                  } else if (_unitController.text.trim() == '') {
+                  }*/ else if (_unitController.text.trim() == '') {
                     showToast('Please enter unit quantity', context);
                   } else if (_dosageUnit == '') {
                         showToast('Please Select dosage unit', context);
@@ -1023,17 +1094,21 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
   }
 
   bool validationForDuration() {
-    if (_frequencyUnit == 'Daily' &&
-        double.parse(_durationController.text.toString()) > 180) {
+    if(_durationController.text.isNotEmpty) {
+      if (_frequencyUnit == 'Daily' &&
+          double.parse(_durationController.text.toString()) > 180) {
+        return true;
+      } else if (_frequencyUnit == 'Weekly' &&
+          double.parse(_durationController.text.toString()) > 26) {
+        return true;
+      } else if (_frequencyUnit == 'Monthly' &&
+          double.parse(_durationController.text.toString()) > 6) {
+        return true;
+      } else {
+        return false;
+      }
+    }else{
       return true;
-    } else if (_frequencyUnit == 'Weekly' &&
-        double.parse(_durationController.text.toString()) > 26) {
-      return true;
-    } else if (_frequencyUnit == 'Monthly' &&
-        double.parse(_durationController.text.toString()) > 6) {
-      return true;
-    } else {
-      return false;
     }
   }
 
@@ -1455,10 +1530,22 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
       map['Instructions'] = _instructionController.text;
       map['ImageResourceId'] = medcationResourceId;
 
-      final BaseResponse baseResponse = await model.addMedicationforVisit(map);
+      late BaseResponse baseResponse;
+
+      if(globeMedication != null) {
+        baseResponse = await model.updateMedicationforVisit(
+            map,globeMedication!.id.toString());
+      }else {
+        baseResponse = await model.addMedicationforVisit(
+            map);
+      }
 
       if (baseResponse.status == 'success') {
-        showToast('Medication was added successfully.', context);
+        if(globeMedication == null) {
+          showToast('Medication was added successfully.', context);
+        }else{
+          showToast('Medication was updated successfully.', context);
+        }
         //widget._submitButtonListner();
         if(widget._path == 'Dashboard'){
           Navigator.popAndPushNamed(context, RoutePaths.My_Medications, arguments: 1);

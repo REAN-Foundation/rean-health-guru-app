@@ -16,6 +16,7 @@ import 'package:patient/features/common/emergency/ui/emergency_contact.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/user_data.dart';
 import 'package:patient/features/misc/ui/dashboard_ver_3.dart';
+import 'package:patient/features/misc/ui/login_with_otp_view.dart';
 import 'package:patient/features/misc/ui/my_reports_upload.dart';
 import 'package:patient/features/misc/view_models/common_config_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
@@ -148,6 +149,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         //debugPrint("CarePlan ==> ${startCarePlanResponseGlob.data.carePlan.carePlanCode}");
       }
       Timer(Duration(seconds: 2), () {
+        getPatientDetails();
         getCarePlan();
       });
       Future.delayed(
@@ -156,6 +158,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       );
     } catch (Excepetion) {
       Timer(Duration(seconds: 2), () {
+        getPatientDetails();
         getCarePlan();
       });
       Future.delayed(
@@ -198,6 +201,19 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         }
         //showToast(startCarePlanResponse.message);
       } else {
+        if(carePlanEnrollmentForPatient.message.toString() == 'Forbidden user access'){
+          showToast('Your session has expired, please login', context);
+          dailyCheckInDate = '';
+          carePlanEnrollmentForPatientGlobe = null;
+          _sharedPrefUtils.save('CarePlan', null);
+          _sharedPrefUtils.saveBoolean('login', null);
+          _sharedPrefUtils.clearAll();
+          chatList.clear();
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) {
+                return LoginWithOTPView();
+              }), (Route<dynamic> route) => false);
+        }
         //showToast(startCarePlanResponse.message);
       }
 
@@ -591,8 +607,50 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         builder: (BuildContext context) => sucsessDialog);
   }
 
+  getPatientDetails() async {
+    try {
+
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth!;
+
+      final response =
+      await apiProvider!.get('/patients/' + patientUserId!, header: map);
+
+      final PatientApiDetails apiResponse =
+      PatientApiDetails.fromJson(response);
+
+      if (apiResponse.status == 'success') {
+        debugPrint("Patient User Details ==> ${apiResponse.data!.patient!.user!.person!
+            .toJson()
+            .toString()}");
+        await _sharedPrefUtils.save(
+            'patientDetails', apiResponse.data!.patient!.toJson());
+      } else {
+        autoLogOut(apiResponse);
+        model.setBusy(false);
+      }
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint(CustomException.toString());
+    }
+  }
+
+  autoLogOut(PatientApiDetails apiResponse){
+    //debugPrint('apiResponse.message ==> ${apiResponse.message}');
+    if(apiResponse.message! == "Forbidden user access" || apiResponse.message! == "Forebidden user access"){
+      showToast('Your session has expired, please login', context);
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+            return LoginWithOTPView();
+          }), (Route<dynamic> route) => false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    setAppBuildContext(context);
     //UserData data = UserData.fromJson(_sharedPrefUtils.read("user"));
     //debugPrint(_sharedPrefUtils.read("user"));
 

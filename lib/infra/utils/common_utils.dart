@@ -27,6 +27,8 @@ StartTaskOfAHACarePlanResponse getStartTaskOfAHACarePlanResponse() {
   return _startTaskOfAHACarePlanResponseGlobe;
 }*/
 
+late BuildContext _buildContext;
+
 bool _isLogin = false;
 String? _baseUrl = '';
 late UserTask _task;
@@ -161,6 +163,14 @@ void setAppType(String name) {
 
 String getAppType() {
   return _appType;
+}
+
+void setAppBuildContext(BuildContext context) {
+  _buildContext = context;
+}
+
+BuildContext getAppBuildContext() {
+  return _buildContext;
 }
 
 void setAppFlavour(String appFlavour) {

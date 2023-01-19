@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:package_info/package_info.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/ui/login_with_otp_view.dart';
@@ -271,7 +271,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
           Visibility(
-            visible: getAppFlavour() != 'HF Helper',
+            visible: RemoteConfigValues.carePlanCode.isNotEmpty,
             /*visible: getBaseUrl()!.contains('aha-api-uat') ||
                 getBaseUrl()!.contains('reancare-api-dev') ||
                 getAppName() == 'Heart & Stroke Helper™ ',*/

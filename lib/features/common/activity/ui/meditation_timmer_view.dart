@@ -219,7 +219,6 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                       if (_timer != null) ...[
                                                         _timer!.isActive
                                                             ? Semantics(
-                                                                label: 'Play',
                                                                 button: true,
                                                                 child:
                                                                     ExcludeSemantics(
@@ -256,6 +255,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                                               primaryColor,
                                                                           size:
                                                                               64,
+                                                                          semanticLabel: 'Play',
                                                                         ),
                                                                       ],
                                                                     ),
@@ -283,7 +283,6 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                             Radius.circular(
                                                                 70.0))),
                                                 child: Semantics(
-                                                  label: 'Pause',
                                                   button: true,
                                                   child: ExcludeSemantics(
                                                     child: Container(
@@ -310,6 +309,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                           Icon(
                                                             Icons.pause,
                                                             color: primaryColor,
+                                                            semanticLabel: 'Pause',
                                                             size: 64,
                                                           ),
                                                         ],

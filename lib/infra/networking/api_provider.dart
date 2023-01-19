@@ -135,6 +135,8 @@ class ApiProvider {
   }
 
   dynamic _response(http.Response response) {
+    debugPrint('Status_Code ${response.statusCode.toString()}');
+    debugPrint('Status_Code ${response.body.toString()}');
     switch (response.statusCode) {
       case 200:
       case 201:

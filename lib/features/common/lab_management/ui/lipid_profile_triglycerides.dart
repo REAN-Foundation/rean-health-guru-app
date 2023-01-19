@@ -655,7 +655,7 @@ class _LipidProfileTriglyceridesViewState
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         _controller.clear();
         //Navigator.pop(context);
         getVitalsHistory();
@@ -700,7 +700,7 @@ class _LipidProfileTriglyceridesViewState
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);

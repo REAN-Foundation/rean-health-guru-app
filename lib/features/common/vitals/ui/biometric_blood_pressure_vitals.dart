@@ -1350,7 +1350,7 @@ class _BiometricBloodPresureVitalsViewState
         if(progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         _systolicController.clear();
         _diastolicController.clear();
         //Navigator.pop(context);
@@ -1379,7 +1379,7 @@ class _BiometricBloodPresureVitalsViewState
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);

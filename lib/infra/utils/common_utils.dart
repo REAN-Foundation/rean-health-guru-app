@@ -213,6 +213,28 @@ setCurrentLocale(String? locale) {
   _currentLocale = locale;
 }
 
+void showSuccessToast(String msg, BuildContext context) {
+  FocusManager.instance.primaryFocus!.unfocus();
+  /*Fluttertoast.showToast(
+    msg: msg,
+    toastLength: Toast.LENGTH_LONG,
+    backgroundColor: Colors.black,
+    textColor: Colors.white,
+  );*/
+  final snackBar = SnackBar(
+    content: Text(msg,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600
+            ),),
+    backgroundColor: primaryColor,
+  );
+
+  // Find the ScaffoldMessenger in the widget tree
+  // and use it to show a SnackBar.
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
 void showToast(String msg, BuildContext context) {
   FocusManager.instance.primaryFocus!.unfocus();
   /*Fluttertoast.showToast(

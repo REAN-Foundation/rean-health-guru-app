@@ -147,9 +147,12 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(12), topLeft: Radius.circular(12))),
       child: Center(
-        child: Text(
-          '\n' + widget.next!.title.toString(),
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
+        child:Text(
+          widget.next!.title.toString(),
+          style: TextStyle(
+              color: primaryColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 16),
           textAlign: TextAlign.left,
         ),
       ),

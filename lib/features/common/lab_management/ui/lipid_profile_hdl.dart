@@ -653,7 +653,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         _controller.clear();
         //Navigator.pop(context);
         getVitalsHistory();
@@ -698,7 +698,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);

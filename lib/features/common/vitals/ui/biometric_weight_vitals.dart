@@ -1082,7 +1082,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         _weightController.clear();
         _sharedPrefUtils.saveDouble(
             'weight', double.parse(entertedWeight.toString()));
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);
@@ -1109,7 +1109,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);

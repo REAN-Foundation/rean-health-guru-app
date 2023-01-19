@@ -2640,7 +2640,7 @@ class _EditProfileState extends State<EditProfile> {
 
                     if (updateProfileSuccess.status == 'success') {
                       progressDialog.close();
-                      showToast('Patient profile details updated successfully!', context);
+                      showSuccessToast('Patient profile details updated successfully!', context);
                       /* if (Navigator.canPop(context)) {
                     Navigator.pop(context);
                   }*/

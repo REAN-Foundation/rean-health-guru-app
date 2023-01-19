@@ -653,7 +653,7 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         _controller.clear();
         //Navigator.pop(context);
         getVitalsHistory();
@@ -698,7 +698,7 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);

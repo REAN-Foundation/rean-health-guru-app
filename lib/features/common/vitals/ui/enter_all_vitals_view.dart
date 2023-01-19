@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -121,27 +122,23 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   //const SizedBox(height: 16,),
-                  weightFeilds(),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  bloodPresureFeilds(),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  bloodGlucoseFeilds(),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  bloodOxygenSaturationFeilds(),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  pulseRateFeilds(),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  bodyTempratureFeilds(),
+                  for (int i = 0 ; i < RemoteConfigValues.vitalScreenTile.length ; i++)...[
+                    if(RemoteConfigValues.vitalScreenTile[i] == 'Weight')
+                      weightFeilds(),
+                    if(RemoteConfigValues.vitalScreenTile[i] == 'Blood Pressure')
+                      bloodPresureFeilds(),
+                    if(RemoteConfigValues.vitalScreenTile[i] == 'Blood Glucose')
+                      bloodGlucoseFeilds(),
+                    if(RemoteConfigValues.vitalScreenTile[i] == 'Blood Oxygen Sturation')
+                      bloodOxygenSaturationFeilds(),
+                    if(RemoteConfigValues.vitalScreenTile[i] == 'Pulse Rate')
+                      pulseRateFeilds(),
+                    if(RemoteConfigValues.vitalScreenTile[i] == 'Body Temprature')
+                      bodyTempratureFeilds(),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                  ],
                   const SizedBox(
                     height: 32,
                   ),

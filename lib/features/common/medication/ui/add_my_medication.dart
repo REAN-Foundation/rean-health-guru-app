@@ -637,7 +637,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
               text: TextSpan(
                 text: 'Duration',
                 style: TextStyle(
-                    fontSize: 18.0, color: textBlack, fontWeight: FontWeight.w600),
+                    fontSize: 16.0, color: textBlack, fontWeight: FontWeight.w600),
                 children: <TextSpan>[
                   TextSpan(
                       text: ' ' + _frequencyUnit! == ''
@@ -650,7 +650,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
                           ? ' (number of days)'
                           : '',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.w300,
                           fontStyle: FontStyle.italic)),
                 ],
@@ -1542,9 +1542,9 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
       if (baseResponse.status == 'success') {
         if(globeMedication == null) {
-          showToast('Medication was added successfully.', context);
+          showSuccessToast('Medication was added successfully.', context);
         }else{
-          showToast('Medication was updated successfully.', context);
+          showSuccessToast('Medication was updated successfully.', context);
         }
         //widget._submitButtonListner();
         if(widget._path == 'Dashboard'){

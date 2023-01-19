@@ -665,7 +665,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getMyMedications();
         model.setBusy(true);

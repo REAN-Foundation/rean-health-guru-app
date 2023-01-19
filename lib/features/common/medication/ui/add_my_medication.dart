@@ -95,7 +95,7 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
 
     debugPrint('_durationController ==> ${_durationController.text.toString()}');
 
-    if(_durationController.text.toString() != "") {
+    if(medication.duration.toString() != "" || medication.duration.toString() != null ) {
       _durationController.text = medication.duration.toString();
       _durationController.selection = TextSelection.fromPosition(
         TextPosition(offset: _durationController.text.length),

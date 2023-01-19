@@ -178,7 +178,7 @@ class _MyMedicationHistoryViewState extends State<MyMedicationHistoryView> {
                             SizedBox(
                               width: 4,
                             ),
-                            Text('Misssed',
+                            Text('Missed',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(

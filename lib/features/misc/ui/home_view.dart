@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
@@ -327,7 +328,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   }*/
 
   healthJourneyCheck(){
-    if(getAppFlavour() != 'HF Helper') {
+    if(RemoteConfigValues.carePlanCode.isNotEmpty) {
       if (carePlanEnrollmentForPatientGlobe == null) {
         /*if(getBaseUrl()!.contains('aha-api-uat') ||
           getBaseUrl()!.contains('reancare-api-dev') ||

@@ -412,7 +412,7 @@ class _EnterAllMentalWellBeingViewState extends State<EnterAllMentalWellBeingVie
                   Row(
                     children: [
                       Text(
-                        'Enter number of your mindful minutes',
+                        'Enter your mindful minutes',
                         style: TextStyle(
                             color: textBlack,
                             fontWeight: FontWeight.w600,

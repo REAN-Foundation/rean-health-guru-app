@@ -884,8 +884,19 @@ class _AddMyMedicationViewState extends State<AddMyMedicationView> {
     debugPrint('index click $index');
     for (int i = 0; i < medicationStockImagesList.length; i++) {
       if (i == index) {
-        medicationStockImagesList.elementAt(i).isSelected = true;
-        medcationResourceId = medicationStockImagesList.elementAt(i).resourceId;
+        if(medicationStockImagesList.elementAt(i).isSelected) {
+          medicationStockImagesList
+              .elementAt(i)
+              .isSelected = false;
+          medcationResourceId = '';
+        }else{
+          medicationStockImagesList
+              .elementAt(i)
+              .isSelected = true;
+          medcationResourceId = medicationStockImagesList
+              .elementAt(i)
+              .resourceId;
+        }
       } else {
         medicationStockImagesList.elementAt(i).isSelected = false;
       }

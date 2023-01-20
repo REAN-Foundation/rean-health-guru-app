@@ -270,7 +270,19 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                           fontWeight: FontWeight.w300,
                           color: Colors.grey)),
                   const SizedBox(
-                    height: 8,
+                    height: 4,
+                  ),
+                  Text('Duration '+
+                      medication.duration.toString() +
+                          ' days',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.grey)),
+                  const SizedBox(
+                    height: 4,
                   ),
                   Text(medication.frequencyUnit.toString() == "Other" ? medication.frequencyUnit.toString() :
                       medication.frequencyUnit.toString() +

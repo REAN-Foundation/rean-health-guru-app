@@ -125,9 +125,9 @@ class _EditProfileState extends State<EditProfile> {
       dob = dateFormat.format(patient.user!.person!.birthDate!);
       unformatedDOB = patient.user!.person!.birthDate!.toIso8601String();
       _maritalStatusValue =
-          patient.user!.person!.maritalStatus.toString() == 'null'
+          patient.healthProfile!.maritalStatus.toString() == 'null'
               ? ''
-              : patient.user!.person!.maritalStatus.toString();
+              : patient.healthProfile!.maritalStatus.toString();
       if (patient.user!.person!.addresses!.isNotEmpty) {
         _countryValue = patient.user!.person!.addresses!
                     .elementAt(0)
@@ -193,11 +193,11 @@ class _EditProfileState extends State<EditProfile> {
               '/download'
           : '';
 
-      _ethnicityValue = patient.user!.person!.ethnicity ?? '';
-      _raceValue = patient.user!.person!.race ?? '';
-      _surviourOrCaregiverValue = patient.user!.person!.strokeSurvivorOrCaregiver ?? '';
-      _liveAloneValue = patient.user!.person!.livingAlone == null ? '' : patient.user!.person!.livingAlone!  ? 'Yes' : 'No';
-      workPriorToStrokeValue = patient.user!.person!.workedPriorToStroke == null ? '' : patient.user!.person!.workedPriorToStroke!  ? 'Yes' : 'No';
+      _ethnicityValue = patient.healthProfile!.ethnicity ?? '';
+      _raceValue = patient.healthProfile!.race ?? '';
+      _surviourOrCaregiverValue = patient.healthProfile!.strokeSurvivorOrCaregiver ?? '';
+      _liveAloneValue = patient.healthProfile!.livingAlone == null ? '' : patient.healthProfile!.livingAlone!  ? 'Yes' : 'No';
+      workPriorToStrokeValue = patient.healthProfile!.workedPriorToStroke == null ? '' : patient.healthProfile!.workedPriorToStroke!  ? 'Yes' : 'No';
       debugPrint('Race = $_raceValue \nEthinicity = $_ethnicityValue \nStroke Survivor Or Caregiver = $_surviourOrCaregiverValue \nLive Alone Value = $_liveAloneValue \nWork Prior To Stroke Value = $workPriorToStrokeValue');
       setState(() {
         debugPrint(patientGender);

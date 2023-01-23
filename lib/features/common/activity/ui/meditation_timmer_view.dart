@@ -339,7 +339,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
                                                     child: ElevatedButton(
                                                       child: Text('Finish'),
                                                       onPressed: () {
-                                                        showToast('Mindfulness duration recorded successfully', context);
+                                                        showSuccessToast('Mindfulness duration recorded successfully', context);
                                                         saveMindfulnessTime();
                                                       },
                                                       style: ElevatedButton.styleFrom(
@@ -490,8 +490,7 @@ class _MeditationTimmerViewState extends State<MeditationTimmerView> {
     hours = 0;
     final map = <String, dynamic>{};
     map['PatientUserId'] = patientUserId;
-    map['MeditationDuration'] = newSec.toString();
-    map['Unit'] = 'Sec';
+    map['DurationInMins'] = Duration(minutes: newSec).inMinutes.toString();
     map['RecordDate'] = dateFormat.format(DateTime.now());
 
     final BaseResponse baseResponse = await model.recordMyMindfulness(map);

@@ -3077,7 +3077,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
             'emergency',
             DashboardTile(DateTime.now(), 'emergency', emergencyBreif)
                 .toJson());
-        showToast('Emergency details saved successfully!', context);
+        showSuccessToast('Emergency details saved successfully!', context);
         loadSharedPrefs();
         setState(() {});
       } else {
@@ -3137,7 +3137,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
         debugPrint('Medication ==> ${baseResponse.toJson()}');
         if (baseResponse.status == 'success') {
           //progressDialog.close();
-          showToast(baseResponse.message!, context);
+          showSuccessToast(baseResponse.message!, context);
           getMyMedications();
         } else {
           showToast(baseResponse.message!, context);
@@ -3168,9 +3168,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
           await model.recordMyCaloriesConsumed(map);
       if (baseResponse.status == 'success') {
         if(ateHealthyFood) {
-          showToast('Yes, most of my food choices were healthy today.', context);
+          showSuccessToast('Yes, most of my food choices were healthy today.', context);
         }else{
-          showToast('No, most of my food choices were not healthy today.', context);
+          showSuccessToast('No, most of my food choices were not healthy today.', context);
         }
       } else {}
     } on FetchDataException catch (e) {
@@ -3197,7 +3197,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
         if(haveYouDoneWithPhysicalActivity) {
           //showToast('Yes, I had movement today.', context);
         }else{
-          showToast('Okay, try to add movement to your day it will help you to stay healthy.', context);
+          showSuccessToast('Okay, try to add movement to your day it will help you to stay healthy.', context);
         }
       } else {}
     } on FetchDataException catch (e) {
@@ -3228,9 +3228,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
         //progressDialog.close();
         //showToast(baseResponse.message, context);
         if (feeling == 1) {
-          showToast('Good to hear that', context);
+          showSuccessToast('Good to hear that', context);
         } else if (feeling == 0) {
-          showToast('Please follow your medications', context);
+          showSuccessToast('Please follow your medications', context);
         } else if (feeling == -1) {
           getSymptomAssesmentTemplete();
         }

@@ -1179,7 +1179,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       await model.updateProfilePatient(map);
 
       if (updateProfileSuccess.status == 'success') {
-        showToast(
+        showSuccessToast(
             'Patient Health System details updated successfully!', context);
 
         getPatientDetails();

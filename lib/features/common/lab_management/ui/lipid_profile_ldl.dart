@@ -92,11 +92,11 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
                         const SizedBox(
                           height: 16,
                         ),
-                        _historyListFeilds(),
+                        if (records.isEmpty) Container() else graph(),
                         const SizedBox(
                           height: 16,
                         ),
-                        if (records.isEmpty) Container() else graph(),
+                        _historyListFeilds(),
                         //allGoal(),
                         const SizedBox(
                           height: 16,
@@ -111,11 +111,11 @@ class _LipidProfileLDLViewState extends State<LipidProfileLDLView> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    _historyListFeilds(),
+                    if (records.isEmpty) Container() else graph(),
                     const SizedBox(
                       height: 16,
                     ),
-                    if (records.isEmpty) Container() else graph(),
+                    _historyListFeilds(),
                   ],
                 ),
               ),

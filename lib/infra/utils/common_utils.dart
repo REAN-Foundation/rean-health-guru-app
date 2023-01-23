@@ -385,3 +385,21 @@ enum AppState {
   NO_DATA,
   AUTH_NOT_GRANTED
 }
+
+String removeLeadingZeros(String num) {
+  // traverse the entire string
+  for (int i = 0; i < num.length; i++) {
+
+    // check for the first non-zero character
+    if (num[i] != '0') {
+      // return the remaining string
+      String res = num.substring(i);
+      return res;
+    }
+  }
+
+  // If the entire string is traversed
+  // that means it didn't have a single
+  // non-zero character, hence return "0"
+  return "0";
+}

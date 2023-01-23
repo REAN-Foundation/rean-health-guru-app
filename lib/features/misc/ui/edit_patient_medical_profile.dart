@@ -1385,7 +1385,7 @@ class _EditPatientMedicalProfileViewState
                     conversion();
                     debugPrint('Selected Height ==> $localHeight');
                     setState(() {
-                      showToast('Height record created successfully!', context);
+                      showSuccessToast('Height record created successfully!', context);
                     });
                     Navigator.of(context, rootNavigator: true).pop();
                   },

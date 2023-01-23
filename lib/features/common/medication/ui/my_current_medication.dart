@@ -227,6 +227,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                 children: [
                   Row(
                     children: [
+                      if(medication.imageResourceId != '')...[
                       medication.imageResourceId != null
                           ? Container(
                         height: 24,
@@ -243,6 +244,7 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                       )
                           : Container(),
                       SizedBox(width: 8,),
+                      ],
                       SizedBox(
                         width: MediaQuery.of(context).size.width - 124,
                         child: Semantics(

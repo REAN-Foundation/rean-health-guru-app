@@ -207,7 +207,9 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
 
     var frequency = '';
 
-    if (medication.frequencyUnit == 'Daily'){
+    if(medication.frequencyUnit == 'Other'){
+      frequency = '';
+    }else if (medication.frequencyUnit == 'Daily'){
         frequency = ' days';
     } else if (medication.frequencyUnit == 'Weekly') {
         frequency = ' weeks';
@@ -236,29 +238,33 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      if(medication.imageResourceId != '')...[
-                      medication.imageResourceId != null
-                          ? Container(
-                        height: 24,
-                        width: 24,
-                        child: Semantics(
-                          label: 'Medication ',
-                          child: CachedNetworkImage(
-                            imageUrl: apiProvider!.getBaseUrl()! +
-                                '/file-resources/' +
-                                medication.imageResourceId! +
-                                '/download-by-version-name/1',
+                      if(medication.imageResourceId != null)...[
+                        if(medication.imageResourceId != '')...[
+                        medication.imageResourceId != null
+                            ? Container(
+                          height: 24,
+                          width: 24,
+                          child: Semantics(
+                            label: 'Medication ',
+                            child: CachedNetworkImage(
+                              imageUrl: apiProvider!.getBaseUrl()! +
+                                  '/file-resources/' +
+                                  medication.imageResourceId! +
+                                  '/download-by-version-name/1',
+                            ),
                           ),
-                        ),
-                      )
-                          : Container(),
-                      SizedBox(width: 8,),
+                        )
+                            : Container(),
+                        SizedBox(width: 8,),
+                        ],
                       ],
                       SizedBox(
                         width: MediaQuery.of(context).size.width - 124,
                         child: Semantics(
-                            child: Text(medication.drugName!,
+                            child: Text(medication.drugName!.trimLeft(),
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: 16,
@@ -284,19 +290,21 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   const SizedBox(
                     height: 4,
                   ),
-                  if(medication.duration != null)...[
-                    Text('Duration '+
-                        medication.duration.toString() +
-                        frequency,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w300,
-                            color: Colors.grey)),
-                    const SizedBox(
-                      height: 4,
-                    ),
+                  if( medication.frequencyUnit != 'Other')...[
+                    if(medication.duration != null)...[
+                      Text('Duration '+
+                          medication.duration.toString() +
+                          frequency,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.grey)),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                    ],
                   ],
                   Text(medication.frequencyUnit.toString() == "Other" ? medication.frequencyUnit.toString() :
                       medication.frequencyUnit.toString() +

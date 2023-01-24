@@ -205,6 +205,16 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
   Widget _makeMedicineCard(BuildContext context, int index) {
     final Items medication = currentMedicationList.elementAt(index);
 
+    var frequency = '';
+
+    if (medication.frequencyUnit == 'Daily'){
+        frequency = ' days';
+    } else if (medication.frequencyUnit == 'Weekly') {
+        frequency = ' weeks';
+    } else if (medication.frequencyUnit == 'Monthly'){
+        frequency = ' months';
+    }
+
     return Card(
       semanticContainer: false,
       elevation: 0,
@@ -274,18 +284,20 @@ class _MyCurrentMedicationViewState extends State<MyCurrentMedicationView> {
                   const SizedBox(
                     height: 4,
                   ),
-                  Text('Duration '+
-                      medication.duration.toString() +
-                          ' days',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.grey)),
-                  const SizedBox(
-                    height: 4,
-                  ),
+                  if(medication.duration != null)...[
+                    Text('Duration '+
+                        medication.duration.toString() +
+                        frequency,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w300,
+                            color: Colors.grey)),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                  ],
                   Text(medication.frequencyUnit.toString() == "Other" ? medication.frequencyUnit.toString() :
                       medication.frequencyUnit.toString() +
                           ' - ' +

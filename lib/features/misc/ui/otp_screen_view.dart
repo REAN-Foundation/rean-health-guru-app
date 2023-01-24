@@ -374,7 +374,7 @@ class _OTPScreenViewState extends State<OTPScreenView> {
           BaseResponse.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        showToast(
+        showSuccessToast(
             'One-time PIN has been successfully sent on your mobile number',
             context);
         otpController.clear();
@@ -527,10 +527,10 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       if (doctorListApiResponse.status == 'success') {
         if (getAppType() == 'AHA') {
           if(getAppName() != 'Heart & Stroke Helper™ ') {
-            showToast('Welcome to ' + getAppName(), context);
+            showSuccessToast('Welcome to ' + getAppName(), context);
           }
         } else {
-          showToast('Welcome to REAN HealthGuru', context);
+          showSuccessToast('Welcome to REAN HealthGuru', context);
         }
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());

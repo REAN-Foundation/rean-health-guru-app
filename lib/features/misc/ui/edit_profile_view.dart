@@ -96,6 +96,9 @@ class _EditProfileState extends State<EditProfile> {
   var _api_key;
 
   final List<String> radioItemsForGender = ['Female', 'Intersex', 'Male'];
+  final List<String> radioItemsForMiratalStatus = [ 'Single', 'Married', 'Divorced', 'Widowed'];
+  final List<String> radioItemsForRace = [ 'American Indian/Alaskan Native', 'Asian', 'Black/African American', 'Native Hawaiian or Other Pacific Islander', 'White' ];
+  final List<String> radioItemsForEthnicity = [ 'Hispanic/Latino', 'Not Hispanic/Latino', 'Prefer not to say' ];
   String _maritalStatusValue = '';
   String _countryValue = '';
   List<String> countryList = [];
@@ -125,9 +128,12 @@ class _EditProfileState extends State<EditProfile> {
       dob = dateFormat.format(patient.user!.person!.birthDate!);
       unformatedDOB = patient.user!.person!.birthDate!.toIso8601String();
       _maritalStatusValue =
-          patient.user!.person!.maritalStatus.toString() == 'null'
+          patient.healthProfile!.maritalStatus.toString() == 'null'
               ? ''
-              : patient.user!.person!.maritalStatus.toString();
+              : patient.healthProfile!.maritalStatus.toString();
+      if(!radioItemsForMiratalStatus.contains(_maritalStatusValue)){
+        _maritalStatusValue = '';
+      }
       if (patient.user!.person!.addresses!.isNotEmpty) {
         _countryValue = patient.user!.person!.addresses!
                     .elementAt(0)
@@ -193,11 +199,17 @@ class _EditProfileState extends State<EditProfile> {
               '/download'
           : '';
 
-      _ethnicityValue = patient.user!.person!.ethnicity ?? '';
-      _raceValue = patient.user!.person!.race ?? '';
-      _surviourOrCaregiverValue = patient.user!.person!.strokeSurvivorOrCaregiver ?? '';
-      _liveAloneValue = patient.user!.person!.livingAlone == null ? '' : patient.user!.person!.livingAlone!  ? 'Yes' : 'No';
-      workPriorToStrokeValue = patient.user!.person!.workedPriorToStroke == null ? '' : patient.user!.person!.workedPriorToStroke!  ? 'Yes' : 'No';
+      _ethnicityValue = patient.healthProfile!.ethnicity ?? '';
+      if(!radioItemsForEthnicity.contains(_ethnicityValue)){
+        _ethnicityValue = '';
+      }
+      _raceValue = patient.healthProfile!.race ?? '';
+      if(!radioItemsForRace.contains(_raceValue)){
+        _raceValue = '';
+      }
+      _surviourOrCaregiverValue = patient.healthProfile!.strokeSurvivorOrCaregiver ?? '';
+      _liveAloneValue = patient.healthProfile!.livingAlone == null ? '' : patient.healthProfile!.livingAlone!  ? 'Yes' : 'No';
+      workPriorToStrokeValue = patient.healthProfile!.workedPriorToStroke == null ? '' : patient.healthProfile!.workedPriorToStroke!  ? 'Yes' : 'No';
       debugPrint('Race = $_raceValue \nEthinicity = $_ethnicityValue \nStroke Survivor Or Caregiver = $_surviourOrCaregiverValue \nLive Alone Value = $_liveAloneValue \nWork Prior To Stroke Value = $workPriorToStrokeValue');
       setState(() {
         debugPrint(patientGender);
@@ -761,13 +773,7 @@ class _EditProfileState extends State<EditProfile> {
                   child: DropdownButton<String>(
                     isExpanded: true,
                     value: _raceValue == '' ? null : _raceValue,
-                    items: <String>[
-                      'American Indian/Alaskan Native',
-                      'Asian',
-                      'Black/African American',
-                      'Native Hawaiian or Other Pacific Islander',
-                      'White'
-                    ].map((String value) {
+                    items: radioItemsForRace.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -860,11 +866,7 @@ class _EditProfileState extends State<EditProfile> {
                   child: DropdownButton<String>(
                     isExpanded: true,
                     value: _ethnicityValue == '' ? null : _ethnicityValue,
-                    items: <String>[
-                      'Hispanic/Latino',
-                      'Not Hispanic/Latino',
-                      'Prefer not to say'
-                    ].map((String value) {
+                    items: radioItemsForEthnicity.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -1635,7 +1637,7 @@ class _EditProfileState extends State<EditProfile> {
             imageResourceId =
                 uploadResponse.data!.fileResources!.elementAt(0).id;
             //profileImage = uploadResponse.data.details.elementAt(0).url;
-            showToast('Profile picture uploaded successfully!', context);
+            showSuccessToast('Profile picture uploaded successfully!', context);
             setState(() {
               debugPrint(
                   'File Public URL ==> ${uploadResponse.data!.fileResources!.elementAt(0).url}');
@@ -2630,6 +2632,8 @@ class _EditProfileState extends State<EditProfile> {
                   //  _emergencyMobileNumberController.text;
                   if (_emailController.text != '') {
                     map['Email'] = _emailController.text;
+                  }else{
+                    map['Email'] = null;
                   }
                   //map['LocationCoords_Longitude'] = null;
                   //map['LocationCoords_Lattitude'] = null;
@@ -2640,7 +2644,7 @@ class _EditProfileState extends State<EditProfile> {
 
                     if (updateProfileSuccess.status == 'success') {
                       progressDialog.close();
-                      showToast('Patient profile details updated successfully!', context);
+                      showSuccessToast('Patient profile details updated successfully!', context);
                       /* if (Navigator.canPop(context)) {
                     Navigator.pop(context);
                   }*/

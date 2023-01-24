@@ -1974,7 +1974,7 @@ class _NutritionQuestionnaireViewState
   }
 
   void clearText() {
-    showToast('Food consumption record created successfully!', context);
+    showSuccessToast('Food consumption record created successfully!', context);
     vegetableServing = 0;
     fruitServing = 0;
     grainServing = 0;

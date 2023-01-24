@@ -494,10 +494,10 @@ class _CreateProfileState extends State<CreateProfile> {
                       progressDialog.close();
                       if (getAppType() == 'AHA') {
                         if(getAppName() != 'Heart & Stroke Helper™ ') {
-                          showToast('Welcome to ' + getAppName(), context);
+                          showSuccessToast('Welcome to ' + getAppName(), context);
                         }
                       } else {
-                        showToast('Welcome to REAN HealthGuru', context);
+                        showSuccessToast('Welcome to REAN HealthGuru', context);
                       }
                       /* if (Navigator.canPop(context)) {
                     Navigator.pop(context);

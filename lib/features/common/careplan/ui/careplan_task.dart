@@ -7,6 +7,7 @@ import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as tabs;
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
@@ -92,11 +93,11 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
           getAppName() == 'Heart & Stroke Helper™ ') {
         dateTill = DateTime.now();
       } else {*/
-      if(getBaseUrl()!.contains('reancare-api-dev')){
+      /*if(getBaseUrl()!.contains('reancare-api-dev')){
         dateTill = DateTime.now().add(Duration(days: 91));
-      }else{
-        dateTill = DateTime.now().add(Duration(days: 0));
-      }
+      }else{*/
+        dateTill = DateTime.now().add(Duration(days: RemoteConfigValues.carePlanTaskDurationInDays));
+      //}
 
       if(carePlanEnrollmentForPatientGlobe != null){
         DateTime startDate = DateTime.parse(

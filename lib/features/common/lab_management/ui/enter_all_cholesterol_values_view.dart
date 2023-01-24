@@ -860,7 +860,7 @@ class _EnterAllCholesterolValuesViewState
     //if (toastDisplay) {
     _scrollController.animateTo(0.0,
         duration: Duration(seconds: 2), curve: Curves.ease);
-       showToast('Record Created Successfully!', context);
+    showSuccessToast('Record Created Successfully!', context);
       //toastDisplay = false;
     //}
 

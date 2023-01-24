@@ -1733,7 +1733,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getEmergencyTeam();
-        showToast(addTeamMemberResponse.message!, context);
+        showSuccessToast(addTeamMemberResponse.message!, context);
       } else {
         showToast(addTeamMemberResponse.message!, context);
       }
@@ -1806,7 +1806,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
       debugPrint('Team Member Response ==> ${addTeamMemberResponse.toJson()}');
       if (addTeamMemberResponse.status == 'success') {
         getEmergencyTeam();
-        showToast(addTeamMemberResponse.message!, context);
+        showSuccessToast(addTeamMemberResponse.message!, context);
       } else {
         showToast(addTeamMemberResponse.message!, context);
       }
@@ -1821,7 +1821,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
   deleteMedicalEmergencyEvent() async {
     try {
         _sharedPrefUtils.remove('emergency');
-        showToast('Hospitalization details record deleted successfully!', context);
+        showSuccessToast('Hospitalization details record deleted successfully!', context);
         loadSharedPrefs();
     } catch (CustomException) {
       showToast(CustomException.toString(), context);
@@ -1844,7 +1844,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
             'emergency',
             DashboardTile(DateTime.now(), 'emergency', emergencyBreif)
                 .toJson());
-        showToast('Hospitalization details saved successfully!', context);
+        showSuccessToast('Hospitalization details saved successfully!', context);
         loadSharedPrefs();
         setState(() {});
       } else {
@@ -1868,7 +1868,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
           .updateProfilePatient(map);
 
       if (updateProfileSuccess.status == 'success') {
-        showToast('Patient Health System details updated successfully!', context);
+        showSuccessToast('Patient Health System details updated successfully!', context);
 
 
         getPatientDetails();

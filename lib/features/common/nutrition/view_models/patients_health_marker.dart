@@ -79,6 +79,42 @@ class PatientHealthMarkerViewModel extends BaseModel {
     return BaseResponse.fromJson(response);
   }
 
+  Future<BaseResponse> recordMySleep(Map body) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.post(
+        '/wellness/daily-records/sleep',
+        header: map,
+        body: body);
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
+
+  Future<BaseResponse> recordMyMindfulness(Map body) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.post(
+        '/wellness/exercise/meditations',
+        header: map,
+        body: body);
+
+    setBusy(false);
+    // Convert and return
+    return BaseResponse.fromJson(response);
+  }
+
   Future<BaseResponse> recordMyCaloriesConsumed(Map body) async {
     // Get user profile for id
     setBusy(true);

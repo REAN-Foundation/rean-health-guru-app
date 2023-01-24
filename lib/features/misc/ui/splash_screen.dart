@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:core';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
+
 import 'package:devicelocale/devicelocale.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:get_it/get_it.dart';
 import 'package:package_info/package_info.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -138,6 +140,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
     debugPrint(
         'Firebase Remote Config ==> ${remoteConfig.getString('sample_string_value')}');
+
+    RemoteConfigValues.getValues(remoteConfig);
+
   }
 
 

@@ -131,7 +131,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       debugPrint('Records ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         getAllRecords();
-        showToast('Document renamed successfully.', context);
+        showSuccessToast('Document renamed successfully.', context);
       } else {
         showToast(baseResponse.message!, context);
       }
@@ -148,7 +148,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       debugPrint('Records ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         getAllRecords();
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
       } else {
         showToast(baseResponse.message!, context);
       }
@@ -709,7 +709,7 @@ class _MyReportsViewState extends State<MyReportsView> {
               UploadDocumentResponse.fromJson(json.decode(respStr));
           if (uploadResponse.status == 'success') {
             getAllRecords();
-            showToast(uploadResponse.message!, context);
+            showSuccessToast(uploadResponse.message!, context);
           } else {
             showToast('Opps, something went wrong!', context);
           }
@@ -827,7 +827,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                 debugPrint('EnteredFileName Length ==> ${enteredFileName.length}');
 
                 if (document.fileName == renameControler.text) {
-                  showToastMsg('Document renamed successfully ', context);
+                  showSuccessToast('Document renamed successfully ', context);
                   Navigator.of(context, rootNavigator: true).pop();
                 } else if (newFileName == '') {
                   showToastMsg('Please enter valid file name', context);

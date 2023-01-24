@@ -207,7 +207,7 @@ class _SymptomsViewState extends State<SymptomsView> {
       alignment: Alignment.center,
       child: ElevatedButton.icon(
         onPressed: () async {
-          showToast('Symptoms recorded successfully', context);
+          showSuccessToast('Symptoms recorded successfully', context);
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
             return HomeView(0);

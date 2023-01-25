@@ -574,7 +574,7 @@ class _BiometricBodyTemperatureVitalsViewState
           await model.addMyVitals('body-temperatures', map);
 
       if (baseResponse.status == 'success') {
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         progressDialog.close();
         _controller.clear();
         //Navigator.pop(context);
@@ -603,7 +603,7 @@ class _BiometricBodyTemperatureVitalsViewState
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);

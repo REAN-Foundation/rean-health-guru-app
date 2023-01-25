@@ -1385,7 +1385,7 @@ class _EditPatientMedicalProfileViewState
                     conversion();
                     debugPrint('Selected Height ==> $localHeight');
                     setState(() {
-                      showToast('Height record created successfully!', context);
+                      showSuccessToast('Height record created successfully!', context);
                     });
                     Navigator.of(context, rootNavigator: true).pop();
                   },
@@ -1462,7 +1462,7 @@ class _EditPatientMedicalProfileViewState
                     conversion();
                     debugPrint('Selected Height ==> $localHeight');
                     setState(() {
-                      showToast('Height record created successfully!', context);
+                      showSuccessToast('Height record created successfully!', context);
                     });
                     Navigator.of(context, rootNavigator: true).pop();
                   },
@@ -1534,7 +1534,7 @@ class _EditPatientMedicalProfileViewState
           widget.healthProfile!.id, data);
 
       if (baseResponse.status == 'success') {
-        showToast('Medical Profile updated successfully!', context);
+        showSuccessToast('Medical Profile updated successfully!', context);
         //progressDialog.close();
         //FocusScope.of(context).unfocus();
         //Navigator.popUntil(context, ModalRoute.withName(RoutePaths.My_Medical_Profile));

@@ -1,4 +1,5 @@
 
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -22,19 +23,19 @@ import 'package:patient/infra/widgets/info_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 //ignore: must_be_immutable
-class DashBoardVer2View extends StatefulWidget {
+class DashBoardVer3View extends StatefulWidget {
   late Function positionToChangeNavigationBar;
 
-  DashBoardVer2View({Key? key, required Function positionToChangeNavigationBar})
+  DashBoardVer3View({Key? key, required Function positionToChangeNavigationBar})
       : super(key: key) {
     this.positionToChangeNavigationBar = positionToChangeNavigationBar;
   }
 
   @override
-  _DashBoardVer2ViewState createState() => _DashBoardVer2ViewState();
+  _DashBoardVer3ViewState createState() => _DashBoardVer3ViewState();
 }
 
-class _DashBoardVer2ViewState extends State<DashBoardVer2View>
+class _DashBoardVer3ViewState extends State<DashBoardVer3View>
     with WidgetsBindingObserver {
   var model = DashboardSummaryModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -220,21 +221,25 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                //if (incompleteMedicationCount > 0)
-                myMedication(),
-                // else
-                //   Container(),
-                myNutrition(),
-                /*if (Platform.isIOS) ...[*/
-                myActivity(),
-                myStress(),
-                //],
-                Visibility(visible: RemoteConfigValues.dashboardVitalsVisibility, child:myBiometrics()),
-                Visibility(visible: RemoteConfigValues.dashboardVitalsVisibility, child: howAreYoursymptoms()),
-                mylipidProfile(),
-                knowledgeTree(),
-                //myTasks(),
-                //searchNearMe(),
+
+                for (int i = 0 ; i < RemoteConfigValues.homeScreenTile.length ; i++)...[
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Medications')
+                    myMedication(),
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Nutrition')
+                    myNutrition(),
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Physical Activity')
+                    myActivity(),
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Mental Well-Being')
+                    myStress(),
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Vitals')
+                    myBiometrics(),
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Symptoms')
+                    howAreYoursymptoms(),
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Lab Values')
+                    mylipidProfile(),
+                  if(RemoteConfigValues.homeScreenTile[i] == 'Knowledge')
+                    knowledgeTree(),
+                ],
                 SizedBox(
                   height: 32,
                 )
@@ -1642,6 +1647,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        if(RemoteConfigValues.vitalScreenTile.contains('Weight'))
                         Semantics(
                           label: 'Add Weight',
                           button: true,
@@ -1688,6 +1694,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             ),
                           ),
                         ),
+                        if(RemoteConfigValues.vitalScreenTile.contains('Blood Pressure'))
                         Semantics(
                           label: "Add Blood Pressure",
                           button: true,
@@ -1736,6 +1743,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             ),
                           ),
                         ),
+                        if(RemoteConfigValues.vitalScreenTile.contains('Blood Glucose'))
                         Semantics(
                           label: 'Add Blood Glucose',
                           button: true,
@@ -1784,6 +1792,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             ),
                           ),
                         ),
+                        if(RemoteConfigValues.vitalScreenTile.contains('Pulse Rate'))
                         Semantics(
                           label: 'Add Pulse',
                           button: true,

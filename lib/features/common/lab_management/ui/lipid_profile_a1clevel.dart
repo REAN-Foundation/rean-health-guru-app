@@ -92,11 +92,11 @@ class _LipidProfileA1CLevelViewState extends State<LipidProfileA1CLevelView> {
                         const SizedBox(
                           height: 16,
                         ),
-                        _historyListFeilds(),
+                        if (records.isEmpty) Container() else graph(),
                         const SizedBox(
                           height: 16,
                         ),
-                        if (records.isEmpty) Container() else graph(),
+                        _historyListFeilds(),
                         //allGoal(),
                         const SizedBox(
                           height: 16,
@@ -111,11 +111,11 @@ class _LipidProfileA1CLevelViewState extends State<LipidProfileA1CLevelView> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    _historyListFeilds(),
+                    if (records.isEmpty) Container() else graph(),
                     const SizedBox(
                       height: 16,
                     ),
-                    if (records.isEmpty) Container() else graph(),
+                    _historyListFeilds(),
                   ],
                 ),
               ),
@@ -635,7 +635,7 @@ class _LipidProfileA1CLevelViewState extends State<LipidProfileA1CLevelView> {
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         _controller.clear();
         //Navigator.pop(context);
         getVitalsHistory();
@@ -680,7 +680,7 @@ class _LipidProfileA1CLevelViewState extends State<LipidProfileA1CLevelView> {
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);

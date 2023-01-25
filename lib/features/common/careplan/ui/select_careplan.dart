@@ -6,6 +6,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/common/careplan/models/check_careplan_eligibility.dart';
 import 'package:patient/features/common/careplan/models/enroll_care_clan_response.dart';
 import 'package:patient/features/common/careplan/models/get_aha_careplans_response.dart';
@@ -139,7 +140,14 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       debugPrint(
           'Plan Code ==> ${list.elementAt(i).code == 'CholesterolMini'}');
 
-      if (getAppFlavour() == 'Heart & Stroke Helper™ ' &&
+      if(RemoteConfigValues.carePlanCode.contains(list.elementAt(i).code)){
+        items.add(DropdownMenuItem(
+          child: Text(list.elementAt(i).displayName!),
+          value: list.elementAt(i).displayName,
+        ));
+      }
+
+      /*if (getAppFlavour() == 'Heart & Stroke Helper™ ' &&
           list.elementAt(i).code == 'Cholesterol') {
         items.add(DropdownMenuItem(
           child: Text(list.elementAt(i).displayName!),
@@ -165,7 +173,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
           child: Text(list.elementAt(i).displayName!),
           value: list.elementAt(i).displayName,
         ));
-      }
+      }*/
     }
 
     debugPrint('List Length ${items.length}');
@@ -1171,7 +1179,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
       await model.updateProfilePatient(map);
 
       if (updateProfileSuccess.status == 'success') {
-        showToast(
+        showSuccessToast(
             'Patient Health System details updated successfully!', context);
 
         getPatientDetails();

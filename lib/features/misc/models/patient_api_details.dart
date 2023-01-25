@@ -52,6 +52,7 @@ class Patient {
   String? ehrId;
   String? healthSystem;
   String? associatedHospital;
+  HealthProfile? healthProfile;
 
   Patient({
     this.id,
@@ -60,7 +61,8 @@ class Patient {
     this.displayId,
     this.ehrId,
     this.healthSystem,
-    this.associatedHospital
+    this.associatedHospital,
+    this.healthProfile
   });
 
   Patient.fromJson(Map<String, dynamic> json) {
@@ -71,6 +73,7 @@ class Patient {
     ehrId = json['EhrId'];
     healthSystem = json['HealthSystem'];
     associatedHospital = json['AssociatedHospital'];
+    healthProfile = json['HealthProfile'] != null ? HealthProfile.fromJson(json['HealthProfile']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -84,7 +87,9 @@ class Patient {
     data['EhrId'] = ehrId;
     data['HealthSystem'] = healthSystem;
     data['AssociatedHospital'] = associatedHospital;
-
+    if (healthProfile != null) {
+      data['HealthProfile'] = healthProfile?.toJson();
+    }
     return data;
   }
 }
@@ -149,12 +154,6 @@ class Person {
   String? lastName;
   String? displayName;
   String? gender;
-  String? maritalStatus;
-  String? race;
-  String? ethnicity;
-  String? strokeSurvivorOrCaregiver;
-  bool? livingAlone;
-  bool? workedPriorToStroke;
   DateTime? birthDate;
   String? age;
   String? phone;
@@ -171,12 +170,6 @@ class Person {
       this.lastName,
       this.displayName,
       this.gender,
-      this.maritalStatus,
-      this.race,
-      this.ethnicity,
-      this.strokeSurvivorOrCaregiver,
-      this.livingAlone,
-      this.workedPriorToStroke,
       this.birthDate,
       this.age,
       this.phone,
@@ -193,12 +186,6 @@ class Person {
     lastName = json['LastName'];
     displayName = json['DisplayName'];
     gender = json['Gender'];
-    maritalStatus = json['MaritalStatus'];
-    race = json['Race'];
-    ethnicity = json['Ethnicity'];
-    strokeSurvivorOrCaregiver = json['StrokeSurvivorOrCaregiver'];
-    livingAlone = json['LivingAlone'];
-    workedPriorToStroke = json['WorkedPriorToStroke'];
     if (json['BirthDate'] != null) {
       birthDate = DateTime.parse(json['BirthDate']);
     } else {
@@ -211,9 +198,11 @@ class Person {
     activeSince = json['ActiveSince'];
     if (json['Addresses'] != null) {
       addresses = <Addresses>[];
-      json['Addresses'].forEach((v) {
-        addresses!.add(Addresses.fromJson(v));
-      });
+      if(addresses!.isNotEmpty) {
+        json['Addresses'].forEach((v) {
+          addresses!.add(Addresses.fromJson(v));
+        });
+      }
     }
   }
 
@@ -226,12 +215,6 @@ class Person {
     data['LastName'] = lastName;
     data['DisplayName'] = displayName;
     data['Gender'] = gender;
-    data['MaritalStatus'] = maritalStatus;
-    data['Ethnicity'] = ethnicity;
-    data['Race'] = race;
-    data['StrokeSurvivorOrCaregiver'] = strokeSurvivorOrCaregiver;
-    data['LivingAlone'] = livingAlone;
-    data['WorkedPriorToStroke'] = workedPriorToStroke;
     if (birthDate == null) {
       data['BirthDate'] = birthDate;
     } else {
@@ -300,4 +283,223 @@ class Addresses {
     data['Lattitude'] = lattitude;
     return data;
   }
+}
+
+class HealthProfile {
+  HealthProfile({
+    String? id,
+    String? patientUserId,
+    dynamic bloodGroup,
+    dynamic bloodTransfusionDate,
+    dynamic bloodDonationCycle,
+    dynamic majorAilment,
+    dynamic otherConditions,
+    bool? isDiabetic,
+    bool? hasHeartAilment,
+    String? maritalStatus,
+    dynamic ethnicity,
+    dynamic race,
+    dynamic nationality,
+    dynamic occupation,
+    bool? sedentaryLifestyle,
+    bool? isSmoker,
+    String? smokingSeverity,
+    dynamic smokingSince,
+    bool? isDrinker,
+    String? drinkingSeverity,
+    dynamic drinkingSince,
+    bool? substanceAbuse,
+    dynamic procedureHistory,
+    dynamic obstetricHistory,
+    dynamic otherInformation,
+    dynamic tobaccoQuestion,
+    bool? tobaccoQuestionAns,
+    dynamic typeOfStroke,
+    dynamic hasHighBloodPressure,
+    dynamic hasHighCholesterol,
+    dynamic hasAtrialFibrillation,
+    dynamic strokeSurvivorOrCaregiver,
+    dynamic livingAlone,
+    dynamic workedPriorToStroke,}){
+    _id = id;
+    _patientUserId = patientUserId;
+    _bloodGroup = bloodGroup;
+    _bloodTransfusionDate = bloodTransfusionDate;
+    _bloodDonationCycle = bloodDonationCycle;
+    _majorAilment = majorAilment;
+    _otherConditions = otherConditions;
+    _isDiabetic = isDiabetic;
+    _hasHeartAilment = hasHeartAilment;
+    _maritalStatus = maritalStatus;
+    _ethnicity = ethnicity;
+    _race = race;
+    _nationality = nationality;
+    _occupation = occupation;
+    _sedentaryLifestyle = sedentaryLifestyle;
+    _isSmoker = isSmoker;
+    _smokingSeverity = smokingSeverity;
+    _smokingSince = smokingSince;
+    _isDrinker = isDrinker;
+    _drinkingSeverity = drinkingSeverity;
+    _drinkingSince = drinkingSince;
+    _substanceAbuse = substanceAbuse;
+    _procedureHistory = procedureHistory;
+    _obstetricHistory = obstetricHistory;
+    _otherInformation = otherInformation;
+    _tobaccoQuestion = tobaccoQuestion;
+    _tobaccoQuestionAns = tobaccoQuestionAns;
+    _typeOfStroke = typeOfStroke;
+    _hasHighBloodPressure = hasHighBloodPressure;
+    _hasHighCholesterol = hasHighCholesterol;
+    _hasAtrialFibrillation = hasAtrialFibrillation;
+    _strokeSurvivorOrCaregiver = strokeSurvivorOrCaregiver;
+    _livingAlone = livingAlone;
+    _workedPriorToStroke = workedPriorToStroke;
+  }
+
+  HealthProfile.fromJson(dynamic json) {
+    _id = json['id'];
+    _patientUserId = json['PatientUserId'];
+    _bloodGroup = json['BloodGroup'];
+    _bloodTransfusionDate = json['BloodTransfusionDate'];
+    _bloodDonationCycle = json['BloodDonationCycle'];
+    _majorAilment = json['MajorAilment'];
+    _otherConditions = json['OtherConditions'];
+    _isDiabetic = json['IsDiabetic'];
+    _hasHeartAilment = json['HasHeartAilment'];
+    _maritalStatus = json['MaritalStatus'];
+    _ethnicity = json['Ethnicity'];
+    _race = json['Race'];
+    _nationality = json['Nationality'];
+    _occupation = json['Occupation'];
+    _sedentaryLifestyle = json['SedentaryLifestyle'];
+    _isSmoker = json['IsSmoker'];
+    _smokingSeverity = json['SmokingSeverity'];
+    _smokingSince = json['SmokingSince'];
+    _isDrinker = json['IsDrinker'];
+    _drinkingSeverity = json['DrinkingSeverity'];
+    _drinkingSince = json['DrinkingSince'];
+    _substanceAbuse = json['SubstanceAbuse'];
+    _procedureHistory = json['ProcedureHistory'];
+    _obstetricHistory = json['ObstetricHistory'];
+    _otherInformation = json['OtherInformation'];
+    _tobaccoQuestion = json['TobaccoQuestion'];
+    _tobaccoQuestionAns = json['TobaccoQuestionAns'];
+    _typeOfStroke = json['TypeOfStroke'];
+    _hasHighBloodPressure = json['HasHighBloodPressure'];
+    _hasHighCholesterol = json['HasHighCholesterol'];
+    _hasAtrialFibrillation = json['HasAtrialFibrillation'];
+    _strokeSurvivorOrCaregiver = json['StrokeSurvivorOrCaregiver'];
+    _livingAlone = json['LivingAlone'];
+    _workedPriorToStroke = json['WorkedPriorToStroke'];
+  }
+  String? _id;
+  String? _patientUserId;
+  dynamic _bloodGroup;
+  dynamic _bloodTransfusionDate;
+  dynamic _bloodDonationCycle;
+  dynamic _majorAilment;
+  dynamic _otherConditions;
+  bool? _isDiabetic;
+  bool? _hasHeartAilment;
+  String? _maritalStatus;
+  dynamic _ethnicity;
+  dynamic _race;
+  dynamic _nationality;
+  dynamic _occupation;
+  bool? _sedentaryLifestyle;
+  bool? _isSmoker;
+  String? _smokingSeverity;
+  dynamic _smokingSince;
+  bool? _isDrinker;
+  String? _drinkingSeverity;
+  dynamic _drinkingSince;
+  bool? _substanceAbuse;
+  dynamic _procedureHistory;
+  dynamic _obstetricHistory;
+  dynamic _otherInformation;
+  dynamic _tobaccoQuestion;
+  bool? _tobaccoQuestionAns;
+  dynamic _typeOfStroke;
+  dynamic _hasHighBloodPressure;
+  dynamic _hasHighCholesterol;
+  dynamic _hasAtrialFibrillation;
+  dynamic _strokeSurvivorOrCaregiver;
+  dynamic _livingAlone;
+  dynamic _workedPriorToStroke;
+
+  String? get id => _id;
+  String? get patientUserId => _patientUserId;
+  dynamic get bloodGroup => _bloodGroup;
+  dynamic get bloodTransfusionDate => _bloodTransfusionDate;
+  dynamic get bloodDonationCycle => _bloodDonationCycle;
+  dynamic get majorAilment => _majorAilment;
+  dynamic get otherConditions => _otherConditions;
+  bool? get isDiabetic => _isDiabetic;
+  bool? get hasHeartAilment => _hasHeartAilment;
+  String? get maritalStatus => _maritalStatus;
+  dynamic get ethnicity => _ethnicity;
+  dynamic get race => _race;
+  dynamic get nationality => _nationality;
+  dynamic get occupation => _occupation;
+  bool? get sedentaryLifestyle => _sedentaryLifestyle;
+  bool? get isSmoker => _isSmoker;
+  String? get smokingSeverity => _smokingSeverity;
+  dynamic get smokingSince => _smokingSince;
+  bool? get isDrinker => _isDrinker;
+  String? get drinkingSeverity => _drinkingSeverity;
+  dynamic get drinkingSince => _drinkingSince;
+  bool? get substanceAbuse => _substanceAbuse;
+  dynamic get procedureHistory => _procedureHistory;
+  dynamic get obstetricHistory => _obstetricHistory;
+  dynamic get otherInformation => _otherInformation;
+  dynamic get tobaccoQuestion => _tobaccoQuestion;
+  bool? get tobaccoQuestionAns => _tobaccoQuestionAns;
+  dynamic get typeOfStroke => _typeOfStroke;
+  dynamic get hasHighBloodPressure => _hasHighBloodPressure;
+  dynamic get hasHighCholesterol => _hasHighCholesterol;
+  dynamic get hasAtrialFibrillation => _hasAtrialFibrillation;
+  dynamic get strokeSurvivorOrCaregiver => _strokeSurvivorOrCaregiver;
+  dynamic get livingAlone => _livingAlone;
+  dynamic get workedPriorToStroke => _workedPriorToStroke;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = _id;
+    map['PatientUserId'] = _patientUserId;
+    map['BloodGroup'] = _bloodGroup;
+    map['BloodTransfusionDate'] = _bloodTransfusionDate;
+    map['BloodDonationCycle'] = _bloodDonationCycle;
+    map['MajorAilment'] = _majorAilment;
+    map['OtherConditions'] = _otherConditions;
+    map['IsDiabetic'] = _isDiabetic;
+    map['HasHeartAilment'] = _hasHeartAilment;
+    map['MaritalStatus'] = _maritalStatus;
+    map['Ethnicity'] = _ethnicity;
+    map['Race'] = _race;
+    map['Nationality'] = _nationality;
+    map['Occupation'] = _occupation;
+    map['SedentaryLifestyle'] = _sedentaryLifestyle;
+    map['IsSmoker'] = _isSmoker;
+    map['SmokingSeverity'] = _smokingSeverity;
+    map['SmokingSince'] = _smokingSince;
+    map['IsDrinker'] = _isDrinker;
+    map['DrinkingSeverity'] = _drinkingSeverity;
+    map['DrinkingSince'] = _drinkingSince;
+    map['SubstanceAbuse'] = _substanceAbuse;
+    map['ProcedureHistory'] = _procedureHistory;
+    map['ObstetricHistory'] = _obstetricHistory;
+    map['OtherInformation'] = _otherInformation;
+    map['TobaccoQuestion'] = _tobaccoQuestion;
+    map['TobaccoQuestionAns'] = _tobaccoQuestionAns;
+    map['TypeOfStroke'] = _typeOfStroke;
+    map['HasHighBloodPressure'] = _hasHighBloodPressure;
+    map['HasHighCholesterol'] = _hasHighCholesterol;
+    map['HasAtrialFibrillation'] = _hasAtrialFibrillation;
+    map['StrokeSurvivorOrCaregiver'] = _strokeSurvivorOrCaregiver;
+    map['LivingAlone'] = _livingAlone;
+    map['WorkedPriorToStroke'] = _workedPriorToStroke;
+    return map;
+  }
+
 }

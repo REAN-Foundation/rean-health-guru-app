@@ -272,7 +272,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                   width: 8,
                 ),
                 Text(
-                  'Enter your stand minutes',
+                  'Enter number of minutes standing',
                   style: TextStyle(
                       color: textBlack,
                       fontWeight: FontWeight.w600,
@@ -667,7 +667,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
       radioItem = '';
       _scrollController.animateTo(0.0,
           duration: Duration(seconds: 2), curve: Curves.ease);
-      showToast('Record Updated Successfully!', context);
+      showSuccessToast('Record Updated Successfully!', context);
       toastDisplay = false;
     }
     setState(() {

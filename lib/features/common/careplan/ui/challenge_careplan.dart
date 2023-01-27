@@ -244,7 +244,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
           .finishUserTask(task!.action!.userTaskId.toString(), bodyMap: map);
 
       if (response.status == 'success') {
-        showToast('Task completed successfully!', context);
+        showSuccessToast('Task completed successfully!', context);
         model.setBusy(false);
         setState(() {});
         assrotedUICount = 0;

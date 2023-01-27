@@ -2194,7 +2194,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;
-        showToast('Task completed successfully!', context);
+        showSuccessToast('Task completed successfully!', context);
         debugPrint(
             'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:devicelocale/devicelocale.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
@@ -132,6 +133,23 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');
     }
+  }
+
+  openBrowserTab() async {
+    FlutterWebBrowser.openWebPage(
+      url: "https://widget.tryterra.co/session/7e2bcbf0-b00c-47e0-b5a1-5c2e7e5961c4",
+      customTabsOptions: const CustomTabsOptions(
+        colorScheme: CustomTabsColorScheme.dark,
+        instantAppsEnabled: true,
+        showTitle: true,
+        urlBarHidingEnabled: true,
+      ),
+      safariVCOptions: const SafariViewControllerOptions(
+        barCollapsingEnabled: true,
+        dismissButtonStyle: SafariViewControllerDismissButtonStyle.close,
+        modalPresentationCapturesStatusBarAppearance: true,
+      ),
+    );
   }
 
   getCarePlanSubscribe() async {
@@ -421,6 +439,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     _initPackageInfo();
     getDailyCheckInDate();
     loadSharedPrefs();
+    openBrowserTab();
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
     initTargets();
     WidgetsBinding.instance.addPostFrameCallback(_layout);

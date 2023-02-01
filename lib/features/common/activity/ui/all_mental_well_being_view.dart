@@ -121,8 +121,7 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             color: widget._currentIndex == 0
-                                ? Colors.white
-                                : Colors.grey,
+                                ? Colors.white : primaryExtraLightColor,
                             fontSize: 10),
                       ),
                     ],
@@ -150,8 +149,7 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
                         AssetImage('res/images/ic_stress.png'),
                         size: 24,
                         color: widget._currentIndex == 1
-                            ? Colors.white
-                            : Colors.grey,
+                            ? Colors.white : primaryExtraLightColor,
                       ),
                       SizedBox(
                         height: 8,

@@ -1,5 +1,4 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,10 +21,13 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool? login = prefs.getBool('login1.8.141');
+  bool? login = prefs.getBool('login1.8.167');
   login ??= false;
+  String? sponsor = prefs.getString('Sponsor');
+  setSponsor(sponsor??'');
   primaryColor = Color(0XFFc10e21);
   primaryLightColor = Color(0XFFFFFFFF);
+  primaryExtraLightColor =  Color(0XFFFF8B90);
   runApp(MyApp(login));
 }
 
@@ -34,7 +36,9 @@ class MyApp extends StatelessWidget {
   bool? isLogin;
   String? _baseUrl;
   String? _botBaseUrl;
-  FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer =
+  FirebaseAnalyticsObserver(analytics: analytics);
   Map<int, Color> color = {
     50: Color(0xFFFFEBEE),
     100: Color(0xFFFFCDD2),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -121,27 +122,23 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   //const SizedBox(height: 16,),
-                  weightFeilds(),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  bloodPresureFeilds(),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  bloodGlucoseFeilds(),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  bloodOxygenSaturationFeilds(),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  pulseRateFeilds(),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  bodyTempratureFeilds(),
+                  for (int i = 0 ; i < RemoteConfigValues.vitalScreenTile.length ; i++)...[
+                    if(RemoteConfigValues.vitalScreenTile[i] == 'Weight')
+                      weightFeilds(),
+                    if(RemoteConfigValues.vitalScreenTile[i] == 'Blood Pressure')
+                      bloodPresureFeilds(),
+                    if(RemoteConfigValues.vitalScreenTile[i] == 'Blood Glucose')
+                      bloodGlucoseFeilds(),
+                    if(RemoteConfigValues.vitalScreenTile[i] == 'Blood Oxygen Sturation')
+                      bloodOxygenSaturationFeilds(),
+                    if(RemoteConfigValues.vitalScreenTile[i] == 'Pulse Rate')
+                      pulseRateFeilds(),
+                    if(RemoteConfigValues.vitalScreenTile[i] == 'Body Temprature')
+                      bodyTempratureFeilds(),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                  ],
                   const SizedBox(
                     height: 32,
                   ),
@@ -158,43 +155,75 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
                             child: InkWell(
                               onTap: () {
                                 toastDisplay = true;
+                                validationToastDisplay = true;
                                 /*if(_controller.text.toString().isEmpty){
                                 showToast('Please enter your pulse', context);
                               }else{
                                 addvitals();
                               }*/
+
                                 if (_weightController.text
                                     .toString()
                                     .isNotEmpty) {
-                                  addWeightVitals();
-                                }
+                                  if(isNumeric(_weightController.text)) {
+                                    validationToastDisplay = false;
+                                    addWeightVitals();
+                                  }else{
+                                    showToast('Please enter valid input', context);
+                                  }
+                                }/*else{
+                                  validationToastDisplay = true;
+                                }*/
                                 if (_systolicController.text
                                         .toString()
                                         .isNotEmpty &&
                                     _diastolicController.text
                                         .toString()
                                         .isNotEmpty) {
+                                  validationToastDisplay = false;
                                   addBPVitals();
-                                }
+                                }/*else{
+                                  validationToastDisplay = true;
+                                }*/
                                 if (_bloodGlucosecontroller.text
                                     .toString()
                                     .isNotEmpty) {
+                                  validationToastDisplay = false;
                                   addBloodGlucoseVitals();
-                                }
+                                }/*else{
+                                  validationToastDisplay = true;
+                                }*/
                                 if (_bloodOxygenSaturationController.text
                                     .toString()
                                     .isNotEmpty) {
+                                  validationToastDisplay = false;
                                   addBloodOxygenSaturationVitals();
-                                }
+                                }/*else{
+                                  validationToastDisplay = true;
+                                }*/
                                 if (_pulseRateController.text
                                     .toString()
                                     .isNotEmpty) {
+                                  validationToastDisplay = false;
                                   addPulseVitals();
-                                }
+                                }/*else{
+                                  validationToastDisplay = true;
+                                }*/
                                 if (_bodyTempratureController.text
                                     .toString()
                                     .isNotEmpty) {
-                                  addTemperatureVitals();
+                                  if(isNumeric(_bodyTempratureController.text)) {
+                                    validationToastDisplay = false;
+                                    addTemperatureVitals();
+                                  }else{
+                                    showToast('Please enter valid input', context);
+                                  }
+                                }/*else{
+                                  validationToastDisplay = true;
+                                }*/
+
+                                if(validationToastDisplay){
+                                  showToast('Please enter valid input', context);
                                 }
                               },
                               child: ExcludeSemantics(
@@ -1174,12 +1203,13 @@ class _EnterAllVitalsViewState extends State<EnterAllVitalsView> {
   }
 
   bool toastDisplay = true;
+  bool validationToastDisplay = false;
 
   clearAllFeilds() {
     if (toastDisplay) {
       _scrollController.animateTo(0.0,
           duration: Duration(seconds: 2), curve: Curves.ease);
-      showToast('Record Updated Successfully!', context);
+      showSuccessToast('Record Updated Successfully!', context);
       toastDisplay = false;
     }
 

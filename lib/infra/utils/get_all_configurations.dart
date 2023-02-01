@@ -15,6 +15,7 @@ class GetAllConfigrations {
     _getMedicationDosageUnits();
     _getMedicationFrequencies();
     _getMedicationDurationUnits();
+    //_generateReport();
     //_getAllLabSamples();
     //_getAllSymptoms();
     //_getAllDygnoses();
@@ -58,4 +59,13 @@ class GetAllConfigrations {
     _sharedPrefUtils.save('MedicationDurationUnits', response);
     // Convert and return
   }
+
+  /*_generateReport() async {
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+    final response = await apiProvider!
+        .get('/patient-statistics/'+patientUserId.toString()+'/report', header: map);
+    debugPrint('Report Generation ==> $response');
+  }*/
 }

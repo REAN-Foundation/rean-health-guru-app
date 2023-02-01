@@ -49,22 +49,27 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
   int? maxLengthOfPhone = 0;
   bool? isPrivacyPolicyChecked = false;
   bool privacyPolicyErrorVisibility = false;
+  String privacySemanticsLabel = '';
 
   @override
   void initState() {
+    if(getAppType() == "AHA"){
+      privacySemanticsLabel = 'I agree to the American Heart Association’s privacy policy and terms of service';
+      privacySemanticsLabel = "I agree to the REAN HealthGuru privacy policy";
+    }
     progressDialog = ProgressDialog(context: context);
     getKnowdledgeLinkLastViewDate();
     permissionDialog();
     //if(apiProvider.getBaseUrl().contains('dev')) {
     setUpDummyNumbers();
     //}
-    cleanAllDate();
+    cleanAllData();
     getRoleIdApi();
     firebase();
     super.initState();
   }
 
-  cleanAllDate(){
+  cleanAllData(){
     dailyCheckInDate = '';
     carePlanEnrollmentForPatientGlobe = null;
     _sharedPrefUtils.save('CarePlan', null);
@@ -279,7 +284,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
               )),
           Scrollbar(
             controller: _scrollController,
-            isAlwaysShown: true,
+            thumbVisibility: true,
             child: SingleChildScrollView(
               controller: _scrollController,
               child: Padding(
@@ -649,7 +654,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
 
       if (doctorListApiResponse.status == 'success') {
         progressDialog.close();
-        showToast(
+        showSuccessToast(
             'One-time PIN has been successfully sent on your mobile number',
             context);
         Navigator.pushNamed(context, RoutePaths.OTP_Screen,
@@ -690,7 +695,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
           PatientApiDetails.fromJson(response);
       if (doctorListApiResponse.status == 'success') {
         progressDialog.close();
-        showToast(
+        showSuccessToast(
             'One-time PIN has been successfully sent on your mobile number',
             context);
         _sharedPrefUtils.save(
@@ -734,7 +739,7 @@ class _LoginWithOTPViewState extends State<LoginWithOTPView> {
             'OTP has been successfully sent on your mobile number', context);
         _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
-        _sharedPrefUtils.saveBoolean('login1.8.141', true);
+        _sharedPrefUtils.saveBoolean('login1.8.167', true);
         _clearFeilds();
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {

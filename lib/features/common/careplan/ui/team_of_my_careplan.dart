@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:patient/features/common/appointment_booking/models/doctor_list_api_response.dart';
 import 'package:patient/features/common/appointment_booking/models/pharmacy_list_api_response.dart';
@@ -210,24 +210,28 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
                         //showToast(tittle);
                         if (tittle == 'Doctor') {
                           showDialog(
+        barrierDismissible: false,
                               context: context,
                               builder: (_) {
                                 return _addEmergencyDoctorDialog(context);
                               });
                         } else if (tittle == 'Pharmacies') {
                           showDialog(
+        barrierDismissible: false,
                               context: context,
                               builder: (_) {
                                 return _addPharmaciesDialog(context);
                               });
                         } else if (tittle == 'Nurses / Social Health Workers') {
                           showDialog(
+        barrierDismissible: false,
                               context: context,
                               builder: (_) {
                                 return _addNurseDialog(context);
                               });
                         } else if (tittle == 'Family Members / Friends') {
                           showDialog(
+        barrierDismissible: false,
                               context: context,
                               builder: (_) {
                                 return _addFamilyMemberDialog(context);
@@ -1140,6 +1144,7 @@ class _TeamOfMyCarePlanViewState extends State<TeamOfMyCarePlanView> {
 
   _removeConfirmation(Team team) {
     showDialog(
+        barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         content: ListTile(

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:patient/features/common/medication/models/nih_medication_search_response.dart';
 import 'package:patient/features/common/medication/view_models/patients_medication.dart';

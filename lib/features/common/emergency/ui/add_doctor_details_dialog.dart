@@ -80,21 +80,21 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   //_profileIcon(),
-                  _entryFirstNameField('First Name*'),
-                  _entryLastNameField('Last Name*'),
-                  _entryMobileNoField('Phone*'),
+                  _entryFirstNameField('First Name'),
+                  _entryLastNameField('Last Name'),
+                  _entryMobileNoField('Phone'),
                   SizedBox(
                     height: 8,
                   ),
-                  Container(
+                  /*Container(
                     height: 1,
                     width: MediaQuery.of(context).size.width - 16,
                     color: Colors.grey,
-                  ),
+                  ),*/
                   SizedBox(
                     height: 16,
                   ),
-                  RichText(
+                  /*RichText(
                     text: TextSpan(
                       text:
                           'To share your health information with your doctor, you must include their email address in the doctor profile. ',
@@ -110,7 +110,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
                   SizedBox(
                     height: 8,
                   ),
-                  _entryEmailField('Email'),
+                  _entryEmailField('Email'),*/
                   //_genderWidget(),
                   const SizedBox(
                     height: 24,
@@ -141,9 +141,9 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
           showToastMsg('Enter first name', context);
         } else if (_lastNameController.text.trim() == '') {
           showToastMsg('Enter last name', context);
-        } else if (emailValidation()) {
+        } /*else if (emailValidation()) {
           showToastMsg('Enter valid email', context);
-        } else if (mobileNumber!.isEmpty) {
+        } */else if (mobileNumber!.isEmpty) {
           showToastMsg('Enter mobile number', context);
         } else if (mobileNumber!.length != maxLengthOfPhone) {
           showToastMsg('Enter valid mobile number', context);
@@ -181,9 +181,19 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              ),
+              Text(
+                '*',
+                semanticsLabel: 'required',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -226,9 +236,19 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              ),
+              Text(
+                '*',
+                semanticsLabel: 'required',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -265,7 +285,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
     );
   }
 
-  Widget _entryEmailField(String title) {
+  /*Widget _entryEmailField(String title) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -312,7 +332,7 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
         ],
       ),
     );
-  }
+  }*/
 
   /*Widget _genderWidget() {
     return Container(
@@ -360,9 +380,19 @@ class _MyDialogState extends State<AddDoctorDetailsDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              ),
+              Text(
+                '*',
+                semanticsLabel: 'required',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,

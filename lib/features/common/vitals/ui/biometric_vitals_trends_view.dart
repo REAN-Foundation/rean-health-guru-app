@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/vitals/ui/biometric_trends_view.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -38,7 +39,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Vitals',
               style: TextStyle(
@@ -89,7 +90,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
             flex: 1,
             child: Semantics(
               label: 'Record Vitals 1 of 2',
-              selected: true,
+              //selected: true,
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -104,7 +105,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
                       ImageIcon(
                         AssetImage('res/images/ic_heart_biometric.png'),
                         size: 24,
-                        color: _currentIndex == 0 ? Colors.white : Colors.grey,
+                        color: _currentIndex == 0 ? Colors.white : primaryExtraLightColor,
                       ),
                       SizedBox(
                         height: 4,
@@ -113,7 +114,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
                         'Record Vitals',
                         style: TextStyle(
                             color:
-                                _currentIndex == 0 ? Colors.white : Colors.grey,
+                                _currentIndex == 0 ? Colors.white : primaryExtraLightColor,
                             fontSize: 10),
                       ),
                     ],
@@ -126,7 +127,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
             flex: 1,
             child: Semantics(
               label: 'View Trends 2 of 2',
-              selected: true,
+              //selected: true,
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -141,7 +142,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
                       ImageIcon(
                         AssetImage('res/images/ic_trends.png'),
                         size: 28,
-                        color: _currentIndex == 1 ? Colors.white : Colors.grey,
+                        color: _currentIndex == 1 ? Colors.white : primaryExtraLightColor,
                       ),
                       SizedBox(
                         height: 4,
@@ -150,7 +151,7 @@ class _BiometricVitalsTrendsViewState extends State<BiometricVitalsTrendsView> {
                         'View Trends',
                         style: TextStyle(
                             color:
-                                _currentIndex == 1 ? Colors.white : Colors.grey,
+                                _currentIndex == 1 ? Colors.white : primaryExtraLightColor,
                             fontSize: 10),
                       ),
                     ],

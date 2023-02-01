@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:devicelocale/devicelocale.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
@@ -16,6 +17,8 @@ import 'package:patient/features/common/daily_check_in/ui/how_are_you_feeling.da
 import 'package:patient/features/common/emergency/ui/emergency_contact.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/user_data.dart';
+import 'package:patient/features/misc/ui/dashboard_ver_3.dart';
+import 'package:patient/features/misc/ui/login_with_otp_view.dart';
 import 'package:patient/features/misc/ui/my_reports_upload.dart';
 import 'package:patient/features/misc/view_models/common_config_model.dart';
 import 'package:patient/infra/networking/api_provider.dart';
@@ -106,6 +109,12 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             : '';
       });
 
+      healthSystemGlobe =  patient.healthSystem?.toString();
+      healthSystemHospitalGlobe = patient.associatedHospital?.toString();
+
+      debugPrint('Health System Globe ==> ${patient.healthSystem.toString()}');
+      debugPrint('Health System Hospital Globe ==> ${patient.associatedHospital.toString()}');
+
       /*if (!user.data.isProfileComplete ||
           user.data.isProfileComplete == null) {
         startCarePlanResponseGlob = null;
@@ -159,6 +168,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
         //debugPrint("CarePlan ==> ${startCarePlanResponseGlob.data.carePlan.carePlanCode}");
       }
       Timer(Duration(seconds: 2), () {
+        getPatientDetails();
         getCarePlan();
       });
       Future.delayed(
@@ -167,6 +177,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       );
     } catch (Excepetion) {
       Timer(Duration(seconds: 2), () {
+        getPatientDetails();
         getCarePlan();
       });
       Future.delayed(
@@ -193,11 +204,39 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
               .elementAt(0)
               .id
               .toString());
+
+          if(carePlanEnrollmentForPatient
+              .data!.patientEnrollments!
+              .elementAt(0).planCode == 'Stroke'){
+            debugPrint('CarePlan ==> Stroke');
+            _sharedPrefUtils.save('Sponsor', 'The HCA Healthcare Foundation is proud to be a national supporter of the American Stroke Association’s Together to End Stroke™');
+          }else if(carePlanEnrollmentForPatient
+              .data!.patientEnrollments!
+              .elementAt(0).planCode == 'Cholesterol'){
+            debugPrint('CarePlan ==> Cholesterol');
+            _sharedPrefUtils.save('Sponsor', 'Novartis is a proud supporter of the American Heart Association’s Integrated ASCVD Management Initiative.');
+          }
+
         }
         //showToast(startCarePlanResponse.message);
       } else {
+        if(carePlanEnrollmentForPatient.message.toString() == 'Forbidden user access'){
+          showToast('Your session has expired, please login', context);
+          dailyCheckInDate = '';
+          carePlanEnrollmentForPatientGlobe = null;
+          _sharedPrefUtils.save('CarePlan', null);
+          _sharedPrefUtils.saveBoolean('login', null);
+          _sharedPrefUtils.clearAll();
+          chatList.clear();
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) {
+                return LoginWithOTPView();
+              }), (Route<dynamic> route) => false);
+        }
         //showToast(startCarePlanResponse.message);
       }
+
+
     } catch (CustomException) {
       model.setBusy(false);
       showToast(CustomException.toString(), context);
@@ -307,20 +346,25 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   }*/
 
   healthJourneyCheck(){
-    if (carePlanEnrollmentForPatientGlobe == null) {
-      /*if(getBaseUrl()!.contains('aha-api-uat') ||
+    if(RemoteConfigValues.carePlanCode.isNotEmpty) {
+      if (carePlanEnrollmentForPatientGlobe == null) {
+        /*if(getBaseUrl()!.contains('aha-api-uat') ||
           getBaseUrl()!.contains('reancare-api-dev') ||
           getAppName() == 'Heart & Stroke Helper™ ') {*/
         debugPrint('Health Journey');
         Future.delayed(
             const Duration(seconds: 2), () => showHealthJourneyDialog());
-     /* }else{
+        /* }else{
         debugPrint('Daily Check-In');
         Future.delayed(
             const Duration(seconds: 2), () => showDailyCheckIn());
       }*/
+      } else {
+        debugPrint('Daily Check-In');
+        Future.delayed(
+            const Duration(seconds: 2), () => showDailyCheckIn());
+      }
     }else{
-      debugPrint('Daily Check-In');
       Future.delayed(
           const Duration(seconds: 2), () => showDailyCheckIn());
     }
@@ -344,7 +388,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       debugPrint('Coach Mark target click');
     }, onCoachMartkClickOverlay: () {
       debugPrint('Coach Mark overlay click');
-    }).show();
+    }).show(context: context);
   }
 
   void initTargets() {
@@ -398,14 +442,14 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     openBrowserTab();
     //Future.delayed(const Duration(seconds: 4), () => getLocation());
     initTargets();
-    WidgetsBinding.instance!.addPostFrameCallback(_layout);
+    WidgetsBinding.instance.addPostFrameCallback(_layout);
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -578,13 +622,55 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       ),
     );
     showDialog(
+        barrierDismissible: false,
         context: context,
-        barrierDismissible: true,
         builder: (BuildContext context) => sucsessDialog);
+  }
+
+  getPatientDetails() async {
+    try {
+
+      final map = <String, String>{};
+      map['Content-Type'] = 'application/json';
+      map['authorization'] = 'Bearer ' + auth!;
+
+      final response =
+      await apiProvider!.get('/patients/' + patientUserId!, header: map);
+
+      final PatientApiDetails apiResponse =
+      PatientApiDetails.fromJson(response);
+
+      if (apiResponse.status == 'success') {
+        debugPrint("Patient User Details ==> ${apiResponse.data!.patient!.user!.person!
+            .toJson()
+            .toString()}");
+        await _sharedPrefUtils.save(
+            'patientDetails', apiResponse.data!.patient!.toJson());
+      } else {
+        autoLogOut(apiResponse);
+        model.setBusy(false);
+      }
+    } catch (CustomException) {
+      model.setBusy(false);
+      showToast(CustomException.toString(), context);
+      debugPrint(CustomException.toString());
+    }
+  }
+
+  autoLogOut(PatientApiDetails apiResponse){
+    //debugPrint('apiResponse.message ==> ${apiResponse.message}');
+    if(apiResponse.message! == "Forbidden user access" || apiResponse.message! == "Forebidden user access"){
+      showToast('Your session has expired, please login', context);
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+            return LoginWithOTPView();
+          }), (Route<dynamic> route) => false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    setAppBuildContext(context);
     //UserData data = UserData.fromJson(_sharedPrefUtils.read("user"));
     //debugPrint(_sharedPrefUtils.read("user"));
 
@@ -596,7 +682,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     );
     switch (_currentNav) {
       case 0:
-        screen = DashBoardVer2View(
+        screen = DashBoardVer3View(
           positionToChangeNavigationBar: (int tabPosition) {
             debugPrint('Tapped Tab $tabPosition');
             _selectedTab(tabPosition);
@@ -628,7 +714,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             child: AppBar(
               elevation: 10.0,
               backgroundColor: Colors.white,
-              brightness: Brightness.light,
+              systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
               title: RichText(
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -798,7 +884,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
                       label: 'emergency contact',
                       selected: true,
                       child: Icon(
-                        FontAwesomeIcons.ambulance,
+                        FontAwesomeIcons.truckMedical,
                         color: _currentNav == 3 ? Colors.white : Colors.white54,
                         size: 20,
                       )),

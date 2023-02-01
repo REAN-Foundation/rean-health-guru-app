@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/appointment_booking/models/doctor_list_api_response.dart';
 import 'package:patient/features/common/careplan/models/add_team_member_response.dart';
@@ -60,7 +61,7 @@ class _SetUpDoctorForCarePlanViewState
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Set up Your Team',
               style: TextStyle(
@@ -229,6 +230,7 @@ class _SetUpDoctorForCarePlanViewState
               mini: false,
               onPressed: () {
                 showDialog(
+        barrierDismissible: false,
                     context: context,
                     builder: (_) {
                       return _addFamilyMemberDialog(context);

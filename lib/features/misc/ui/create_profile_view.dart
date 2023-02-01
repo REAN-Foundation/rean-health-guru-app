@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:get_it/get_it.dart';
-import 'package:group_radio_button/group_radio_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -142,7 +142,7 @@ class _CreateProfileState extends State<CreateProfile> {
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             backgroundColor: Colors.white,
             title: Text(
               'Create Profile',
@@ -282,9 +282,19 @@ class _CreateProfileState extends State<CreateProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              ),
+              Text(
+                '*',
+                semanticsLabel: 'required',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -301,6 +311,7 @@ class _CreateProfileState extends State<CreateProfile> {
             ),
             child: Semantics(
               label: 'First Name ' + _firstNameController.text.toString(),
+              hint: 'required',
               child: TextFormField(
                   textCapitalization: TextCapitalization.sentences,
                   obscureText: isPassword,
@@ -329,9 +340,19 @@ class _CreateProfileState extends State<CreateProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              ),
+              Text(
+                '*',
+                semanticsLabel: 'required',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -348,6 +369,7 @@ class _CreateProfileState extends State<CreateProfile> {
             ),
             child: Semantics(
               label: 'Last name ' + _lastNameController.text.toString(),
+              hint: 'required',
               child: TextFormField(
                   textCapitalization: TextCapitalization.sentences,
                   obscureText: isPassword,
@@ -451,7 +473,7 @@ class _CreateProfileState extends State<CreateProfile> {
                 } else if (unformatedDOB == '') {
                   showToast('Please select your date of birth', context);
                 } else if (selectedGender == '') {
-                  showToast('Please select your gender', context);
+                  showToast('Please select your sex', context);
                 } else {
                   progressDialog.show(max: 100, msg: 'Loading...');
                   progressDialog.show(max: 100, msg: 'Loading...');
@@ -472,10 +494,10 @@ class _CreateProfileState extends State<CreateProfile> {
                       progressDialog.close();
                       if (getAppType() == 'AHA') {
                         if(getAppName() != 'Heart & Stroke Helper™ ') {
-                          showToast('Welcome to ' + getAppName(), context);
+                          showSuccessToast('Welcome to ' + getAppName(), context);
                         }
                       } else {
-                        showToast('Welcome to REAN HealthGuru', context);
+                        showSuccessToast('Welcome to REAN HealthGuru', context);
                       }
                       /* if (Navigator.canPop(context)) {
                     Navigator.pop(context);
@@ -516,10 +538,10 @@ class _CreateProfileState extends State<CreateProfile> {
           PatientApiDetails.fromJson(response);
 
       if (doctorListApiResponse.status == 'success') {
-        _sharedPrefUtils.saveBoolean('login1.8.141', true);
+        _sharedPrefUtils.saveBoolean('login1.8.167', true);
         await _sharedPrefUtils.save(
             'patientDetails', doctorListApiResponse.data!.patient!.toJson());
-        _sharedPrefUtils.saveBoolean('login1.8.141', true);
+        _sharedPrefUtils.saveBoolean('login1.8.167', true);
         if(getAppName() == 'Heart & Stroke Helper™ ') {
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
@@ -633,9 +655,19 @@ class _CreateProfileState extends State<CreateProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            'Sex',
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+          Row(
+            children: [
+              Text(
+                'Sex',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              ),
+              Text(
+                '*',
+                semanticsLabel: 'required',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -662,7 +694,7 @@ class _CreateProfileState extends State<CreateProfile> {
                   selectedGender = 'Intersex';
                 }
               })*/
-          RadioGroup<String>.builder(
+          /*RadioGroup<String>.builder(
             items: radioItemsForGender,
             groupValue: selectedGender.toString(),
             direction: Axis.horizontal,
@@ -676,7 +708,38 @@ class _CreateProfileState extends State<CreateProfile> {
               item,
               textPosition: RadioButtonTextPosition.right,
             ),
-          ),
+          ),*/
+           Semantics(
+             hint: 'required',
+             child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                      border: Border.all(color: Color(0XFF909CAC), width: 0.80),
+                      color: Colors.white),
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: selectedGender == ''
+                        ? null
+                        : selectedGender,
+                    items: radioItemsForGender.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    hint: Text('Choose an option'),
+                    onChanged: (data) {
+                      debugPrint(data);
+                      setState(() {
+                        selectedGender = data.toString();
+                      });
+                      setState(() {});
+                    },
+                  ),
+                ),
+           )
         ],
       ),
     );
@@ -688,9 +751,19 @@ class _CreateProfileState extends State<CreateProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              ),
+              Text(
+                '*',
+                semanticsLabel: 'required',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -698,6 +771,7 @@ class _CreateProfileState extends State<CreateProfile> {
           Semantics(
             label: 'Date of Birth ' + dob,
             button: true,
+            hint: 'required',
             child: GestureDetector(
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -737,7 +811,7 @@ class _CreateProfileState extends State<CreateProfile> {
                 FocusScope.of(context).unfocus();
                 DatePicker.showDatePicker(context,
                     showTitleActions: true,
-                    minTime: DateTime(1940, 1, 1),
+                    minTime: DateTime(1900, 1, 1),
                     maxTime: DateTime.now().subtract(Duration(days: 1)),
                     onChanged: (date) {
                       debugPrint('change $date');

@@ -1,11 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/models/user_data.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -26,6 +27,9 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
   final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
   String name = ' ';
   String? userPhone = ' ';
+
+  String hfHelprText = 'www.heart.org/HFsupport\nis easy and membership is free. Join an exclusive peer group for heart failure patients like you – putting encouragement and reliable, helpful information at your fingertips whenever you need it.';
+  String hfHearthAndStrokeText = 'www.heart.org/SupportNetwork\nis easy, and membership is free — putting advice, encouragement and reliable, helpful information at your fingertips whenever you need it.';
 
   loadSharedPrefs() async {
     try {
@@ -66,7 +70,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: primaryColor,
-          brightness: Brightness.dark,
+          systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
           title: Text(
             '',
             style: TextStyle(
@@ -136,7 +140,7 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
         children: [
           Expanded(
             child: Scrollbar(
-              isAlwaysShown: true,
+              thumbVisibility: true,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: SingleChildScrollView(
@@ -206,8 +210,47 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                       ),
                       Linkify(
                         onOpen: (link) async {
-                          if (await canLaunch(link.url)) {
-                            await launch(link.url);
+                          if (await canLaunchUrl(Uri.parse(link.url))) {
+                            await launchUrl(Uri.parse(link.url));
+                          } else {
+                            throw 'Could not launch $link';
+                          }
+                        },
+                        options: LinkifyOptions(
+                          humanize: true,
+                        ),
+                        text:getAppName() != 'HF Helper' ? 'www.heart.org/SupportNetwork\nis easy, and membership is free — putting advice, encouragement and reliable, helpful information at your fingertips whenever you need it.'
+                         : 'www.heart.org/HFsupport\nis easy and membership is free.\nJoin an exclusive peer group for heart failure patients like you – putting encouragement and reliable, helpful information at your fingertips whenever you need it.',
+                        style: TextStyle(
+                            height: 1.5,
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500),
+                        linkStyle: TextStyle(color: hyperLinkTextColor),
+                      ),
+
+                      SizedBox(
+                        height: 32,
+                      ),
+                      if(getAppName() == 'HF Helper')...[
+                      Text("Helpful Links",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Color(0xff000000),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal,
+
+
+                          )
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Linkify(
+                        onOpen: (link) async {
+                          if (await canLaunchUrl(Uri.parse(link.url))) {
+                            await launchUrl(Uri.parse(link.url));
                           } else {
                             throw 'Could not launch $link';
                           }
@@ -216,14 +259,15 @@ class _SupportNetworkViewState extends State<SupportNetworkView> {
                           humanize: true,
                         ),
                         text:
-                        'www.heart.org/SupportNetwork\nis easy, and membership is free — putting advice, encouragement and reliable, helpful information at your fingertips whenever you need it.',
+                        'Need help finding a community resource? Start here https://heart.org/findhelp',
                         style: TextStyle(
                             height: 1.5,
                             color: Colors.black,
                             fontSize: 14,
                             fontWeight: FontWeight.w500),
-                        linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                        linkStyle: TextStyle(color: hyperLinkTextColor),
                       ),
+      ],
                     ],
                   ),
                 ),

@@ -1,5 +1,4 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,8 +20,10 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await dotenv.load(fileName: 'res/.env');
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool? login = prefs.getBool('login1.8.141');
+  bool? login = prefs.getBool('login1.8.167');
   login ??= false;
+  String? sponsor = prefs.getString('Sponsor');
+  setSponsor(sponsor??'');
   runApp(MyApp(login));
 }
 //ignore: must_be_immutable
@@ -30,7 +31,9 @@ class MyApp extends StatelessWidget {
   bool? isLogin;
   String? _baseUrl;
   String? _botBaseUrl;
-  FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  static FirebaseAnalyticsObserver observer =
+  FirebaseAnalyticsObserver(analytics: analytics);
 
   MyApp(bool isLogin) {
     debugPrint('Print from .env ==> ${dotenv.env['UAT_BASE_URL']}');

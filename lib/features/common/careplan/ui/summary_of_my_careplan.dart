@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -15,7 +16,7 @@ class SummaryOfMyCarePlanView extends StatefulWidget {
 class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
   var model = PatientCarePlanViewModel();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  var dateFormat = DateFormat('MMMM dd, yyyy');
+  var dateFormat = DateFormat('MMM dd, yyyy');
   int? currentWeek = 0;
 
   @override
@@ -34,7 +35,7 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
           backgroundColor: Colors.white,
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
+            child: currentWeek == 0 ? textMessage() : Column(
               children: [
                 Container(
                     height: 40,
@@ -95,11 +96,12 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
                               ),
                               Stack(
                                 children: <Widget>[
-                                  if (currentWeek.toString() == '-1')
+                                  if (currentWeek.toString() == '-1' || currentWeek.toString() == '0')
                                     Container()
                                   else
                                     currentWeekCount(),
-                                  _buildCarePlanView(),
+                                    _buildCarePlanView(),
+
                                 ],
                               ),
                             ],
@@ -113,6 +115,99 @@ class _SummaryOfMyCarePlanViewState extends State<SummaryOfMyCarePlanView> {
       ),
     );
   }
+
+  textMessage(){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        getAppType() == 'AHA' ?
+            ExcludeSemantics(
+              child: Container(
+                width: 100,
+                height: 100,
+                child: Lottie.asset(
+                  'res/lottiefiles/aha_health_journey_loader.json',
+                ),
+              ),
+            )
+            :
+        ExcludeSemantics(
+          child: Container(
+            width: 100,
+            height: 100,
+            child: Lottie.asset(
+              'res/lottiefiles/health_journey_loader.json',
+            ),
+          ),
+        ),
+        SizedBox(height: 16,),
+        Text('Your ${carePlanEnrollmentForPatientGlobe!
+            .data!.patientEnrollments!
+            .elementAt(0)
+            .planName
+            .toString()} Health Journey will begin from '+dateFormat.format(weeklyCarePlanStatusGlobe!
+            .data!.careplanStatus!.startDate!
+            .toLocal()),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: secondaryTextBlack,
+              fontWeight: FontWeight.w600,
+              fontFamily: "Montserrat",
+              fontStyle: FontStyle.normal,
+              fontSize: 16.0),
+        ),
+        SizedBox(height: 16,),
+        Semantics(
+          label: 'Okay',
+          button: true,
+          child: ExcludeSemantics(
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 48,
+                width: MediaQuery.of(context).size.width - 256,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    border: Border.all(color: primaryColor, width: 1),
+                    color: primaryColor),
+                child: Center(
+                  child: Text(
+                    'Okay',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontSize: 14),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /*if(currentWeek.toString() == '0')
+          Text('Your ${carePlanEnrollmentForPatientGlobe!
+              .data!.patientEnrollments!
+              .elementAt(0)
+              .planName
+              .toString()} Health Journey will begin from '+dateFormat.format(weeklyCarePlanStatusGlobe!
+              .data!.careplanStatus!.startDate!
+              .toLocal()),
+            style: TextStyle(
+                color: textBlack,
+                fontWeight: FontWeight.w500,
+                fontFamily: "Montserrat",
+                fontStyle: FontStyle.normal,
+                fontSize: 16.0),
+          ),*/
 
   Widget currentWeekCount() {
     return Positioned(

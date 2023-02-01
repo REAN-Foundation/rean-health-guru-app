@@ -54,7 +54,7 @@ class _MyReportsViewState extends State<MyReportsView> {
     _api_key = dotenv.env['Patient_API_KEY'];
     progressDialog = ProgressDialog(context: context);
     getAllRecords();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         _scrollController.jumpTo(50.0);
       }
@@ -131,7 +131,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       debugPrint('Records ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         getAllRecords();
-        showToast('Document renamed successfully.', context);
+        showSuccessToast('Document renamed successfully.', context);
       } else {
         showToast(baseResponse.message!, context);
       }
@@ -148,7 +148,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       debugPrint('Records ==> ${baseResponse.toJson()}');
       if (baseResponse.status == 'success') {
         getAllRecords();
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
       } else {
         showToast(baseResponse.message!, context);
       }
@@ -169,7 +169,7 @@ class _MyReportsViewState extends State<MyReportsView> {
           backgroundColor: Colors.white,
           /*appBar: AppBar(
                 backgroundColor: Colors.white,
-                brightness: Brightness.light,
+                systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                 title: Text(
                   'My '+wi,
                   style: TextStyle(
@@ -310,7 +310,7 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   Widget listWidget() {
     return Scrollbar(
-      isAlwaysShown: true,
+      thumbVisibility: true,
       controller: _scrollController,
       child: ListView.separated(
           itemBuilder: (context, index) => _myReports(context, index),
@@ -341,7 +341,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                 .then((f) {
               progressDialog.close();
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PDFScreen(f.path)));
+                  MaterialPageRoute(builder: (context) => PDFScreen(f.path, 'Reports')));
             });
           } else if (document.mimeType!.contains('image')) {
             createFileOfPdfUrl(document.authenticatedUrl!, document.fileName)
@@ -633,6 +633,7 @@ class _MyReportsViewState extends State<MyReportsView> {
 
   Future<String?> _askForDocsType() async {
     return showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -708,7 +709,7 @@ class _MyReportsViewState extends State<MyReportsView> {
               UploadDocumentResponse.fromJson(json.decode(respStr));
           if (uploadResponse.status == 'success') {
             getAllRecords();
-            showToast(uploadResponse.message!, context);
+            showSuccessToast(uploadResponse.message!, context);
           } else {
             showToast('Opps, something went wrong!', context);
           }
@@ -785,6 +786,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       TextPosition(offset: renameControler.text.length - 4),
     );
     showDialog(
+        barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),
@@ -825,7 +827,7 @@ class _MyReportsViewState extends State<MyReportsView> {
                 debugPrint('EnteredFileName Length ==> ${enteredFileName.length}');
 
                 if (document.fileName == renameControler.text) {
-                  showToastMsg('Document renamed successfully ', context);
+                  showSuccessToast('Document renamed successfully ', context);
                   Navigator.of(context, rootNavigator: true).pop();
                 } else if (newFileName == '') {
                   showToastMsg('Please enter valid file name', context);

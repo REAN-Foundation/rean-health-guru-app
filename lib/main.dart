@@ -15,7 +15,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool? login = prefs.getBool('login1.8.141');
+  bool? login = prefs.getBool('login1.8.167');
   login ??= false;
   debugPrint('Main >> Login Session: $login');
 

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
@@ -71,7 +71,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
       debugPrint('Coach Mark target click');
     }, onCoachMartkClickOverlay: () {
       debugPrint('Coach Mark overlay click');
-    }).show();
+    }).show(context: context);
   }
 
 /*  _layout(_) async {
@@ -381,6 +381,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
             }
           });
           /*final bool res = await showDialog(
+        barrierDismissible: false,
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
@@ -427,6 +428,7 @@ class _MyTodaysMedicationViewState extends State<MyTodaysMedicationView> {
             }
           });
         }
+        return true;
       },
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/activity/ui/view_my_all_daily_stress.dart';
 import 'package:patient/features/common/vitals/view_models/patients_vitals.dart';
 import 'package:patient/infra/themes/app_colors.dart';
@@ -42,7 +43,7 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Mental Well-Being',
               style: TextStyle(
@@ -93,7 +94,6 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
             flex: 1,
             child: Semantics(
               label: 'Record Mental Well-Being 1 of 2',
-              focusable: true,
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -121,8 +121,7 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             color: widget._currentIndex == 0
-                                ? Colors.white
-                                : Colors.grey,
+                                ? Colors.white : primaryExtraLightColor,
                             fontSize: 10),
                       ),
                     ],
@@ -150,8 +149,7 @@ class _AllMentalWellBeingViewState extends State<AllMentalWellBeingView> {
                         AssetImage('res/images/ic_stress.png'),
                         size: 24,
                         color: widget._currentIndex == 1
-                            ? Colors.white
-                            : Colors.grey,
+                            ? Colors.white : primaryExtraLightColor,
                       ),
                       SizedBox(
                         height: 8,

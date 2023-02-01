@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
@@ -20,7 +20,7 @@ class SupportView extends StatefulWidget {
 class _SupportViewState extends State<SupportView> {
   //var model = PatientCarePlanViewModel();
   String msg = 'We are here to help you so please get in touch.';
-  String msgAHA = 'Please call us or email us for technical help.';
+  String msgAHA = 'Please email us for technical help.';
   String subtitle =
       'For medical help, please contact your health care professional.';
   String phone = '+12025397323';
@@ -53,6 +53,9 @@ class _SupportViewState extends State<SupportView> {
 
   @override
   void initState() {
+    if(getAppType() == 'AHA'){
+      email = 'helperapp@heart.org';
+    }
     //completeMessageTaskOfAHACarePlan(widget.assortedViewConfigs.task);
     loadSharedPrefs();
     super.initState();
@@ -85,6 +88,8 @@ class _SupportViewState extends State<SupportView> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+                                  if(getAppType() == 'AHA')
+                                    SizedBox(height: 80,),
                                   Semantics(
                                     label: 'Support',
                                     image: true,
@@ -144,16 +149,15 @@ class _SupportViewState extends State<SupportView> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Expanded(
-                                      flex: 1,
-                                      child: Semantics(
+                                    if(getAppType() != 'AHA')...[
+                                      Semantics(
                                         label: 'Call Us',
                                         button: true,
                                         child: InkWell(
                                           onTap: () async {
                                             final String url = 'tel://' + phone;
-                                            if (await canLaunch(url)) {
-                                              await launch(url);
+                                            if (await canLaunchUrl(Uri.parse(url))) {
+                                              await launchUrl(Uri.parse(url));
                                             } else {
                                               showToast('Unable to dial number',
                                                   context);
@@ -174,6 +178,7 @@ class _SupportViewState extends State<SupportView> {
                                               shadowColor: colorF6F6FF,
                                               child: Container(
                                                 height: 160,
+                                                width: 120,
                                                 child: Column(
                                                   children: [
                                                     getAppType() == 'AHA'
@@ -200,104 +205,102 @@ class _SupportViewState extends State<SupportView> {
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Semantics(
-                                        label: 'Email us',
-                                        button: true,
-                                        child: InkWell(
-                                          onTap: () async {
-                                            /* final Uri _emailLaunchUri = Uri(
-                                              scheme: 'mailto',
-                                              path: email,
-                                              queryParameters: {
-                                                'subject': 'REAN%2BCare%2Bapp%2Bquery',
-                                                'body': 'Hey Team, \n'+name+' wants to get in touch\nContact Number: '+userPhone,
-                                              }
-                                          );*/
-
-                                            String appName =
-                                                'REAN%20HealthGuru';
-                                            if (getAppType() == 'AHA') {
-                                              appName = Uri.parse(getAppName()).toString();
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                    ],
+                                    Semantics(
+                                      label: 'Email us',
+                                      button: true,
+                                      child: InkWell(
+                                        onTap: () async {
+                                          /* final Uri _emailLaunchUri = Uri(
+                                            scheme: 'mailto',
+                                            path: email,
+                                            queryParameters: {
+                                              'subject': 'REAN%2BCare%2Bapp%2Bquery',
+                                              'body': 'Hey Team, \n'+name+' wants to get in touch\nContact Number: '+userPhone,
                                             }
+                                        );*/
 
-                                            final link = 'mailto:' +
-                                                email +
-                                                '?subject=Regarding%20' +
-                                                appName +
-                                                '%20App&body=Hey Team,%20\n\n' +
-                                                name +
-                                                '%20wants%20to%20get%20in%20touch%20with%20you.\n\nContact%20Number:%20' +
-                                                userPhone! +
-                                                '\n\n';
-                                            if (await canLaunch(
-                                                link.toString())) {
-                                              await launch(link.toString());
+                                          String appName =
+                                              'REAN%20HealthGuru';
+                                          if (getAppType() == 'AHA') {
+                                            appName = Uri.parse(getAppName().replaceAll('™ ', '')).toString();
+                                          }
+
+                                          final link = 'mailto:' +
+                                              email +
+                                              '?subject=Regarding%20' +
+                                              appName +
+                                              '%20App&body=Hey Team,%20\n\n' +
+                                              name +
+                                              '%20wants%20to%20get%20in%20touch%20with%20you.\n\nContact%20Number:%20' +
+                                              userPhone! +
+                                              '\n\n';
+                                            if (await canLaunchUrl(Uri.parse(
+                                                link.toString()))) {
+                                              await launchUrl(Uri.parse(link.toString()));
                                             } else {
-                                              final Uri _emailLaunchUri = Uri(
-                                                  scheme: 'mailto',
-                                                  path: email,
-                                                  queryParameters: {
-                                                    'subject':
-                                                        appName.replaceAll(
-                                                                '%20', ' ') +
-                                                            ' app query',
-                                                    'body': ''
-                                                            '' +
-                                                        name +
-                                                        ' wants to get in touch with you. ---- '
-                                                            'Contact Number:' +
-                                                        userPhone! +
-                                                        ''
-                                                            '',
-                                                  });
-                                              await launch(_emailLaunchUri
-                                                  .toString()
-                                                  .replaceAll('+', '%20'));
+                                            final Uri _emailLaunchUri = Uri(
+                                                scheme: 'mailto',
+                                                path: email,
+                                                queryParameters: {
+                                                  'subject':
+                                                      appName.replaceAll(
+                                                              '%20', ' ') +
+                                                          ' app query',
+                                                  'body': ''
+                                                          '' +
+                                                      name +
+                                                      ' wants to get in touch with you. ---- '
+                                                          'Contact Number:' +
+                                                      userPhone! +
+                                                      ''
+                                                          '',
+                                                });
+                                            await launchUrl(Uri.parse(_emailLaunchUri
+                                                .toString()
+                                                .replaceAll('+', '%20')));
 
-                                              debugPrint(
-                                                  'Could not launch ${link.toString()}');
-                                              throw 'Could not launch ${link.toString()}';
-                                            }
-                                          },
-                                          child: ExcludeSemantics(
-                                            child: Card(
-                                              semanticContainer: true,
-                                              elevation: 8.0,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(12.0),
-                                              ),
-                                              color: colorF6F6FF,
-                                              shadowColor: colorF6F6FF,
-                                              child: Container(
-                                                height: 160,
-                                                child: Column(
-                                                  children: [
-                                                    getAppType() == 'AHA'
-                                                        ? Image.asset(
-                                                            'res/images/ic_mail_aha.png',
-                                                            width: 120)
-                                                        : Lottie.asset(
-                                                            'res/lottiefiles/mail.json',
-                                                            height: 120,
-                                                          ),
-                                                    Text('Email us',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 16,
-                                                            color:
-                                                                primaryColor)),
-                                                  ],
-                                                ),
+                                            debugPrint(
+                                                'Could not launch ${link.toString()}');
+                                            throw 'Could not launch ${link.toString()}';
+                                          }
+                                        },
+                                        child: ExcludeSemantics(
+                                          child: Card(
+                                            semanticContainer: true,
+                                            elevation: 8.0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
+                                            ),
+                                            color: colorF6F6FF,
+                                            shadowColor: colorF6F6FF,
+                                            child: Container(
+                                              height: 160,
+                                              width: 120,
+                                              child: Column(
+                                                children: [
+                                                  getAppType() == 'AHA'
+                                                      ? Image.asset(
+                                                          'res/images/ic_mail_aha.png',
+                                                          width: 120)
+                                                      : Lottie.asset(
+                                                          'res/lottiefiles/mail.json',
+                                                          height: 120,
+                                                        ),
+                                                  Text('Email us',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 16,
+                                                          color:
+                                                              primaryColor)),
+                                                ],
                                               ),
                                             ),
                                           ),

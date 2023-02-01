@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:group_radio_button/group_radio_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -40,7 +39,7 @@ class _MyDialogState extends State<AddNurseDialog> {
   final _mobileNumberFocus = FocusNode();
   String? profileImage = '';
   String? profileImagePath = '';
-  String selectedGender = 'Male';
+  String selectedGender = '';
   String? mobileNumber = '';
   String? countryCode = '';
   int? maxLengthOfPhone = 0;
@@ -84,9 +83,9 @@ class _MyDialogState extends State<AddNurseDialog> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   //_profileIcon(),
-                  _entryFirstNameField('First Name*'),
-                  _entryLastNameField('Last Name*'),
-                  _entryMobileNoField('Phone*'),
+                  _entryFirstNameField('First Name'),
+                  _entryLastNameField('Last Name'),
+                  _entryMobileNoField('Phone'),
                   _genderWidget(),
                   const SizedBox(
                     height: 32,
@@ -116,7 +115,7 @@ class _MyDialogState extends State<AddNurseDialog> {
           } else if (mobileNumber!.length != maxLengthOfPhone) {
             showToastMsg('Enter valid mobile number', context);
           } else if (selectedGender == '') {
-            showToastMsg('Select gender', context);
+            showToastMsg('Select sex', context);
           } else {
             widget._submitButtonListner(
                 _firstNameController.text.trim(),
@@ -149,9 +148,19 @@ class _MyDialogState extends State<AddNurseDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              ),
+              Text(
+                '*',
+                semanticsLabel: 'required',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -194,9 +203,19 @@ class _MyDialogState extends State<AddNurseDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              ),
+              Text(
+                '*',
+                semanticsLabel: 'required',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
@@ -238,37 +257,74 @@ class _MyDialogState extends State<AddNurseDialog> {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.symmetric(vertical: 10),
-      child: Semantics(
-        label: 'Sex of nurse',
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ExcludeSemantics(
-              child: Text(
-                'Sex*',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: [
+              Text(
+                'Sex',
+                semanticsLabel: 'sex of nurse',
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
               ),
+              Text(
+                '*',
+                semanticsLabel: 'required',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          /*RadioGroup<String>.builder(
+            items: radioItemsForGender,
+            groupValue: selectedGender.toString(),
+            direction: Axis.horizontal,
+            horizontalAlignment: MainAxisAlignment.start,
+            onChanged: (item) {
+              debugPrint(item);
+              selectedGender = item.toString();
+              setState(() {});
+            },
+            itemBuilder: (item) => RadioButtonBuilder(
+              item,
+              textPosition: RadioButtonTextPosition.right,
             ),
-            SizedBox(
-              height: 10,
-            ),
-            RadioGroup<String>.builder(
-              items: radioItemsForGender,
-              groupValue: selectedGender.toString(),
-              direction: Axis.horizontal,
-              horizontalAlignment: MainAxisAlignment.start,
-              onChanged: (item) {
-                debugPrint(item);
-                selectedGender = item.toString();
-                setState(() {});
-              },
-              itemBuilder: (item) => RadioButtonBuilder(
-                item,
-                textPosition: RadioButtonTextPosition.right,
+          ),*/
+         Semantics(
+           hint: 'required',
+           child: Container(
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.0),
+                  border: Border.all(color: primaryColor, width: 0.80),
+                  color: Colors.white),
+              child: DropdownButton<String>(
+                isExpanded: true,
+                value: selectedGender == ''
+                    ? null
+                    : selectedGender,
+                items: radioItemsForGender.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                hint: Text('Choose an option'),
+                onChanged: (data) {
+                  debugPrint(data);
+                  setState(() {
+                    selectedGender = data.toString();
+                  });
+                  setState(() {});
+                },
               ),
             ),
-          ],
-        ),
+         )
+        ],
       ),
     );
   }
@@ -279,9 +335,19 @@ class _MyDialogState extends State<AddNurseDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          Row(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              ),
+              Text(
+                '*',
+                semanticsLabel: 'required',
+                style: TextStyle(
+                    color: Color(0XFFEB0C2D), fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ],
           ),
           SizedBox(
             height: 10,

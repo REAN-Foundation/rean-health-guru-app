@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,6 +9,7 @@ import 'package:patient/features/common/careplan/models/get_care_plan_enrollment
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
 import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/chat_bot/models/faq_chat_model_pojo.dart';
+import 'package:patient/features/common/medication/models/my_current_medication.dart' as med;
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:phone_number/phone_number.dart';
@@ -27,6 +27,8 @@ StartTaskOfAHACarePlanResponse getStartTaskOfAHACarePlanResponse() {
   return _startTaskOfAHACarePlanResponseGlobe;
 }*/
 
+late BuildContext _buildContext;
+
 bool _isLogin = false;
 String? _baseUrl = '';
 late UserTask _task;
@@ -37,6 +39,7 @@ String? _currentLocale = '';
 String _appName = '';
 String _appType = '';
 String _appFlavour = '';
+String _sponsor = '';
 dynamic _roleId = '';
 final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
 String knowledgeLinkDisplayedDate = '';
@@ -48,6 +51,9 @@ String dailyMood = '';
 String dailyFeeling = '';
 List<String> dailyEnergyLevels = [];
 List<String> createdGoalsIds = [];
+var healthSystemGlobe;
+var healthSystemHospitalGlobe;
+med.Items? globeMedication;
 
 setUpDummyNumbers() {
   dummyNumberList.add('1231231231');
@@ -143,12 +149,28 @@ dynamic getRoleId() {
   return _roleId;
 }
 
+void setSponsor(String name) {
+  _sponsor = name;
+}
+
+String getSponsor() {
+  return _sponsor;
+}
+
 void setAppType(String name) {
   _appType = name;
 }
 
 String getAppType() {
   return _appType;
+}
+
+void setAppBuildContext(BuildContext context) {
+  _buildContext = context;
+}
+
+BuildContext getAppBuildContext() {
+  return _buildContext;
 }
 
 void setAppFlavour(String appFlavour) {
@@ -191,6 +213,28 @@ setCurrentLocale(String? locale) {
   _currentLocale = locale;
 }
 
+void showSuccessToast(String msg, BuildContext context) {
+  FocusManager.instance.primaryFocus!.unfocus();
+  /*Fluttertoast.showToast(
+    msg: msg,
+    toastLength: Toast.LENGTH_LONG,
+    backgroundColor: Colors.black,
+    textColor: Colors.white,
+  );*/
+  final snackBar = SnackBar(
+    content: Text(msg,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600
+            ),),
+    backgroundColor: primaryColor,
+  );
+
+  // Find the ScaffoldMessenger in the widget tree
+  // and use it to show a SnackBar.
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
 void showToast(String msg, BuildContext context) {
   FocusManager.instance.primaryFocus!.unfocus();
   /*Fluttertoast.showToast(
@@ -231,6 +275,10 @@ void announceText(String text) {
   SemanticsService.announce(text, TextDirection.ltr);
 }
 
+hideKeyboard(){
+  FocusManager.instance.primaryFocus!.unfocus();
+}
+
 setImage(String url) {
   CachedNetworkImage(
     imageUrl:
@@ -238,6 +286,13 @@ setImage(String url) {
     placeholder: (context, url) => CircularProgressIndicator(),
     errorWidget: (context, url, error) => Icon(Icons.error),
   );
+}
+
+bool isNumeric(String s) {
+  if (s == null) {
+    return false;
+  }
+  return double.tryParse(s) != null;
 }
 
 circularImage() {
@@ -329,4 +384,22 @@ enum AppState {
   DATA_READY,
   NO_DATA,
   AUTH_NOT_GRANTED
+}
+
+String removeLeadingZeros(String num) {
+  // traverse the entire string
+  for (int i = 0; i < num.length; i++) {
+
+    // check for the first non-zero character
+    if (num[i] != '0') {
+      // return the remaining string
+      String res = num.substring(i);
+      return res;
+    }
+  }
+
+  // If the entire string is traversed
+  // that means it didn't have a single
+  // non-zero character, hence return "0"
+  return "0";
 }

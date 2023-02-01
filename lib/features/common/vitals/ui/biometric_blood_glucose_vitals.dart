@@ -68,7 +68,7 @@ class _BiometricBloodSugarVitalsViewState
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                   backgroundColor: Colors.white,
-                  brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                   title: Text(
                     'Blood Glucose',
                     style: TextStyle(
@@ -348,7 +348,7 @@ class _BiometricBloodSugarVitalsViewState
                     ),
                     Expanded(
                       child: Scrollbar(
-                        isAlwaysShown: true,
+                        thumbVisibility: true,
                         controller: _scrollController,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -683,7 +683,7 @@ class _BiometricBloodSugarVitalsViewState
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         _controller.clear();
         //Navigator.pop(context);
         getVitalsHistory();
@@ -711,7 +711,7 @@ class _BiometricBloodSugarVitalsViewState
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);

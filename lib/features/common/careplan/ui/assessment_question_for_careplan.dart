@@ -1,11 +1,14 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
+
+import '../../../../infra/utils/common_utils.dart';
 
 //ignore: must_be_immutable
 class AssessmentQuestionCarePlanView extends StatefulWidget {
@@ -63,7 +66,7 @@ class _AssessmentQuestionCarePlanViewState
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
               'Assessment',
               style: TextStyle(
@@ -126,7 +129,12 @@ class _AssessmentQuestionCarePlanViewState
                       child: InkWell(
                         onTap: () {
                           //Navigator.pushNamed(context, RoutePaths.Assessment_Question_Two_Care_Plan);
-                          Navigator.pop(context, id);
+                          //Navigator.pop(context, id);
+                          if(id != 1000) {
+                            Navigator.pop(context, id);
+                          }else{
+                            showToast('Please select valid option.', context);
+                          }
                         },
                         child: Container(
                             height: 40,
@@ -168,7 +176,7 @@ class _AssessmentQuestionCarePlanViewState
   String radioItem = '';
 
   // Group Value for Radio Button.
-  int id = 1;
+  int id = 1000;
 
   Widget quizQuestionOne() {
     return Container(

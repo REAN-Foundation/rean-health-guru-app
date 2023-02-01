@@ -1,7 +1,13 @@
-import 'package:flutter/cupertino.dart';
+
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as tabs;
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/careplan/models/assorted_view_configs.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
@@ -10,6 +16,7 @@ import 'package:patient/features/common/careplan/models/user_task_response.dart'
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
+import 'package:patient/features/misc/ui/pdf_viewer.dart';
 import 'package:patient/infra/networking/custom_exception.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -81,27 +88,36 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   getAllUserTask() async {
     try {
       var dateTill;
+      var dateFrom;
       /*if (getBaseUrl()!.contains('aha-api-uat.services') ||
           getAppName() == 'Heart & Stroke Helper™ ') {
         dateTill = DateTime.now();
       } else {*/
-      if(getBaseUrl()!.contains('reancare-api-dev')){
+      /*if(getBaseUrl()!.contains('reancare-api-dev')){
         dateTill = DateTime.now().add(Duration(days: 91));
+      }else{*/
+        dateTill = DateTime.now().add(Duration(days: RemoteConfigValues.carePlanTaskDurationInDays));
+      //}
+
+      if(carePlanEnrollmentForPatientGlobe != null){
+        DateTime startDate = DateTime.parse(
+            carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
+                .elementAt(0)
+                .startAt
+                .toString());
+        if(startDate.isAfter(DateTime.now())){
+          dateFrom = dateQueryFormat.format(DateTime.now());
+        }else {
+          dateFrom = dateQueryFormat.format(startDate);
+        }
       }else{
-        dateTill = DateTime.now().add(Duration(days: 0));
+        dateFrom = dateQueryFormat.format(DateTime.now());
       }
 
       //}
       //_carePlanTaskResponse = await model.getTaskOfAHACarePlan(startCarePlanResponseGlob.data.carePlan.id.toString(), query);
       userTaskResponse = await model.getUserTasks(
-          query,
-          carePlanEnrollmentForPatientGlobe != null
-              ? dateQueryFormat.format(DateTime.parse(
-                  carePlanEnrollmentForPatientGlobe!.data!.patientEnrollments!
-                      .elementAt(0)
-                      .startAt
-                      .toString()))
-              : dateQueryFormat.format(DateTime.now()),
+          query, dateFrom,
           carePlanEnrollmentForPatientGlobe != null
               ? dateQueryFormat.format(dateTill)
               : dateQueryFormat.format(DateTime.now()));
@@ -165,7 +181,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -181,7 +197,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     progressDialog = ProgressDialog(context: context);
     //debugPrint("startCarePlanResponseGlob ==> ${startCarePlanResponseGlob}");
     triggerApiCall();
@@ -370,7 +386,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
   Widget listWidget() {
     return Scrollbar(
-      isAlwaysShown: true,
+      thumbVisibility: true,
       controller: _scrollController,
       child: ListView.separated(
           itemBuilder: (context, index) => _createToDos(context, index),
@@ -1208,7 +1224,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                           fontSize: 14,
                                           fontWeight: FontWeight.w200,
                                           color: textBlack)),
-                                  task.task == 'Survey'
+                                  task.task == 'Survey' || task.task == 'Patient Satisfaction Survey'
                                       ? IconButton(
                                           onPressed: () {
                                             showMaterialModalBottomSheet(
@@ -1222,12 +1238,13 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                                               25.0)),
                                                 ),
                                                 context: context,
-                                                builder: (context) => _info());
+                                                builder: (context) => _info(task.task.toString()));
                                           },
                                           icon: Icon(
                                             Icons.info_outline_rounded,
                                             color: primaryColor,
                                             size: 24,
+                                            semanticLabel: 'Survey information',
                                           ))
                                       : Container(),
                                 ],
@@ -1243,17 +1260,14 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                                         fontWeight: FontWeight.w300,
                                         color: textBlack)),
                               )
-                                  : Container()
-                              /*SizedBox(
-                                height: 4,
-                              ),
+                                  : Container(),
                               Text(task.description ?? '',
                                   maxLines: 4,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontWeight: FontWeight.w300,
-                                      color: Color(0XFF909CAC))),*/
+                                      color: Color(0XFF909CAC))),
                             ],
                           ),
                         ),
@@ -1852,6 +1866,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
     setTask(task);
     if (task != null) {
       switch (task.task) {
+        case 'Patient Satisfaction Survey':
         case 'Survey':
           _launchURL(task.action!.details!.link!.replaceAll(' ', '%20'))
               .then((value) {
@@ -2179,7 +2194,7 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
 
       if (_startTaskOfAHACarePlanResponse.status == 'success') {
         assrotedUICount = 0;
-        showToast('Task completed successfully!', context);
+        showSuccessToast('Task completed successfully!', context);
         debugPrint(
             'AHA Care Plan ==> ${_startTaskOfAHACarePlanResponse.toJson()}');
       } else {
@@ -2193,15 +2208,46 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
   }
 
   _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      showToast('Could not launch $url', context);
-      //throw 'Could not launch $url';
+    if(url.contains('.pdf')){
+      createFileOfPdfUrl(Uri.parse(url).toString(), 'careplan_pdf')
+          .then((f) {
+        progressDialog.close();
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => PDFScreen(f.path,'')));
+      });
+    }else {
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await tabs.launch(url);
+      } else {
+        showToast('Could not launch $url', context);
+        //throw 'Could not launch $url';
+      }
     }
   }
 
-  Widget _info() {
+  Future<File> createFileOfPdfUrl(String url, String? fileName) async {
+    //debugPrint('Base Url ==> ${url}');
+    //final url = "http://africau.edu/images/default/sample.pdf";
+    //final url = "https://www.lalpathlabs.com/SampleReports/Z614.pdf";
+    //final filename = url.substring(url.lastIndexOf("/") + 1);
+    final map = <String, String>{};
+    //map["enc"] = "multipart/form-data";
+    map['Authorization'] = 'Bearer ' + auth!;
+    progressDialog.show(max: 100, msg: 'Loading...');
+    final request = await HttpClient().getUrl(Uri.parse(url));
+    final response = await request.close();
+
+    debugPrint('Base Url ==> ${request.uri}');
+    debugPrint('Headers ==> ${request.headers.toString()}');
+
+    final bytes = await consolidateHttpClientResponseBytes(response);
+    final String dir = (await getApplicationDocumentsDirectory()).path;
+    final File file = File('$dir/$fileName');
+    await file.writeAsBytes(bytes);
+    return file;
+  }
+
+  Widget _info(String taskType) {
     return Card(
       semanticContainer: false,
       elevation: 0.0,
@@ -2239,7 +2285,8 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                 const SizedBox(
                   height: 24,
                 ),
-                RichText(
+                if(taskType == 'Survey')
+                  RichText(
                   text: TextSpan(
                     text:
                         'As a part of the American Heart Association’s focus on heart failure, we are asking patients to complete a 5- to 10-minute confidential survey. This will help us better understand how different resources can support patients in managing their heart failure. You will receive a \u002410 e-gift card to thank you for completing the survey. You can earn additional e-gift cards by participating in follow-up surveys. ',
@@ -2252,6 +2299,20 @@ class _CarePlanTasksViewState extends State<CarePlanTasksView>
                     children: <TextSpan>[],
                   ),
                 ),
+                if(taskType == 'Patient Satisfaction Survey')
+                  RichText(
+                    text: TextSpan(
+                      text:
+                      'As part of the American Heart Association’s (AHA) focus on cholesterol, we would like to know what you thought of the Heart & Stroke Helper. To provide an opportunity to hear from you, the AHA’s program study team invites you to complete this 5-10 minute survey. \n\nYou will receive a \u002410 Amazon gift card as a token of appreciation for completing the full survey.',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: textGrey,
+                      ),
+                      children: <TextSpan>[],
+                    ),
+                  ),
                 const SizedBox(
                   height: 24,
                 ),

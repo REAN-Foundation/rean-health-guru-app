@@ -176,10 +176,12 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                             child: InkWell(
                               onTap: () {
                                 toastDisplay = true;
+                                bool validationToastDisplay = true;
                                 if (_standController.text != null &&
                                     _standController.text.trim().isNotEmpty) {
                                   debugPrint(
                                       'Stand ==> ${_standController.text}');
+                                  validationToastDisplay = false;
                                   recordMyStand();
                                   recordMyStandTimeInMinutes(
                                       int.parse(_standController.text));
@@ -189,6 +191,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                                     _stepscontroller.text.trim().isNotEmpty) {
                                   debugPrint(
                                       'Steps ==> ${_stepscontroller.text}');
+                                  validationToastDisplay = false;
                                   recordMySteps();
                                   recordMyStepCount(
                                       int.parse(_stepscontroller.text));
@@ -200,8 +203,13 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                                         .isNotEmpty) {
                                   debugPrint(
                                       'Exercise ==> ${_exerciseController.text}');
+                                  validationToastDisplay = false;
                                   recordMyExcerciseTimeInMinutes(
                                       int.parse(_exerciseController.text));
+                                }
+
+                                if(validationToastDisplay){
+                                  showToast('Please enter valid input', context);
                                 }
                               },
                               child: ExcludeSemantics(
@@ -264,7 +272,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                   width: 8,
                 ),
                 Text(
-                  'Enter your stand minutes',
+                  'Enter number of minutes standing',
                   style: TextStyle(
                       color: textBlack,
                       fontWeight: FontWeight.w600,
@@ -306,7 +314,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
                         border: Border.all(color: textGrey, width: 1),
                         color: Colors.white),
                     child: Semantics(
-                      label: 'Stand measures in miutes',
+                      label: 'Stand measures in minutes',
                       child: TextFormField(
                           controller: _standController,
                           focusNode: _standFocus,
@@ -659,7 +667,7 @@ class _EnterAllMovementsViewState extends State<EnterAllMovementsView> {
       radioItem = '';
       _scrollController.animateTo(0.0,
           duration: Duration(seconds: 2), curve: Curves.ease);
-      showToast('Record Updated Successfully!', context);
+      showSuccessToast('Record Updated Successfully!', context);
       toastDisplay = false;
     }
     setState(() {

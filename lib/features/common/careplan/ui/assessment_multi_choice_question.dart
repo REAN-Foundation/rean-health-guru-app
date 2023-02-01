@@ -1,10 +1,12 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/models/start_assessment_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
 import 'package:patient/infra/themes/app_colors.dart';
+import 'package:patient/infra/utils/common_utils.dart';
 
 //ignore: must_be_immutable
 class AssessmentMultiChoiceQuestionView extends StatefulWidget {
@@ -52,7 +54,7 @@ class _AssessmentMultiChoiceQuestionViewState
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
               'Assessment',
               style: TextStyle(
@@ -153,7 +155,7 @@ class _AssessmentMultiChoiceQuestionViewState
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Scrollbar(
-                isAlwaysShown: true,
+                thumbVisibility: true,
                 child: ListView.builder(
                     itemCount: widget.assesment!.options!.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -195,7 +197,11 @@ class _AssessmentMultiChoiceQuestionViewState
                     }
                   }
 
-                  Navigator.pop(context, id);
+                  if(id.isNotEmpty) {
+                    Navigator.pop(context, id);
+                  }else{
+                    showToast('Please select valid option.', context);
+                  }
                 },
                 child: Container(
                     height: 40,

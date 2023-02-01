@@ -3,25 +3,31 @@
 
 class AssessmentScore {
   AssessmentScore({
-      String? status, 
-      Data? data,}){
+      String? status,
+    String? message,
+    Data? data,}){
     _status = status;
+    _message = message;
     _data = data;
 }
 
   AssessmentScore.fromJson(dynamic json) {
     _status = json['Status'];
+    _message = json['Message'];
     _data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
   }
   String? _status;
+  String? _message;
   Data? _data;
 
   String? get status => _status;
+  String? get message => _message;
   Data? get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['Status'] = _status;
+    map['Message'] = _message;
     if (_data != null) {
       map['Data'] = _data?.toJson();
     }
@@ -36,20 +42,25 @@ class AssessmentScore {
 class Data {
   Data({
       String? assessmentId, 
-      Score? score,}){
+      Score? score,
+      String? reportURL}){
     _assessmentId = assessmentId;
     _score = score;
+    _reportURL = reportURL;
 }
 
   Data.fromJson(dynamic json) {
     _assessmentId = json['AssessmentId'];
     _score = json['Score'] != null ? Score.fromJson(json['Score']) : null;
+    _reportURL = json['ReportUrl'];
   }
   String? _assessmentId;
   Score? _score;
+  String? _reportURL;
 
   String? get assessmentId => _assessmentId;
   Score? get score => _score;
+  String? get reportURL => _reportURL;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -57,6 +68,7 @@ class Data {
     if (_score != null) {
       map['Score'] = _score?.toJson();
     }
+    map['ReportUrl'] = _reportURL;
     return map;
   }
 

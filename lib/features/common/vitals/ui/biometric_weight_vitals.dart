@@ -99,6 +99,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         heightInInch = 0;
         heightInDouble = heightInFt.toString()+'.0';
       }
+      calculetBMI();
       debugPrint('Conversion Height => $heightInFt ft $heightInInch inch');
     }
   }
@@ -123,7 +124,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
             title: Text(
               'Weight',
               style: TextStyle(
@@ -230,6 +231,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
       setState(() {});
     }
 
+    Future.delayed(const Duration(seconds: 4), () => announceText('Your recent BMI is ${bmiValue.toStringAsFixed(2)} and your recent BMI status is $bmiResult'));
+
     /*new Timer(const Duration(milliseconds: 3000), () {
       setState(() {
       });
@@ -328,18 +331,21 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
 
                             if (getCurrentLocale() == 'US') {
                               showDialog(
+        barrierDismissible: false,
                                   context: context,
                                   builder: (_) {
                                     return _addHeightInFtnInchDialog(context);
                                   });
                             } else {
                               showDialog(
+        barrierDismissible: false,
                                   context: context,
                                   builder: (_) {
                                     return _addHeightInCmDialog(context);
                                   });
                             }
                             /*showDialog(
+        barrierDismissible: false,
                                 context: context,
                                 builder: (_) {
                                   return _addBMIDetailsDialog(context);
@@ -358,7 +364,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.w500,
                                 fontSize: bmiValue == 0.0 ? 14 : 28.0,
-                                color: Colors.lightBlueAccent),
+                                color: hyperLinkTextColor),
                           ),
                         ),
                       ),
@@ -545,8 +551,10 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                 onTap: () {
                   if (_weightController.text.toString().isEmpty) {
                     showToast('Please enter your weight', context);
-                  } else {
+                  } else if(isNumeric(_weightController.text)) {
                     addvitals();
+                  } else{
+                    showToast('Please enter valid input', context);
                   }
                 },
                 child: ExcludeSemantics(
@@ -643,7 +651,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                     ),
           Expanded(
             child: Scrollbar(
-              isAlwaysShown: true,
+              thumbVisibility: true,
               controller: _scrollController,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -1074,7 +1082,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         _weightController.clear();
         _sharedPrefUtils.saveDouble(
             'weight', double.parse(entertedWeight.toString()));
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);
@@ -1101,7 +1109,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);
@@ -1194,7 +1202,8 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           setState(() {
             showToast('Height record created successfully!', context);
           });
-        }).showDialog(context);
+        }).showDialog(
+        barrierDismissible: false,context);
   }
 
   showHeightPickerCms(BuildContext context) {
@@ -1298,7 +1307,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                     conversion();
                     debugPrint('Selected Height ==> $localHeight');
                     setState(() {
-                      showToast('Height record created successfully!', context);
+                      showSuccessToast('Height record created successfully!', context);
                     });
                     Navigator.of(context, rootNavigator: true).pop();
                   },
@@ -1375,7 +1384,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                     conversion();
                     debugPrint('Selected Height ==> $localHeight');
                     setState(() {
-                      showToast('Height record created successfully!', context);
+                      showSuccessToast('Height record created successfully!', context);
                     });
                     Navigator.of(context, rootNavigator: true).pop();
                   },

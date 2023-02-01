@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:package_info/package_info.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/ui/login_with_otp_view.dart';
@@ -11,6 +12,7 @@ import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
+import 'package:terra_flutter_bridge/terra_flutter_bridge.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -61,6 +63,7 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   void initState() {
     _initPackageInfo();
+    checkForUpdate();
     super.initState();
   }
 
@@ -121,51 +124,52 @@ class _AppDrawerState extends State<AppDrawer> {
   Widget _menuItems() {
     return Expanded(
         child: SingleChildScrollView(
-      child: Column(
-        children: [
-          InkWell(
-            onTap: () {
-              Navigator.popAndPushNamed(context, RoutePaths.Edit_Profile);
-            },
-            child: Container(
-              height: 48,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: 40,
+          child: Column(
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.popAndPushNamed(context, RoutePaths.Edit_Profile);
+                },
+                child: Container(
+                  height: 48,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        'Profile',
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w600),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Profile',
-                    style: TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.w600),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.popAndPushNamed(context, RoutePaths.My_Medical_Profile);
-            },
-            child: Container(
-              height: 48,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: 40,
+              InkWell(
+                onTap: () {
+                  Navigator.popAndPushNamed(
+                      context, RoutePaths.My_Medical_Profile);
+                },
+                child: Container(
+                  height: 48,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        'Medical Profile',
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w600),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Medical Profile',
-                    style: TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.w600),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
-          /*InkWell(
+              /*InkWell(
                 onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.My_Vitals);
                 },
@@ -186,7 +190,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),*/
-          /*InkWell(
+              /*InkWell(
                 onTap:(){
                   Navigator.popAndPushNamed(context, RoutePaths.My_Vitals_By_Device_Framework);
                 },
@@ -201,54 +205,55 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),*/
-          InkWell(
-            onTap: () {
-              Navigator.popAndPushNamed(context, RoutePaths.My_Medications, arguments: 0);
-            },
-            child: Container(
-              height: 48,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: 40,
+              InkWell(
+                onTap: () {
+                  Navigator.popAndPushNamed(
+                      context, RoutePaths.My_Medications, arguments: 0);
+                },
+                child: Container(
+                  height: 48,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        'Medications',
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w600),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Medications',
-                    style: TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          /*if (Platform.isIOS) ...[*/
-          Visibility(
-            visible: false,
-            child: InkWell(
-              onTap: () {
-                Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
-              },
-              child: Container(
-                height: 48,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 40,
-                    ),
-                    Text(
-                      'Activity',
-                      style: TextStyle(
-                          color: primaryColor, fontWeight: FontWeight.w600),
-                    ),
-                  ],
                 ),
               ),
-            ),
-          ),
-          //],
-          /*InkWell(
+              /*if (Platform.isIOS) ...[*/
+              Visibility(
+                visible: false,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.popAndPushNamed(context, RoutePaths.My_Activity);
+                  },
+                  child: Container(
+                    height: 48,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Text(
+                          'Activity',
+                          style: TextStyle(
+                              color: primaryColor, fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              //],
+              /*InkWell(
                 onTap: () {
                   Navigator.popAndPushNamed(context, RoutePaths.My_Nutrition,
                       arguments: '');
@@ -270,39 +275,40 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),*/
-          Visibility(
-            /*visible: getBaseUrl()!.contains('aha-api-uat') ||
+              Visibility(
+                visible: RemoteConfigValues.carePlanCode.isNotEmpty,
+                /*visible: getBaseUrl()!.contains('aha-api-uat') ||
                 getBaseUrl()!.contains('reancare-api-dev') ||
                 getAppName() == 'Heart & Stroke Helper™ ',*/
-            visible: true,
-            child: InkWell(
-              onTap: () {
-                if (carePlanEnrollmentForPatientGlobe == null) {
-                  Navigator.popAndPushNamed(
-                      context, RoutePaths.Select_Care_Plan);
-                } else {
-                  Navigator.popAndPushNamed(context, RoutePaths.My_Care_Plan);
-                }
-              },
-              child: Container(
-                height: 48,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 40,
+                child: InkWell(
+                  onTap: () {
+                    if (carePlanEnrollmentForPatientGlobe == null) {
+                      Navigator.popAndPushNamed(
+                          context, RoutePaths.Select_Care_Plan);
+                    } else {
+                      Navigator.popAndPushNamed(
+                          context, RoutePaths.My_Care_Plan);
+                    }
+                  },
+                  child: Container(
+                    height: 48,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Text(
+                          'Health Journey',
+                          style: TextStyle(
+                              color: primaryColor, fontWeight: FontWeight.w600),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'Health Journey',
-                      style: TextStyle(
-                          color: primaryColor, fontWeight: FontWeight.w600),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-          /*InkWell(
+              /*InkWell(
                 onTap: (){
                   //Navigator.popAndPushNamed(context, RoutePaths.Set_Goals_Care_Plan);
                   Navigator.popAndPushNamed(context, RoutePaths.Self_Reflection_For_Goals_Care_Plan);
@@ -318,7 +324,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),*/
-          /*InkWell(
+              /*InkWell(
                 onTap: (){
                   Navigator.popAndPushNamed(context, RoutePaths.Quiz_Care_Plan);
                 },
@@ -364,8 +370,9 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
 
-              /* InkWell(
-                onTap: (){
+              InkWell(
+                onTap: () {
+                  initTerraFunctionState();
                 },
                 child: Container(
                   height: 48,
@@ -373,86 +380,147 @@ class _AppDrawerState extends State<AppDrawer> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(width: 40,),
-                      Text("Helpdesk", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),),
+                      Text("Connect Health device", style: TextStyle(
+                          color: primaryColor, fontWeight: FontWeight.w600),),
                     ],
                   ),
                 ),
-              ),*/
-          Visibility(
-            visible: getAppName() != 'Heart & Stroke Helper™ ',
-            child: InkWell(
-              onTap: () {
-                Navigator.popAndPushNamed(context, RoutePaths.ABOUT_REAN_CARE);
-              },
-              child: Container(
-                height: 48,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 40,
+              ),
+              Visibility(
+                visible: getAppName() != 'Heart & Stroke Helper™ ',
+                child: InkWell(
+                  onTap: () {
+                    Navigator.popAndPushNamed(
+                        context, RoutePaths.ABOUT_REAN_CARE);
+                  },
+                  child: Container(
+                    height: 48,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Text(
+                          getAppType() == 'AHA' ? 'About Us' : 'About REAN',
+                          style: TextStyle(
+                              color: primaryColor, fontWeight: FontWeight.w600),
+                        ),
+                      ],
                     ),
-                    Text(
-                      getAppType() == 'AHA' ? 'About Us' : 'About REAN',
-                      style: TextStyle(
-                          color: primaryColor, fontWeight: FontWeight.w600),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.popAndPushNamed(context, RoutePaths.CONTACT_US);
-            },
-            child: Container(
-              height: 48,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: 40,
+              InkWell(
+                onTap: () {
+                  Navigator.popAndPushNamed(context, RoutePaths.CONTACT_US);
+                },
+                child: Container(
+                  height: 48,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Text(
+                        'Contact Us',
+                        style: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w600),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Contact Us',
-                    style: TextStyle(
-                        color: primaryColor, fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Visibility(
-            visible: getAppType() == 'AHA',
-            child: InkWell(
-              onTap: () {
-                Navigator.popAndPushNamed(context, RoutePaths.SUPPORT_NETWORK);
-              },
-              child: Container(
-                height: 48,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 40,
-                    ),
-                    Text(
-                      'Support Network',
-                      style: TextStyle(
-                          color: primaryColor, fontWeight: FontWeight.w600),
-                    ),
-                  ],
                 ),
               ),
-            ),
+              Visibility(
+                visible: getAppType() == 'AHA',
+                child: InkWell(
+                  onTap: () {
+                    Navigator.popAndPushNamed(
+                        context, RoutePaths.SUPPORT_NETWORK);
+                  },
+                  child: Container(
+                    height: 48,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 40,
+                        ),
+                        Text(
+                          'Support Network',
+                          style: TextStyle(
+                              color: primaryColor, fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 48,
+              ),
+            ],
           ),
-          SizedBox(
-            height: 48,
-          ),
-        ],
-      ),
-    ));
+        ));
+  }
+
+  Future<void> initTerraFunctionState() async {
+    bool initialised = false;
+    bool connected = false;
+    bool daily = false;
+    String testText;
+    Connection c = Connection.appleHealth;
+    // Function messages may fail, so we use a try/catch Exception.
+    // We also handle the message potentially returning null.
+    // USE YOUR OWN CATCH BLOCKS
+    // HAVING ALL FUNCTIONS IN THE SAME CATCH IS NOT A GOOD IDEA
+    try {
+      DateTime now = DateTime.now().toUtc();
+      DateTime lastMidnight = DateTime(now.year, now.month, now.day);
+      initialised = await TerraFlutter.initTerra("DEVID", "your_users_id") ??
+          false;
+      print(initialised);
+      connected = await TerraFlutter.initConnection(c, "TOKEN", false, []) ??
+          false;
+
+      testText = await TerraFlutter.getUserId(c) ?? "1234";
+      print(testText);
+      daily = await TerraFlutter.getDaily(
+          c, lastMidnight, now) ??
+          false;
+      daily = await TerraFlutter.getAthlete(c) ?? false;
+      daily = await TerraFlutter.getMenstruation(
+          c, DateTime(2022, 9, 25), DateTime(2022, 9, 30)) ??
+          false;
+      daily = await TerraFlutter.getNutrition(
+          c, DateTime(2022, 7, 25), DateTime(2022, 7, 26)) ??
+          false;
+      daily = await TerraFlutter.getSleep(
+          c, now.subtract(Duration(days: 1)), now) ??
+          false;
+      daily = await TerraFlutter.getActivity(
+          c, DateTime(2022, 7, 25), DateTime(2022, 7, 26)) ??
+          false;
+    } on Exception catch (e) {
+      print('error caught: $e');
+      testText = "Some exception went wrong";
+      initialised = false;
+      connected = false;
+      daily = false;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+
+
+    setState(() {
+      debugPrint(
+          'Daily Data :\nInitialised ==> $initialised \nConnected ==> $connected \nDaily$daily');
+    });
+    if (!mounted)
+      return;
   }
 
   Widget _footer() {
@@ -497,8 +565,8 @@ class _AppDrawerState extends State<AppDrawer> {
                       (_baseUrl!.contains('dev')
                           ? 'Dev_'
                           : _baseUrl!.contains('uat')
-                              ? 'Alpha_'
-                              : '') +
+                          ? 'Alpha_'
+                          : '') +
                       _packageInfo.version,
                   style: TextStyle(
                       fontSize: 12,
@@ -511,6 +579,30 @@ class _AppDrawerState extends State<AppDrawer> {
         ),
       ],
     );
+  }
+
+  AppUpdateInfo? _updateInfo;
+  bool _flexibleUpdateAvailable = false;
+
+  Future<void> checkForUpdate() async {
+    InAppUpdate.checkForUpdate().then((info) {
+      setState(() {
+        _updateInfo = info;
+      });
+    }).catchError((e) {
+      showToast(e.toString(), context);
+    });
+  }
+
+  immediateUpdate() {
+
+
+
+    if(_updateInfo?.updateAvailability == UpdateAvailability.updateAvailable) {
+      InAppUpdate.performImmediateUpdate().catchError((e){
+        showToast(e.toString(), context);
+      });
+    }
   }
 
   _logoutConfirmation() {

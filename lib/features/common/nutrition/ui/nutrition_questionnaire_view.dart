@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:patient/features/common/nutrition/models/alcohol_consumption.dart';
 import 'package:patient/features/common/nutrition/models/glass_of_water_consumption.dart';
@@ -30,7 +30,7 @@ class _NutritionQuestionnaireViewState
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   var dateFormat = DateFormat('yyyy-MM-dd');
   //final SharedPrefUtils _sharedPrefUtils = SharedPrefUtils();
-  Color buttonColor = Color(0XFFCFB4FF);
+  Color buttonColor = primaryLightColor;
   int vegetableServing = 0;
   int fruitServing = 0;
   int grainServing = 0;
@@ -102,7 +102,7 @@ class _NutritionQuestionnaireViewState
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
               'Nutrition',
               style: TextStyle(
@@ -171,7 +171,7 @@ class _NutritionQuestionnaireViewState
       children: [
         Expanded(
           child: Scrollbar(
-            isAlwaysShown: true,
+            thumbVisibility: true,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: SingleChildScrollView(
@@ -1974,7 +1974,7 @@ class _NutritionQuestionnaireViewState
   }
 
   void clearText() {
-    showToast('Food consumption record created successfully!', context);
+    showSuccessToast('Food consumption record created successfully!', context);
     vegetableServing = 0;
     fruitServing = 0;
     grainServing = 0;

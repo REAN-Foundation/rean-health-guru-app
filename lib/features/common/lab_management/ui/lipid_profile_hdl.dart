@@ -57,7 +57,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                   backgroundColor: Colors.white,
-                  brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                   title: Text(
                     'HDL',
                     style: TextStyle(
@@ -92,11 +92,11 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
                         const SizedBox(
                           height: 16,
                         ),
-                        _historyListFeilds(),
+                        if (records.isEmpty) Container() else graph(),
                         const SizedBox(
                           height: 16,
                         ),
-                        if (records.isEmpty) Container() else graph(),
+                        _historyListFeilds(),
                         //allGoal(),
                         const SizedBox(
                           height: 16,
@@ -111,11 +111,11 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    _historyListFeilds(),
+                    if (records.isEmpty) Container() else graph(),
                     const SizedBox(
                       height: 16,
                     ),
-                    if (records.isEmpty) Container() else graph(),
+                    _historyListFeilds(),
                   ],
                 ),
               ),
@@ -322,7 +322,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
           ),
           Expanded(
             child: Scrollbar(
-              isAlwaysShown: true,
+              thumbVisibility: true,
               controller: _scrollController,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -653,7 +653,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         _controller.clear();
         //Navigator.pop(context);
         getVitalsHistory();
@@ -698,7 +698,7 @@ class _LipidProfileHdlViewState extends State<LipidProfileHdlView> {
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);

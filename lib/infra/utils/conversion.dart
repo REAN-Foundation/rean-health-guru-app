@@ -44,6 +44,18 @@ class Conversion {
   static String durationFromSecToMinToString(int seconds) {
     final d = Duration(seconds: seconds);
     final List<String> parts = d.toString().split(':');
-    return '${parts[1].padLeft(2, '0')} min ${parts[2].padLeft(2, '0').replaceRange(2, parts[2].padLeft(2, '0').length, '')} sec';
+    if(parts[0] == '0') {
+      return '${parts[1].padLeft(2, '0')} min ${parts[2]
+          .padLeft(2, '0')
+          .replaceRange(2, parts[2]
+          .padLeft(2, '0')
+          .length, '')} sec';
+    }else{
+      return '${parts[0].padLeft(2, '0')} hrs ${parts[1].padLeft(2, '0')} min ${parts[2]
+          .padLeft(2, '0')
+          .replaceRange(2, parts[2]
+          .padLeft(2, '0')
+          .length, '')} sec';
+    }
   }
 }

@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/medication/models/get_my_medications_response.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -52,6 +53,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
   int completedMedicationCount = 0;
   int incompleteMedicationCount = 0;
 
+
 /*  Weight weight;
   BloodPressure bloodPressure;
   BloodSugar bloodSugar;
@@ -98,13 +100,13 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
     if (getCurrentLocale() == 'US') {
       unit = 'lbs';
     }
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -227,8 +229,8 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                 myActivity(),
                 myStress(),
                 //],
-                myBiometrics(),
-                howAreYoursymptoms(),
+                Visibility(visible: RemoteConfigValues.dashboardVitalsVisibility, child:myBiometrics()),
+                Visibility(visible: RemoteConfigValues.dashboardVitalsVisibility, child: howAreYoursymptoms()),
                 mylipidProfile(),
                 knowledgeTree(),
                 //myTasks(),
@@ -1201,7 +1203,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                     color: iconColor,
                   ),*/
                   Icon(
-                    FontAwesomeIcons.firstAid,
+                    FontAwesomeIcons.kitMedical,
                     color: Colors.white,
                     size: 24,
                   ),
@@ -1288,7 +1290,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(
-                              FontAwesomeIcons.ambulance,
+                              FontAwesomeIcons.truckMedical,
                               color: primaryColor,
                               size: 36,
                             ),
@@ -1496,34 +1498,34 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                         final String url =
                             'https://supportnetwork.heart.org/s/';
 
-                        if (await canLaunch(url)) {
-                          await launch(url);
-                        } else {
-                          throw 'Could not launch $url';
-                        }
-                      },
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Visit: ',
-                          style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                              fontSize: 16),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'https://supportnetwork.heart.org/s/',
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 16.0,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            )
-                          ],
+                  if (await canLaunchUrl(Uri.parse(url))) {
+                    await launchUrl(Uri.parse(url));
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Visit: ',
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 16),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'https://supportnetwork.heart.org/s/',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 16.0,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
                         ),
-                      ),
-                    )
+                      )
+                    ],
+                  ),
+                ),
+              )
                   : model.busy
                       ? Center(
                           child: SizedBox(
@@ -2465,7 +2467,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             Icons.add_circle,
                             size: 32,
                             color: iconColor,
-                            semanticLabel: 'Add physical health record',
+                            semanticLabel: 'Add physical activity',
                           ),
                           onPressed: () {
                             Navigator.pushNamed(
@@ -2781,6 +2783,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
                             Icons.add_circle,
                             size: 32,
                             color: iconColor,
+                            semanticLabel: 'Add mental well-being record'
                           ),
                           onPressed: () {
                             Navigator.pushNamed(context, RoutePaths.My_Activity_Mindfullness,
@@ -2989,6 +2992,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
       );
     }
     showDialog(
+        barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         contentPadding: const EdgeInsets.all(16.0),
@@ -3073,7 +3077,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
             'emergency',
             DashboardTile(DateTime.now(), 'emergency', emergencyBreif)
                 .toJson());
-        showToast('Emergency details saved successfully!', context);
+        showSuccessToast('Emergency details saved successfully!', context);
         loadSharedPrefs();
         setState(() {});
       } else {
@@ -3133,7 +3137,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
         debugPrint('Medication ==> ${baseResponse.toJson()}');
         if (baseResponse.status == 'success') {
           //progressDialog.close();
-          showToast(baseResponse.message!, context);
+          showSuccessToast(baseResponse.message!, context);
           getMyMedications();
         } else {
           showToast(baseResponse.message!, context);
@@ -3164,9 +3168,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
           await model.recordMyCaloriesConsumed(map);
       if (baseResponse.status == 'success') {
         if(ateHealthyFood) {
-          showToast('Yes, most of my food choices were healthy today.', context);
+          showSuccessToast('Yes, most of my food choices were healthy today.', context);
         }else{
-          showToast('No, most of my food choices were not healthy today.', context);
+          showSuccessToast('No, most of my food choices were not healthy today.', context);
         }
       } else {}
     } on FetchDataException catch (e) {
@@ -3193,7 +3197,7 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
         if(haveYouDoneWithPhysicalActivity) {
           //showToast('Yes, I had movement today.', context);
         }else{
-          showToast('Okay, try to add movement to your day it will help you to stay healthy.', context);
+          showSuccessToast('Okay, try to add movement to your day it will help you to stay healthy.', context);
         }
       } else {}
     } on FetchDataException catch (e) {
@@ -3224,9 +3228,9 @@ class _DashBoardVer2ViewState extends State<DashBoardVer2View>
         //progressDialog.close();
         //showToast(baseResponse.message, context);
         if (feeling == 1) {
-          showToast('Good to hear that', context);
+          showSuccessToast('Good to hear that', context);
         } else if (feeling == 0) {
-          showToast('Please follow your medications', context);
+          showSuccessToast('Please follow your medications', context);
         } else if (feeling == -1) {
           getSymptomAssesmentTemplete();
         }

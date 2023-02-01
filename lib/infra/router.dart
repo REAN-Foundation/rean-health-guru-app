@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/common/activity/ui/all_mental_well_being_view.dart';
 import 'package:patient/features/common/activity/ui/all_movements_view.dart';
@@ -233,6 +232,7 @@ class Routers {
         return MaterialPageRoute(builder: (_) => PatientMedicalProfileView());
       case RoutePaths.Patient_EDIT_MEDIACL_PROFILE:
         return MaterialPageRoute(
+            settings: RouteSettings(name: "mProfile"),
             builder: (_) => EditPatientMedicalProfileView(
                 settings.arguments as HealthProfile));
       case RoutePaths.My_Medications:

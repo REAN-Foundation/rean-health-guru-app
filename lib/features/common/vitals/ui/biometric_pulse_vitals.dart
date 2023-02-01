@@ -67,7 +67,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                   backgroundColor: Colors.white,
-                  brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                   title: Text(
                     'Pulse Rate',
                     style: TextStyle(
@@ -332,7 +332,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
                     ),
                     Expanded(
                       child: Scrollbar(
-                        isAlwaysShown: true,
+                        thumbVisibility: true,
                         controller: _scrollController,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -669,7 +669,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
 
       if (baseResponse.status == 'success') {
         progressDialog.close();
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         _controller.clear();
         //Navigator.pop(context);
         getVitalsHistory();
@@ -697,7 +697,7 @@ class _BiometricPulseVitalsViewState extends State<BiometricPulseVitalsView> {
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);

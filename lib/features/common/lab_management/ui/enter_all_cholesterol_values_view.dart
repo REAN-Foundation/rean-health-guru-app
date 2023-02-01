@@ -726,31 +726,53 @@ class _EnterAllCholesterolValuesViewState
 
   validate() {
     bool ifRecordsEnterted = false;
+    bool validationToastDisplay = true;
 
     if (_ldlController.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      validationToastDisplay = false;
       addvitals('LDL', _ldlController.text.toString(), 'mg/dl');
     }
     if (_hdlcontroller.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      validationToastDisplay = false;
       addvitals('HDL', _hdlcontroller.text.toString(), 'mg/dl');
     }
     if (_totalCholesterolController.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      validationToastDisplay = false;
       addvitals('Total Cholesterol', _totalCholesterolController.text.toString(), 'mg/dl');
     }
     if (_triglyceridesController.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      validationToastDisplay = false;
       addvitals('Triglyceride Level', _triglyceridesController.text.toString(), 'mg/dl');
     }
     if (_ratioController.text.isNotEmpty) {
       ifRecordsEnterted = true;
+      validationToastDisplay = false;
       addvitals('Cholesterol Ratio', _ratioController.text.toString(), '%');
     }
 
     if (_a1cLevelController.text.isNotEmpty) {
-      ifRecordsEnterted = true;
-      addvitals('A1C Level', _a1cLevelController.text.toString(), '%');
+      if(isNumeric(_a1cLevelController.text)) {
+        ifRecordsEnterted = true;
+        validationToastDisplay = false;
+        addvitals('A1C Level', _a1cLevelController.text.toString(), '%');
+      }else{
+        showToast('Please enter valid input', context);
+      }
+
+     /* if(isNumeric(_a1cLevelController.text){
+        ifRecordsEnterted = true;
+        addvitals('A1C Level', _a1cLevelController.text.toString(), '%');
+      }else{
+      showToast('Please enter valid input', context);
+      }*/
+    }
+
+    if(validationToastDisplay){
+      showToast('Please enter valid input', context);
     }
 
     if (ifRecordsEnterted) {
@@ -838,7 +860,7 @@ class _EnterAllCholesterolValuesViewState
     //if (toastDisplay) {
     _scrollController.animateTo(0.0,
         duration: Duration(seconds: 2), curve: Curves.ease);
-       showToast('Record Created Successfully!', context);
+    showSuccessToast('Record Created Successfully!', context);
       //toastDisplay = false;
     //}
 

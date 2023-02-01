@@ -3,13 +3,13 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:patient/features/common/appointment_booking/models/my_appointment_api_response.dart';
 import 'package:patient/features/common/appointment_booking/view_models/book_appointment_view_model.dart';
 import 'package:patient/features/misc/models/user_data.dart';
 import 'package:patient/features/misc/ui/pdf_viewer.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../../../misc/ui/base_widget.dart';
 
@@ -417,7 +417,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        PDFScreen(pathPDF)));
+                                                        PDFScreen(pathPDF, '')));
                                           },
                                           child: SizedBox(
                                               height: 32,
@@ -431,7 +431,7 @@ class _ViewMyAppoinmentState extends State<ViewMyAppointment> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        PDFScreen(pathPDF)));
+                                                        PDFScreen(pathPDF, '')));
                                           },
                                           child: SizedBox(
                                               height: 32,

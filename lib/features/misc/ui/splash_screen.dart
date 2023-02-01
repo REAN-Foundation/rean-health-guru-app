@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:devicelocale/devicelocale.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
 import 'package:get_it/get_it.dart';
 import 'package:package_info/package_info.dart';
+import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
@@ -49,6 +51,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  final remoteConfig = FirebaseRemoteConfig.instance;
   PackageInfo _packageInfo = PackageInfo(
     appName: '',
     packageName: '',
@@ -84,6 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    setupFirebaseConfig();
     GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
     GetIt.instance.registerSingleton<GetSleepData>(GetSleepData());
     GetIt.instance.registerSingleton<GetSleepDataInBed>(GetSleepDataInBed());
@@ -119,8 +124,31 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
+  setupFirebaseConfig() async {
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval: const Duration(seconds: 10),
+    ));
+
+    await remoteConfig.setDefaults(const {
+      "sample_string_value": "Hello, world!",
+    });
+
+    await remoteConfig.fetchAndActivate();
+
+    GetIt.instance.registerSingleton<FirebaseRemoteConfig>(remoteConfig);
+
+    debugPrint(
+        'Firebase Remote Config ==> ${remoteConfig.getString('sample_string_value')}');
+
+    RemoteConfigValues.getValues(remoteConfig);
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    debugPrint('Sponsor ==> ${getSponsor()}');
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: getAppType() == 'AHA' ? primaryLightColor : primaryColor,
@@ -195,7 +223,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   Expanded(
                     flex: 1,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color?>(
@@ -223,6 +252,25 @@ class _SplashScreenState extends State<SplashScreen> {
                                       ? primaryColor
                                       : Colors.white)),
                         ),
+                        SizedBox(height: 20,),
+                        if(getSponsor().isNotEmpty)...[
+                          Semantics(
+                            readOnly: true,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                  getSponsor().substring(1, getSponsor().length - 1),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w300,
+                                      color: getAppType() == 'AHA'
+                                          ? primaryColor
+                                          : Colors.white)),
+                            ),
+                          ),
+                        ],
+                        SizedBox(height: 8,),
                       ],
                     ),
                   ),

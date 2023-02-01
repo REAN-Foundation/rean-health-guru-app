@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/careplan/models/assesment_response.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/ui/base_widget.dart';
@@ -43,7 +44,7 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
               'Assessment',
               style: TextStyle(
@@ -142,13 +143,16 @@ class _ChallengeCarePlanViewState extends State<TextTaskView> {
       height: 100,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-          color: primaryLightColor,
+          color: colorF6F6FF,
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(12), topLeft: Radius.circular(12))),
       child: Center(
-        child: Text(
-          '\n' + widget.next!.title.toString(),
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),
+        child:Text(
+          widget.next!.title.toString(),
+          style: TextStyle(
+              color: primaryColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 16),
           textAlign: TextAlign.left,
         ),
       ),

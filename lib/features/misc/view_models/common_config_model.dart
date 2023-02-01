@@ -1,10 +1,12 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:patient/features/common/careplan/models/get_care_plan_enrollment_for_patient.dart';
 import 'package:patient/features/common/careplan/models/get_weekly_care_plan_status.dart';
 import 'package:patient/features/common/emergency/models/emergency_contact_response.dart';
+import 'package:patient/features/common/emergency/models/health_syetem_hospital_pojo.dart';
+import 'package:patient/features/common/emergency/models/health_system_pojo.dart';
 import 'package:patient/features/misc/models/base_response.dart';
 import 'package:patient/features/misc/models/get_all_record_response.dart';
 import 'package:patient/features/misc/models/get_sharable_public_link.dart';
@@ -26,7 +28,7 @@ class CommonConfigModel extends BaseModel {
     map['authorization'] = 'Bearer ' + auth!;
 
     final response = await apiProvider!.get(
-        '/care-plans/patients/' + patientUserId! + '/enrollments',
+        '/care-plans/patients/' + patientUserId! + '/enrollments?isAcvtive=true',
         header: map);
     setBusy(false);
     // Convert and return
@@ -122,6 +124,55 @@ class CommonConfigModel extends BaseModel {
     setBusy(false);
     // Convert and return
     return EmergencyContactResponse.fromJson(response);
+  }
+
+  Future<HealthSystemPojo> getHealthSystem() async {
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/patient-emergency-contacts/health-systems',
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return HealthSystemPojo.fromJson(response);
+  }
+
+  Future<HealthSyetemHospitalPojo> getHealthSystemHospital(String healthSystemId) async {
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/patient-emergency-contacts/health-systems/'+healthSystemId,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return HealthSyetemHospitalPojo.fromJson(response);
+  }
+
+  Future<BaseResponse> updateProfilePatient(
+      Map body) async {
+    // Get user profile for id
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response =
+    await apiProvider!.put('/patients/' + patientUserId!, body: body, header: map);
+
+    debugPrint(response.toString());
+
+    // Convert and return
+    return BaseResponse.fromJson(response);
   }
 
   Future<BaseResponse> addTeamMembers(Map body) async {

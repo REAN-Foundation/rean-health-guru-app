@@ -250,7 +250,7 @@ class _SignUpViewState extends State<SignUpView> {
               onTap: () {
                 DatePicker.showDatePicker(context,
                     showTitleActions: true,
-                    minTime: DateTime(1940, 1, 1),
+                    minTime: DateTime(1900, 1, 1),
                     maxTime: DateTime.now(),
                     onChanged: (date) {}, onConfirm: (date) {
                   debugPrint('confirm $date');

@@ -81,7 +81,7 @@ class _BiometricBloodPresureVitalsViewState
                 backgroundColor: Colors.white,
                 appBar: AppBar(
                   backgroundColor: Colors.white,
-                  brightness: Brightness.light,
+                  systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
                   title: Text(
                     'Blood Pressure',
                     style: TextStyle(
@@ -403,12 +403,16 @@ class _BiometricBloodPresureVitalsViewState
     }
   }*/
 
+  int bmiLeftSideValue = 0;
+  int bmiRightSideValue = 0;
+  String value = '';
+  Color valeTextColor = textBlack;
 
-  Widget bpScale(){
-    int bmiLeftSideValue = 0;
-    int bmiRightSideValue = 0;
-    String value = '';
-    Color valeTextColor = textBlack;
+  calculateBPRange(){
+     bmiLeftSideValue = 0;
+     bmiRightSideValue = 0;
+     value = '';
+     valeTextColor = textBlack;
     debugPrint('BP Systolic Value ==> $sytolicBloodPressure BP Diastolic Value ==> $diastolicBloodPressure');
     /*if (bmiValue != 0.0) {
       bmiLeftSideValue = int.parse(bmiValue.toStringAsFixed(0)) - 1;
@@ -567,9 +571,15 @@ class _BiometricBloodPresureVitalsViewState
         valeTextColor = Color(0XFF991112);
       }*/
     }
+    announceText('Your recent Blood Pressure is $value');
 
+    setState(() {
 
-      return Card(
+    });
+  }
+
+  Widget bpScale(){
+    return Card(
       semanticContainer: false,
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -746,7 +756,7 @@ class _BiometricBloodPresureVitalsViewState
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Scrollbar(
-                          isAlwaysShown: true,
+                          thumbVisibility: true,
                           controller: _scrollController,
                           child: ListView.separated(
                               itemBuilder: (context, index) =>
@@ -1340,7 +1350,7 @@ class _BiometricBloodPresureVitalsViewState
         if(progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         _systolicController.clear();
         _diastolicController.clear();
         //Navigator.pop(context);
@@ -1369,7 +1379,7 @@ class _BiometricBloodPresureVitalsViewState
         if (progressDialog.isOpen()) {
           progressDialog.close();
         }
-        showToast(baseResponse.message!, context);
+        showSuccessToast(baseResponse.message!, context);
         //Navigator.pop(context);
         getVitalsHistory();
         model.setBusy(true);
@@ -1397,9 +1407,7 @@ class _BiometricBloodPresureVitalsViewState
           debugPrint('BP Systolic Value ==> $sytolicBloodPressure BP Diastolic Value ==> $diastolicBloodPressure');
           sytolicBloodPressure = int.parse(records.elementAt(0).systolic.toString());
           diastolicBloodPressure = int.parse(records.elementAt(0).diastolic.toString());
-          setState(() {
-
-          });
+          calculateBPRange();
         }
 
       } else {

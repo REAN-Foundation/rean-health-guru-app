@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -93,8 +93,8 @@ class _InfoScreenState extends State<InfoOutlinedScreen> {
                   Expanded(
                     child: Linkify(
                       onOpen: (link) async {
-                        if (await canLaunch(link.url)) {
-                          await launch(link.url);
+                        if (await canLaunchUrl(Uri.parse(link.url))) {
+                          await launchUrl(Uri.parse(link.url));
                         } else {
                           throw 'Could not launch $link';
                         }
@@ -110,7 +110,7 @@ class _InfoScreenState extends State<InfoOutlinedScreen> {
                         fontSize: 14,
                         color: textGrey,
                       ),
-                      linkStyle: TextStyle(color: Colors.lightBlueAccent),
+                      linkStyle: TextStyle(color: hyperLinkTextColor),
                     ),
                   ),
                 ],

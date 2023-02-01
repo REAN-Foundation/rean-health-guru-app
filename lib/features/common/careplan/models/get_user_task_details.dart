@@ -297,6 +297,7 @@ class Action {
     String? providerActionId,
     String? title,
     String? description,
+    String? transcription,
     String? url,
     Details? details,
     String? scheduledAt,
@@ -322,6 +323,7 @@ class Action {
     _title = title;
     _details = details;
     _description = description;
+    _transcription = transcription;
     _url = url;
     _scheduledAt = scheduledAt;
     _startedAt = startedAt;
@@ -347,6 +349,7 @@ class Action {
     _providerActionId = json['ProviderActionId'];
     _title = json['Title'];
     _description = json['Description'];
+    _transcription = json["Transcription"];
     _details =
         json['Details'] != null ? Details.fromJson(json['Details']) : null;
     _url = json['Url'];
@@ -380,6 +383,7 @@ class Action {
   String? _providerActionId;
   String? _title;
   String? _description;
+  String? _transcription;
   String? _url;
   String? _scheduledAt;
   dynamic _startedAt;
@@ -416,6 +420,8 @@ class Action {
   String? get title => _title;
 
   String? get description => _description;
+
+  String? get transcription => _transcription;
 
   String? get url => _url;
 
@@ -454,6 +460,7 @@ class Action {
       map['Details'] = _details?.toJson();
     }
     map['Description'] = _description;
+    map['Transcription'] = _transcription;
     map['Url'] = _url;
     map['ScheduledAt'] = _scheduledAt;
     map['StartedAt'] = _startedAt;

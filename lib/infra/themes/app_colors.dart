@@ -5,7 +5,10 @@ const Color commentColor = Color.fromARGB(255, 255, 246, 196);
 
 Color primaryColor = Color(0XFF6541A5);
 Color primaryLightColor = Color(0XFFEBE0FF);
+Color primaryExtraLightColor = Color(0XFFDEDBFF);
 const Color textBlack = Color(0XFF303030);
+const Color secondaryTextBlack = Color(0XFF383739);
+const Color hyperLinkTextColor = Color(0XFF0867F7);
 const Color textGrey = Color(0XFF636466);
 const Color color909CAC = Color(0XFF909CAC);
 const Color colorF5F5F5 = Color(0XFFF5F5F5);

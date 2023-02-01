@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient/features/common/careplan/models/get_user_task_details.dart';
 import 'package:patient/features/common/careplan/view_models/patients_careplan.dart';
 import 'package:patient/features/misc/models/base_response.dart';
@@ -48,7 +49,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: primaryColor,
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
             title: Text(
               'Challenge',
               style: TextStyle(
@@ -243,7 +244,7 @@ class _ChallengeCarePlanViewState extends State<ChallengeCarePlanView> {
           .finishUserTask(task!.action!.userTaskId.toString(), bodyMap: map);
 
       if (response.status == 'success') {
-        showToast('Task completed successfully!', context);
+        showSuccessToast('Task completed successfully!', context);
         model.setBusy(false);
         setState(() {});
         assrotedUICount = 0;

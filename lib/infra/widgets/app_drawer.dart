@@ -582,7 +582,7 @@ class _AppDrawerState extends State<AppDrawer> {
   }
 
   AppUpdateInfo? _updateInfo;
-  //bool _flexibleUpdateAvailable = false;
+  bool _flexibleUpdateAvailable = false;
 
   Future<void> checkForUpdate() async {
     InAppUpdate.checkForUpdate().then((info) {

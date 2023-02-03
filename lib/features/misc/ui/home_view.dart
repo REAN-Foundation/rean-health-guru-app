@@ -196,7 +196,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
               .data!.patientEnrollments!
               .elementAt(0).planCode == 'Cholesterol'){
             debugPrint('CarePlan ==> Cholesterol');
-            _sharedPrefUtils.save('Sponsor', 'Novartis is a proud supporter of the American Heart Association’s');
+            _sharedPrefUtils.save('Sponsor', 'Novartis is a proud supporter of the American Heart Association’s Integrated ASCVD Management Initiative.');
           }
 
         }

@@ -259,7 +259,7 @@ class _SplashScreenState extends State<SplashScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Text(
-                                  getSponsor(),
+                                  getSponsor().substring(1, getSponsor().length - 1),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 16,

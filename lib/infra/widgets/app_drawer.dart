@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as tabs;
 import 'package:get_it/get_it.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:package_info/package_info.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
@@ -10,7 +12,10 @@ import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
+import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
+import 'package:terra_flutter_bridge/terra_flutter_bridge.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -60,6 +65,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   void initState() {
+    checkForUpdate();
     _initPackageInfo();
     super.initState();
   }
@@ -364,20 +370,23 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),*/
 
-              /* InkWell(
-                onTap: (){
-                },
-                child: Container(
-                  height: 48,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(width: 40,),
-                      Text("Helpdesk", style: TextStyle(color: primaryColor, fontWeight: FontWeight.w600),),
-                    ],
-                  ),
-                ),
-              ),*/
+          InkWell(
+            onTap: () {
+              initTerraWebView('https://widget.tryterra.co/session/568147e7-b134-46a4-8c70-d2de06db5d77');
+              //initTerraFunctionState();
+            },
+            child: Container(
+              height: 48,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(width: 40,),
+                  Text("Connect Health device", style: TextStyle(
+                      color: primaryColor, fontWeight: FontWeight.w600),),
+                ],
+              ),
+            ),
+          ),
           Visibility(
             visible: getAppName() != 'Heart & Stroke Helper™ ',
             child: InkWell(
@@ -454,6 +463,121 @@ class _AppDrawerState extends State<AppDrawer> {
       ),
     ));
   }
+
+
+  initTerraWebView(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+    await tabs.launch(url,
+      customTabsOption: tabs.CustomTabsOption(
+        toolbarColor: primaryColor,
+        enableDefaultShare: true,
+        enableUrlBarHiding: true,
+        showPageTitle: true,
+        animation: tabs.CustomTabsSystemAnimation.slideIn(),
+        extraCustomTabs: const <String>[
+          // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
+          'org.mozilla.firefox',
+          // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
+          'com.microsoft.emmx',
+        ],
+      ),
+      safariVCOption: tabs.SafariViewControllerOption(
+        preferredBarTintColor: primaryColor,
+        preferredControlTintColor: Colors.white,
+        barCollapsingEnabled: false,
+        entersReaderIfAvailable: false,
+        dismissButtonStyle: tabs.SafariViewControllerDismissButtonStyle.close,
+      ),
+    );
+    } else {
+    showToast('Could not launch $url', context);
+    //throw 'Could not launch $url';
+    }
+  }
+
+  Future<void> initTerraFunctionState() async {
+    bool initialised = false;
+    bool connected = false;
+    bool daily = false;
+    String testText;
+    Connection c = Connection.appleHealth;
+    // Function messages may fail, so we use a try/catch Exception.
+    // We also handle the message potentially returning null.
+    // USE YOUR OWN CATCH BLOCKS
+    // HAVING ALL FUNCTIONS IN THE SAME CATCH IS NOT A GOOD IDEA
+    try {
+      DateTime now = DateTime.now().toUtc();
+      DateTime lastMidnight = DateTime(now.year, now.month, now.day);
+      initialised = await TerraFlutter.initTerra('rean-healthguru-dev-8sCumnMOFl', patientUserId!) ??
+          false;
+      print('Intialised ==> ${initialised}');
+      connected = await TerraFlutter.initConnection(c, '2849e1b68e0b9843cbd53e5bc1cf1c599310f14f04a565cd956fb5c77acad7cd', false, []) ??
+          false;
+
+      testText = await TerraFlutter.getUserId(c) ?? "";
+      print('TerraUserId ==> ${testText}');
+      daily = await TerraFlutter.getDaily(
+          c, lastMidnight, now) ??
+          false;
+      /*daily = await TerraFlutter.getAthlete(c) ?? false;
+      daily = await TerraFlutter.getMenstruation(
+          c, DateTime(2022, 9, 25), DateTime(2022, 9, 30)) ??
+          false;
+      daily = await TerraFlutter.getNutrition(
+          c, DateTime(2022, 7, 25), DateTime(2022, 7, 26)) ??
+          false;
+      daily = await TerraFlutter.getSleep(
+          c, now.subtract(Duration(days: 1)), now) ??
+          false;
+      daily = await TerraFlutter.getActivity(
+          c, DateTime(2022, 7, 25), DateTime(2022, 7, 26)) ??
+          false;*/
+    } on Exception catch (e) {
+      print('error caught: $e');
+      testText = "Some exception went wrong";
+      initialised = false;
+      connected = false;
+      daily = false;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+
+
+    setState(() {
+      debugPrint(
+          'Daily Data :\nInitialised ==> $initialised \nConnected ==> $connected \nDaily ==> $daily');
+    });
+    if (!mounted)
+      return;
+  }
+
+  AppUpdateInfo? _updateInfo;
+  bool _flexibleUpdateAvailable = false;
+
+  Future<void> checkForUpdate() async {
+    InAppUpdate.checkForUpdate().then((info) {
+      setState(() {
+        _updateInfo = info;
+      });
+    }).catchError((e) {
+      showToast(e.toString(), context);
+    });
+  }
+
+  immediateUpdate() {
+
+
+
+    if(_updateInfo?.updateAvailability == UpdateAvailability.updateAvailable) {
+      InAppUpdate.performImmediateUpdate().catchError((e){
+        showToast(e.toString(), context);
+      });
+    }
+  }
+
+
 
   Widget _footer() {
     return Column(

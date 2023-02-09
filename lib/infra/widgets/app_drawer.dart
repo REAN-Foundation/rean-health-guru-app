@@ -381,7 +381,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(width: 40,),
-                  Text("Connect Health device", style: TextStyle(
+                  Text("Connect Health Device", style: TextStyle(
                       color: primaryColor, fontWeight: FontWeight.w600),),
                 ],
               ),
@@ -510,12 +510,12 @@ class _AppDrawerState extends State<AppDrawer> {
       DateTime lastMidnight = DateTime(now.year, now.month, now.day);
       initialised = await TerraFlutter.initTerra('rean-healthguru-dev-8sCumnMOFl', patientUserId!) ??
           false;
-      print('Intialised ==> ${initialised}');
+      print('Intialised ==> $initialised');
       connected = await TerraFlutter.initConnection(c, '2849e1b68e0b9843cbd53e5bc1cf1c599310f14f04a565cd956fb5c77acad7cd', false, []) ??
           false;
 
       testText = await TerraFlutter.getUserId(c) ?? "";
-      print('TerraUserId ==> ${testText}');
+      print('TerraUserId ==> $testText');
       daily = await TerraFlutter.getDaily(
           c, lastMidnight, now) ??
           false;
@@ -554,7 +554,7 @@ class _AppDrawerState extends State<AppDrawer> {
   }
 
   AppUpdateInfo? _updateInfo;
-  bool _flexibleUpdateAvailable = false;
+  //bool _flexibleUpdateAvailable = false;
 
   Future<void> checkForUpdate() async {
     InAppUpdate.checkForUpdate().then((info) {

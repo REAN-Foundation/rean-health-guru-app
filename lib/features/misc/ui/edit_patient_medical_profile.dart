@@ -1520,7 +1520,7 @@ class _EditPatientMedicalProfileViewState
       data['BloodGroup'] = _bloodgroupValue;
       data['MajorAilment'] = _majorAilmentController.text;
       data['IsDiabetic'] = isDiabetic == '' ? null : isDiabetic == 'Yes' ? true : false;
-      data['IsSmoker'] = isSmoker == '' ? null : isSmoker == 'Yes' ? true : false;
+      data['TobaccoQuestionAns'] = isSmoker == '' ? null : isSmoker == 'Yes' ? true : false;
       data['HasHeartAilment'] = hasHeartAilment == '' ? null : hasHeartAilment == 'Yes' ? true : false;
       /*data['Ethnicity'] = _ethnicityValue;
       data['Race'] = _raceValue;*/

@@ -65,7 +65,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   void initState() {
-    checkForUpdate();
+    //checkForUpdate();
     _initPackageInfo();
     super.initState();
   }
@@ -372,7 +372,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
           InkWell(
             onTap: () {
-              initTerraWebView('https://widget.tryterra.co/session/568147e7-b134-46a4-8c70-d2de06db5d77');
+              initTerraWebView('https://widget.tryterra.co/session/d449cfdb-c100-48c0-907c-46e03f6de4cc');
               //initTerraFunctionState();
             },
             child: Container(

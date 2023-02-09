@@ -1127,7 +1127,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
                               onTap: () {
                                 Navigator.pushNamed(context, RoutePaths.My_Nutrition,
                                     arguments: '');
-                                //recordMyCaloriesConsumed(false);
+                                recordMyCaloriesConsumed(false);
                               },
                               child: ExcludeSemantics(
                                 child: Column(
@@ -3179,7 +3179,7 @@ class _DashBoardVer3ViewState extends State<DashBoardVer3View>
         if(ateHealthyFood) {
           showSuccessToast('Yes, most of my food choices were healthy today.', context);
         }else{
-          showSuccessToast('No, most of my food choices were not healthy today.', context);
+          //showSuccessToast('No, most of my food choices were not healthy today.', context);
         }
       } else {}
     } on FetchDataException catch (e) {

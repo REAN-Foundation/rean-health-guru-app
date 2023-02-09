@@ -1,3 +1,5 @@
+
+
 class PatientApiDetails {
   String? status;
   String? message;
@@ -199,7 +201,9 @@ class Person {
     if (json['Addresses'] != null) {
       addresses = <Addresses>[];
         json['Addresses'].forEach((v) {
-          addresses!.add(Addresses.fromJson(v));
+          if(v != null) {
+            addresses?.add(Addresses.fromJson(v));
+          }
         });
     }
   }

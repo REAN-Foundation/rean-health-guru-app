@@ -308,6 +308,7 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                                             selectCarePlanDropDown(),
                                             startCarePlanDate(),
                                             SizedBox(height: 8,),
+                                            if(RemoteConfigValues.hospitalSystemVisibility)
                                             healthSystem(),
                                             //checkElegibility(),
                                             /* if (selectedCarePlan == '')
@@ -412,6 +413,12 @@ class _SelectCarePlanViewState extends State<SelectCarePlanView> {
                   ]*/
                 ,
                 onChanged: (value) {
+                  if(value == 'Heart Failure Motivator'){
+                    RemoteConfigValues.hospitalSystemVisibility = false;
+                  }else{
+                    RemoteConfigValues.hospitalSystemVisibility = true;
+                  }
+
                   setState(() {
                     selectedCarePlan = value;
                     getCarePlanDetails();

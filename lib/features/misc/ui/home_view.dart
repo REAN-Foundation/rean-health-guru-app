@@ -34,6 +34,7 @@ import 'package:patient/infra/widgets/app_drawer.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../common/careplan/ui/careplan_task.dart';
+import '../../common/vitals/models/get_my_vitals_history.dart';
 import 'base_widget.dart';
 import 'dashboard_ver_2.dart';
 
@@ -161,11 +162,30 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       Timer(Duration(seconds: 2), () {
         getPatientDetails();
         getCarePlan();
+        getVitalsHistory();
       });
       Future.delayed(
         Duration(seconds: 4),
         () => GetAllConfigrations(),
       );
+    }
+  }
+
+  getVitalsHistory() async {
+    try {
+      final GetMyVitalsHistory getMyVitalsHistory =
+      await model.getMyVitalsHistory('body-heights');
+      if (getMyVitalsHistory.status == 'success') {
+        if (getMyVitalsHistory.data!.bodyHeightRecords!.items!.isNotEmpty) {
+          _sharedPrefUtils.saveDouble('height', double.parse(getMyVitalsHistory.data!.bodyHeightRecords!.items!.elementAt(0).bodyHeight.toString()));
+        }
+      } else {
+        //showToast(getMyVitalsHistory.message!, context);
+      }
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
     }
   }
 

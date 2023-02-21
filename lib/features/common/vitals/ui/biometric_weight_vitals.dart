@@ -1303,6 +1303,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                         heightInFeet,
                         heightInInches);
                     _sharedPrefUtils.saveDouble('height', double.parse(localHeight));
+                    addHeight(localHeight.toString());
                     height = int.parse(localHeight);
                     conversion();
                     debugPrint('Selected Height ==> $localHeight');
@@ -1381,6 +1382,7 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
                     double.parse(heightInCm.toString());
                     _sharedPrefUtils.saveDouble('height', localHeight);
                     height = localHeight.toInt();
+                    addHeight(localHeight.toString());
                     conversion();
                     debugPrint('Selected Height ==> $localHeight');
                     setState(() {
@@ -1395,4 +1397,27 @@ class _BiometricWeightVitalsViewState extends State<BiometricWeightVitalsView> {
           ),
         ));
   }
+
+  addHeight(String height) async {
+    try {
+
+      final map = <String, dynamic>{};
+      map['BodyHeight'] = height.toString();
+      map['PatientUserId'] = "";
+      map['Unit'] = "Cm";
+
+      final BaseResponse baseResponse =
+      await model.addMyVitals('body-heights', map);
+
+      if (baseResponse.status == 'success') {
+
+      } else {
+        showToast(baseResponse.message!, context);
+      }
+    } catch (e) {
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
 }

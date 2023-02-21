@@ -14,6 +14,7 @@ import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 
 import '../../../infra/view_models/base_model.dart';
+import '../../common/vitals/models/get_my_vitals_history.dart';
 
 class CommonConfigModel extends BaseModel {
   //ApiProvider apiProvider = new ApiProvider();
@@ -231,5 +232,25 @@ class CommonConfigModel extends BaseModel {
     setBusy(false);
     // Convert and return
     return BaseResponse.fromJson(response);
+  }
+
+  Future<GetMyVitalsHistory> getMyVitalsHistory(String path) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/clinical/biometrics/' +
+            path +
+            '/search?patientUserId=' +
+            patientUserId!,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return GetMyVitalsHistory.fromJson(response);
   }
 }

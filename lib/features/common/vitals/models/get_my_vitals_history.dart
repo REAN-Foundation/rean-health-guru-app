@@ -31,6 +31,7 @@ class Data {
   Records? pulseRecords;
   Records? bodyTemperatureRecords;
   Records? bodyWeightRecords;
+  Records? bodyHeightRecords;
   Records? bloodOxygenSaturationRecords;
 
   Data(
@@ -39,6 +40,7 @@ class Data {
       this.pulseRecords,
       this.bodyTemperatureRecords,
       this.bodyWeightRecords,
+      this.bodyHeightRecords,
       this.bloodOxygenSaturationRecords});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -56,6 +58,9 @@ class Data {
         : null;
     bodyWeightRecords = json['BodyWeightRecords'] != null
         ? Records.fromJson(json['BodyWeightRecords'])
+        : null;
+    bodyHeightRecords = json['BodyHeightRecords'] != null
+        ? Records.fromJson(json['BodyHeightRecords'])
         : null;
     bloodOxygenSaturationRecords = json['BloodOxygenSaturationRecords'] != null
         ? Records.fromJson(json['BloodOxygenSaturationRecords'])
@@ -78,6 +83,9 @@ class Data {
     }
     if (bodyWeightRecords != null) {
       data['BodyWeightRecords'] = bodyWeightRecords!.toJson();
+    }
+    if (bodyHeightRecords != null) {
+      data['BodyHeightRecords'] = bodyHeightRecords!.toJson();
     }
     if (bloodOxygenSaturationRecords != null) {
       data['BloodOxygenSaturationRecords'] =
@@ -145,6 +153,7 @@ class Items {
   dynamic pulse;
   dynamic bodyTemperature;
   dynamic bodyWeight;
+  dynamic bodyHeight;
   dynamic bloodOxygenSaturation;
   String? unit;
   String? recordDate;
@@ -160,6 +169,7 @@ class Items {
       this.pulse,
       this.bodyTemperature,
       this.bodyWeight,
+      this.bodyHeight,
       this.bloodOxygenSaturation,
       this.unit,
       this.recordDate,
@@ -175,6 +185,7 @@ class Items {
     pulse = json['Pulse'];
     bodyTemperature = json['BodyTemperature'];
     bodyWeight = json['BodyWeight'];
+    bodyHeight = json['BodyHeight'];
     bloodOxygenSaturation = json['BloodOxygenSaturation'];
     unit = json['Unit'];
     recordDate = json['RecordDate'];
@@ -192,6 +203,7 @@ class Items {
     data['Pulse'] = pulse;
     data['BodyTemperature'] = bodyTemperature;
     data['BodyWeight'] = bodyWeight;
+    data['BodyHeight'] = bodyHeight;
     data['BloodOxygenSaturation'] = bloodOxygenSaturation;
     data['Unit'] = unit;
     data['RecordDate'] = recordDate;

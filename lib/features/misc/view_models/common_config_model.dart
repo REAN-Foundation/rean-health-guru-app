@@ -14,6 +14,7 @@ import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 
 import '../../../infra/view_models/base_model.dart';
+import '../../common/activity/models/GetRecords.dart';
 import '../../common/vitals/models/get_my_vitals_history.dart';
 
 class CommonConfigModel extends BaseModel {
@@ -252,5 +253,41 @@ class CommonConfigModel extends BaseModel {
     setBusy(false);
     // Convert and return
     return GetMyVitalsHistory.fromJson(response);
+  }
+
+  Future<GetRecords> getMySleepHistory(String createFromDate) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/wellness/daily-records/sleep/search?patientUserId=' +
+            patientUserId!+'&createdDateFrom='+createFromDate,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return GetRecords.fromJson(response);
+  }
+
+  Future<GetRecords> getMyStepHistory(String createFromDate) async {
+    // Get user profile for id
+    setBusy(true);
+
+    final map = <String, String>{};
+    map['Content-Type'] = 'application/json';
+    map['authorization'] = 'Bearer ' + auth!;
+
+    final response = await apiProvider!.get(
+        '/wellness/daily-records/step-counts/search?patientUserId=' +
+            patientUserId!+'&createdDateFrom='+createFromDate,
+        header: map);
+
+    setBusy(false);
+    // Convert and return
+    return GetRecords.fromJson(response);
   }
 }

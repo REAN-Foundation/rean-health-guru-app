@@ -469,6 +469,8 @@ class _OTPScreenViewState extends State<OTPScreenView> {
           userDiviceData(
               model, userData.data!.accessToken!, userData.data!.user!.id);
         } else {
+          userDiviceData(
+              model, userData.data!.accessToken!, userData.data!.user!.id);
           Navigator.pushAndRemoveUntil(context,
               MaterialPageRoute(builder: (context) {
             return CreateProfile();

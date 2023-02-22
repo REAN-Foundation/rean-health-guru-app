@@ -438,7 +438,7 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
     } else {
       //https://pub.dev/packages/time_range_picker
     }
-
+    recordMySleepTimeInHrs();
     return Container(
       height: 240,
       decoration: BoxDecoration(
@@ -697,6 +697,25 @@ class _ViewMyAllDailyStressState extends State<ViewMyAllDailyStress> {
       final BaseResponse baseResponse = await model.recordMySteps(map);
       if (baseResponse.status == 'success') {
       } else {}
+    } catch (e) {
+      model.setBusy(false);
+      showToast(e.toString(), context);
+      debugPrint('Error ==> ' + e.toString());
+    }
+  }
+
+  recordMySleepTimeInHrs() async {
+    try {
+      if(_sleepHrs != 0 ) {
+        final map = <String, dynamic>{};
+        map['PatientUserId'] = patientUserId;
+        map['SleepDuration'] = _sleepHrs;
+        map['Unit'] = 'Hrs';
+        map['RecordDate'] = dateFormat.format(DateTime.now());
+
+        final BaseResponse baseResponse = await model.recordMySleep(map);
+        if (baseResponse.status == 'success') {} else {}
+      }
     } catch (e) {
       model.setBusy(false);
       showToast(e.toString(), context);

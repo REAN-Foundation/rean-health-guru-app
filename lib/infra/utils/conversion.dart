@@ -36,8 +36,10 @@ class Conversion {
   }
 
   static String durationFromMinToHrsToString(int minutes) {
+    debugPrint('Convaersin ==>  $minutes');
     final d = Duration(minutes: minutes);
     final List<String> parts = d.toString().split(':');
+    debugPrint('Convaersin ==>  ${parts[0].padLeft(2, '0')} hr ${parts[1].padLeft(2, '0')} min');
     return '${parts[0].padLeft(2, '0')} hr ${parts[1].padLeft(2, '0')} min';
   }
 

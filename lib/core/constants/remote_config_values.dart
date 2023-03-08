@@ -28,7 +28,7 @@ class RemoteConfigValues{
     var carePlanCodeJsonArray =  remoteConfig.getValue('careplan_code');
     carePlanCode = List<String>.from(jsonDecode(carePlanCodeJsonArray.asString()));
     debugPrint('############################################################################################');
-    debugPrint('$carePlanCode');
+    debugPrint('$hospitalSystemVisibility');
     debugPrint('############################################################################################');
   }
 

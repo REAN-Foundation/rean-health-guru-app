@@ -168,6 +168,7 @@ class _EmergencyContactViewState extends State<EmergencyContactView> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('##########################${RemoteConfigValues.hospitalSystemVisibility}');
     return BaseWidget<CommonConfigModel?>(
       model: model,
       builder: (context, model, child) => Container(

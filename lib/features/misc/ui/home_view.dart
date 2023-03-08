@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:devicelocale/devicelocale.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -128,6 +129,12 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
       //if(!isCoachMarkDisplayed) {
 
       //}
+
+      await FirebaseAnalytics.instance.setUserId(id: patientUserId);
+      await FirebaseAnalytics.instance.setUserProperty(name: 'name', value: name);
+      await FirebaseAnalytics.instance.setUserProperty(name: 'app_name', value: getAppName());
+      await FirebaseAnalytics.instance.setUserProperty(name: 'user_gender', value: patientGender);
+
 
     } on FetchDataException catch (e) {
       debugPrint('error caught: $e');

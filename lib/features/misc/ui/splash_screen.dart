@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:devicelocale/devicelocale.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sim_country_code/flutter_sim_country_code.dart';
@@ -88,6 +89,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    FirebaseAnalytics.instance.logAppOpen();
     setupFirebaseConfig();
     GetIt.instance.registerSingleton<GetHealthData>(GetHealthData());
     GetIt.instance.registerSingleton<GetSleepData>(GetSleepData());

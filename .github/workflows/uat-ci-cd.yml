@@ -24,6 +24,13 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0 # fetch all history so multiple commits can be scanned
+          
+      - name: Checking labels of PR
+        uses: docker://agilepathway/pull-request-label-checker:latest
+        with:
+          one_of: major,minor,patch
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: GitGuardian Scan
         uses: GitGuardian/gg-shield-action@master
         env:

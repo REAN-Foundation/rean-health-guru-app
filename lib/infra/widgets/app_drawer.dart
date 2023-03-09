@@ -1,21 +1,31 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as tabs;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
 import 'package:in_app_update/in_app_update.dart';
 import 'package:package_info/package_info.dart';
 import 'package:patient/core/constants/remote_config_values.dart';
 import 'package:patient/core/constants/route_paths.dart';
 import 'package:patient/features/misc/models/patient_api_details.dart';
 import 'package:patient/features/misc/ui/login_with_otp_view.dart';
+import 'package:patient/features/misc/view_models/TerraSessionId.dart';
 import 'package:patient/infra/networking/api_provider.dart';
 import 'package:patient/infra/themes/app_colors.dart';
 import 'package:patient/infra/utils/common_utils.dart';
 import 'package:patient/infra/utils/shared_prefUtils.dart';
 import 'package:patient/infra/utils/string_utility.dart';
 import 'package:patient/infra/widgets/confirmation_bottom_sheet.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:terra_flutter_bridge/terra_flutter_bridge.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../networking/custom_exception.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -36,6 +46,7 @@ class _AppDrawerState extends State<AppDrawer> {
   ApiProvider? apiProvider = GetIt.instance<ApiProvider>();
   String? _baseUrl = '';
   String imageResourceId = '';
+  ProgressDialog? progressDialog;
 
   loadSharedPrefs() async {
     try {
@@ -372,7 +383,9 @@ class _AppDrawerState extends State<AppDrawer> {
 
           InkWell(
             onTap: () {
-              initTerraWebView('https://widget.tryterra.co/session/d449cfdb-c100-48c0-907c-46e03f6de4cc');
+              //progressDialog!.show(max: 100, msg: 'Loading...');
+              generateSeesionId();
+              //initTerraWebView('https://widget.tryterra.co/session/ca5757dc-8297-4d8c-b1d8-c246239ac705');
               //initTerraFunctionState();
             },
             child: Container(
@@ -464,8 +477,54 @@ class _AppDrawerState extends State<AppDrawer> {
     ));
   }
 
+  Future<dynamic> generateSeesionId() async {
+    Map<String, String>? headers = <String, String>{};
+    headers['x-api-key'] = dotenv.env['TERRA_API_KEY'].toString();
+    headers['Dev-Id'] = dotenv.env['TERRA_DEVELOPER_ID'].toString();
+    headers['Content-Type'] = 'application/json';
+    headers['accept'] = 'application/json';
+
+    Map<String, String>? body = <String, String>{};
+    body['reference_id'] = patientUserId.toString();
+    body['providers'] = 'GARMIN,WITHINGS,FITBIT,OURA,WAHOO,PELOTON,ZWIFT,TRAININGPEAKS,FREESTYLELIBRE,DEXCOM,COROS,HUAWEI,OMRON,RENPHO,POLAR,SUUNTO,EIGHT,CONCEPT2,WHOOP,IFIT,TEMPO,CRONOMETER,FATSECRET,NUTRACHECK,UNDERARMOUR';
+    body['language'] = 'en';
+
+    debugPrint('Base Url ==> POST https://api.tryterra.co/v2/auth/generateWidgetSession');
+    debugPrint('Request Body ==> ${json.encode(body).toString()}');
+    debugPrint('Headers ==> ${json.encode(headers).toString()}');
+
+    var responseJson;
+    try {
+      final response = await http
+          .post(Uri.parse('https://api.tryterra.co/v2/auth/generateWidgetSession'),
+          body: json.encode(body), headers: headers)
+          .timeout(const Duration(seconds: 40));
+      if(progressDialog!.isOpen()) {
+        progressDialog!.close();
+      }
+      progressDialog!.close();
+      debugPrint('Terra Response Body ==> ${response.body}');
+      debugPrint('Terra Response Code ==> ${response.statusCode}');
+
+      if(response.statusCode == 201) {
+        responseJson = json.decode(response.body.toString());
+        TerraSessionId sessionId = TerraSessionId.fromJson(responseJson);
+        debugPrint('Terra Session URL ==> ${sessionId.url}');
+        initTerraWebView(sessionId.url.toString());
+      }else{
+        showToast('Opps, something wents wrong!\nPlease try again', context);
+      }
+    } on SocketException {
+      throw FetchDataException('No Internet connection');
+    } on TimeoutException catch (_) {
+      // A timeout occurred.
+      throw FetchDataException('No Internet connection');
+    }
+    return responseJson;
+  }
 
   initTerraWebView(String url) async {
+    Navigator.pop(context);
     if (await canLaunchUrl(Uri.parse(url))) {
     await tabs.launch(url,
       customTabsOption: tabs.CustomTabsOption(

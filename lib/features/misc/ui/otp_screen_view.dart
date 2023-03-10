@@ -407,11 +407,13 @@ class _OTPScreenViewState extends State<OTPScreenView> {
       body['UserId'] = userId;
       if (Platform.isAndroid) {
         body['DeviceName'] = androidInfo.brand! + ' ' + androidInfo.model!;
+        body['DeviceId'] = androidInfo.id;
         body['OSType'] = 'Android';
         body['OSVersion'] = androidInfo.version.release;
       }
       if (Platform.isIOS) {
         body['DeviceName'] = iosInfo.model;
+        body['DeviceId'] = iosInfo.identifierForVendor;
         body['OSType'] = 'iOS';
         body['OSVersion'] = Platform.operatingSystemVersion;
       }

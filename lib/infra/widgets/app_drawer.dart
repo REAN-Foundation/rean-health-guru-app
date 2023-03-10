@@ -47,6 +47,7 @@ class _AppDrawerState extends State<AppDrawer> {
   String? _baseUrl = '';
   String imageResourceId = '';
   ProgressDialog? progressDialog;
+  late BuildContext buildContext;
 
   loadSharedPrefs() async {
     try {
@@ -92,6 +93,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    buildContext = context;
     loadSharedPrefs();
     return Drawer(
       child: Card(
@@ -484,6 +486,11 @@ class _AppDrawerState extends State<AppDrawer> {
     headers['Content-Type'] = 'application/json';
     headers['accept'] = 'application/json';
 
+    /*if(dotenv.env['TERRA_API_KEY'].toString().isNotEmpty && dotenv.env['TERRA_DEVELOPER_ID'].toString().isNotEmpty){
+      showToast('Terra Keys Imported', buildContext);
+    }*/
+
+
     Map<String, String>? body = <String, String>{};
     body['reference_id'] = patientUserId.toString();
     body['providers'] = 'GARMIN,WITHINGS,FITBIT,OURA,WAHOO,PELOTON,ZWIFT,TRAININGPEAKS,FREESTYLELIBRE,DEXCOM,COROS,HUAWEI,OMRON,RENPHO,POLAR,SUUNTO,EIGHT,CONCEPT2,WHOOP,IFIT,TEMPO,CRONOMETER,FATSECRET,NUTRACHECK,UNDERARMOUR';
@@ -499,26 +506,33 @@ class _AppDrawerState extends State<AppDrawer> {
           .post(Uri.parse('https://api.tryterra.co/v2/auth/generateWidgetSession'),
           body: json.encode(body), headers: headers)
           .timeout(const Duration(seconds: 40));
-      if(progressDialog!.isOpen()) {
+      /*if(progressDialog!.isOpen()) {
         progressDialog!.close();
       }
-      progressDialog!.close();
+      progressDialog!.close();*/
       debugPrint('Terra Response Body ==> ${response.body}');
       debugPrint('Terra Response Code ==> ${response.statusCode}');
+      responseJson = json.decode(response.body.toString());
+      TerraSessionId sessionId = TerraSessionId.fromJson(responseJson);
 
       if(response.statusCode == 201) {
-        responseJson = json.decode(response.body.toString());
-        TerraSessionId sessionId = TerraSessionId.fromJson(responseJson);
         debugPrint('Terra Session URL ==> ${sessionId.url}');
         initTerraWebView(sessionId.url.toString());
       }else{
-        showToast('Opps, something wents wrong!\nPlease try again', context);
+        showToast(sessionId.message.toString(), buildContext);
+        //showToast('Opps, something wents wrong!\nPlease try again', context);
       }
     } on SocketException {
+      showToast('SocketException', buildContext);
       throw FetchDataException('No Internet connection');
     } on TimeoutException catch (_) {
       // A timeout occurred.
+      showToast('TimeoutException', buildContext);
       throw FetchDataException('No Internet connection');
+    } on Exception catch (e) {
+      showToast(e.toString(), buildContext);
+      print("throwing new error");
+      throw Exception("Error on server");
     }
     return responseJson;
   }

@@ -64,4 +64,11 @@ jobs:
           APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
           IOS_DEMO_USER: ${{ secrets.IOS_DEMO_USER }}
           IOS_DEMO_PASSWORD: ${{ secrets.IOS_DEMO_PASSWORD }}
+        
+      - name: New Release Publish
+        uses: release-drafter/release-drafter@v5
+        with:
+          publish : true
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
 

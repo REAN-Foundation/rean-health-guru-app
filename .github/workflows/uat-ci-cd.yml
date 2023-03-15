@@ -81,7 +81,6 @@ jobs:
            repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   Android-BuildApp:
-    needs: Label_Checks
     environment: uat
     # needs: [Code-Scan]
     runs-on: ubuntu-latest

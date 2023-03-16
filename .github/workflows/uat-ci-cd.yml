@@ -81,6 +81,7 @@ jobs:
            repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   Android-BuildApp:
+    if: ${{ github.event_name == 'push' }}
     environment: uat
     # needs: [Code-Scan]
     runs-on: ubuntu-latest

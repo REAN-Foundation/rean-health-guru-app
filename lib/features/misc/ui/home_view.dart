@@ -286,6 +286,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           }
 
         }else{
+          //RemoteConfigValues.hospitalSystemVisibility = true;
         }
         //showToast(startCarePlanResponse.message);
       } else {
